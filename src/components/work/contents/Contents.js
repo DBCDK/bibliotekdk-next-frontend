@@ -26,7 +26,7 @@ import Accordion, { Item as AccordionItem } from "@/components/base/accordion";
  */
 export function useTablesOfContents({ workId, pid, type, customRootHeader }) {
   const { data, isLoading, error } = useData(
-    workFragments.workTableOfContents({ id: workId })
+    workFragments.workTableOfContents({ workId })
   );
 
   const manifestations = data?.work?.manifestations?.bestRepresentations ?? [];
