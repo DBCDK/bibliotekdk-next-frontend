@@ -26,10 +26,11 @@ import { hitcount as advancedHitcount } from "@/lib/api/complexSearch.fragments"
 
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import TopBar from "@/components/search/advancedSearch/topBar/TopBar";
-import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
+import AdvancedFacets from "@/components/search/facets/advanced/advancedFacets";
 import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
-import { FacetTags } from "@/components/search/advancedSearch/facets/facetTags/facetTags";
-import { FacetButton } from "@/components/search/advancedSearch/facets/facetButton/facetButton";
+import { FacetTags } from "@/components/search/facets/advanced/facetTags/facetTags";
+import { FacetButton } from "@/components/search/facets/advanced/facetButton/facetButton";
+import SimpleFacets from "@/components/search/facets/simple";
 
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
@@ -118,16 +119,15 @@ function Page({
           hasAdvancedSearch && !isSimple ? (
             <div>
               <FacetButton cql={rawcql} isLoading={isLoading} />
-              <div className={styles.mobileTags}>
+              {/* <div className={styles.mobileTags}>
                 <FacetTags />
-              </div>
+              </div> */}
               <div className={styles.titleflex}>
-                <div className={styles.borderTitleTop}></div>
                 <Title type="title5" skeleton={isLoading}>
                   {hitcount}
                 </Title>
                 <Text
-                  type="text3"
+                  type="text1"
                   className={styles.titleStyle}
                   skeleton={isLoading}
                 >
@@ -142,8 +142,7 @@ function Page({
           )
         }
         subtitle={
-          hasAdvancedSearch &&
-          !isSimple && (
+          (hasAdvancedSearch || hasQuery) && (
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
               <div className={styles.subtitleStyle}>
@@ -152,7 +151,8 @@ function Page({
                 </Text>
               </div>
               <QuickFilter />
-              <AdvancedFacets cql={advancedCql} />
+              {isSimple && <SimpleFacets />}
+              {!isSimple && <AdvancedFacets cql={advancedCql} />}
             </div>
           )
         }
@@ -295,7 +295,7 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       hasCqlSearch={hasCqlSearch}
       rawcql={rawcql}
       advancedCql={advancedCql}
-      selectedFacets={selectedFacets}
+      selectedFacets={selectedFacets || filters}
     />
   );
 }

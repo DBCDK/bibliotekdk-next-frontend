@@ -1,4 +1,8 @@
-import { AdvFacetsTypeEnum, FacetValidDatabases } from "@/lib/enums";
+import {
+  AdvFacetsTypeEnum,
+  FacetValidDatabases,
+  FilterTypeEnum,
+} from "@/lib/enums";
 import Accordion, { Item } from "@/components/base/accordion/Accordion";
 
 import styles from "./advancedFacets.module.css";
@@ -6,7 +10,7 @@ import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import Link from "@/components/base/link/Link";
 
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
-import { useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import { useData } from "@/lib/api/api";
@@ -15,6 +19,7 @@ import { parseOutFacets } from "@/components/search/advancedSearch/utils";
 import Skeleton from "@/components/base/skeleton";
 import translate from "@/components/base/translate";
 import { LinkToHelpTxt } from "@/components/search/advancedSearch/advancedSearchDropdown/AdvancedSearchDropdown";
+import { useRouter } from "next/router";
 
 /**
  *
@@ -22,60 +27,56 @@ import { LinkToHelpTxt } from "@/components/search/advancedSearch/advancedSearch
  * @returns {JSX.Element}
  * @constructor
  */
-export function AdvancedFacets({ facets, isLoading, replace = false }) {
-  const { addFacet, removeFacet, selectedFacets } = useFacets();
-
-  const scrollRef = useRef();
-
+export function AdvancedFacets({
+  facets,
+  isLoading,
+  selectedFacets,
+  onItemClick,
+  origin = "advancedSearch",
+  translateContext = "complex-search-facets",
+}) {
   // special handling of the facet.source
   // the sources we wish to handle
   const validSource = Object.values(FacetValidDatabases).map((val) =>
     val.toLowerCase()
   );
 
-  // filter out unwanted sources
-  facets = facets?.filter((fac) => {
-    if (fac.name !== "facet.source") {
-      return true;
-    } else {
-      const validValuse = fac.values.filter((fac) =>
-        validSource.includes(fac.key)
-      );
-      if (validValuse.length > 0) {
-        fac.values = validValuse;
+  // variable that holds facets to be shown
+  // advancedFacets is used for both advanced search AND simplesearch - so we differ with the 'origin' param
+  let filteredFacets;
+  if (origin === "advancedSearch") {
+    // filter out unwanted sources
+    facets = facets?.filter((fac) => {
+      if (fac.name !== "facet.source") {
         return true;
+      } else {
+        const validValues = fac.values.filter((fac) =>
+          validSource.includes(fac.key)
+        );
+        if (validValues.length > 0) {
+          fac.values = validValues;
+          return true;
+        }
       }
-    }
-    return false;
-  });
-  // end special handling of facet.source
-  const filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
-    facets?.find((facet) => {
-      return facet.name.split(".")[1] === val;
-    })
-  );
-
-  function scrollToRef(ref) {
-    ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
+      return false;
+    });
+    // end special handling of facet.source
+    filteredFacets = Object.values(AdvFacetsTypeEnum).filter((val) =>
+      facets?.find((facet) => {
+        return facet.name.split(".")[1] === val;
+      })
+    );
+  } else {
+    // facets for simple search
+    filteredFacets = Object.values(FilterTypeEnum).filter((val) =>
+      facets?.find((facet) => {
+        return facet.name === val;
+      })
+    );
   }
-
-  const onItemClick = ({ checked, value, facetName }) => {
-    const name = value?.key;
-
-    if (checked) {
-      // selected -> add to list
-      addFacet(name, facetName, replace, value?.traceId);
-      scrollToRef(scrollRef);
-    } else {
-      // deselected - remove from list
-      removeFacet(name, facetName, replace);
-      scrollToRef(scrollRef);
-    }
-  };
 
   return (
     <Accordion className={styles.accordionContainer}>
-      <div ref={scrollRef} />
       {isLoading && <AccordianItem isLoading={isLoading} />}
       {filteredFacets?.map((facetName, index) => (
         <AccordianItem
@@ -86,6 +87,8 @@ export function AdvancedFacets({ facets, isLoading, replace = false }) {
           selectedFacets={selectedFacets}
           onItemClick={onItemClick}
           isLoading={isLoading}
+          origin={origin}
+          translateContext={translateContext}
         />
       ))}
     </Accordion>
@@ -99,6 +102,8 @@ function AccordianItem({
   selectedFacets,
   onItemClick,
   isLoading,
+  origin,
+  translateContext,
 }) {
   if (isLoading) {
     return (
@@ -108,6 +113,19 @@ function AccordianItem({
     );
   }
 
+  // Global excluded categories @TODO - this is a lousy solution from filters page - refactor
+  // Exclude types from facetbrowser - in simple search facets most are shown in the quickfilters
+  const excluded = [
+    FilterTypeEnum.WORK_TYPES,
+    FilterTypeEnum.ACCESS_TYPES,
+    FilterTypeEnum.CHILDREN_OR_ADULTS,
+    FilterTypeEnum.FICTION_NONFICTION,
+  ];
+  if (excluded.includes(facetName)) {
+    return null;
+  }
+
+  // we use current to display number of selected values in this specific facet
   const current = selectedFacets?.find((sel) => sel.searchIndex === facetName);
 
   const titleElement = () => {
@@ -115,7 +133,7 @@ function AccordianItem({
       <div className={styles.countContainer}>
         <Text tag="span" type="text3" className={styles.facettitle}>
           {translate({
-            context: "complex-search-facets",
+            context: translateContext,
             label: `label-${facetName}`,
           })}
         </Text>
@@ -128,9 +146,18 @@ function AccordianItem({
     );
   };
 
-  const facet = facets.find((fac) => {
-    return fac.name.split(".")[1] === facetName;
-  });
+  /** Advanced facets are now used as filters for simple search - check
+   * origin parameter an act accordingly **/
+  let facet;
+  if (origin === "simpleSearch") {
+    facet = facets.find((fac) => {
+      return fac.name === facetName;
+    });
+  } else {
+    facet = facets.find((fac) => {
+      return fac.name.split(".")[1] === facetName;
+    });
+  }
 
   return (
     <div className={styles.itemborder}>
@@ -149,13 +176,14 @@ function AccordianItem({
           facetName={facetName}
           selectedFacets={selectedFacets}
           onItemClick={onItemClick}
+          origin={origin}
         />
       </Item>
     </div>
   );
 }
 
-function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
+function ListItem({ facet, facetName, selectedFacets, onItemClick, origin }) {
   const [numToShow, setNumToShow] = useState(5);
   const numberToShowMore = 20;
 
@@ -189,8 +217,10 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
     return a?.score > b?.score ? -1 : 1;
   };
 
-  let initialcheck;
+  const values = (Array.isArray(facet?.values) ? facet.values : []).slice();
+  const visible = values.sort(sorter).slice(0, numToShow);
 
+  let initialcheck;
   return (
     <>
       {/* we want to show a link to a helptext for term.source (fagbibliografier) */}
@@ -208,48 +238,49 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
         />
       )}
       <ul data-cy={`${facetName}`}>
-        {[...facet?.values]
-          .sort(sorter)
-          .slice(0, numToShow)
-          .map((value, index) => (
-            <li
-              key={`${facetName}-${value.key}-${index}`}
-              className={styles.item}
-              data-cy={`li-${facetName}-${value.key}`}
-            >
-              {
-                (initialcheck = !!current?.values?.find((val) => {
-                  return val.name === value.key;
-                }))
-              }
-              <Checkbox
-                id={`${facetName}-${value.key}-${index}`}
-                ariaLabel={value.key}
-                className={styles.checkbox}
-                onChange={(checked) => {
-                  onItemClick({ checked, value, facetName });
-                }}
-                checked={initialcheck}
-              ></Checkbox>
-              {/* Set a label for the checkbox - in that way the checkbox's selected value will be set when clicking the label */}
-              <label htmlFor={`${facetName}-${value.key}-${index}`}>
-                <Text tag="span" type="text3" className={styles.facettext}>
-                  {value.key}
-                </Text>
-              </label>
+        {visible.map((value, index) => (
+          <li
+            key={`${facetName}-${value.key}-${index}`}
+            className={styles.item}
+            data-cy={`li-${facetName}-${value.key}`}
+          >
+            {
+              (initialcheck = !!current?.values?.find((val) => {
+                return (
+                  val.name === value.key ||
+                  val === value.key ||
+                  val === value.term
+                );
+              }))
+            }
+            <Checkbox
+              id={`${facetName}-${value.key}-${index}`}
+              ariaLabel={value.key}
+              className={styles.checkbox}
+              onChange={(checked) => {
+                onItemClick({ checked, value, facetName });
+              }}
+              checked={initialcheck}
+            ></Checkbox>
+            {/* Set a label for the checkbox - in that way the checkbox's selected value will be set when clicking the label */}
+            <label htmlFor={`${facetName}-${value.key}-${index}`}>
+              <Text tag="span" type="text3" className={styles.facettext}>
+                {value.term || value.key}
+              </Text>
+            </label>
+            {origin === "advancedFacets" && (
               <Text tag="span" type="text3" className={styles.score}>
                 {value.score}
               </Text>
-            </li>
-          ))}
+            )}
+          </li>
+        ))}
         {facet?.values?.length > numToShow && (
-          <div
-            onClick={() => {
-              setNumToShow(numToShow + numberToShowMore);
-            }}
-            className={styles.showmorelink}
-          >
+          <div className={styles.showmorelink}>
             <Link
+              onClick={() => {
+                setNumToShow(numToShow + numberToShowMore);
+              }}
               border={{
                 top: false,
                 bottom: {
@@ -272,8 +303,19 @@ function ListItem({ facet, facetName, selectedFacets, onItemClick }) {
   );
 }
 
-export default function Wrap({ cql, replace }) {
-  const { facetsFromEnum, facetLimit } = useFacets();
+export default function Wrap({ cql, replace = false }) {
+  const {
+    facetsFromEnum,
+    facetLimit,
+    addFacet,
+    removeFacet,
+    selectedFacets,
+    clearFacetsUrl,
+  } = useFacets();
+
+  const router = useRouter();
+  const prevModeRef = useRef();
+
   // use the useData hook to fetch data
   const { data: facetResponse, isLoading } = useData(
     complexFacetsOnly({
@@ -287,9 +329,44 @@ export default function Wrap({ cql, replace }) {
 
   const facets = parseOutFacets(facetResponse?.complexFacets?.facets);
 
-  return AdvancedFacets({
-    facets: facets,
-    isLoading: isLoading,
-    replace: replace,
-  });
+  const onItemClick = ({ checked, value, facetName }) => {
+    const name = value?.key;
+
+    if (checked) {
+      // selected -> add to list
+      addFacet(name, facetName, replace, value?.traceId);
+    } else {
+      // deselected - remove from list
+      removeFacet(name, facetName, replace);
+    }
+  };
+
+  // Reset facets-URL når route-param "mode" ændrer sig
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const mode = router.query?.mode ?? null;
+
+    // Init: ingen reset første gang
+    if (prevModeRef.current === undefined) {
+      prevModeRef.current = mode;
+      return;
+    }
+
+    if (prevModeRef.current !== mode) {
+      prevModeRef.current = mode;
+      clearFacetsUrl(); // forventer at denne bevarer scroll (tilpas i hook hvis nødvendigt)
+    }
+  }, [router.isReady, router.query.mode, clearFacetsUrl]);
+
+  return (
+    <AdvancedFacets
+      facets={facets}
+      isLoading={isLoading}
+      selectedFacets={selectedFacets}
+      onItemClick={onItemClick}
+      origin="advancedSearch"
+      translateContext="complex-search-facets"
+    />
+  );
 }
