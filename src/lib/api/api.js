@@ -55,6 +55,7 @@ export async function fetcher(
 
   const {
     uniqueVisitorId,
+    visitorFingerprint,
     statistics,
     parentTraceId,
     headers: orgHeaders = {},
@@ -73,8 +74,8 @@ export async function fetcher(
   const headers = {
     ...orgHeaders,
     "Content-Type": "application/json",
-    "X-Unique-Visitor-ID": uniqueVisitorId || "", // Remove this when no longer used in FBI-API
-    "X-Session-Token": uniqueVisitorId || "", // X-Unique-Visistor-ID has been renamed to this
+    "X-Session-Token": uniqueVisitorId || "",
+    "X-Client-Fingerprint": visitorFingerprint || "",
     "X-Tracking-Consent": !!statistics,
   };
   if (parentTraceId) {

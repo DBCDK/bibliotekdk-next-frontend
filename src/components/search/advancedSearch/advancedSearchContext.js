@@ -12,7 +12,10 @@ import React, {
 } from "react";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import { convertStateToCql } from "@/components/search/advancedSearch/utils";
+import {
+  convertStateToCql,
+  parseSearchUrl,
+} from "@/components/search/advancedSearch/utils";
 import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import isEmpty from "lodash/isEmpty";
@@ -184,12 +187,9 @@ export function useAdvancedSearchContext() {
 
 export function getFieldSearchFromUrl(query) {
   const { fieldSearch, "q.all": q = null } = query;
-  // const { fieldSearch } = query;
 
-  const fieldSearchFromUrl =
-    fieldSearch && JSON.parse(decodeURIComponent(fieldSearch));
-
-  if (fieldSearchFromUrl) {
+  const fieldSearchFromUrl = parseSearchUrl(fieldSearch);
+  if (fieldSearchFromUrl && !isEmpty(fieldSearchFromUrl)) {
     return fieldSearchFromUrl;
   }
 
@@ -210,8 +210,7 @@ export default function AdvancedSearchProvider({ children, router }) {
   } = router.query;
 
   const fieldSearchFromUrl = getFieldSearchFromUrl(router?.query);
-
-  const sort = sortFromUrl && JSON.parse(decodeURIComponent(sortFromUrl));
+  const sort = parseSearchUrl(sortFromUrl);
 
   //// ----  Popup Trigger ----
   const popoverRef = useRef(null);

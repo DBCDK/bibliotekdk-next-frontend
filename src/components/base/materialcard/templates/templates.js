@@ -301,14 +301,7 @@ export function templateForUniverseSeriesBase({ material, classNameAddition }) {
   const firstWork = material?.members?.[0]?.work;
   const { titles } = getTitlesAndType({ work: material });
 
-  const title = titles[0] || material?.title;
-  const identifyingAddition = material?.identifyingAddition;
-  const fullTitle = [
-    title,
-    ...(identifyingAddition ? [identifyingAddition] : []),
-  ].join(", ");
-
-  // const fullTitle = material?.title;
+  const fullTitle = titles[0] || material?.title;
 
   const creators = firstWork?.creators;
   const firstCreator =

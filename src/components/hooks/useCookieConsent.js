@@ -14,6 +14,23 @@ export default function useCookieConsent() {
   // hence Cookiebot should be available on first render
   const consent = isClient ? window.Cookiebot?.consent : null;
 
+  const visitorFingerprint = useMemo(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
+
+    if (useFixedSessionId) {
+      return "fp_test";
+    }
+
+    try {
+      const fingerprint = getBrowserFingerprint();
+      return "fp_" + fingerprint;
+    } catch (e) {
+      return "";
+    }
+  }, [consent?.statistics]);
+
   // Extract matomo visitor id from cookie
   // It only exists of user has given statistics consent
   const uniqueVisitorId = useMemo(() => {
@@ -38,12 +55,7 @@ export default function useCookieConsent() {
     }
 
     // If user has not given consent to statistics, we use browser fingerprinting
-    try {
-      const fingerprint = getBrowserFingerprint();
-      return "fp_" + fingerprint;
-    } catch (e) {
-      return "";
-    }
+    return visitorFingerprint;
   }, [consent?.statistics]);
 
   useEffect(() => {
@@ -64,5 +76,6 @@ export default function useCookieConsent() {
     statistics: consent?.statistics || false,
     marketing: consent?.marketing || false,
     uniqueVisitorId,
+    visitorFingerprint,
   };
 }

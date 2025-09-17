@@ -85,6 +85,20 @@ describe("Popover elements", () => {
       ""
     );
   });
+
+  it("should handle percent characters in search without throwing exceptions", () => {
+    const testString = "11%";
+    
+    cy.get('[data-cy="advanced-search-trigger"]').click();
+    
+    // Type the problematic string with % character
+    cy.get('[data-cy="advanced-search-inputfield-0"]')
+      .type(testString)
+      .blur();
+
+    // Click search button to verify no exception is thrown
+    cy.get('[data-cy="button-søg-avanceret"]').click();
+  });
 });
 
 describe("TextInputs test", () => {

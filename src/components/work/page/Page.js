@@ -4,7 +4,6 @@ import Overview from "../overview";
 import Details from "../details";
 import Description from "../description";
 import RelatedWorks from "../relatedworks";
-import Content from "../content";
 import Keywords from "../keywords";
 import SimilarArticles from "../similararticles";
 import Related from "../related";
@@ -15,7 +14,6 @@ import Header from "@/components/header/Header";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
-import Parts from "../parts";
 
 import Anchor from "@/components/base/anchor";
 import min from "lodash/min";
@@ -27,6 +25,7 @@ import Universes from "@/components/work/universes/Universes";
 import PeriodicaArticles from "@/components/work/periodicaArticles/PeriodicaArticles";
 import Issues from "@/components/work/periodicaArticles/Issues";
 import PeriodicaOverview from "../periodicaoverview/PeriodicaOverview";
+import { ContentsSection } from "@/components/work/contents";
 
 /**
  * The work page React component
@@ -98,25 +97,18 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             type={type}
             anchor-label={Translate({ context: "description", label: "title" })}
           />
-
-          <Parts
+          <ContentsSection
             workId={workId}
             type={type}
-            anchor-label={Translate({
-              context: "bibliographic-data",
-              label: "manifestationParts",
-            })}
+            anchor-label={Translate({ context: "content", label: "title" })}
           />
+
           <RelatedWorks
             workId={workId}
             type={type}
             anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}
           />
-          <Content
-            workId={workId}
-            type={type}
-            anchor-label={Translate({ context: "content", label: "title" })}
-          />
+
           <section
             anchor-label={Translate({ context: "keywords", label: "title" })}
           >

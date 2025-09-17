@@ -357,3 +357,25 @@ export function getUrlByType({ type, value, traceId }) {
   const inputField = getAdvancedSearchField({ type, value });
   return fieldsToAdvancedUrl({ inputFields: inputField, traceId });
 }
+
+/**
+ * Tries to parse a query param that might be plain JSON or URL-encoded JSON.
+ * Returns {} if parsing fails, so "%" or bad input won't break the app.
+ */
+export const parseSearchUrl = (value) => {
+  if (!value) return {};
+  if (typeof value === "object") return value; // already parsed
+
+  // Try plain JSON
+  try {
+    return JSON.parse(value);
+  } catch {}
+
+  // Try URL-decoded JSON
+  try {
+    return JSON.parse(decodeURIComponent(value));
+  } catch {}
+
+  console.error("Failed to parse search url", value);
+  return {};
+};

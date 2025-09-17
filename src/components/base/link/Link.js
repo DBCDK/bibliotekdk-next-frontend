@@ -362,6 +362,7 @@ export function LinkOnlyInternalAnimations({
       onClick={onClick}
       target={target}
       disabled={disabled}
+      style={{ display: "flex" }}
     >
       {children}
     </Link>
