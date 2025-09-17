@@ -364,10 +364,18 @@ export function getUrlByType({ type, value, traceId }) {
  */
 export const parseSearchUrl = (value) => {
   if (!value) return {};
+  if (typeof value === "object") return value; // already parsed
+
+  // Try plain JSON
   try {
     return JSON.parse(value);
-  } catch {
-    console.error("Failed to parse search url", value);
-  }
+  } catch {}
+
+  // Try URL-decoded JSON
+  try {
+    return JSON.parse(decodeURIComponent(value));
+  } catch {}
+
+  console.error("Failed to parse search url", value);
   return {};
 };

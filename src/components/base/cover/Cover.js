@@ -1,19 +1,11 @@
+// Cover.jsx
 import PropTypes from "prop-types";
-
-import Skeleton from "@/components/base/skeleton";
-
-import styles from "./Cover.module.css";
 import { useEffect, useRef, useState } from "react";
 import cx from "classnames";
 
-/**
- * The Component function
- *
- * @param {Object} props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
- */
+import Skeleton from "@/components/base/skeleton";
+import styles from "./Cover.module.css";
+
 function Cover({
   children = null,
   src = null,
@@ -25,36 +17,62 @@ function Cover({
 }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const imageRef = useRef();
+  const imageRef = useRef(null);
 
-  // If src is an array of cover images, select the first valid in line
-  if (src instanceof Array) {
-    src = src.map((t) => t.cover && t.cover.detail).filter((c) => c)[0];
+  // Resolve src if it's an array
+  let resolvedSrc = src;
+  if (Array.isArray(src)) {
+    resolvedSrc = src.map((t) => t?.cover?.detail).filter(Boolean)?.[0];
   }
 
   useEffect(() => {
     setLoaded(false);
     setError(false);
-  }, [src]);
+  }, [resolvedSrc]);
 
-  // Add class for missing cover image
+  const showSkeleton = Boolean(skeleton || (resolvedSrc && !loaded));
+
   const loadedClass = loaded ? styles.loaded : "";
-
-  const skeletonClass = skeleton || (!loaded && src) ? styles.skeleton : "";
-
+  const skeletonClass = showSkeleton ? styles.skeleton : "";
   const frameStyle = bgColor ? styles.frame : "";
 
   const backgroundColor = {
-    backgroundColor: bgColor ? bgColor : src ? "transparent" : "var(--iron)",
+    backgroundColor: bgColor
+      ? bgColor
+      : resolvedSrc
+      ? "transparent"
+      : "var(--iron)",
   };
 
-  const dynamicStyles = {
-    ...backgroundColor,
+  const interactive = typeof onClick === "function";
+
+  // A11y: aktiver med Enter/Space
+  const handleKeyDown = (e) => {
+    if (!interactive) return;
+    if (e.key === " ") {
+      e.preventDefault(); // undgå scroll på Space
+    }
+    if (e.key === "Enter") {
+      onClick?.(e);
+    }
+  };
+
+  const handleKeyUp = (e) => {
+    if (!interactive) return;
+    // Space aktiveres på keyup for rolle=button
+    if (e.key === " ") {
+      onClick?.(e);
+    }
   };
 
   return (
     <div
-      style={dynamicStyles}
+      role={interactive ? "button" : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
+      onClick={interactive ? onClick : undefined}
+      style={backgroundColor}
       className={cx(
         styles.cover,
         frameStyle,
@@ -69,45 +87,39 @@ function Cover({
           [styles["fill-width"]]: size === "fill-width",
         }
       )}
-      onClick={onClick}
-      data-cy={src ? "cover-present" : "missing-cover"}
+      data-cy={resolvedSrc ? "cover-present" : "missing-cover"}
     >
       {skeletonClass && <Skeleton />}
-      {src && !error && (
+
+      {resolvedSrc && !error && (
         <img
           ref={imageRef}
           alt=""
-          data-src={src}
-          data-bg={src}
-          className="lazyload"
-          onLoad={() => {
-            setLoaded(true);
-          }}
+          src={resolvedSrc}
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          onLoad={() => setLoaded(true)}
           onError={() => {
             setLoaded(true);
             setError(true);
           }}
         />
       )}
-      {((!skeleton && !src) || error) && <div className={styles.fallback} />}
+
+      {((!skeleton && !resolvedSrc) || error) && (
+        <div className={styles.fallback} />
+      )}
+
       {children}
     </div>
   );
 }
 
-/**
- *  Default export function of the Component
- *
- * @param {Object} props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
- */
 export default function Container(props) {
   return <Cover {...props} />;
 }
 
-// PropTypes for the Component
 Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),

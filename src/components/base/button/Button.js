@@ -33,6 +33,7 @@ function Button({
   ariaControls = null,
   ariaLabel = null,
   asLink = false,
+  target = "_blank",
   href = "",
 }) {
   const key = dataCy || cyKey({ name: children, prefix: "button" });
@@ -43,7 +44,7 @@ function Button({
   return (
     <Tag
       href={href}
-      target="_blank"
+      target={target}
       id={id}
       data-cy={key}
       className={cx([

@@ -8,7 +8,7 @@ describe("Search", () => {
       win.localStorage.clear();
     });
 
-    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
+    cy.visit(`${nextjsBaseUrl}/find/simpel?q.all=harry potter`);
     cy.consentAllowAll();
   });
 

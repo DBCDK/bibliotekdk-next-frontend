@@ -20,7 +20,7 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ index, fieldValue, doAdvancedSearch }) {
+function FieldInput({ index, fieldValue, onSearch }) {
   const [suggestions, setSuggestions] = useState([]);
 
   const inputId = `input-field-${index}`;
@@ -122,8 +122,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
-
-                    doAdvancedSearch();
+                    onSearch();
                   }
                 }}
               />
@@ -225,21 +224,18 @@ export function LogicalOperatorDropDown({
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function TextInputs({ doAdvancedSearch }) {
+export default function TextInputs({ handleSearch }) {
   const { inputFields, addInputField } = useAdvancedSearchContext();
 
   return (
     <>
-      <Text type="text1" className={styles.inputTitle}>
-        {Translate({ context: "search", label: "construct-your-search" })}
-      </Text>
       {inputFields?.map((field, index) => {
         return (
           <FieldInput
             key={`inputField-${index}`}
             index={index}
             fieldValue={field}
-            doAdvancedSearch={doAdvancedSearch}
+            onSearch={handleSearch}
           />
         );
       })}

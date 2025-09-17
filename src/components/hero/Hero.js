@@ -6,7 +6,6 @@ import React from "react";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
 
-import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 import Translate from "@/components/base/translate";
 import Image from "@/components/base/image";
 import { useData } from "@/lib/api/api";
@@ -30,21 +29,6 @@ export function Hero({ image }) {
       <div className={styles.gradient} />
       <Row className={styles.herotopmargin}>
         <Col lg={3} xs={0} className={styles.heroicon} />
-        <Col
-          lg={{ span: 9, offset: 0 }}
-          md={{ span: 8, offset: 2 }}
-          sm={{ span: 10, offset: 1 }}
-          xs={{ span: 12, offset: 0 }}
-        >
-          <Title type="title2" className={styles.heromobiletxt} tag="h1">
-            {Translate({
-              context: "general",
-              label: "heroTxt",
-            })}
-          </Title>
-
-          <FakeSearchInput className={styles.fakesearchinput} />
-        </Col>
         <Col md={2} xs={1} />
         <div className={styles.bluebox}>
           <div className={styles.iconandtxt}>

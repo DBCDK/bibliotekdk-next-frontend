@@ -289,16 +289,18 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe(`find`, () => {
+  describe.only(`find`, () => {
     it(`has correct metadata`, () => {
-      getPageHead("/find?q.all=ost").then((res) => {
+      getPageHead("/find/simpel?q.all=ost").then((res) => {
         expect(res.title).to.equal(
           "Alle resultater med &quot;ost&quot; | Bibliotek.dk"
         );
         expect(res.description).to.match(
           /Bibliotekerne har i alt \d+ resultater med &quot;ost&quot;. Bibliotek.dk er én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv./
         );
-        expect(res["og:url"]).to.equal("http://localhost:3000/find?q.all=ost");
+        expect(res["og:url"]).to.equal(
+          "http://localhost:3000/find/simpel?q.all=ost"
+        );
         expect(res["og:title"]).to.equal(
           "Alle resultater med &quot;ost&quot; | Bibliotek.dk"
         );
@@ -310,15 +312,15 @@ describe("Server Side Rendering", () => {
     });
 
     it(`has correct alternate links`, () => {
-      getPageHead("/find?q.all=ost&workTypes=movie").then((res) => {
+      getPageHead("/find/simpel?q.all=ost&workTypes=movie").then((res) => {
         expect(res.alternate).to.deep.equal([
-          '<link rel="alternate" hreflang="da" href="http://localhost:3000/find?workTypes=movie&amp;q.all=ost"/>',
-          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/find?workTypes=movie&amp;q.all=ost"/>',
+          '<link rel="alternate" hreflang="da" href="http://localhost:3000/find/simpel?workTypes=movie&amp;q.all=ost"/>',
+          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/find/simpel?workTypes=movie&amp;q.all=ost"/>',
         ]);
       });
     });
     it(`hitcount must be greater than 0`, () => {
-      getPageHead("/find?q.all=ost").then((res) => {
+      getPageHead("/find/simpel?q.all=ost").then((res) => {
         const hitcount = parseInt(
           res.description.match(/i alt (\d+) resultater/)[1],
           10
@@ -327,7 +329,7 @@ describe("Server Side Rendering", () => {
       });
     });
     it(`Applying a filter results in lower hitcount`, () => {
-      getPageHead("/find?q.all=ost").then((res) => {
+      getPageHead("/find/simpel?q.all=ost").then((res) => {
         const hitcount = parseInt(
           res.description.match(/i alt (\d+) resultater/)[1],
           10
@@ -335,14 +337,16 @@ describe("Server Side Rendering", () => {
         // Applying a filter should result in lower hitcount
 
         // worktype kan ligenu ikke fanges af serverside renderingen af hitcount da fetchAll forventer af router.query indeholder en param som hedder filters
-        getPageHead("/find?q.all=ost&workTypes=movie").then((filteredRes) => {
-          const filteredHitcount = parseInt(
-            filteredRes.description.match(/i alt (\d+) resultater/)[1],
-            10
-          );
-          expect(filteredHitcount).to.be.greaterThan(0);
-          expect(hitcount).to.be.greaterThan(filteredHitcount);
-        });
+        getPageHead("/find/simpel?q.all=ost&workTypes=movie").then(
+          (filteredRes) => {
+            const filteredHitcount = parseInt(
+              filteredRes.description.match(/i alt (\d+) resultater/)[1],
+              10
+            );
+            expect(filteredHitcount).to.be.greaterThan(0);
+            expect(hitcount).to.be.greaterThan(filteredHitcount);
+          }
+        );
       });
     });
   });

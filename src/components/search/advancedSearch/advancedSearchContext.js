@@ -52,11 +52,6 @@ export function getInitialInputFields(workType = "all") {
   const inputFieldsByMaterialType = {
     all: [
       { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.default",
-      },
     ],
     literature: [
       {
@@ -190,16 +185,31 @@ export function useAdvancedSearchContext() {
   return useContext(AdvancedSearchContext);
 }
 
+export function getFieldSearchFromUrl(query) {
+  const { fieldSearch, "q.all": q = null } = query;
+
+  const fieldSearchFromUrl = parseSearchUrl(fieldSearch);
+  if (fieldSearchFromUrl && !isEmpty(fieldSearchFromUrl)) {
+    return fieldSearchFromUrl;
+  }
+
+  if (q) {
+    const arr = getInitialInputFields();
+    arr[0].value = q;
+    return { inputFields: arr };
+  }
+
+  return {};
+}
+
 export default function AdvancedSearchProvider({ children, router }) {
   const {
     page = "1",
     cql: cqlFromUrl = null,
-    fieldSearch = "{}",
     sort: sortFromUrl = "{}",
   } = router.query;
 
-  const fieldSearchFromUrl = parseSearchUrl(fieldSearch);
-
+  const fieldSearchFromUrl = getFieldSearchFromUrl(router?.query);
   const sort = parseSearchUrl(sortFromUrl);
 
   //// ----  Popup Trigger ----

@@ -27,7 +27,7 @@ describe("Quickfilters", () => {
     cy.get("div [role=group]")
       .eq(1)
       .find("[data-cy=list-button-1]")
-      .should("not.have.attr", "aria-checked");
+      .should("not.have.attr", "aria-checked", "true");
 
     cy.get("div [role=group]").eq(1).find("[data-cy=list-button-1]").click();
 

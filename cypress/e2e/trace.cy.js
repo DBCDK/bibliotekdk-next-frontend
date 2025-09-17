@@ -3,7 +3,8 @@ const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Trace", () => {
   describe("simple search", () => {
-    it(`TraceId from related subject is available as URL parameter when clicking`, () => {
+    // skipped for now, saved for later, when suggester is moved to /find
+    it.skip(`TraceId from related subject is available as URL parameter when clicking`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
 
@@ -26,7 +27,8 @@ describe("Trace", () => {
           expect(tid.length).to.be.greaterThan(20);
         });
     });
-    it(`TraceId from search response is available as URL parameter when clicking`, () => {
+    // skipped for now, saved for later, when suggester is moved to /find
+    it.skip(`TraceId from search response is available as URL parameter when clicking`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
 
@@ -47,8 +49,8 @@ describe("Trace", () => {
           expect(tid.length).to.be.greaterThan(20);
         });
     });
-
-    it(`TraceId from did you mean is available as URL parameter when clicking`, () => {
+    // skipped for now, saved for later, when suggester is moved to /find
+    it.skip(`TraceId from did you mean is available as URL parameter when clicking`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
 
@@ -87,7 +89,7 @@ describe("Trace", () => {
       });
     });
     it("traceid on materialtypes in searchresult", () => {
-      cy.visit(`${nextjsBaseUrl}/find?q.all=hest`);
+      cy.visit(`${nextjsBaseUrl}/find/simpel?q.all=hest`);
       cy.consentAllowAll(); //allow cookies
 
       // get all the searchresults
@@ -103,7 +105,9 @@ describe("Trace", () => {
         });
     });
   });
-  describe("complex search", () => {
+
+  // skipped for now, saved for later, when suggester is moved to /find
+  describe.skip("complex search", () => {
     it(`TraceId on suggestion click`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
@@ -160,25 +164,21 @@ describe("Trace", () => {
     cy.visit(`${nextjsBaseUrl}/inspiration/boeger?workTypes=literature`);
     cy.consentAllowAll(); //allow cookies
 
-
     //click on fist element in inspiration belt
     cy.get('[data-cy="inspiration-slider"]')
-    .find('[data-cy="link"]') 
-    .first() 
-    .click();
-
+      .find('[data-cy="link"]')
+      .first()
+      .click();
 
     cy.url()
-    .should("include", "tid=")
-    .then((url) => {
-      const params = new URLSearchParams(url.split("?")[1]);
-      const tid = params.get("tid");
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
 
-      expect(tid).to.exist;
-      expect(tid.length).to.be.greaterThan(20);
-    });
-
-
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
   });
 
   it("traceid universes in details", () => {
@@ -258,8 +258,8 @@ describe("Trace", () => {
       expect(traceIdHeader).to.equal("fisk");
     });
   });
-
-  it(`TraceId from suggest response is available as URL parameter when clicking`, () => {
+  // skipped for now, saved for later, when suggester is moved to /find
+  it.skip(`TraceId from suggest response is available as URL parameter when clicking`, () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll(); //allow cookies
 
@@ -284,21 +284,20 @@ describe("Trace", () => {
   it(`TraceId from suggest response is available as URL parameter when clicking`, () => {
     cy.visit(
       `${nextjsBaseUrl}/avanceret?fieldSearch=%7B"inputFields"%3A%5B%7B"value"%3A"hest"%2C"prefixLogicalOperator"%3Anull%2C"searchIndex"%3A"term.default"%7D%5D%7D#0-specificmaterialtype`
-    );    
+    );
 
     //we check that tid is not set as URL param
     cy.url().then((url) => {
-      const params = new URLSearchParams(url.split("?")[1]); 
-      const tid = params.get("tid"); 
-      expect(tid).to.not.exist; 
+      const params = new URLSearchParams(url.split("?")[1]);
+      const tid = params.get("tid");
+      expect(tid).to.not.exist;
     });
-    
+
     cy.consentAllowAll(); //allow cookies
 
     //click on a facet
     cy.get('[data-cy="li-specificmaterialtype-bog"]').click();
 
-  
     // Check that tid is set as URL param
     cy.url()
       .should("include", "tid=")

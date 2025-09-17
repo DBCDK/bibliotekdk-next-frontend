@@ -100,7 +100,6 @@ export function addSavedSearch({ searchObject }) {
  */
 
 export function updateSavedSearch({ searchObject }) {
-  console.log("updateSavedSearch.searchObject", searchObject);
   if (!searchObject.id) {
     return null;
   }
