@@ -1,6 +1,9 @@
 .section {
   margin: 0 calc(var(--pt1) * -2);
-  padding-bottom: 0 !important;
+  padding-bottom: var(--pt2) !important;
+
+  border-top: 1px solid var(--iron);
+  border-bottom: 1px solid var(--iron);
 }
 
 .skip {
@@ -24,7 +27,7 @@
 }
 
 .words {
-  padding: var(--pt2) var(--pt2) 0 var(--pt2);
+  padding: 0 var(--pt2) 0 var(--pt2);
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
@@ -40,7 +43,9 @@
 
 @media (min-width: 992px) {
   .section {
-    padding: var(--pt2) 0 0 0 !important;
+    margin: 0 0 0 calc(var(--pt1) * -2);
+    padding: 0 !important;
+    border: none;
   }
 
   .section.noRelatedSubjects {

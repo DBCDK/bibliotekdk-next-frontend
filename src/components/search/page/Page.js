@@ -39,6 +39,9 @@ import translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import styles from "./Page.module.css";
 import { useRouter } from "next/router";
+import SaveSearchBtn from "../save";
+import Related from "../related/Related";
+import DidYouMean from "../didYouMean/DidYouMean";
 
 // -------------------------------
 // UI-komponent: kun rendering
@@ -119,9 +122,6 @@ function Page({
           hasAdvancedSearch && !isSimple ? (
             <div>
               <FacetButton cql={rawcql} isLoading={isLoading} />
-              {/* <div className={styles.mobileTags}>
-                <FacetTags />
-              </div> */}
               <div className={styles.titleflex}>
                 <Title type="title5" skeleton={isLoading}>
                   {hitcount}
@@ -135,14 +135,13 @@ function Page({
                 </Text>
               </div>
             </div>
-          ) : !isLoading && hitcount > 0 ? (
-            <FilterButton className={styles.filterButton} />
           ) : (
             <span />
           )
         }
         subtitle={
-          (hasAdvancedSearch || hasQuery) && (
+          (hasAdvancedSearch || hasQuery) &&
+          !isMobile && (
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
               <div className={styles.subtitleStyle}>
@@ -169,6 +168,19 @@ function Page({
         {!isSimple && hitcount > 0 && (
           <div className={styles.sort_wrapper}>
             <AdvancedSearchSort className={styles.sort_container} />
+          </div>
+        )}
+
+        {!isLoading && hitcount > 0 && (
+          <div className={styles.actions}>
+            <FilterButton className={styles.filterButton} />
+
+            <div className={styles.supplementary}>
+              <Related />
+              <DidYouMean />
+            </div>
+
+            <SaveSearchBtn />
           </div>
         )}
 

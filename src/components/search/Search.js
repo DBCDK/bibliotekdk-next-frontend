@@ -18,13 +18,11 @@ import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 import translate from "@/components/base/translate";
-import Translate from "@/components/base/translate";
-import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-import IconButton from "../base/iconButton";
-import { getHelpUrl } from "@/lib/utils";
-
+import Link from "@/components/base/link";
 import styles from "./Search.module.css";
+import Translate from "@/components/base/translate";
+import { getHelpUrl } from "@/lib/utils";
 
 // -----------------------------
 // Centralized mode + URL helpers
@@ -164,8 +162,6 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
               >
                 <Col className={styles.content}>
                   <SimpleSearch />
-                  <Related />
-                  <DidYouMean />
                 </Col>
               </Tab>
 
@@ -193,32 +189,23 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
           </Col>
 
           <Col className={styles.links} sm={12} lg={{ span: 2 }}>
-            <IconButton
-              icon="arrowrightblue"
-              keepUnderline={true}
-              iconSize={1}
-              href="/avanceret/soegehistorik"
-              border={{ top: false, bottom: { keepVisible: true } }}
-            >
-              <Text type="text4" tag="span">
-                {Translate({ context: "search", label: "searchHistory" })}
-              </Text>
-            </IconButton>
-
-            <Link
-              href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
-              border={{ bottom: { keepVisible: true } }}
-              target="_blank"
-            >
-              <Text type="text5" tag="span">
-                {Translate({
-                  context: "search",
-                  label: isMobileSize
-                    ? "mobile_helpAndGuidance"
-                    : "helpAndGuidance",
-                })}
-              </Text>
-            </Link>
+            <div>
+              <Link
+                href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
+                className={styles.help}
+                border={{ bottom: { keepVisible: true } }}
+                target="_blank"
+              >
+                <Text type="text5" tag="span">
+                  {Translate({
+                    context: "search",
+                    label: isMobileSize
+                      ? "mobile_helpAndGuidance"
+                      : "helpAndGuidance",
+                  })}
+                </Text>
+              </Link>
+            </div>
           </Col>
         </Row>
       </Container>

@@ -3,7 +3,10 @@
   width: 100%;
   background-color: var(--concrete);
   position: fixed;
-  top: -100px; /* skjult ved default, styres med klasse */
+  top: 0;
+  transform: translateY(
+    calc(-1 * (100% + 20px))
+  ); /* skjult ved default, styres med klasse */
   left: 0;
   z-index: 10;
   border-bottom: 1px solid var(--iron);

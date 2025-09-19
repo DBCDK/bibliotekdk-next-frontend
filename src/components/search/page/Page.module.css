@@ -1,18 +1,17 @@
-.section {
-  padding-top: var(--pt2);
-}
-
 .section :global(.section-title) {
   padding-bottom: 0;
 }
 
+.facetsContainer {
+  padding-top: var(--pt8);
+}
+
 .filterButton {
-  margin-bottom: var(--pt2);
   width: fit-content;
 }
 
 .topbar-visible {
-  top: 0;
+  transform: translateY(0);
   transition-duration: 0.3s;
 }
 
@@ -45,6 +44,25 @@
   margin-right: var(--pt1);
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--pt3);
+
+  flex-wrap: wrap;
+}
+
+.supplementary {
+  width: 100%;
+  margin-top: var(--pt2);
+  order: 3;
+}
+
+.supplementary > div {
+  padding-top: var(--pt2);
+}
+
 @media (min-width: 992px) {
   .section {
     padding-top: var(--pt1);
@@ -52,5 +70,18 @@
 
   .filterButton:not(.visible) {
     display: none;
+  }
+
+  .actions {
+    flex-wrap: nowrap;
+  }
+
+  .supplementary {
+    order: unset;
+    margin-top: unset;
+  }
+
+  .supplementary > div {
+    padding-top: unset;
   }
 }
