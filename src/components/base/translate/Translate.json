@@ -2517,6 +2517,10 @@
         "da": "Filtrer din søgning",
         "en": "Filter your search"
       },
+      "filter": {
+        "da": "Filtrer",
+        "en": "Filters"
+      },
       "filtersResultText": {
         "da": "Mest relevante resultater",
         "en": "LABEL: mangler oversættelse"
@@ -3162,8 +3166,8 @@
         "en": "Clear"
       },
       "helpAndGuidance": {
-        "da": "Hjælp og vejledning",
-        "en": "Help and guidance"
+        "da": "Brug for hjælp til søgning?",
+        "en": "Need help with your search?"
       },
       "mobile_helpAndGuidance": {
         "da": "Hjælp",

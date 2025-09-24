@@ -17,12 +17,9 @@ import AdvancedSearch from "./advancedSearch/advancedSearch/AdvancedSearch";
 import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
-import translate from "@/components/base/translate";
-import Text from "@/components/base/text";
-import Link from "@/components/base/link";
-import styles from "./Search.module.css";
 import Translate from "@/components/base/translate";
-import { getHelpUrl } from "@/lib/utils";
+import styles from "./Search.module.css";
+import HelpBtn from "./help";
 
 // -----------------------------
 // Centralized mode + URL helpers
@@ -131,17 +128,15 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
   const activeTab = mode || MODE.SIMPEL;
   const isSimple = activeTab === MODE.SIMPEL;
+  const isAdvanced = activeTab === MODE.AVANCERET;
 
   return (
     <div className={styles.background}>
       <Container fluid>
         <Row as="section" className={styles.section}>
           <Col sm={12} lg={{ span: 2 }} className={styles.select}>
-            {!isSimple && (
-              <WorkTypeMenu
-                className={styles.worktypes}
-                onClick={onWorkTypeSelect}
-              />
+            {isAdvanced && !isMobileSize && (
+              <WorkTypeMenu onClick={onWorkTypeSelect} />
             )}
           </Col>
 
@@ -155,31 +150,43 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
             >
               <Tab
                 eventKey={MODE.SIMPEL}
-                title={translate({
+                title={Translate({
                   context: "improved-search",
                   label: "simple",
                 })}
               >
                 <Col className={styles.content}>
+                  {isMobileSize && (
+                    <WorkTypeMenu
+                      className={styles.workTypesMenu}
+                      onClick={onWorkTypeSelect}
+                    />
+                  )}
                   <SimpleSearch />
                 </Col>
               </Tab>
 
               <Tab
                 eventKey={MODE.AVANCERET}
-                title={translate({
+                title={Translate({
                   context: "improved-search",
                   label: "advanced",
                 })}
               >
                 <Col className={styles.content}>
+                  {isMobileSize && (
+                    <WorkTypeMenu
+                      className={styles.workTypesMenu}
+                      onClick={onWorkTypeSelect}
+                    />
+                  )}
                   <AdvancedSearch />
                 </Col>
               </Tab>
 
               <Tab
                 eventKey={MODE.CQL}
-                title={translate({ context: "improved-search", label: "cql" })}
+                title={Translate({ context: "improved-search", label: "cql" })}
               >
                 <Col className={styles.content} lg={12} xs={12}>
                   <CqlTextArea />
@@ -190,21 +197,7 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
 
           <Col className={styles.links} sm={12} lg={{ span: 2 }}>
             <div>
-              <Link
-                href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
-                className={styles.help}
-                border={{ bottom: { keepVisible: true } }}
-                target="_blank"
-              >
-                <Text type="text5" tag="span">
-                  {Translate({
-                    context: "search",
-                    label: isMobileSize
-                      ? "mobile_helpAndGuidance"
-                      : "helpAndGuidance",
-                  })}
-                </Text>
-              </Link>
+              <HelpBtn className={styles.help} />
             </div>
           </Col>
         </Row>

@@ -8,6 +8,7 @@
 
 .filterButton {
   width: fit-content;
+  margin-bottom: var(--pt2);
 }
 
 .topbar-visible {
@@ -29,17 +30,38 @@
   margin-bottom: var(--pt2);
 }
 
+.sort_wrapper {
+  margin-right: calc(var(--pt1) * -1);
+}
+
 .titleflex {
   display: flex;
   align-items: baseline;
-  margin-bottom: var(--pt4);
+  justify-content: space-between;
+  padding: 0 var(--pt2);
+  margin: 0 calc(var(--pt2) * -1) 0 calc(var(--pt2) * -1);
+
+  border-bottom: 1px solid var(--iron);
+}
+
+.titleflex:last-child {
+  padding-top: var(--pt2);
+}
+
+.titleflex:first-child {
+  padding-bottom: var(--pt2);
+}
+
+.titleflex > div {
+  display: flex;
+  align-items: baseline;
 }
 
 .facetsContainer > div:first-child {
   margin-bottom: var(--pt4);
 }
 
-.titleflex > *:first-child {
+.titleflex:last-of-type div:first-child > *:first-child {
   color: var(--blue);
   margin-right: var(--pt1);
 }
@@ -55,7 +77,6 @@
 
 .supplementary {
   width: 100%;
-  margin-top: var(--pt2);
   order: 3;
 }
 
@@ -78,10 +99,19 @@
 
   .supplementary {
     order: unset;
-    margin-top: unset;
   }
 
   .supplementary > div {
     padding-top: unset;
+  }
+
+  .titleflex {
+    display: flex;
+    align-items: baseline;
+    justify-content: unset;
+    padding: unset !important;
+    border: none;
+
+    margin: unset;
   }
 }

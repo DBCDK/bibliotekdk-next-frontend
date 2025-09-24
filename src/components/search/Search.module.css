@@ -30,25 +30,15 @@
 }
 
 .content {
-  padding: var(--pt4) 0 var(--pt2) 0;
+  padding: var(--pt1) 0 var(--pt2) 0;
+}
+
+.workTypesMenu {
+  padding-bottom: var(--pt3);
 }
 
 .links {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.links > div {
-  margin-top: auto;
-  height: var(--pt7);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.help {
-  /* compensate for text-height mismatch */
-  margin-bottom: var(--pt1);
+  display: none;
 }
 
 @media (min-width: 992px) {
@@ -78,5 +68,23 @@
 
   .tabs {
     justify-content: unset;
+  }
+
+  .help {
+    /* compensate for text-height mismatch */
+    margin-top: var(--pt1);
+  }
+
+  .links {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .links > div {
+    margin-top: auto;
+    height: var(--pt7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
