@@ -27,11 +27,11 @@
   display: inline-flex;
   gap: var(--pt1);
   align-items: center;
-  margin-bottom: var(--pt2);
 }
 
 .sort_wrapper {
   margin-right: calc(var(--pt1) * -1);
+  margin-bottom: var(--pt1_5);
 }
 
 .titleflex {
@@ -113,5 +113,12 @@
     border: none;
 
     margin: unset;
+  }
+
+  .advancedSearchActions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--pt2);
   }
 }

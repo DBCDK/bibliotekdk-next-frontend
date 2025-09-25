@@ -174,13 +174,13 @@ function Page({
         )}
 
         {!isSimple && !isMobile && hitcount > 0 && (
-          <div>
+          <div className={styles.advancedSearchActions}>
             <AdvancedSearchSort className={styles.sort_container} />
             <SaveSearchBtn />
           </div>
         )}
 
-        {!isLoading && hitcount > 0 && (
+        {isSimple && !isLoading && hitcount > 0 && (
           <div className={styles.actions}>
             {isSimple && <FilterButton className={styles.filterButton} />}
 
