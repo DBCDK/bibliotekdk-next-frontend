@@ -19,13 +19,23 @@
 }
 
 .formatedQueryContainer {
+  /* beholder flex, hvis du vil have children ved siden af */
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
 }
 
+.clampedText {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  flex: 1; /* så den fylder alt ledigt space */
+}
+
 .formatedQueryContainer p {
-  margin-right: var(--pt2);
+  margin-right: var(--pt1);
   display: inline;
 }
 
@@ -36,6 +46,10 @@
 
 .editSearchMobile {
   display: block;
+}
+
+.edit {
+  width: 100%;
 }
 
 .editSearchDesktop {
@@ -53,6 +67,8 @@
 
 .edit_search {
   display: flex;
+  flex-direction: column;
+  gap: var(--pt1);
   --underline-bottom-color: var(--blue);
   --underline-bottom-hover-color: var(--blue);
 }
@@ -79,7 +95,7 @@
   }
 
   .editSearchDesktop {
-    display: block;
+    display: inline-block;
   }
 
   .saveSearchButton {

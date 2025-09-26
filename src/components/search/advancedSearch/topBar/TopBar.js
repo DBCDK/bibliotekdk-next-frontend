@@ -46,18 +46,19 @@ export function FormatFieldSearchIndexes({ fieldsearch, children }) {
 
   return (
     <div className={styles.formatedQueryContainer}>
-      <FormatWorkType workType={fieldsearch?.workType} />
-      <FormatFieldInput
-        inputFields={filteredInputFields}
-        showAndOperator={fieldsearch?.workType}
-      />
-      <FormatDropdowns
-        dropdowns={filteredDropdownSearchIndices}
-        showAndOperator={
-          filteredInputFields?.length > 0 || fieldsearch?.workType
-        }
-      />
-      {children}
+      <div className={styles.clampedText}>
+        <FormatWorkType workType={fieldsearch?.workType} />
+        <FormatFieldInput
+          inputFields={filteredInputFields}
+          showAndOperator={fieldsearch?.workType}
+        />
+        <FormatDropdowns
+          dropdowns={filteredDropdownSearchIndices}
+          showAndOperator={
+            filteredInputFields?.length > 0 || fieldsearch?.workType
+          }
+        />
+      </div>
     </div>
   );
 }
@@ -199,7 +200,8 @@ export default function TopBar({
             lg={{ offset: 1, span: true }}
             className={styles.edit_search}
           >
-            <FormattedQuery>
+            <FormattedQuery />
+            <div className={styles.edit}>
               <Link
                 onClick={scrollToTop}
                 border={{ top: false, bottom: { keepVisible: true } }}
@@ -213,7 +215,7 @@ export default function TopBar({
                   {Translate({ context: "search", label: "edit" })}
                 </Text>
               </Link>
-            </FormattedQuery>
+            </div>
           </Col>
 
           <Col xs={12} lg={2} className={styles.saveSearchButton}>
