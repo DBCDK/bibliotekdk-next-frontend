@@ -11,8 +11,6 @@ import useBreakpoint from "../hooks/useBreakpoint";
 
 import Tabs from "../base/tabs";
 import SimpleSearch from "./simple";
-import Related from "./related/Related";
-import DidYouMean from "./didYouMean/DidYouMean";
 import AdvancedSearch from "./advancedSearch/advancedSearch/AdvancedSearch";
 import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
@@ -47,7 +45,11 @@ function extractAllFromFieldSearch(fieldSearch) {
   try {
     const obj =
       typeof fieldSearch === "string" ? JSON.parse(fieldSearch) : fieldSearch;
-    return obj?.inputFields?.[0]?.value || "";
+    const field = obj?.inputFields?.[0];
+    if (field?.searchIndex === "term.default") {
+      return field.value || "";
+    }
+    return ""; // ignorer alt andet
   } catch {
     return "";
   }
@@ -127,7 +129,6 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
   const activeTab = mode || MODE.SIMPEL;
-  const isSimple = activeTab === MODE.SIMPEL;
   const isAdvanced = activeTab === MODE.AVANCERET;
 
   return (
