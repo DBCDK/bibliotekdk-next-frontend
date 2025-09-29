@@ -1,4 +1,5 @@
-// TopBar.js
+// TopBar.cleaned.js
+import React, { useMemo, useCallback, Fragment } from "react";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import styles from "./TopBar.module.css";
 import Container from "react-bootstrap/Container";
@@ -7,146 +8,149 @@ import Col from "react-bootstrap/Col";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
-import isEmpty from "lodash/isEmpty";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
 import IconButton from "@/components/base/iconButton";
 import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import { useRouter } from "next/router";
 
-function FormattedQuery({ children }) {
+// Small helper to shorten Translate calls
+const t = (context, label) => Translate({ context, label });
+
+// Generic check for non-empty values (string or array)
+const hasValue = (v) => {
+  if (Array.isArray(v)) return v.length > 0;
+  return v !== undefined && v !== null && String(v).trim() !== "";
+};
+
+function FormattedQuery() {
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
   const { inputFields, dropdownSearchIndices, workType } =
     fieldSearchFromUrl || {};
 
-  if (cqlFromUrl) {
+  const fieldsearch = useMemo(
+    () => ({
+      workType,
+      inputFields: (inputFields || []).filter((f) => hasValue(f?.value)),
+      dropdownSearchIndices: (dropdownSearchIndices || []).filter((d) =>
+        hasValue(d?.value)
+      ),
+    }),
+    [workType, inputFields, dropdownSearchIndices]
+  );
+
+  // Hvis CQL er udfyldt, vis det
+  if (hasValue(cqlFromUrl)) {
     return (
       <div className={styles.formatedQueryContainer}>
         <Text type="text2">{cqlFromUrl}</Text>
-        {children}
       </div>
     );
   }
 
-  const fieldsearch = { inputFields, dropdownSearchIndices, workType };
-  return (
-    <FormatFieldSearchIndexes fieldsearch={fieldsearch}>
-      {children}
-    </FormatFieldSearchIndexes>
-  );
+  return <FormatFieldSearchIndexes fieldsearch={fieldsearch} />;
 }
 
-export function FormatFieldSearchIndexes({ fieldsearch, children }) {
-  const filteredDropdownSearchIndices =
-    fieldsearch?.dropdownSearchIndices?.filter((d) => !isEmpty(d.value));
-  const filteredInputFields = fieldsearch?.inputFields?.filter(
-    (f) => !isEmpty(f.value)
-  );
+export function FormatFieldSearchIndexes({ fieldsearch }) {
+  const showAndForDropdowns =
+    (fieldsearch?.inputFields?.length ?? 0) > 0 ||
+    hasValue(fieldsearch?.workType);
 
   return (
     <div className={styles.formatedQueryContainer}>
-      <FormatWorkType workType={fieldsearch?.workType} />
-      <FormatFieldInput
-        inputFields={filteredInputFields}
-        showAndOperator={fieldsearch?.workType}
-      />
-      <FormatDropdowns
-        dropdowns={filteredDropdownSearchIndices}
-        showAndOperator={
-          filteredInputFields?.length > 0 || fieldsearch?.workType
-        }
-      />
-      {children}
+      <div className={styles.clampedText}>
+        <FormatWorkType workType={fieldsearch?.workType} />
+        <FormatFieldInput
+          inputFields={fieldsearch?.inputFields}
+          showAndOperator={hasValue(fieldsearch?.workType)}
+        />
+        <FormatDropdowns
+          dropdowns={fieldsearch?.dropdownSearchIndices}
+          showAndOperator={showAndForDropdowns}
+        />
+      </div>
     </div>
   );
 }
 
-function FormatFieldInput({ inputFields, showAndOperator }) {
-  return inputFields?.map((field, index) => {
-    if (!field?.value) return null;
+function Operator({ label = "AND" }) {
+  return (
+    <Text type="text2" className={styles.operator_color}>
+      {t("search", `advanced-dropdown-${label}`)}
+    </Text>
+  );
+}
+
+function FormatFieldInput({ inputFields = [], showAndOperator }) {
+  return inputFields.map((field, index) => {
+    if (!hasValue(field?.value)) return null;
+    const showLeadingAnd = index === 0 && showAndOperator;
+    const showPrefixedOp =
+      !showLeadingAnd && hasValue(field?.prefixLogicalOperator);
+
     return (
-      <>
-        {index === 0 && showAndOperator && (
-          <Text type="text2" className={styles.operator_color}>
-            {Translate({ context: "search", label: `advanced-dropdown-AND` })}
-          </Text>
-        )}
-        {field.prefixLogicalOperator && index !== 0 && (
-          <Text type="text2" className={styles.operator_color}>
-            {Translate({
-              context: "search",
-              label: `advanced-dropdown-${field.prefixLogicalOperator}`,
-            })}
-          </Text>
-        )}
+      <Fragment key={`fi-${field?.searchIndex || field?.label || index}`}>
+        {showLeadingAnd && <Operator label="AND" />}
+        {showPrefixedOp && <Operator label={field.prefixLogicalOperator} />}
+
         <Text type="text1">
-          {Translate({
-            context: "search",
-            label: `advanced-dropdown-${field?.label || field.searchIndex}`,
-          })}
+          {t(
+            "search",
+            `advanced-dropdown-${field?.label || field?.searchIndex}`
+          )}
           :
         </Text>
         <Text type="text2">{`"${field.value}"`}</Text>
-      </>
+      </Fragment>
     );
   });
 }
 
 function FormatWorkType({ workType }) {
-  if (!workType) return null;
+  if (!hasValue(workType)) return null;
   return (
-    <>
-      <Text type="text1">
-        {Translate({ context: "advanced_search_worktypes", label: "category" })}
-        :
-      </Text>
-      <Text type="text2">
-        {Translate({ context: "advanced_search_worktypes", label: workType })}
-      </Text>
-    </>
+    <Fragment>
+      <Text type="text1">{t("advanced_search_worktypes", "category")}:</Text>
+      <Text type="text2">{t("advanced_search_worktypes", workType)}</Text>
+    </Fragment>
   );
 }
 
-function FormatDropdowns({ dropdowns, showAndOperator }) {
-  return dropdowns?.map((dropdownItem, index) => {
-    if (!dropdownItem?.value) return null;
+function FormatDropdowns({ dropdowns = [], showAndOperator }) {
+  return dropdowns.map((dropdownItem, index) => {
+    if (!hasValue(dropdownItem?.value)) return null;
 
     const { getSelectedPresentation } = formattersAndComparitors(
       dropdownItem.searchIndex
     );
-    const isLastItem = index === dropdowns.length - 1;
+    const isFirst = index === 0;
+    const isLast = index === dropdowns.length - 1;
+
+    // Format list of selected values with capitalization for the first
+    const valuesText = (dropdownItem.value || [])
+      .map((v, i) => {
+        const value = getSelectedPresentation(v.value);
+        if (!hasValue(value)) return "";
+        return i === 0 ? value.charAt(0).toUpperCase() + value.slice(1) : value;
+      })
+      .filter(Boolean)
+      .join(", ");
+
+    if (!hasValue(valuesText)) return null;
 
     return (
-      <>
-        {index === 0 && showAndOperator && (
-          <Text type="text2" className={styles.operator_color}>
-            {Translate({ context: "search", label: `advanced-dropdown-AND` })}
-          </Text>
-        )}
+      <Fragment key={`dd-${dropdownItem.searchIndex}-${index}`}>
+        {isFirst && showAndOperator && <Operator label="AND" />}
+
         <Text type="text1">
-          {Translate({
-            context: "advanced_search_dropdown",
-            label: dropdownItem.searchIndex,
-          })}
-          :
+          {t("advanced_search_dropdown", dropdownItem.searchIndex)}:
         </Text>
-        <Text type="text2">
-          {dropdownItem.value
-            .map((val, i) => {
-              const value = getSelectedPresentation(val.value);
-              return i === 0
-                ? value.charAt(0).toUpperCase() + value.slice(1)
-                : value;
-            })
-            .join(", ")}
-        </Text>
-        {!isLastItem && (
-          <Text type="text2" className={styles.operator_color}>
-            {Translate({ context: "search", label: `advanced-dropdown-AND` })}
-          </Text>
-        )}
-      </>
+        <Text type="text2">{valuesText}</Text>
+
+        {!isLast && <Operator label="AND" />}
+      </Fragment>
     );
   });
 }
@@ -159,47 +163,78 @@ export default function TopBar({
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
   const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+  const router = useRouter();
+
+  // Hide the entire TopBar if there are no query values at all
+  const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
+  const hasAnyValues = useMemo(() => {
+    if (hasValue(cqlFromUrl)) return true;
+    const {
+      inputFields = [],
+      dropdownSearchIndices = [],
+      workType,
+    } = fieldSearchFromUrl || {};
+    if (hasValue(workType)) return true;
+    if (inputFields.some((f) => hasValue(f?.value))) return true;
+    if (dropdownSearchIndices.some((d) => hasValue(d?.value))) return true;
+    return false;
+  }, [cqlFromUrl, fieldSearchFromUrl]);
 
   const { savedObject, mutate } = useSavedSearchByCql({
-    cql: searchHistoryObj.key,
+    cql: searchHistoryObj?.key,
   });
   const isSaved = !!savedObject?.id;
 
-  const onSaveSearchClick = async (e) => {
-    e.stopPropagation();
-    if (isSaved) {
-      await deleteSearches({ idsToDelete: [savedObject?.id] });
-      mutate();
-    } else {
-      modal.push("saveSearch", { item: searchHistoryObj, onSaveDone: mutate });
-    }
-  };
+  const onSaveSearchClick = useCallback(
+    async (e) => {
+      e?.stopPropagation?.();
+      if (isSaved) {
+        await deleteSearches({ idsToDelete: [savedObject?.id] });
+        mutate();
+      } else {
+        modal.push("saveSearch", {
+          item: searchHistoryObj,
+          onSaveDone: mutate,
+        });
+      }
+    },
+    [isSaved, savedObject?.id, deleteSearches, modal, searchHistoryObj, mutate]
+  );
 
-  const onSaveSearchLogin = (e) => {
-    e.stopPropagation();
-    openLoginModal({ modal });
-  };
+  const onSaveSearchLogin = useCallback(
+    (e) => {
+      e?.stopPropagation?.();
+      openLoginModal({ modal });
+    },
+    [modal]
+  );
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, []);
+
+  const mode = router?.query?.mode || "simpel"; // default fallback
+  const labelKey =
+    { simpel: "simple", avanceret: "advanced", cql: "cql" }[mode] || "simple";
+  const searchHeading = t("search", `topbar-${labelKey}-search`);
+
+  if (!hasAnyValues) return null;
 
   return (
     <div className={`${styles.topBar} ${className}`}>
       <Container fluid className={styles.container}>
         <Row>
           <Col xs={12} lg={2} className={styles.your_search}>
-            <Text type="text1">
-              {Translate({ context: "search", label: "yourSearch" })}
-            </Text>
+            <Text type="text1">{searchHeading}</Text>
           </Col>
 
           <Col
             xs={12}
-            lg={{ offset: 1, span: true }}
+            lg={{ offset: 1, span: 7 }}
             className={styles.edit_search}
           >
-            <FormattedQuery>
+            <FormattedQuery />
+            <div className={styles.edit}>
               <Link
                 onClick={scrollToTop}
                 border={{ top: false, bottom: { keepVisible: true } }}
@@ -210,10 +245,10 @@ export default function TopBar({
                   skeleton={isLoading}
                   className={styles.editSearchDesktop}
                 >
-                  {Translate({ context: "search", label: "edit" })}
+                  {t("search", "edit")}
                 </Text>
               </Link>
-            </FormattedQuery>
+            </div>
           </Col>
 
           <Col xs={12} lg={2} className={styles.saveSearchButton}>
@@ -228,7 +263,7 @@ export default function TopBar({
                   skeleton={isLoading}
                   className={styles.editSearchMobile}
                 >
-                  {Translate({ context: "search", label: "editSearch" })}
+                  {t("search", "editSearch")}
                 </Text>
               </Link>
 
@@ -240,7 +275,7 @@ export default function TopBar({
                 icon={isSaved ? "heart_filled" : "heart"}
                 keepUnderline
               >
-                {Translate({ context: "search", label: "saveSearch" })}
+                {t("search", "saveSearch")}
               </IconButton>
             </div>
           </Col>

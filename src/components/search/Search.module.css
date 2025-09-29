@@ -5,8 +5,7 @@
 
 .section {
   position: relative;
-  padding: 0 0 var(--pt4) 0;
-  margin-bottom: var(--pt2) !important;
+  margin-bottom: var(--pt2);
 }
 
 .section > div {
@@ -20,16 +19,6 @@
   order: 3;
 }
 
-/* links */
-.section > div:last-child {
-  background-color: var(--iron);
-  padding: var(--pt2);
-  order: 1;
-  display: inline-flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-}
-
 .section > div:first-child {
   display: inline-flex;
   flex-direction: row-reverse;
@@ -40,25 +29,24 @@
   margin-right: var(--pt2);
 }
 
-.tabs {
-  justify-content: flex-end;
-}
-
 .content {
-  padding: var(--pt4) 0 var(--pt2) 0;
+  padding: var(--pt1) 0 var(--pt2) 0;
 }
 
-.links a {
-  display: inline-block;
+.workTypesMenu {
+  padding-bottom: var(--pt3);
+}
+
+.links {
+  display: none;
 }
 
 @media (min-width: 992px) {
   .section {
-    padding: var(--pt4) 0 var(--pt8) 0;
-    margin-bottom: var(--pt8) !important;
+    padding: var(--pt4) 0 var(--pt4) 0;
   }
 
-  .section > div {
+  .section > div:last-child {
     order: 2;
   }
 
@@ -70,17 +58,7 @@
     flex-direction: column;
   }
 
-  .section > div:last-child {
-    order: 3;
-    margin-top: calc(var(--pt2) * -1);
-    background-color: unset;
-    align-items: flex-end;
-    justify-content: flex-start;
-    flex-direction: column;
-  }
-
-  .section > div:first-child,
-  .section > div:last-child {
+  .section > div:first-child {
     display: inline-flex;
   }
 
@@ -90,5 +68,23 @@
 
   .tabs {
     justify-content: unset;
+  }
+
+  .help {
+    /* compensate for text-height mismatch */
+    margin-top: var(--pt1);
+  }
+
+  .links {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .links > div {
+    margin-top: auto;
+    height: var(--pt7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }

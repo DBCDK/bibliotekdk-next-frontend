@@ -39,6 +39,9 @@ import translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import styles from "./Page.module.css";
 import { useRouter } from "next/router";
+import SaveSearchBtn from "../save";
+import Related from "../related/Related";
+import DidYouMean from "../didYouMean/DidYouMean";
 
 // -------------------------------
 // UI-komponent: kun rendering
@@ -77,23 +80,17 @@ function Page({
   const shouldShowNoHits = !isLoading && hasActiveSearch && hitcount === 0;
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowTopBar(!entry.isIntersecting);
-      },
-      {
-        root: null,
-        threshold: 0,
-        rootMargin: "-150px 0px 0px 0px",
+    const handleScroll = () => {
+      const rect = searchRef.current?.getBoundingClientRect();
+      if (rect) {
+        setShowTopBar(rect.bottom <= 0); // kun når hele Search er scrollet forbi
       }
-    );
-
-    const current = searchRef.current;
-    if (current) observer.observe(current);
-
-    return () => {
-      if (current) observer.unobserve(current);
     };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -118,31 +115,41 @@ function Page({
         title={
           hasAdvancedSearch && !isSimple ? (
             <div>
-              <FacetButton cql={rawcql} isLoading={isLoading} />
-              {/* <div className={styles.mobileTags}>
-                <FacetTags />
-              </div> */}
+              {isMobile && (
+                <div className={styles.titleflex}>
+                  <FacetButton cql={rawcql} isLoading={isLoading} />
+                  <SaveSearchBtn />
+                </div>
+              )}
+
               <div className={styles.titleflex}>
-                <Title type="title5" skeleton={isLoading}>
-                  {hitcount}
-                </Title>
-                <Text
-                  type="text1"
-                  className={styles.titleStyle}
-                  skeleton={isLoading}
-                >
-                  {translate({ context: "search", label: "title" })}
-                </Text>
+                <div>
+                  <Title type="title5" skeleton={isLoading}>
+                    {hitcount}
+                  </Title>
+                  <Text
+                    type="text1"
+                    className={styles.titleStyle}
+                    skeleton={isLoading}
+                  >
+                    {translate({ context: "search", label: "title" })}
+                  </Text>
+                </div>
+
+                {!isSimple && isMobile && hitcount > 0 && (
+                  <div className={styles.sort_wrapper}>
+                    <AdvancedSearchSort className={styles.sort_container} />
+                  </div>
+                )}
               </div>
             </div>
-          ) : !isLoading && hitcount > 0 ? (
-            <FilterButton className={styles.filterButton} />
           ) : (
             <span />
           )
         }
         subtitle={
-          (hasAdvancedSearch || hasQuery) && (
+          (hasAdvancedSearch || hasQuery) &&
+          !isMobile && (
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
               <div className={styles.subtitleStyle}>
@@ -166,9 +173,23 @@ function Page({
           <NoHitSearch isSimpleSearch={!hasAdvancedSearch} />
         )}
 
-        {!isSimple && hitcount > 0 && (
-          <div className={styles.sort_wrapper}>
+        {!isSimple && !isMobile && hitcount > 0 && (
+          <div className={styles.advancedSearchActions}>
             <AdvancedSearchSort className={styles.sort_container} />
+            <SaveSearchBtn />
+          </div>
+        )}
+
+        {isSimple && !isLoading && hitcount > 0 && (
+          <div className={styles.actions}>
+            {isSimple && <FilterButton className={styles.filterButton} />}
+
+            <div className={styles.supplementary}>
+              <Related />
+              <DidYouMean />
+            </div>
+
+            {isSimple && <SaveSearchBtn />}
           </div>
         )}
 

@@ -2517,6 +2517,10 @@
         "da": "Filtrer din søgning",
         "en": "Filter your search"
       },
+      "filter": {
+        "da": "Filtrer",
+        "en": "Filters"
+      },
       "filtersResultText": {
         "da": "Mest relevante resultater",
         "en": "LABEL: mangler oversættelse"
@@ -3093,6 +3097,18 @@
         "da": "Ny feltsøgning",
         "en": "New fields search"
       },
+      "topbar-simple-search": {
+        "da": "Simpel søgning",
+        "en": "Simple search"
+      },
+      "topbar-advanced-search": {
+        "da": "Avanceret søgning",
+        "en": "Advanced search"
+      },
+      "topbar-cql-search": {
+        "da": "CQL søgning",
+        "en": "CQL search"
+      },
       "yourSearch": {
         "da": "Din søgning",
         "en": "Your search"
@@ -3162,8 +3178,8 @@
         "en": "Clear"
       },
       "helpAndGuidance": {
-        "da": "Hjælp og vejledning",
-        "en": "Help and guidance"
+        "da": "Brug for hjælp til søgning?",
+        "en": "Need help with your search?"
       },
       "mobile_helpAndGuidance": {
         "da": "Hjælp",

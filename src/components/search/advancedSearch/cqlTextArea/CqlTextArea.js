@@ -22,6 +22,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { convertStateToCql } from "../utils";
+import HelpBtn from "../../help";
 
 /**
  * Præsentationskomponent: UI og events via props
@@ -98,6 +99,8 @@ export function CqlTextAreaView({
                 })}
               </Link>
             </Text>
+
+            <HelpBtn className={styles.help} />
           </Col>
         </Row>
       </Col>

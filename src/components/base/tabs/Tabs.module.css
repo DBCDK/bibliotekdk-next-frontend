@@ -18,7 +18,7 @@
 }
 
 .tabs li button {
-  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+  padding: var(--pt1) var(--pt1_5) var(--pt1) var(--pt1_5);
   background-color: transparent;
   font-size: 17px;
   font-family: var(--body-font);

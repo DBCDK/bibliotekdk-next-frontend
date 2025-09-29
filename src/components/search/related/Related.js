@@ -127,6 +127,11 @@ export default function Wrap() {
     { subject: "hesteavl" },
   ];
 
+  // If no sugestions was found - when finished loading
+  if (!isLoading && !data?.recommendations?.subjects?.length) {
+    return null;
+  }
+
   return (
     <Related
       data={data?.recommendations?.subjects || (isLoading && dummy) || []}

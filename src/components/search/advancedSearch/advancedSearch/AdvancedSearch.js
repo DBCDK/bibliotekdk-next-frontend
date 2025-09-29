@@ -15,6 +15,7 @@ import Text from "@/components/base/text";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import HelpBtn from "../../help";
 
 /**
  * Præsentationskomponent: kun UI
@@ -55,6 +56,8 @@ function AdvancedSearch({ onSearch, onClear, isMobile }) {
                     })}
               </Link>
             </Text>
+
+            <HelpBtn className={styles.help} />
           </Col>
         </Row>
       </Container>

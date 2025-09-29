@@ -11,20 +11,13 @@ import useBreakpoint from "../hooks/useBreakpoint";
 
 import Tabs from "../base/tabs";
 import SimpleSearch from "./simple";
-import Related from "./related/Related";
-import DidYouMean from "./didYouMean/DidYouMean";
 import AdvancedSearch from "./advancedSearch/advancedSearch/AdvancedSearch";
 import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
-import translate from "@/components/base/translate";
 import Translate from "@/components/base/translate";
-import Link from "@/components/base/link";
-import Text from "@/components/base/text";
-import IconButton from "../base/iconButton";
-import { getHelpUrl } from "@/lib/utils";
-
 import styles from "./Search.module.css";
+import HelpBtn from "./help";
 
 // -----------------------------
 // Centralized mode + URL helpers
@@ -52,7 +45,11 @@ function extractAllFromFieldSearch(fieldSearch) {
   try {
     const obj =
       typeof fieldSearch === "string" ? JSON.parse(fieldSearch) : fieldSearch;
-    return obj?.inputFields?.[0]?.value || "";
+    const field = obj?.inputFields?.[0];
+    if (field?.searchIndex === "term.default") {
+      return field.value || "";
+    }
+    return ""; // ignorer alt andet
   } catch {
     return "";
   }
@@ -132,18 +129,15 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
   const activeTab = mode || MODE.SIMPEL;
-  const isSimple = activeTab === MODE.SIMPEL;
+  const isAdvanced = activeTab === MODE.AVANCERET;
 
   return (
     <div className={styles.background}>
       <Container fluid>
         <Row as="section" className={styles.section}>
           <Col sm={12} lg={{ span: 2 }} className={styles.select}>
-            {!isSimple && (
-              <WorkTypeMenu
-                className={styles.worktypes}
-                onClick={onWorkTypeSelect}
-              />
+            {isAdvanced && !isMobileSize && (
+              <WorkTypeMenu onClick={onWorkTypeSelect} />
             )}
           </Col>
 
@@ -157,33 +151,43 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
             >
               <Tab
                 eventKey={MODE.SIMPEL}
-                title={translate({
+                title={Translate({
                   context: "improved-search",
                   label: "simple",
                 })}
               >
                 <Col className={styles.content}>
+                  {isMobileSize && (
+                    <WorkTypeMenu
+                      className={styles.workTypesMenu}
+                      onClick={onWorkTypeSelect}
+                    />
+                  )}
                   <SimpleSearch />
-                  <Related />
-                  <DidYouMean />
                 </Col>
               </Tab>
 
               <Tab
                 eventKey={MODE.AVANCERET}
-                title={translate({
+                title={Translate({
                   context: "improved-search",
                   label: "advanced",
                 })}
               >
                 <Col className={styles.content}>
+                  {isMobileSize && (
+                    <WorkTypeMenu
+                      className={styles.workTypesMenu}
+                      onClick={onWorkTypeSelect}
+                    />
+                  )}
                   <AdvancedSearch />
                 </Col>
               </Tab>
 
               <Tab
                 eventKey={MODE.CQL}
-                title={translate({ context: "improved-search", label: "cql" })}
+                title={Translate({ context: "improved-search", label: "cql" })}
               >
                 <Col className={styles.content} lg={12} xs={12}>
                   <CqlTextArea />
@@ -193,32 +197,9 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
           </Col>
 
           <Col className={styles.links} sm={12} lg={{ span: 2 }}>
-            <IconButton
-              icon="arrowrightblue"
-              keepUnderline={true}
-              iconSize={1}
-              href="/avanceret/soegehistorik"
-              border={{ top: false, bottom: { keepVisible: true } }}
-            >
-              <Text type="text4" tag="span">
-                {Translate({ context: "search", label: "searchHistory" })}
-              </Text>
-            </IconButton>
-
-            <Link
-              href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
-              border={{ bottom: { keepVisible: true } }}
-              target="_blank"
-            >
-              <Text type="text5" tag="span">
-                {Translate({
-                  context: "search",
-                  label: isMobileSize
-                    ? "mobile_helpAndGuidance"
-                    : "helpAndGuidance",
-                })}
-              </Text>
-            </Link>
+            <div>
+              <HelpBtn className={styles.help} />
+            </div>
           </Col>
         </Row>
       </Container>

@@ -97,9 +97,6 @@ export function checkTranslationsObject(transProps) {
  *  obj | false
  */
 export function setTranslations(translations) {
-  // contexts = translation.contexts;
-  // return;
-
   // we use the file (Translate.json) as default if
   // translations fail to get -> translations are set to false. (@see _app.js::getInitialProps)
   if (translations && checkTranslationsObject(translations)) {

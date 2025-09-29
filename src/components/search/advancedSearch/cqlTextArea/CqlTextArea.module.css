@@ -28,30 +28,25 @@
 }
 
 .buttonRow {
-  padding-top: var(--pt4);
+  padding-top: var(--pt1);
 }
 
 .button {
-  width: 100%; /* mobil: knappen fylder hele bredden */
+  width: 156px;
 }
 
 .button_group {
   display: flex;
-  flex-direction: column;
-  gap: var(--pt2);
-  align-items: stretch;
-  width: 100%;
+  align-items: center;
+  gap: var(--pt3);
 }
 
-@media (min-width: 768px) {
-  .button {
-    width: 156px;
-  }
+.help {
+  margin-left: auto;
+}
 
-  .button_group {
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--pt3);
+@media (min-width: 992px) {
+  .help {
+    display: none;
   }
 }

@@ -26,13 +26,7 @@ export function FacetButton({ cql, isLoading }) {
         type="secondary"
         size="medium"
         className={styles.facetbutton}
-        onClick={() =>
-          // modal.push("advancedFacets", {
-          //   cql: cql,
-          //   replace: true,
-          // })
-          modal.push("mobileFacets", { cql: cql })
-        }
+        onClick={() => modal.push("mobileFacets", { cql })}
       >
         <Text
           tag="span"
@@ -40,9 +34,10 @@ export function FacetButton({ cql, isLoading }) {
           skeleton={isLoading}
           dataCy={"result-row-laanemuligheder-wrap"}
         >
-          {count > 0
-            ? Translate({ context: "search", label: "filters" })
-            : Translate({ context: "search", label: "filter-your-search" })}
+          {Translate({
+            context: "search",
+            label: count > 0 ? "filters" : "filter",
+          })}
         </Text>
         {count > 0 && (
           <>

@@ -1,162 +1,166 @@
+.row {
+  margin-bottom: var(--pt2) 0;
+}
+
 .inputContainer {
   display: flex;
+  flex-wrap: wrap;
+}
+
+.inputContainer .removeIcon {
+  align-self: center;
+}
+
+.inputContainer .removeIcon[data-disabled="true"] {
+  opacity: 0.25;
+}
+
+.inputContainer .select button {
+  width: 100%;
 }
 
 .suggesterContainer {
-  margin-bottom: var(--pt2);
+  width: 100%;
+  margin-top: var(--pt1);
   flex-grow: 2;
   height: var(--pt5);
-  margin-left: var(--pt1);
 }
 
 .select {
+  flex-grow: 2;
   white-space: nowrap;
 }
+
 .removeIcon {
   display: flex;
-  margin-left: var(--pt2);
-  padding-bottom: var(--pt2);
+  margin: 0 var(--pt2);
   cursor: pointer;
 }
 
 .dropdownwrap {
   width: fit-content;
   display: flex;
-  margin-bottom: var(--pt2);
-}
-
-.addLine {
-  box-shadow: inset 0 0 0 1px var(--dove);
-  outline: 0;
-  color: unset;
-  display: flex;
-  align-items: center;
-  background-color: var(--white);
-  padding: var(--pt05) var(--pt2) !important;
-}
-
-.addLine:hover,
-.addLine:focus {
-  outline: 0;
-  box-shadow: inset 0 0 0 2px var(--blue);
-}
-.expandIcon {
-  margin-left: var(--pt1);
-  display: flex;
-  align-items: center;
-}
-.dropdownitem {
-  display: block;
-  border-bottom: 1px solid var(--mine-shaft);
-  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
-  text-decoration: none;
-  color: var(--mine-shaft);
-  text-align: inherit;
-  white-space: nowrap;
-}
-
-.dropdownitem a {
-  text-decoration: none;
-}
-
-.dropdownitem:focus {
-  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
-}
-
-.dropdownitem:hover {
-  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
+  margin: var(--pt2) 0;
 }
 
 .dropdownwrap :global(.dropdown-toggle::after) {
   display: none;
 }
 
+.addLine {
+  display: flex;
+  align-items: center;
+  padding: var(--pt1) var(--pt2) !important;
+  color: unset;
+  box-shadow: inset 0 0 0 1px var(--iron);
+  outline: 0;
+
+  margin: var(--pt2) 0;
+}
+
+.addLine:hover,
+.addLine:focus {
+  box-shadow: inset 0 0 0 2px var(--blue);
+  outline: 0;
+}
+
+.expandIcon {
+  margin-left: var(--pt1);
+  display: flex;
+  align-items: center;
+}
+
+.dropdownitem {
+  display: block;
+  padding: var(--pt1) var(--pt2);
+  border-bottom: 1px solid var(--mine-shaft);
+  color: var(--mine-shaft);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.dropdownitem:hover,
+.dropdownitem:focus {
+  background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
+}
+
 .dropdownmenu {
   border: 1px solid var(--blue);
   background-color: var(--white);
-  z-index: 5;
-  /* bootstrap default styles override */
   border-radius: 0;
   padding: 0;
+  z-index: 5;
 }
 
 .dropdowntoggle {
-  background-color: unset;
-  min-height: 28px;
   display: flex;
   align-items: center;
   gap: var(--pt1);
-  padding-inline: var(--pt2);
+  min-height: 28px;
+  padding: var(--pt1) var(--pt2);
+  background-color: unset;
   color: var(--blue);
+  box-shadow: inset 0 0 0 1px var(--iron);
 }
 
 .dropdowntoggle:is(:focus-visible, :hover) {
   outline: 2px solid var(--blue);
 }
 
-.suggesterInput:is(:focus-visible, :hover) {
-  outline: 0;
-  box-shadow: inset 0 0 0 2px var(--blue);
-}
-
-.suggesterInput {
-  /* The right padding has to be pt2 (for base) + 2 times pt2 for the icon */
-  padding: var(--pt2) calc(var(--pt2) * 3) var(--pt2) var(--pt2);
-  height: var(--pt5);
-  border: none;
-  outline: 0;
-  box-shadow: inset 0 0 0 1px var(--dove);
-  /* Text 3*/
-  font-size: 14px;
-  line-height: 22px;
-}
 .suggester {
   height: var(--pt5);
 }
 
-.trashAndSuggester {
-  display: flex;
-  width: 100%;
+.suggesterInput {
+  padding: var(--pt2) calc(var(--pt2) * 3) var(--pt2) var(--pt2);
+  height: var(--pt5);
+  border: none;
+  box-shadow: inset 0 0 0 1px var(--dove);
+  font-size: 17px; /* Mobil som udgangspunkt */
+  line-height: 22px;
+  outline: 0;
 }
 
-/* 640px up */
+.suggesterInput:is(:focus-visible, :hover) {
+  box-shadow: inset 0 0 0 2px var(--blue);
+  outline: 0;
+}
+
+/* Tablet og op */
 @media (min-width: 640px) {
+  .row {
+    margin-bottom: var(--pt1);
+  }
+
   .inputContainer {
+    flex-wrap: nowrap;
+  }
+
+  .inputContainer .removeIcon {
+    order: 3;
+  }
+
+  .suggesterContainer {
+    margin-top: 0;
+    margin-left: var(--pt1);
     display: flex;
   }
 
-  .suggesterContainer {
-    display: flex;
-  }
-}
-
-@media (max-width: 768px) {
-  .suggester input {
-    font-size: 17px;
-  }
-}
-
-/* 640px down */
-@media (max-width: 640px) {
-  .inputContainer {
-    display: block;
+  .suggesterInput {
+    font-size: 14px; /* Skaler ned på større skærme */
   }
 
-  .suggesterContainer {
-    margin-left: 0;
-    margin-top: var(--pt1);
-    display: block;
-  }
-}
-
-/* 463 px down */
-@media (max-width: 463px) {
-  .suggesterContainer {
-    margin-left: 0;
-    margin-top: var(--pt1);
+  .dropdowntoggle {
+    box-shadow: unset;
+    padding: 0 var(--pt2);
   }
 
-  .inputContainer {
-    flex-wrap: wrap;
+  .dropdownwrap {
+    margin: var(--pt1) 0;
+  }
+
+  .addLine {
+    background-color: var(--white);
+    padding: var(--pt05) var(--pt2) !important;
   }
 }

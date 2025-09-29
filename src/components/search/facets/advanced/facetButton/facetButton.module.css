@@ -1,8 +1,7 @@
 .facetbutton {
-  width: 50%;
   display: block;
+  width: 100%;
   background-color: var(--concrete);
-  margin: var(--pt3) var(--pt2) var(--pt3) 0;
   outline: 2px solid var(--iron);
   color: var(--black);
 }
@@ -10,32 +9,26 @@
 .buttonWrap {
   display: flex;
   align-items: center;
-  margin-top: var(--pt2);
-}
-
-.count {
-  color: var(--white);
-  background-color: var(--blue);
-  padding: 2px var(--pt1) 2px var(--pt1);
-  margin-left: var(--pt2);
-  align-items: center;
 }
 
 .counterwrap {
-  margin-top: var(--pt2);
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  margin-left: var(--pt2);
+  padding: 2px var(--pt1);
+  background-color: var(--blue);
+  color: var(--white);
 }
 
 .mobileclear {
-  margin-left: var(--pt2);
   display: block;
+  margin-left: var(--pt2);
 }
 
-@media (max-width: 768px) {
-  .facetbutton {
-    width: 100%;
-  }
-}
-
+/* Desktop: skjul mobil-knapper */
 @media (min-width: 992px) {
   .facetbutton {
     display: none;
