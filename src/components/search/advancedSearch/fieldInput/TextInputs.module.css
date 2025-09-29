@@ -31,11 +31,6 @@
   white-space: nowrap;
 }
 
-.trashAndSuggester {
-  display: flex;
-  width: 100%;
-}
-
 .removeIcon {
   display: flex;
   margin: 0 var(--pt2);

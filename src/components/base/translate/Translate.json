@@ -3097,6 +3097,18 @@
         "da": "Ny feltsøgning",
         "en": "New fields search"
       },
+      "topbar-simple-search": {
+        "da": "Simpel søgning",
+        "en": "Simple search"
+      },
+      "topbar-advanced-search": {
+        "da": "Avanceret søgning",
+        "en": "Advanced search"
+      },
+      "topbar-cql-search": {
+        "da": "CQL søgning",
+        "en": "CQL search"
+      },
       "yourSearch": {
         "da": "Din søgning",
         "en": "Your search"
