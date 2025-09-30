@@ -13,7 +13,7 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 //max number of search queries to be combined
-const MAX_ITEMS = 4;
+const MAX_ITEMS = 10;
 
 /**
  * Merges facets form multiple
@@ -118,7 +118,9 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
       searchItemsWrapper.current.style.overflow = `hidden`;
       searchItemsWrapper.current.style.maxHeight = `${currentHeight}px`;
       setTimeout(() => {
-        searchItemsWrapper.current.style.overflow = `visible`;
+        if (searchItemsWrapper.current?.style) {
+          searchItemsWrapper.current.style.overflow = `visible`;
+        }
       }, 300);
     }
   }, [queriesItems, queries]);
@@ -145,6 +147,25 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
       if (newQueriesItems.length >= MAX_ITEMS) {
         return;
       }
+
+      //can only combine queries with fieldSearch
+      // Convert simple search to fieldSearch
+      if (!item?.fieldSearch) {
+        item = {
+          ...item,
+          fieldSearch: {
+            inputFields: [
+              {
+                value:
+                  item?.q?.all || item?.q?.creator || item?.q?.subject || "",
+                prefixLogicalOperator: null,
+                searchIndex: "term.default",
+              },
+            ],
+          },
+        };
+      }
+
       //add to list of queries to be combined
       if (!keys.includes(item.key)) {
         newQueriesItems.push({

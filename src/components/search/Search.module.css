@@ -37,13 +37,18 @@
   padding-bottom: var(--pt3);
 }
 
+.worktypes {
+  /* Add any specific styling for worktypes if needed */
+}
+
 .links {
   display: none;
 }
 
 @media (min-width: 992px) {
   .section {
-    padding: var(--pt4) 0 var(--pt4) 0;
+    padding: var(--pt4) 0 0 0;
+    margin-bottom: var(--pt8) !important;
   }
 
   .section > div:last-child {
@@ -68,11 +73,6 @@
 
   .tabs {
     justify-content: unset;
-  }
-
-  .help {
-    /* compensate for text-height mismatch */
-    margin-top: var(--pt1);
   }
 
   .links {

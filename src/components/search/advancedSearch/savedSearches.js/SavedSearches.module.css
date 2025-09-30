@@ -1,28 +1,18 @@
 .container {
-  margin-top: var(--pt3);
+  margin-top: var(--pt2);
 }
 .pagination {
   margin-top: var(--pt4);
 }
-
+.historyHeaderActions {
+  border-bottom: 0 !important;
+}
 @media (min-width: 576px) {
   .container {
     padding-inline: var(--pt2);
   }
   .pagination {
     margin-top: var(--pt9);
-  }
-}
-
-.title {
-  padding-top: var(--pt2);
-  margin-bottom: var(--pt3);
-  padding-left: var(--pt2);
-}
-
-@media (min-width: 576px) {
-  .title {
-    padding-left: 0;
   }
 }
 
@@ -136,8 +126,14 @@
   .tableHeader {
     display: grid;
     grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
-    padding: 0 var(--pt2) var(--pt1) var(--pt2);
+    padding: var(--pt1_5) var(--pt2);
     column-gap: var(--pt2);
+    background-color: var(--concrete);
+    align-items: center;
+  }
+
+  .tableHeader .checkbox {
+    margin-top: 3px;
   }
 
   .tableContainer {
@@ -157,13 +153,6 @@
   }
 }
 
-.titleAndActionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--pt2);
-}
-
 .mobileContent {
   display: grid;
   grid-template-columns: 8fr 2fr;
@@ -172,13 +161,7 @@
   grid-column-gap: var(--pt2);
 }
 
-@media (max-width: 370px) {
-  .titleAndActionHeader {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
 .accordioItem a {
-  margin: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
