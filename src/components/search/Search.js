@@ -16,28 +16,42 @@ import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 import Translate from "@/components/base/translate";
+import Link from "@/components/base/link";
+import Text from "@/components/base/text";
+import { getHelpUrl } from "@/lib/utils";
 import styles from "./Search.module.css";
-import HelpBtn from "./help";
 
 // -----------------------------
 // Centralized mode + URL helpers
 // -----------------------------
-const MODE = { SIMPEL: "simpel", AVANCERET: "avanceret", CQL: "cql" };
+const MODE = {
+  SIMPEL: "simpel",
+  AVANCERET: "avanceret",
+  CQL: "cql",
+  HISTORY: "history",
+};
 
 const MODE_RULES = {
   [MODE.SIMPEL]: {
     // Keep simple URLs tidy
     allow: ["q.all", "workTypes", "tid"],
     clean: toSimple,
+    path: "/find/simpel",
   },
   [MODE.AVANCERET]: {
     allow: ["fieldSearch", "workTypes", "tid"],
     clean: toAdvanced,
+    path: "/find/avanceret",
   },
   [MODE.CQL]: {
     // CQL uses the exact same URL shape as advanced
     allow: ["fieldSearch", "workTypes", "tid"],
     clean: toAdvanced,
+    path: "/find/cql",
+  },
+  [MODE.HISTORY]: {
+    allow: [],
+    path: "/find/historik/seneste",
   },
 };
 
@@ -111,11 +125,11 @@ function navigateToMode(
 ) {
   const nav = replace ? router.replace : router.push;
   const rules = MODE_RULES[targetMode];
-  const cleaned = normalize ? rules.clean(router.query || {}) : {};
+  const cleaned = normalize ? rules?.clean?.(router.query || {}) : {};
   return nav(
     {
-      pathname: `/find/${targetMode}`,
-      query: Object.keys(cleaned).length ? cleaned : undefined,
+      pathname: rules?.path || `/find/${targetMode}`,
+      query: cleaned && Object.keys(cleaned).length ? cleaned : undefined,
     },
     undefined,
     { shallow: true }
@@ -129,15 +143,18 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
   const activeTab = mode || MODE.SIMPEL;
-  const isAdvanced = activeTab === MODE.AVANCERET;
+  const includeWorkTypeMenu = [MODE.AVANCERET].includes(activeTab);
 
   return (
     <div className={styles.background}>
       <Container fluid>
         <Row as="section" className={styles.section}>
           <Col sm={12} lg={{ span: 2 }} className={styles.select}>
-            {isAdvanced && !isMobileSize && (
-              <WorkTypeMenu onClick={onWorkTypeSelect} />
+            {includeWorkTypeMenu && !isMobileSize && (
+              <WorkTypeMenu
+                className={styles.worktypes}
+                onClick={onWorkTypeSelect}
+              />
             )}
           </Col>
 
@@ -196,13 +213,31 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
                   <CqlTextArea />
                 </Col>
               </Tab>
+              <Tab
+                eventKey={MODE.HISTORY}
+                title={Translate({
+                  context: "improved-search",
+                  label: "history",
+                })}
+              ></Tab>
             </Tabs>
           </Col>
 
           <Col className={styles.links} sm={12} lg={{ span: 2 }}>
-            <div>
-              <HelpBtn className={styles.help} />
-            </div>
+            <Link
+              href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
+              border={{ bottom: { keepVisible: true } }}
+              target="_blank"
+            >
+              <Text type="text5" tag="span">
+                {Translate({
+                  context: "search",
+                  label: isMobileSize
+                    ? "mobile_helpAndGuidance"
+                    : "helpAndGuidance",
+                })}
+              </Text>
+            </Link>
           </Col>
         </Row>
       </Container>
@@ -252,7 +287,7 @@ export default function Wrap() {
 
   return (
     <Search
-      mode={mode}
+      mode={mode || MODE.HISTORY}
       onTabChange={handleModeChange}
       onWorkTypeSelect={handleOnWorkTypeSelect}
     />
