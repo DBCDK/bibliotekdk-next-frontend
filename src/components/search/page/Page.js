@@ -273,11 +273,12 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const rawcql = cqlAndFacetsQuery ? cql : fieldSearchQuery;
 
   const simpleRes = useData(
-    hasQuery && searchFragments.hitcount({ q, filters })
+    isSimple && searchFragments.hitcount({ q, filters })
   );
 
   const advancedRes = useData(
-    (hasAdvancedSearch || hasCqlSearch) &&
+    !isSimple &&
+      (hasAdvancedSearch || hasCqlSearch) &&
       advancedHitcount({ cql: advancedCql })
   );
 
@@ -286,22 +287,32 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
     : simpleRes?.data?.search?.hitcount || 0;
 
   const isLoading = isAdvanced ? advancedRes.isLoading : simpleRes.isLoading;
+  useEffect(() => {
+    if (simpleRes?.data) {
+      console.log("set value for simpleRes", { mode, q, filters });
+      setValue({
+        mode,
+        key: JSON.stringify({ mode, q, filters }),
+        q,
+        filters,
+      });
+    }
+  }, [simpleRes?.data]);
+  useEffect(() => {
+    if (advancedRes?.data) {
+      console.log("set value for advancedRes");
 
-  if (
-    (hasAdvancedSearch || hasCqlSearch) &&
-    !advancedRes?.error &&
-    !advancedRes?.isLoading &&
-    (cqlAndFacetsQuery || fieldSearchQuery)
-  ) {
-    setValue({
-      key: advancedCql,
-      hitcount,
-      fieldSearch,
-      cql: rawcql,
-      selectedFacets,
-      selectedQuickFilters,
-    });
-  }
+      setValue({
+        key: advancedCql,
+        hitcount,
+        fieldSearch,
+        cql: rawcql,
+        selectedFacets,
+        selectedQuickFilters,
+        mode,
+      });
+    }
+  }, [advancedRes?.data]);
 
   return (
     <Page

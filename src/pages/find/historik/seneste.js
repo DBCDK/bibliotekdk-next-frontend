@@ -1,11 +1,11 @@
 import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import SavedSearches from "@/components/search/advancedSearch/savedSearches.js/SavedSearches";
-
+import { AdvancedSearchHistory } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Search from "@/components/search/Search";
 /**
  * Renders search history AdvancedSearch
  */
@@ -15,6 +15,7 @@ export default function AdvancedSearchPage() {
   return (
     <main>
       <Header router={router} />
+      <Search />
 
       <Container fluid>
         <Row>
@@ -23,7 +24,7 @@ export default function AdvancedSearchPage() {
             md={{ span: 12 }}
             style={{ paddingInline: "0px" }}
           >
-            <SavedSearches />
+            <AdvancedSearchHistory />
           </Col>
         </Row>
       </Container>

@@ -71,10 +71,11 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
             </Text>
           )}
           <Text type="text2">
-            {`${item.hitcount} ${Translate({
-              context: "search",
-              label: "results",
-            }).toLowerCase()}`}{" "}
+            {item.hitcount >= 0 &&
+              `${item.hitcount} ${Translate({
+                context: "search",
+                label: "results",
+              }).toLowerCase()}`}
           </Text>
         </div>
 
@@ -231,60 +232,30 @@ export default function SavedSearches() {
     <div className={styles.container}>
       <div ref={scrollToElement} />
 
-      {isMobile ? (
-        <>
-          <div className={styles.titleAndActionHeader}>
-            <Title type="title3" className={styles.title}>
-              {Translate({ context: "suggester", label: "historyTitle" })}
-            </Title>
-            <HistoryHeaderActions
-              checkedObjects={checkedObjects} //TODO REMOVE??
-              deleteSelected={onDeleteSelected}
-              checked={
-                savedSearches?.length === checkboxList?.length &&
-                checkboxList?.length > 0
-              }
-              partiallyChecked={checkboxList?.length > 0}
-              disabled={!isAuthenticated || savedSearches?.length === 0}
-              setAllChecked={setAllChecked}
-              setShowCombinedSearch={setShowCombinedSearch}
-            />
-          </div>
-          <SearchHistoryNavigation />
-          {showCombinedSearch && (
-            <CombinedSearch
-              cancelCombinedSearch={() => setShowCombinedSearch(false)}
-              queries={checkedObjects}
-            />
-          )}
-        </>
-      ) : (
-        <>
-          <Title type="title3" className={styles.title}>
-            {Translate({ context: "suggester", label: "historyTitle" })}
-          </Title>
-          <SearchHistoryNavigation />
-          {showCombinedSearch ? (
-            <CombinedSearch
-              cancelCombinedSearch={() => setShowCombinedSearch(false)}
-              queries={checkedObjects}
-            />
-          ) : (
-            <HistoryHeaderActions
-              checkedObjects={checkedObjects}
-              deleteSelected={onDeleteSelected}
-              checked={
-                savedSearches?.length === checkboxList?.length &&
-                checkboxList?.length > 0
-              }
-              partiallyChecked={checkboxList?.length > 0}
-              disabled={!isAuthenticated || savedSearches?.length === 0}
-              setAllChecked={setAllChecked}
-              setShowCombinedSearch={setShowCombinedSearch}
-            />
-          )}
-        </>
-      )}
+      <>
+        <SearchHistoryNavigation />
+        {showCombinedSearch ? (
+          <CombinedSearch
+            cancelCombinedSearch={() => setShowCombinedSearch(false)}
+            queries={checkedObjects}
+          />
+        ) : (
+          <HistoryHeaderActions
+            checkedObjects={checkedObjects}
+            deleteSelected={onDeleteSelected}
+            checked={
+              savedSearches?.length === checkboxList?.length &&
+              checkboxList?.length > 0
+            }
+            partiallyChecked={checkboxList?.length > 0}
+            disabled={!isAuthenticated || savedSearches?.length === 0}
+            setAllChecked={setAllChecked}
+            setShowCombinedSearch={setShowCombinedSearch}
+            className={styles.historyHeaderActions}
+          />
+        )}
+      </>
+
       <div className={styles.tableContainer}>
         <div
           className={cx(styles.tableHeader, {
@@ -292,7 +263,20 @@ export default function SavedSearches() {
               !isAuthenticated || savedSearches?.length === 0,
           })}
         >
-          <div />
+          <div className={styles.checkbox}>
+            <Checkbox
+              ariaLabel="vælg alle"
+              tabIndex="-1"
+              onClick={setAllChecked}
+              id="selectall"
+              checked={
+                savedSearches?.length === checkboxList?.length &&
+                checkboxList?.length > 0
+              }
+              disabled={!isAuthenticated || savedSearches?.length === 0}
+              dataCy="saved-searches-selectall-checkbox"
+            />
+          </div>
           <Text type="text4">
             {Translate({ context: "search", label: "date" })}
           </Text>

@@ -55,12 +55,7 @@ export const useAdvancedSearchHistory = () => {
       if (typeof window !== "undefined") {
         // check if cql (and facets) is already stored
         const alreadyStored = storedValue.find(
-          (stor) =>
-            stor?.cql?.trim() === value?.cql?.trim() &&
-            JSON.stringify(stor?.selectedFacets) ===
-              JSON.stringify(value?.selectedFacets) &&
-            JSON.stringify(stor?.selectedQuickFilters) ===
-              JSON.stringify(value?.selectedQuickFilters)
+          (stor) => value?.key === stor?.key
         );
 
         value["timestamp"] = getTimeStamp(getUnixTimeStamp());
