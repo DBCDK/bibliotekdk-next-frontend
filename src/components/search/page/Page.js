@@ -289,7 +289,6 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const isLoading = isAdvanced ? advancedRes.isLoading : simpleRes.isLoading;
   useEffect(() => {
     if (simpleRes?.data) {
-      console.log("set value for simpleRes", { mode, q, filters });
       setValue({
         mode,
         key: JSON.stringify({ mode, q, filters }),
@@ -300,8 +299,6 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   }, [simpleRes?.data]);
   useEffect(() => {
     if (advancedRes?.data) {
-      console.log("set value for advancedRes");
-
       setValue({
         key: advancedCql,
         hitcount,
