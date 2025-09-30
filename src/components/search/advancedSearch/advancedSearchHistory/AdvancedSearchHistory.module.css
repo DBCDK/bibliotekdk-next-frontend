@@ -167,12 +167,6 @@
 }
 
 /* Mobile first - max-width: 370px */
-@media (max-width: 370px) {
-  .titleAndActionHeader {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
 
 /* Small devices - min-width: 576px */
 @media (min-width: 576px) {
@@ -190,10 +184,6 @@
 
   .timestamp {
     padding-right: 0;
-  }
-
-  .title {
-    padding-left: 0;
   }
 
   .actionheader {

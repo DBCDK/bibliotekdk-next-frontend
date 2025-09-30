@@ -161,13 +161,6 @@
   grid-column-gap: var(--pt2);
 }
 
-@media (max-width: 370px) {
-  .titleAndActionHeader {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
 .accordioItem a {
   margin-left: 0;
   margin-right: 0;
