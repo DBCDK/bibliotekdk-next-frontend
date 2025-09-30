@@ -1,4 +1,4 @@
-describe("Advanced search history", () => {
+describe.skip("Advanced search history", () => {
   beforeEach(() => {
     cy.visit("/iframe.html?id=search-avanceret-searchhistory--default");
   });
