@@ -45,6 +45,14 @@
   display: none;
 }
 
+.tabs li:last-child {
+  margin-left: auto;
+}
+
+.paddingBottom {
+  padding-bottom: var(--pt4) !important;
+}
+
 @media (min-width: 992px) {
   .section {
     padding: var(--pt4) 0 0 0;

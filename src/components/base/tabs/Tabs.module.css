@@ -26,6 +26,7 @@
 }
 
 .tabs li button:hover {
+  color: var(--blue);
 }
 
 .tabs li button[aria-selected="true"] {

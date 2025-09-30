@@ -20,6 +20,7 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import { getHelpUrl } from "@/lib/utils";
 import styles from "./Search.module.css";
+import HelpBtn from "./help";
 
 // -----------------------------
 // Centralized mode + URL helpers
@@ -145,10 +146,14 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
   const activeTab = mode || MODE.SIMPEL;
   const includeWorkTypeMenu = [MODE.AVANCERET].includes(activeTab);
 
+  const isHistory = activeTab === MODE.HISTORY;
+
+  const paddingBottomClass = !isHistory ? styles.paddingBottom : "";
+
   return (
-    <div className={styles.background}>
+    <div className={`${styles.background}`}>
       <Container fluid>
-        <Row as="section" className={styles.section}>
+        <Row as="section" className={`${styles.section} ${paddingBottomClass}`}>
           <Col sm={12} lg={{ span: 2 }} className={styles.select}>
             {includeWorkTypeMenu && !isMobileSize && (
               <WorkTypeMenu
@@ -224,20 +229,11 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
           </Col>
 
           <Col className={styles.links} sm={12} lg={{ span: 2 }}>
-            <Link
-              href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
-              border={{ bottom: { keepVisible: true } }}
-              target="_blank"
-            >
-              <Text type="text5" tag="span">
-                {Translate({
-                  context: "search",
-                  label: isMobileSize
-                    ? "mobile_helpAndGuidance"
-                    : "helpAndGuidance",
-                })}
-              </Text>
-            </Link>
+            {!isHistory && (
+              <div>
+                <HelpBtn className={styles.help} />
+              </div>
+            )}
           </Col>
         </Row>
       </Container>
