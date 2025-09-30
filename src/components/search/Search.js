@@ -187,7 +187,10 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
 
               <Tab
                 eventKey={MODE.CQL}
-                title={Translate({ context: "improved-search", label: "cql" })}
+                title={Translate({
+                  context: "improved-search",
+                  label: isMobileSize ? "cql" : "cql-desktop",
+                })}
               >
                 <Col className={styles.content} lg={12} xs={12}>
                   <CqlTextArea />

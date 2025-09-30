@@ -2475,6 +2475,10 @@
         "da": "CQL",
         "en": "CQL"
       },
+      "cql-desktop": {
+        "da": "CQL-søgning",
+        "en": "CQL search"
+      },
       "history-latest": {
         "da": "Seneste søgninger",
         "en": "Latest searches"
@@ -3106,7 +3110,7 @@
         "en": "Advanced search"
       },
       "topbar-cql-search": {
-        "da": "CQL søgning",
+        "da": "CQL-søgning",
         "en": "CQL search"
       },
       "yourSearch": {
