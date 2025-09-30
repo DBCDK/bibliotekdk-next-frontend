@@ -82,31 +82,6 @@
   margin-bottom: 320px;
 }
 
-.lessergap {
-  margin-left: calc(var(--pt2) * -1);
-}
-
-.title {
-  padding-top: var(--pt2);
-  margin-bottom: var(--pt3);
-  padding-left: var(--pt2);
-}
-
-.disabled_link {
-  color: var(--dove);
-}
-
-.header {
-  background-color: var(--concrete);
-  margin-bottom: var(--pt4);
-  padding: var(--pt2) 0 var(--pt2) var(--pt2);
-}
-
-.removeItems {
-  display: flex;
-  height: fit-content;
-}
-
 .removeItemsButton {
   display: flex;
   align-items: center;
@@ -116,14 +91,6 @@
 .inline {
   display: inline;
   margin-right: var(--pt05);
-}
-
-.row:hover {
-  background-color: var(--concrete);
-}
-
-.action {
-  cursor: pointer;
 }
 
 .navigationButtons {
@@ -193,13 +160,6 @@
 .menuDropdownContainer {
   grid-area: menuDropdown;
   justify-self: end;
-}
-
-.titleAndActionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--pt2);
 }
 
 .simplefilters {

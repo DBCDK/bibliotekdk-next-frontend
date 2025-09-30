@@ -16,18 +16,6 @@
   }
 }
 
-.title {
-  padding-top: var(--pt2);
-  margin-bottom: var(--pt3);
-  padding-left: var(--pt2);
-}
-
-@media (min-width: 576px) {
-  .title {
-    padding-left: 0;
-  }
-}
-
 .searchPreview {
   white-space: nowrap;
   overflow: hidden;
@@ -163,13 +151,6 @@
   .accordionContent > div:nth-child(2) {
     display: unset;
   }
-}
-
-.titleAndActionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--pt2);
 }
 
 .mobileContent {

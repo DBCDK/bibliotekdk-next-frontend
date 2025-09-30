@@ -20,7 +20,6 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import { getHelpUrl } from "@/lib/utils";
 import styles from "./Search.module.css";
-import HelpBtn from "./help";
 
 // -----------------------------
 // Centralized mode + URL helpers

@@ -75,11 +75,6 @@
     justify-content: unset;
   }
 
-  .help {
-    /* compensate for text-height mismatch */
-    margin-top: var(--pt1);
-  }
-
   .links {
     display: flex;
     justify-content: flex-end;

@@ -6,7 +6,6 @@ import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import { FormatFieldSearchIndexes } from "@/components/search/advancedSearch/topBar/TopBar";
 import isEmpty from "lodash/isEmpty";
 import Translate from "@/components/base/translate";
-import Title from "@/components/base/title/Title";
 import cx from "classnames";
 import Icon from "@/components/base/icon/Icon";
 import useSavedSearches from "@/components/hooks/useSavedSearches";
