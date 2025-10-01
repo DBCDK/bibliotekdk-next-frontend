@@ -148,16 +148,18 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
         return;
       }
 
+      const searchValue =
+        item?.q?.all || item?.q?.creator || item?.q?.subject || "";
       //can only combine queries with fieldSearch
       // Convert simple search to fieldSearch
       if (!item?.fieldSearch) {
         item = {
           ...item,
+          cql: `term.default="${searchValue?.replace(/"/g, '\\"')}"`,
           fieldSearch: {
             inputFields: [
               {
-                value:
-                  item?.q?.all || item?.q?.creator || item?.q?.subject || "",
+                value: searchValue,
                 prefixLogicalOperator: null,
                 searchIndex: "term.default",
               },
