@@ -39,16 +39,21 @@ export const useSavedSearches = () => {
       setSavedSearches((prev) => {
         //if mobile, dont replace previous page. It should keep it and extend it with data from new page.
         const prevPage = isMobile ? prev : [];
+
+        // set of saved searches id's for fast lookup
+        const savedSearchIds = new Set(prevPage.map((search) => search.id));
         return [
           ...prevPage,
-          ...data.user.savedSearches.result.map((search) => {
-            const searchObject = JSON.parse(search.searchObject);
-            return {
-              ...searchObject,
-              id: search.id,
-              createdAt: search.createdAt,
-            };
-          }),
+          ...data.user.savedSearches.result
+            .filter((search) => !savedSearchIds.has(search.id))
+            .map((search) => {
+              const searchObject = JSON.parse(search.searchObject);
+              return {
+                ...searchObject,
+                id: search.id,
+                createdAt: search.createdAt,
+              };
+            }),
         ];
       });
     }
@@ -87,7 +92,13 @@ export const useSavedSearches = () => {
   const deleteSearches = async ({ idsToDelete }) => {
     try {
       await userDataMutation.post(deleteSavedSearches({ idsToDelete }));
-      mutateData();
+      if (isMobile) {
+        setSavedSearches((prev) =>
+          prev.filter((item) => !idsToDelete.includes(item.id))
+        );
+      } else {
+        mutateData();
+      }
     } catch (err) {
       console.error(err);
     }
