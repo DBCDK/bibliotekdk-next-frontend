@@ -33,6 +33,8 @@ export function enableDebug() {
 const forced_profile =
   getConfig()?.publicRuntimeConfig?.fbi_api_force_profile || null;
 
+const internalUrl = getConfig()?.publicRuntimeConfig?.app?.url || null;
+
 /**
  * Our custom fetcher
  *
@@ -63,9 +65,7 @@ export async function fetcher(
 
   // Calculate apiUrl
   const host =
-    typeof window === "undefined"
-      ? "http://localhost:3000"
-      : window.location.origin;
+    typeof window === "undefined" ? internalUrl : window.location.origin;
 
   const profile =
     forced_profile ||
