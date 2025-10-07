@@ -3,14 +3,39 @@
  */
 
 import { ApiEnums } from "@/lib/api/api";
-import {
-  cacheWorkFragment,
-  creatorsFragment,
-  materialTypesFragment,
-  tvSeriesFragment,
-} from "@/lib/api/fragments.utils";
+import { cacheWorkFragment, creatorsFragment } from "@/lib/api/fragments.utils";
 import { cacheWork } from "./work.fragments";
 
+const createCqlString = ({
+  creatorId,
+  generalMaterialType,
+  creatorFunction,
+  subjects,
+  language,
+  publicationYears,
+}) => {
+  let cql = `phrase.creatorcontributor="${creatorId}"`; // CQL format for creator search using allowed index
+  if (generalMaterialType) {
+    cql += ` AND phrase.generalmaterialtype="${generalMaterialType}"`;
+  }
+  if (creatorFunction) {
+    cql += ` AND phrase.creatorfunction="${creatorFunction}"`;
+  }
+  if (subjects && subjects.length > 0) {
+    cql += ` AND (${subjects
+      .map((subject) => `phrase.subject="${subject}"`)
+      .join(" AND ")})`;
+  }
+  if (language) {
+    cql += ` AND phrase.mainlanguage="${language}"`;
+  }
+  if (publicationYears && publicationYears.length > 0) {
+    cql += ` AND publicationyear=(${publicationYears
+      ?.map((year) => '"' + year + '"')
+      ?.join(" OR ")})`;
+  }
+  return cql;
+};
 /**
  * Fetch works by creator ID using complexSearch
  *
@@ -25,39 +50,28 @@ export function worksByCreator({
   generalMaterialType,
   creatorFunction,
   subjects,
+  language,
+  publicationYears,
 }) {
-  let cql = `phrase.creator="${creatorId}"`; // CQL format for creator search using allowed index
-  if (generalMaterialType) {
-    cql += ` AND phrase.generalmaterialtype="${generalMaterialType}"`;
-  }
-  if (creatorFunction) {
-    cql += ` AND phrase.creatorfunction="${creatorFunction}"`;
-  }
-  if (subjects && subjects.length > 0) {
-    const subjectQuery = subjects
-      .map((subject) => `phrase.subject="${subject}"`)
-      .join(" AND ");
-    cql += ` AND (${subjectQuery})`;
-  }
+  const cql = createCqlString({
+    creatorId,
+    generalMaterialType,
+    creatorFunction,
+    subjects,
+    language,
+    publicationYears,
+  });
+
   const sort = [{ index: "sort.latestpublicationdate", order: "DESC" }]; // Sort newest first
 
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query worksByCreator($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $sort: [SortInput!]) {
-  complexSearch(cql: $cql, facets: {facetLimit: 50, facets: [GENERALMATERIALTYPE]}) {
+  complexSearch(cql: $cql) {
     hitcount
     errorMessage
     works(limit: $limit, offset: $offset, sort: $sort) {
       workId
-      traceId
-      series {
-        title
-        numberInSeries
-      }
-      mainLanguages {
-        isoCode
-        display
-      }
       abstract
       subjects {
         dbcVerified {
@@ -68,91 +82,65 @@ export function worksByCreator({
         year
       }
       manifestations {
-        mostRelevant {
-          pid
+        bestRepresentation {
           abstract
-          cover {
-            detail: detail_207
-            origin
-            thumbnail
-          }
-          materialTypes {
-            ...materialTypesFragment
-          }
-          hostPublication {
-            title
-            issue
-          }
-          publisher
-          edition {
-            summary
-            edition
-            publicationYear {
+          subjects {
+            dbcVerified {
               display
+            }
+          }
+          physicalDescription {
+            summaryFull
+          }
+        }
+        mostRelevant {
+          edition {
+            publicationYear {
               year
             }
           }
-          physicalDescription {
-            summaryFull
-            numberOfPages
-          }
-          subjects {
-            dbcVerified {
-              display
-            }
-          }
-        }
-        bestRepresentation {
           cover {
             detail: detail_207
             origin
             thumbnail
-          }
-          materialTypes {
-            ...materialTypesFragment
-          }
-          abstract
-          subjects {
-            dbcVerified {
-              display
-            }
-          }
-          physicalDescription {
-            summaryFull
-            numberOfPages
           }
         }
         all {
+          edition {
+            publicationYear {
+              year
+            }
+          }
           cover {
             detail: detail_207
             origin
             thumbnail
-          }
-          materialTypes {
-            ...materialTypesFragment
           }
         }
       }
       creators {
-        ...creatorsFragment
+        display
+        ... on Person {
+          __typename
+          nameSort
+          roles {
+            function {
+              plural
+              singular
+            }
+            functionCode
+          }
+        }
       }
       titles {
         main
         full
-        parallel
-        sort
-        tvSeries {
-          ...tvSeriesFragment
-        }
       }
       ...cacheWorkFragment
     }
   }
 }
-    ${cacheWorkFragment}
-    ${creatorsFragment}
-    ${materialTypesFragment}
-    ${tvSeriesFragment}`,
+    ${cacheWorkFragment}`,
     variables: {
       cql,
       limit,
@@ -177,18 +165,7 @@ export function worksByCreator({
  * Applies filters from other dropdowns but excludes generalMaterialType filter
  */
 export function generalMaterialTypeFacets({ creatorId, filters = {} }) {
-  let cql = `phrase.creator="${creatorId}"`;
-
-  // Apply other filters but not generalMaterialType
-  if (filters.creatorFunction) {
-    cql += ` AND phrase.creatorfunction="${filters.creatorFunction}"`;
-  }
-  if (filters.subjects && filters.subjects.length > 0) {
-    const subjectQuery = filters.subjects
-      .map((subject) => `phrase.subject="${subject}"`)
-      .join(" AND ");
-    cql += ` AND (${subjectQuery})`;
-  }
+  const cql = createCqlString({ creatorId, ...filters });
 
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -212,18 +189,7 @@ export function generalMaterialTypeFacets({ creatorId, filters = {} }) {
  * Applies filters from other dropdowns but excludes creatorFunction filter
  */
 export function creatorFunctionFacets({ creatorId, filters = {} }) {
-  let cql = `phrase.creator="${creatorId}"`;
-
-  // Apply other filters but not creatorFunction
-  if (filters.generalMaterialType) {
-    cql += ` AND phrase.generalmaterialtype="${filters.generalMaterialType}"`;
-  }
-  if (filters.subjects && filters.subjects.length > 0) {
-    const subjectQuery = filters.subjects
-      .map((subject) => `phrase.subject="${subject}"`)
-      .join(" AND ");
-    cql += ` AND (${subjectQuery})`;
-  }
+  const cql = createCqlString({ creatorId, ...filters });
 
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -247,23 +213,67 @@ export function creatorFunctionFacets({ creatorId, filters = {} }) {
  * Applies filters from other dropdowns but excludes subjects filter
  */
 export function subjectFacets({ creatorId, filters = {} }) {
-  let cql = `phrase.creator="${creatorId}"`;
-
-  // Apply other filters but not subjects
-  if (filters.generalMaterialType) {
-    cql += ` AND phrase.generalmaterialtype="${filters.generalMaterialType}"`;
-  }
-  if (filters.creatorFunction) {
-    cql += ` AND phrase.creatorfunction="${filters.creatorFunction}"`;
-  }
+  const cql = createCqlString({ creatorId, ...filters });
 
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query subjectFacets($cql: String!) {
-      complexSearch(cql: $cql, facets: {facetLimit: 50, facets: [SUBJECT]}) {
+      complexFacets(cql: $cql, facets: {facetLimit: 100, facets: [SUBJECT]}) {
+        hitcount
         facets {
           name
           values {
+            score
+            key
+          }
+        }
+      }
+    }`,
+    variables: { cql },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Fetch LANGUAGE facets for a creator's works
+ * Applies filters from other dropdowns but excludes language filter
+ */
+export function languageFacets({ creatorId, filters = {} }) {
+  const cql = createCqlString({ creatorId, ...filters });
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query languageFacets($cql: String!) {
+      complexSearch(cql: $cql, facets: {facetLimit: 50, facets: [MAINLANGUAGE]}) {
+        facets {
+          name
+          values {
+            key
+          }
+        }
+      }
+    }`,
+    variables: { cql },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Fetch LANGUAGE facets for a creator's works
+ * Applies filters from other dropdowns but excludes language filter
+ */
+export function publicationYearFacets({ creatorId, filters = {} }) {
+  const cql = createCqlString({ creatorId, ...filters });
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query publicationYearFacets($cql: String!) {
+      complexFacets(cql: $cql, facets: {facetLimit: 500, facets: [PUBLICATIONYEAR]}) {
+        hitcount
+        facets {
+          name
+          values {
+            score
             key
           }
         }

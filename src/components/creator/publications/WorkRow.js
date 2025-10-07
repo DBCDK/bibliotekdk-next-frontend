@@ -3,6 +3,7 @@ import Text from "@/components/base/text/Text";
 import Cover from "@/components/base/cover";
 import { encodeTitleCreator } from "@/lib/utils";
 import { getCoverImage } from "@/components/utils/getCoverImage";
+import { useMemo } from "react";
 import styles from "./WorkRow.module.css";
 
 /**
@@ -17,9 +18,12 @@ export function WorkRow({ work, creatorId, isFirst = false }) {
   const manifestation = work.manifestations?.bestRepresentation;
   const workId = work.workId;
 
-  const coverDetail = getCoverImage(
-    work.manifestations?.all || [manifestation]
-  )?.detail;
+  const coverDetail = useMemo(() => {
+    if (work?.manifestations?.mostRelevant) {
+      return getCoverImage(work.manifestations.mostRelevant)?.detail;
+    }
+    return getCoverImage(work.manifestations?.all || [manifestation])?.detail;
+  }, [work?.manifestations]);
 
   const url = `/materiale/${encodeTitleCreator(
     work?.titles?.full?.[0],
@@ -41,7 +45,6 @@ export function WorkRow({ work, creatorId, isFirst = false }) {
           {/* <Text type="text3" className={styles.bold}> */}
           <Text type="text4" lines={2} clamp={true}>
             {work?.titles?.full?.[0] || work?.titles?.main?.[0]}
-            {work?.workYear?.year && ` (${work?.workYear?.year})`}
           </Text>
           {/* </Text> */}
 

@@ -18,7 +18,7 @@ export default function Subject({ creatorId, selected, onSelect, filters }) {
       })
   );
 
-  const facets = data?.complexSearch?.facets || [];
+  const facets = data?.complexFacets?.facets || [];
 
   // Find the facet.subject facet
   const subjectFacet = facets.find((facet) => facet.name === "facet.subject");
@@ -30,7 +30,7 @@ export default function Subject({ creatorId, selected, onSelect, filters }) {
         .filter((subject) => subject.length <= 20)
         .sort()
     : [];
-
+  console.log({ options });
   return (
     <SimpleDropDown
       placeholder={Translate({ context: "search", label: "label-subject" })}

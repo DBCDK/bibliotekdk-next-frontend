@@ -9,6 +9,7 @@
 
 .filters {
   display: flex;
+  align-items: center;
 }
 
 .filters > div {

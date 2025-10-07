@@ -1,22 +1,111 @@
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
-import { useData } from "@/lib/api/api";
-import { worksByCreator } from "@/lib/api/creator.fragments";
-import GeneralMaterialType from "./dropdowns/GeneralMaterialType";
-import CreatorFunction from "./dropdowns/CreatorFunction";
-import Subject from "./dropdowns/Subject";
+import { useData, useFetcherWithCache } from "@/lib/api/api";
+import {
+  publicationYearFacets,
+  worksByCreator,
+} from "@/lib/api/creator.fragments";
+import GeneralMaterialType from "./filters/GeneralMaterialTypeDropdown";
+import CreatorFunction from "./filters/CreatorFunctionDropdown";
+import Subject from "./filters/SubjectDropdown";
+import Language from "./filters/LanguageDropdown";
 import { WorkRow } from "./WorkRow";
 import { parseWorks } from "./utils";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import styles from "./Publications.module.css";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
+import useElementVisible from "@/components/hooks/useElementVisible";
+import Text from "@/components/base/text";
 
 /**
- * Publications component - shows a list of publications by a creator
+ * Displays works for a specific publication year with lazy loading
+ */
+function PublicationYearWorks({ year, creatorId, filters }) {
+  const fetcher = useFetcherWithCache({ revalidate: false });
+  // Generate unique key using useMemo
+  const cacheKey = useMemo(() => {
+    return JSON.stringify({ year: year.key, creatorId, filters });
+  }, [year.key, creatorId, filters]);
+
+  const [works, setWorks] = useGlobalState({
+    key: "creator_publications_works_" + cacheKey,
+    initial: null,
+  });
+
+  const { elementRef, hasBeenSeen } = useElementVisible({
+    root: null,
+    rootMargin: "150px",
+    threshold: 1.0,
+  });
+
+  useEffect(() => {
+    if (!works && hasBeenSeen) {
+      async function fetchWorks() {
+        const limit = 100;
+        const count = year.score;
+        const numQueries = Math.ceil(count / limit);
+        const queries = [];
+        for (let i = 0; i < numQueries; i++) {
+          queries.push(
+            worksByCreator({
+              creatorId,
+              generalMaterialType: filters.generalMaterialType || undefined,
+              creatorFunction: filters.creatorFunction || undefined,
+              subjects: filters.subjects?.length ? filters.subjects : undefined,
+              language: filters.language || undefined,
+              publicationYears: [year.key],
+              offset: i * limit,
+              limit,
+            })
+          );
+        }
+
+        const allResults = await Promise.all(
+          queries.map((query) => fetcher(query))
+        );
+        const allWorks = [];
+        allResults?.forEach((result) => {
+          allWorks.push(...result?.data?.complexSearch?.works);
+        });
+
+        const parsedWorks = parseWorks(allWorks);
+        const filteredWorks = parsedWorks.filter((work) => {
+          return String(work?.originalWorkYear) === String(year.key);
+        });
+
+        setWorks(filteredWorks || []);
+      }
+      fetchWorks();
+    }
+  }, [works, hasBeenSeen]);
+
+  const isLoading = !works;
+
+  if (works?.length === 0) {
+    return null;
+  }
+
+  return (
+    <div key={year} className={styles.workscontainer} ref={elementRef}>
+      <Title type="title4" tag="h3" className={styles.yearTitle}>
+        {year.key}
+      </Title>
+      {isLoading && (
+        <div style={{ height: "200px" }}>Indlæser år {year.key} ...</div>
+      )}
+      {works?.map((work) => (
+        <WorkRow key={work.workId} work={work} creatorId={creatorId} />
+      ))}
+    </div>
+  );
+}
+/**
+ * Main publications component that displays filtered works by publication year
  */
 export function Publications({
-  works,
+  years,
+  hitcount,
   creatorId,
   selectedSubjects,
   setSelectedSubjects,
@@ -24,51 +113,32 @@ export function Publications({
   setSelectedGeneralMaterialType,
   selectedCreatorFunction,
   setSelectedCreatorFunction,
+  selectedLanguage,
+  setSelectedLanguage,
 }) {
-  // Create filters object for cross-filtering
-  const filters = {
-    generalMaterialType: selectedGeneralMaterialType,
-    creatorFunction: selectedCreatorFunction,
-    subjects: selectedSubjects,
-  };
+  const filters = useMemo(
+    () => ({
+      generalMaterialType: selectedGeneralMaterialType,
+      creatorFunction: selectedCreatorFunction,
+      subjects: selectedSubjects,
+      language: selectedLanguage,
+    }),
+    [
+      selectedGeneralMaterialType,
+      selectedCreatorFunction,
+      selectedSubjects,
+      selectedLanguage,
+    ]
+  );
 
-  // Use provided works or fallback to dummy data
-  const displayWorks = works;
+  let hitcountText = "";
 
-  // Filter works based on selected subject filter
-  const filteredWorks = displayWorks.filter((work) => {
-    // Subject filter
-    if (selectedSubjects?.length > 0) {
-      const workSubjects = [
-        ...(work.subjects?.dbcVerified?.map((s) => s.display) || []),
-        ...(work.manifestations?.mostRelevant?.subjects?.dbcVerified?.map(
-          (s) => s.display
-        ) || []),
-      ];
-      if (!selectedSubjects.some((subject) => workSubjects.includes(subject))) {
-        return false;
-      }
-    }
-
-    return true;
-  });
-
-  // Group filtered works by year
-  const worksByYear = filteredWorks.reduce((groups, work) => {
-    const year = work?.workYear?.year || "Ukendt år";
-    if (!groups[year]) {
-      groups[year] = [];
-    }
-    groups[year].push(work);
-    return groups;
-  }, {});
-
-  // Sort years (newest first, "Ukendt år" last)
-  const sortedYears = Object.keys(worksByYear).sort((a, b) => {
-    if (a === "Ukendt år") return 1;
-    if (b === "Ukendt år") return -1;
-    return parseInt(b, 10) - parseInt(a, 10);
-  });
+  if (hitcount) {
+    hitcountText += `${hitcount} ${hitcount === 1 ? "værk" : "værker"}`;
+  }
+  if (years?.length > 1) {
+    hitcountText += ` fra ${years[years.length - 1].key} til ${years[0].key} `;
+  }
 
   return (
     <Section
@@ -96,31 +166,22 @@ export function Publications({
             onSelect={setSelectedSubjects}
             filters={filters}
           />
+          <Language
+            creatorId={creatorId}
+            selected={selectedLanguage}
+            onSelect={setSelectedLanguage}
+            filters={filters}
+          />
+          <Text type="text3">{hitcountText}</Text>
         </div>
 
-        {/* Publications list */}
-        {sortedYears.length === 0 && filteredWorks.length === 0 && works && (
-          <div className={styles.noResults}>
-            <p>{Translate({ context: "creator", label: "no-results" })}</p>
-          </div>
-        )}
-
-        {sortedYears.map((year) => (
-          <div key={year} className={styles.workscontainer}>
-            <Title type="title4" tag="h3" className={styles.yearTitle}>
-              {year}
-            </Title>
-            <div>
-              {worksByYear[year].map((work, index) => (
-                <WorkRow
-                  key={work.workId}
-                  work={work}
-                  creatorId={creatorId}
-                  isFirst={index === 0}
-                />
-              ))}
-            </div>
-          </div>
+        {years?.map((year) => (
+          <PublicationYearWorks
+            key={year.key}
+            year={year}
+            filters={filters}
+            creatorId={creatorId}
+          />
         ))}
       </div>
     </Section>
@@ -128,7 +189,37 @@ export function Publications({
 }
 
 /**
- * Wrap function - handles data fetching and loading states with filter management
+ * Custom hook that fetches and sorts publication years for a creator
+ */
+function usePublicationYears(creatorId, filters) {
+  // Fetch all publication years for every work by this creator
+  const { data, isLoading, error } = useData(
+    creatorId &&
+      publicationYearFacets({
+        creatorId,
+        filters,
+      })
+  );
+
+  // Sort years by newest first
+  const years = useMemo(() => {
+    const allYears = data?.complexFacets?.facets?.find(
+      (facet) => facet.name === "facet.publicationyear"
+    )?.values;
+
+    return allYears?.sort((a, b) => b.key - a.key);
+  }, [data]);
+
+  return {
+    hitcount: data?.complexFacets?.hitcount,
+    years,
+    isLoading,
+    error,
+  };
+}
+
+/**
+ * Wrapper component that manages filter state and data fetching for publications
  */
 export default function Wrap({ creatorId }) {
   // Filter state management
@@ -142,39 +233,22 @@ export default function Wrap({ creatorId }) {
     key: "creator_selectedCreatorFunction_" + creatorId,
     initial: "",
   });
+  const [selectedLanguage, setSelectedLanguage] = useGlobalState({
+    key: "creator_selectedLanguage_" + creatorId,
+    initial: "dansk",
+  });
 
-  const { data, isLoading, error } = useData(
-    creatorId &&
-      worksByCreator({
-        creatorId,
-        generalMaterialType: selectedGeneralMaterialType || undefined,
-        creatorFunction: selectedCreatorFunction || undefined,
-        subjects: selectedSubjects?.length ? selectedSubjects : undefined,
-      })
-  );
-  const works = data?.complexSearch?.works || [];
-
-  // Parse works to ensure year data is available
-  const parsedWorks = useMemo(() => parseWorks(works), [works]);
-
-  if (error) {
-    return null;
-  }
-
-  if (isLoading) {
-    return (
-      <Section
-        title={Translate({ context: "creator", label: "publications" })}
-        divider={{ content: false }}
-      >
-        <div>Loading publications...</div>
-      </Section>
-    );
-  }
+  const { years, hitcount } = usePublicationYears(creatorId, {
+    generalMaterialType: selectedGeneralMaterialType,
+    creatorFunction: selectedCreatorFunction,
+    subjects: selectedSubjects,
+    language: selectedLanguage,
+  });
 
   return (
     <Publications
-      works={parsedWorks}
+      hitcount={hitcount}
+      years={years}
       creatorId={creatorId}
       selectedSubjects={selectedSubjects}
       setSelectedSubjects={setSelectedSubjects}
@@ -182,6 +256,8 @@ export default function Wrap({ creatorId }) {
       setSelectedGeneralMaterialType={setSelectedGeneralMaterialType}
       selectedCreatorFunction={selectedCreatorFunction}
       setSelectedCreatorFunction={setSelectedCreatorFunction}
+      selectedLanguage={selectedLanguage}
+      setSelectedLanguage={setSelectedLanguage}
     />
   );
 }

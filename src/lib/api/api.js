@@ -3,7 +3,7 @@
  * In this file we have functions related to data fetching.
  */
 import { createContext, useContext, useEffect, useState } from "react";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import useCookieConsent from "@/components/hooks/useCookieConsent";
 import { useRouter } from "next/router";
 import { mutate as globalMutate } from "swr";
@@ -259,15 +259,22 @@ export function useFetcher() {
   return doFetch;
 }
 
-export const useFetcherWithCache = () => {
+export const useFetcherWithCache = ({ revalidate = true } = {}) => {
   const fetcherImpl = useFetcherImpl();
   const keyGenerator = useKeyGenerator();
+  const { cache } = useSWRConfig();
 
   async function doFetch(query) {
     // The key for this query
     const key = keyGenerator(query);
 
-    return await globalMutate(key, fetcherImpl(key), true);
+    let result = cache.get(key)?.data;
+
+    if (!result || revalidate) {
+      result = await globalMutate(key, fetcherImpl(key), true);
+    }
+
+    return result;
   }
 
   return doFetch;
