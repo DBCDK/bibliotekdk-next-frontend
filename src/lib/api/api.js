@@ -259,6 +259,14 @@ export function useFetcher() {
   return doFetch;
 }
 
+/**
+ * A custom React hook for fetching data with caching capabilities using SWR
+ *
+ * This hook provides a cached data fetching mechanism that can either return
+ * cached data immediately (if available) or revalidate and fetch fresh data from the API.
+ * It's particularly useful for scenarios where you need fine-grained control
+ * over when to use cached data vs. when to fetch fresh data.
+ */
 export const useFetcherWithCache = ({ revalidate = true } = {}) => {
   const fetcherImpl = useFetcherImpl();
   const keyGenerator = useKeyGenerator();
@@ -271,6 +279,8 @@ export const useFetcherWithCache = ({ revalidate = true } = {}) => {
     let result = cache.get(key)?.data;
 
     if (!result || revalidate) {
+      // Use globalMutate to revalidate and fetch fresh data
+      // globalMutate will update the cache with the fresh data
       result = await globalMutate(key, fetcherImpl(key), true);
     }
 

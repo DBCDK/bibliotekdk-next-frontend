@@ -3,6 +3,13 @@ import { creatorFunctionFacets } from "@/lib/api/creator.fragments";
 import { SimpleDropDown } from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import Translate from "@/components/base/translate";
 
+function parseValue(value, creatorId) {
+  return value
+    ?.toLowerCase()
+    ?.replace(creatorId?.toLowerCase(), "")
+    ?.replace(/\(|\)/g, "")
+    ?.trim();
+}
 /**
  * Dropdown for creator functions - handles data fetching and rendering
  */
@@ -38,36 +45,20 @@ export default function CreatorFunction({
   if (creatorFunctionFacet?.values?.length) {
     creatorFunctionFacet.values
       .map((value) => value.key)
-      ?.filter?.((value) => {
-        // Match values that start with creatorId followed by " (function)" format
-        // e.g. "Jakob Martin Strid (forfatter)" or "Frantz Frantzen (f. 1990) (producent)"
-        // Escapes special regex characters in creatorId to handle cases like parentheses in names
-        const regex = new RegExp(
-          `^${creatorId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\([^)]+\\)$`,
-          "i"
-        );
-        return regex.test(value);
-      })
-      ?.forEach((originalValue) => {
-        // Find the function part in parentheses
-        const match = originalValue.match(/\(([^)]+)\)$/);
-        const parsedFunction = match ? match[1] : originalValue;
-
-        functionToOriginalMap[parsedFunction] = originalValue;
-        if (!parsedFunctions.includes(parsedFunction)) {
-          parsedFunctions.push(parsedFunction);
-        }
+      // Match values that start with creatorId followed by " (function)" format
+      // e.g. "Jakob Martin Strid (forfatter)" or "Frantz Frantzen (f. 1990) (producent)"
+      // Escapes special regex characters in creatorId to handle cases like parentheses in names
+      ?.filter?.((value) =>
+        value?.toLowerCase()?.startsWith(creatorId?.toLowerCase())
+      )
+      .forEach((originalValue) => {
+        const func = parseValue(originalValue, creatorId);
+        parsedFunctions.push(func);
+        functionToOriginalMap[func] = originalValue;
       });
   }
 
   const options = parsedFunctions.sort((a, b) => a.localeCompare(b));
-
-  // Parse selected value to show only function
-  const parseSelectedValue = (value) => {
-    if (!value) return "";
-    const match = value.match(/\(([^)]+)\)$/);
-    return match ? match[1] : value;
-  };
 
   return (
     <SimpleDropDown
@@ -75,7 +66,7 @@ export default function CreatorFunction({
         context: "facets",
         label: "label-creatorfunction",
       })}
-      selected={parseSelectedValue(selected)}
+      selected={parseValue(selected, creatorId)}
       onSelect={(entry) => {
         // Map the parsed function back to original value
         const originalValue = entry ? functionToOriginalMap[entry] || "" : "";
