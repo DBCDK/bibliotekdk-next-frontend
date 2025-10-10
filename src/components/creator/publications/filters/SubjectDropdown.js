@@ -30,7 +30,6 @@ export default function Subject({ creatorId, selected, onSelect, filters }) {
         .filter((subject) => subject.length <= 20)
         .sort()
     : [];
-  console.log({ options });
   return (
     <SimpleDropDown
       placeholder={Translate({ context: "search", label: "label-subject" })}

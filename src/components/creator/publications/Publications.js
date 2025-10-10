@@ -69,7 +69,7 @@ function PublicationYearWorks({ year, creatorId, filters }) {
           allWorks.push(...result?.data?.complexSearch?.works);
         });
 
-        const parsedWorks = parseWorks(allWorks);
+        const parsedWorks = parseWorks(allWorks, creatorId);
         const filteredWorks = parsedWorks.filter((work) => {
           return String(work?.originalWorkYear) === String(year.key);
         });
@@ -91,11 +91,14 @@ function PublicationYearWorks({ year, creatorId, filters }) {
       <Title type="title4" tag="h3" className={styles.yearTitle}>
         {year.key}
       </Title>
-      {isLoading && (
-        <div style={{ height: "200px" }}>Indlæser år {year.key} ...</div>
-      )}
+      {isLoading && <WorkRow isLoading={true} year={year} />}
       {works?.map((work) => (
-        <WorkRow key={work.workId} work={work} creatorId={creatorId} />
+        <WorkRow
+          key={work.workId}
+          work={work}
+          creatorId={creatorId}
+          year={year}
+        />
       ))}
     </div>
   );
@@ -131,18 +134,51 @@ export function Publications({
     ]
   );
 
-  let hitcountText = "";
+  let hitcountText;
 
   if (hitcount) {
-    hitcountText += `${hitcount} ${hitcount === 1 ? "værk" : "værker"}`;
-  }
-  if (years?.length > 1) {
-    hitcountText += ` fra ${years[years.length - 1].key} til ${years[0].key} `;
+    hitcountText = (
+      <Text type="text3">
+        <Text type="text2" tag="span">
+          {hitcount}
+        </Text>{" "}
+        {hitcount === 1
+          ? Translate({ context: "creator", label: "work-singular" }) + " "
+          : Translate({ context: "creator", label: "work-plural" }) + " "}
+        {years?.length > 1 && (
+          <>
+            {Translate({ context: "creator", label: "from" })}{" "}
+            <Text type="text2" tag="span">
+              {years[years.length - 1].key}
+            </Text>{" "}
+            {Translate({ context: "creator", label: "to" })}{" "}
+            <Text type="text2" tag="span">
+              {years[0].key}
+            </Text>
+          </>
+        )}
+      </Text>
+    );
   }
 
   return (
     <Section
       title={Translate({ context: "creator", label: "publications" })}
+      subtitle={
+        <div>
+          <Text type="text3" className={styles.explanationText}>
+            {Translate({
+              context: "creator",
+              label: "publications-explanation",
+            })}
+          </Text>
+          {hitcountText && (
+            <Text type="text3" className={styles.hitcountText}>
+              {hitcountText}
+            </Text>
+          )}
+        </div>
+      }
       divider={{ content: false }}
     >
       <div>
@@ -172,7 +208,6 @@ export function Publications({
             onSelect={setSelectedLanguage}
             filters={filters}
           />
-          <Text type="text3">{hitcountText}</Text>
         </div>
 
         {years?.map((year) => (

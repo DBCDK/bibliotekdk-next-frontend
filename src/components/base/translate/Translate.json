@@ -23,6 +23,26 @@
         "da": "Udgivelser",
         "en": "Publications"
       },
+      "publications-explanation": {
+        "da": "Værkerne grupperes efter tidligste registrerede udgave, men værket kan være skabt tidligere.",
+        "en": "Works are grouped by the earliest registered edition, but the work may have been created earlier."
+      },
+      "work-singular": {
+        "da": "værk",
+        "en": "work"
+      },
+      "work-plural": {
+        "da": "værker",
+        "en": "works"
+      },
+      "from": {
+        "da": "fra",
+        "en": "from"
+      },
+      "to": {
+        "da": "til",
+        "en": "to"
+      },
       "no-results": {
         "da": "Ingen publikationer fundet med de valgte filtre",
         "en": "No publications found with the selected filters"
@@ -1582,6 +1602,32 @@
       "fallback": {
         "da": "materialet",
         "en": "the material"
+      }
+    },
+    "workTypeSingularForm": {
+      "literature": {
+        "da": "bog",
+        "en": "book"
+      },
+      "movie": {
+        "da": "film",
+        "en": "movie"
+      },
+      "article": {
+        "da": "artikel",
+        "en": "article"
+      },
+      "music": {
+        "da": "musik",
+        "en": "music"
+      },
+      "game": {
+        "da": "spil",
+        "en": "game"
+      },
+      "sheetmusic": {
+        "da": "node",
+        "en": "sheet music"
       }
     },
     "holdings": {

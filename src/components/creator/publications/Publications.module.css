@@ -10,10 +10,16 @@
 .filters {
   display: flex;
   align-items: center;
+  margin-left: calc(-1 * var(--pt2));
+  margin-right: calc(-1 * var(--pt2));
+  padding-left: var(--pt1);
+  padding-right: var(--pt1);
+  flex-wrap: wrap;
+  gap: var(--pt1);
 }
 
 .filters > div {
-  margin-right: var(--pt2);
+  flex-shrink: 0;
 }
 
 .noResults {
@@ -25,11 +31,29 @@
 
 .workscontainer {
   margin-top: calc(var(--pt4) * -1);
+  margin-left: calc(-1 * var(--pt1));
+  margin-right: calc(-1 * var(--pt1));
 }
 
-/* Desktop styles */
-@media (min-width: 415px) {
+.explanationText {
+  margin-top: var(--pt1);
+}
+.hitcountText {
+  margin-top: var(--pt1);
+}
+
+@media (min-width: 576px) {
   .filters + div .yearTitle {
     margin-top: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .filters {
+    margin-left: calc(-1 * var(--pt1));
+  }
+  .workscontainer {
+    margin-left: 0;
+    margin-right: 0;
   }
 }

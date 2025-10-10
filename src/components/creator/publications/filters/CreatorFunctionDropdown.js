@@ -27,7 +27,7 @@ export default function CreatorFunction({
 
   // Find the facet.creatorfunction facet
   const creatorFunctionFacet = facets.find(
-    (facet) => facet.name === "facet.creatorfunction"
+    (facet) => facet.name === "facet.creatorcontributorfunction"
   );
 
   // Create mapping from parsed function to original facet value

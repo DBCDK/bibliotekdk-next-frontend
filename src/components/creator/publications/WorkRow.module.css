@@ -7,21 +7,6 @@
   display: block;
   background-color: var(--white);
 }
-
-.headerrow,
-.row {
-  display: grid;
-  grid-template-columns: 80px 3fr; /* Cover + title column */
-}
-
-.row {
-  border-top: 1px solid var(--iron);
-}
-
-.row.firstInGroup {
-  /* border-top: none; */
-}
-
 .row:focus,
 .row:hover {
   color: var(--mine-shaft);
@@ -29,36 +14,66 @@
   cursor: pointer;
 }
 
-.row > div {
-  padding: var(--pt1);
+/* Grid column styles */
+.coverColumn {
+  grid-area: cover;
 }
 
-.headline {
+.titleColumn {
+  position: relative;
+  grid-area: title;
+  display: flex;
+  flex-direction: column;
+}
+
+.coverColumn,
+.titleColumn,
+.descriptionColumn,
+.subjectsColumn {
   padding: var(--pt1);
+}
+.extentColumn {
+  padding: 0 var(--pt1);
+}
+
+.subjects {
+  margin-top: var(--pt05);
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.subjects a {
+  display: inline-block;
+  --underline-bottom-color: var(--blue);
+  margin-right: var(--pt1);
+}
+
+.worktype {
+  text-transform: capitalize;
+  /* padding-top: var(--pt1); */
 }
 
 .creators {
-  margin-top: var(--pt1);
+  padding-top: var(--pt05);
 }
 
-.workcontainer {
-  /* Similar to articlecontainer */
-  display: block;
+.descriptionColumn {
+  grid-area: description;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt05);
+  min-width: 0; /* Tillader flex items at krympe under deres naturlige størrelse */
 }
 
-.tableHeaderDescription,
-.tableHeaderSubjects,
-.tableHeaderExtent,
-.description,
-.subjects,
-.extent {
-  display: none;
+.extentColumn {
+  grid-area: extent;
 }
 
 .coverColumn {
   display: flex;
   align-items: flex-start;
-  padding: var(--pt1);
 }
 
 .cover {
@@ -67,35 +82,49 @@
   object-fit: cover;
 }
 
-.tableHeaderCover {
-  /* Empty header for cover column */
-  width: 80px;
+.originalWorkYear {
+  padding-top: var(--pt05);
+}
+
+.descriptionColumn,
+.subjects {
+  display: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 80px 3fr; /* Cover + title column */
+  grid-template-areas:
+    "cover title"
+    "cover extent";
+  align-items: start;
+  border-top: 1px solid var(--iron);
+  padding: var(--pt1_5) 0;
+  grid-auto-rows: min-content 1fr;
 }
 
 @media (min-width: 576px) {
-  .headerrow,
   .row {
-    grid-template-columns: 80px 3fr 3fr; /* Cover + title + description */
+    grid-template-columns: 80px 5fr 6fr;
+    grid-template-areas:
+      "cover title description"
+      "cover title extent";
+    /* grid-template-rows: min-content min-content; */
   }
-
-  .tableHeaderDescription,
-  .description {
+  .descriptionColumn {
     display: initial;
   }
 }
 
 @media (min-width: 768px) {
-  .headerrow,
   .row {
-    grid-template-columns: 80px 3fr 3fr 2fr 1fr; /* Cover + title + description + subjects + extent */
+    grid-template-columns: 80px 5fr 2fr 6fr;
+    grid-template-areas: "cover title extent description";
   }
-
-  .tableHeaderDescription,
-  .tableHeaderSubjects,
-  .tableHeaderExtent,
-  .description,
-  .subjects,
-  .extent {
-    display: initial;
+  .extentColumn {
+    padding: var(--pt1);
+  }
+  .subjects {
+    display: block;
   }
 }

@@ -19,7 +19,7 @@ const createCqlString = ({
     cql += ` AND phrase.generalmaterialtype="${generalMaterialType}"`;
   }
   if (creatorFunction) {
-    cql += ` AND phrase.creatorfunction="${creatorFunction}"`;
+    cql += ` AND phrase.creatorcontributorfunction="${creatorFunction}"`;
   }
   if (subjects && subjects.length > 0) {
     cql += ` AND (${subjects
@@ -72,14 +72,21 @@ export function worksByCreator({
     errorMessage
     works(limit: $limit, offset: $offset, sort: $sort) {
       workId
+      workTypes
       abstract
       subjects {
         dbcVerified {
           display
         }
       }
+      genreAndForm
       workYear {
         year
+      }
+      materialTypes {
+        materialTypeSpecific {
+          display
+        }
       }
       manifestations {
         bestRepresentation {
@@ -104,17 +111,13 @@ export function worksByCreator({
             origin
             thumbnail
           }
-        }
-        all {
-          edition {
-            publicationYear {
-              year
+          contributors {
+            display
+            roles {
+              function {
+                singular
+              }
             }
-          }
-          cover {
-            detail: detail_207
-            origin
-            thumbnail
           }
         }
       }
@@ -135,6 +138,18 @@ export function worksByCreator({
       titles {
         main
         full
+      }
+      extendedWork {
+        ... on PeriodicalArticle {
+          parentPeriodical {
+            titles {
+              main
+            }
+          }
+          parentIssue {
+            display
+          }
+        }
       }
       ...cacheWorkFragment
     }
@@ -194,7 +209,7 @@ export function creatorFunctionFacets({ creatorId, filters = {} }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query creatorFunctionFacets($cql: String!) {
-      complexSearch(cql: $cql, facets: {facetLimit: 50, facets: [CREATORFUNCTION]}) {
+      complexSearch(cql: $cql, facets: {facetLimit: 50, facets: [CREATORCONTRIBUTORFUNCTION]}) {
         facets {
           name
           values {
