@@ -351,7 +351,11 @@ export function getUrlByType({ type, value, traceId }) {
   // we want some types to use simplesearch .. i know this is advancedUrl .. but .. it
   // is the easiest way
   if (simpelsearchTypes.includes(type)) {
-    return `/find?q.all="${value}"&tid=${traceId}`;
+    let query = `/find?q.all="${value}"`;
+    if (traceId) {
+      query += `&tid=${traceId}`;
+    }
+    return query;
   }
 
   const inputField = getAdvancedSearchField({ type, value });

@@ -3,7 +3,7 @@
  * In this file we have functions related to data fetching.
  */
 import { createContext, useContext, useEffect, useState } from "react";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import useCookieConsent from "@/components/hooks/useCookieConsent";
 import { useRouter } from "next/router";
 import { mutate as globalMutate } from "swr";
@@ -259,15 +259,32 @@ export function useFetcher() {
   return doFetch;
 }
 
-export const useFetcherWithCache = () => {
+/**
+ * A custom React hook for fetching data with caching capabilities using SWR
+ *
+ * This hook provides a cached data fetching mechanism that can either return
+ * cached data immediately (if available) or revalidate and fetch fresh data from the API.
+ * It's particularly useful for scenarios where you need fine-grained control
+ * over when to use cached data vs. when to fetch fresh data.
+ */
+export const useFetcherWithCache = ({ revalidate = true } = {}) => {
   const fetcherImpl = useFetcherImpl();
   const keyGenerator = useKeyGenerator();
+  const { cache } = useSWRConfig();
 
   async function doFetch(query) {
     // The key for this query
     const key = keyGenerator(query);
 
-    return await globalMutate(key, fetcherImpl(key), true);
+    let result = cache.get(key)?.data;
+
+    if (!result || revalidate) {
+      // Use globalMutate to revalidate and fetch fresh data
+      // globalMutate will update the cache with the fresh data
+      result = await globalMutate(key, fetcherImpl(key), true);
+    }
+
+    return result;
   }
 
   return doFetch;
