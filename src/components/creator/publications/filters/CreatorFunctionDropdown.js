@@ -22,7 +22,7 @@ export default function CreatorFunction({
   // Exclude own filter from the filters object
   const filtersWithoutCreatorFunction = { ...filters, creatorFunction: null };
 
-  const { data, isLoading, error } = useData(
+  const { data } = useData(
     creatorId &&
       creatorFunctionFacets({
         creatorId,

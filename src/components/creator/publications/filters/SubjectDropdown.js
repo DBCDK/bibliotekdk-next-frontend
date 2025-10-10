@@ -10,7 +10,7 @@ export default function Subject({ creatorId, selected, onSelect, filters }) {
   // Exclude own filter from the filters object
   const filtersWithoutSubjects = { ...filters, subjects: null };
 
-  const { data, isLoading, error } = useData(
+  const { data } = useData(
     creatorId &&
       subjectFacets({
         creatorId,

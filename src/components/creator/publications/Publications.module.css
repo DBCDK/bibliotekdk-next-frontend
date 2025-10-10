@@ -22,13 +22,6 @@
   flex-shrink: 0;
 }
 
-.noResults {
-  margin-top: var(--pt3);
-  margin-bottom: var(--pt3);
-  text-align: left;
-  color: var(--gray-dark);
-}
-
 .workscontainer {
   margin-top: calc(var(--pt4) * -1);
   margin-left: calc(-1 * var(--pt1));

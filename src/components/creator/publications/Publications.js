@@ -12,7 +12,7 @@ import Subject from "./filters/SubjectDropdown";
 import Language from "./filters/LanguageDropdown";
 import { WorkRow } from "./WorkRow";
 import { parseWorks } from "./utils";
-import { useMemo, useState, useRef, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import styles from "./Publications.module.css";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
 import useElementVisible from "@/components/hooks/useElementVisible";

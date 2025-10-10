@@ -10,7 +10,7 @@ export default function Language({ creatorId, selected, onSelect, filters }) {
   // Exclude own filter from the filters object
   const filtersWithoutLanguage = { ...filters, language: null };
 
-  const { data, isLoading, error } = useData(
+  const { data } = useData(
     creatorId &&
       languageFacets({
         creatorId,

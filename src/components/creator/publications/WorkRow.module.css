@@ -1,12 +1,4 @@
-.bold {
-  font-weight: bold;
-}
-
 /* Work grid (similar to article grid) */
-.container {
-  display: block;
-  background-color: var(--white);
-}
 .row:focus,
 .row:hover {
   color: var(--mine-shaft);
@@ -28,8 +20,7 @@
 
 .coverColumn,
 .titleColumn,
-.descriptionColumn,
-.subjectsColumn {
+.descriptionColumn {
   padding: var(--pt1);
 }
 .extentColumn {

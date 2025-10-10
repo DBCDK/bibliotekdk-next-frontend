@@ -3,7 +3,7 @@
  */
 
 import { ApiEnums } from "@/lib/api/api";
-import { cacheWorkFragment, creatorsFragment } from "@/lib/api/fragments.utils";
+import { cacheWorkFragment } from "@/lib/api/fragments.utils";
 import { cacheWork } from "./work.fragments";
 
 const createCqlString = ({

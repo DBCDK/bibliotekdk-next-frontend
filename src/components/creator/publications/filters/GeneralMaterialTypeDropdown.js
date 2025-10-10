@@ -15,7 +15,7 @@ export default function GeneralMaterialType({
   // Exclude own filter from the filters object
   const filtersWithoutMaterialType = { ...filters, generalMaterialType: null };
 
-  const { data, isLoading, error } = useData(
+  const { data } = useData(
     creatorId &&
       generalMaterialTypeFacets({
         creatorId,
