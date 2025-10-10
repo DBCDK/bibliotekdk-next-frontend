@@ -75,34 +75,3 @@ export function parseWorks(works, creatorId) {
     return b?.originalWorkYear - a?.originalWorkYear;
   });
 }
-
-export function createCqlString({
-  creatorId,
-  generalMaterialType,
-  creatorFunction,
-  subjects,
-  language,
-  publicationYears,
-}) {
-  let cql = `phrase.creator="${creatorId}"`; // CQL format for creator search using allowed index
-  if (generalMaterialType) {
-    cql += ` AND phrase.generalmaterialtype="${generalMaterialType}"`;
-  }
-  if (creatorFunction) {
-    cql += ` AND phrase.creatorcontributorfunction="${creatorFunction}"`;
-  }
-  if (subjects && subjects.length > 0) {
-    cql += ` AND (${subjects
-      .map((subject) => `phrase.subject="${subject}"`)
-      .join(" AND ")})`;
-  }
-  if (language) {
-    cql += ` AND phrase.mainlanguage="${language}"`;
-  }
-  if (publicationYears && publicationYears.length > 0) {
-    cql += ` AND publicationyear=(${publicationYears
-      ?.map((year) => '"' + year + '"')
-      ?.join(" OR ")})`;
-  }
-  return cql;
-}

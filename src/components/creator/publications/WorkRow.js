@@ -41,14 +41,14 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
   const creators = [
     work?.creatorFunctions,
     ...(work?.creators || [])
-      ?.filter((creator) => creator.display !== creatorId)
-      ?.map((creator) => {
+      .filter((creator) => creator.display !== creatorId)
+      .map((creator) => {
         const functionName = creator.roles?.[0]?.function?.singular;
         return `${creator.display} ${functionName ? `(${functionName})` : ""}`;
       }),
   ]
-    ?.filter(Boolean)
-    ?.join(", ");
+    .filter(Boolean)
+    .join(", ");
   return (
     <Link
       className={`${styles.row} ${isFirst ? styles.firstInGroup : ""}`}

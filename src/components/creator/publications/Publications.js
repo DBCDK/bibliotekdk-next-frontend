@@ -66,7 +66,10 @@ function PublicationYearWorks({ year, creatorId, filters }) {
         );
         const allWorks = [];
         allResults?.forEach((result) => {
-          allWorks.push(...result?.data?.complexSearch?.works);
+          const works = result?.data?.complexSearch?.works;
+          if (Array.isArray(works)) {
+            allWorks.push(...works);
+          }
         });
 
         const parsedWorks = parseWorks(allWorks, creatorId);

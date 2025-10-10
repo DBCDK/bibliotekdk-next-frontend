@@ -50,7 +50,7 @@ export default function CreatorFunction({
       })
       ?.forEach((originalValue) => {
         // Find the function part in parentheses
-        const match = originalValue.match(/.*\(([^)]+)\)$/);
+        const match = originalValue.match(/\(([^)]+)\)$/);
         const parsedFunction = match ? match[1] : originalValue;
 
         functionToOriginalMap[parsedFunction] = originalValue;
@@ -60,12 +60,12 @@ export default function CreatorFunction({
       });
   }
 
-  const options = parsedFunctions.sort();
+  const options = parsedFunctions.sort((a, b) => a.localeCompare(b));
 
   // Parse selected value to show only function
   const parseSelectedValue = (value) => {
     if (!value) return "";
-    const match = value.match(/.*\(([^)]+)\)$/);
+    const match = value.match(/\(([^)]+)\)$/);
     return match ? match[1] : value;
   };
 
