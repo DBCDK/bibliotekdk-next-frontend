@@ -1,0 +1,121 @@
+/* Work grid (similar to article grid) */
+.row:focus,
+.row:hover {
+  color: var(--mine-shaft);
+  background-color: var(--concrete);
+  cursor: pointer;
+}
+
+/* Grid column styles */
+.coverColumn {
+  grid-area: cover;
+}
+
+.titleColumn {
+  position: relative;
+  grid-area: title;
+  display: flex;
+  flex-direction: column;
+}
+
+.coverColumn,
+.titleColumn,
+.descriptionColumn {
+  padding: var(--pt1);
+}
+.extentColumn {
+  padding: 0 var(--pt1);
+}
+
+.subjects {
+  margin-top: var(--pt05);
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.subjects a {
+  display: inline-block;
+  --underline-bottom-color: var(--blue);
+  margin-right: var(--pt1);
+}
+
+.worktype {
+  text-transform: capitalize;
+  /* padding-top: var(--pt1); */
+}
+
+.creators {
+  padding-top: var(--pt05);
+}
+
+.descriptionColumn {
+  grid-area: description;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt05);
+  min-width: 0; /* Tillader flex items at krympe under deres naturlige størrelse */
+}
+
+.extentColumn {
+  grid-area: extent;
+}
+
+.coverColumn {
+  display: flex;
+  align-items: flex-start;
+}
+
+.cover {
+  width: 60px;
+  height: auto;
+  object-fit: cover;
+}
+
+.originalWorkYear {
+  padding-top: var(--pt05);
+}
+
+.descriptionColumn,
+.subjects {
+  display: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 80px 3fr; /* Cover + title column */
+  grid-template-areas:
+    "cover title"
+    "cover extent";
+  align-items: start;
+  border-top: 1px solid var(--iron);
+  padding: var(--pt1_5) 0;
+  grid-auto-rows: min-content 1fr;
+}
+
+@media (min-width: 576px) {
+  .row {
+    grid-template-columns: 80px 5fr 6fr;
+    grid-template-areas:
+      "cover title description"
+      "cover title extent";
+    /* grid-template-rows: min-content min-content; */
+  }
+  .descriptionColumn {
+    display: initial;
+  }
+}
+
+@media (min-width: 768px) {
+  .row {
+    grid-template-columns: 80px 5fr 2fr 6fr;
+    grid-template-areas: "cover title extent description";
+  }
+  .extentColumn {
+    padding: var(--pt1);
+  }
+  .subjects {
+    display: block;
+  }
+}
