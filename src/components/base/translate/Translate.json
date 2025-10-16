@@ -2472,8 +2472,8 @@
         "en": "Advanced"
       },
       "cql": {
-        "da": "CQL-søgning",
-        "en": "CQL-search"
+        "da": "CQL",
+        "en": "CQL"
       },
       "cql-desktop": {
         "da": "CQL-søgning",
@@ -3198,7 +3198,7 @@
         "en": "Clear"
       },
       "helpAndGuidance": {
-        "da": "Brug for hjælp til søgning?",
+        "da": "Brug for hjælp?",
         "en": "Need help with your search?"
       },
       "mobile_helpAndGuidance": {

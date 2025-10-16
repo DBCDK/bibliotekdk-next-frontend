@@ -287,7 +287,7 @@ export default function SavedSearches() {
           </Text>
         </div>
         {!isAuthenticated && (
-          <div>
+          <div className={styles.notLoggedIn}>
             <Text type="text2" className={styles.loginText}>
               {Translate({
                 context: "advanced_search_savedSearch",

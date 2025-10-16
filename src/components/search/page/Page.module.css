@@ -58,7 +58,7 @@
 }
 
 .facetsContainer > div:first-child {
-  margin-bottom: var(--pt4);
+  margin-bottom: 0;
 }
 
 .titleflex:last-of-type div:first-child > *:first-child {

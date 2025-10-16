@@ -9,7 +9,7 @@
 }
 
 .section > div {
-  padding-top: var(--pt2);
+  padding-top: var(--pt1_5);
   order: 2;
 }
 
@@ -50,13 +50,13 @@
 }
 
 .paddingBottom {
-  padding-bottom: var(--pt4) !important;
+  padding-bottom: var(--pt2);
 }
 
 @media (min-width: 992px) {
   .section {
     padding: var(--pt4) 0 0 0;
-    margin-bottom: var(--pt8) !important;
+    margin-bottom: var(--pt6) !important;
   }
 
   .section > div:last-child {
@@ -76,7 +76,7 @@
   }
 
   .content {
-    padding: var(--pt4) 0 0 0;
+    padding: var(--pt3) 0 0 0;
   }
 
   .tabs {
@@ -94,5 +94,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .indexes {
+    margin-bottom: var(--pt05);
+  }
+
+  .paddingBottom {
+    padding-bottom: var(--pt4);
   }
 }

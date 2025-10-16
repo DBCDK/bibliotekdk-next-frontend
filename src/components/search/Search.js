@@ -19,6 +19,7 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Search.module.css";
 import HelpBtn from "./help";
+import IndexesBtn from "./indexes";
 
 // -----------------------------
 // Centralized mode + URL helpers
@@ -229,6 +230,7 @@ export function Search({ onWorkTypeSelect, mode, onTabChange }) {
           <Col className={styles.links} sm={12} lg={{ span: 2 }}>
             {!isHistory && (
               <div>
+                <IndexesBtn className={styles.indexes} />
                 <HelpBtn className={styles.help} />
               </div>
             )}
