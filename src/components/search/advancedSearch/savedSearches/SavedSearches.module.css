@@ -45,6 +45,10 @@
   padding-bottom: var(--pt2);
 }
 
+.accordioItem:last-child .accordionContentContainer {
+  border-bottom: 1px solid var(--iron);
+}
+
 .emptyListMessage {
   white-space: pre-wrap;
   display: flex;

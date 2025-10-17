@@ -3,6 +3,43 @@
   display: none;
 }
 
+.banner {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--pt1) var(--pt2);
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: var(--pt5);
+}
+
+.link {
+  --underline-bottom-hover-color: var(--white);
+}
+
+.link span {
+  color: var(--white);
+}
+
+.link span:first-child {
+  transform: scale(0.9);
+}
+
+.link svg {
+  color: white;
+
+  display: block; /* undgår små “gaps” */
+  overflow: visible; /* forhindrer clipping */
+}
+
+.pipe {
+  height: 80%;
+  width: 2px;
+  background-color: var(--white);
+}
+
 @media (min-width: 768px) {
   /* Banner */
   .bannerWrap {
@@ -10,10 +47,4 @@
     background-color: var(--mine-shaft);
     color: var(--white);
   }
-}
-
-.banner {
-  display: flex;
-  justify-content: flex-end;
-  padding: var(--pt1) var(--pt2);
 }

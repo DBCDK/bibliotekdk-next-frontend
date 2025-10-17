@@ -106,9 +106,16 @@ function toSimple(query) {
 }
 
 function toAdvanced(query) {
-  // If fieldSearch is missing but q.all exists → build minimal fieldSearch
-  const fs = query.fieldSearch || buildFieldSearchFromAll(query["q.all"]);
+  // Fjern evt. anførselstegn fra q.all
+  let all = query["q.all"];
+  if (typeof all === "string") {
+    all = all.replace(/^"(.*)"$/, "$1"); // fjerner " forrest og bagerst
+  }
+
+  // Hvis fieldSearch mangler men q.all findes → byg minimal fieldSearch
+  const fs = query.fieldSearch || buildFieldSearchFromAll(all);
   const base = { ...query, fieldSearch: fs };
+
   const picked = pickAllowed(base, MODE_RULES[MODE.AVANCERET].allow);
   if (isEmptyVal(picked.fieldSearch)) delete picked.fieldSearch;
   return picked;
