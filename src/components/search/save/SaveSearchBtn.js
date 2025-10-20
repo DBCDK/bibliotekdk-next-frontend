@@ -16,6 +16,7 @@ import {
 import { useAdvancedSearchContext } from "../advancedSearch/advancedSearchContext";
 import { useFacets } from "../advancedSearch/useFacets";
 import { useQuickFilters } from "../advancedSearch/useQuickFilters";
+import { useCurrentSearchHistoryItem } from "@/components/hooks/useAdvancedSearchHistory";
 
 // =====================
 // UI (dumb/presentational)
@@ -47,6 +48,7 @@ export default function SaveSearchBtn({ className = "" }) {
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
   const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+  const currentSearchHistoryItem = useCurrentSearchHistoryItem();
 
   const advCtx = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
@@ -88,7 +90,10 @@ export default function SaveSearchBtn({ className = "" }) {
       });
     } else {
       // Saving
-      modal.push("saveSearch", { item: searchHistoryObj, onSaveDone: mutate });
+      modal.push("saveSearch", {
+        item: currentSearchHistoryItem,
+        onSaveDone: mutate,
+      });
     }
   };
 

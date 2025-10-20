@@ -72,11 +72,11 @@ export function History({ items, router, clearValues }) {
         </Col>
       </Row>
       {items?.map((value, index) => (
-        <Row>
-          <Col {...sizes} key={index}>
+        <Row key={index}>
+          <Col {...sizes}>
             <div className={styles.item}>
               <Link
-                onClick={(e) => {
+                onClick={() => {
                   value?.goToItemUrl();
                 }}
               >
@@ -97,7 +97,7 @@ export function History({ items, router, clearValues }) {
           iconPlacement="right"
           iconOrientation={180}
           border={{ bottom: { keepVisible: true }, top: false }}
-          onClick={(e) => {
+          onClick={() => {
             router.push("/find/historik/seneste");
           }}
           className={styles.showmore}

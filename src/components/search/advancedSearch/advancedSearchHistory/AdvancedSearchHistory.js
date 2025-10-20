@@ -76,6 +76,7 @@ export function SearchQueryDisplay({ item }) {
   return (
     <div className={styles.link}>
       <Text type="text4" tag="div" className={styles.searchType}>
+        hej
         {item?.translations?.type}
       </Text>
       <Link
@@ -201,6 +202,7 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
               await deleteSearches({ idsToDelete: [savedObject?.id] });
               mutate();
             } else {
+              console.log("save me??");
               //open save search modal
               modal.push("saveSearch", {
                 item: item,

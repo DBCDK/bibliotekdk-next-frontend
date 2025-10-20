@@ -13,6 +13,16 @@ import { useFacets } from "../search/advancedSearch/useFacets";
 import { useQuickFilters } from "../search/advancedSearch/useQuickFilters";
 import { useRouter } from "next/router";
 import { useAdvancedSearchContext } from "../search/advancedSearch/advancedSearchContext";
+import {
+  convertStateToCql,
+  getCqlAndFacetsQuery,
+} from "../search/advancedSearch/utils";
+import { useData } from "@/lib/api/api";
+
+import * as searchFragments from "@/lib/api/search.fragments";
+import { hitcount as advancedHitcount } from "@/lib/api/complexSearch.fragments";
+import useQ from "./useQ";
+import useFilters from "./useFilters";
 
 const KEY = "advanced-search-history";
 
@@ -113,15 +123,173 @@ function getUnixTimeStamp() {
   return new Date().getTime();
 }
 
+export function useCurrentSearchHistoryItem() {
+  const { getQuery } = useQ();
+  const q = getQuery();
+  const { filters } = useFilters();
+  const router = useRouter();
+  const advCtx = useAdvancedSearchContext();
+  const { selectedFacets } = useFacets();
+  const { selectedQuickFilters } = useQuickFilters();
+
+  const mode = router?.query?.mode;
+
+  const isSimple = mode === "simpel";
+  const isAdvanced = !isSimple;
+
+  const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl);
+  const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl);
+  const cql = advCtx?.cqlFromUrl;
+  const fieldSearch = advCtx?.fieldSearchFromUrl;
+  const simpleRes = useData(
+    isSimple && searchFragments.hitcount({ q, filters })
+  );
+
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
+    cql,
+    selectedFacets,
+    quickFilters: selectedQuickFilters,
+  });
+
+  const fieldSearchQuery = convertStateToCql(fieldSearch);
+
+  const advancedCql =
+    cqlAndFacetsQuery ||
+    convertStateToCql({
+      ...fieldSearch,
+      facets: selectedFacets,
+      quickFilters: selectedQuickFilters,
+    });
+  const advancedRes = useData(
+    !isSimple &&
+      (hasAdvancedSearch || hasCqlSearch) &&
+      advancedHitcount({ cql: advancedCql })
+  );
+
+  const rawcql = cqlAndFacetsQuery ? cql : fieldSearchQuery;
+
+  const hitcount = isAdvanced
+    ? advancedRes?.data?.complexSearch?.hitcount || 0
+    : simpleRes?.data?.search?.hitcount || 0;
+
+  let item = simpleRes?.data
+    ? {
+        mode,
+        key: JSON.stringify({ mode, q, filters }),
+        q,
+        filters,
+      }
+    : advancedRes?.data
+    ? {
+        key: advancedCql,
+        hitcount,
+        fieldSearch,
+        cql: rawcql,
+        selectedFacets,
+        selectedQuickFilters,
+        mode,
+      }
+    : null;
+
+  // return the item as a memoized value in order to avoid unnecessary re-renders
+  return useMemo(() => {
+    if (!item) {
+      return null;
+    }
+    return {
+      ...item,
+      timestamp: getTimeStamp(getUnixTimeStamp()),
+      unixtimestamp: getUnixTimeStamp(),
+    };
+  }, [JSON.stringify(item)]);
+}
+
+export function useEnhanceSearchHistoryItem() {
+  const { restartFacetsHook } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
+  const { changeWorkType } = useAdvancedSearchContext();
+
+  function enhanceItem(item) {
+    const isSimple = item.mode === "simpel";
+    const isAdvanced = !isSimple && !isEmpty(item.fieldSearch);
+    const type = Translate({
+      context: "improved-search",
+      label: isSimple ? "simple" : isAdvanced ? "advanced" : "cql",
+    });
+
+    const goToItemUrl = () => {
+      if (item.mode === "simpel") {
+        let qKey = "";
+        let qValue = "";
+        if (item?.q?.subject) {
+          qKey = "q.subject";
+          qValue = item?.q?.subject;
+        } else if (item?.q?.creator) {
+          qKey = "q.creator";
+          qValue = item?.q?.creator;
+        } else {
+          qKey = "q.all";
+          qValue = item?.q?.all;
+        }
+        let filtersStr = "";
+        if (item?.filters) {
+          Object.entries(item?.filters).forEach(([key, value]) => {
+            if (value.length > 0) {
+              filtersStr += `&${key}=${encodeURIComponent(value.join(","))}`;
+            }
+          });
+        }
+
+        router.push(
+          `/find/simpel?${qKey}=${encodeURIComponent(qValue)}${filtersStr}`
+        );
+        return;
+      }
+      // restart the useFacets hook - this is a 'new' search
+      restartFacetsHook();
+      resetQuickFilters();
+
+      // set worktype from item
+      changeWorkType(item.fieldSearch?.workType || "all");
+      if (!isEmpty(item.fieldSearch)) {
+        const query = {
+          fieldSearch: JSON.stringify(item.fieldSearch),
+          facets: JSON.stringify(item.selectedFacets || "[]"),
+          quickfilters: JSON.stringify(item.selectedQuickFilters || "[]"),
+        };
+        router.push({
+          pathname: "/avanceret/",
+          query: query,
+        });
+      } else if (item.cql) {
+        router.push({
+          pathname: "/avanceret/",
+          query: {
+            cql: item.cql,
+            facets: JSON.stringify(item.selectedFacets || "[]"),
+            quickfilters: JSON.stringify(item.quickfilters || "[]"),
+          },
+        });
+      }
+    };
+
+    return {
+      ...item,
+      goToItemUrl,
+      translations: {
+        type,
+        searchValue: getSearchValueString(item),
+      },
+    };
+  }
+  return enhanceItem;
+}
+
 export const useAdvancedSearchHistory = () => {
   let { data: storedValue, mutate } = useSWR(KEY, (key) =>
     JSON.parse(getSessionStorageItem(key) || "[]")
   );
-  const router = useRouter();
-
-  const { restartFacetsHook } = useFacets();
-  const { resetQuickFilters } = useQuickFilters();
-  const { changeWorkType } = useAdvancedSearchContext();
+  const enhanceItem = useEnhanceSearchHistoryItem();
 
   const setValue = (value) => {
     try {
@@ -181,77 +349,7 @@ export const useAdvancedSearchHistory = () => {
 
   const parsedStoredValue = useMemo(() => {
     return storedValue?.map((item) => {
-      const isSimple = item.mode === "simpel";
-      const isAdvanced = !isSimple && !isEmpty(item.fieldSearch);
-      const type = Translate({
-        context: "improved-search",
-        label: isSimple ? "simple" : isAdvanced ? "advanced" : "cql",
-      });
-
-      const goToItemUrl = () => {
-        if (item.mode === "simpel") {
-          let qKey = "";
-          let qValue = "";
-          if (item?.q?.subject) {
-            qKey = "q.subject";
-            qValue = item?.q?.subject;
-          } else if (item?.q?.creator) {
-            qKey = "q.creator";
-            qValue = item?.q?.creator;
-          } else {
-            qKey = "q.all";
-            qValue = item?.q?.all;
-          }
-          let filtersStr = "";
-          if (item?.filters) {
-            Object.entries(item?.filters).forEach(([key, value]) => {
-              if (value.length > 0) {
-                filtersStr += `&${key}=${encodeURIComponent(value.join(","))}`;
-              }
-            });
-          }
-
-          router.push(
-            `/find/simpel?${qKey}=${encodeURIComponent(qValue)}${filtersStr}`
-          );
-          return;
-        }
-        // restart the useFacets hook - this is a 'new' search
-        restartFacetsHook();
-        resetQuickFilters();
-
-        // set worktype from item
-        changeWorkType(item.fieldSearch?.workType || "all");
-        if (!isEmpty(item.fieldSearch)) {
-          const query = {
-            fieldSearch: JSON.stringify(item.fieldSearch),
-            facets: JSON.stringify(item.selectedFacets || "[]"),
-            quickfilters: JSON.stringify(item.selectedQuickFilters || "[]"),
-          };
-          router.push({
-            pathname: "/avanceret/",
-            query: query,
-          });
-        } else if (item.cql) {
-          router.push({
-            pathname: "/avanceret/",
-            query: {
-              cql: item.cql,
-              facets: JSON.stringify(item.selectedFacets || "[]"),
-              quickfilters: JSON.stringify(item.quickfilters || "[]"),
-            },
-          });
-        }
-      };
-
-      return {
-        ...item,
-        goToItemUrl,
-        translations: {
-          type,
-          searchValue: getSearchValueString(item),
-        },
-      };
+      return enhanceItem(item);
     });
   }, [storedValue]);
 

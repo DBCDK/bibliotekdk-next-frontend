@@ -15,6 +15,7 @@ import {
 import { useData, useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { useEnhanceSearchHistoryItem } from "./useAdvancedSearchHistory";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -25,6 +26,7 @@ export const useSavedSearches = () => {
   const isMobile = breakpoint === "xs";
   const [currentPage, setCurrentPage] = useState(1);
   const [savedSearches, setSavedSearches] = useState([]);
+  const enhanceItem = useEnhanceSearchHistoryItem();
 
   const { data, isLoading, mutate } = useData(
     hasCulrUniqueId &&
@@ -48,8 +50,10 @@ export const useSavedSearches = () => {
             .filter((search) => !savedSearchIds.has(search.id))
             .map((search) => {
               const searchObject = JSON.parse(search.searchObject);
+              const enhancedSearchObject = enhanceItem(searchObject);
+
               return {
-                ...searchObject,
+                ...enhancedSearchObject,
                 id: search.id,
                 createdAt: search.createdAt,
               };
