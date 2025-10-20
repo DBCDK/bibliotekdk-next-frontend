@@ -102,8 +102,6 @@ export default function Wrap({ onCommit = () => {} }) {
           selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
       };
 
-      console.log("value", value);
-
       // callback
       onCommit?.(value);
 
