@@ -1,4 +1,19 @@
 .item {
-  margin-top: var(--pt1_5);
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--pt1);
+  padding: var(--pt2) 0;
+  border-bottom: 1px solid var(--concrete);
+}
+
+.itemsheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--pt2);
+}
+
+.showmore {
+  margin-top: var(--pt2);
 }
