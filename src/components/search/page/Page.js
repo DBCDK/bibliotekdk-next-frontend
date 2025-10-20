@@ -12,7 +12,9 @@ import { NoHitSearch } from "@/components/search/advancedSearch/noHitSearch/NoHi
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
-import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
+import useSearchHistory, {
+  useCurrentSearchHistoryItem,
+} from "@/components/hooks/useSearchHistory";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
@@ -246,7 +248,8 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const advCtx = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
   const { selectedQuickFilters } = useQuickFilters();
-  const { setValue } = useAdvancedSearchHistory();
+  const { setValue } = useSearchHistory();
+  const currentSearchHistoryItem = useCurrentSearchHistoryItem();
 
   const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl) && isAdvanced;
   const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl) && isAdvanced;
@@ -287,29 +290,13 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
     : simpleRes?.data?.search?.hitcount || 0;
 
   const isLoading = isAdvanced ? advancedRes.isLoading : simpleRes.isLoading;
+
+  // Store the current search history item in the local storage
   useEffect(() => {
-    if (simpleRes?.data) {
-      setValue({
-        mode,
-        key: JSON.stringify({ mode, q, filters }),
-        q,
-        filters,
-      });
+    if (currentSearchHistoryItem) {
+      setValue(currentSearchHistoryItem);
     }
-  }, [simpleRes?.data]);
-  useEffect(() => {
-    if (advancedRes?.data) {
-      setValue({
-        key: advancedCql,
-        hitcount,
-        fieldSearch,
-        cql: rawcql,
-        selectedFacets,
-        selectedQuickFilters,
-        mode,
-      });
-    }
-  }, [advancedRes?.data]);
+  }, [currentSearchHistoryItem]);
 
   return (
     <Page

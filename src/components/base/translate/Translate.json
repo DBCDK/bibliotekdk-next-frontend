@@ -2483,9 +2483,17 @@
         "da": "Seneste søgninger",
         "en": "Latest searches"
       },
+      "history-empty-message": {
+        "da": "Her vil dine seneste søgninger dukke op, når du begynder at søge",
+        "en": "Your recent searches will appear here once you start searching"
+      },
       "history": {
         "da": "Søgehistorik",
         "en": "Search History"
+      },
+      "clear-history": {
+        "da": "Ryd liste",
+        "en": "Clear list"
       }
     },
     "search": {

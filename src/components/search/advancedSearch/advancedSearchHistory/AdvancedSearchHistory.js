@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
-import useAdvancedSearchHistory, {
+import useSearchHistory, {
   getDateTime,
   getTimeStamp,
-} from "@/components/hooks/useAdvancedSearchHistory";
+} from "@/components/hooks/useSearchHistory";
 import styles from "./AdvancedSearchHistory.module.css";
 import Text from "@/components/base/text";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
@@ -17,14 +17,11 @@ import { cyKey } from "@/utils/trim";
 import Icon from "@/components/base/icon/Icon";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
-import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useSavedSearches } from "@/components/hooks/useSearchHistory";
 import { useModal } from "@/components/_modal";
-import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
 //Component to render facets
 export function FormatedFilters({ facets, quickFilters = [], className }) {
@@ -70,79 +67,16 @@ export function FormatedFilters({ facets, quickFilters = [], className }) {
  * @returns  {JSX.Element}
  */
 export function SearchQueryDisplay({ item }) {
-  const router = useRouter();
-
-  const { restartFacetsHook } = useFacets();
-  const { resetQuickFilters } = useQuickFilters();
-  const { changeWorkType } = useAdvancedSearchContext();
-
   const isSimple = item.mode === "simpel";
   const isAdvanced = !isSimple && !isEmpty(item.fieldSearch);
   const isCql = !isSimple && isEmpty(item.fieldSearch);
 
-  const goToItemUrl = (item) => {
-    if (item.mode === "simpel") {
-      let qKey = "";
-      let qValue = "";
-      if (item?.q?.subject) {
-        qKey = "q.subject";
-        qValue = item?.q?.subject;
-      } else if (item?.q?.creator) {
-        qKey = "q.creator";
-        qValue = item?.q?.creator;
-      } else {
-        qKey = "q.all";
-        qValue = item?.q?.all;
-      }
-      let filtersStr = "";
-      if (item?.filters) {
-        Object.entries(item?.filters).forEach(([key, value]) => {
-          if (value.length > 0) {
-            filtersStr += `&${key}=${encodeURIComponent(value.join(","))}`;
-          }
-        });
-      }
-
-      router.push(
-        `/find/simpel?${qKey}=${encodeURIComponent(qValue)}${filtersStr}`
-      );
-      return;
-    }
-    // restart the useFacets hook - this is a 'new' search
-    restartFacetsHook();
-    resetQuickFilters();
-
-    // set worktype from item
-    changeWorkType(item.fieldSearch?.workType || "all");
-    if (!isEmpty(item.fieldSearch)) {
-      const query = {
-        fieldSearch: JSON.stringify(item.fieldSearch),
-        facets: JSON.stringify(item.selectedFacets || "[]"),
-        quickfilters: JSON.stringify(item.selectedQuickFilters || "[]"),
-      };
-      router.push({
-        pathname: "/avanceret/",
-        query: query,
-      });
-    } else if (item.cql) {
-      router.push({
-        pathname: "/avanceret/",
-        query: {
-          cql: item.cql,
-          facets: JSON.stringify(item.selectedFacets || "[]"),
-          quickfilters: JSON.stringify(item.quickfilters || "[]"),
-        },
-      });
-    }
-  };
+  const goToItemUrl = item?.goToItemUrl;
 
   return (
     <div className={styles.link}>
       <Text type="text4" tag="div" className={styles.searchType}>
-        {isSimple && Translate({ context: "improved-search", label: "simple" })}
-        {isAdvanced &&
-          Translate({ context: "improved-search", label: "advanced" })}
-        {isCql && Translate({ context: "improved-search", label: "cql" })}
+        {item?.translations?.type}
       </Text>
       <Link
         onClick={(e) => {
@@ -576,7 +510,7 @@ function splitHistoryItems(storedValues) {
 }
 
 export function AdvancedSearchHistory() {
-  const { storedValue, deleteValue } = useAdvancedSearchHistory();
+  const { storedValue, deleteValue } = useSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
   const breakpoint = useBreakpoint();

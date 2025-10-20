@@ -8,7 +8,7 @@ import isEmpty from "lodash/isEmpty";
 import Translate from "@/components/base/translate";
 import cx from "classnames";
 import Icon from "@/components/base/icon/Icon";
-import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useSavedSearches } from "@/components/hooks/useSearchHistory";
 import {
   SearchHistoryNavigation,
   HistoryHeaderActions,
