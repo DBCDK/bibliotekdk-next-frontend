@@ -201,7 +201,6 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
               await deleteSearches({ idsToDelete: [savedObject?.id] });
               mutate();
             } else {
-              console.log("save me??");
               //open save search modal
               modal.push("saveSearch", {
                 item: item,
