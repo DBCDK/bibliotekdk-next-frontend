@@ -5,7 +5,7 @@ import styles from "./SaveSearchBtn.module.css";
 
 // --- Wrap (handles hooks, data, side-effects) ---
 import Translate from "@/components/base/translate";
-import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useSavedSearches } from "@/components/hooks/useSearchHistory";
 import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
@@ -16,7 +16,7 @@ import {
 import { useAdvancedSearchContext } from "../advancedSearch/advancedSearchContext";
 import { useFacets } from "../advancedSearch/useFacets";
 import { useQuickFilters } from "../advancedSearch/useQuickFilters";
-import { useCurrentSearchHistoryItem } from "@/components/hooks/useAdvancedSearchHistory";
+import { useCurrentSearchHistoryItem } from "@/components/hooks/useSearchHistory";
 
 // =====================
 // UI (dumb/presentational)

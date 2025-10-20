@@ -12,9 +12,9 @@ import { NoHitSearch } from "@/components/search/advancedSearch/noHitSearch/NoHi
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
-import useAdvancedSearchHistory, {
+import useSearchHistory, {
   useCurrentSearchHistoryItem,
-} from "@/components/hooks/useAdvancedSearchHistory";
+} from "@/components/hooks/useSearchHistory";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
@@ -248,7 +248,7 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const advCtx = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
   const { selectedQuickFilters } = useQuickFilters();
-  const { setValue } = useAdvancedSearchHistory();
+  const { setValue } = useSearchHistory();
   const currentSearchHistoryItem = useCurrentSearchHistoryItem();
 
   const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl);

@@ -11,7 +11,7 @@ import Button from "@/components/base/button";
 import styles from "./SaveSearch.module.css";
 import Input from "@/components/base/forms/input";
 import { useEffect, useState } from "react";
-import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useSavedSearches } from "@/components/hooks/useSearchHistory";
 
 export default function SaveSearch({ modal, context }) {
   const { item, back, onSaveDone } = context;

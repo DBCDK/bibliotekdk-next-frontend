@@ -6,7 +6,7 @@ import Link from "@/components/base/link";
 
 import styles from "./History.module.css";
 import Translate from "@/components/base/translate";
-import useAdvancedSearchHistory from "@/components/hooks/useAdvancedSearchHistory";
+import useSearchHistory from "@/components/hooks/useSearchHistory";
 import { IconLink as LinkArrow } from "@/components/base/iconlink/IconLink";
 import { useRouter } from "next/router";
 
@@ -117,7 +117,7 @@ export function History({ items, router, clearValues }) {
 // Wrapper-komponent der håndterer navigation
 export default function Wrap() {
   const router = useRouter();
-  const { storedValue, clearValues } = useAdvancedSearchHistory();
+  const { storedValue, clearValues } = useSearchHistory();
 
   return (
     <History items={storedValue} router={router} clearValues={clearValues} />
