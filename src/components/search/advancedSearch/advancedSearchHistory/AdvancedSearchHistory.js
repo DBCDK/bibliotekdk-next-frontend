@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
-import useAdvancedSearchHistory, {
+import useSearchHistory, {
   getDateTime,
   getTimeStamp,
-} from "@/components/hooks/useAdvancedSearchHistory";
+} from "@/components/hooks/useSearchHistory";
 import styles from "./AdvancedSearchHistory.module.css";
 import Text from "@/components/base/text";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
@@ -19,7 +19,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import Button from "@/components/base/button";
 import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/CombinedSearch";
-import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useSavedSearches } from "@/components/hooks/useSearchHistory";
 import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
@@ -76,7 +76,6 @@ export function SearchQueryDisplay({ item }) {
   return (
     <div className={styles.link}>
       <Text type="text4" tag="div" className={styles.searchType}>
-        hej
         {item?.translations?.type}
       </Text>
       <Link
@@ -512,7 +511,7 @@ function splitHistoryItems(storedValues) {
 }
 
 export function AdvancedSearchHistory() {
-  const { storedValue, deleteValue } = useAdvancedSearchHistory();
+  const { storedValue, deleteValue } = useSearchHistory();
   const [checkboxList, setCheckboxList] = useState([]);
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
   const breakpoint = useBreakpoint();
