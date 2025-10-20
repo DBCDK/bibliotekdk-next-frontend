@@ -15,11 +15,11 @@ const LIMIT = 5;
 
 // History-komponent
 export function History({ items, router, clearValues }) {
-  const showMore = items.length > LIMIT;
-  items = items.slice(0, LIMIT);
+  const showMore = items?.length > LIMIT;
+  items = items?.slice(0, LIMIT);
   const sizes = { xs: 12, md: 10, lg: 11, xl: 9 };
 
-  if (!items.length) {
+  if (!items?.length) {
     return (
       <>
         <Row>
