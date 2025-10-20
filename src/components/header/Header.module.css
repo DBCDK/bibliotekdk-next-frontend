@@ -43,10 +43,6 @@
   font-family: var(--body-font-medium);
 }
 
-.top .actions {
-  display: none;
-}
-
 .iconActions {
   align-self: center;
   display: flex;
@@ -115,24 +111,6 @@
 
   .action + .action {
     margin-left: var(--pt3);
-  }
-
-  .header .top {
-    display: flex;
-    padding: var(--pt1) 0 var(--pt2) 0;
-  }
-
-  .top .actions {
-    display: flex;
-    align-items: center;
-  }
-
-  .top .actions a:first-child {
-    margin-left: auto;
-  }
-
-  .top .actions a {
-    margin: 0 0 0 var(--pt3);
   }
 }
 

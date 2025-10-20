@@ -1,10 +1,10 @@
-import Head from "next/head";
+import NextHead from "next/head";
 
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 import Translate from "@/components/base/translate";
 
-export default function _Head() {
+export default function Head() {
   const context = { context: "metadata" };
   const pageTitle = Translate({ ...context, label: "frontpage-title" });
   const pageDescription = Translate({
@@ -15,7 +15,7 @@ export default function _Head() {
   const { canonical, alternate } = useCanonicalUrl();
 
   return (
-    <Head>
+    <NextHead>
       <title key="title">{pageTitle}</title>
       <meta
         key="description"
@@ -46,6 +46,6 @@ export default function _Head() {
 
       <meta name="mobile-web-app-capable" content="yes"></meta>
       <meta name="theme-color" content="#3333ff"></meta>
-    </Head>
+    </NextHead>
   );
 }
