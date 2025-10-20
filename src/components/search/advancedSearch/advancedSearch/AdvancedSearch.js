@@ -68,7 +68,7 @@ function AdvancedSearch({ onSearch, onClear, isMobile }) {
 /**
  * Wrapper komponent: håndterer kontekst og logik
  */
-export default function Wrap() {
+export default function Wrap({ onCommit = () => {} }) {
   const router = useRouter();
   const isMobile = useBreakpoint() === "xs";
 
@@ -93,6 +93,9 @@ export default function Wrap() {
       fieldSearch: stateToString,
       ...(suggesterTid?.length > 0 && { tid: suggesterTid }),
     };
+
+    // callback
+    onCommit?.(stateToString);
 
     router.push({ pathname: "/find/avanceret", query });
 

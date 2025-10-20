@@ -248,8 +248,8 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const { selectedQuickFilters } = useQuickFilters();
   const { setValue } = useAdvancedSearchHistory();
 
-  const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl);
-  const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl);
+  const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl) && isAdvanced;
+  const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl) && isAdvanced;
 
   const cql = advCtx?.cqlFromUrl;
   const fieldSearch = advCtx?.fieldSearchFromUrl;

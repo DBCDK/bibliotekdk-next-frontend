@@ -370,8 +370,6 @@ function useQ() {
       obj[SuggestTypeEnum.SUBJECT]
   );
 
-  console.log("qqqq", _q);
-
   return {
     // functions
     setQ,
