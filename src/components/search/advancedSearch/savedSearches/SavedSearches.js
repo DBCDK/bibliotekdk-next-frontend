@@ -37,10 +37,18 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
     return (
       <div className={styles.savedItemRow} {...props}>
         <div
+          tabIndex={0}
           onClick={(e) => {
             e.stopPropagation(); // Prevent the accordion from expanding
             e.preventDefault();
             onSelect(item, !checked);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              e.stopPropagation();
+              onSelect(item, !checked);
+            }
           }}
         >
           <Checkbox
@@ -88,10 +96,18 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   return (
     <div className={styles.savedItemRow} {...props}>
       <div
+        tabIndex={0}
         onClick={(e) => {
           e.stopPropagation(); // Prevent the accordion from expanding
           e.preventDefault();
           onSelect(item, !checked);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            onSelect(item, !checked);
+          }
         }}
       >
         <Checkbox
@@ -125,10 +141,20 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         className={styles.removeItemIcon}
         size={3}
         src={`trash-2.svg`}
+        tabIndex={0}
         onClick={(e) => {
           e.stopPropagation();
           if (item?.id) {
             deleteSearches({ idsToDelete: [item.id] });
+          }
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            if (item?.id) {
+              deleteSearches({ idsToDelete: [item.id] });
+            }
           }
         }}
       />
@@ -381,10 +407,20 @@ export default function SavedSearches() {
                             className={styles.removeItemIcon}
                             size={3}
                             src={`trash_blue.svg`}
+                            tabIndex={0}
                             onClick={(e) => {
                               e.stopPropagation();
                               if (item?.id) {
                                 deleteSearches({ idsToDelete: [item.id] });
+                              }
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                if (item?.id) {
+                                  deleteSearches({ idsToDelete: [item.id] });
+                                }
                               }
                             }}
                           />
