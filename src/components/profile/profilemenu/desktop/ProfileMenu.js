@@ -23,7 +23,7 @@ const CONTEXT = "profile";
 export function getProfileUrl(wordToTranslate) {
   //savedSearches has different path than the rest of the profile urls
   if (wordToTranslate === "savedSearches") {
-    return "/avanceret/gemte-soegninger";
+    return "/find/historik/gemte";
   }
   return `/profil/${translateAndEncode(CONTEXT, wordToTranslate, "da")}`;
 }
