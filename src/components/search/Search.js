@@ -1,5 +1,5 @@
 // components/search/Search.jsx
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
@@ -41,6 +41,8 @@ export function Search({
   const isHistory = activeTab === MODE.HISTORY;
   const paddingBottomClass = !isHistory ? styles.paddingBottom : "";
 
+  console.log("activeTab", activeTab);
+
   return (
     <div className={styles.background}>
       <Container fluid>
@@ -58,6 +60,8 @@ export function Search({
             <Tabs
               active={activeTab}
               onSelect={(nextTab) => {
+                console.log("nextTab", nextTab);
+
                 if (nextTab && nextTab !== activeTab) onTabChange(nextTab);
               }}
               className={styles.tabs}
@@ -143,8 +147,16 @@ export function Search({
 export default function Wrap() {
   const { setQuery } = useQ();
   const router = useRouter();
-  const mode =
-    typeof router.query.mode === "string" ? router.query.mode : MODE.SIMPLE;
+
+  // Derive mode from the current path first; fallback to query; default to SIMPLE.
+  const mode = useMemo(() => {
+    const path = router.asPath || router.pathname || "";
+    if (path.includes("/find/historik")) return MODE.HISTORY;
+    if (path.includes("/find/avanceret")) return MODE.ADVANCED;
+    if (path.includes("/find/cql")) return MODE.CQL;
+    const q = typeof router.query.mode === "string" ? router.query.mode : null;
+    return q && Object.values(MODE).includes(q) ? q : MODE.SIMPLE;
+  }, [router.asPath, router.pathname, router.query.mode]);
 
   const { handleSimpleCommit, handleAdvancedCommit } = useSearchSync({
     router,
