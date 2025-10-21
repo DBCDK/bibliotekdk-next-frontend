@@ -15,6 +15,7 @@ import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefau
 import {
   convertStateToCql,
   parseSearchUrl,
+  stripOuterQuotesOnce,
 } from "@/components/search/advancedSearch/utils";
 import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
@@ -194,8 +195,9 @@ export function getFieldSearchFromUrl(query) {
   }
 
   if (q) {
+    // Ensure Advanced default seed does not carry outer quotes from Simple.
     const arr = getInitialInputFields();
-    arr[0].value = q;
+    arr[0].value = stripOuterQuotesOnce(q);
     return { inputFields: arr };
   }
 
