@@ -36,18 +36,6 @@ export const MATERIAL_PAGES = [
   { path: "noder", label: "sheetmusic" },
 ];
 
-const actions = [
-  {
-    label: "digitalOffers",
-    href: "/artikel/digitale-bibliotekstilbud/5",
-  },
-  {
-    label: "askLibrarian",
-    href: "/hjaelp/kontakt-os/25",
-  },
-  { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
-];
-
 /**
  * The Component function
  *
@@ -122,30 +110,6 @@ export function Header({
     >
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
-          <Row className={styles.top}>
-            <Col
-              xs={{ span: 12 }}
-              className={styles.actions}
-              data-cy={cyKey({ name: "actions", prefix: "header-top" })}
-            >
-              {actions.map((m) => (
-                <Link
-                  key={m.label}
-                  href={m.href}
-                  target={m.target}
-                  dataCy={cyKey({
-                    name: m.label,
-                    prefix: "header-link",
-                  })}
-                >
-                  <Text type="text3" tag="span">
-                    {Translate({ ...context, label: m.label })}
-                  </Text>
-                </Link>
-              ))}
-            </Col>
-          </Row>
-
           <Row className={styles.bottom}>
             <Col xs={3} lg={2} className={styles.logoWrapper}>
               <Logo />
@@ -153,10 +117,10 @@ export function Header({
             <Col
               xs={{ span: 7, offset: 1 }}
               className={styles.materials}
-              data-cy={cyKey({ name: "materials", prefix: "header" })}
+              data-cy="header-materials"
             >
               <Link href="/">
-                <Text type="text3" tag="span">
+                <Text type="text2" tag="span">
                   {Translate({
                     context: "general",
                     label: "frontpage",
@@ -176,7 +140,7 @@ export function Header({
                     border={{ bottom: { keepVisible: active } }}
                     dataCy={`header-link-${label}`}
                   >
-                    <Text type="text3" tag="span">
+                    <Text type="text2" tag="span">
                       {Translate({
                         context: "facets",
                         label: `label-${label}`,
@@ -193,7 +157,7 @@ export function Header({
                 className={styles.searchButton}
                 onClick={() => router.push("/find/simpel")}
               >
-                <Text type="text3" tag="span">
+                <Text type="text2" tag="span">
                   {Translate({
                     context: "header",
                     label: `search`,

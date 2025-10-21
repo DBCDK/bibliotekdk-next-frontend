@@ -251,8 +251,8 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const { setValue } = useSearchHistory();
   const currentSearchHistoryItem = useCurrentSearchHistoryItem();
 
-  const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl);
-  const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl);
+  const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl) && isAdvanced;
+  const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl) && isAdvanced;
 
   const cql = advCtx?.cqlFromUrl;
   const fieldSearch = advCtx?.fieldSearchFromUrl;

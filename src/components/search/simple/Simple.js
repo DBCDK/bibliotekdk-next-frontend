@@ -67,7 +67,7 @@ export function SimpleSearch({
 }
 
 // ⚙️ "Smart" komponent med al logik
-export default function Wrap() {
+export default function Wrap({ onCommit = () => {} }) {
   const router = useRouter();
   const { getQuery } = useFilters();
   const { q, setQ, setQuery, getQuery: getQ } = useQ();
@@ -101,6 +101,9 @@ export default function Wrap() {
         workTypes:
           selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
       };
+
+      // callback
+      onCommit?.(value);
 
       setQuery({
         include: newQ,

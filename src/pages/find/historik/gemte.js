@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Search from "@/components/search/Search";
-import SavedSearches from "@/components/search/advancedSearch/savedSearches.js/SavedSearches";
+import SavedSearches from "@/components/search/advancedSearch/savedSearches/SavedSearches";
 /**
  * Renders search history AdvancedSearch
  */

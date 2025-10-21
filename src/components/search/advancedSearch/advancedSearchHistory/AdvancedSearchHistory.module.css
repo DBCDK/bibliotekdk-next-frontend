@@ -1,6 +1,4 @@
-.container {
-  margin-top: var(--pt2);
-}
+/* ===== Base (mobile first) ===== */
 
 .historyFilters {
   display: flex;
@@ -13,22 +11,20 @@
   margin-right: var(--pt1);
 }
 
-.filteritem {
+.filteritem,
+.simplefilters {
   margin-right: var(--pt1);
   color: var(--blue);
 }
 
 .itemsheader {
-  padding-top: var(--pt3);
-  padding-bottom: var(--pt05);
+  padding: var(--pt3) 0 var(--pt05) var(--pt2);
   border-bottom: 1px solid var(--iron);
-  padding-left: var(--pt2);
-
   background-color: var(--concrete);
 }
 
-.table_row,
-.table_header {
+.table_header,
+.table_row {
   display: grid;
   grid-template-columns: 1fr 7fr 7fr 1fr;
   grid-template-areas:
@@ -38,21 +34,22 @@
   padding: var(--pt1_5) var(--pt2);
   align-items: start;
 }
-.table_row > *,
-.table_header > * {
-  min-width: 0; /* meget vigtigt i CSS Grid */
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 .table_header {
   background-color: var(--concrete);
 }
 
 .table_row {
-  padding: var(--pt2) var(--pt2);
   border-bottom: 1px solid var(--iron);
 }
+
+.table_header > *,
+.table_row > * {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .searchType {
   margin-bottom: var(--pt05);
 }
@@ -78,8 +75,37 @@
   justify-self: end;
 }
 
-.emptysearchpage {
-  margin-bottom: 320px;
+.saveSearch {
+  grid-area: save_search;
+  justify-self: end;
+}
+
+.saveSearchIcon {
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.menuDropdown {
+  display: grid;
+  grid-template-columns: 1fr 7fr 7fr 1fr;
+  grid-template-areas: "checkbox checkboxLabel menuDropdown menuDropdown";
+  column-gap: var(--pt1);
+  padding: var(--pt2);
+  border-bottom: 1px solid var(--iron);
+  align-items: center;
+}
+
+.menuDropdown .checkbox {
+  margin-top: var(--pt05);
+}
+
+.checkboxLabel {
+  grid-area: checkboxLabel;
+}
+
+.menuDropdownContainer {
+  grid-area: menuDropdown;
+  justify-self: end;
 }
 
 .removeItemsButton {
@@ -90,6 +116,7 @@
 
 .inline {
   display: inline;
+  padding: var(--pt2);
   margin-right: var(--pt05);
 }
 
@@ -101,8 +128,8 @@
 }
 
 .navigationButtons a {
-  background-image: none !important;
   position: relative;
+  background-image: none !important;
 }
 
 .navigationButtons a::after {
@@ -113,15 +140,14 @@
   right: 0;
   height: 3px;
   background-color: var(--underline-bottom-color, currentColor);
-  background-image: none;
 }
 
 .actionheader {
-  margin-bottom: var(--pt1);
   display: flex;
-  gap: var(--pt3);
   justify-content: flex-end;
   align-items: center;
+  gap: var(--pt3);
+  margin-bottom: var(--pt1);
 }
 
 .actionheader button {
@@ -129,57 +155,24 @@
   padding: var(--pt05) var(--pt2) !important;
 }
 
-.saveSearch {
-  grid-area: save_search;
-  justify-self: end;
-}
-.saveSearchIcon {
-  cursor: pointer;
-  margin-top: 2px;
+.emptysearchpage {
+  margin-bottom: 320px;
 }
 
-.menuDropdown {
-  display: grid;
-  grid-template-columns: 1fr 7fr 7fr 1fr;
-  grid-template-areas: "checkbox checkboxLabel menuDropdown menuDropdown";
-  column-gap: var(--pt1);
-  padding: var(--pt2) var(--pt2);
-  /*   
-  padding-right: var(--pt2);
-  padding-left: var(--pt2);
-  padding-bottom: var(--pt2); */
-  border-bottom: 1px solid var(--iron);
-  align-items: center;
-}
-.menuDropdown .checkbox {
-  margin-top: var(--pt05);
-}
-.checkboxLabel {
-  grid-area: checkboxLabel;
-}
-.menuDropdownContainer {
-  grid-area: menuDropdown;
-  justify-self: end;
-}
+/* ===== Media Queries ===== */
 
-.simplefilters {
-  color: var(--blue);
-}
-
-/* Mobile first - max-width: 370px */
-
-/* Small devices - min-width: 576px */
+/* ≥ 576px (sm) */
 @media (min-width: 576px) {
   .container {
     padding-inline: var(--pt2);
   }
 
-  .table_container > *:first-child {
-    border-top: none;
-  }
-
   .table_container {
     margin-top: 0;
+  }
+
+  .table_container > *:first-child {
+    border-top: none;
   }
 
   .timestamp {
@@ -188,19 +181,14 @@
 
   .actionheader {
     padding-left: var(--pt2);
+    justify-content: flex-end;
+    margin-bottom: var(--pt2);
   }
 
   .navigationButtons {
     padding-left: initial;
-    margin-left: initial;
-    margin-right: initial;
+    margin: 0;
     margin-bottom: var(--pt3);
-  }
-
-  .actionheader {
-    padding-left: var(--pt1);
-    justify-content: flex-end;
-    margin-bottom: var(--pt2);
   }
 
   .table_header,
@@ -208,6 +196,7 @@
     grid-template-columns: 1fr 2fr 6fr 2fr 1fr;
     grid-template-areas: "checkbox timestamp search_query hitcount save_search";
   }
+
   .link {
     margin-bottom: 0;
   }
@@ -215,7 +204,14 @@
   .itemsheader {
     background-color: unset;
   }
+
+  .inline {
+    padding: 0;
+    padding-top: var(--pt2);
+  }
 }
+
+/* ≥ 768px (md) */
 @media (min-width: 768px) {
   .table_header,
   .table_row {
@@ -228,6 +224,7 @@
   }
 }
 
-/* Large devices - min-width: 992px */
+/* ≥ 992px (lg) */
 @media (min-width: 992px) {
+  /* plads til fremtidige desktop-optimeringer */
 }
