@@ -1,32 +1,155 @@
-/* components/sample/epub/Epub.module.css */
+/* =========
+   CSS-variabler til styling af ReactReader + ePub-indhold
+   ========= */
 .wrapper {
+  /* Container + UI */
+  --epub-container-bg: #fff;
+  --epub-container-fg: #111;
+
+  --epub-reader-bg: #fff;
+
+  --epub-title-bg: #fff;
+  --epub-title-fg: #333;
+  --epub-title-border: 1px solid rgba(0, 0, 0, 0.06);
+
+  --epub-arrow-fg: #333;
+  --epub-arrow-hover-fg: #0f622f;
+  --epub-arrow-hover-bg: rgba(15, 98, 47, 0.08);
+
+  --epub-toc-bg: #fafafa;
+  --epub-toc-fg: #222;
+  --epub-toc-button-fg: #222;
+  --epub-toc-button-bg: transparent;
+  --epub-toc-button-expanded-bg: #efefef;
+  --epub-toc-button-bar-bg: #222;
+
+  /* ePub (iframe) indhold */
+  --epub-page-bg: #ffffff;
+  --epub-page-fg: #111111;
+  --epub-heading-fg: #0f622f;
+  --epub-link-fg: #0b5bd3;
+  --epub-link-decoration: underline;
+  --epub-page-font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  --epub-page-line-height: 1.55;
+  --epub-p-margin: 0 0 1em 0;
+
   position: relative;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: var(--epub-container-bg);
+  color: var(--epub-container-fg);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
 }
 
-.metaBar {
+/* ===== Labels (lige brede) — halv bredde & centreret ===== */
+.labels {
+  display: flex;
+  width: 50%;
+  margin: 8px auto 4px;
+  gap: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.96),
+    rgba(255, 255, 255, 0.8)
+  );
+  z-index: 5;
+}
+
+.labelBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  min-width: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.labelBtn:last-child {
+  border-right: none;
+}
+.labelBtn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.labelText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
+}
+.active .labelText {
+  color: var(--blue);
+}
+
+/* ===== Progressbar – halv bredde & centreret ===== */
+.progressTrack {
+  position: relative;
+  width: 50%;
+  margin: 8px auto;
+  height: 8px;
+  background: repeating-linear-gradient(
+    to right,
+    #eee 0,
+    #eee calc(100% / var(--segments) - 1px),
+    #ddd calc(100% / var(--segments) - 1px),
+    #ddd calc(100% / var(--segments))
+  );
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.progressFill {
   position: absolute;
   left: 0;
-  right: 0;
+  top: 0;
   bottom: 0;
-  padding: 8px 12px;
-  background: linear-gradient(
-    to top,
-    rgba(255, 255, 255, 0.96),
-    rgba(255, 255, 255, 0.75),
-    transparent
-  );
-  font-size: 12px;
-  color: #444;
-  pointer-events: none;
-  z-index: 1;
+  width: 0%;
+  background-color: var(--blue);
+  transition: width 0.22s ease;
+  will-change: width;
+  border-radius: 999px;
 }
 
-.pageLabel {
-  pointer-events: auto;
+/* Reader fylder resten (container-klassen fra react-reader) */
+.wrapper :global(.react-reader) {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Små skærme */
+@media (max-width: 640px) {
+  .labels {
+    width: 70%;
+    overflow-x: auto;
+  }
+  .labelBtn {
+    padding: 6px 10px;
+  }
+  .progressTrack {
+    width: 70%;
+    height: 6px;
+  }
+}
+
+/* remove reader toggle button */
+.wrapper > div > div button:first-of-type {
+  display: none;
+}
+
+.wrapper body {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.wrapper :global(#cover-image) {
+  display: none;
 }
