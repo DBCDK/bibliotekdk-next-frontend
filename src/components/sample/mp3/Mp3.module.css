@@ -1,0 +1,97 @@
+.container {
+  width: 100%;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid #e5e7eb;
+  background: #f7f7f7;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #efefef;
+}
+
+.wrapper {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+}
+
+/* Let forskellig padding/ramme afhængig af brugsscenarie */
+.overlay {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.page {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.limitOverlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(2px);
+  background: rgba(255, 255, 255, 0.88);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.limitCard {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.limitTitle {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.limitText {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 12px;
+}
+
+.cta {
+  appearance: none;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.cta:hover {
+  opacity: 0.95;
+}

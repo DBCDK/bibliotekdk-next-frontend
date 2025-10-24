@@ -1,0 +1,32 @@
+/* components/sample/epub/Epub.module.css */
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+.metaBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 12px;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.96),
+    rgba(255, 255, 255, 0.75),
+    transparent
+  );
+  font-size: 12px;
+  color: #444;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pageLabel {
+  pointer-events: auto;
+}
