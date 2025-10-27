@@ -11,6 +11,10 @@ import Cover from "@/components/base/cover/Cover";
 import Icon from "@/components/base/icon";
 import AiMarkdown from "@/components/base/markdown/AiMarkdown";
 
+/**
+ * Displays the creator overview with breadcrumbs, name, occupation,
+ * awards, generated summary and image.
+ */
 export function Overview({
   className = "",
   creatorId,
@@ -102,7 +106,7 @@ export function Overview({
 }
 
 export default function Wrap({ creatorId }) {
-  // This is temporary solution to get the viafid from the viaf data.
+  // This is temporary solution to get the viafid.
   // Will be available directly from fbi-api soon
   const { data: viafData, isLoading: isViafLoading } = useData({
     // delay: 1000,

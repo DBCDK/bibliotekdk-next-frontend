@@ -6,6 +6,10 @@ import styles from "./AiMarkdown.module.css";
 import Expand from "@/components/base/animation/expand/Expand";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
 
+/**
+ * Renders AI-generated markdown with progressive paragraph fade-in
+ * and expandable/collapsible content.
+ */
 export default function AiMarkdown({
   creatorId,
   text = "",
