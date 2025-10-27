@@ -85,7 +85,7 @@ export function Overview({
             className={styles.imageCol}
           >
             <Cover
-              src={creatorData?.wikidata?.image?.url}
+              src={creatorData?.wikidata?.image?.medium}
               alt={creatorData?.display}
               skeleton={isLoading}
             />
@@ -115,7 +115,7 @@ export default function Wrap({ creatorId }) {
     apiUrl: ApiEnums.FBI_API,
     query: `query creatorViafId($name: String!) {
   search(q: {creator: $name}) {
-    works(offset: 0, limit: 1) {
+    works(offset: 0, limit: 10) {
       creators {
         display
         viafid
@@ -125,12 +125,18 @@ export default function Wrap({ creatorId }) {
 }`,
     variables: { name: creatorId },
   });
-  const viafid = viafData?.search?.works?.[0]?.creators?.find(
-    (creator) => creator.display === creatorId
-  )?.viafid;
-  const { data: creatorData, isLoading: isCreatorLoading } = useData(
-    viafid && creatorOverview({ viafid })
-  );
+  const viafid = viafData?.search?.works
+    ?.find((work) =>
+      work.creators?.find((creator) => creator.display === creatorId)
+    )
+    ?.creators?.find((creator) => creator.display === creatorId)?.viafid;
+
+  const {
+    data: creatorData,
+    isLoading: isCreatorLoading,
+    error: creatorError,
+  } = useData(viafid && creatorOverview({ viafid }));
+
   return (
     <Overview
       creatorId={creatorId}

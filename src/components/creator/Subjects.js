@@ -85,7 +85,7 @@ export function Subjects({
 }
 
 export function SubjectsSkeleton(props) {
-  const data = ["someKeyword", "someKeyword", "someOtherKeyword"];
+  const data = ["someKeyword1", "someKeyword2", "someKeyword3"];
 
   return (
     <Subjects

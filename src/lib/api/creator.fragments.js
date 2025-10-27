@@ -318,7 +318,7 @@ export function creatorOverview({ viafid }) {
     wikidata {
       education
       image {
-        url
+        medium
         attributionText
       }
       nationality
