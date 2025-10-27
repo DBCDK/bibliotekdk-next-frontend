@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import Publications from "@/components/creator/publications";
 import Overview from "@/components/creator/Overview";
+import Subjects from "@/components/creator/Subjects";
 
 export default function CreatorPage() {
   const router = useRouter();
@@ -33,6 +34,8 @@ export default function CreatorPage() {
 
       <Header router={router} />
       <Overview creatorId={creatorId} />
+
+      <Subjects creatorId={creatorId} />
 
       <Publications creatorId={creatorId} />
     </>

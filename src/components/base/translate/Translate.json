@@ -46,6 +46,14 @@
       "no-results": {
         "da": "Ingen publikationer fundet med de valgte filtre",
         "en": "No publications found with the selected filters"
+      },
+      "keywords": {
+        "da": "Emneord",
+        "en": "Keywords"
+      },
+      "keywords-subtitle": {
+        "da": "%s beskæftiger sig ofte med",
+        "en": "Topics %s often explores"
       }
     },
     "advanced_search_cql": {
