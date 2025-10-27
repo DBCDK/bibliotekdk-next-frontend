@@ -29,9 +29,6 @@ export default function AiMarkdown({
     expanded ? "none" : `${previewHeight}px`
   );
 
-  //Override disclaimer until we get the text right
-  disclaimer =
-    "Tektsen er automatisk genereret ud fra bibliotekernes materialevurderinger. Indholdet kan indeholde fejl.";
   useEffect(() => {
     if (!expanded) {
       setInlineMaxHeight(`${previewHeight}px`);

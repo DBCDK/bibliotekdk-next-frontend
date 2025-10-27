@@ -21,6 +21,8 @@ export function Overview({
   creatorData,
   isLoading,
 }) {
+  const tmpDisclaimer =
+    "Teksten er automatisk genereret ud fra bibliotekernes materialevurderinger og kan indeholde fejl.";
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -72,7 +74,7 @@ export function Overview({
                 creatorId={creatorId}
                 text={creatorData?.generated?.summary?.text}
                 urlTransform={(href) => `/materiale/title/${href}`}
-                disclaimer={creatorData?.generated?.summary?.disclaimer}
+                disclaimer={tmpDisclaimer}
               />
             )}
           </Col>
