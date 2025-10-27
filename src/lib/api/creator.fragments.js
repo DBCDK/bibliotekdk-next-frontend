@@ -298,3 +298,37 @@ export function publicationYearFacets({ creatorId, filters = {} }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Fetch creator overview data by VIAF id (viafid)
+ */
+export function creatorOverview({ viafid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query CreatorOverview($viafid: String!) {
+  creatorByViafid(viafid: $viafid) {
+    display
+    viafid
+    generated {
+      summary {
+        text
+        disclaimer
+      }
+    }
+    wikidata {
+      education
+      image {
+        url
+        attributionText
+      }
+      nationality
+      occupation
+      description
+      awards
+    }
+  }
+}`,
+    variables: { viafid },
+    slowThreshold: 3000,
+  };
+}
