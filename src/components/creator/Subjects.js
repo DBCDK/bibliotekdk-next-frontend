@@ -4,7 +4,7 @@ import Translate from "@/components/base/translate/Translate";
 import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import { subjectUrl } from "@/components/work/keywords/Keywords";
-import kwStyles from "./Subjects.module.css";
+import kwStyles from "../work/keywords/Keywords.module.css";
 import { useData } from "@/lib/api/api";
 import { subjectFacets } from "@/lib/api/creator.fragments";
 import { useMemo } from "react";
@@ -18,13 +18,18 @@ import { useMemo } from "react";
  * - Strip diacritics (NFD + remove combining marks)
  * - Remove all non-letter characters (Unicode aware)
  */
-const normalizeLetters = (str) =>
-  (str || "")
-    .replace(/\([^)]*\)/g, " ")
+const normalizeLetters = (str) => {
+  if (!str) return "";
+
+  // Fjern parentesindhold, men brug et simpelt mønster uden backtracking
+  let s = str.replace(/\([^()]*\)/g, " ");
+
+  return s
     .toLowerCase()
     .normalize("NFD")
-    .replace(/\p{M}+/gu, "")
-    .replace(/[^\p{L}]+/gu, "");
+    .replace(/\p{M}/gu, "") // Fjern diakritiske tegn
+    .replace(/[^\p{L}]+/gu, ""); // Fjern alt der ikke er bogstaver
+};
 
 /**
  * Renders the creator Subjects (Emneord) section styled like Work Keywords.
