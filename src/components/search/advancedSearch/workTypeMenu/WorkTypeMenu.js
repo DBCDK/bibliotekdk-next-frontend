@@ -1,3 +1,4 @@
+// components/search/advancedSearch/workTypeMenu/WorkTypeMenu.jsx
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
@@ -11,6 +12,17 @@ import Translate from "@/components/base/translate/Translate";
 import Tag from "@/components/base/forms/tag";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
+/** helpers */
+const norm = (v) => (v == null ? "" : String(v).trim());
+const isNonEmpty = (v) => norm(v) !== "";
+const parseJSONSafe = (s) => {
+  try {
+    return typeof s === "string" ? JSON.parse(s) : s || null;
+  } catch {
+    return null;
+  }
+};
+
 export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
   const router = useRouter();
   const { workType, changeWorkType } = useAdvancedSearchContext();
@@ -18,25 +30,43 @@ export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
   const isSmallScreen =
     breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm";
 
-  // 📡 Parse URL param safely
+  /**
+   * Læs workType fra URL:
+   * 1) ?workTypes=... (Simple)
+   * 2) fallback: fieldSearch.workType (Advanced/CQL seed)
+   * ellers "all"
+   */
   const getWorkTypeFromUrl = () => {
-    const { workTypes } = router.query;
-    if (!workTypes) return "all";
-    if (Array.isArray(workTypes)) return workTypes[0] || "all";
-    return workTypes || "all";
+    const { workTypes: wtParam, fieldSearch } = router.query;
+
+    // 1) Direkte query-param (Simple)
+    if (wtParam) {
+      if (Array.isArray(wtParam)) return wtParam[0] || "all";
+      return wtParam || "all";
+    }
+
+    // 2) Fallback til fieldSearch.workType (Advanced/CQL)
+    if (fieldSearch) {
+      const fs = parseJSONSafe(fieldSearch);
+      const wtFromFS = fs?.workType;
+      if (isNonEmpty(wtFromFS)) return String(wtFromFS);
+    }
+
+    return "all";
   };
 
-  // 🔁 Keep context in sync with URL (initially and on Back/Forward)
+  // Hold kontekst i sync med URL – men KUN hvis forskellig (undgå loops)
   useEffect(() => {
     const fromUrl = getWorkTypeFromUrl();
     if (fromUrl !== workType) {
       changeWorkType(fromUrl);
     }
-  }, [router.query.workTypes]); // eslint-disable-line react-hooks/exhaustive-deps
+    // Vi lytter på begge, da wt kan komme enten som query-param eller inde i fieldSearch
+  }, [router.query.workTypes, router.query.fieldSearch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = (type) => {
-    onClick(type);
-    changeWorkType(type);
+    onClick(type); // kalder din hook.setWorkType via prop
+    changeWorkType(type); // opdaterer AdvancedSearchContext (UI state)
   };
 
   if (isSmallScreen) {

@@ -1,3 +1,4 @@
+// components/search/advancedSearch/advancedSearch/AdvancedSearch.jsx
 import { useRouter } from "next/router";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
@@ -86,30 +87,28 @@ export default function Wrap({ onCommit = () => {} }) {
   } = useAdvancedSearchContext();
 
   const handleSearch = () => {
+    // Ryd facets/quickfilters for et "rent" submit
     resetFacets();
     resetQuickFilters();
 
-    const query = {
-      fieldSearch: stateToString,
-      ...(suggesterTid?.length > 0 && { tid: suggesterTid }),
-    };
+    // 1) Lad HOOKEN styre navigationen + URL
+    //    (Hooken læser stateToString som fieldSearch og sørger for workTypes-injektion)
+    onCommit(stateToString, { tid: suggesterTid });
 
-    // callback
-    onCommit?.(stateToString);
-
-    router.push({ pathname: "/find/avanceret", query });
-
+    // 2) Opdater CQL-preview i UI (ingen navigation her)
     const cql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,
       workType,
     });
-
     setParsedCQL(cql);
   };
 
   const handleClear = () => {
+    // Nulstil avanceret state (felter, dropdowns, worktype, cql-preview)
     resetObjectState();
+
+    // Behold din nuværende “clear”-navigation – eller flyt den ind i hooken senere
     router.push({
       pathname: router.pathname,
       ...(router.query?.mode === "avanceret" && {

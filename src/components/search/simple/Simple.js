@@ -69,7 +69,7 @@ export function SimpleSearch({
 // ⚙️ "Smart" komponent med al logik
 export default function Wrap({ onCommit = () => {} }) {
   const router = useRouter();
-  const { getQuery } = useFilters();
+  const { getQuery, filters } = useFilters();
   const { q, setQ, setQuery, getQuery: getQ } = useQ();
   const [query, setQueryState] = useState(q[SuggestTypeEnum.ALL] || "");
   const [history, setHistory, clearHistory] = useHistory();
@@ -81,7 +81,8 @@ export default function Wrap({ onCommit = () => {} }) {
   const isMobileSuggester = isMobileSize && router?.query?.suggester;
 
   const { workTypes } = getQuery();
-  const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
+  const selectedMaterial =
+    workTypes?.[0] || filters?.workTypes?.[0] || SuggestTypeEnum.ALL;
 
   // Sync initial query
   useEffect(() => {

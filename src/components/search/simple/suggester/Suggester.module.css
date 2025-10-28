@@ -263,6 +263,6 @@
   }
 
   .suggestion:only-child {
-    padding: var(--pt2) 0;
+    padding: var(--pt2);
   }
 }

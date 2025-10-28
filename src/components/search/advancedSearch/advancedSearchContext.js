@@ -50,6 +50,14 @@ export function getDefaultDropdownIndices() {
  * @returns {[{prefixLogicalOperator: null, searchIndex: string, value: string},{prefixLogicalOperator: string, searchIndex: string, value: string}]}
  */
 export function getInitialInputFields(workType = "all") {
+  return [
+    {
+      value: "",
+      prefixLogicalOperator: null,
+      searchIndex: "term.default",
+    },
+  ];
+
   const inputFieldsByMaterialType = {
     all: [
       { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },

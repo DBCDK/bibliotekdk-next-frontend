@@ -1,17 +1,19 @@
+import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import cx from "classnames";
+
 import useFilters from "@/components/hooks/useFilters";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import Tag from "@/components/base/forms/tag";
 import Translate from "@/components/base/translate";
 import { cyKey } from "@/utils/trim";
-import styles from "./Select.module.css";
-import React from "react";
-import useQ from "@/components/hooks/useQ";
-import { useRouter } from "next/router";
-import FilterButton from "../../filterButton";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import cx from "classnames";
+
+import FilterButton from "../../filterButton";
+
+import styles from "./Select.module.css";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 export function Desktop({ options = [], onSelect, selected, className }) {
   return (
@@ -108,25 +110,20 @@ export function Mobile({ options = [], onSelect, selected, className }) {
  * @returns {React.JSX.Element}
  */
 function Wrap({ children }) {
-  const { getQuery, workTypes, getCount } = useFilters();
-  const { workTypes: workTypes2 } = getQuery();
+  const { filters, setFilters, getQuery, workTypes, getCount } = useFilters();
+  const { workTypes: urlWorkTypes } = getQuery();
 
-  const { setQuery } = useQ();
-
-  const selected = workTypes2[0] || "all";
-
-  const router = useRouter();
+  const selected =
+    urlWorkTypes?.[0] || filters?.workTypes?.[0] || SuggestTypeEnum.ALL;
 
   return React.cloneElement(children, {
     options: ["all", ...workTypes],
     onSelect: (elem) => {
-      const param =
+      const selected =
         elem === "all" ? { workTypes: [null] } : { workTypes: [elem] };
-      setQuery({
-        pathname: router.pathname,
-        query: { ...router.query, ...param },
-        exclude: ["page"],
-      });
+
+      // Updates selected filter in useFilters
+      setFilters({ ...filters, ...selected });
     },
     selected,
     count: getCount(["workTypes"]),
