@@ -4,7 +4,7 @@ import Translate from "@/components/base/translate/Translate";
 import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import { subjectUrl } from "@/components/work/keywords/Keywords";
-import kwStyles from "@/components/work/keywords/Keywords.module.css";
+import kwStyles from "./Subjects.module.css";
 import { useData } from "@/lib/api/api";
 import { subjectFacets } from "@/lib/api/creator.fragments";
 import { useMemo } from "react";

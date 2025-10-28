@@ -332,3 +332,76 @@ export function creatorOverview({ viafid }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Fetch up to N works for a creator including review relations (Infomedia etc.)
+ * Excludes articles and reviews via workType filter.
+ */
+export function reviewsForCreator({ creator, limit = 100, offset = 0 }) {
+  const cql = `phrase.creator="${creator}" NOT workType="review" NOT workType="article"`;
+  const sort = [{ index: "sort.latestpublicationdate", order: "DESC" }];
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query ReviewsForCreator($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $sort: [SortInput!]) {
+  complexSearch(cql: $cql) {
+    hitcount
+    errorMessage
+    works(offset: $offset, limit: $limit, sort: $sort) {
+      workId
+      titles {
+        main
+      }
+      manifestations {
+        mostRelevant {
+          cover {
+            detail: detail_207
+            origin
+            thumbnail
+          }
+          materialTypes {
+            materialTypeSpecific {
+              code
+            }
+          }
+        }
+        all {
+          cover {
+            detail: detail_207
+            origin
+            thumbnail
+          }
+          materialTypes {
+            materialTypeSpecific {
+              code
+            }
+          }
+        }
+      }
+      relations {
+        hasReview {
+          creators {
+            display
+          }
+          hostPublication {
+            title
+            issue
+          }
+          review {
+            rating
+          }
+          access {
+            __typename
+            ... on InfomediaService {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}`,
+    variables: { cql, offset, limit, sort },
+    slowThreshold: 3000,
+  };
+}

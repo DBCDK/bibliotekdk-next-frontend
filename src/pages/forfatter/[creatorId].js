@@ -5,6 +5,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import Publications from "@/components/creator/publications";
 import Overview from "@/components/creator/Overview";
 import Subjects from "@/components/creator/Subjects";
+import Favorites from "@/components/creator/Favorites";
 
 export default function CreatorPage() {
   const router = useRouter();
@@ -36,6 +37,8 @@ export default function CreatorPage() {
       <Overview creatorId={creatorId} />
 
       <Subjects creatorId={creatorId} />
+
+      <Favorites creatorId={creatorId} />
 
       <Publications creatorId={creatorId} />
     </>

@@ -131,11 +131,9 @@ export default function Wrap({ creatorId }) {
     )
     ?.creators?.find((creator) => creator.display === creatorId)?.viafid;
 
-  const {
-    data: creatorData,
-    isLoading: isCreatorLoading,
-    error: creatorError,
-  } = useData(viafid && creatorOverview({ viafid }));
+  const { data: creatorData, isLoading: isCreatorLoading } = useData(
+    viafid && creatorOverview({ viafid })
+  );
 
   return (
     <Overview
