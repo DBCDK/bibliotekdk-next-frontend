@@ -44,6 +44,7 @@ import { useRouter } from "next/router";
 import SaveSearchBtn from "../save";
 import Related from "../related/Related";
 import DidYouMean from "../didYouMean/DidYouMean";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 // -------------------------------
 // UI-komponent: kun rendering
@@ -236,8 +237,9 @@ Page.propTypes = {
 // -------------------------------
 export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const { getQuery, hasQuery } = useQ();
-  const { filters } = useFilters();
+  const { getQuery: getFiltersQuery } = useFilters();
   const q = getQuery();
+  const f = getFiltersQuery();
   const router = useRouter();
 
   const mode = router?.query?.mode;
@@ -274,6 +276,9 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
     });
 
   const rawcql = cqlAndFacetsQuery ? cql : fieldSearchQuery;
+
+  const filters =
+    f.workTypes[0] === SuggestTypeEnum.ALL ? { ...f, workTypes: [] } : f;
 
   const simpleRes = useData(
     isSimple && searchFragments.hitcount({ q, filters })

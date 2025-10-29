@@ -1,5 +1,5 @@
 // components/search/advancedSearch/workTypeMenu/WorkTypeMenu.jsx
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import { useRouter } from "next/router";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 
@@ -12,7 +12,7 @@ import Translate from "@/components/base/translate/Translate";
 import Tag from "@/components/base/forms/tag";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
-/** helpers */
+/* helpers */
 const norm = (v) => (v == null ? "" : String(v).trim());
 const isNonEmpty = (v) => norm(v) !== "";
 const parseJSONSafe = (s) => {
@@ -23,58 +23,65 @@ const parseJSONSafe = (s) => {
   }
 };
 
-export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
+/** Læs effektiv WT fra URL:
+ * 1) ?workTypes=...  2) fallback: fieldSearch.workType  3) "all"
+ */
+function getWorkTypeFromQuery(query) {
+  const wtParam = query?.workTypes;
+  if (isNonEmpty(wtParam)) {
+    return Array.isArray(wtParam) ? wtParam[0] || "all" : wtParam;
+  }
+  const fs = query?.fieldSearch ? parseJSONSafe(query.fieldSearch) : null;
+  const wtFromFS = fs?.workType;
+  return isNonEmpty(wtFromFS) ? String(wtFromFS) : "all";
+}
+
+/**
+ * WorkTypeMenu
+ * - Når deferUrlUpdate = true: opdater KUN Advanced-context lokalt (ingen URL push)
+ * - Når deferUrlUpdate = false: kald onClick(type) (typisk → useSearchSync.setWorkType → URL)
+ */
+export default function WorkTypeMenu({
+  className = "",
+  onClick = () => {},
+  deferUrlUpdate = true,
+}) {
   const router = useRouter();
-  const { workType, changeWorkType } = useAdvancedSearchContext();
+  const { workType: ctxWT, changeWorkType } = useAdvancedSearchContext();
   const breakpoint = useBreakpoint();
   const isSmallScreen =
     breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm";
 
-  /**
-   * Læs workType fra URL:
-   * 1) ?workTypes=... (Simple)
-   * 2) fallback: fieldSearch.workType (Advanced/CQL seed)
-   * ellers "all"
-   */
-  const getWorkTypeFromUrl = () => {
-    const { workTypes: wtParam, fieldSearch } = router.query;
-
-    // 1) Direkte query-param (Simple)
-    if (wtParam) {
-      if (Array.isArray(wtParam)) return wtParam[0] || "all";
-      return wtParam || "all";
-    }
-
-    // 2) Fallback til fieldSearch.workType (Advanced/CQL)
-    if (fieldSearch) {
-      const fs = parseJSONSafe(fieldSearch);
-      const wtFromFS = fs?.workType;
-      if (isNonEmpty(wtFromFS)) return String(wtFromFS);
-    }
-
-    return "all";
-  };
-
-  // Hold kontekst i sync med URL – men KUN hvis forskellig (undgå loops)
-  useEffect(() => {
-    const fromUrl = getWorkTypeFromUrl();
-    if (fromUrl !== workType) {
-      changeWorkType(fromUrl);
-    }
-    // Vi lytter på begge, da wt kan komme enten som query-param eller inde i fieldSearch
-  }, [router.query.workTypes, router.query.fieldSearch]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Vis værdi: brug Advanced-ctx hvis sat; ellers effektiv fra URL.
+  const effectiveWT = useMemo(() => {
+    return ctxWT || getWorkTypeFromQuery(router.query) || "all";
+  }, [ctxWT, router.query?.workTypes, router.query?.fieldSearch]);
 
   const handleClick = (type) => {
-    onClick(type); // kalder din hook.setWorkType via prop
-    changeWorkType(type); // opdaterer AdvancedSearchContext (UI state)
+    if (deferUrlUpdate) {
+      // Advanced (defer): kun lokalt, ingen reset, ingen URL
+      if (typeof changeWorkType === "function") {
+        // Understøt både (type) og (type, options)
+        try {
+          changeWorkType(type, { reset: false });
+        } catch {
+          changeWorkType(type);
+        }
+      }
+    } else {
+      // Normal: lad Search.jsx → useSearchSync sætte global WT/URL
+      onClick(type);
+    }
   };
+
+  const items = workTypes; // ["all", "literature", ...] i din json
 
   if (isSmallScreen) {
     return (
       <div className={`${styles.tagWrapper} ${className}`}>
         <div className={styles.tagContainer}>
-          {workTypes.map((type) => {
-            const isSelected = type === workType;
+          {items.map((type) => {
+            const isSelected = type === effectiveWT;
             return (
               <Tag
                 className={styles.tagItem}
@@ -98,8 +105,8 @@ export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
 
   return (
     <div className={`${styles.dropdownMenu} ${className}`}>
-      {workTypes.map((type) => {
-        const isSelected = type === workType;
+      {items.map((type) => {
+        const isSelected = type === effectiveWT;
         const LinkTag = isSelected ? IconButton : Link;
         const linkProps = isSelected
           ? { keepUnderline: true, iconSize: 1 }

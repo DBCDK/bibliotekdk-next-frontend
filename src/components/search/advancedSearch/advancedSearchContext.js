@@ -21,6 +21,9 @@ import { useInputFields } from "@/components/search/advancedSearch/useInputField
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import isEmpty from "lodash/isEmpty";
 
+const norm = (v) => (v == null ? "" : String(v).trim());
+const isNonEmpty = (v) => norm(v) !== "";
+
 export function getDefaultDropdownIndices() {
   return [
     { searchIndex: DropdownIndicesEnum.MAINLANGUAGES, value: [] },
@@ -238,6 +241,22 @@ export default function AdvancedSearchProvider({ children, router }) {
       popoverRef?.current?.focus();
     }
   }, [showPopover, popoverRef.current]);
+
+  useEffect(() => {
+    const { workTypes: wtParam, fieldSearch: fsParam } = router.query;
+
+    let wt = "all";
+    if (isNonEmpty(wtParam)) {
+      wt = Array.isArray(wtParam) ? wtParam[0] || "all" : wtParam;
+    } else if (fsParam) {
+      const fs = parseSearchUrl(fsParam);
+      wt = fs?.workType || "all";
+    }
+
+    if (wt !== workType) {
+      setWorkType(wt);
+    }
+  }, [router.query?.workTypes, router.query?.fieldSearch]); // eslint-disable-line
 
   //tracking id for the selected suggestion from inputfield. For now we only save one tid.
   const [suggesterTid, setSuggesterTid] = useState("");

@@ -1,6 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useMemo, useState, useCallback, memo } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import cx from "classnames";
 
 import useFilters from "@/components/hooks/useFilters";
 import Icon from "@/components/base/icon";
@@ -15,7 +16,22 @@ import FilterButton from "../../filterButton";
 import styles from "./Select.module.css";
 import { SuggestTypeEnum } from "@/lib/enums";
 
-export function Desktop({ options = [], onSelect, selected, className }) {
+/** Fælles label-helper */
+function labelFor(value) {
+  const isAll = value === "all";
+  return Translate({
+    context: isAll ? "general" : "facets",
+    label: isAll ? "all" : `label-${value}`,
+  });
+}
+
+/** Desktop */
+export const Desktop = memo(function Desktop({
+  options = [],
+  onSelect,
+  selected,
+  className = "",
+}) {
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
       <Dropdown.Toggle
@@ -25,10 +41,7 @@ export function Desktop({ options = [], onSelect, selected, className }) {
         className={styles.dropdowntoggle}
       >
         <Text tag="span" type="text2">
-          {Translate({
-            context: selected === "all" ? "general" : "facets",
-            label: selected === "all" ? selected : `label-${selected}`,
-          })}
+          {labelFor(selected)}
           <Icon
             size={{ w: 1, h: 1 }}
             src="arrowrightblue.svg"
@@ -40,23 +53,19 @@ export function Desktop({ options = [], onSelect, selected, className }) {
 
       <Dropdown.Menu className={styles.dropdownmenu}>
         {options.map((elem) => {
+          const isSelected = selected === elem;
           return (
             <Dropdown.Item
               tabIndex="-1"
               data-cy={`item-${elem}`}
               key={`materialdropdown-${elem}`}
-              className={cx(styles.dropdownitem, {
-                [styles.selectedItem]: selected === elem,
-              })}
-              onClick={() => {
-                onSelect(elem);
-              }}
+              className={`${styles.dropdownitem} ${
+                isSelected ? styles.selectedItem : ""
+              }`}
+              onClick={() => onSelect(elem)}
             >
               <Text tag="span" type="text3">
-                {Translate({
-                  context: "facets",
-                  label: `label-${elem}`,
-                })}
+                {labelFor(elem)}
               </Text>
             </Dropdown.Item>
           );
@@ -64,67 +73,81 @@ export function Desktop({ options = [], onSelect, selected, className }) {
       </Dropdown.Menu>
     </Dropdown>
   );
-}
+});
 
-/**
- * Mobile version - @see SearchBar.js
- * @param options
- * @param onSelect
- * @param selected
- * @param count
- * @param className
- * @returns {React.JSX.Element}
- */
-export function Mobile({ options = [], onSelect, selected, className }) {
+/** Mobile */
+export const Mobile = memo(function Mobile({
+  options = [],
+  onSelect,
+  selected,
+  className = "",
+}) {
   const breakpoint = useBreakpoint();
   const isTablet = breakpoint === "md";
 
   return (
     <div className={`${styles.materials} ${className}`}>
       <div>
-        {options.map((elem) => {
-          const isSelected = selected === elem;
-          return (
-            <Tag
-              key={elem}
-              selected={isSelected}
-              onClick={() => onSelect(elem)}
-            >
-              {Translate({
-                context: elem === "all" ? "general" : "facets",
-                label: elem === "all" ? elem : `label-${elem}`,
-              })}
-            </Tag>
-          );
-        })}
+        {options.map((elem) => (
+          <Tag
+            key={elem}
+            selected={selected === elem}
+            onClick={() => onSelect(elem)}
+          >
+            {labelFor(elem)}
+          </Tag>
+        ))}
       </div>
-      {isTablet && <FilterButton className={styles.filterButton} />}{" "}
+      {isTablet && <FilterButton className={styles.filterButton} />}
     </div>
   );
-}
+});
 
 /**
- * Show a 'select' list of available material filters.
- *
- * @param children
- * @returns {React.JSX.Element}
+ * Wrap
+ * - Brug URL-værdien KUN til at initialisere lokalt state (ingen skriv til filters ved mount)
+ * - Hold lokalt `selected` i sync med filters.workTypes
+ * - Ved brugerinteraktion: opdatér lokalt + bevar øvrige filtre via `{ ...filters, ...next }`
  */
 function Wrap({ children }) {
   const { filters, setFilters, getQuery, workTypes, getCount } = useFilters();
   const { workTypes: urlWorkTypes } = getQuery();
 
-  const selected =
-    urlWorkTypes?.[0] || filters?.workTypes?.[0] || SuggestTypeEnum.ALL;
+  // 1) Initial selected kun fra URL/filters ved mount
+  const initialSelected =
+    urlWorkTypes?.[0] ?? filters?.workTypes?.[0] ?? SuggestTypeEnum.ALL;
+
+  const [selected, setSelected] = useState(initialSelected);
+
+  // 2) Sync lokalt state når hooken (SWR) har initieret/ændret filters
+  useEffect(() => {
+    const fromFilters = filters?.workTypes?.[0] ?? SuggestTypeEnum.ALL;
+    if (fromFilters !== selected) {
+      setSelected(fromFilters);
+    }
+  }, [filters?.workTypes, selected]);
+
+  // 3) Håndter brugerens valg — bevar alle eksisterende filtre
+  const handleSelect = useCallback(
+    (elem) => {
+      if (elem !== selected) setSelected(elem);
+
+      const next =
+        elem === "all"
+          ? { workTypes: [SuggestTypeEnum.ALL] }
+          : { workTypes: [elem] };
+
+      // Kritisk: bevar andre filterfelter
+      setFilters({ ...filters, ...next });
+    },
+    [selected, filters, setFilters]
+  );
+
+  const options = useMemo(() => ["all", ...(workTypes || [])], [workTypes]);
 
   return React.cloneElement(children, {
-    options: ["all", ...workTypes],
-    onSelect: (elem) => {
-      const selected =
-        elem === "all" ? { workTypes: [null] } : { workTypes: [elem] };
-
-      // Updates selected filter in useFilters
-      setFilters({ ...filters, ...selected });
-    },
+    options,
+    onSelect: handleSelect,
     selected,
     count: getCount(["workTypes"]),
   });

@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import isEqual from "lodash/isEqual";
 
 import useSWR from "swr";
-import { FilterTypeEnum } from "@/lib/enums";
+import { FilterTypeEnum, SuggestTypeEnum } from "@/lib/enums";
 
 const URL_FACET_DELIMITER = ",";
 const DELIMITER_ENCODING = "__";
@@ -50,6 +50,7 @@ const fetcher = () => locale;
 export function buildFilters() {
   const params = {};
   types.forEach((type) => (params[type] = []));
+  params.workTypes = [SuggestTypeEnum.ALL];
   return params;
 }
 

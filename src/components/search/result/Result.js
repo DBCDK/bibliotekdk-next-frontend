@@ -22,6 +22,7 @@ import {
   convertStateToCql,
 } from "@/components/search/advancedSearch/utils";
 import { mapQuickFilters } from "@/components/search/facets/simple/SimpleFacets";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 /* -------------------------------- UI -------------------------------- */
 
@@ -111,10 +112,11 @@ export default function Wrap({ page = 1, onWorkClick }) {
   );
 
   // Simpel søgning inputs
-  const { filters, isSynced } = useFilters();
+  const { getQuery: getFiltersQuery, isSynced } = useFilters();
   const { getQuery, hasQuery } = useQ();
 
   const q = getQuery();
+  const f = getFiltersQuery();
 
   const dataCollect = useDataCollect();
   if (!isSynced) offset = 0;
@@ -130,6 +132,9 @@ export default function Wrap({ page = 1, onWorkClick }) {
         })
       : null
   );
+
+  const filters =
+    f.workTypes[0] === SuggestTypeEnum.ALL ? { ...f, workTypes: [] } : f;
 
   const merged = { ...filters, ...mapped };
 
