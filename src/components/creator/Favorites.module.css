@@ -66,13 +66,3 @@
 }
 
 /* No responsive overrides: width is fixed for consistency */
-
-/* Vertical separator like work reviews */
-.seperator {
-  width: 1px;
-  height: 100%;
-  background-color: var(--iron);
-  border: 0;
-  position: absolute;
-  left: 1px;
-}

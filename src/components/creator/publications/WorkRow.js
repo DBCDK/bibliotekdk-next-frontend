@@ -21,11 +21,6 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
       ? work?.workYear?.year
       : null;
 
-  const latestPublicationYear =
-    String(year?.key) !== String(work?.latestPublicationYear)
-      ? work?.latestPublicationYear
-      : null;
-
   const coverDetail = useMemo(() => {
     if (work?.manifestations?.mostRelevant) {
       return getCoverImage(work?.manifestations.mostRelevant)?.detail;
@@ -81,17 +76,10 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
           </Text>
         )}
 
-        {(originalWorkYear || latestPublicationYear) && (
+        {originalWorkYear && (
           <div className={styles.originalWorkYear}>
             <Text type="text3" lines={1} tag="span" skeleton={isLoading}>
               {originalWorkYear && `Oprindeligt udgivet ${originalWorkYear}`}
-              {originalWorkYear && latestPublicationYear && ", "}
-              {latestPublicationYear &&
-                !originalWorkYear &&
-                `Senest udgivet ${latestPublicationYear}`}
-              {latestPublicationYear &&
-                originalWorkYear &&
-                `senest ${latestPublicationYear}`}
             </Text>
           </div>
         )}
