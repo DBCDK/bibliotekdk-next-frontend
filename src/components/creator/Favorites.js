@@ -8,7 +8,7 @@ import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
 import { Rating } from "@/components/base/rating/Rating";
 import Cover from "@/components/base/cover/Cover";
-import { getInfomediaReviewUrl } from "@/lib/utils";
+import { getInfomediaReviewUrl, getWorkUrl } from "@/lib/utils";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { useData } from "@/lib/api/api";
 import { reviewsForCreator } from "@/lib/api/creator.fragments";
@@ -106,6 +106,13 @@ function mapToFavoritesItem({ work, review }) {
     ?.map((c) => c?.display)
     ?.filter(Boolean)
     ?.join(", ");
+  const workHref = getWorkUrl(
+    mainTitle || "",
+    work?.creators || [],
+    work?.workId,
+    undefined,
+    true
+  );
 
   return {
     title: review?.hostPublication?.title || "",
@@ -116,6 +123,7 @@ function mapToFavoritesItem({ work, review }) {
     workId: work?.workId || "",
     infomediaId: accessInf?.id || "",
     cover: coverDetail || null,
+    workHref,
   };
 }
 
@@ -145,18 +153,22 @@ export function Favorites({ data = [], isLoading = false }) {
       >
         {data.map((item, idx) => (
           <div key={`favorite_${idx}`} className={styles.item}>
-            <hr className={styles.seperator} />
             <div className={styles.row}>
               <div className={styles.cover}>
-                <Cover
-                  src={
-                    item.cover ||
-                    "https://fbiinfo-present.dbc.dk/images/xzE5DeFpSc-ax1Q6ENNQKg/240px!AS2cLB0cUHOxu-MsTSuWAwnrHhLs7Y42ue_VWka2Cbl39A"
-                  }
-                  alt={item.title}
-                  skeleton={isLoading}
-                  size="medium"
-                />
+                <Link
+                  href={item.workHref}
+                  border={{ bottom: false, top: false }}
+                >
+                  <Cover
+                    src={
+                      item.cover ||
+                      "https://fbiinfo-present.dbc.dk/images/xzE5DeFpSc-ax1Q6ENNQKg/240px!AS2cLB0cUHOxu-MsTSuWAwnrHhLs7Y42ue_VWka2Cbl39A"
+                    }
+                    alt={item.title}
+                    skeleton={isLoading}
+                    size="medium"
+                  />
+                </Link>
               </div>
               <div className={styles.content}>
                 <Title
