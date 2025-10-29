@@ -1,11 +1,11 @@
 // components/search/utils/debug.js
 /**
- * Debug logger with namespaces + easy export.
+ * Debug logger med namespaces + eksport af JSON.
  *
- * - Always logs in non-production (both server and browser).
- * - In production, logs only if localStorage['SEARCH_SYNC_DEBUG'] === '1'.
+ * - Logger altid i non-production (server + browser).
+ * - I production logger vi KUN hvis localStorage['SEARCH_SYNC_DEBUG'] === '1'.
  *
- * Global helpers (browser):
+ * Globale helpers (browser):
  *   window.SEARCH_LOGS.download()   // download JSON
  *   window.SEARCH_LOGS.copy()       // copy JSON
  *   window.SEARCH_LOGS.clear()      // clear buffer
@@ -14,8 +14,6 @@
  *   Ctrl+Alt+D  → download logs
  *   Ctrl+Alt+C  → copy logs
  *   Ctrl+Alt+X  → clear logs
- *
- * Optional floating button (bottom-right) appears when logging is enabled.
  */
 
 function isProd() {
@@ -49,7 +47,7 @@ function shouldLog() {
   return loggingEnabledInBrowser();
 }
 
-// ---- ring buffer for logs ----
+// ring buffer
 const MAX_LOGS = 5000;
 function makeStore() {
   return {
@@ -68,6 +66,7 @@ function makeStore() {
 }
 
 const store = makeStore();
+
 const NS_COLORS = {
   SYNC: "color:#fff;background:#0ea5e9;padding:2px 6px;border-radius:3px",
   CORE: "color:#fff;background:#10b981;padding:2px 6px;border-radius:3px",
@@ -81,17 +80,15 @@ const DEFAULT_STYLE =
 export function dbgNS(ns, ...args) {
   const ts = new Date().toISOString();
   const entry = { ts, ns, args };
-
-  // always store in dev (and prod if flag on)
+  store.push(entry);
   if (shouldLog()) {
     // eslint-disable-next-line no-console
-    const style = NS_COLORS[ns] || DEFAULT_STYLE;
-    console.log(`%c${ns}`, style, ...args);
+    console.log(`%c${ns}`, NS_COLORS[ns] || DEFAULT_STYLE, ...args);
   }
-
-  // store regardless, but keep size in check
-  store.push(entry);
 }
+
+/** Back-compat alias (nogle filer kaldte dbg()) */
+export const dbg = (...args) => dbgNS("SYNC", ...args);
 
 /** Namespaced helpers */
 export const dbgSYNC = (...a) => dbgNS("SYNC", ...a);
@@ -99,7 +96,15 @@ export const dbgCORE = (...a) => dbgNS("CORE", ...a);
 export const dbgCTX = (...a) => dbgNS("CTX", ...a);
 export const dbgUI = (...a) => dbgNS("UI", ...a);
 
-// ---- Browser helpers: download/copy/clear + hotkeys + floating button ----
+/** Udskriv buffer pænt til console (for at undgå "er ikke en funktion"-fejl) */
+export function flushDebugToConsole() {
+  try {
+    // eslint-disable-next-line no-console
+    console.log(prettyDump());
+  } catch {}
+}
+
+/** Utilities til browser UI */
 function toBlobUrl(json) {
   const blob = new Blob([json], { type: "application/json;charset=utf-8" });
   return URL.createObjectURL(blob);
@@ -180,7 +185,7 @@ function installHotkeys() {
 
 function installFloatingButton() {
   if (typeof window === "undefined") return;
-  if (!shouldLog()) return; // only show when logging is on
+  if (!shouldLog()) return;
   if (document.getElementById("search-logs-dock")) return;
 
   const btn = document.createElement("button");
@@ -209,11 +214,10 @@ function installFloatingButton() {
   document.body.appendChild(btn);
 }
 
-// initialize browser glue
+// init i browser
 if (typeof window !== "undefined") {
   ensureGlobals();
   installHotkeys();
-  // delay floating button until DOM is ready
   if (
     document.readyState === "complete" ||
     document.readyState === "interactive"

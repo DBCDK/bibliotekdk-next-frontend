@@ -1,21 +1,24 @@
-// components/search/hooks/useSearchSync.js
+// components/hooks/useSearchSync.js
+/**
+ * UI-hook der bruger core-funktionerne:
+ * - hydrateFromUrl (på asPath/query ændringer)
+ * - reduceCommit (handlers)
+ * - computeUrlForMode (tab-skift)
+ *
+ * Ingen afhængighed til AdvancedSearchContext.
+ */
+"use client";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   MODE,
+  MODE_PATH,
   initialSnap,
-  computeUrlForMode,
   reduceCommit,
+  computeUrlForMode,
   hydrateFromUrl,
-  withWorkTypeInFS,
-} from "../utils/searchSyncCore";
-import { dbgSYNC } from "../utils/debug";
-
-export const MODE_PATH = {
-  [MODE.SIMPLE]: "/find/simpel",
-  [MODE.ADVANCED]: "/find/avanceret",
-  [MODE.CQL]: "/find/cql",
-  [MODE.HISTORY]: "/find/historik/seneste",
-};
+} from "@/components/utils/searchSyncCore";
+import { dbgSYNC } from "@/components/utils/debug";
 
 function getModeFromRouter(router) {
   const base = (router?.asPath || router?.pathname || "").split("?")[0];
@@ -24,53 +27,24 @@ function getModeFromRouter(router) {
   if (base.includes("/find/cql")) return MODE.CQL;
   return MODE.SIMPLE;
 }
-function getPathForMode(mode) {
-  return MODE_PATH[mode] || MODE_PATH[MODE.SIMPLE];
-}
-const norm = (v) => (v == null ? "" : String(v).trim());
-const isNonEmpty = (v) => norm(v) !== "";
-
-function parseJSONSafe(s) {
-  try {
-    return typeof s === "string" ? JSON.parse(s) : s || null;
-  } catch {
-    return null;
-  }
-}
-function deriveWorkTypeFromUrl(query) {
-  const wtParam = query?.workTypes;
-  if (isNonEmpty(wtParam)) {
-    return Array.isArray(wtParam) ? wtParam[0] || "all" : String(wtParam);
-  }
-  const fs = query?.fieldSearch ? parseJSONSafe(query.fieldSearch) : null;
-  const wtFs = fs?.workType;
-  if (isNonEmpty(wtFs)) return String(wtFs);
-  return "all";
-}
 
 export function useSearchSync({ router }) {
-  const [snap, setSnap] = useState(initialSnap());
+  const [snap, setSnap] = useState(initialSnap);
   const lastOriginRef = useRef(null);
 
   const mode = useMemo(() => getModeFromRouter(router), [router.asPath]);
 
-  // Hydrate CQL from URL (?cql=) when in CQL
+  // Hydration fra URL (inkl. CQL=cql → “commit” + nedad-nulstilling)
   useEffect(() => {
-    const currentMode = getModeFromRouter(router);
-    const next = hydrateFromUrl(
-      { mode: currentMode, query: router.query },
-      { snap, lastOrigin: lastOriginRef.current }
+    const out = hydrateFromUrl(
+      mode,
+      router.query || {},
+      snap,
+      lastOriginRef.current
     );
-    if (next && next.snap !== snap) {
-      dbgSYNC("URL effect (hydrate)", {
-        asPath: router.asPath,
-        query: router.query,
-        next,
-      });
-      setSnap(next.snap);
-      lastOriginRef.current = next.lastOrigin;
-    }
-  }, [router.asPath]);
+    setSnap(out.snap);
+    lastOriginRef.current = out.lastOrigin;
+  }, [mode, router.query]); // shallow OK
 
   const pushUrl = useCallback(
     (pathname, queryObj) => {
@@ -91,224 +65,102 @@ export function useSearchSync({ router }) {
     [router]
   );
 
+  // Tab-skift
   const goToMode = useCallback(
-    (target) => {
+    (targetMode) => {
       dbgSYNC("goToMode() start", {
         from: mode,
-        to: target,
+        to: targetMode,
         lastOrigin: lastOriginRef.current,
         snap,
         urlQuery: router.query,
       });
-
-      // Special-case: CQL→ADV with URL fieldSearch seed (no CQL commit)
-      if (
-        mode === MODE.CQL &&
-        target === MODE.ADVANCED &&
-        router.query?.fieldSearch &&
-        !router.query?.cql &&
-        lastOriginRef.current !== MODE.CQL
-      ) {
-        const fieldSearch = String(router.query.fieldSearch);
-        const workTypes = router.query.workTypes
-          ? String(router.query.workTypes)
-          : undefined;
-        dbgSYNC("goToMode() special-case CQL→ADV w/URL seed", {
-          fieldSearch,
-          workTypes,
-          tid: router.query?.tid,
-        });
-        pushUrl(MODE_PATH[MODE.ADVANCED], {
-          fieldSearch,
-          ...(workTypes && { workTypes }),
-          ...(router.query?.tid && { tid: router.query.tid }),
-        });
-        return;
-      }
-
-      const wtEff =
-        snap.workTypes && snap.workTypes !== "all"
-          ? snap.workTypes
-          : deriveWorkTypeFromUrl(router.query);
-
-      const snapEff =
-        wtEff !== snap.workTypes ? { ...snap, workTypes: wtEff } : snap;
-
-      const { query } = computeUrlForMode({
-        targetMode: target,
-        snap: snapEff,
-        lastOrigin: lastOriginRef.current,
-        tid: router.query?.tid,
-      });
-
-      // Bevar FS.workType ved ADV→ADV/CQL (når wtEff === "all")
-      if (
-        target === MODE.ADVANCED &&
-        lastOriginRef.current === MODE.ADVANCED &&
-        isNonEmpty(snap.advanced.fieldSearch)
-      ) {
-        query.fieldSearch = withWorkTypeInFS(snap.advanced.fieldSearch, wtEff);
-      }
-      if (
-        target === MODE.CQL &&
-        lastOriginRef.current === MODE.ADVANCED &&
-        isNonEmpty(snap.advanced.fieldSearch)
-      ) {
-        query.fieldSearch = withWorkTypeInFS(snap.advanced.fieldSearch, wtEff);
-      }
-
-      dbgSYNC("goToMode() computed", { target, query });
-      pushUrl(getPathForMode(target), query);
-    },
-    [
-      mode,
-      snap,
-      pushUrl,
-      router.query?.tid,
-      router.query?.fieldSearch,
-      router.query?.cql,
-      router.query?.workTypes,
-    ]
-  );
-
-  const setWorkType = useCallback(
-    (type, options = { push: true }) => {
-      const nextWT = type || "all";
-      dbgSYNC("setWorkType()", {
-        nextWT,
-        options,
-        mode,
-        beforeSnapWT: snap.workTypes,
-      });
-
-      const next = reduceCommit(
-        { snap, lastOrigin: lastOriginRef.current },
-        { type: "SET_WORKTYPE", workTypes: nextWT }
+      const { query } = computeUrlForMode(
+        targetMode,
+        snap,
+        lastOriginRef.current
       );
-      setSnap(next.snap);
-
-      if (options?.push) {
-        const wtEff =
-          next.snap.workTypes && next.snap.workTypes !== "all"
-            ? next.snap.workTypes
-            : deriveWorkTypeFromUrl(router.query);
-
-        if (
-          mode === MODE.ADVANCED &&
-          isNonEmpty(next.snap.advanced.fieldSearch)
-        ) {
-          const fsWithWT = withWorkTypeInFS(
-            next.snap.advanced.fieldSearch,
-            wtEff
-          );
-          pushUrl(getPathForMode(MODE.ADVANCED), { fieldSearch: fsWithWT });
-          return;
-        }
-        if (mode === MODE.CQL && isNonEmpty(next.snap.cql.cql)) {
-          pushUrl(getPathForMode(MODE.CQL), { cql: next.snap.cql.cql });
-          return;
-        }
-        if (mode === MODE.SIMPLE && isNonEmpty(next.snap.simple.qAll)) {
-          const query = {
-            "q.all": next.snap.simple.qAll,
-            ...(wtEff !== "all" && { workTypes: wtEff }),
-          };
-          pushUrl(getPathForMode(MODE.SIMPLE), query);
-          return;
-        }
-        pushUrl(getPathForMode(mode), {});
-      } else {
-        dbgSYNC("setWorkType() (no push) – snapshot only");
-      }
+      const pathname = MODE_PATH[targetMode] || MODE_PATH[MODE.SIMPLE];
+      dbgSYNC("goToMode() computed", { target: targetMode, query });
+      pushUrl(pathname, query);
     },
-    [snap, mode, pushUrl, router.query]
+    [mode, snap, router.query, pushUrl]
   );
 
+  // SIMPLE commit
   const handleSimpleCommit = useCallback(
     (text) => {
-      const wtFromUrlOrFs = deriveWorkTypeFromUrl(router.query);
-      dbgSYNC("handleSimpleCommit()", {
-        text,
-        prevWT: snap.workTypes,
-        wtFromUrlOrFs,
-      });
-
-      // 🔧 VIGTIGT: send WT ind i reduceren, så snapshot skifter WT til SIMPLE-valget
-      const next = reduceCommit(
-        { snap, lastOrigin: lastOriginRef.current },
-        { type: "COMMIT_SIMPLE", qAll: text, workTypes: wtFromUrlOrFs }
+      dbgSYNC("handleSimpleCommit()", { text, prevWT: snap.workTypes });
+      const out = reduceCommit(
+        { type: "COMMIT_SIMPLE", qAll: text },
+        snap,
+        lastOriginRef.current
       );
-      setSnap(next.snap);
-      lastOriginRef.current = next.lastOrigin;
+      setSnap(out.snap);
+      lastOriginRef.current = out.lastOrigin;
 
-      const query = {
-        ...(isNonEmpty(text) && { "q.all": text }),
-        ...(isNonEmpty(text) &&
-          wtFromUrlOrFs !== "all" && { workTypes: wtFromUrlOrFs }),
-      };
-      dbgSYNC("handleSimpleCommit() → pushUrl", { query });
-      pushUrl(getPathForMode(MODE.SIMPLE), query);
+      const q = {};
+      if (out.snap.simple.qAll) q["q.all"] = out.snap.simple.qAll;
+      if (out.snap.workTypes && out.snap.workTypes !== "all")
+        q.workTypes = out.snap.workTypes;
+
+      dbgSYNC("handleSimpleCommit() → pushUrl", { query: q });
+      pushUrl(MODE_PATH[MODE.SIMPLE], q);
     },
-    [snap, pushUrl, router.query]
+    [snap, pushUrl]
   );
 
+  // ADVANCED commit
   const handleAdvancedCommit = useCallback(
     (fieldSearchString, extras = {}) => {
       dbgSYNC("handleAdvancedCommit()", { fieldSearchString, extras });
-      const next = reduceCommit(
-        { snap, lastOrigin: lastOriginRef.current },
-        { type: "COMMIT_ADVANCED", fieldSearch: fieldSearchString }
+      const out = reduceCommit(
+        { type: "COMMIT_ADVANCED", fieldSearch: fieldSearchString },
+        snap,
+        lastOriginRef.current
       );
-      setSnap(next.snap);
-      lastOriginRef.current = next.lastOrigin;
+      setSnap(out.snap);
+      lastOriginRef.current = out.lastOrigin;
 
-      const query = {
-        ...(isNonEmpty(fieldSearchString) && {
-          fieldSearch: fieldSearchString,
-        }),
-        ...(extras && extras.tid ? { tid: extras.tid } : {}),
-      };
-      dbgSYNC("handleAdvancedCommit() → pushUrl", { query });
-      pushUrl(getPathForMode(MODE.ADVANCED), query);
+      const q = {};
+      if (out.snap.advanced.fieldSearch)
+        q.fieldSearch = out.snap.advanced.fieldSearch;
+      if (out.snap.workTypes && out.snap.workTypes !== "all")
+        q.workTypes = out.snap.workTypes;
+
+      dbgSYNC("handleAdvancedCommit() → pushUrl", { query: q });
+      pushUrl(MODE_PATH[MODE.ADVANCED], q);
     },
     [snap, pushUrl]
   );
 
+  // CQL commit (rigtig CQL-søgning – IKKE bare visitation med fieldSearch seed)
   const handleCqlCommit = useCallback(
     (cqlString) => {
       dbgSYNC("handleCqlCommit()", { cqlString });
-      const next = reduceCommit(
-        { snap, lastOrigin: lastOriginRef.current },
-        { type: "COMMIT_CQL", cql: cqlString }
+      const out = reduceCommit(
+        { type: "COMMIT_CQL", cql: cqlString },
+        snap,
+        lastOriginRef.current
       );
-      setSnap(next.snap);
-      lastOriginRef.current = next.lastOrigin;
+      setSnap(out.snap);
+      lastOriginRef.current = out.lastOrigin;
 
-      const query = { ...(isNonEmpty(cqlString) && { cql: cqlString }) };
-      dbgSYNC("handleCqlCommit() → pushUrl", { query });
-      pushUrl(getPathForMode(MODE.CQL), query);
+      const q = {};
+      if (out.snap.cql.cql) q.cql = out.snap.cql.cql;
+
+      dbgSYNC("handleCqlCommit() → pushUrl", { query: q });
+      pushUrl(MODE_PATH[MODE.CQL], q);
     },
     [snap, pushUrl]
   );
 
-  const handleCqlClear = useCallback(() => {
-    dbgSYNC("handleCqlClear()");
-    const next = reduceCommit(
-      { snap, lastOrigin: lastOriginRef.current },
-      { type: "COMMIT_CQL", cql: "" }
-    );
-    setSnap(next.snap);
-    pushUrl(getPathForMode(MODE.CQL), {});
-  }, [snap, pushUrl]);
-
   return {
+    mode,
+    goToMode,
     handleSimpleCommit,
     handleAdvancedCommit,
     handleCqlCommit,
-    handleCqlClear,
-    goToMode,
-    setWorkType,
-    mode,
   };
 }
 

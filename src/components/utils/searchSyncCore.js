@@ -1,6 +1,20 @@
-// components/search/utils/searchSyncCore.js
+// src/components/search/utils/searchSyncCore.js
+/**
+ * Core sync- og URL-logik for søgningens “stige”.
+ * - MODE + initialSnap
+ * - reduceCommit: SIMPLE / ADVANCED / CQL
+ * - hydrateFromUrl: læs URL ind i snap (inkl. default workTypes = "all")
+ * - computeUrlForMode: byg query til target mode efter reglerne
+ *
+ * Stige-regel:
+ *  - CQL commit (eller CQL-url med cql=...) = lastOrigin='cql' + ryd SIMPLE/ADV og workTypes='all'
+ *  - Ved navigation NED fra cql → (avanceret/simpel) returneres altid TOM visning
+ *  - Opad (simpel → avanceret → cql) må seedes, inkl. workType
+ */
+
 import { dbgCORE } from "./debug";
 
+/* ---------- Modes ---------- */
 export const MODE = {
   SIMPLE: "simpel",
   ADVANCED: "avanceret",
@@ -8,15 +22,28 @@ export const MODE = {
   HISTORY: "history",
 };
 
-export const initialSnap = () => ({
-  simple: { qAll: null },
-  advanced: { fieldSearch: null },
-  cql: { cql: null },
-  workTypes: "all",
-});
+export const MODE_PATH = {
+  [MODE.SIMPLE]: "/find/simpel",
+  [MODE.ADVANCED]: "/find/avanceret",
+  [MODE.CQL]: "/find/cql",
+  [MODE.HISTORY]: "/find/historik/seneste",
+};
 
+/* ---------- Helpers ---------- */
 const norm = (v) => (v == null ? "" : String(v).trim());
-const isNonEmpty = (v) => norm(v) !== "";
+export const isNonEmpty = (v) => norm(v) !== "";
+
+function stripOuterQuotesOnce(s) {
+  const str = norm(s);
+  if (str.length >= 2) {
+    const a = str[0];
+    const b = str[str.length - 1];
+    if ((a === '"' && b === '"') || (a === "'" && b === "'")) {
+      return str.slice(1, -1);
+    }
+  }
+  return str;
+}
 
 function parseJSONSafe(s) {
   try {
@@ -25,6 +52,7 @@ function parseJSONSafe(s) {
     return null;
   }
 }
+
 function stringifySafe(obj) {
   try {
     return JSON.stringify(obj ?? {});
@@ -32,21 +60,9 @@ function stringifySafe(obj) {
     return "";
   }
 }
-function stripOuterQuotesOnce(s) {
-  const str = norm(s);
-  if (str.length >= 2) {
-    const a = str[0],
-      b = str[str.length - 1];
-    if ((a === '"' && b === "'") || (a === "'" && b === "'"))
-      return str.slice(1, -1);
-    if ((a === '"' && b === '"') || (a === "'" && b === "'"))
-      return str.slice(1, -1);
-  }
-  return str;
-}
 
-/* SIMPLE <-> fieldSearch */
-export function buildFSFromSimple(all) {
+/** SIMPLE -> fieldSearch seed */
+function buildFSFromSimple(all) {
   const v = stripOuterQuotesOnce(all);
   if (!isNonEmpty(v)) return undefined;
   return stringifySafe({
@@ -56,235 +72,225 @@ export function buildFSFromSimple(all) {
   });
 }
 
-/* workTypes helpers */
-function normalizeWorkTypesParam(val) {
-  if (!val) return "all";
-  if (Array.isArray(val)) {
-    const first = val.find(Boolean) || "all";
-    return String(first);
+/** fieldSearch.workType -> snap.workTypes */
+function safeExtractWorkType(fieldSearchStr) {
+  try {
+    if (!fieldSearchStr) return null;
+    const obj = JSON.parse(fieldSearchStr);
+    const wt = obj?.workType;
+    return wt && typeof wt === "string" ? wt : null;
+  } catch {
+    return null;
   }
-  return String(val) || "all";
-}
-function parseWorkTypeFromFS(fieldSearch) {
-  const obj = parseJSONSafe(fieldSearch);
-  return obj?.workType || "all";
 }
 
-/**
- * withWorkTypeInFS
- * - Hvis workType === "all" → bevar eksisterende workType i FS (ingen sletning)
- * - Hvis workType !== "all" → skriv/overskriv workType i FS
- */
-export function withWorkTypeInFS(fieldSearch, workType) {
+/** injicer workType ind i en FS-string */
+function injectWorkTypeIntoFS(fieldSearch, workType) {
   if (!isNonEmpty(fieldSearch)) return fieldSearch || "";
+  if (!workType || workType === "all") return fieldSearch;
   const obj = parseJSONSafe(fieldSearch) || {};
-
-  if (!workType || workType === "all") {
-    return stringifySafe(obj);
-  }
-
   obj.workType = workType;
   return stringifySafe(obj);
 }
 
-/* Reducer */
-export function reduceCommit(state, action) {
-  const base = state ?? { snap: initialSnap(), lastOrigin: null };
-  const { snap, lastOrigin } = base;
+/* ---------- initialSnap ---------- */
+export const initialSnap = {
+  simple: { qAll: null },
+  advanced: { fieldSearch: null },
+  cql: { cql: null },
+  workTypes: "all",
+};
+
+/* ---------- reduceCommit ---------- */
+export function reduceCommit(action, snap, lastOrigin) {
+  const next = {
+    snap: {
+      simple: { ...snap.simple },
+      advanced: { ...snap.advanced },
+      cql: { ...snap.cql },
+      workTypes: snap.workTypes,
+    },
+    lastOrigin,
+  };
 
   dbgCORE("reduceCommit() in", { action, snap, lastOrigin });
 
-  let out = base;
-
-  switch (action?.type) {
+  switch (action.type) {
     case "COMMIT_SIMPLE": {
-      const qAll = isNonEmpty(action.qAll) ? action.qAll : null;
-      // VIGTIGT: brug WT fra action hvis givet (SIMPLE’s valg)
-      const nextWT = qAll
-        ? normalizeWorkTypesParam(action.workTypes ?? snap.workTypes)
-        : "all";
-      out = {
-        snap: { ...snap, simple: { qAll }, workTypes: nextWT },
-        lastOrigin: MODE.SIMPLE,
-      };
+      const qAll = norm(action.qAll);
+      next.snap.simple.qAll = isNonEmpty(qAll) ? qAll : null;
+      next.lastOrigin = MODE.SIMPLE;
       break;
     }
 
     case "COMMIT_ADVANCED": {
-      const fs = isNonEmpty(action.fieldSearch) ? action.fieldSearch : null;
-      const wtFromFS = fs ? parseWorkTypeFromFS(fs) : "all";
-      const nextWT = fs
-        ? wtFromFS !== "all"
-          ? wtFromFS
-          : snap.workTypes
-        : "all";
-      out = {
-        snap: { ...snap, advanced: { fieldSearch: fs }, workTypes: nextWT },
-        lastOrigin: MODE.ADVANCED,
-      };
+      const fs = norm(action.fieldSearch);
+      next.snap.advanced.fieldSearch = isNonEmpty(fs) ? fs : null;
+      // sync workTypes til senere brug
+      const wt = safeExtractWorkType(fs) || next.snap.workTypes || "all";
+      next.snap.workTypes = wt;
+      next.lastOrigin = MODE.ADVANCED;
       break;
     }
 
     case "COMMIT_CQL": {
-      const val = isNonEmpty(action.cql) ? action.cql : null;
-      out = {
-        snap: { ...snap, cql: { cql: val } },
-        lastOrigin: MODE.CQL,
-      };
+      const cql = norm(action.cql);
+      next.snap.cql.cql = isNonEmpty(cql) ? cql : null;
+
+      // Stige-politik: Ryd nedre trin + reset workTypes
+      next.snap.simple.qAll = null;
+      next.snap.advanced.fieldSearch = null;
+      next.snap.workTypes = "all";
+
+      next.lastOrigin = MODE.CQL;
       break;
     }
 
     case "SET_WORKTYPE": {
-      out = {
-        snap: { ...snap, workTypes: normalizeWorkTypesParam(action.workTypes) },
-        lastOrigin,
-      };
-      break;
-    }
-
-    case "HYDRATE_CQL_FROM_URL": {
-      const cql = isNonEmpty(action.cql) ? action.cql : null;
-      if (!cql) {
-        out = base;
-      } else {
-        out = { snap: { ...snap, cql: { cql } }, lastOrigin: MODE.CQL };
-      }
+      const wt = norm(action.workType);
+      next.snap.workTypes = isNonEmpty(wt) ? wt : "all";
       break;
     }
 
     default:
-      out = base;
+      break;
   }
 
-  dbgCORE("reduceCommit() out", { out });
-  return out;
+  dbgCORE("reduceCommit() out", { out: next });
+  return next;
 }
 
-function pickEffectiveOrigin(snap, lastOrigin) {
-  if (lastOrigin === MODE.CQL && !isNonEmpty(snap.cql.cql)) {
-    if (isNonEmpty(snap.advanced.fieldSearch)) return MODE.ADVANCED;
-    if (isNonEmpty(snap.simple.qAll)) return MODE.SIMPLE;
-    return MODE.CQL;
-  }
-  return lastOrigin;
-}
+/* ---------- hydrateFromUrl ---------- */
+export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
+  const next = {
+    snap: {
+      simple: { ...snap.simple },
+      advanced: { ...snap.advanced },
+      cql: { ...snap.cql },
+      workTypes: snap.workTypes,
+    },
+    lastOrigin,
+  };
 
-/* URL computation (kun query – path håndteres i hook) */
-export function computeUrlForMode({ targetMode, snap, lastOrigin, tid }) {
-  dbgCORE("computeUrlForMode() in", { targetMode, snap, lastOrigin, tid });
+  // workTypes fra URL (fallback = "all")
+  let wtParam = query?.workTypes;
+  if (Array.isArray(wtParam)) wtParam = wtParam[0];
+  const urlWT = norm(wtParam);
+  next.snap.workTypes = isNonEmpty(urlWT)
+    ? urlWT
+    : next.snap.workTypes || "all";
 
-  const wt = normalizeWorkTypesParam(snap.workTypes);
-  const base = tid ? { tid } : {};
-  const origin = pickEffectiveOrigin(snap, lastOrigin);
-
-  let out = { query: { ...base } };
-
-  if (targetMode === MODE.SIMPLE) {
-    if (origin === MODE.SIMPLE && isNonEmpty(snap.simple.qAll)) {
-      out = {
-        query: {
-          ...base,
-          "q.all": snap.simple.qAll,
-          ...(wt !== "all" && { workTypes: wt }),
-        },
-      };
+  // CQL-hydration: hvis vi står i CQL og har ?cql=..., så behandl som commit
+  if (currentMode === MODE.CQL) {
+    const cqlInUrl = norm(query?.cql);
+    if (isNonEmpty(cqlInUrl)) {
+      next.snap.cql.cql = cqlInUrl;
+      next.snap.simple.qAll = null;
+      next.snap.advanced.fieldSearch = null;
+      next.snap.workTypes = "all";
+      next.lastOrigin = MODE.CQL;
     }
-    dbgCORE("computeUrlForMode() out SIMPLE", out);
-    return out;
+  }
+
+  dbgCORE("hydrateFromUrl()", {
+    currentMode,
+    query,
+    out: { snap: next.snap, lastOrigin: next.lastOrigin },
+  });
+  return next;
+}
+
+/* ---------- computeUrlForMode ---------- */
+export function computeUrlForMode(targetMode, snap, lastOrigin) {
+  const empty = () => ({ query: {} });
+
+  const toAdvancedFromSimple = (qAll, wt) => {
+    const fs = buildFSFromSimple(qAll);
+    const seeded = injectWorkTypeIntoFS(fs, wt);
+    return {
+      query: {
+        fieldSearch: seeded,
+        ...(wt && wt !== "all" ? { workTypes: wt } : {}),
+      },
+    };
+  };
+
+  // Ned fra CQL er altid tom visning (ingen seed nedad)
+  if (lastOrigin === MODE.CQL) {
+    if (targetMode === MODE.ADVANCED || targetMode === MODE.SIMPLE) {
+      const out = empty();
+      dbgCORE("computeUrlForMode() out CQL→down (empty)", out);
+      return out;
+    }
   }
 
   if (targetMode === MODE.ADVANCED) {
-    if (origin === MODE.SIMPLE && isNonEmpty(snap.simple.qAll)) {
-      const fsSeedRaw = buildFSFromSimple(snap.simple.qAll) || "{}";
-      const fsWithWT = withWorkTypeInFS(fsSeedRaw, wt);
-      out = {
-        query: {
-          ...base,
-          fieldSearch: fsWithWT,
-          ...(wt !== "all" && { workTypes: wt }),
-        },
-      };
+    if (lastOrigin === MODE.SIMPLE && isNonEmpty(snap.simple.qAll)) {
+      const wt = snap.workTypes || "all";
+      const out = toAdvancedFromSimple(snap.simple.qAll, wt);
       dbgCORE("computeUrlForMode() out SIMPLE→ADV", out);
       return out;
     }
-    if (origin === MODE.ADVANCED && isNonEmpty(snap.advanced.fieldSearch)) {
-      const fsWithWT = withWorkTypeInFS(snap.advanced.fieldSearch, wt);
-      out = {
-        query: {
-          ...base,
-          fieldSearch: fsWithWT,
-          ...(wt !== "all" && { workTypes: wt }),
-        },
-      };
+    if (lastOrigin === MODE.ADVANCED && isNonEmpty(snap.advanced.fieldSearch)) {
+      const out = { query: { fieldSearch: snap.advanced.fieldSearch } };
       dbgCORE("computeUrlForMode() out ADV→ADV", out);
       return out;
     }
-    if (origin === MODE.CQL) {
-      out = { query: { ...base } };
-      dbgCORE("computeUrlForMode() out CQL→ADV (blocked)", out);
-      return out;
-    }
-    out = { query: { ...base } };
-    dbgCORE("computeUrlForMode() out ADV default", out);
+    const out = empty();
+    dbgCORE("computeUrlForMode() out ADV empty", out);
     return out;
   }
 
   if (targetMode === MODE.CQL) {
-    if (origin === MODE.CQL && isNonEmpty(snap.cql.cql)) {
-      out = { query: { ...base, cql: snap.cql.cql } };
-      dbgCORE("computeUrlForMode() out CQL→CQL", out);
+    // *** NY: bliver du i CQL (efter at have været nede og kigge i simpel/adv), så behold cql i URL ***
+    if (lastOrigin === MODE.CQL) {
+      if (isNonEmpty(snap.cql.cql)) {
+        const out = { query: { cql: snap.cql.cql } };
+        dbgCORE("computeUrlForMode() out CQL→CQL keep", out);
+        return out;
+      }
+      const out = empty();
+      dbgCORE("computeUrlForMode() out CQL→CQL empty", out);
       return out;
     }
-    if (origin === MODE.SIMPLE && isNonEmpty(snap.simple.qAll)) {
-      const fsSeedRaw = buildFSFromSimple(snap.simple.qAll) || "{}";
-      const fsWithWT = withWorkTypeInFS(fsSeedRaw, wt);
-      out = {
+
+    if (lastOrigin === MODE.ADVANCED && isNonEmpty(snap.advanced.fieldSearch)) {
+      const wt = snap.workTypes || "all";
+      const out = {
         query: {
-          ...base,
-          fieldSearch: fsWithWT,
-          ...(wt !== "all" && { workTypes: wt }),
-        },
-      };
-      dbgCORE("computeUrlForMode() out SIMPLE→CQL", out);
-      return out;
-    }
-    if (origin === MODE.ADVANCED && isNonEmpty(snap.advanced.fieldSearch)) {
-      const fsWithWT = withWorkTypeInFS(snap.advanced.fieldSearch, wt);
-      out = {
-        query: {
-          ...base,
-          fieldSearch: fsWithWT,
-          ...(wt !== "all" && { workTypes: wt }),
+          fieldSearch: snap.advanced.fieldSearch,
+          ...(wt && wt !== "all" ? { workTypes: wt } : {}),
         },
       };
       dbgCORE("computeUrlForMode() out ADV→CQL", out);
       return out;
     }
-    out = { query: { ...base } };
-    dbgCORE("computeUrlForMode() out CQL default", out);
+    if (lastOrigin === MODE.SIMPLE && isNonEmpty(snap.simple.qAll)) {
+      const wt = snap.workTypes || "all";
+      const out = toAdvancedFromSimple(snap.simple.qAll, wt);
+      dbgCORE("computeUrlForMode() out SIMPLE→CQL", out);
+      return out;
+    }
+    const out = empty();
+    dbgCORE("computeUrlForMode() out CQL empty", out);
     return out;
   }
 
-  out = { query: {} };
-  dbgCORE("computeUrlForMode() out HISTORY", out);
+  if (targetMode === MODE.SIMPLE) {
+    if (lastOrigin === MODE.SIMPLE && isNonEmpty(snap.simple.qAll)) {
+      const wt = snap.workTypes || "all";
+      const q = { "q.all": snap.simple.qAll };
+      if (wt && wt !== "all") q.workTypes = wt;
+      const out = { query: q };
+      dbgCORE("computeUrlForMode() out SIMPLE→SIMPLE", out);
+      return out;
+    }
+    const out = empty();
+    dbgCORE("computeUrlForMode() out SIMPLE empty", out);
+    return out;
+  }
+
+  const out = empty();
+  dbgCORE("computeUrlForMode() out default empty", out);
   return out;
 }
-
-export function hydrateFromUrl({ mode, query }, state) {
-  if (mode !== MODE.CQL) return state;
-  const cql = norm(query?.cql || "");
-  if (isNonEmpty(cql)) {
-    return reduceCommit(state, { type: "HYDRATE_CQL_FROM_URL", cql });
-  }
-  return state;
-}
-
-export default {
-  MODE,
-  initialSnap,
-  computeUrlForMode,
-  reduceCommit,
-  hydrateFromUrl,
-  buildFSFromSimple,
-  withWorkTypeInFS,
-};

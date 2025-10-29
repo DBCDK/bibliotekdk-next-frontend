@@ -318,9 +318,11 @@ export default function AdvancedSearchProvider({ children, router }) {
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
-  //reset worktype on url change
   useEffect(() => {
-    setWorkType(fieldSearchFromUrl.workType || "all");
+    const nextWT = fieldSearchFromUrl.workType || "all";
+    if (nextWT !== workType) {
+      setWorkType(nextWT);
+    }
   }, [JSON.stringify(fieldSearchFromUrl.workType)]);
 
   function resetObjectState() {
