@@ -7,7 +7,7 @@ export function CreatorsArray({ creators: creatorsBeforeFilter, skeleton }) {
 
   return (
     creators?.map((creator, index) => {
-      const url = `/forfatter/${encodeURIComponent(creator.display)}`;
+      const url = `/ophav/${encodeURIComponent(creator.display)}`;
       return (
         <span key={`${creator.display}-${index}`}>
           <Link

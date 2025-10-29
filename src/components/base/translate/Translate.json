@@ -58,6 +58,10 @@
       "favorites-title": {
         "da": "Anmeldernes favoritter",
         "en": "Reviewers' favorites"
+      },
+      "creator-breadcrumb": {
+        "da": "Ophav",
+        "en": "Creator"
       }
     },
     "advanced_search_cql": {

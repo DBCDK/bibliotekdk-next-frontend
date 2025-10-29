@@ -29,7 +29,7 @@ export function Overview({
         <Row className={styles.overview}>
           <Col xs={12} xl={3} className={styles.breadcrumbs}>
             <Text type="text3" tag="p" lines={1} skeleton={isLoading}>
-              {Translate({ context: "general", label: "authors" })} /{" "}
+              {Translate({ context: "creator", label: "creator-breadcrumb" })} /{" "}
               {creatorId}
             </Text>
           </Col>
