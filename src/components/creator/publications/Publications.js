@@ -182,7 +182,7 @@ export function Publications({
           )}
         </div>
       }
-      divider={{ content: false }}
+      divider={{ content: true }}
     >
       <div>
         {/* Filter dropdowns */}

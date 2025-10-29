@@ -1,17 +1,20 @@
 .yearTitle {
   margin-top: var(--pt8);
   margin-bottom: var(--pt2);
-  text-align: right;
+  text-align: left;
 }
+
 .filters + div .yearTitle {
-  margin-top: var(--pt6);
+  margin-top: 0;
 }
 
 .filters {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   margin-left: calc(-1 * var(--pt2));
   margin-right: calc(-1 * var(--pt2));
+  margin-bottom: var(--pt3);
   padding-left: var(--pt1);
   padding-right: var(--pt1);
   flex-wrap: wrap;
@@ -21,9 +24,11 @@
 .filters > div {
   flex-shrink: 0;
 }
+.filters button {
+  padding: 0 var(--pt1);
+}
 
 .workscontainer {
-  margin-top: calc(var(--pt4) * -1);
   margin-left: calc(-1 * var(--pt1));
   margin-right: calc(-1 * var(--pt1));
 }
@@ -33,12 +38,6 @@
 }
 .hitcountText {
   margin-top: var(--pt1);
-}
-
-@media (min-width: 576px) {
-  .filters + div .yearTitle {
-    margin-top: 0;
-  }
 }
 
 @media (min-width: 992px) {

@@ -1,0 +1,68 @@
+.slider {
+  display: flex;
+  gap: var(--pt5);
+}
+
+.item {
+  /* Fixed width across breakpoints */
+  flex: 0 0 420px;
+  min-width: 420px;
+  max-width: 420px;
+  scroll-snap-align: start;
+  position: relative;
+  height: 100%;
+  padding-top: var(--pt05);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  margin-top: var(--pt1);
+}
+
+.link i {
+  margin-right: var(--pt1);
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--pt05);
+  margin-top: var(--pt05);
+}
+
+.by {
+  margin-right: 0;
+}
+
+.row {
+  display: flex;
+  gap: var(--pt2);
+  align-items: flex-start;
+}
+
+/* cover wrapper for alignment */
+
+.cover :global(a:focus-visible),
+.cover :global(a:focus) {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.cover :global(a:hover) {
+  outline: none;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-width: 0; /* allow text to shrink/ellipsis inside flex row */
+  overflow: hidden;
+}
+
+.title {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* No responsive overrides: width is fixed for consistency */

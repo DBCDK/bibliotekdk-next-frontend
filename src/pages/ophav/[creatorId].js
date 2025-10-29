@@ -3,6 +3,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import Publications from "@/components/creator/publications";
+import Overview from "@/components/creator/Overview";
+import Subjects from "@/components/creator/Subjects";
+import Favorites from "@/components/creator/Favorites";
 
 export default function CreatorPage() {
   const router = useRouter();
@@ -31,19 +34,11 @@ export default function CreatorPage() {
       </Head>
 
       <Header router={router} />
-      <div
-        style={{
-          padding: "var(--pt2)",
-          height: 400,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ maxWidth: 1000 }}>
-          Hej her er forfattersiden for <b>{creatorId}</b>
-        </div>
-      </div>
+      <Overview creatorId={creatorId} />
+
+      <Subjects creatorId={creatorId} />
+
+      <Favorites creatorId={creatorId} />
 
       <Publications creatorId={creatorId} />
     </>

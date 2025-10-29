@@ -33,7 +33,7 @@ const headers = [
       "default-src 'self'; " +
       "script-src 'self' *.dbc.dk https://consent.cookiebot.eu https://consentcdn.cookiebot.eu 'unsafe-eval' 'unsafe-inline' http://localhost:*; " +
       "style-src 'self' 'unsafe-inline'; " +
-      "img-src 'self' https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:*; " +
+      "img-src 'self' https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:* https://upload.wikimedia.org; " +
       "connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk http://localhost:* ws://localhost:*; " +
       "frame-src 'self' *.dbc.dk https://consentcdn.cookiebot.eu;" +
       "font-src 'self' data:; " +
@@ -96,6 +96,7 @@ module.exports = {
       "bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk",
       "bibdk-backend-www-master.febib-staging.svc.cloud.dbc.dk",
       "bibdk-backend-www-master.frontend-staging.svc.cloud.dbc.dk",
+      "upload.wikimedia.org",
     ],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 640, 1400],
   },

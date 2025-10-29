@@ -1,0 +1,29 @@
+.keyword_group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.keyword {
+  margin: 0 var(--pt3) var(--pt3) 0;
+}
+
+.small h1 {
+  font-size: var(--pt3);
+  line-height: var(--pt4);
+}
+
+.medium h1 {
+  font-size: var(--pt4);
+  line-height: var(--pt6);
+}
+
+.large h1 {
+  font-size: var(--pt5);
+  line-height: var(--pt7);
+}
+
+.skeleton .keyword {
+  border-bottom: none;
+  pointer-events: none;
+  cursor: default;
+}
