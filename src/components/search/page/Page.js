@@ -239,7 +239,7 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const { getQuery, hasQuery } = useQ();
   const { getQuery: getFiltersQuery } = useFilters();
   const q = getQuery();
-  const f = getFiltersQuery();
+  const filters = getFiltersQuery();
   const router = useRouter();
 
   const mode = router?.query?.mode;
@@ -277,8 +277,8 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
 
   const rawcql = cqlAndFacetsQuery ? cql : fieldSearchQuery;
 
-  const filters =
-    f.workTypes[0] === SuggestTypeEnum.ALL ? { ...f, workTypes: [] } : f;
+  // const filters =
+  //   f.workTypes[0] === SuggestTypeEnum.ALL ? { ...f, workTypes: [] } : f;
 
   const simpleRes = useData(
     isSimple && searchFragments.hitcount({ q, filters })

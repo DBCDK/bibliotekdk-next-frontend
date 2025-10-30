@@ -116,7 +116,7 @@ export default function Wrap({ page = 1, onWorkClick }) {
   const { getQuery, hasQuery } = useQ();
 
   const q = getQuery();
-  const f = getFiltersQuery();
+  const filters = getFiltersQuery();
 
   const dataCollect = useDataCollect();
   if (!isSynced) offset = 0;
@@ -133,14 +133,18 @@ export default function Wrap({ page = 1, onWorkClick }) {
       : null
   );
 
-  const filters =
-    f.workTypes[0] === SuggestTypeEnum.ALL ? { ...f, workTypes: [] } : f;
+  // const filters =
+  //   f.workTypes[0] === SuggestTypeEnum.ALL ? { ...f, workTypes: [] } : f;
 
   const merged = { ...filters, ...mapped };
+
+  console.log("merged", merged);
 
   const simpleResponse = useData(
     hasQuery ? searchFragments.all({ q, limit, offset, filters: merged }) : null
   );
+
+  console.log("simpleResponse", simpleResponse);
 
   // Tracking for simpel søgning
   useEffect(() => {

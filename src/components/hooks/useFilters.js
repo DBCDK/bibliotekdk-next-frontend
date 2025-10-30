@@ -10,13 +10,23 @@ import { useRouter } from "next/router";
 import isEqual from "lodash/isEqual";
 
 import useSWR from "swr";
-import { FilterTypeEnum, SuggestTypeEnum } from "@/lib/enums";
+import { FilterTypeEnum } from "@/lib/enums";
 
 const URL_FACET_DELIMITER = ",";
 const DELIMITER_ENCODING = "__";
 
 const URL_FACET_DELIMITER_REGEX = new RegExp(URL_FACET_DELIMITER, "g");
 const DELIMITER_ENCODING_REGEX = new RegExp(DELIMITER_ENCODING, "g");
+
+// Visible Worktypes for work type selections
+export const workTypes = [
+  "literature",
+  "article",
+  "movie",
+  "music",
+  "game",
+  "sheetmusic",
+];
 
 /**
  *
@@ -50,7 +60,6 @@ const fetcher = () => locale;
 export function buildFilters() {
   const params = {};
   types.forEach((type) => (params[type] = []));
-  params.workTypes = [SuggestTypeEnum.ALL];
   return params;
 }
 
@@ -78,7 +87,11 @@ export function getQuery(query) {
     }
   });
 
-  return { ...base, ...filters };
+  return {
+    ...base,
+    ...filters,
+    workTypes: filters?.workTypes?.filter((wt) => workTypes.includes(wt)) || [],
+  };
 }
 
 /**
@@ -340,16 +353,6 @@ export default function useFilters() {
 }
 
 const types = Object.values(FilterTypeEnum);
-
-// Visible Worktypes for work type selections
-export const workTypes = [
-  "literature",
-  "article",
-  "movie",
-  "music",
-  "game",
-  "sheetmusic",
-];
 
 // Included categories/facets by selected workType
 // This list works as a sorted whitelist

@@ -1,12 +1,7 @@
-// components/hooks/useSearchSync.js
-/**
- * UI-hook der bruger core-funktionerne:
- * - hydrateFromUrl (på asPath/query ændringer)
- * - reduceCommit (handlers)
- * - computeUrlForMode (tab-skift)
- *
- * Ingen afhængighed til AdvancedSearchContext.
- */
+// ==============================================
+// File: components/hooks/useSearchSync.js
+// Purpose: Tiny UI hook that wires URL <-> state
+// ==============================================
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -20,6 +15,9 @@ import {
 } from "@/components/utils/searchSyncCore";
 import { dbgSYNC } from "@/components/utils/debug";
 
+/**
+ * Helper: derive mode purely from pathname (NEVER from query)
+ */
 function getModeFromRouter(router) {
   const base = (router?.asPath || router?.pathname || "").split("?")[0];
   if (base.includes("/find/historik")) return MODE.HISTORY;
@@ -28,13 +26,22 @@ function getModeFromRouter(router) {
   return MODE.SIMPLE;
 }
 
+/**
+ * Public hook API used by Search.Wrap
+ * - Keeps a small, serializable snapshot (snap)
+ * - All business rules live in searchSyncCore
+ * - This hook ONLY:
+ *   - reads router
+ *   - hydrates from URL
+ *   - emits URL updates (goToMode / commits / workType)
+ */
 export function useSearchSync({ router }) {
   const [snap, setSnap] = useState(initialSnap);
-  const lastOriginRef = useRef(null);
+  const lastOriginRef = useRef(null); // MODE of last commit (SIMPLE/ADVANCED/CQL) or null
 
   const mode = useMemo(() => getModeFromRouter(router), [router.asPath]);
 
-  // Hydration fra URL (inkl. CQL=cql → “commit” + nedad-nulstilling)
+  // ----------- Hydration from URL -----------
   useEffect(() => {
     const out = hydrateFromUrl(
       mode,
@@ -46,6 +53,7 @@ export function useSearchSync({ router }) {
     lastOriginRef.current = out.lastOrigin;
   }, [mode, router.query]); // shallow OK
 
+  // ----------- URL push (robust & shallow) -----------
   const pushUrl = useCallback(
     (pathname, queryObj) => {
       const query = Object.fromEntries(
@@ -65,7 +73,7 @@ export function useSearchSync({ router }) {
     [router]
   );
 
-  // Tab-skift
+  // ----------- Tab navigation -----------
   const goToMode = useCallback(
     (targetMode) => {
       dbgSYNC("goToMode() start", {
@@ -87,7 +95,38 @@ export function useSearchSync({ router }) {
     [mode, snap, router.query, pushUrl]
   );
 
-  // SIMPLE commit
+  // ----------- WorkType change (does NOT alter search terms) -----------
+  const setWorkType = useCallback(
+    (workType) => {
+      dbgSYNC("setWorkType()", {
+        workTypeBefore: snap.workTypes,
+        workTypeNext: workType,
+      });
+      const out = reduceCommit(
+        { type: "SET_WORKTYPE", workType },
+        snap,
+        lastOriginRef.current
+      );
+      setSnap(out.snap);
+      lastOriginRef.current = out.lastOrigin; // unchanged by SET_WORKTYPE
+
+      // Build query for current visible mode using existing content rules
+      const { query } = computeUrlForMode(mode, out.snap, out.lastOrigin);
+
+      // Ensure workTypes mirrors state when relevant
+      if (out.snap.workTypes && out.snap.workTypes !== "all") {
+        query.workTypes = out.snap.workTypes;
+      } else {
+        delete query.workTypes;
+      }
+
+      dbgSYNC("setWorkType() → pushUrl", { mode, query });
+      pushUrl(MODE_PATH[mode] || MODE_PATH[MODE.SIMPLE], query);
+    },
+    [mode, snap, pushUrl]
+  );
+
+  // ----------- Commits -----------
   const handleSimpleCommit = useCallback(
     (text) => {
       dbgSYNC("handleSimpleCommit()", { text, prevWT: snap.workTypes });
@@ -110,7 +149,6 @@ export function useSearchSync({ router }) {
     [snap, pushUrl]
   );
 
-  // ADVANCED commit
   const handleAdvancedCommit = useCallback(
     (fieldSearchString, extras = {}) => {
       dbgSYNC("handleAdvancedCommit()", { fieldSearchString, extras });
@@ -134,7 +172,6 @@ export function useSearchSync({ router }) {
     [snap, pushUrl]
   );
 
-  // CQL commit (rigtig CQL-søgning – IKKE bare visitation med fieldSearch seed)
   const handleCqlCommit = useCallback(
     (cqlString) => {
       dbgSYNC("handleCqlCommit()", { cqlString });
@@ -150,6 +187,7 @@ export function useSearchSync({ router }) {
       if (out.snap.cql.cql) q.cql = out.snap.cql.cql;
 
       dbgSYNC("handleCqlCommit() → pushUrl", { query: q });
+      // Never carry workTypes in CQL mode (policy)
       pushUrl(MODE_PATH[MODE.CQL], q);
     },
     [snap, pushUrl]
@@ -158,6 +196,7 @@ export function useSearchSync({ router }) {
   return {
     mode,
     goToMode,
+    setWorkType,
     handleSimpleCommit,
     handleAdvancedCommit,
     handleCqlCommit,

@@ -132,10 +132,7 @@ function Wrap({ children }) {
     (elem) => {
       if (elem !== selected) setSelected(elem);
 
-      const next =
-        elem === "all"
-          ? { workTypes: [SuggestTypeEnum.ALL] }
-          : { workTypes: [elem] };
+      const next = elem === "all" ? { workTypes: [] } : { workTypes: [elem] };
 
       // Kritisk: bevar andre filterfelter
       setFilters({ ...filters, ...next });

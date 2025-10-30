@@ -54,7 +54,12 @@ export function mapQuickFilters(selectedQuickFilters = []) {
 
 export default function Wrap() {
   // connected filters hook
-  const { filters, setFilter, setQuery } = useFilters();
+  const {
+    getQuery: getFiltersQuery,
+    filters,
+    setFilter,
+    setQuery,
+  } = useFilters();
 
   // connected q hook
   const { hasQuery, getQuery } = useQ();
@@ -63,6 +68,7 @@ export default function Wrap() {
 
   // Get q object
   const q = getQuery();
+  const f = getFiltersQuery();
 
   // map quickfilters to filters
   const mapped = mapQuickFilters(selectedQuickFilters);
