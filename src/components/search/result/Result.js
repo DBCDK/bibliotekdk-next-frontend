@@ -22,7 +22,6 @@ import {
   convertStateToCql,
 } from "@/components/search/advancedSearch/utils";
 import { mapQuickFilters } from "@/components/search/facets/simple/SimpleFacets";
-import { SuggestTypeEnum } from "@/lib/enums";
 
 /* -------------------------------- UI -------------------------------- */
 
@@ -133,18 +132,11 @@ export default function Wrap({ page = 1, onWorkClick }) {
       : null
   );
 
-  // const filters =
-  //   f.workTypes[0] === SuggestTypeEnum.ALL ? { ...f, workTypes: [] } : f;
-
   const merged = { ...filters, ...mapped };
-
-  console.log("merged", merged);
 
   const simpleResponse = useData(
     hasQuery ? searchFragments.all({ q, limit, offset, filters: merged }) : null
   );
-
-  console.log("simpleResponse", simpleResponse);
 
   // Tracking for simpel søgning
   useEffect(() => {
