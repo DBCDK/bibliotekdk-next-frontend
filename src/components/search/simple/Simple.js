@@ -69,7 +69,7 @@ export function SimpleSearch({
 // ⚙️ "Smart" komponent med al logik
 export default function Wrap({ onCommit = () => {} }) {
   const router = useRouter();
-  const { getQuery } = useFilters();
+  const { getQuery, filters } = useFilters();
   const { q, setQ, setQuery, getQuery: getQ } = useQ();
   const [query, setQueryState] = useState(q[SuggestTypeEnum.ALL] || "");
   const [history, setHistory, clearHistory] = useHistory();
@@ -81,7 +81,11 @@ export default function Wrap({ onCommit = () => {} }) {
   const isMobileSuggester = isMobileSize && router?.query?.suggester;
 
   const { workTypes } = getQuery();
-  const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
+
+  // accept null for an answer
+  const selectedMaterial = filters?.workTypes?.length
+    ? filters.workTypes[0]
+    : workTypes?.[0] ?? SuggestTypeEnum.ALL;
 
   // Sync initial query
   useEffect(() => {
@@ -89,7 +93,11 @@ export default function Wrap({ onCommit = () => {} }) {
   }, [q]);
 
   const doSearch = (value = query, suggestion = null) => {
-    if (init !== value) {
+    // Differs from Url state params
+    const queryDiffers = value !== init;
+    const workTypeDiffers = workTypes?.[0] !== selectedMaterial;
+
+    if (queryDiffers || workTypeDiffers) {
       const queryKey = "all";
       const method = isMobileSuggester ? "replace" : "push";
 
@@ -98,8 +106,7 @@ export default function Wrap({ onCommit = () => {} }) {
       const extras = {
         tid: suggestion?.traceId,
         quickfilters: router?.query?.quickfilters,
-        workTypes:
-          selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
+        workTypes: selectedMaterial,
       };
 
       // callback
@@ -121,12 +128,12 @@ export default function Wrap({ onCommit = () => {} }) {
     }
   };
 
-  const handleSelect = (suggestionValue, suggestion) => {
-    const formattedValue = history.some((t) => t.term === suggestionValue)
-      ? suggestionValue
-      : `"${suggestionValue}"`;
-    doSearch(formattedValue, suggestion);
-  };
+  // const handleSelect = (suggestionValue, suggestion) => {
+  //   const formattedValue = history.some((t) => t.term === suggestionValue)
+  //     ? suggestionValue
+  //     : `"${suggestionValue}"`;
+  //   doSearch(formattedValue, suggestion);
+  // };
 
   const handleChange = (val) => {
     setQueryState(val);
@@ -157,7 +164,7 @@ export default function Wrap({ onCommit = () => {} }) {
       history={filteredHistory}
       selectedMaterial={selectedMaterial}
       isMobileSize={isMobileSize}
-      onSelect={handleSelect}
+      onSelect={() => {}}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       onClose={handleClose}

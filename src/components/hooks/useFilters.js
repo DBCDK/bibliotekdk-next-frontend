@@ -18,6 +18,16 @@ const DELIMITER_ENCODING = "__";
 const URL_FACET_DELIMITER_REGEX = new RegExp(URL_FACET_DELIMITER, "g");
 const DELIMITER_ENCODING_REGEX = new RegExp(DELIMITER_ENCODING, "g");
 
+// Visible Worktypes for work type selections
+export const workTypes = [
+  "literature",
+  "article",
+  "movie",
+  "music",
+  "game",
+  "sheetmusic",
+];
+
 /**
  *
  * Settings
@@ -77,7 +87,11 @@ export function getQuery(query) {
     }
   });
 
-  return { ...base, ...filters };
+  return {
+    ...base,
+    ...filters,
+    workTypes: filters?.workTypes?.filter((wt) => workTypes.includes(wt)) || [],
+  };
 }
 
 /**
@@ -339,16 +353,6 @@ export default function useFilters() {
 }
 
 const types = Object.values(FilterTypeEnum);
-
-// Visible Worktypes for work type selections
-export const workTypes = [
-  "literature",
-  "article",
-  "movie",
-  "music",
-  "game",
-  "sheetmusic",
-];
 
 // Included categories/facets by selected workType
 // This list works as a sorted whitelist

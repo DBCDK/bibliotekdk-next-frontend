@@ -21,6 +21,9 @@ import { useInputFields } from "@/components/search/advancedSearch/useInputField
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import isEmpty from "lodash/isEmpty";
 
+const norm = (v) => (v == null ? "" : String(v).trim());
+const isNonEmpty = (v) => norm(v) !== "";
+
 export function getDefaultDropdownIndices() {
   return [
     { searchIndex: DropdownIndicesEnum.MAINLANGUAGES, value: [] },
@@ -50,6 +53,14 @@ export function getDefaultDropdownIndices() {
  * @returns {[{prefixLogicalOperator: null, searchIndex: string, value: string},{prefixLogicalOperator: string, searchIndex: string, value: string}]}
  */
 export function getInitialInputFields(workType = "all") {
+  return [
+    {
+      value: "",
+      prefixLogicalOperator: null,
+      searchIndex: "term.default",
+    },
+  ];
+
   const inputFieldsByMaterialType = {
     all: [
       { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
@@ -231,6 +242,22 @@ export default function AdvancedSearchProvider({ children, router }) {
     }
   }, [showPopover, popoverRef.current]);
 
+  useEffect(() => {
+    const { workTypes: wtParam, fieldSearch: fsParam } = router.query;
+
+    let wt = "all";
+    if (isNonEmpty(wtParam)) {
+      wt = Array.isArray(wtParam) ? wtParam[0] || "all" : wtParam;
+    } else if (fsParam) {
+      const fs = parseSearchUrl(fsParam);
+      wt = fs?.workType || "all";
+    }
+
+    if (wt !== workType) {
+      setWorkType(wt);
+    }
+  }, [router.query?.workTypes, router.query?.fieldSearch]); // eslint-disable-line
+
   //tracking id for the selected suggestion from inputfield. For now we only save one tid.
   const [suggesterTid, setSuggesterTid] = useState("");
 
@@ -291,9 +318,11 @@ export default function AdvancedSearchProvider({ children, router }) {
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
-  //reset worktype on url change
   useEffect(() => {
-    setWorkType(fieldSearchFromUrl.workType || "all");
+    const nextWT = fieldSearchFromUrl.workType || "all";
+    if (nextWT !== workType) {
+      setWorkType(nextWT);
+    }
   }, [JSON.stringify(fieldSearchFromUrl.workType)]);
 
   function resetObjectState() {

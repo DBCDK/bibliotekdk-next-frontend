@@ -236,8 +236,9 @@ Page.propTypes = {
 // -------------------------------
 export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const { getQuery, hasQuery } = useQ();
-  const { filters } = useFilters();
+  const { getQuery: getFiltersQuery } = useFilters();
   const q = getQuery();
+  const filters = getFiltersQuery();
   const router = useRouter();
 
   const mode = router?.query?.mode;

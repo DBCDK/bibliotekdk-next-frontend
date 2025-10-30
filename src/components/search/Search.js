@@ -1,5 +1,5 @@
 // components/search/Search.jsx
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
@@ -9,7 +9,8 @@ import Col from "react-bootstrap/Col";
 
 import useQ from "../hooks/useQ";
 import useBreakpoint from "../hooks/useBreakpoint";
-import { MODE, MODE_PATH, useSearchSync } from "../hooks/useSearchSync";
+import { useSearchSync } from "../hooks/useSearchSync";
+import { MODE } from "../utils/searchSyncCore";
 
 import Tabs from "../base/tabs";
 import SimpleSearch from "./simple";
@@ -18,14 +19,13 @@ import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 import Translate from "@/components/base/translate";
-
 import styles from "./Search.module.css";
 import HelpBtn from "./help";
 import IndexesBtn from "./indexes";
 
 /**
  * Tab shell component. Keeps the UI minimal and delegates logic to the hook.
- * All comments are in English for consistency and tooling (SonarQube, ESLint).
+ * (Markup og classNames er uændret, så dine styles forbliver som før.)
  */
 export function Search({
   onWorkTypeSelect,
@@ -33,6 +33,7 @@ export function Search({
   onTabChange,
   onSimpleCommit,
   onAdvancedCommit,
+  onCQLCommit,
 }) {
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
@@ -40,8 +41,6 @@ export function Search({
   const includeWorkTypeMenu = [MODE.ADVANCED].includes(activeTab);
   const isHistory = activeTab === MODE.HISTORY;
   const paddingBottomClass = !isHistory ? styles.paddingBottom : "";
-
-  console.log("activeTab", activeTab);
 
   return (
     <div className={styles.background}>
@@ -60,8 +59,6 @@ export function Search({
             <Tabs
               active={activeTab}
               onSelect={(nextTab) => {
-                console.log("nextTab", nextTab);
-
                 if (nextTab && nextTab !== activeTab) onTabChange(nextTab);
               }}
               className={styles.tabs}
@@ -112,7 +109,7 @@ export function Search({
                 })}
               >
                 <Col className={styles.content} lg={12} xs={12}>
-                  <CqlTextArea />
+                  <CqlTextArea onCommit={onCQLCommit} />
                 </Col>
               </Tab>
 
@@ -141,54 +138,39 @@ export function Search({
 }
 
 /**
- * Wrap component: wires tab navigation and commit handlers via the hook.
- * No auto-normalization on tab switch; values persist until submit.
+ * Wrap-komponent: wiring til URL-sync.
+ * - Mode afledes KUN fra path (ikke ?mode=)
+ * - Tab-skift konverterer URL-structure til target mode
+ * - WorkType ændrer kun workTypes og bevarer søgetermer
+ * - Submit fra simple/advanced håndteres i hooken (ingen interpolation-fejl)
  */
 export default function Wrap() {
-  const { setQuery } = useQ();
+  const { setQuery } = useQ(); // beholdt for kompatibilitet, hvis du bruger den andre steder
   const router = useRouter();
 
-  // Derive mode from the current path first; fallback to query; default to SIMPLE.
-  const mode = useMemo(() => {
-    const path = router.asPath || router.pathname || "";
-    if (path.includes("/find/historik")) return MODE.HISTORY;
-    if (path.includes("/find/avanceret")) return MODE.ADVANCED;
-    if (path.includes("/find/cql")) return MODE.CQL;
-    const q = typeof router.query.mode === "string" ? router.query.mode : null;
-    return q && Object.values(MODE).includes(q) ? q : MODE.SIMPLE;
-  }, [router.asPath, router.pathname, router.query.mode]);
+  const {
+    mode,
+    goToMode, // tab navigation med URL-normalisering
+    setWorkType, // opdater kun workTypes i URL (bevar søgeparametre)
+    handleSimpleCommit, // Simple submit → sæt q.all og baseline
+    handleAdvancedCommit, // Advanced submit → sæt fieldSearch og evt. løft q.all
+    handleCqlCommit, // CQL submit → sæt cql param
+  } = useSearchSync({ router, setQuery });
 
-  const { handleSimpleCommit, handleAdvancedCommit } = useSearchSync({
-    router,
-    setQuery,
-  });
-
-  // Keep navigation as a memoized callback to avoid needless re-renders.
+  // Tabs: skift mode (URL bliver formateret rigtigt pr. mode)
   const handleModeChange = useCallback(
     (nextMode) => {
-      const path = MODE_PATH[nextMode] || `/find/${nextMode}`;
-      router
-        .push({ pathname: path, query: router.query }, undefined, {
-          shallow: true,
-        })
-        .catch(() => {
-          // Fail-safe: avoid unhandled promise rejections; log if needed.
-        });
+      goToMode(nextMode);
     },
-    [router]
+    [goToMode]
   );
 
+  // WorkType: rør kun workTypes
   const handleOnWorkTypeSelect = useCallback(
     (type) => {
-      setQuery({
-        query: {
-          ...router.query,
-          workTypes: [type === "all" ? null : type],
-        },
-        exclude: ["page"],
-      });
+      setWorkType(type);
     },
-    [router.query, setQuery]
+    [setWorkType]
   );
 
   return (
@@ -198,6 +180,7 @@ export default function Wrap() {
       onWorkTypeSelect={handleOnWorkTypeSelect}
       onSimpleCommit={handleSimpleCommit}
       onAdvancedCommit={handleAdvancedCommit}
+      onCQLCommit={handleCqlCommit}
     />
   );
 }
