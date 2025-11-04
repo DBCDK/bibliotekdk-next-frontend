@@ -157,8 +157,8 @@ pipeline {
                 docker rmi ${IMAGE_NAME}
             '''
 
-            junit skipPublishingChecks: true, testResults: 'cypress/reports/*.xml'
-            archiveArtifacts 'cypress/screenshots/*, cypress/videos/*, logs/*'
+            junit skipPublishingChecks: true, allowEmptyResults: true, testResults: 'cypress/reports/*.xml'
+            archiveArtifacts artifacts: 'cypress/screenshots/**, cypress/videos/**, logs/**', allowEmptyArchive: true
         }
         failure {
             script {
