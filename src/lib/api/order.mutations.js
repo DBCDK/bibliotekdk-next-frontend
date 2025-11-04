@@ -12,6 +12,7 @@ export function submitMultipleOrders({
   mobileLibrary,
   userParameters,
   pagination,
+  exactEdition,
 }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -31,6 +32,7 @@ export function submitMultipleOrders({
         pickUpBranchSubdivision: mobileLibrary,
         userParameters,
         pagination,
+        exactEdition,
       },
     },
   };
