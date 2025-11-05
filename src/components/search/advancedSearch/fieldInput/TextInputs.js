@@ -140,6 +140,11 @@ function FieldInput({ index, numberOfItems, fieldValue, onSearch }) {
           disabled={isLastItem}
           dataCy={"advanced-search-remove-input"}
           onClick={() => removeInputField(index)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              removeInputField(index);
+            }
+          }}
           size={{ w: 3, h: "auto" }}
           alt=""
           src={"trash-2.svg"}

@@ -144,8 +144,13 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
       <span
         data-cy={`${inputProps.dataCy}-clear`}
         className={`${styles.clear} ${clearVisibleClass}`}
-        onClick={() => onClear()}
         tabIndex={showClear ? "0" : "-1"}
+        onClick={() => onClear()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onClear();
+          }
+        }}
       >
         <Icon size={{ w: "auto", h: 2 }} alt="">
           <ClearSvg />
@@ -170,7 +175,6 @@ function Suggester({
   data = [],
   children,
   skeleton = false,
-  onClear = null,
   onSelect = null,
   onChange = null,
   onBlur = null,
@@ -269,16 +273,10 @@ function Suggester({
           inputProps: merged,
           onClear: () => {
             setState({ q: "", _q: null });
-            onClear && onClear();
             focusInput(id);
           },
         });
       }}
-      // onSuggestionHighlighted={({ suggestion }) => {
-      //   if (suggestion?.value !== state._q) {
-      //     setState({ ...state, _q: suggestion?.value });
-      //   }
-      // }}
       focusInputOnSuggestionClick={false}
       highlightFirstSuggestion={false}
       inputProps={inputProps}

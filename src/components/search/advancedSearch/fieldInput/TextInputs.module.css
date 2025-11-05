@@ -37,8 +37,9 @@
   cursor: pointer;
 }
 
-.removeIcon:focus {
+.removeIcon:focus-visible {
   outline: 2px solid var(--blue);
+  outline-offset: calc(var(--pt1) - 2px);
 }
 
 .dropdownwrap {
