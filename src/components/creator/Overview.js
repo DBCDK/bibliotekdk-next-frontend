@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styles from "./Overview.module.css";
-import { ApiEnums, useData } from "@/lib/api/api";
+import { useData } from "@/lib/api/api";
 import { creatorOverview } from "@/lib/api/creator.fragments";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
@@ -108,38 +108,14 @@ export function Overview({
 }
 
 export default function Wrap({ creatorId }) {
-  // This is temporary solution to get the viafid.
-  // Will be available directly from fbi-api soon
-  const { data: viafData, isLoading: isViafLoading } = useData({
-    // delay: 1000,
-    apiUrl: ApiEnums.FBI_API,
-    query: `query creatorViafId($name: String!) {
-  search(q: {creator: $name}) {
-    works(offset: 0, limit: 10) {
-      creators {
-        display
-        viafid
-      }
-    }
-  }
-}`,
-    variables: { name: creatorId },
-  });
-  const viafid = viafData?.search?.works
-    ?.find((work) =>
-      work.creators?.find((creator) => creator.display === creatorId)
-    )
-    ?.creators?.find((creator) => creator.display === creatorId)?.viafid;
-
   const { data: creatorData, isLoading: isCreatorLoading } = useData(
-    viafid && creatorOverview({ viafid })
+    creatorOverview({ display: creatorId })
   );
-
   return (
     <Overview
       creatorId={creatorId}
-      creatorData={creatorData?.creatorByViafid}
-      isLoading={isViafLoading || isCreatorLoading}
+      creatorData={creatorData?.creatorByDisplay}
+      isLoading={isCreatorLoading}
     />
   );
 }

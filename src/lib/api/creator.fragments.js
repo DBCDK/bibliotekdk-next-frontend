@@ -14,7 +14,7 @@ const createCqlString = ({
   language,
   publicationYears,
 }) => {
-  let cql = `phrase.creatorcontributor="${creatorId}"`; // CQL format for creator search using allowed index
+  let cql = `phrase.creator="${creatorId}"`; // CQL format for creator search using allowed index
   if (generalMaterialType) {
     cql += ` AND phrase.generalmaterialtype="${generalMaterialType}"`;
   }
@@ -302,11 +302,11 @@ export function publicationYearFacets({ creatorId, filters = {} }) {
 /**
  * Fetch creator overview data by VIAF id (viafid)
  */
-export function creatorOverview({ viafid }) {
+export function creatorOverview({ display }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query CreatorOverview($viafid: String!) {
-  creatorByViafid(viafid: $viafid) {
+    query: `query CreatorOverview($display: String!) {
+  creatorByDisplay(display: $display) {
     display
     viafid
     generated {
@@ -328,7 +328,7 @@ export function creatorOverview({ viafid }) {
     }
   }
 }`,
-    variables: { viafid },
+    variables: { display },
     slowThreshold: 3000,
   };
 }
