@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import * as workFragments from "@/lib/api/work.fragments";
 
-import Page from "@/components/sample/Page";
+import Page from "@/components/sample/page/Page";
 import Header from "@/components/work/page/Header";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import React, { useMemo, useState } from "react";
