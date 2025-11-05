@@ -22,7 +22,7 @@ export default function Subject({ creatorId, selected, onSelect, filters }) {
 
   // Find the facet.subject facet
   const subjectFacet = facets.find((facet) => facet.name === "facet.subject");
-  console.log("subjectFacet", subjectFacet);
+
   // If loading, error, or no options, show empty dropdown but still allow clearing
   const options = subjectFacet?.values?.length
     ? subjectFacet.values

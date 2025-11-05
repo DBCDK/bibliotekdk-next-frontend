@@ -10,6 +10,7 @@ import GeneralMaterialType from "./filters/GeneralMaterialTypeDropdown";
 import CreatorFunction from "./filters/CreatorFunctionDropdown";
 import Subject from "./filters/SubjectDropdown";
 import Language from "./filters/LanguageDropdown";
+import GenreAndForm from "./filters/GenreAndFormDropdown";
 import { WorkRow } from "./WorkRow";
 import { parseWorks } from "./utils";
 import { useMemo, useState, useEffect } from "react";
@@ -54,6 +55,7 @@ function PublicationYearWorks({ year, creatorId, filters }) {
               creatorFunction: filters.creatorFunction || undefined,
               subjects: filters.subjects?.length ? filters.subjects : undefined,
               language: filters.language || undefined,
+              genreAndForm: filters.genreAndForm || undefined,
               publicationYears: [year.key],
               offset: i * limit,
               limit,
@@ -121,6 +123,9 @@ export function Publications({
   setSelectedCreatorFunction,
   selectedLanguage,
   setSelectedLanguage,
+  selectedGenreAndForm,
+  setSelectedGenreAndForm,
+  isLoading,
 }) {
   const filters = useMemo(
     () => ({
@@ -128,58 +133,53 @@ export function Publications({
       creatorFunction: selectedCreatorFunction,
       subjects: selectedSubjects,
       language: selectedLanguage,
+      genreAndForm: selectedGenreAndForm,
     }),
     [
       selectedGeneralMaterialType,
       selectedCreatorFunction,
       selectedSubjects,
       selectedLanguage,
+      selectedGenreAndForm,
     ]
   );
 
-  let hitcountText;
+  const titleText =
+    hitcount === 1
+      ? `1 ${Translate({ context: "creator", label: "work-singular" })}`
+      : `${hitcount} ${Translate({
+          context: "creator",
+          label: "work-plural",
+        })}`;
 
-  if (hitcount) {
-    hitcountText = (
-      <Text type="text3">
-        <Text type="text2" tag="span">
-          {hitcount}
-        </Text>{" "}
-        {hitcount === 1
-          ? Translate({ context: "creator", label: "work-singular" }) + " "
-          : Translate({ context: "creator", label: "work-plural" }) + " "}
-        {years?.length > 1 && (
-          <>
-            {Translate({ context: "creator", label: "from" })}{" "}
-            <Text type="text2" tag="span">
-              {years[years.length - 1].key}
-            </Text>{" "}
-            {Translate({ context: "creator", label: "to" })}{" "}
-            <Text type="text2" tag="span">
-              {years[0].key}
-            </Text>
-          </>
-        )}
-      </Text>
-    );
-  }
+  const isSameYear = years?.[years?.length - 1]?.key === years?.[0]?.key;
+  const hitcountText = isSameYear
+    ? `${Translate({ context: "creator", label: "publishedIn" })} ${
+        years?.[years?.length - 1]?.key
+      }`
+    : `${Translate({ context: "creator", label: "publishedFrom" })} ${
+        years?.[years?.length - 1]?.key
+      } ${Translate({ context: "creator", label: "to" })} ${years?.[0]?.key}`;
 
   return (
     <Section
-      title={Translate({ context: "creator", label: "publications" })}
+      isLoading={isLoading}
+      title={titleText}
       subtitle={
         <div>
+          <Text
+            type="text3"
+            className={styles.publishedFromText}
+            skeleton={isLoading}
+          >
+            {hitcountText}
+          </Text>
           <Text type="text3" className={styles.explanationText}>
             {Translate({
               context: "creator",
               label: "publications-explanation",
             })}
           </Text>
-          {hitcountText && (
-            <Text type="text3" className={styles.hitcountText}>
-              {hitcountText}
-            </Text>
-          )}
         </div>
       }
       divider={{ content: true }}
@@ -197,6 +197,12 @@ export function Publications({
             creatorId={creatorId}
             selected={selectedCreatorFunction}
             onSelect={setSelectedCreatorFunction}
+            filters={filters}
+          />
+          <GenreAndForm
+            creatorId={creatorId}
+            selected={selectedGenreAndForm}
+            onSelect={setSelectedGenreAndForm}
             filters={filters}
           />
           <Subject
@@ -275,12 +281,17 @@ export default function Wrap({ creatorId }) {
     key: "creator_selectedLanguage_" + creatorId,
     initial: "dansk",
   });
+  const [selectedGenreAndForm, setSelectedGenreAndForm] = useGlobalState({
+    key: "creator_selectedGenreAndForm_" + creatorId,
+    initial: "",
+  });
 
-  const { years, hitcount } = usePublicationYears(creatorId, {
+  const { years, hitcount, isLoading } = usePublicationYears(creatorId, {
     generalMaterialType: selectedGeneralMaterialType,
     creatorFunction: selectedCreatorFunction,
     subjects: selectedSubjects,
     language: selectedLanguage,
+    genreAndForm: selectedGenreAndForm,
   });
 
   return (
@@ -296,6 +307,9 @@ export default function Wrap({ creatorId }) {
       setSelectedCreatorFunction={setSelectedCreatorFunction}
       selectedLanguage={selectedLanguage}
       setSelectedLanguage={setSelectedLanguage}
+      selectedGenreAndForm={selectedGenreAndForm}
+      setSelectedGenreAndForm={setSelectedGenreAndForm}
+      isLoading={isLoading}
     />
   );
 }

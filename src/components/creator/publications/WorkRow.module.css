@@ -40,13 +40,19 @@
   --underline-bottom-color: var(--blue);
   margin-right: var(--pt1);
 }
-
+.serieslink {
+  --underline-bottom-color: var(--blue);
+}
 .worktype {
   text-transform: capitalize;
   /* padding-top: var(--pt1); */
 }
 
 .creators {
+  padding-top: var(--pt05);
+}
+
+.series {
   padding-top: var(--pt05);
 }
 

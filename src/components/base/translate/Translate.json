@@ -24,8 +24,8 @@
         "en": "Publications"
       },
       "publications-explanation": {
-        "da": "Værkerne grupperes efter tidligste registrerede udgave, men værket kan være skabt tidligere.",
-        "en": "Works are grouped by the earliest registered edition, but the work may have been created earlier."
+        "da": "Værkerne er grupperet efter ældste registrerede udgave, men værket kan være skabt tidligere.",
+        "en": "Works are grouped by the oldest registered edition, but the work may have been created earlier."
       },
       "work-singular": {
         "da": "værk",
@@ -62,6 +62,14 @@
       "creator-breadcrumb": {
         "da": "Ophav",
         "en": "Creator"
+      },
+      "publishedFrom": {
+        "da": "Udgivet fra",
+        "en": "Published from"
+      },
+      "publishedIn": {
+        "da": "Udgivet i",
+        "en": "Published in"
       }
     },
     "advanced_search_cql": {
