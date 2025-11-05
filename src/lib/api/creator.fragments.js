@@ -13,6 +13,7 @@ const createCqlString = ({
   subjects,
   language,
   publicationYears,
+  genreAndForm,
 }) => {
   let cql = `phrase.creator="${creatorId}"`; // CQL format for creator search using allowed index
   if (generalMaterialType) {
@@ -28,6 +29,9 @@ const createCqlString = ({
   }
   if (language) {
     cql += ` AND phrase.mainlanguage="${language}"`;
+  }
+  if (genreAndForm) {
+    cql += ` AND phrase.genreandform="${genreAndForm}"`;
   }
   if (publicationYears && publicationYears.length > 0) {
     cql += ` AND publicationyear=(${publicationYears
@@ -52,6 +56,7 @@ export function worksByCreator({
   subjects,
   language,
   publicationYears,
+  genreAndForm,
 }) {
   const cql = createCqlString({
     creatorId,
@@ -60,6 +65,7 @@ export function worksByCreator({
     subjects,
     language,
     publicationYears,
+    genreAndForm,
   });
 
   const sort = [{ index: "sort.latestpublicationdate", order: "DESC" }]; // Sort newest first
@@ -85,6 +91,9 @@ export function worksByCreator({
       }
       materialTypes {
         materialTypeSpecific {
+          display
+        }
+        materialTypeGeneral {
           display
         }
       }
@@ -289,6 +298,30 @@ export function publicationYearFacets({ creatorId, filters = {} }) {
           name
           values {
             score
+            key
+          }
+        }
+      }
+    }`,
+    variables: { cql },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Fetch GENREANDFORM facets for a creator's works
+ * Applies filters from other dropdowns but excludes genreAndForm filter
+ */
+export function genreAndFormFacets({ creatorId, filters = {} }) {
+  const cql = createCqlString({ creatorId, ...filters });
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query genreAndFormFacets($cql: String!) {
+      complexSearch(cql: $cql, facets: {facetLimit: 50, facets: [GENREANDFORM]}) {
+        facets {
+          name
+          values {
             key
           }
         }

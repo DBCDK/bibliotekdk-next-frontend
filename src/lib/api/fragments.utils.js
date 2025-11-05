@@ -209,7 +209,8 @@ export const cacheWorkFragment = `fragment cacheWorkFragment on Work {
   workId
   series {
     title
-    numberInSeries  
+    seriesId
+    numberInSeries
   }
   mainLanguages {
     isoCode
@@ -246,6 +247,10 @@ export const cacheWorkFragment = `fragment cacheWorkFragment on Work {
     full
     parallel
     sort
+    tvSeries {
+      title
+      danishLaunchTitle
+    }
   }
 }`;
 

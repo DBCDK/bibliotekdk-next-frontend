@@ -1,12 +1,16 @@
 import Link from "@/components/base/link";
 import Text from "@/components/base/text/Text";
 import Cover from "@/components/base/cover";
-import { encodeTitleCreator } from "@/lib/utils";
+import { encodeTitleCreator, getSeriesUrl } from "@/lib/utils";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { subjectUrl } from "@/components/work/keywords/Keywords";
 import { useMemo } from "react";
 import styles from "./WorkRow.module.css";
-import Translate, { hasTranslation } from "@/components/base/translate";
+import {
+  getPartOfSeriesText,
+  constructSeriesTitle,
+} from "@/components/work/overview/workgroupingsoverview/WorkGroupingsOverview";
+import { getTitlesAndType } from "@/components/work/overview/titlerenderer/TitleRenderer";
 
 /**
  * WorkRow component - displays a work in a table-like format
@@ -28,10 +32,10 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
     return getCoverImage(work?.manifestations?.all || [manifestation])?.detail;
   }, [work?.manifestations]);
 
-  const url = `/materiale/${encodeTitleCreator(
-    work?.titles?.full?.[0],
-    work?.creators || []
-  )}/${workId}`;
+  const title = work?.titles?.full?.[0] || work?.titles?.main?.[0] || "";
+  const encodedPath = encodeTitleCreator(title, work?.creators || []);
+  const url =
+    workId && encodedPath ? `/materiale/${encodedPath}/${workId}` : null;
 
   const creators = [
     work?.creatorFunctions,
@@ -44,6 +48,45 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
   ]
     .filter(Boolean)
     .join(", ");
+
+  // Get series information for display
+  const firstSeries = work?.series?.[0];
+  const seriesInfo = useMemo(() => {
+    if (!firstSeries) return null;
+
+    const { type, titles } = getTitlesAndType({ work });
+    const numberInSeries = firstSeries?.numberInSeries;
+    const description = getPartOfSeriesText(type, numberInSeries);
+    const seriesTitle = constructSeriesTitle({
+      type,
+      series: firstSeries,
+      titles,
+    });
+    const seriesLink = firstSeries?.seriesId
+      ? getSeriesUrl(firstSeries.seriesId, work?.traceId)
+      : null;
+
+    return {
+      description,
+      title: seriesTitle,
+      link: seriesLink,
+    };
+  }, [firstSeries, work]);
+
+  const materialTypes = useMemo(() => {
+    const unique = new Set(
+      work?.materialTypes?.map(
+        (materialType) => materialType.materialTypeGeneral?.display
+      )
+    );
+    return Array.from(unique)?.sort();
+  }, [work?.materialTypes]);
+
+  // Don't render link if URL is invalid
+  if (!url || !workId) {
+    return null;
+  }
+
   return (
     <Link
       className={`${styles.row} ${isFirst ? styles.firstInGroup : ""}`}
@@ -64,6 +107,29 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
         <Text type="text1" lines={2} clamp={true} skeleton={isLoading}>
           {work?.titles?.full?.[0] || work?.titles?.main?.[0]}
         </Text>
+        {seriesInfo && (
+          <Text
+            type="text3"
+            className={styles.series}
+            lines={1}
+            clamp={true}
+            skeleton={isLoading}
+            tag="div"
+          >
+            {seriesInfo.description}
+            {seriesInfo.link ? (
+              <Link
+                href={seriesInfo.link}
+                border={{ bottom: { keepVisible: true } }}
+                className={styles.serieslink}
+              >
+                {seriesInfo.title}
+              </Link>
+            ) : (
+              <span>{seriesInfo.title}</span>
+            )}
+          </Text>
+        )}
         {creators && (
           <Text
             type="text3"
@@ -86,7 +152,7 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
       </div>
 
       <div className={styles.descriptionColumn}>
-        <Text type="text3" lines={2} clamp={true} skeleton={isLoading}>
+        <Text type="text2" lines={2} clamp={true} skeleton={isLoading}>
           {(!work?.abstract?.length && work?.genreAndForm?.join(", ")) || ""}
           {work?.abstract}
         </Text>
@@ -114,22 +180,18 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
       </div>
 
       <div className={styles.extentColumn}>
-        <Text
-          type="text4"
-          lines={1}
-          className={styles.worktype}
-          skeleton={isLoading}
-        >
-          {hasTranslation({
-            context: "workTypeSingularForm",
-            label: work?.workTypes?.[0]?.toLowerCase(),
-          })
-            ? Translate({
-                context: "workTypeSingularForm",
-                label: work?.workTypes?.[0]?.toLowerCase(),
-              })
-            : work?.materialTypes?.[0]?.materialTypeSpecific?.display || ""}
-        </Text>
+        {materialTypes?.map((display, index) => (
+          <Text
+            key={index}
+            type="text3"
+            lines={1}
+            className={styles.worktype}
+            skeleton={isLoading}
+          >
+            {display}
+          </Text>
+        ))}
+
         {work?.extendedWork?.parentPeriodical?.titles?.main?.[0] && (
           <Text
             type="text5"
