@@ -37,6 +37,10 @@
   cursor: pointer;
 }
 
+.removeIcon:focus {
+  outline: 2px solid var(--blue);
+}
+
 .dropdownwrap {
   width: fit-content;
   display: flex;

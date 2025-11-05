@@ -145,7 +145,7 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
         data-cy={`${inputProps.dataCy}-clear`}
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => onClear()}
-        tabIndex={0}
+        tabIndex={showClear ? "0" : "-1"}
       >
         <Icon size={{ w: "auto", h: 2 }} alt="">
           <ClearSvg />
@@ -240,21 +240,17 @@ function Suggester({
       id={id}
       theme={theme}
       suggestions={data}
-      shouldRenderSuggestions={(value) => {
-        // type to see suggestions
-        return value.trim().length > 0;
-      }}
-      onSuggestionsFetchRequested={({}) => {
-        // func is required
-      }}
-      onSuggestionsClearRequested={() => {
-        // func is required
-      }}
+      // shouldRenderSuggestions={(value) => {
+      //   // type to see suggestionss
+      //   return value.trim().length > 0;
+      // }}
+      onSuggestionsFetchRequested={() => {}}
+      onSuggestionsClearRequested={() => {}}
       onSuggestionSelected={(_, entry) => {
+        _.preventBubbleHack = true;
         const { suggestionValue, suggestion, suggestionIndex } = entry;
         onSelect && onSelect(suggestionValue, suggestion, suggestionIndex);
         setState({ q: suggestionValue, _q: null });
-        // blurInput(id);
       }}
       renderSuggestionsContainer={(props) =>
         renderSuggestionsContainer(props.containerProps, props.children)
@@ -283,7 +279,6 @@ function Suggester({
       //     setState({ ...state, _q: suggestion?.value });
       //   }
       // }}
-
       focusInputOnSuggestionClick={false}
       highlightFirstSuggestion={false}
       inputProps={inputProps}

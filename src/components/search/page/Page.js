@@ -115,7 +115,7 @@ function Page({
         id="search-result-section"
         className={styles.section}
         title={
-          hasAdvancedSearch && !isSimple ? (
+          hasActiveSearch && !isSimple ? (
             <div>
               {isMobile && (
                 <div className={styles.titleflex}>
@@ -150,7 +150,7 @@ function Page({
           )
         }
         subtitle={
-          (hasAdvancedSearch || hasQuery) &&
+          hasActiveSearch &&
           !isMobile && (
             <div className={styles.facetsContainer}>
               <FacetTags selectedFacets={selectedFacets} />
@@ -165,15 +165,9 @@ function Page({
             </div>
           )
         }
-        sectionContentClass={
-          hasAdvancedSearch && isMobile ? styles.sectionContentStyle : ""
-        }
-        sectionTitleClass={hasAdvancedSearch ? styles.sectionTitleClass : ""}
       >
         {shouldShowHistory && <History />}
-        {shouldShowNoHits && (
-          <NoHitSearch isSimpleSearch={!hasAdvancedSearch} />
-        )}
+        {shouldShowNoHits && <NoHitSearch isSimpleSearch={isSimple} />}
 
         {!isSimple && !isMobile && hitcount > 0 && (
           <div className={styles.advancedSearchActions}>

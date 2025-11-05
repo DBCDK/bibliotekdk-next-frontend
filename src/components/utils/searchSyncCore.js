@@ -152,8 +152,7 @@ export function reduceCommit(action, snap, lastOrigin) {
         next.snap.workTypes = "all";
       }
 
-      // If we previously committed in CQL and user now commits in ADVANCED,
-      // that should also reset the CQL rung (moving down the ladder with a new search)
+      // If previously at CQL and now committing in ADVANCED, reset CQL rung
       if (lastOrigin === MODE.CQL) {
         next.snap.cql.cql = null;
       }
@@ -195,6 +194,8 @@ export function reduceCommit(action, snap, lastOrigin) {
  * - Always reflect ?workTypes= (fallback "all")
  * - In CQL mode, a cql= param is treated as a COMMIT (and clears others)
  * - In ADVANCED mode, fieldSearch without workType => workTypes becomes "all" (bugfix mirror)
+ * - IMPORTANT: ADVANCED hydration only sets lastOrigin=ADVANCED when lastOrigin is null
+ *              (deep-link / first load). Seeded nav from SIMPLE must not change origin.
  */
 export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
   const next = {
@@ -233,7 +234,11 @@ export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
       next.snap.advanced.fieldSearch = fsInUrl;
       const wt = safeExtractWorkType(fsInUrl);
       next.snap.workTypes = wt ?? "all"; // BUGFIX mirror
-      next.lastOrigin = MODE.ADVANCED; // explicit fieldSearch in URL = committed state
+
+      // Only set origin on first-load/deep-link. Do not override seeded origin.
+      if (!next.lastOrigin) {
+        next.lastOrigin = MODE.ADVANCED;
+      }
     }
   }
 
@@ -241,7 +246,8 @@ export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
     const allInUrl = norm(query?.["q.all"]);
     if (isNonEmpty(allInUrl)) {
       next.snap.simple.qAll = allInUrl;
-      next.lastOrigin = MODE.SIMPLE;
+      // Same principle: mark origin only if unknown (initial load)
+      if (!next.lastOrigin) next.lastOrigin = MODE.SIMPLE;
     }
   }
 
@@ -258,7 +264,7 @@ export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
  * 1) SIMPLE commit may seed ADVANCED + CQL (with workType)
  * 2) ADVANCED commit may seed CQL (with workType)
  * 3) CQL commit never seeds down; going down after CQL shows empty views
- * 4) Returning to the origin tab re-shows its committed query
+ * 4) Returning to SIMPLE should show its committed query ONLY if SIMPLE is the origin
  */
 export function computeUrlForMode(targetMode, snap, lastOrigin) {
   const empty = () => ({ query: {} });
@@ -292,13 +298,13 @@ export function computeUrlForMode(targetMode, snap, lastOrigin) {
       dbgCORE("computeUrlForMode() out SIMPLE→ADV", out);
       return out;
     }
-    // 4) ADVANCED → ADVANCED (keep)
-    if (lastOrigin === MODE.ADVANCED && isNonEmpty(snap.advanced.fieldSearch)) {
+    // Keep ADVANCED's own query if present
+    if (isNonEmpty(snap.advanced.fieldSearch)) {
       const q = { fieldSearch: snap.advanced.fieldSearch };
       const wt = snap.workTypes;
       if (wt && wt !== "all") q.workTypes = wt;
       const out = { query: q };
-      dbgCORE("computeUrlForMode() out ADV→ADV", out);
+      dbgCORE("computeUrlForMode() out ADV keep", out);
       return out;
     }
     const out = empty();
@@ -337,17 +343,17 @@ export function computeUrlForMode(targetMode, snap, lastOrigin) {
   }
 
   if (targetMode === MODE.SIMPLE) {
-    // Staying or returning to SIMPLE should show its own committed query
+    // IMPORTANT: Only show SIMPLE when SIMPLE is the origin (latest commit).
     if (lastOrigin === MODE.SIMPLE && isNonEmpty(snap.simple.qAll)) {
       const wt = snap.workTypes || "all";
       const q = { "q.all": snap.simple.qAll };
       if (wt && wt !== "all") q.workTypes = wt;
       const out = { query: q };
-      dbgCORE("computeUrlForMode() out SIMPLE→SIMPLE", out);
+      dbgCORE("computeUrlForMode() out SIMPLE→SIMPLE (origin match)", out);
       return out;
     }
     const out = empty();
-    dbgCORE("computeUrlForMode() out SIMPLE empty", out);
+    dbgCORE("computeUrlForMode() out SIMPLE empty (not origin)", out);
     return out;
   }
 
