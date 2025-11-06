@@ -702,11 +702,6 @@ export function useSubmitOrders({ orders }) {
   const userParameters = loanerInfo?.userParameters;
   const isReady = !!validation?.isValid;
   const { pincode, pincodeIsRequired } = usePincode();
-  
-  const exactEdition = useMemo(
-    () => !!orders?.some?.((o) => o?.exactEdition),
-    [orders]
-  );
 
   async function submitOrders() {
     if (!isReady) {
@@ -730,6 +725,7 @@ export function useSubmitOrders({ orders }) {
       const materialToOrder = {
         key: entry?.order?.bookmarkKey || orderKey,
         pids: entry?.pids,
+        exactEdition: !!entry?.order?.exactEdition,
       };
 
       if (periodicaForm) {
@@ -764,7 +760,6 @@ export function useSubmitOrders({ orders }) {
           userMail: mail,
           pincode: pincodeIsRequired ? pincode : undefined,
         },
-        exactEdition: exactEdition,
       })
     );
     const failedMaterialsPids =
