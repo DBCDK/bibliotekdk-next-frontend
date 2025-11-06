@@ -164,6 +164,7 @@
 /* ≥ 576px (sm) */
 @media (min-width: 576px) {
   .container {
+    margin-top: var(--pt2);
     padding-inline: var(--pt2);
   }
 

@@ -144,8 +144,13 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
       <span
         data-cy={`${inputProps.dataCy}-clear`}
         className={`${styles.clear} ${clearVisibleClass}`}
+        tabIndex={showClear ? "0" : "-1"}
         onClick={() => onClear()}
-        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onClear();
+          }
+        }}
       >
         <Icon size={{ w: "auto", h: 2 }} alt="">
           <ClearSvg />
@@ -170,7 +175,6 @@ function Suggester({
   data = [],
   children,
   skeleton = false,
-  onClear = null,
   onSelect = null,
   onChange = null,
   onBlur = null,
@@ -240,21 +244,17 @@ function Suggester({
       id={id}
       theme={theme}
       suggestions={data}
-      shouldRenderSuggestions={(value) => {
-        // type to see suggestions
-        return value.trim().length > 0;
-      }}
-      onSuggestionsFetchRequested={({}) => {
-        // func is required
-      }}
-      onSuggestionsClearRequested={() => {
-        // func is required
-      }}
+      // shouldRenderSuggestions={(value) => {
+      //   // type to see suggestionss
+      //   return value.trim().length > 0;
+      // }}
+      onSuggestionsFetchRequested={() => {}}
+      onSuggestionsClearRequested={() => {}}
       onSuggestionSelected={(_, entry) => {
+        _.preventBubbleHack = true;
         const { suggestionValue, suggestion, suggestionIndex } = entry;
         onSelect && onSelect(suggestionValue, suggestion, suggestionIndex);
         setState({ q: suggestionValue, _q: null });
-        // blurInput(id);
       }}
       renderSuggestionsContainer={(props) =>
         renderSuggestionsContainer(props.containerProps, props.children)
@@ -273,17 +273,10 @@ function Suggester({
           inputProps: merged,
           onClear: () => {
             setState({ q: "", _q: null });
-            onClear && onClear();
             focusInput(id);
           },
         });
       }}
-      // onSuggestionHighlighted={({ suggestion }) => {
-      //   if (suggestion?.value !== state._q) {
-      //     setState({ ...state, _q: suggestion?.value });
-      //   }
-      // }}
-
       focusInputOnSuggestionClick={false}
       highlightFirstSuggestion={false}
       inputProps={inputProps}

@@ -84,8 +84,8 @@ export default function Wrap({ onCommit = () => {} }) {
 
   // accept null for an answer
   const selectedMaterial = filters?.workTypes?.length
-    ? filters.workTypes[0]
-    : workTypes?.[0] ?? SuggestTypeEnum.ALL;
+    ? filters?.workTypes?.[0]
+    : SuggestTypeEnum.ALL;
 
   // Sync initial query
   useEffect(() => {
@@ -128,12 +128,12 @@ export default function Wrap({ onCommit = () => {} }) {
     }
   };
 
-  // const handleSelect = (suggestionValue, suggestion) => {
-  //   const formattedValue = history.some((t) => t.term === suggestionValue)
-  //     ? suggestionValue
-  //     : `"${suggestionValue}"`;
-  //   doSearch(formattedValue, suggestion);
-  // };
+  const handleSelect = (suggestionValue, suggestion) => {
+    const formattedValue = history.some((t) => t.term === suggestionValue)
+      ? suggestionValue
+      : `"${suggestionValue}"`;
+    doSearch(formattedValue, suggestion);
+  };
 
   const handleChange = (val) => {
     setQueryState(val);
@@ -164,7 +164,7 @@ export default function Wrap({ onCommit = () => {} }) {
       history={filteredHistory}
       selectedMaterial={selectedMaterial}
       isMobileSize={isMobileSize}
-      onSelect={() => {}}
+      onSelect={handleSelect}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       onClose={handleClose}
