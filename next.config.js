@@ -31,6 +31,7 @@ const headers = [
     key: "Content-Security-Policy",
     value:
       "default-src 'self'; " +
+      "media-src 'self' https://samples.pubhub.dk https://samples.qa.pubhub.dk https://*.wedobooks.io data: blob: http://localhost:*; " +
       "script-src 'self' *.dbc.dk https://consent.cookiebot.eu https://consentcdn.cookiebot.eu 'unsafe-eval' 'unsafe-inline' http://localhost:*; " +
       "style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' blob: https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:*; " +

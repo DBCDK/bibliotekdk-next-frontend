@@ -1,3 +1,19 @@
+.offcanvas {
+  --bs-offcanvas-width: 700px;
+  transition: width 300ms ease, transform 0.3s ease-in-out;
+}
+
 .offcanvas.maximize {
   --bs-offcanvas-width: 100%;
+}
+
+.header {
+}
+
+.title {
+  flex: 1 1 0;
+}
+
+.expand {
+  margin-right: var(--pt2);
 }

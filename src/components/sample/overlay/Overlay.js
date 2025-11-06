@@ -1,15 +1,22 @@
 import Offcanvas from "react-bootstrap/Offcanvas";
+
+import { Close } from "@/components/_modal/pages/base/top";
+
 import styles from "./Overlay.module.css";
+import Expand from "../icons/expand";
+import { useState } from "react";
 
 export default function Overlay({
   show,
-  maximize = false,
+  expandDefault = false,
   onHide,
   title = false,
   children,
   className = "",
 }) {
-  const maximized = maximize ? styles.maximize : "";
+  const [expanded, setExpanded] = useState(expandDefault);
+
+  const maximized = expanded ? styles.maximize : "";
 
   return (
     <Offcanvas
@@ -20,11 +27,16 @@ export default function Overlay({
       onHide={onHide}
       className={`${styles.offcanvas} ${maximized} ${className}`}
     >
-      {title && (
-        <Offcanvas.Header className={styles.header} closeButton>
-          <Offcanvas.Title>{title}</Offcanvas.Title>
-        </Offcanvas.Header>
-      )}
+      <Offcanvas.Header className={styles.header}>
+        <Expand
+          className={styles.expand}
+          onChange={(e) => setExpanded(e?.target?.checked)}
+        />
+        <Offcanvas.Title className={styles.title}>
+          {"Sample af Papirguderne"}
+        </Offcanvas.Title>
+        <Close className={styles.close} onClose={onHide} />
+      </Offcanvas.Header>
       <Offcanvas.Body id="overlay" className={styles.body}>
         {children}
       </Offcanvas.Body>

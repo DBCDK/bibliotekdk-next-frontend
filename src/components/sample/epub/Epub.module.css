@@ -49,7 +49,8 @@
 /* ===== Labels (lige brede) — halv bredde & centreret ===== */
 .labels {
   display: flex;
-  width: 50%;
+  max-width: 750px;
+  width: 100%;
   margin: 8px auto 4px;
   gap: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -93,7 +94,8 @@
 /* ===== Progressbar – halv bredde & centreret ===== */
 .progressTrack {
   position: relative;
-  width: 50%;
+  width: 100%;
+  max-width: 750px;
   margin: 8px auto;
   height: 8px;
   background: repeating-linear-gradient(

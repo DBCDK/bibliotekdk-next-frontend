@@ -175,7 +175,7 @@ export function Overview({
                   selectedPids={selectedPids}
                 />
 
-                <SampleButton className={styles.sample} />
+                <SampleButton workId={workId} className={styles.sample} />
 
                 <BookmarkDropdown
                   materialId={workId}

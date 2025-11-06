@@ -4,15 +4,21 @@ import { useRouter } from "next/router";
 
 import Button from "./button";
 import Overlay from "./overlay";
-import EpubSample from "./epub";
+import ReaderSample from "./epub";
 
 import styles from "./Sample.module.css";
+import AudioSample from "./mp3";
 
-const url = "https://samples.pubhub.dk/9788758817842.epub";
+// const url = "https://samples.pubhub.dk/9788758817842.epub";
+const url = "https://samples.pubhub.dk/9788741509884.mp3";
 
-export default function Sample({ className = "" }) {
+export function Sample({ className = "" }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
+
+  // url filetype format
+  const isEpub = url.toLowerCase().endsWith(".epub");
+  const isMp3 = url.toLowerCase().endsWith(".mp3");
 
   // Hold state i sync med URL (loader + back/forward)
   useEffect(() => {
@@ -57,8 +63,13 @@ export default function Sample({ className = "" }) {
         title={false}
         className={styles.overlay}
       >
-        <EpubSample url={url} />
+        {isEpub && <ReaderSample url={url} />}
+        {isMp3 && <AudioSample src={url} />}
       </Overlay>
     </>
   );
+}
+
+export default function Wrap(props) {
+  return <Sample {...props} />;
 }

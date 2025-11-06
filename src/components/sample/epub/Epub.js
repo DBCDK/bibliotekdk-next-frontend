@@ -12,7 +12,7 @@ const ReactReader = dynamic(
   { ssr: false }
 );
 
-export default function Epub({ url, title }) {
+export default function ReaderSample({ src, title }) {
   // Reader position (gemmes i localStorage)
   const [location, setLocation] = useState(0);
 
@@ -347,7 +347,7 @@ export default function Epub({ url, title }) {
 
       {/* Reader */}
       <ReactReader
-        url={url}
+        url={src}
         title={title}
         location={location}
         getRendition={handleGetRendition}
