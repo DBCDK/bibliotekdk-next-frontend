@@ -1,119 +1,39 @@
-.wrapper {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-gap: 0.75rem;
-  align-items: center;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: #fff;
-  border: 1px solid #e6e6e6;
-  border-radius: 12px;
-  padding: 0.5rem 0.75rem;
-  max-width: 620px;
-}
-
-.play {
-  appearance: none;
-  background: #111;
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-}
-.play:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.icon {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-}
-
-.timeline {
-  position: relative;
-  height: 24px;
-  display: flex;
-  align-items: center;
-}
-
-.range {
-  -webkit-appearance: none;
-  appearance: none;
+.wrap {
   width: 100%;
-  background: transparent;
-  margin: 0;
-  cursor: pointer;
-}
-.range:focus {
-  outline: none;
-}
-
-/* Track */
-.range::-webkit-slider-runnable-track {
-  height: 4px;
-  background: #e6e6e6;
-  border-radius: 999px;
-}
-.range::-moz-range-track {
-  height: 4px;
-  background: #e6e6e6;
-  border-radius: 999px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Thumb */
-.range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  margin-top: -6px; /* center thumb */
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: none;
-  background: #111;
-}
-.range::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: none;
-  background: #111;
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Progress overlay (pure CSS, follows React state) */
-.progress {
-  pointer-events: none;
-  position: absolute;
-  left: 0;
-  height: 4px;
-  background: #111;
-  border-radius: 999px;
+.cover {
+  margin: auto;
 }
 
-/* Time labels */
-.time {
-  font-variant-numeric: tabular-nums;
-  font-size: 12px;
-  color: #333;
-  display: inline-flex;
-  gap: 4px;
-  min-width: 78px;
-  justify-content: flex-end;
-}
-.sep {
-  opacity: 0.5;
+.cover img {
+  width: 350px;
+  display: block;
+  margin: auto;
 }
 
-.error {
-  grid-column: 1 / -1;
-  color: #a40000;
-  background: #fff5f5;
-  border: 1px solid #ffd6d6;
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-top: 0.25rem;
+.info {
+  max-width: 350px;
+}
+
+.info div {
+  margin-top: var(--pt2);
+}
+
+.player {
+  margin-top: var(--pt4);
+  width: 80%;
 }

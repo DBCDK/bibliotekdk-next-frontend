@@ -91,6 +91,7 @@ export function Overview({
     () => manifestations?.map((manifestation) => manifestation?.pid),
     [manifestations]
   );
+
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
   const checkForPeriodicaArticle = (pids) => {
@@ -175,7 +176,11 @@ export function Overview({
                   selectedPids={selectedPids}
                 />
 
-                <SampleButton workId={workId} className={styles.sample} />
+                <SampleButton
+                  workId={workId}
+                  selectedPids={selectedPids}
+                  className={styles.sample}
+                />
 
                 <BookmarkDropdown
                   materialId={workId}
