@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import { CqlTextArea } from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
+import CqlTextArea from "@/components/search/advancedSearch/cqlTextArea/CqlTextArea";
 
 const exportedObject = {
   title: "search/avanceret/cqlTxtBox",

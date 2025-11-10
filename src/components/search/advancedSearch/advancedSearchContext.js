@@ -15,10 +15,14 @@ import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefau
 import {
   convertStateToCql,
   parseSearchUrl,
+  stripOuterQuotesOnce,
 } from "@/components/search/advancedSearch/utils";
 import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import isEmpty from "lodash/isEmpty";
+
+const norm = (v) => (v == null ? "" : String(v).trim());
+const isNonEmpty = (v) => norm(v) !== "";
 
 export function getDefaultDropdownIndices() {
   return [
@@ -49,14 +53,17 @@ export function getDefaultDropdownIndices() {
  * @returns {[{prefixLogicalOperator: null, searchIndex: string, value: string},{prefixLogicalOperator: string, searchIndex: string, value: string}]}
  */
 export function getInitialInputFields(workType = "all") {
+  return [
+    {
+      value: "",
+      prefixLogicalOperator: null,
+      searchIndex: "term.default",
+    },
+  ];
+
   const inputFieldsByMaterialType = {
     all: [
       { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.default",
-      },
     ],
     literature: [
       {
@@ -190,16 +197,32 @@ export function useAdvancedSearchContext() {
   return useContext(AdvancedSearchContext);
 }
 
+export function getFieldSearchFromUrl(query) {
+  const { fieldSearch, "q.all": q = null } = query;
+
+  const fieldSearchFromUrl = parseSearchUrl(fieldSearch);
+  if (fieldSearchFromUrl && !isEmpty(fieldSearchFromUrl)) {
+    return fieldSearchFromUrl;
+  }
+
+  if (q) {
+    // Ensure Advanced default seed does not carry outer quotes from Simple.
+    const arr = getInitialInputFields();
+    arr[0].value = stripOuterQuotesOnce(q);
+    return { inputFields: arr };
+  }
+
+  return {};
+}
+
 export default function AdvancedSearchProvider({ children, router }) {
   const {
     page = "1",
     cql: cqlFromUrl = null,
-    fieldSearch = "{}",
     sort: sortFromUrl = "{}",
   } = router.query;
 
-  const fieldSearchFromUrl = parseSearchUrl(fieldSearch);
-
+  const fieldSearchFromUrl = getFieldSearchFromUrl(router?.query);
   const sort = parseSearchUrl(sortFromUrl);
 
   //// ----  Popup Trigger ----
@@ -218,6 +241,22 @@ export default function AdvancedSearchProvider({ children, router }) {
       popoverRef?.current?.focus();
     }
   }, [showPopover, popoverRef.current]);
+
+  useEffect(() => {
+    const { workTypes: wtParam, fieldSearch: fsParam } = router.query;
+
+    let wt = "all";
+    if (isNonEmpty(wtParam)) {
+      wt = Array.isArray(wtParam) ? wtParam[0] || "all" : wtParam;
+    } else if (fsParam) {
+      const fs = parseSearchUrl(fsParam);
+      wt = fs?.workType || "all";
+    }
+
+    if (wt !== workType) {
+      setWorkType(wt);
+    }
+  }, [router.query?.workTypes, router.query?.fieldSearch]); // eslint-disable-line
 
   //tracking id for the selected suggestion from inputfield. For now we only save one tid.
   const [suggesterTid, setSuggesterTid] = useState("");
@@ -279,9 +318,11 @@ export default function AdvancedSearchProvider({ children, router }) {
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
-  //reset worktype on url change
   useEffect(() => {
-    setWorkType(fieldSearchFromUrl.workType || "all");
+    const nextWT = fieldSearchFromUrl.workType || "all";
+    if (nextWT !== workType) {
+      setWorkType(nextWT);
+    }
   }, [JSON.stringify(fieldSearchFromUrl.workType)]);
 
   function resetObjectState() {

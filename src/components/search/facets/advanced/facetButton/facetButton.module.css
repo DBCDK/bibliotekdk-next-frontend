@@ -1,0 +1,40 @@
+.facetbutton {
+  display: block;
+  width: 100%;
+  background-color: var(--concrete);
+  outline: 2px solid var(--iron);
+  color: var(--black);
+}
+
+.buttonWrap {
+  display: flex;
+  align-items: center;
+}
+
+.counterwrap {
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  margin-left: var(--pt2);
+  padding: 2px var(--pt1);
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.mobileclear {
+  display: block;
+  margin-left: var(--pt2);
+}
+
+/* Desktop: skjul mobil-knapper */
+@media (min-width: 992px) {
+  .facetbutton {
+    display: none;
+  }
+
+  .mobileclear {
+    display: none;
+  }
+}

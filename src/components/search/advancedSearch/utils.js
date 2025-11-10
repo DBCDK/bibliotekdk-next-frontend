@@ -364,10 +364,46 @@ export function getUrlByType({ type, value, traceId }) {
  */
 export const parseSearchUrl = (value) => {
   if (!value) return {};
+  if (typeof value === "object") return value; // already parsed
+
+  // Try plain JSON
   try {
     return JSON.parse(value);
-  } catch {
-    console.error("Failed to parse search url", value);
-  }
+  } catch {}
+
+  // Try URL-decoded JSON
+  try {
+    return JSON.parse(decodeURIComponent(value));
+  } catch {}
+
+  console.error("Failed to parse search url", value);
   return {};
 };
+
+// Removes one outer pair of quotes (straight or smart), leaving inner quotes intact.
+// Examples:  "Hest" → Hest,  'Hest' → Hest,  “Hest” → Hest
+export function stripOuterQuotesOnce(s) {
+  if (typeof s !== "string") return s;
+  const trimmed = s.trim();
+
+  // straight double/single quotes
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+
+  // common smart quotes: “ ” and ‘ ’
+  const smartPairs = [
+    ["“", "”"],
+    ["‘", "’"],
+  ];
+  for (const [open, close] of smartPairs) {
+    if (trimmed.startsWith(open) && trimmed.endsWith(close)) {
+      return trimmed.slice(1, -1);
+    }
+  }
+
+  return trimmed;
+}

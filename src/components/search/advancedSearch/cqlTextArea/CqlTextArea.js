@@ -1,8 +1,7 @@
 import styles from "./CqlTextArea.module.css";
 import React, { useMemo, useState } from "react";
-import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text";
-import translate from "@/components/base/translate";
+import Translate from "@/components/base/translate";
 import { CqlErrorMessage } from "@/components/search/advancedSearch/cqlErrorMessage/CqlErrorMessage";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import {
@@ -14,87 +13,177 @@ import {
 import Editor from "react-simple-code-editor";
 import { useData } from "@/lib/api/api";
 import { complexSearchIndexes } from "@/lib/api/complexSearch.fragments";
+import { useFacets } from "../useFacets";
+import { useQuickFilters } from "../useQuickFilters";
+import { useRouter } from "next/router";
+import Button from "@/components/base/button";
+import Link from "@/components/base/link";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { convertStateToCql } from "../utils";
+import HelpBtn from "../../help";
 
-export function CqlTextArea({ doAdvancedSearch }) {
+/**
+ * Præsentationskomponent: UI og events via props
+ */
+export function CqlTextAreaView({
+  parsedCQL,
+  onChange,
+  onSearch,
+  onClear,
+  indexes,
+  message,
+  focused,
+  setFocused,
+  isMobile,
+}) {
+  return (
+    <Row>
+      <Col>
+        <Col
+          className={`${styles.formatted} ${focused ? styles.focused : ""}`}
+          data-cy="advanced-search-cqlTxt"
+        >
+          <Editor
+            id="cqlTextArea"
+            value={parsedCQL}
+            onValueChange={onChange}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            highlight={(code) => {
+              const tokens = tokenize(code);
+              const validated = validateTokens(tokens, indexes);
+              return highlight(validated);
+            }}
+            placeholder={Translate({
+              context: "search",
+              label: "cqlsearchPlaceholder",
+            })}
+            padding={16}
+            style={{
+              background: "white",
+              fontFamily:
+                "ibm_plex_mono,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Courier New",
+              fontSize: 17,
+              lineHeight: 1.5,
+              minHeight: 84,
+            }}
+            insertSpaces
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && e.ctrlKey) {
+                e.preventDefault();
+                onSearch();
+              }
+            }}
+            ignoreTabKey
+          />
+        </Col>
+        <CqlErrorMessage message={message} />
+
+        <Row className={styles.buttonRow}>
+          <Col className={styles.button_group} sm={12}>
+            <Button className={styles.button} size="medium" onClick={onSearch}>
+              {Translate({ context: "search", label: "advancedSearch_button" })}
+            </Button>
+
+            <Text type="text3">
+              <Link
+                dataCy="advanced-search-clear-search"
+                border={{ bottom: { keepVisible: true } }}
+                onClick={onClear}
+              >
+                {Translate({
+                  context: "search",
+                  label: isMobile ? "mobile_clearSearch" : "clearSearch",
+                })}
+              </Link>
+            </Text>
+
+            <HelpBtn className={styles.help} />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  );
+}
+
+/**
+ * Wrapper-komponent: håndterer data, logik og eventhandlers
+ */
+export default function Wrap() {
+  const router = useRouter();
+  const isMobile = useBreakpoint() === "xs";
+
   const { data } = useData(complexSearchIndexes());
+  const { resetFacets } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
 
-  const { parsedCQL, setParsedCQL } = useAdvancedSearchContext();
+  const {
+    parsedCQL,
+    setParsedCQL,
+    cqlFromUrl,
+    fieldSearchFromUrl,
+    setShowPopover,
+    stateToString,
+    resetObjectState,
+  } = useAdvancedSearchContext();
+
   const [focused, setFocused] = useState(false);
 
   const indexes = useMemo(() => {
-    if (!data?.complexSearchIndexes?.length) {
-      return;
-    }
-
-    // Set containing all valid indexes
+    if (!data?.complexSearchIndexes?.length) return new Set();
     const set = new Set();
-
-    data?.complexSearchIndexes?.forEach?.((entry) => {
+    data.complexSearchIndexes.forEach((entry) => {
       set.add(entry?.index);
-
-      // Add all aliases
-      entry?.aliases?.forEach?.((index) => set.add(index));
+      entry?.aliases?.forEach((alias) => set.add(alias));
     });
-
     return set;
   }, [data]);
 
-  const message = useMemo(() => {
+  const errorMessage = useMemo(() => {
     const tokens = tokenize(parsedCQL);
     const validatedTokens = validateTokens(tokens, indexes);
     const { message } = createErrorMessage(validatedTokens, indexes);
     return message;
   }, [parsedCQL, indexes]);
 
+  const handleSearch = () => {
+    resetFacets();
+    resetQuickFilters();
+
+    const cqlParsedFromUrl = fieldSearchFromUrl
+      ? convertStateToCql(fieldSearchFromUrl)
+      : cqlFromUrl;
+
+    const query =
+      !cqlFromUrl && parsedCQL === cqlParsedFromUrl
+        ? { fieldSearch: stateToString }
+        : { cql: parsedCQL };
+
+    router.push({ pathname: "/find/cql", query });
+    setShowPopover(false);
+  };
+
+  const handleClear = () => {
+    resetObjectState();
+    router.push({
+      pathname: router.pathname,
+      ...(router.query?.mode === "cql" && { query: { mode: "cql" } }),
+    });
+  };
+
   return (
-    <div>
-      <label className={styles.label}>
-        <Text type="text1">
-          {translate({ context: "search", label: "cqlsearchlabel" })}
-        </Text>
-      </label>
-      <div
-        className={`${styles.formatted} ${focused ? styles.focused : ""}`}
-        data-cy={cyKey({
-          name: "cqlTxt",
-          prefix: "advanced-search",
-        })}
-      >
-        <Editor
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          placeholder={translate({
-            context: "search",
-            label: "cqlsearchPlaceholder",
-          })}
-          id="cqlTextArea"
-          value={parsedCQL}
-          onValueChange={(code) => setParsedCQL(code)}
-          highlight={(code) => {
-            const tokens = tokenize(code);
-            const validatedTokens = validateTokens(tokens, indexes);
-            return highlight(validatedTokens);
-          }}
-          padding={16}
-          style={{
-            background: "white",
-            fontFamily:
-              "ibm_plex_mono,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New",
-            fontSize: 17,
-            lineHeight: 1.5,
-            minHeight: 84,
-          }}
-          insertSpaces={true}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && e.ctrlKey === true) {
-              e.preventDefault();
-              doAdvancedSearch();
-            }
-          }}
-          ignoreTabKey={true}
-        />
-      </div>
-      <CqlErrorMessage message={message} />
-    </div>
+    <CqlTextAreaView
+      parsedCQL={parsedCQL}
+      onChange={setParsedCQL}
+      onSearch={handleSearch}
+      onClear={handleClear}
+      indexes={indexes}
+      message={errorMessage}
+      focused={focused}
+      setFocused={setFocused}
+      isMobile={isMobile}
+    />
   );
 }

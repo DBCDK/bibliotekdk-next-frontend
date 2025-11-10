@@ -1,0 +1,105 @@
+.background {
+  background-color: var(--concrete);
+  transition-duration: 0.3s;
+}
+
+.section {
+  position: relative;
+  margin-bottom: var(--pt2);
+}
+
+.section > div {
+  padding-top: var(--pt1_5);
+  order: 2;
+}
+
+/* worktypes */
+.section > div:first-child {
+  padding-top: 0;
+  order: 3;
+}
+
+.section > div:first-child {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.section > div:last-child a:last-child {
+  margin-right: var(--pt2);
+}
+
+.content {
+  padding: var(--pt1) 0 var(--pt2) 0;
+}
+
+.workTypesMenu {
+  padding-bottom: var(--pt3);
+}
+
+.worktypes {
+  /* Add any specific styling for worktypes if needed */
+}
+
+.links {
+  display: none;
+}
+
+.tabs li:last-child {
+  margin-left: auto;
+}
+
+.paddingBottom {
+  padding-bottom: var(--pt2);
+}
+
+@media (min-width: 992px) {
+  .section {
+    padding: var(--pt4) 0 0 0;
+  }
+
+  .section > div:last-child {
+    order: 2;
+  }
+
+  .section > div:first-child {
+    order: 1;
+    padding-top: var(--pt7);
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  .section > div:first-child {
+    display: inline-flex;
+  }
+
+  .content {
+    padding: var(--pt3) 0 0 0;
+  }
+
+  .tabs {
+    justify-content: unset;
+  }
+
+  .links {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .links > div {
+    margin-top: auto;
+    height: var(--pt7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .indexes {
+    margin-bottom: var(--pt05);
+  }
+
+  .paddingBottom {
+    padding-bottom: var(--pt4);
+  }
+}

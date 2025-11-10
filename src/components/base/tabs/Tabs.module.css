@@ -1,0 +1,47 @@
+.tabs {
+  display: flex;
+  list-style: none;
+  position: relative;
+}
+
+.tabs:after {
+  content: "";
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--iron);
+}
+
+.tabs li {
+}
+
+.tabs li button {
+  padding: var(--pt1) var(--pt1_5) var(--pt1) var(--pt1_5);
+  background-color: transparent;
+  font-size: 17px;
+  font-family: var(--body-font);
+  cursor: pointer;
+}
+
+.tabs li button:hover {
+  color: var(--blue);
+}
+
+.tabs li button[aria-selected="true"] {
+  color: var(--blue);
+  font-family: var(--body-font-semibold);
+
+  border-bottom: 2px solid var(--blue);
+
+  /* active element blue line above pseudo element*/
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 992px) {
+  .tabs li button {
+    font-size: 20px;
+  }
+}
