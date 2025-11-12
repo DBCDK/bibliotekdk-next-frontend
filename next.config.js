@@ -28,31 +28,32 @@
 
 const headers = [
   {
-    key: "Content-Security-Policy", // prevents XSS attacks. Allow only whitelisted sources
+    key: "Content-Security-Policy",
     value:
       "default-src 'self'; " +
+      "media-src 'self' https://samples.pubhub.dk https://samples.qa.pubhub.dk https://*.wedobooks.io data: blob: http://localhost:*; " +
       "script-src 'self' *.dbc.dk https://consent.cookiebot.eu https://consentcdn.cookiebot.eu 'unsafe-eval' 'unsafe-inline' http://localhost:*; " +
       "style-src 'self' 'unsafe-inline'; " +
-      "img-src 'self' https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:*; " +
-      "connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk http://localhost:* ws://localhost:*; " +
-      "frame-src 'self' *.dbc.dk https://consentcdn.cookiebot.eu;" +
+      "img-src 'self' blob: https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:*; " +
+      "connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk https://samples.pubhub.dk https://samples.qa.pubhub.dk https://*.wedobooks.io http://localhost:* ws://localhost:*; " +
+      "frame-src 'self' *.dbc.dk https://consentcdn.cookiebot.eu; " +
       "font-src 'self' data:; " +
-      "worker-src 'self' blob:; ", // Allow Web Workers.. Can be removed if productionBrowserSourceMaps is false
+      "worker-src 'self' blob:; ",
   },
   {
-    key: "X-Content-Type-Options", // prevents the browser from guessing the content type. This will prevent MIME sniffing
+    key: "X-Content-Type-Options",
     value: "nosniff",
   },
   {
-    key: "X-Frame-Options", // prevents the page from being rendered in an iframe
+    key: "X-Frame-Options",
     value: "SAMEORIGIN",
   },
   {
-    key: "Strict-Transport-Security", // forces the browser to use https
+    key: "Strict-Transport-Security",
     value: "max-age=31536000; includeSubDomains",
   },
   {
-    key: "Referrer-Policy", // will include full url in referrer for requests from same origin. But only the origin(bibliotek.dk) for requests from other origins
+    key: "Referrer-Policy",
     value: "origin-when-cross-origin",
   },
 ];

@@ -64,7 +64,10 @@ function scrollLock(shouldLockScroll) {
 export default function BodyScrollLock({ router }) {
   // Query param targets to track
   // breakpoints are the breakpoints where the scroll is locked
-  const targetList = [{ param: "suggester", breakpoints: ["xs", "sm", "md"] }];
+  const targetList = [
+    { param: "suggester", breakpoints: ["xs", "sm", "md"] },
+    { param: "sample", breakpoints: ["xs", "sm", "md", "xl"] },
+  ];
 
   const breakpoint = useBreakpoint();
 

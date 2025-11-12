@@ -67,7 +67,12 @@
 .basket {
   padding-top: var(--pt3);
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+}
+
+.sample {
+  min-width: var(--pt7);
+  margin-left: var(--pt2);
 }
 
 .info {

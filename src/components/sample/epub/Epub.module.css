@@ -1,0 +1,75 @@
+/* keep the existing variable block + wrapper/reader styles */
+.wrapper {
+  --epub-container-bg: var(--white);
+  --epub-container-fg: var(--mine-shaft);
+  --epub-reader-bg: var(--white);
+  --epub-title-bg: var(--white);
+  --epub-title-fg: var(--mine-shaft);
+  --epub-title-border: 1px solid rgba(0, 0, 0, 0.06);
+  --epub-arrow-fg: var(--mine-shaft);
+  --epub-arrow-hover-bg: var(--blue);
+  --epub-toc-bg: var(--white);
+  --epub-toc-fg: var(--mine-shaft);
+  --epub-toc-button-fg: var(--mine-shaft);
+  --epub-toc-button-bg: transparent;
+  --epub-toc-button-expanded-bg: var(--white);
+  --epub-toc-button-bar-bg: var(--mine-shaft);
+  --epub-page-bg: var(--white);
+  --epub-page-fg: var(--mine-shaft);
+  --epub-link-fg: var(--blue);
+  --epub-link-decoration: underline;
+  --epub-page-font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  --epub-page-line-height: 1.55;
+  --epub-p-margin: 0 0 1em 0;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--epub-container-bg);
+  color: var(--epub-container-fg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  width: 90%;
+  height: 90%;
+  margin: auto;
+}
+
+.wrapper :global(.react-reader) {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* remove reader toggle button */
+.wrapper > div > div button:first-of-type {
+  display: none;
+}
+.wrapper > div > div > div > div {
+  inset: 0 0 0 !important;
+}
+
+.wrapper,
+.wrapper > div {
+  overflow: visible !important;
+}
+
+.wrapper > div > div button {
+  left: -40px !important;
+  opacity: 0.5;
+}
+.wrapper > div > div button:last-of-type {
+  left: unset !important;
+  right: -40px !important;
+}
+
+.wrapper body {
+  display: flex;
+  justify-content: flex-end;
+}
+.wrapper img {
+  display: none;
+}

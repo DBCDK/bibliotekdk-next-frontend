@@ -1,0 +1,38 @@
+.offcanvas {
+  transition: width 300ms ease, transform 0.3s ease-in-out;
+  border-left: none !important;
+}
+
+.offcanvas.mp3,
+.offcanvas.epub {
+  --bs-offcanvas-width: 100%;
+}
+
+.offcanvas.mp3.maximize,
+.offcanvas.epub.maximize {
+  --bs-offcanvas-width: 100%;
+}
+
+.title {
+  flex: 1 1 0;
+  margin-right: var(--pt2);
+}
+
+.expand {
+  margin-right: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .offcanvas {
+    transition: width 300ms ease, transform 0.3s ease-in-out;
+    box-shadow: -2px 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .offcanvas.epub {
+    --bs-offcanvas-width: 700px;
+  }
+
+  .offcanvas.mp3 {
+    --bs-offcanvas-width: 500px;
+  }
+}

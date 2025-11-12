@@ -156,6 +156,7 @@ export function useManifestationAccess({ pids, filter }) {
         return filter.includes(entry.__typename);
       }
     );
+
     // sort & filter - we only want access of type RESOURCE AND we do not want broken links
     let access = sortAccessArray(flattenedAccess)?.filter((singleAccess) => {
       return (
@@ -174,6 +175,9 @@ export function useManifestationAccess({ pids, filter }) {
         (acc) => acc.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
       );
     }
+
+    // we do not want to show publizon access entries
+    access = access?.filter((acc) => acc.__typename !== AccessEnum.PUBLIZON);
 
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));

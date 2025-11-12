@@ -1,0 +1,39 @@
+.wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover {
+  margin: auto;
+}
+
+.cover img {
+  width: 350px;
+  display: block;
+  margin: auto;
+}
+
+.info {
+  max-width: 350px;
+}
+
+.info div {
+  margin-top: var(--pt2);
+}
+
+.player {
+  margin-top: var(--pt4);
+  width: 80%;
+}

@@ -25,6 +25,7 @@ import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
+import SampleButton from "@/components/sample";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -90,6 +91,7 @@ export function Overview({
     () => manifestations?.map((manifestation) => manifestation?.pid),
     [manifestations]
   );
+
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
   const checkForPeriodicaArticle = (pids) => {
@@ -168,11 +170,17 @@ export function Overview({
                   type={type}
                 />
               </Col>
-              <Col xs={12} sm={9} xl={7} className={styles.basket}>
+              <Col xs={12} sm={9} xl={8} className={styles.basket}>
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
                 />
+
+                <SampleButton
+                  selectedPids={selectedPids}
+                  className={styles.sample}
+                />
+
                 <BookmarkDropdown
                   materialId={workId}
                   workId={workId}

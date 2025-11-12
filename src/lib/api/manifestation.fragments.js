@@ -36,6 +36,36 @@ export function ris(pids) {
   };
 }
 
+export function publizonSamples({ pids = [] }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query PublizonSamples($pids: [String!]) {
+              manifestations(pid: $pids) {
+                titles {
+                  main
+                }
+                creators {
+                  display
+                }
+                cover {
+                  large {
+                    url
+                  }
+                }
+                access {
+                  __typename
+                  ...on Publizon {
+                    sample
+                    format
+                  }
+                }
+              }
+            }`,
+    variables: { pids },
+    slowThreshold: 3000,
+  };
+}
+
 export function manifestationFullManifestation({ pid }) {
   if (!pid) {
     return null;
