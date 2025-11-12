@@ -9,7 +9,6 @@ import Link from "@/components/base/link";
 import styles from "./Footer.module.css";
 import Logo from "@/components/base/logo/Logo";
 import { MATERIAL_PAGES } from "@/components/header";
-import { useRouter } from "next/router";
 
 /** @file
  * Footer
@@ -237,13 +236,5 @@ const FooterSection = () => {
 };
 
 export default function Footer() {
-  const router = useRouter();
-
-  const omitOnPath = ["uddrag"];
-
-  if (omitOnPath.includes(router.pathname.split("/")[1])) {
-    return null;
-  }
-
   return <FooterSection />;
 }

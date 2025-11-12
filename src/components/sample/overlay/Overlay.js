@@ -22,15 +22,9 @@ export default function Overlay({
   const typeClass = isEpub ? styles.epub : isMp3 ? styles.mp3 : "";
 
   const handleToggle = (next) => {
-    // fallback hvis komponenten ikke giver 'checked'
-    const val =
-      typeof next === "boolean"
-        ? next
-        : typeof next?.target?.checked === "boolean"
-        ? next.target.checked
-        : !isFullscreen;
-    onToggle(val);
-    // (ReaderSample lytter på isFullscreen-proppen fra parent og reflow'er selv)
+    const nextVal =
+      typeof next === "boolean" ? next : next?.target?.checked ?? !isFullscreen;
+    onToggle(nextVal);
   };
 
   return (
@@ -46,9 +40,7 @@ export default function Overlay({
         <Expand
           className={styles.expand}
           disabled={isMp3}
-          // gør den kontrolleret:
           checked={isFullscreen}
-          // virker både hvis Expand er checkbox eller button:
           onChange={handleToggle}
           onClick={handleToggle}
           aria-pressed={isFullscreen}
