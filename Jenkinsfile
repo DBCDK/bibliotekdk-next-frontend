@@ -47,7 +47,7 @@ pipeline {
                         }
 
                         sh returnStatus: true, script: """
-                        $SONAR_SCANNER $sonarOptions -Dsonar.token=${SONAR_AUTH_TOKEN} -Dsonar.projectKey="${SONAR_PROJECT_KEY}"
+                        $SONAR_SCANNER $sonarOptions -Dsonar.token=${SONAR_AUTH_TOKEN} -Dsonar.projectKey=${SONAR_PROJECT_KEY}
                         """
                     }
                 }
