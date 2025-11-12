@@ -1,3 +1,6 @@
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+
 // components/sample/Sample.jsx
 import Button from "./button";
 import Overlay from "./overlay";
@@ -5,7 +8,7 @@ import ReaderSample from "./epub";
 import AudioSample from "./mp3";
 
 import { useData } from "@/lib/api/api";
-import * as workFragments from "@/lib/api/work.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 
 import styles from "./Sample.module.css";
 
@@ -19,13 +22,21 @@ export function Sample({
   isFullscreen,
   data,
 }) {
-  // Samme default URL som før (kan nemt byttes ud senere)
-  const url = "https://samples.pubhub.dk/9788758817842.epub";
-  // const url = "https://samples.pubhub.dk/9788741509884.mp3";
+  const access = data?.access?.find?.((a) => a?.__typename === "Publizon");
 
-  // url filetype format (uændret logik, nu bare her)
-  const isEpub = url.toLowerCase().endsWith(".epub");
-  const isMp3 = url.toLowerCase().endsWith(".mp3");
+  // Return null if no publizon access type was found
+  if (!access) {
+    return null;
+  }
+
+  // Test url samples
+  // const url = "https://samples.pubhub.dk/9788758817842.epub";
+  // const url = "https://samples.pubhub.dk/9788741509884.mp3";
+  const url = access?.sample;
+
+  // access sample format
+  const isEpub = access?.format === "epub";
+  const isMp3 = access?.format === "mp3";
 
   return (
     <>
@@ -51,31 +62,27 @@ export function Sample({
   );
 }
 
-import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/router";
-
 // WRAP: data + routing + filtrering (minimale ændringer i øvrigt)
 export default function Wrap(props) {
-  const { workId, selectedPids } = props;
+  const { selectedPids } = props;
   const router = useRouter();
 
-  const cWork = useData(workFragments.cacheWork({ workId }));
-  const work = cWork?.data?.work;
+  const samples = useData(
+    manifestationFragments.publizonSamples({ pids: selectedPids })
+  );
+
+  const manifestations = samples?.data?.manifestations || [];
 
   // Filtrér manifestationer
-  const data = useMemo(() => {
-    if (!work) return null;
-    if (!selectedPids?.length) return work;
+  const data = useMemo(
+    () =>
+      manifestations?.find((m) =>
+        m?.access?.some((a) => a?.__typename === "Publizon" && a?.sample)
+      ),
+    [manifestations]
+  );
 
-    const mostRelevant = (work.manifestations?.mostRelevant ?? []).filter((m) =>
-      selectedPids.includes(m.pid)
-    );
-
-    return {
-      ...work,
-      manifestations: { ...(work.manifestations ?? {}), mostRelevant },
-    };
-  }, [work, selectedPids]);
+  console.log("data", data);
 
   // Hold state i sync med URL (loader + back/forward) — uændret logik
   const [show, setShow] = useState(false);

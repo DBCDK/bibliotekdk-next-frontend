@@ -1,28 +1,19 @@
-/* =========
-   CSS-variabler til styling af ReactReader + ePub-indhold
-   ========= */
+/* keep the existing variable block + wrapper/reader styles */
 .wrapper {
-  /* Container + UI */
   --epub-container-bg: var(--white);
   --epub-container-fg: var(--mine-shaft);
-
   --epub-reader-bg: var(--white);
-
   --epub-title-bg: var(--white);
   --epub-title-fg: var(--mine-shaft);
   --epub-title-border: 1px solid rgba(0, 0, 0, 0.06);
-
   --epub-arrow-fg: var(--mine-shaft);
   --epub-arrow-hover-bg: var(--blue);
-
   --epub-toc-bg: var(--white);
   --epub-toc-fg: var(--mine-shaft);
   --epub-toc-button-fg: var(--mine-shaft);
   --epub-toc-button-bg: transparent;
   --epub-toc-button-expanded-bg: var(--white);
   --epub-toc-button-bar-bg: var(--mine-shaft);
-
-  /* ePub (iframe) indhold */
   --epub-page-bg: var(--white);
   --epub-page-fg: var(--mine-shaft);
   --epub-link-fg: var(--blue);
@@ -37,9 +28,7 @@
   height: 100%;
   background: var(--epub-container-bg);
   color: var(--epub-container-fg);
-  /* border-radius: 8px; */
   overflow: hidden;
-  /* box-shadow: 0 0 12px rgba(0, 0, 0, 0.08); */
   display: flex;
   flex-direction: column;
 }
@@ -50,102 +39,15 @@
   margin: auto;
 }
 
-.progress {
-  width: 90%;
-  margin: auto;
-}
-
-/* ===== Labels (lige brede) — halv bredde & centreret ===== */
-.labels {
-  display: flex;
-  max-width: 750px;
-  width: 100%;
-  margin: 8px auto 4px;
-  gap: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.96),
-    rgba(255, 255, 255, 0.8)
-  );
-  z-index: 5;
-}
-
-.labelBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 6px;
-  background: transparent;
-
-  min-width: 0;
-  border-right: 1px solid rgba(0, 0, 0, 0.06);
-  transition: background-color 120ms ease, color 120ms ease;
-}
-.labelBtn:last-child {
-  border-right: none;
-}
-
-.labelText {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 95%;
-  cursor: pointer;
-}
-.active .labelText {
-  color: var(--blue);
-}
-
-/* ===== Progressbar – halv bredde & centreret ===== */
-.progressTrack {
-  position: relative;
-  width: 100%;
-  max-width: 750px;
-  margin: 8px auto;
-  height: 8px;
-  background: var(--concrete);
-  overflow: hidden;
-  border-radius: 999px;
-}
-
-.progressFill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0%;
-  background-color: var(--blue);
-  transition: width 0.22s ease;
-  will-change: width;
-  border-radius: 999px;
-}
-
-/* Reader fylder resten (container-klassen fra react-reader) */
 .wrapper :global(.react-reader) {
   flex: 1 1 auto;
   min-height: 0;
-}
-
-/* Små skærme */
-@media (max-width: 640px) {
-  .labels {
-    width: 70%;
-    overflow-x: auto;
-  }
-  .labelBtn {
-    padding: 6px 10px;
-  }
-  .progressTrack {
-    width: 70%;
-    height: 6px;
-  }
 }
 
 /* remove reader toggle button */
 .wrapper > div > div button:first-of-type {
   display: none;
 }
-
 .wrapper > div > div > div > div {
   inset: 0 0 0 !important;
 }
@@ -159,7 +61,6 @@
   left: -40px !important;
   opacity: 0.5;
 }
-
 .wrapper > div > div button:last-of-type {
   left: unset !important;
   right: -40px !important;
@@ -169,7 +70,6 @@
   display: flex;
   justify-content: flex-end;
 }
-
 .wrapper img {
-  display: none !important;
+  display: none;
 }

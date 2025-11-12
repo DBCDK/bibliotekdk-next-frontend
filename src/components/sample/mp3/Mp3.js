@@ -14,10 +14,8 @@ import styles from "./Mp3.module.css";
  * - className: string (valgfri ekstra styling)
  */
 export default function AudioSample({ src, className = "", data }) {
-  console.log("data", data);
-
-  const coverUrl = data?.manifestations?.mostRelevant?.[0]?.cover?.detail;
-  const title = data?.titles?.full?.[0] || "Lydbogssample";
+  const coverUrl = data?.cover?.large?.url;
+  const title = data?.titles?.main?.[0] || "Lydbogssample";
   const creators = data?.creators?.map((c) => c.display).join(", ");
 
   return (

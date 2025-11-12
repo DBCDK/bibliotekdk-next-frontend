@@ -1,0 +1,86 @@
+/* components/sample/epub/EpubProgress.module.css */
+
+.progress {
+  width: 90%;
+  margin: auto;
+}
+
+/* ===== Labels (lige brede) — halv bredde & centreret ===== */
+.labels {
+  display: flex;
+  max-width: 750px;
+  width: 100%;
+  margin: 8px auto 4px;
+  gap: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.96),
+    rgba(255, 255, 255, 0.8)
+  );
+  z-index: 5;
+}
+
+.labelBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 6px;
+  background: transparent;
+
+  min-width: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.labelBtn:last-child {
+  border-right: none;
+}
+
+.labelText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
+  cursor: pointer;
+}
+.active .labelText {
+  color: var(--blue);
+}
+
+/* ===== Progressbar – halv bredde & centreret ===== */
+.progressTrack {
+  position: relative;
+  width: 100%;
+  max-width: 750px;
+  margin: 8px auto;
+  height: 8px;
+  background: var(--concrete);
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background-color: var(--blue);
+  transition: width 0.22s ease;
+  will-change: width;
+  border-radius: 999px;
+}
+
+/* Små skærme */
+@media (max-width: 640px) {
+  .labels {
+    width: 70%;
+    overflow-x: auto;
+  }
+  .labelBtn {
+    padding: 6px 10px;
+  }
+  .progressTrack {
+    width: 70%;
+    height: 6px;
+  }
+}

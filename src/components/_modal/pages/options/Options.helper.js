@@ -18,6 +18,9 @@ export const getTemplateProps = {
   [AccessEnum.INTER_LIBRARY_LOAN](props) {
     return templateProps?.propsForPhysicalOrderLink?.(props);
   },
+  [AccessEnum.INTER_LIBRARY_LOAN](props) {
+    return templateProps?.propsForPhysicalOrderLink?.(props);
+  },
 };
 
 const templateProps = {

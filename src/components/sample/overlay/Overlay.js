@@ -15,7 +15,7 @@ export default function Overlay({
   children,
   className = "",
 }) {
-  const title = data?.titles?.full[0] || "Prøveeksempel";
+  const title = data?.titles?.main[0] || "Prøveeksempel";
   const type = isEpub ? "Prøvelæs" : "Prøvelyt";
 
   const maximized = isFullscreen ? styles.maximize : "";
