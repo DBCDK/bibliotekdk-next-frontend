@@ -1,0 +1,113 @@
+.block {
+    background: var(--jagged-ice);
+    border: none;
+    border-radius: 8px;
+    padding: var(--pt3);
+    color: var(--mine-shaft);
+  }
+  
+  .topImageWrapper {
+    width: 100px;
+    margin-bottom: var(--pt2);
+  }
+  
+  .topImage {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    gap: var(--pt1_5);
+    margin-bottom: var(--pt1);
+  }
+  
+  .icon {
+    /* reserved for future layout overrides */
+    margin-right: 0;
+  }
+  
+  .title {
+    margin: 0;
+    font-family: var(--title-font);
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--mine-shaft);
+  }
+  
+  .subtitle {
+    margin: 0 0 var(--pt2) 0;
+    font-family: var(--body-font);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--mine-shaft);
+    font-weight: 600;
+  }
+  
+  .description {
+    margin: 0 0 var(--pt3) 0;
+    font-family: var(--body-font);
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--mine-shaft);
+  }
+  
+  .note {
+    margin: 0 0 var(--pt2) 0;
+    font-family: var(--body-font);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--mine-shaft);
+    font-weight: 600;
+  }
+  
+  .thumbs {
+    display: flex;
+    gap: var(--pt2);
+    align-items: flex-end;
+    margin-bottom: var(--pt3);
+  }
+  
+  .thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .thumbImageWrapper {
+    width: 80px;
+    height: 112px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--iron);
+  }
+  
+  .thumbImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .thumbIndex {
+    margin-top: var(--pt0_5);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--mine-shaft);
+  }
+  
+  .actions {
+    display: flex;
+    gap: var(--pt1);
+  }
+  
+  .linkRow {
+    margin-top: var(--pt1);
+  }
+  
+  

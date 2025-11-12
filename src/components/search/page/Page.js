@@ -44,7 +44,10 @@ import { useRouter } from "next/router";
 import SaveSearchBtn from "../save";
 import Related from "../related/Related";
 import DidYouMean from "../didYouMean/DidYouMean";
-
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import SeriesBox from "@/components/search/seriesBox/SeriesBox";
+import CreatorBox from "@/components/search/creatorBox/CreatorBox";
 // -------------------------------
 // UI-komponent: kun rendering
 // -------------------------------
@@ -169,40 +172,72 @@ function Page({
           )
         }
       >
-        {shouldShowHistory && <History />}
-        {shouldShowNoHits && <NoHitSearch isSimpleSearch={isSimple} />}
+        <Row>
+          <Col xs={12} lg={8}>
+            {shouldShowHistory && <History />}
+            {shouldShowNoHits && <NoHitSearch isSimpleSearch={isSimple} />}
 
-        {!isSimple && !isMobile && hitcount > 0 && (
-          <div className={styles.advancedSearchActions}>
-            <AdvancedSearchSort className={styles.sort_container} />
-            <SaveSearchBtn />
-          </div>
-        )}
+            {!isSimple && !isMobile && hitcount > 0 && (
+              <div className={styles.advancedSearchActions}>
+                <AdvancedSearchSort className={styles.sort_container} />
+                <SaveSearchBtn />
+              </div>
+            )}
 
-        {isSimple && !isLoading && hitcount > 0 && (
-          <div className={styles.actions}>
-            {isSimple && <FilterButton className={styles.filterButton} />}
+            {isSimple && !isLoading && hitcount > 0 && (
+              <div className={styles.actions}>
+                {isSimple && <FilterButton className={styles.filterButton} />}
 
-            <div className={styles.supplementary}>
-              <Related />
-              <DidYouMean />
+                <div className={styles.supplementary}>
+                  <Related />
+                  <DidYouMean />
+                </div>
+
+                {isSimple && <SaveSearchBtn />}
+              </div>
+            )}
+
+            <div>
+              {Array(isMobile ? currentPage : 1)
+                .fill({})
+                .map((_, index) => (
+                  <Result
+                    key={`result-${index}`}
+                    page={isMobile ? index + 1 : currentPage}
+                    onWorkClick={onWorkClick}
+                  />
+                ))}
             </div>
-
-            {isSimple && <SaveSearchBtn />}
-          </div>
-        )}
-
-        <div>
-          {Array(isMobile ? currentPage : 1)
-            .fill({})
-            .map((_, index) => (
-              <Result
-                key={`result-${index}`}
-                page={isMobile ? index + 1 : currentPage}
-                onWorkClick={onWorkClick}
-              />
-            ))}
-        </div>
+          </Col>
+          <Col xs={12} lg={4}>
+            {/* <SeriesBox
+              title="Aske i munden, sand i skoen"
+              subtitle="Serie af Per Petterson"
+              body="Per Pettersons serie om Arvid og hans familie. Fortællinger om Arvid, der vokser op i Oslo i 1950'erne og erfarer, at livet kan være trygt og utrygt, stabilt og ustabilt, snævert og uendeligt - samtidig. Senere om Arvid Jansen da han er 37 år og kommer i midtlivskrise. Hans mor har fået konstateret kræft og hans kone forlanger skilsmisse."
+              note="Der er 6 bøger i serien"
+              imageUrl="https://fbiinfo-present.dbc.dk/images/ydF9rP7ARdGDtX6ng3HnWg/240px!ATqg0YZeBPgi0WIS6rlF1TwMVJ2bFfI-u-GYmnDjs1oTkQ"
+              thumbnails={[
+                "https://fbiinfo-present.dbc.dk/images/ydF9rP7ARdGDtX6ng3HnWg/240px!ATqg0YZeBPgi0WIS6rlF1TwMVJ2bFfI-u-GYmnDjs1oTkQ",
+                "https://fbiinfo-present.dbc.dk/images/ydF9rP7ARdGDtX6ng3HnWg/240px!ATqg0YZeBPgi0WIS6rlF1TwMVJ2bFfI-u-GYmnDjs1oTkQ",
+                "https://fbiinfo-present.dbc.dk/images/ydF9rP7ARdGDtX6ng3HnWg/240px!ATqg0YZeBPgi0WIS6rlF1TwMVJ2bFfI-u-GYmnDjs1oTkQ",
+              ]}
+              linkLabel="Se hele serien"
+              onLink={() => {
+                console.log("Se hele serien");
+              }}
+              className="search-block"
+              data-cy="search-block"
+            /> */}
+            <CreatorBox
+              title="Haruki Murakami"
+              role="Forfatter"
+              body="Per Petterson er en dansk forfatter og har skrevet mange bøger om Arvid og hans familie."
+              imageUrl="https://resize-me.dbc.dk/api/image?url=https://upload.wikimedia.org/wikipedia/commons/5/51/Conversatorio_Haruki_Murakami_%2812_de_12%29_%2845747009452%29_%28cropped%29.jpg&w=1200"
+              className="search-block"
+              data-cy="search-block"
+            />
+          </Col>
+        </Row>
       </Section>
       {hitcount > 0 && (
         <Pagination
