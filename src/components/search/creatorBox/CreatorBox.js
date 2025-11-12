@@ -3,6 +3,7 @@ import Link from "@/components/base/link";
 
 import styles from "./CreatorBox.module.css";
 //TODO: pass one creator object instead of individual props
+//TODO make storybook? 
 export default function CreatorBox({
   imageUrl,
   imageAlt = "",
