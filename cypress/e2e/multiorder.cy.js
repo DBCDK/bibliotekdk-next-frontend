@@ -36,7 +36,7 @@ describe("Multi Order", () => {
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
           materialsToOrder: [
-            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] },
+            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] , exactEdition: false},
           ],
           pickUpBranch: "BRANCH_NO_BORROWERCHECK",
           userParameters: {
@@ -135,7 +135,7 @@ describe("Multi Order", () => {
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
           materialsToOrder: [
-            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] },
+            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] , exactEdition: false},
           ],
           pickUpBranch: "BRANCH_ACCEPT_ILL",
           userParameters: {
@@ -179,7 +179,7 @@ describe("Multi Order", () => {
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
           materialsToOrder: [
-            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] },
+            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] , exactEdition: false},
           ],
           pickUpBranch: "BRANCH_MOBILE_LOCATIONS",
           pickUpBranchSubdivision: "Kiosken",
@@ -209,6 +209,7 @@ describe("Multi Order", () => {
             {
               key: "WORK_ILL_ACCESS_FAILSBOOK",
               pids: ["PID_ILL_ACCESS_FAILS"],
+              exactEdition: false,
             },
           ],
           pickUpBranch: "BRANCH_ACCEPT_ILL",
@@ -254,6 +255,7 @@ describe("Multi Order", () => {
             {
               key: "WORK_ILL_ACCESSBOOK",
               pids: ["PID_ILL_ACCESS"],
+              exactEdition: false,
             },
           ],
           pickUpBranch: "BRANCH_REQUIRES_PINCODE",
@@ -316,6 +318,7 @@ describe("Multi Order", () => {
             {
               key: "WORK_DIGITAL_ACCESSBOOK",
               pids: ["PID_DIGITAL_ACCESS"],
+              exactEdition: false,
             },
           ],
           pickUpBranch: "BRANCH_ACCEPT_ILL",
@@ -389,6 +392,7 @@ describe("Multi Order", () => {
                 pid: "PID_PERIODICA_1",
                 publicationDateOfComponent: "1999",
               },
+              exactEdition: false,
             },
             {
               key: "WORK_PERIODICA_2BOOK",
@@ -397,6 +401,7 @@ describe("Multi Order", () => {
                 pid: "PID_PERIODICA_2",
                 publicationDateOfComponent: "2000",
               },
+              exactEdition: false,
             },
           ],
           pickUpBranch: "BRANCH_ACCEPT_ILL",
@@ -464,6 +469,7 @@ describe("Multi Order", () => {
                 authorOfComponent: "author",
                 publicationDateOfComponent: "1999",
               },
+              exactEdition: false,
             },
             {
               key: "WORK_PERIODICA_2BOOK",
@@ -472,7 +478,8 @@ describe("Multi Order", () => {
                 pid: "PID_PERIODICA_2",
                 authorOfComponent: "another author",
                 publicationDateOfComponent: "2000",
-              },
+              },  
+              exactEdition: false,
             },
           ],
           pickUpBranch: "BRANCH_ACCEPT_ILL",
