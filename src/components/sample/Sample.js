@@ -65,13 +65,20 @@ export function Sample({
 // WRAP: data + routing + filtrering (minimale ændringer i øvrigt)
 export default function Wrap(props) {
   const { selectedPids } = props;
+
   const router = useRouter();
 
-  const samples = useData(
-    manifestationFragments.publizonSamples({ pids: selectedPids })
-  );
+  // Hold state i sync med URL (loader + back/forward) — uændret logik
+  const [show, setShow] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const manifestations = samples?.data?.manifestations || [];
+  const {
+    data: samples,
+    error,
+    isLoading,
+  } = useData(manifestationFragments.publizonSamples({ pids: selectedPids }));
+
+  const manifestations = samples?.manifestations || [];
 
   // Filtrér manifestationer
   const data = useMemo(
@@ -81,12 +88,6 @@ export default function Wrap(props) {
       ),
     [manifestations]
   );
-
-  console.log("data", data);
-
-  // Hold state i sync med URL (loader + back/forward) — uændret logik
-  const [show, setShow] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -120,6 +121,19 @@ export default function Wrap(props) {
   };
 
   const handleToggleFullscreen = () => setIsFullscreen((v) => !v);
+
+  if (error) {
+    return null;
+  }
+
+  if (isLoading) {
+    return (
+      <Button
+        isLoading={isLoading}
+        className={`${styles.button} ${props.className}`}
+      />
+    );
+  }
 
   return (
     <Sample

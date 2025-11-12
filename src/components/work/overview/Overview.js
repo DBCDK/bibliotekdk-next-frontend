@@ -177,7 +177,6 @@ export function Overview({
                 />
 
                 <SampleButton
-                  workId={workId}
                   selectedPids={selectedPids}
                   className={styles.sample}
                 />
