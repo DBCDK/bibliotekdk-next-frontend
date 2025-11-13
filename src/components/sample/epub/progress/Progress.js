@@ -1,3 +1,4 @@
+// components/sample/epub/EpubProgress.jsx
 import styles from "./Progress.module.css";
 
 export default function EpubProgress({
@@ -7,7 +8,10 @@ export default function EpubProgress({
   onJump,
   Link,
   Text,
+  show = true,
 }) {
+  if (!show) return null;
+
   return (
     <div className={styles.progress}>
       {!!labels.length && (
