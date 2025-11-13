@@ -107,6 +107,17 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
         <Text type="text1" lines={2} clamp={true} skeleton={isLoading}>
           {work?.titles?.full?.[0] || work?.titles?.main?.[0]}
         </Text>
+        {work?.extendedWork?.parentPeriodical?.titles?.main?.[0] && (
+          <Text
+            type="text3"
+            lines={1}
+            className={styles.hostpublication}
+            skeleton={isLoading}
+          >
+            {work?.extendedWork?.parentPeriodical?.titles?.main?.[0]},{" "}
+            {work?.extendedWork?.parentIssue?.display}
+          </Text>
+        )}
         {seriesInfo && (
           <Text
             type="text3"
@@ -152,7 +163,7 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
       </div>
 
       <div className={styles.descriptionColumn}>
-        <Text type="text2" lines={2} clamp={true} skeleton={isLoading}>
+        <Text type="text3" lines={2} clamp={true} skeleton={isLoading}>
           {(!work?.abstract?.length && work?.genreAndForm?.join(", ")) || ""}
           {work?.abstract}
         </Text>
@@ -191,18 +202,6 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
             {display}
           </Text>
         ))}
-
-        {work?.extendedWork?.parentPeriodical?.titles?.main?.[0] && (
-          <Text
-            type="text5"
-            lines={1}
-            className={styles.hostpublication}
-            skeleton={isLoading}
-          >
-            {work?.extendedWork?.parentPeriodical?.titles?.main?.[0]},{" "}
-            {work?.extendedWork?.parentIssue?.display}
-          </Text>
-        )}
       </div>
     </Link>
   );

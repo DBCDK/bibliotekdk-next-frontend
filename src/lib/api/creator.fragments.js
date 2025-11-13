@@ -232,6 +232,29 @@ export function creatorFunctionFacets({ creatorId, filters = {} }) {
   };
 }
 
+export function oftenUsedSubjects({ creatorId }) {
+  const cql = `phrase.creator="${creatorId}" `;
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query oftenUsedSubjects($cql: String!) {
+  complexSearch(cql: $cql) {
+    works(offset: 0, limit: 50) {
+      workTypes
+      subjects {
+        dbcVerified {
+          display
+          __typename
+        }
+      }
+    }
+  }
+}`,
+    variables: { cql },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Fetch SUBJECT facets for a creator's works
  * Applies filters from other dropdowns but excludes subjects filter
@@ -336,9 +359,29 @@ export function genreAndFormFacets({ creatorId, filters = {} }) {
  * Fetch creator overview data by VIAF id (viafid)
  */
 export function creatorOverview({ display }) {
+  const cql = `worktype=article AND phrase.subject="${display}" AND phrase.hostpublication="Forfatterweb"`;
+  const creatorCql = `phrase.creator="${display}"`;
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query CreatorOverview($display: String!) {
+    query: `query CreatorOverview($display: String!, $cql: String!, $creatorCql: String!) {
+  exists: complexSearch(cql: $creatorCql) {
+    hitcount
+  }
+  forfatterwebSearch: complexSearch(cql: $cql) {
+    hitcount
+    works(offset: 0, limit: 1) {
+      manifestations {
+        bestRepresentation {
+          abstract
+          cover {
+            large {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
   creatorByDisplay(display: $display) {
     display
     viafid
@@ -346,6 +389,13 @@ export function creatorOverview({ display }) {
       summary {
         text
         disclaimer
+      }
+      shortSummary {
+        text
+        disclaimer
+      }
+      dataSummary {
+        text
       }
     }
     wikidata {
@@ -361,7 +411,7 @@ export function creatorOverview({ display }) {
     }
   }
 }`,
-    variables: { display },
+    variables: { display, cql, creatorCql },
     slowThreshold: 3000,
   };
 }

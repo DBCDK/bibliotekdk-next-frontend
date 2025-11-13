@@ -49,6 +49,11 @@
   padding-top: var(--pt1_5);
 }
 
+.noFade p {
+  opacity: 1 !important;
+  transition: none !important;
+}
+
 .toggle {
   background: none;
   border: 0;

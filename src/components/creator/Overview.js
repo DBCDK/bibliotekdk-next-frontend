@@ -11,6 +11,30 @@ import Cover from "@/components/base/cover/Cover";
 import Icon from "@/components/base/icon";
 import AiMarkdown from "@/components/base/markdown/AiMarkdown";
 
+export function useCreatorOverview(creatorId) {
+  const { data, isLoading } = useData(creatorOverview({ display: creatorId }));
+
+  const image =
+    (data?.wikidata?.image?.medium && {
+      url: data?.wikidata?.image?.medium,
+      attributionText: data?.wikidata?.image?.attributionText,
+    }) ||
+    (data?.forfatterwebSearch?.works?.[0]?.manifestations?.bestRepresentation
+      ?.cover?.large?.url && {
+      url: data?.forfatterwebSearch?.works?.[0]?.manifestations
+        ?.bestRepresentation?.cover?.large?.url,
+      attributionText: "Forfatterweb",
+    });
+
+  return {
+    data: data && {
+      ...(data?.creatorByDisplay || {}),
+      numWorks: data?.exists?.hitcount,
+      image,
+    },
+    isLoading: isLoading,
+  };
+}
 /**
  * Displays the creator overview with breadcrumbs, name, occupation,
  * awards, generated summary and image.
@@ -21,14 +45,15 @@ export function Overview({
   creatorData,
   isLoading,
 }) {
-  const tmpDisclaimer =
-    "Teksten er automatisk genereret ud fra bibliotekernes materialevurderinger og kan indeholde fejl.";
+  const summaryText =
+    creatorData?.generated?.summary?.text ||
+    creatorData?.generated?.dataSummary?.text;
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={styles.overview}>
           <Col xs={12} xl={3} className={styles.breadcrumbs}>
-            <Text type="text3" tag="p" lines={1} skeleton={isLoading}>
+            <Text type="text3" tag="p" lines={1}>
               {Translate({ context: "creator", label: "creator-breadcrumb" })} /{" "}
               {creatorId}
             </Text>
@@ -38,7 +63,7 @@ export function Overview({
             md={{ span: 7, order: 1 }}
             xl={{ span: 5, order: 1 }}
           >
-            <Title type="title2" tag="h1" lines={1} skeleton={isLoading}>
+            <Title type="title2" tag="h1" lines={1}>
               {creatorData?.display || creatorId}
             </Title>
             <Text
@@ -46,11 +71,11 @@ export function Overview({
               tag="p"
               className={styles.occupation}
               lines={1}
-              skeleton={isLoading}
+              skeleton={isLoading && !creatorData?.wikidata?.occupation}
             >
               {creatorData?.wikidata?.occupation?.join(", ") || ""}
             </Text>
-            {isLoading && (
+            {isLoading && !summaryText && (
               <Text
                 type="text3"
                 tag="p"
@@ -69,12 +94,13 @@ export function Overview({
                 </Text>
               </div>
             )}
-            {creatorData?.generated?.summary?.text && (
+            {summaryText && (
               <AiMarkdown
                 creatorId={creatorId}
-                text={creatorData?.generated?.summary?.text}
+                text={summaryText}
                 urlTransform={(href) => `/materiale/title/${href}`}
-                disclaimer={tmpDisclaimer}
+                fadeIn={false}
+                // disclaimer={tmpDisclaimer}
               />
             )}
           </Col>
@@ -84,21 +110,25 @@ export function Overview({
             xl={{ span: 4, order: 2 }}
             className={styles.imageCol}
           >
-            <Cover
-              src={creatorData?.wikidata?.image?.medium}
-              alt={creatorData?.display}
-              skeleton={isLoading}
-            />
-            {creatorData?.wikidata?.image?.attributionText && (
-              <Text
-                type="text5"
-                tag="p"
-                className={styles.attribution}
-                lines={2}
-                clamp
-              >
-                {creatorData?.wikidata?.image?.attributionText}
-              </Text>
+            {isLoading && !creatorData?.image?.url && (
+              <>
+                <Cover
+                  src={creatorData?.image?.url}
+                  alt={creatorData?.display}
+                  skeleton={isLoading && !creatorData?.image?.url}
+                />
+                {creatorData?.image?.attributionText && (
+                  <Text
+                    type="text5"
+                    tag="p"
+                    className={styles.attribution}
+                    lines={2}
+                    clamp
+                  >
+                    {creatorData?.image?.attributionText}
+                  </Text>
+                )}
+              </>
             )}
           </Col>
         </Row>
@@ -108,13 +138,13 @@ export function Overview({
 }
 
 export default function Wrap({ creatorId }) {
-  const { data: creatorData, isLoading: isCreatorLoading } = useData(
-    creatorOverview({ display: creatorId })
-  );
+  const { data: creatorData, isLoading: isCreatorLoading } =
+    useCreatorOverview(creatorId);
+
   return (
     <Overview
       creatorId={creatorId}
-      creatorData={creatorData?.creatorByDisplay}
+      creatorData={creatorData}
       isLoading={isCreatorLoading}
     />
   );
