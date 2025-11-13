@@ -40,11 +40,6 @@
   margin-top: var(--pt1);
 }
 
-/* eslint-disable-next-line css-modules/no-unused-class */
-.hitcountText {
-  /* Unused - kept for linter compatibility */
-}
-
 @media (min-width: 992px) {
   .filters {
     margin-left: calc(-1 * var(--pt1));
