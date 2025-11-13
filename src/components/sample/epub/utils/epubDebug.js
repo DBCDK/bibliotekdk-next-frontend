@@ -1,13 +1,17 @@
-// utils/epubDebug.js
-export const DEBUG = process?.env?.NODE_ENV === "development";
+// components/sample/epub/utils/epubDebug.js
+
+// Debug flag: kun i development, eller hvis du eksplicit slår det til
+export const DEBUG =
+  process.env.NODE_ENV === "development" ||
+  process.env.NEXT_PUBLIC_EPUB_DEBUG === "1";
 
 export const dlog = DEBUG
   ? {
-      group: (...a) => {
+      group: (label, ...args) => {
         try {
-          console.groupCollapsed(...a);
+          console.groupCollapsed(label, ...args);
         } catch {
-          console.log(...a);
+          console.log(label, ...args);
         }
       },
       end: () => {
@@ -15,9 +19,9 @@ export const dlog = DEBUG
           console.groupEnd();
         } catch {}
       },
-      info: (...a) => console.log(...a),
-      warn: (...a) => console.warn(...a),
-      error: (...a) => console.error(...a),
+      info: (...args) => console.log(...args),
+      warn: (...args) => console.warn(...args),
+      error: (...args) => console.error(...args),
     }
   : {
       group: () => {},
@@ -46,14 +50,21 @@ export function normalizeHrefForMatch(s = "") {
   } catch {
     clean = noFrag;
   }
+
   const fileName = clean.split("/").pop();
   const unique = new Set([clean, fileName]);
+
   for (const p of CANDIDATE_PREFIXES) {
     if (p && clean.startsWith(p)) unique.add(clean.slice(p.length));
   }
+
   const bases = Array.from(unique);
-  for (const b of bases)
-    for (const pref of CANDIDATE_PREFIXES) unique.add(pref + b);
+  for (const b of bases) {
+    for (const pref of CANDIDATE_PREFIXES) {
+      unique.add(pref + b);
+    }
+  }
+
   return Array.from(new Set(Array.from(unique).filter(Boolean)));
 }
 
@@ -68,8 +79,9 @@ export function describeTarget(target) {
 export function spineIndexOfDebug(book, href) {
   if (!book || !href) return { idx: null, hit: null, tried: [] };
   const tried = [];
-  let hit = null,
-    idx = null;
+  let hit = null;
+  let idx = null;
+
   for (const candidate of normalizeHrefForMatch(href)) {
     try {
       const item = book.spine?.get?.(candidate);
@@ -83,6 +95,7 @@ export function spineIndexOfDebug(book, href) {
       tried.push({ candidate, ok: false, error: String(e) });
     }
   }
+
   return { idx, hit, tried };
 }
 
@@ -90,6 +103,7 @@ export function dumpBookOverview(book, tocFlat) {
   try {
     const spineItems = book?.spine?.spineItems || [];
     const navToc = book?.navigation?.toc || [];
+
     dlog.group("[EPUB DBG] OVERVIEW");
     dlog.info("Spine length:", spineItems.length);
     console.table(
@@ -101,6 +115,7 @@ export function dumpBookOverview(book, tocFlat) {
         properties: it?.properties,
       }))
     );
+
     dlog.info("Navigation TOC length:", navToc.length);
     if (navToc.length) {
       const flatten = (nodes) =>
@@ -110,9 +125,13 @@ export function dumpBookOverview(book, tocFlat) {
         ]);
       console.table(flatten(navToc));
     }
+
     dlog.info("UI tocFlat length:", tocFlat?.length);
-    if (tocFlat?.length)
+    if (tocFlat?.length) {
       console.table(tocFlat.map((x) => ({ href: x.href, label: x.label })));
+    }
     dlog.end();
-  } catch {}
+  } catch {
+    // ignore
+  }
 }

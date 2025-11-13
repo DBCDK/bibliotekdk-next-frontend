@@ -26,6 +26,7 @@ export default function ReaderSample({ src, title, isFullscreen = false }) {
     segments,
     overallPctDerived,
     handleJump,
+    progressEnabled,
   } = useEpubReader({ src, title, isFullscreen, containerRef });
 
   return (
@@ -43,6 +44,7 @@ export default function ReaderSample({ src, title, isFullscreen = false }) {
         onJump={handleJump}
         Link={Link}
         Text={Text}
+        show={progressEnabled}
       />
     </div>
   );

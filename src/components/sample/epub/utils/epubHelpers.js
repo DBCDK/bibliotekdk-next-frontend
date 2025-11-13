@@ -5,6 +5,8 @@ import { spineIndexOfDebug } from "./epubDebug";
 export function getCoverHref(book) {
   try {
     const items = book?.spine?.spineItems || [];
+
+    // 1) properties der ligner “cover”
     const byProp = items.find(
       (it) =>
         /\bcover\b/i.test(it?.properties || "") ||
@@ -13,11 +15,13 @@ export function getCoverHref(book) {
     );
     if (byProp?.href) return byProp.href;
 
+    // 2) idref eller href der matcher “cover”
     const byName = items.find(
       (it) => /cover/i.test(it?.idref || "") || /cover/i.test(it?.href || "")
     );
     if (byName?.href) return byName.href;
 
+    // 3) navigation-toc med label ≈ “cover/forside”
     const nav = book?.navigation?.toc || [];
     const flatten = (nodes) =>
       nodes.flatMap((n) => [
@@ -29,7 +33,9 @@ export function getCoverHref(book) {
       const test = spineIndexOfDebug(book, hit.href);
       if (typeof test.idx === "number") return test.hit || hit.href;
     }
-  } catch {}
+  } catch {
+    // ignore
+  }
   return null;
 }
 
@@ -41,9 +47,12 @@ export function getFirstLinearHref(book) {
       (it) => (it?.linear || "").toLowerCase() !== "no" && it?.href
     );
     if (linearYes?.href) return linearYes.href;
+
     const any = items.find((it) => it?.href);
     if (any?.href) return any.href;
-  } catch {}
+  } catch {
+    // ignore
+  }
   return null;
 }
 
@@ -51,6 +60,7 @@ export function getFirstLinearHref(book) {
 export async function waitForBookAndLayout(rendition, hostEl) {
   const book = rendition?.book;
   if (!book) return;
+
   try {
     await book.ready;
   } catch {}
@@ -66,6 +76,7 @@ export async function waitForBookAndLayout(rendition, hostEl) {
     const rect = hostEl.getBoundingClientRect();
     return rect.width > 16 && rect.height > 16;
   };
+
   if (!hasSize()) {
     await new Promise((resolve) => {
       const ro = new ResizeObserver(() => {
@@ -88,7 +99,52 @@ export async function waitForBookAndLayout(rendition, hostEl) {
 }
 
 export const isHttp = (href) => /^https?:\/\//i.test(href || "");
+
 export const splitHash = (href = "") => {
   const i = href.indexOf("#");
   return i === -1 ? [href, ""] : [href.slice(0, i), href.slice(i + 1)];
 };
+
+/**
+ * Build synthetic TOC ud fra spine, når navigation.toc er tom.
+ */
+export function buildSyntheticTocFromSpine(book) {
+  const items = book?.spine?.spineItems || [];
+
+  const looksLikeGibberish = (base) => {
+    const b = base.toLowerCase();
+
+    // typiske mønstre fra dine eksempler:
+    // index_split_000, index_split_003, index000, id227, osv.
+    if (/^index(_split)?_\d+$/.test(b)) return true;
+    if (/^index\d+$/.test(b)) return true;
+    if (/^id\d+$/.test(b)) return true;
+
+    // meget korte “navne” er også sjældent gode labels
+    if (b.length <= 3) return true;
+
+    return false;
+  };
+
+  const prettyFromBase = (base) =>
+    base.replace(/[_\-]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+  return items
+    .filter((it) => it?.href)
+    .map((it, i) => {
+      const href = it.href;
+      const idref = it.idref || "";
+      const file = (href.split("/").pop() || idref || "Sektion").replace(
+        /\.(x?html?)$/i,
+        ""
+      );
+
+      if (looksLikeGibberish(file)) {
+        // Fallback navn, hvis vi “ved” at filnavnet er teknik-volapyk
+        return { href, label: `Sektion ${i + 1}` };
+      }
+
+      // Ellers prøv at lave noget pænt ud af filnavnet
+      return { href, label: prettyFromBase(file) };
+    });
+}
