@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Markdown from "react-markdown";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -12,6 +18,7 @@ import { useGlobalState } from "@/components/hooks/useGlobalState";
  */
 export default function AiMarkdown({
   creatorId,
+  fadeIn = true,
   text = "",
   disclaimer,
   urlTransform,
@@ -28,6 +35,39 @@ export default function AiMarkdown({
   const [inlineMaxHeight, setInlineMaxHeight] = useState(
     expanded ? "none" : `${previewHeight}px`
   );
+  const hasCheckedHeight = useRef(false);
+  const lastTextRef = useRef(text);
+  const justAutoExpanded = useRef(false);
+
+  // Reset check when text changes
+  useEffect(() => {
+    if (lastTextRef.current !== text) {
+      hasCheckedHeight.current = false;
+      justAutoExpanded.current = false;
+      lastTextRef.current = text;
+    }
+  }, [text]);
+
+  // Check if content is shorter than previewHeight before first paint to avoid flickering
+  useLayoutEffect(() => {
+    if (hasCheckedHeight.current || expanded) return;
+
+    const el = contentRef.current;
+    if (!el) return;
+
+    // Temporarily remove maxHeight to measure full height
+    const originalMaxHeight = el.style.maxHeight;
+    el.style.maxHeight = "none";
+    const scrollHeight = el.scrollHeight;
+    el.style.maxHeight = originalMaxHeight;
+
+    if (scrollHeight <= previewHeight) {
+      setExpanded(true);
+      setInlineMaxHeight("none");
+      justAutoExpanded.current = true;
+    }
+    hasCheckedHeight.current = true;
+  }, [text, previewHeight, expanded]);
 
   useEffect(() => {
     if (!expanded) {
@@ -41,9 +81,12 @@ export default function AiMarkdown({
         urlTransform={urlTransform}
         components={{
           strong(props) {
-            return <Text type="text4" tag="strong" {...props} />;
+            return <Text type="text1" tag="strong" {...props} />;
           },
           p(props) {
+            if (!fadeIn) {
+              return <Text type="text2" tag="p" {...props} />;
+            }
             const Fadable = () => {
               const [show, setShow] = useState(false);
               useEffect(() => {
@@ -54,7 +97,7 @@ export default function AiMarkdown({
               return (
                 <Text
                   className={show ? styles.show : styles.hidden}
-                  type="text3"
+                  type="text2"
                   tag="p"
                   {...props}
                 />
@@ -78,11 +121,17 @@ export default function AiMarkdown({
         {text}
       </Markdown>
     );
-  }, [text]);
+  }, [text, fadeIn]);
 
   useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
+
+    // Skip animation only if we just auto-expanded due to short content
+    if (justAutoExpanded.current && expanded) {
+      justAutoExpanded.current = false;
+      return;
+    }
 
     if (expanded) {
       // Expand: from current height to scrollHeight
@@ -99,12 +148,14 @@ export default function AiMarkdown({
         setInlineMaxHeight(`${previewHeight}px`);
       });
     }
-  }, [expanded]);
+  }, [expanded, previewHeight]);
   return (
     <div className={`${styles.root} ${styles.container} ${className || ""}`}>
       <div
         ref={contentRef}
-        className={`${styles.content} ${!expanded ? styles.collapsed : ""}`}
+        className={`${styles.content} ${!expanded ? styles.collapsed : ""} ${
+          !fadeIn ? styles.noFade : ""
+        }`}
         style={{ maxHeight: inlineMaxHeight }}
         onTransitionEnd={(e) => {
           if (e.target !== contentRef.current) return;

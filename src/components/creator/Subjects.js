@@ -6,8 +6,45 @@ import Link from "@/components/base/link";
 import { subjectUrl } from "@/components/work/keywords/Keywords";
 import kwStyles from "./Subjects.module.css";
 import { useData } from "@/lib/api/api";
-import { subjectFacets } from "@/lib/api/creator.fragments";
+import { oftenUsedSubjects } from "@/lib/api/creator.fragments";
 import { useMemo } from "react";
+
+/**
+ * Fetches the often used subjects for a creator
+ * We can't use facets at this time, as we only want to include subjects of type SubjectText
+ */
+export function useOftenUsedSubjects({ creatorId }) {
+  const { data, isLoading } = useData(
+    creatorId && oftenUsedSubjects({ creatorId })
+  );
+  const subjects = useMemo(() => {
+    if (data) {
+      const subjectsMap = {};
+      const normalizedCreator = normalizeLetters(creatorId);
+      const noArticles = data?.complexSearch?.works?.filter((w) =>
+        w?.workTypes?.includes("LITERATURE")
+      );
+      const works =
+        noArticles?.length > 10 ? noArticles : data?.complexSearch?.works;
+      works?.forEach((w) => {
+        w?.subjects?.dbcVerified
+          ?.filter(
+            (s) => s?.__typename === "SubjectText" || s?.__typename === "Mood"
+          )
+          .filter((s) => normalizeLetters(s?.display) !== normalizedCreator)
+          .forEach((s) => {
+            const normalizedSubject = normalizeLetters(s?.display);
+            if (!subjectsMap[normalizedSubject]) {
+              subjectsMap[normalizedSubject] = { key: s?.display, count: 0 };
+            }
+            subjectsMap[normalizedSubject].count++;
+          });
+      });
+      return Object.values(subjectsMap).sort((a, b) => b.count - a.count);
+    }
+  }, [data, creatorId]);
+  return { data: subjects, isLoading };
+}
 
 /**
  * Normalize a text for robust equality checks between creator name and subject terms.
@@ -63,10 +100,12 @@ export function Subjects({
           })}
         </Text>
       }
-      backgroundColor="var(--jagged-ice)"
+      divider={false}
+      // backgroundColor="var(--jagged-ice)"
       headerTag="h2"
       dataCy="creator-subjects"
       isLoading={skeleton}
+      className={kwStyles.section}
     >
       <div className={className}>
         <div className={kwStyles.keyword_group}>
@@ -110,27 +149,16 @@ export function SubjectsSkeleton(props) {
  * - Show skeleton while loading; return null on error
  */
 export default function Wrap({ creatorId }) {
-  let { data, isLoading, error } = useData(
-    creatorId && subjectFacets({ creatorId })
-  );
-  const subjects = useMemo(() => {
-    const facets = data?.complexFacets?.facets || [];
-    const subjectFacet = facets.find((f) => f.name === "facet.subject");
-    const scored =
-      subjectFacet?.values?.map((v) => ({ key: v.key, score: v.score })) || [];
-    const normalizedCreator = normalizeLetters(creatorId);
-    return scored
-      .filter((v) => normalizeLetters(v.key) !== normalizedCreator)
-      .sort((a, b) => b.score - a.score)
-      .map((v) => v.key)
-      .slice(0, 12);
-  }, [data, creatorId]);
+  const { data, isLoading } = useOftenUsedSubjects({ creatorId });
 
   if (isLoading) {
     return <SubjectsSkeleton creatorId={creatorId} />;
   }
 
-  if (error) return null;
-
-  return <Subjects creatorId={creatorId} subjects={subjects} />;
+  return (
+    <Subjects
+      creatorId={creatorId}
+      subjects={data?.map((s) => s.key)?.slice(0, 12) || []}
+    />
+  );
 }
