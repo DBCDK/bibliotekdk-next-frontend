@@ -122,7 +122,7 @@ function FieldInput({ index, numberOfItems, fieldValue, onSearch }) {
               }}
               placeholder={placeholder}
               overrideValueControl={true}
-              tabIndex={"0"}
+              tabIndex="0"
               // onKeyDown overrides suggesters onKeyDown, and we don't want that
               onKeyPress={(e) => {
                 if (e.key === "Enter") {

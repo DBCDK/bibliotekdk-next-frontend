@@ -24,6 +24,8 @@
   margin-top: var(--pt1);
   flex-grow: 2;
   height: var(--pt5);
+
+  order: 2;
 }
 
 .select {
@@ -142,13 +144,14 @@
   }
 
   .inputContainer .removeIcon {
-    order: 3;
+    order: 1;
   }
 
   .suggesterContainer {
     margin-top: 0;
     margin-left: var(--pt1);
     display: flex;
+    order: unset;
   }
 
   .suggesterInput {

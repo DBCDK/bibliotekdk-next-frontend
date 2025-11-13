@@ -25,6 +25,7 @@ import { openLoginModal } from "../_modal/pages/login/utils";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
 import Button from "../base/button";
+import { focusInput } from "../search/simple/suggester";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -155,7 +156,10 @@ export function Header({
                 type="secondary"
                 size="small"
                 className={styles.searchButton}
-                onClick={() => router.push("/find/simpel")}
+                onClick={() => {
+                  router.push("/find/simpel");
+                  setTimeout(() => focusInput(), 100);
+                }}
               >
                 <Text type="text2" tag="span">
                   {Translate({
