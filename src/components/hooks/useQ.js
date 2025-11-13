@@ -284,6 +284,8 @@ function useQ() {
       obj[SuggestTypeEnum.SUBJECT]
   );
 
+  const _mode = router?.query?.mode || "simpel";
+
   return {
     // functions
     setQ,
@@ -294,6 +296,7 @@ function useQ() {
     isSynced: _isSynced,
     // constants
     q: _q || {},
+    mode: _mode,
     hasQuery: _hasQuery,
     types,
     base: buildQ(),

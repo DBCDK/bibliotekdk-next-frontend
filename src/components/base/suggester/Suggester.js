@@ -148,6 +148,7 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
         onClick={() => onClear()}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
+            e.preventDefault();
             onClear();
           }
         }}

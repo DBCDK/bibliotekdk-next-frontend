@@ -13,7 +13,7 @@ import translate from "@/components/base/translate";
 import styles from "./DidYouMean.module.css";
 
 export function DidYouMean({ data, isLoading }) {
-  const { q, setQuery } = useQ();
+  const { q, mode, setQuery } = useQ();
 
   if (isLoading) {
     return null;
@@ -62,6 +62,7 @@ export function DidYouMean({ data, isLoading }) {
                 include: { all: res.query },
                 query: {
                   workTypes: null,
+                  mode,
                   tid: res.traceId,
                 },
                 method: "push",
