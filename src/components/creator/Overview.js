@@ -13,22 +13,20 @@ import AiMarkdown from "@/components/base/markdown/AiMarkdown";
 
 export function useCreatorOverview(creatorId) {
   const { data, isLoading } = useData(creatorOverview({ display: creatorId }));
+
   const image =
-    (data?.wikidata?.image?.medium && {
-      url: data?.wikidata?.image?.medium,
-      attributionText: data?.wikidata?.image?.attributionText,
+    (data?.creatorByDisplay?.wikidata?.image?.medium && {
+      url: data?.creatorByDisplay?.wikidata?.image?.medium,
+      attributionText: data?.creatorByDisplay?.wikidata?.image?.attributionText,
     }) ||
-    (data?.forfatterwebSearch?.works?.[0]?.manifestations?.bestRepresentation
-      ?.cover?.large?.url && {
-      url: data?.forfatterwebSearch?.works?.[0]?.manifestations
-        ?.bestRepresentation?.cover?.large?.url,
+    (data?.creatorByDisplay?.forfatterweb?.image?.large?.url && {
+      url: data?.creatorByDisplay?.forfatterweb?.image?.large?.url,
       attributionText: "Forfatterweb",
     });
 
   return {
     data: data && {
       ...(data?.creatorByDisplay || {}),
-      numWorks: data?.exists?.hitcount,
       image,
     },
     isLoading: isLoading,
