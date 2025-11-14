@@ -13,7 +13,6 @@ import AiMarkdown from "@/components/base/markdown/AiMarkdown";
 
 export function useCreatorOverview(creatorId) {
   const { data, isLoading } = useData(creatorOverview({ display: creatorId }));
-
   const image =
     (data?.wikidata?.image?.medium && {
       url: data?.wikidata?.image?.medium,
@@ -110,7 +109,7 @@ export function Overview({
             xl={{ span: 4, order: 2 }}
             className={styles.imageCol}
           >
-            {isLoading && !creatorData?.image?.url && (
+            {(isLoading || creatorData?.image?.url) && (
               <>
                 <Cover
                   src={creatorData?.image?.url}
