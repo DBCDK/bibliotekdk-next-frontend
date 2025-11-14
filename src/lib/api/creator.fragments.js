@@ -448,18 +448,6 @@ export function reviewsForCreator({ creator, limit = 100, offset = 0 }) {
             }
           }
         }
-        all {
-          cover {
-            detail: detail_207
-            origin
-            thumbnail
-          }
-          materialTypes {
-            materialTypeSpecific {
-              code
-            }
-          }
-        }
       }
       relations {
         hasReview {
