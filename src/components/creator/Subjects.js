@@ -8,6 +8,7 @@ import kwStyles from "./Subjects.module.css";
 import { useData } from "@/lib/api/api";
 import { oftenUsedSubjects } from "@/lib/api/creator.fragments";
 import { useMemo } from "react";
+import { useCreatorOverview } from "./Overview";
 
 /**
  * Fetches the often used subjects for a creator
@@ -149,7 +150,7 @@ export function SubjectsSkeleton(props) {
  * - Show skeleton while loading; return null on error
  */
 export default function Wrap({ creatorId }) {
-  const { data, isLoading } = useOftenUsedSubjects({ creatorId });
+  const { data, isLoading } = useCreatorOverview(creatorId);
 
   if (isLoading) {
     return <SubjectsSkeleton creatorId={creatorId} />;
@@ -158,7 +159,7 @@ export default function Wrap({ creatorId }) {
   return (
     <Subjects
       creatorId={creatorId}
-      subjects={data?.map((s) => s.key)?.slice(0, 12) || []}
+      subjects={data?.generated?.topSubjects?.slice(0, 12) || []}
     />
   );
 }

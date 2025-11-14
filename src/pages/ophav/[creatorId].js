@@ -18,7 +18,7 @@ export default function CreatorPage() {
   const { data, isLoading } = useCreatorOverview(creatorId);
 
   // Return 404 page if no works are found for the creator
-  if (!isLoading && !data?.numWorks) {
+  if (!isLoading && !data?.generated?.dataSummary?.text) {
     return <Custom404 />;
   }
 
@@ -71,7 +71,7 @@ CreatorPage.getInitialProps = async (ctx) => {
   const queries = Object.values(init.initialData);
 
   // Check if creator exists
-  if (!queries[0]?.data?.exists?.hitcount) {
+  if (!queries[0]?.data?.generated?.dataSummary?.text) {
     if (ctx.res) {
       ctx.res.statusCode = 404;
     }
