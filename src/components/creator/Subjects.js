@@ -5,47 +5,8 @@ import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import { subjectUrl } from "@/components/work/keywords/Keywords";
 import kwStyles from "./Subjects.module.css";
-import { useData } from "@/lib/api/api";
-import { oftenUsedSubjects } from "@/lib/api/creator.fragments";
-import { useMemo } from "react";
-import { useCreatorOverview } from "./Overview";
 
-/**
- * Fetches the often used subjects for a creator
- * We can't use facets at this time, as we only want to include subjects of type SubjectText
- */
-export function useOftenUsedSubjects({ creatorId }) {
-  const { data, isLoading } = useData(
-    creatorId && oftenUsedSubjects({ creatorId })
-  );
-  const subjects = useMemo(() => {
-    if (data) {
-      const subjectsMap = {};
-      const normalizedCreator = normalizeLetters(creatorId);
-      const noArticles = data?.complexSearch?.works?.filter((w) =>
-        w?.workTypes?.includes("LITERATURE")
-      );
-      const works =
-        noArticles?.length > 10 ? noArticles : data?.complexSearch?.works;
-      works?.forEach((w) => {
-        w?.subjects?.dbcVerified
-          ?.filter(
-            (s) => s?.__typename === "SubjectText" || s?.__typename === "Mood"
-          )
-          .filter((s) => normalizeLetters(s?.display) !== normalizedCreator)
-          .forEach((s) => {
-            const normalizedSubject = normalizeLetters(s?.display);
-            if (!subjectsMap[normalizedSubject]) {
-              subjectsMap[normalizedSubject] = { key: s?.display, count: 0 };
-            }
-            subjectsMap[normalizedSubject].count++;
-          });
-      });
-      return Object.values(subjectsMap).sort((a, b) => b.count - a.count);
-    }
-  }, [data, creatorId]);
-  return { data: subjects, isLoading };
-}
+import { useCreatorOverview } from "./Overview";
 
 /**
  * Normalize a text for robust equality checks between creator name and subject terms.
@@ -141,14 +102,6 @@ export function SubjectsSkeleton(props) {
   );
 }
 
-/**
- * Wrapper: fetches SUBJECT facets for a creator and renders Subjects.
- * - Fetch via complexFacets with creator-based CQL
- * - Memoize extraction of facet values
- * - Filter out entries matching creator name (normalized to letters-only, no diacritics, no parenthesis)
- * - Sort by score desc and cap list (top 12)
- * - Show skeleton while loading; return null on error
- */
 export default function Wrap({ creatorId }) {
   const { data, isLoading } = useCreatorOverview(creatorId);
 
