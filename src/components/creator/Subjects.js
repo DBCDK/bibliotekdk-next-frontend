@@ -9,27 +9,6 @@ import kwStyles from "./Subjects.module.css";
 import { useCreatorOverview } from "./Overview";
 
 /**
- * Normalize a text for robust equality checks between creator name and subject terms.
- * We only keep letters to avoid mismatches caused by punctuation, spaces,
- * birth-year annotations, etc. Steps:
- * - Remove any parenthetical content like "(f. 1974)"
- * - Lowercase the string
- * - Strip diacritics (NFD + remove combining marks)
- * - Remove all non-letter characters (Unicode aware)
- */
-const normalizeLetters = (str) => {
-  if (!str) return "";
-
-  let s = str.replace(/\([^()]*\)/g, " ");
-
-  return s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "") // Fjern diakritiske tegn
-    .replace(/[^\p{L}]+/gu, ""); // Fjern alt der ikke er bogstaver
-};
-
-/**
  * Renders the creator Subjects (Emneord) section styled like Work Keywords.
  * Displays a translated title, a subtitle with the creator name,
  * and a responsive list of subject links.
