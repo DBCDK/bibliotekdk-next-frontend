@@ -195,20 +195,11 @@ function scrollToReviewsSection() {
  * Individual work review item component
  */
 function WorkReviewItem({ item, isLoading }) {
-  const handleFocus = (e) => {
-    e.currentTarget.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "nearest",
-    });
-  };
-
   return (
     <Link
       href={item.workHref}
       border={{ top: false, bottom: { keepVisible: false } }}
       className={styles.itemLink}
-      onFocus={handleFocus}
     >
       <div className={styles.item}>
         <div className={styles.row}>
