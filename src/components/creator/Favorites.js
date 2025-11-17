@@ -217,7 +217,8 @@ function WorkReviewItem({ item, isLoading }) {
           <div className={styles.content}>
             <Title
               type="title4"
-              lines={1}
+              lines={2}
+              clamp={true}
               skeleton={isLoading}
               tag="div"
               className={styles.title}
