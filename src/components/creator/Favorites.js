@@ -198,7 +198,7 @@ function WorkReviewItem({ item, isLoading }) {
   const handleFocus = (e) => {
     e.currentTarget.scrollIntoView({
       behavior: "smooth",
-      block: "nearest",
+      block: "center",
       inline: "nearest",
     });
   };
@@ -335,19 +335,20 @@ export function Favorites({ data = [], isLoading = false }) {
       backgroundColor="var(--parchment)"
       dataCy="creator-favorites"
     >
-      <ScrollSnapSlider
-        sliderId={sliderId}
-        slideDistanceFunctionOverride={getScrollToNextCoveredChild}
-        childContainerClassName={styles.slider}
-      >
-        {data.map((item, idx) => (
-          <WorkReviewItem
-            key={`favorite_${idx}`}
-            item={item}
-            isLoading={isLoading}
-          />
-        ))}
-      </ScrollSnapSlider>
+      <div className={styles.sliderContainer}>
+        <ScrollSnapSlider
+          sliderId={sliderId}
+          slideDistanceFunctionOverride={getScrollToNextCoveredChild}
+        >
+          {data.map((item, idx) => (
+            <WorkReviewItem
+              key={`favorite_${idx}`}
+              item={item}
+              isLoading={isLoading}
+            />
+          ))}
+        </ScrollSnapSlider>
+      </div>
     </Section>
   );
 }
