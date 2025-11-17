@@ -1,5 +1,10 @@
-.slider {
-  display: flex;
+.sliderContainer {
+  position: relative;
+  margin-left: calc(var(--pt2) * -1);
+  margin-right: calc(var(--pt2) * -1);
+}
+
+.sliderContainer :global(.flex_box) {
   gap: var(--pt5);
 }
 
@@ -8,16 +13,22 @@
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  --underline-top-hover-color: var(--transparent);
+  --underline-bottom-hover-color: var(--transparent);
+  --underline-middle-hover-color: var(--transparent);
+  --underline-font-hover-color: inherit;
 }
 
 .itemLink:hover,
-.itemLink:focus,
-.itemLink:has(a:focus),
-.itemLink:has(a:hover) {
+.itemLink:focus {
   color: inherit;
-  text-decoration: inherit;
+}
+
+.itemLink:hover .item,
+.itemLink:focus .item,
+.itemLink:has(a:focus) .item,
+.itemLink:has(a:hover) .item {
   background: rgba(0, 0, 0, 0.1);
-  outline: none;
 }
 
 .bottomLine {
@@ -46,6 +57,11 @@
 .link a,
 .allReviewsLink a {
   --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+  --underline-top-color: var(--iron);
+  --underline-top-hover-color: var(--blue);
+  --underline-middle-color: transparent;
+  --underline-middle-hover-color: transparent;
 }
 
 .item {
@@ -55,11 +71,10 @@
   max-width: 420px;
   scroll-snap-align: start;
   position: relative;
-  height: 100%;
-  padding-top: var(--pt1);
-  padding-left: var(--pt1);
-  padding-right: var(--pt1);
-  padding-bottom: var(--pt05);
+  padding-top: var(--pt2);
+  padding-left: var(--pt2);
+  padding-right: var(--pt2);
+  padding-bottom: var(--pt1);
 }
 
 .link {
