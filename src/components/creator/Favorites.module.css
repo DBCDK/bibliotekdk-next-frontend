@@ -111,12 +111,6 @@
   overflow: hidden;
 }
 
-.title {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  white-space: normal;
-}
-
 .date {
   display: block;
   margin-top: var(--pt1);
