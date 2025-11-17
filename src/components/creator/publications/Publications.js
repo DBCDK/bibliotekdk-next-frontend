@@ -183,6 +183,7 @@ export function Publications({
         </div>
       }
       divider={{ content: true }}
+      className={styles.section}
     >
       <div>
         {/* Filter dropdowns */}

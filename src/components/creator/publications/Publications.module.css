@@ -1,3 +1,7 @@
+.section {
+  margin-top: var(--pt8);
+}
+
 .yearTitle {
   margin-top: var(--pt8);
   margin-bottom: var(--pt2);
