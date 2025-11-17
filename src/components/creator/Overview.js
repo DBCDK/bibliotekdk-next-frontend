@@ -86,7 +86,13 @@ export function Overview({
             {creatorData?.wikidata?.awards?.length > 0 && (
               <div className={styles.awards}>
                 <Icon size={{ w: 3, h: 3 }} src="award.svg" alt="" />
-                <Text type="text3" tag="p" className={styles.award}>
+                <Text
+                  type="text3"
+                  tag="p"
+                  className={styles.award}
+                  lines={2}
+                  clamp
+                >
                   {creatorData?.wikidata?.awards?.join(", ")}
                 </Text>
               </div>

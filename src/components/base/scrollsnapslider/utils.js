@@ -33,6 +33,54 @@ export function scrollToElementWithOffset(
   focusElement && element.focus({ preventScroll: true });
 }
 
+/**
+ * Scroll to element by selector, waiting for position to be stable (handles lazy loading)
+ * @param {string} selector - CSS selector to find element (e.g., '[id^="anmeldelser"]')
+ * @param {number} offset - Scroll offset from element top (default: 80)
+ * @param {number} maxDuration - Maximum time to wait in ms (default: 5000)
+ * @param {number} stabilityDuration - Time position must be stable in ms (default: 300)
+ */
+export function scrollToElementWhenStable(
+  selector,
+  offset = 80,
+  maxDuration = 5000,
+  stabilityDuration = 300
+) {
+  let lastTop = null;
+  let stableSince = null;
+  let hasScrolled = false;
+  const startTime = Date.now();
+
+  const check = () => {
+    if (hasScrolled || Date.now() - startTime > maxDuration) return;
+
+    const element = document.querySelector(selector);
+    if (!element) {
+      setTimeout(check, 100);
+      return;
+    }
+
+    const top = element.getBoundingClientRect().top + window.pageYOffset;
+
+    if (lastTop === null || Math.abs(top - lastTop) > 5) {
+      lastTop = top;
+      stableSince = Date.now();
+      setTimeout(check, 100);
+      return;
+    }
+
+    if (Date.now() - stableSince >= stabilityDuration) {
+      window.scrollTo({ top: top - offset, behavior: "smooth" });
+      hasScrolled = true;
+      return;
+    }
+
+    setTimeout(check, 100);
+  };
+
+  setTimeout(check, 200);
+}
+
 export function scrollDistance(sliderId, slideTranslation) {
   document.querySelector(`#${CSS.escape(sliderId)}`).scrollBy({
     left: slideTranslation,
