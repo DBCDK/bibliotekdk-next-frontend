@@ -285,7 +285,12 @@ function WorkReviewItem({ item, isLoading }) {
                     </Text>
                   </Link>
                 </span>
-                <Icon src="chevron.svg" size={{ w: 2, h: "auto" }} alt="" />
+                <Icon
+                  src="chevron.svg"
+                  size={{ w: 2, h: "auto" }}
+                  alt=""
+                  className={styles.icon}
+                />
               </div>
             )}
             {item.reviewsCount > 1 && (
@@ -308,7 +313,12 @@ function WorkReviewItem({ item, isLoading }) {
                     </Text>
                   </Link>
                 </span>
-                <Icon src="chevron.svg" size={{ w: 2, h: "auto" }} alt="" />
+                <Icon
+                  src="chevron.svg"
+                  size={{ w: 2, h: "auto" }}
+                  alt=""
+                  className={styles.icon}
+                />
               </div>
             )}
           </div>
@@ -339,6 +349,7 @@ export function Favorites({ data = [], isLoading = false }) {
         <ScrollSnapSlider
           sliderId={sliderId}
           slideDistanceFunctionOverride={getScrollToNextCoveredChild}
+          childContainerClassName={styles.slider}
         >
           {data.map((item, idx) => (
             <WorkReviewItem
