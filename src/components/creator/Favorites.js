@@ -6,15 +6,17 @@ import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
-import { Rating } from "@/components/base/rating/Rating";
 import Cover from "@/components/base/cover/Cover";
-import { getInfomediaReviewUrl, getWorkUrl } from "@/lib/utils";
+import { getInfomediaReviewUrl, getWorkUrl, encodeString } from "@/lib/utils";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { useData } from "@/lib/api/api";
 import { reviewsForCreator } from "@/lib/api/creator.fragments";
 
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
-import { getScrollToNextCoveredChild } from "@/components/base/scrollsnapslider/utils";
+import {
+  getScrollToNextCoveredChild,
+  scrollToElementWhenStable,
+} from "@/components/base/scrollsnapslider/utils";
 import styles from "./Favorites.module.css";
 import { useMemo } from "react";
 
@@ -32,13 +34,10 @@ function parseIssueISO(issue) {
 }
 
 /**
- * Check that a review is from Infomedia and has a rating.
+ * Check that a review is from Infomedia.
  */
-function isInfomediaWithRating(review) {
-  return (
-    review?.access?.some((a) => a?.__typename === "InfomediaService") &&
-    !!review?.review?.rating
-  );
+function isInfomedia(review) {
+  return review?.access?.some((a) => a?.__typename === "InfomediaService");
 }
 
 /**
@@ -52,14 +51,62 @@ function toRatingPercentage(review) {
 }
 
 /**
- * Pick the best review by rating percentage, only above a threshold.
+ * Sort reviews by date (newest first) - helper for selectBestReview
+ */
+function sortByDateDesc(reviews) {
+  return reviews
+    .map((r) => {
+      const { valid, value } = parseIssueISO(r?.hostPublication?.issue);
+      return { ...r, __parsedDateValid: valid, __parsedDate: value };
+    })
+    .sort((a, b) => {
+      if (a.__parsedDateValid !== b.__parsedDateValid) {
+        return a.__parsedDateValid ? -1 : 1;
+      }
+      if (a.__parsedDate && b.__parsedDate) {
+        return b.__parsedDate - a.__parsedDate;
+      }
+      if (a.__parsedDate && !b.__parsedDate) return -1;
+      if (!a.__parsedDate && b.__parsedDate) return 1;
+      return 0;
+    });
+}
+
+/**
+ * Pick the best review: highest rating if available, otherwise newest.
+ * Returns review with parsed date info attached.
  */
 function selectBestReview(reviews = []) {
-  return reviews
-    .filter(isInfomediaWithRating)
-    .map((r) => ({ ...r, ratingPercentage: toRatingPercentage(r) }))
-    .filter((r) => r.ratingPercentage > 0.5)
-    .sort((a, b) => b.ratingPercentage - a.ratingPercentage)?.[0];
+  const infomediaReviews = reviews.filter(isInfomedia);
+
+  if (infomediaReviews.length === 0) {
+    return null;
+  }
+
+  // Separate reviews with and without ratings
+  const withRatings = infomediaReviews
+    .map((r) => ({
+      ...r,
+      ratingPercentage: toRatingPercentage(r),
+    }))
+    .filter((r) => r.ratingPercentage > 0);
+
+  // If there are reviews with ratings, pick the one with highest rating
+  if (withRatings.length > 0) {
+    const best = withRatings.sort(
+      (a, b) => b.ratingPercentage - a.ratingPercentage
+    )[0];
+    // Parse date for consistency
+    const { valid, value } = parseIssueISO(best?.hostPublication?.issue);
+    return {
+      ...best,
+      __parsedDateValid: valid,
+      __parsedDate: value,
+    };
+  }
+
+  // Otherwise, sort by date (newest first)
+  return sortByDateDesc(infomediaReviews)[0];
 }
 
 /**
@@ -67,12 +114,14 @@ function selectBestReview(reviews = []) {
  */
 function mapWorkToReview(work) {
   const bestReview = selectBestReview(work?.relations?.hasReview || []);
-  const { valid, value } = parseIssueISO(bestReview?.hostPublication?.issue);
+  if (!bestReview) {
+    return null;
+  }
   return {
     work,
     review: bestReview,
-    __parsedDateValid: valid,
-    __parsedDate: value,
+    __parsedDateValid: bestReview.__parsedDateValid,
+    __parsedDate: bestReview.__parsedDate,
   };
 }
 
@@ -115,26 +164,166 @@ function mapToFavoritesItem({ work, review }) {
   );
 
   return {
-    title: review?.hostPublication?.title || "",
+    hostPublication: review?.hostPublication?.title || "",
     subtitle: reviewerName || "",
-    rating: review?.review?.rating || "",
     date: review?.hostPublication?.issue || "",
     workTitle: mainTitle || "",
     workId: work?.workId || "",
     infomediaId: accessInf?.id || "",
     cover: coverDetail || null,
     workHref,
+    reviewsCount: work?.relations?.hasReview?.length || 0,
   };
 }
 
 /**
- * Renders a slider of reviewer favorites for a creator (dummy data for now).
+ * Renders a slider of reviewer favorites for a creator.
  *
  * @param {Object} props
  * @param {Array} [props.data=[]] Items to render in the slider
  * @param {boolean} [props.isLoading=false] Show skeleton state
  * @returns {JSX.Element}
  */
+/**
+ * Scroll to reviews section by finding element with id starting with "anmeldelser"
+ */
+function scrollToReviewsSection() {
+  scrollToElementWhenStable('[id^="anmeldelser"]', 80);
+}
+
+/**
+ * Individual work review item component
+ */
+function WorkReviewItem({ item, isLoading }) {
+  const handleFocus = (e) => {
+    e.currentTarget.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  };
+
+  return (
+    <Link
+      href={item.workHref}
+      border={{ top: false, bottom: { keepVisible: false } }}
+      className={styles.itemLink}
+      onFocus={handleFocus}
+    >
+      <div className={styles.item}>
+        <div className={styles.row}>
+          <div className={styles.cover}>
+            <Cover
+              src={
+                item.cover ||
+                "https://fbiinfo-present.dbc.dk/images/xzE5DeFpSc-ax1Q6ENNQKg/240px!AS2cLB0cUHOxu-MsTSuWAwnrHhLs7Y42ue_VWka2Cbl39A"
+              }
+              alt={item.hostPublication}
+              skeleton={isLoading}
+              size="medium"
+            />
+          </div>
+          <div className={styles.content}>
+            <Title
+              type="title4"
+              lines={1}
+              skeleton={isLoading}
+              tag="div"
+              className={styles.title}
+            >
+              {item.workTitle}
+            </Title>
+
+            {item.date && (
+              <div className={styles.date}>
+                {item.hostPublication && (
+                  <Text type="text2" lines={1} skeleton={isLoading}>
+                    {Translate({
+                      context: "creator",
+                      label: "reviewedIn",
+                    })}{" "}
+                    {item.hostPublication}
+                  </Text>
+                )}
+                {(() => {
+                  const { valid, value } = parseIssueISO(item.date);
+                  return (
+                    <Text type="text2" lines={1} skeleton={isLoading}>
+                      {valid && value
+                        ? `d. ${value.toLocaleDateString("da-DK", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          })}`
+                        : item.date}
+                    </Text>
+                  );
+                })()}
+              </div>
+            )}
+            {!isLoading && (
+              <div className={styles.link}>
+                <span>
+                  <Link
+                    href={
+                      item?.infomediaId && item?.workId
+                        ? getInfomediaReviewUrl(
+                            item.workTitle || "",
+                            item.workId,
+                            item.infomediaId
+                          )
+                        : "#"
+                    }
+                    border={{ bottom: { keepVisible: true } }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Text type="text2" lines={1} tag="span">
+                      {Translate({
+                        context: "reviews",
+                        label: "reviewLinkText",
+                      })}
+                    </Text>
+                  </Link>
+                </span>
+                <Icon src="chevron.svg" size={{ w: 2, h: "auto" }} alt="" />
+              </div>
+            )}
+            {item.reviewsCount > 1 && (
+              <div className={styles.allReviewsLink}>
+                <span>
+                  <Link
+                    href={item.workHref}
+                    border={{ bottom: { keepVisible: true } }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      scrollToReviewsSection();
+                    }}
+                  >
+                    <Text type="text2" tag="span">
+                      {Translate({
+                        context: "creator",
+                        label: "seeAllReviews",
+                      })}{" "}
+                      ({item.reviewsCount})
+                    </Text>
+                  </Link>
+                </span>
+                <Icon src="chevron.svg" size={{ w: 2, h: "auto" }} alt="" />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className={styles.bottomLine} />
+      </div>
+    </Link>
+  );
+}
+
+WorkReviewItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool,
+};
+
 export function Favorites({ data = [], isLoading = false }) {
   const sliderId = "creator_favorites_slider";
 
@@ -152,95 +341,11 @@ export function Favorites({ data = [], isLoading = false }) {
         childContainerClassName={styles.slider}
       >
         {data.map((item, idx) => (
-          <div key={`favorite_${idx}`} className={styles.item}>
-            <div className={styles.row}>
-              <div className={styles.cover}>
-                <Link
-                  href={item.workHref}
-                  border={{ bottom: false, top: false }}
-                >
-                  <Cover
-                    src={
-                      item.cover ||
-                      "https://fbiinfo-present.dbc.dk/images/xzE5DeFpSc-ax1Q6ENNQKg/240px!AS2cLB0cUHOxu-MsTSuWAwnrHhLs7Y42ue_VWka2Cbl39A"
-                    }
-                    alt={item.title}
-                    skeleton={isLoading}
-                    size="medium"
-                  />
-                </Link>
-              </div>
-              <div className={styles.content}>
-                <Title
-                  type="title4"
-                  lines={1}
-                  skeleton={isLoading}
-                  tag="div"
-                  className={styles.title}
-                >
-                  {item.title}
-                </Title>
-                <div className={styles.meta}>
-                  <Text
-                    type="text3"
-                    className={styles.by}
-                    lines={1}
-                    skeleton={isLoading}
-                  >
-                    {Translate({ context: "general", label: "by" })}
-                  </Text>
-                  <Text type="text2" lines={1} skeleton={isLoading}>
-                    {item.subtitle}
-                  </Text>
-                </div>
-                {item.date && (
-                  <Text
-                    type="text2"
-                    className={styles.date}
-                    lines={1}
-                    skeleton={isLoading}
-                  >
-                    {new Date(item.date).toLocaleDateString("da-DK", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </Text>
-                )}
-                {item.rating && (
-                  <div style={{ marginTop: "var(--pt1)" }}>
-                    <Rating rating={item.rating} skeleton={isLoading} />
-                  </div>
-                )}
-                {!isLoading && (
-                  <div className={styles.link}>
-                    <Icon src="chevron.svg" size={{ w: 2, h: "auto" }} alt="" />
-                    <span>
-                      <Link
-                        href={
-                          item?.infomediaId && item?.workId
-                            ? getInfomediaReviewUrl(
-                                item.workTitle || "",
-                                item.workId,
-                                item.infomediaId
-                              )
-                            : "#"
-                        }
-                        border={{ bottom: { keepVisible: true } }}
-                      >
-                        <Text type="text2" lines={1} tag="span">
-                          {Translate({
-                            context: "reviews",
-                            label: "reviewLinkText",
-                          })}
-                        </Text>
-                      </Link>
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <WorkReviewItem
+            key={`favorite_${idx}`}
+            item={item}
+            isLoading={isLoading}
+          />
         ))}
       </ScrollSnapSlider>
     </Section>
@@ -250,20 +355,18 @@ export function Favorites({ data = [], isLoading = false }) {
 export function FavoritesSkeleton(props) {
   const data = [
     {
-      title: "title1",
+      hostPublication: "title1",
       subtitle: "reviewer1",
-      rating: "4/6",
       date: "2024-01-01",
     },
-    { title: "title2", subtitle: "reviewer2", date: "2023-01-01" },
+    { hostPublication: "title2", subtitle: "reviewer2", date: "2023-01-01" },
   ];
 
   return <Favorites {...props} data={data} isLoading={true} />;
 }
 
 /**
- * Wrapper: will later fetch reviewer favorites for a creator.
- * Uses dummy data for initial implementation.
+ * Wrapper: fetches and displays reviewer favorites for a creator.
  */
 export default function Wrap({ creatorId }) {
   const { data: reviewsData, isLoading } = useData(
@@ -271,13 +374,26 @@ export default function Wrap({ creatorId }) {
   );
 
   const reviews = useMemo(() => {
-    const mapped = reviewsData?.complexSearch?.works
-      ?.map(mapWorkToReview)
-      ?.filter((w) => w.review)
-      ?.sort(compareByValidDateDesc)
-      ?.slice(0, 10);
+    if (!reviewsData?.complexSearch?.works) {
+      return [];
+    }
 
-    return mapped?.map(mapToFavoritesItem);
+    const mapped = reviewsData.complexSearch.works
+      .map(mapWorkToReview)
+      .filter((w) => w?.review)
+      .sort(compareByValidDateDesc)
+      .slice(0, 20)
+      .map(mapToFavoritesItem);
+
+    // Generate hash for reviews section once
+    const reviewsHash = `#${encodeString(
+      Translate({ context: "workmenu", label: "reviews" })
+    )}-13`;
+
+    return mapped.map((item) => ({
+      ...item,
+      workHref: item.workHref + reviewsHash,
+    }));
   }, [reviewsData]);
 
   if (isLoading) {
