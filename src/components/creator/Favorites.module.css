@@ -4,8 +4,12 @@
   margin-right: calc(var(--pt2) * -1);
 }
 
-.slider {
-  gap: var(--pt5);
+.slider .itemLink:last-child .item {
+  border-right: none;
+}
+.slider .itemLink:first-child .item {
+  padding-left: var(--pt2);
+  scroll-margin-left: initial;
 }
 
 .itemLink {
@@ -68,13 +72,16 @@
   /* Fixed width across breakpoints */
   flex: 0 0 420px;
   min-width: 420px;
-  max-width: 420px;
+  max-width: 520px;
   scroll-snap-align: start;
+  scroll-margin-left: calc(var(--pt3) * -1);
   position: relative;
   padding-top: var(--pt2);
-  padding-left: var(--pt2);
-  padding-right: var(--pt2);
+  padding-left: var(--pt5);
+  padding-right: var(--pt5);
   padding-bottom: var(--pt1);
+
+  border-right: 1px solid var(--iron);
 }
 
 .link {
