@@ -58,6 +58,7 @@
   height: 100%;
   padding-top: var(--pt1);
   padding-left: var(--pt1);
+  padding-right: var(--pt1);
   padding-bottom: var(--pt05);
 }
 
@@ -66,11 +67,13 @@
   align-items: center;
   gap: var(--pt1);
   margin-top: 0;
+  white-space: nowrap;
 }
 
 .link span {
   display: flex;
   align-items: center;
+  white-space: nowrap;
 }
 
 .link :global(i) {
@@ -97,14 +100,19 @@
 }
 
 /* cover wrapper for alignment */
+.cover {
+  max-width: 160px;
+}
+.cover img {
+  max-width: 160px !important;
+}
 
-.cover :global(a:focus-visible),
-.cover :global(a:focus) {
+.cover a:focus-visible,
+.cover a:focus {
   outline: 2px solid var(--blue);
   outline-offset: 2px;
 }
-
-.cover :global(a:hover) {
+.cover a:hover {
   outline: none;
 }
 
@@ -125,16 +133,24 @@
   margin-top: var(--pt1);
 }
 
+.date > *:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .allReviewsLink {
   display: flex;
   align-items: center;
   gap: var(--pt1);
   margin-top: var(--pt3);
+  white-space: nowrap;
 }
 
 .allReviewsLink span {
   display: flex;
   align-items: center;
+  white-space: nowrap;
 }
 
 .allReviewsLink :global(i) {
