@@ -278,7 +278,7 @@ export default function Wrap({ creatorId }) {
   });
   const [selectedLanguage, setSelectedLanguage] = useGlobalState({
     key: "creator_selectedLanguage_" + creatorId,
-    initial: "dansk",
+    initial: "",
   });
   const [selectedGenreAndForm, setSelectedGenreAndForm] = useGlobalState({
     key: "creator_selectedGenreAndForm_" + creatorId,
