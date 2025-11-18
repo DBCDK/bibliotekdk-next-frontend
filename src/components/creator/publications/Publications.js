@@ -172,9 +172,7 @@ export function Publications({
             className={styles.publishedFromText}
             skeleton={isLoading}
           >
-            {hitcountText}
-          </Text>
-          <Text type="text3" className={styles.explanationText}>
+            {hitcountText}.{" "}
             {Translate({
               context: "creator",
               label: "publications-explanation",
