@@ -171,6 +171,7 @@ export function Publications({
             type="text3"
             className={styles.publishedFromText}
             skeleton={isLoading}
+            lines={3}
           >
             {hitcountText}.{" "}
             {Translate({
@@ -204,18 +205,22 @@ export function Publications({
             onSelect={setSelectedGenreAndForm}
             filters={filters}
           />
-          <Subject
-            creatorId={creatorId}
-            selected={selectedSubjects}
-            onSelect={setSelectedSubjects}
-            filters={filters}
-          />
-          <Language
-            creatorId={creatorId}
-            selected={selectedLanguage}
-            onSelect={setSelectedLanguage}
-            filters={filters}
-          />
+          <div className={styles.subjectFilter}>
+            <Subject
+              creatorId={creatorId}
+              selected={selectedSubjects}
+              onSelect={setSelectedSubjects}
+              filters={filters}
+            />
+          </div>
+          <div className={styles.languageFilter}>
+            <Language
+              creatorId={creatorId}
+              selected={selectedLanguage}
+              onSelect={setSelectedLanguage}
+              filters={filters}
+            />
+          </div>
         </div>
 
         {years?.map((year) => (
