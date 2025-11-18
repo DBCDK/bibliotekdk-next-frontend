@@ -175,6 +175,9 @@ export function useManifestationAccess({ pids, filter }) {
       );
     }
 
+    // we do not want to show publizon access entries
+    access = access?.filter((acc) => acc.__typename !== AccessEnum.PUBLIZON);
+
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
 
