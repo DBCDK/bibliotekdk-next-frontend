@@ -142,10 +142,14 @@ export default function AiMarkdown({
       });
     } else {
       // Collapse: from scrollHeight to previewHeight
-      const start = el.scrollHeight;
+      // Ensure we have a concrete height before animating
+      const currentHeight = el.getBoundingClientRect().height;
+      const start = currentHeight > 0 ? currentHeight : el.scrollHeight;
       setInlineMaxHeight(`${start}px`);
       requestAnimationFrame(() => {
-        setInlineMaxHeight(`${previewHeight}px`);
+        requestAnimationFrame(() => {
+          setInlineMaxHeight(`${previewHeight}px`);
+        });
       });
     }
   }, [expanded, previewHeight]);
@@ -168,6 +172,11 @@ export default function AiMarkdown({
         {!expanded && (
           <button className={styles.toggle} onClick={() => setExpanded(true)}>
             <Expand open={false} size={3} src="smallplus.svg" />
+          </button>
+        )}
+        {expanded && (
+          <button className={styles.toggle} onClick={() => setExpanded(false)}>
+            <Expand open={true} size={3} src="smallplus.svg" />
           </button>
         )}
       </div>
