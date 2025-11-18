@@ -23,6 +23,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  padding-bottom: var(--pt4);
 }
 .content::after {
   content: "";
