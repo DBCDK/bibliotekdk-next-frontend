@@ -64,9 +64,6 @@
   margin-right: calc(-1 * var(--pt1));
 }
 
-.explanationText {
-  margin-top: var(--pt1);
-}
 .publishedFromText {
   margin-top: var(--pt1);
 }
