@@ -8,6 +8,7 @@
   margin-top: var(--pt8);
   margin-bottom: var(--pt2);
   text-align: left;
+  margin-left: var(--pt2);
 }
 
 .filters + div .yearTitle {
@@ -50,6 +51,10 @@
 .languageFilter {
   display: none;
 }
+.workscontainer {
+  margin-left: calc(-1 * var(--pt2));
+  margin-right: calc(-1 * var(--pt2));
+}
 
 /* From 576px and up: show subject and language filters */
 @media (min-width: 576px) {
@@ -57,11 +62,6 @@
   .languageFilter {
     display: block;
   }
-}
-
-.workscontainer {
-  margin-left: calc(-1 * var(--pt1));
-  margin-right: calc(-1 * var(--pt1));
 }
 
 .publishedFromText {
@@ -76,5 +76,8 @@
   .workscontainer {
     margin-left: 0;
     margin-right: 0;
+  }
+  .yearTitle {
+    margin-left: var(--pt1);
   }
 }

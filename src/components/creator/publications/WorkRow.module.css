@@ -97,6 +97,7 @@
   align-items: start;
   border-top: 1px solid var(--iron);
   padding: var(--pt1_5) 0;
+  padding-left: var(--pt1);
   grid-auto-rows: min-content 1fr;
 }
 
@@ -123,5 +124,11 @@
   }
   .subjects {
     display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  .row {
+    padding-left: 0;
   }
 }
