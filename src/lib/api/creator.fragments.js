@@ -343,6 +343,7 @@ export function creatorOverview({ display }) {
     display
     viafid
     forfatterweb {
+      url
       image {
         large {
           url

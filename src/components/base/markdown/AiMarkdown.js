@@ -32,6 +32,7 @@ export default function AiMarkdown({
   });
 
   const contentRef = useRef(null);
+  const [canToggle, setCanToggle] = useState(false);
   const [inlineMaxHeight, setInlineMaxHeight] = useState(
     expanded ? "none" : `${previewHeight}px`
   );
@@ -50,7 +51,7 @@ export default function AiMarkdown({
 
   // Check if content is shorter than previewHeight before first paint to avoid flickering
   useLayoutEffect(() => {
-    if (hasCheckedHeight.current || expanded) return;
+    if (hasCheckedHeight.current) return;
 
     const el = contentRef.current;
     if (!el) return;
@@ -62,9 +63,12 @@ export default function AiMarkdown({
     el.style.maxHeight = originalMaxHeight;
 
     if (scrollHeight <= previewHeight) {
+      setCanToggle(false);
       setExpanded(true);
       setInlineMaxHeight("none");
       justAutoExpanded.current = true;
+    } else {
+      setCanToggle(true);
     }
     hasCheckedHeight.current = true;
   }, [text, previewHeight, expanded]);
@@ -169,12 +173,12 @@ export default function AiMarkdown({
         }}
       >
         {markdown}
-        {!expanded && (
+        {canToggle && !expanded && (
           <button className={styles.toggle} onClick={() => setExpanded(true)}>
             <Expand open={false} size={3} src="smallplus.svg" />
           </button>
         )}
-        {expanded && (
+        {canToggle && expanded && (
           <button className={styles.toggle} onClick={() => setExpanded(false)}>
             <Expand open={true} size={3} src="smallplus.svg" />
           </button>
