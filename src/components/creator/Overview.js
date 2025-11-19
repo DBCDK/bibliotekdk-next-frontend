@@ -18,15 +18,10 @@ import Link from "@/components/base/link";
 export function useCreatorOverview(creatorId) {
   const { data, isLoading } = useData(creatorOverview({ display: creatorId }));
 
-  const image =
-    (data?.creatorByDisplay?.wikidata?.image?.medium && {
-      url: data?.creatorByDisplay?.wikidata?.image?.medium,
-      attributionText: data?.creatorByDisplay?.wikidata?.image?.attributionText,
-    }) ||
-    (data?.creatorByDisplay?.forfatterweb?.image?.large?.url && {
-      url: data?.creatorByDisplay?.forfatterweb?.image?.large?.url,
-      attributionText: "Forfatterweb",
-    });
+  const image = data?.creatorByDisplay?.forfatterweb?.image?.large?.url && {
+    url: data?.creatorByDisplay?.forfatterweb?.image?.large?.url,
+    attributionText: "Forfatterweb",
+  };
 
   return {
     data: data && {
