@@ -2,6 +2,24 @@
   background-color: var(--concrete);
 }
 
+.links {
+  display: flex;
+  column-gap: var(--pt3);
+  row-gap: var(--pt1);
+  border-top: 1px solid var(--iron);
+  margin-top: var(--pt4);
+  padding-top: var(--pt1);
+  flex-wrap: wrap;
+}
+
+.externalLink {
+  display: flex;
+  align-items: end;
+}
+.externalLink * {
+  stroke: var(--blue);
+}
+
 .overview {
   padding: var(--pt3) 0 var(--pt7) 0;
 }

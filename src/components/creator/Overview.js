@@ -10,6 +10,10 @@ import Translate from "@/components/base/translate/Translate";
 import Cover from "@/components/base/cover/Cover";
 import Icon from "@/components/base/icon";
 import AiMarkdown from "@/components/base/markdown/AiMarkdown";
+import { IconLink } from "@/components/base/iconlink/IconLink";
+import animations from "@/components/base/animation/animations.module.css";
+import ExternalSvg from "@/public/icons/external_small.svg";
+import Link from "@/components/base/link";
 
 export function useCreatorOverview(creatorId) {
   const { data, isLoading } = useData(creatorOverview({ display: creatorId }));
@@ -45,6 +49,7 @@ export function Overview({
   const summaryText =
     creatorData?.generated?.summary?.text ||
     creatorData?.generated?.dataSummary?.text;
+  const forfatterwebUrl = creatorData?.forfatterweb?.url;
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -105,6 +110,42 @@ export function Overview({
                 fadeIn={false}
                 // disclaimer={tmpDisclaimer}
               />
+            )}
+            {!isLoading && creatorId && (
+              <div className={`${styles.links} `}>
+                <Link
+                  border={{ bottom: { keepVisible: true } }}
+                  href={"/find?q.all=" + encodeURIComponent(`"${creatorId}"`)}
+                >
+                  <Text type="text3" tag="span">
+                    {Translate({
+                      context: "creator",
+                      label: "creator-search",
+                      vars: [creatorId],
+                    })}
+                  </Text>
+                </Link>
+                {forfatterwebUrl && (
+                  <IconLink
+                    className={styles.externalLink}
+                    href={forfatterwebUrl}
+                    iconPlacement="right"
+                    iconSrc={ExternalSvg}
+                    iconAnimation={[
+                      animations["h-elastic"],
+                      animations["f-elastic"],
+                    ]}
+                    textType="text3"
+                    target="_blank"
+                    iconStyle={{ stroke: "blue" }}
+                  >
+                    {Translate({
+                      context: "creator",
+                      label: "creator-forfatterweb",
+                    })}
+                  </IconLink>
+                )}
+              </div>
             )}
           </Col>
           <Col

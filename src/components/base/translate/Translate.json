@@ -78,6 +78,14 @@
       "seeAllReviews": {
         "da": "Se alle anmeldelser",
         "en": "See all reviews"
+      },
+      "creator-search": {
+        "da": "Søg på %s",
+        "en": "Search for %s"
+      },
+      "creator-forfatterweb": {
+        "da": "Se forfatterportræt på Forfatterweb",
+        "en": "View author portrait on Forfatterweb"
       }
     },
     "advanced_search_cql": {
