@@ -231,6 +231,7 @@ export function Publications({
             year={year}
             filters={filters}
             creatorId={creatorId}
+            debutYear={debutYear}
           />
         ))}
       </div>
