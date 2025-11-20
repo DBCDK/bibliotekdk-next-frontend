@@ -363,7 +363,6 @@ export function creatorOverview({ display }) {
         text
       }
       topSubjects
-      debutYear
     }
     wikidata {
       education
