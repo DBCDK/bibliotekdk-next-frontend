@@ -1,5 +1,5 @@
 // components/search/Search.jsx
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
