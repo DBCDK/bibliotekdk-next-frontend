@@ -179,7 +179,7 @@ function Suggester({
   onSelect = null,
   onChange = null,
   onBlur = null,
-
+  onClearCallback,
   initialValue = "",
 }) {
   // Make copy of all suggestion objects
@@ -275,6 +275,7 @@ function Suggester({
           onClear: () => {
             setState({ q: "", _q: null });
             focusInput(id);
+            onClearCallback();
           },
         });
       }}
@@ -294,7 +295,7 @@ function Suggester({
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  let { className, data } = props;
+  let { className, onClear = () => {}, data } = props;
   const { skeleton, onSelect, children } = props;
 
   if (skeleton) {
@@ -309,6 +310,7 @@ export default function Wrap(props) {
       onSelect={(val, obj, i) => {
         onSelect && onSelect(val, obj, i);
       }}
+      onClearCallback={onClear}
     />
   );
 }

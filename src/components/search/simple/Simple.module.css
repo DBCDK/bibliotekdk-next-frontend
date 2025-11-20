@@ -17,6 +17,10 @@
   height: var(--pt7);
 }
 
+.materialSelectMobile {
+  padding-bottom: var(--pt3);
+}
+
 .select {
   white-space: nowrap;
   height: var(--pt7);

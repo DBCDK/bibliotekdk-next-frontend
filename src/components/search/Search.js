@@ -1,5 +1,5 @@
 // components/search/Search.jsx
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
@@ -71,12 +71,6 @@ export function Search({
                 })}
               >
                 <Col className={styles.content}>
-                  {isMobileSize && (
-                    <WorkTypeMenu
-                      className={styles.workTypesMenu}
-                      onClick={onWorkTypeSelect}
-                    />
-                  )}
                   {/* Call onSimpleCommit(text) on submit inside SimpleSearch */}
                   <SimpleSearch onCommit={onSimpleCommit} />
                 </Col>
@@ -164,6 +158,21 @@ export default function Wrap() {
     },
     [goToMode]
   );
+
+  useEffect(() => {
+    // Lille delay så router + Tabs når at opdatere DOM først
+    const t = setTimeout(() => {
+      const activeTabButton = document.querySelector(
+        '.tabs-tabs button[role="tab"][aria-selected="true"]'
+      );
+
+      if (activeTabButton instanceof HTMLElement) {
+        activeTabButton.focus();
+      }
+    }, 0);
+
+    return () => clearTimeout(t);
+  }, [mode]);
 
   // WorkType: rør kun workTypes
   const handleOnWorkTypeSelect = useCallback(

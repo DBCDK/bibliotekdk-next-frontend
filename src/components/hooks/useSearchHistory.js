@@ -88,8 +88,15 @@ function getSearchValueString(item) {
           }`,
         })
       : inputField?.label || inputField?.searchIndex;
-    searchValue += indexTranslation + ": " + inputField.value;
+
+    searchValue += indexTranslation + ": " + inputField.value + ", ";
   });
+
+  if (item?.fieldSearch?.inputFields?.length) {
+    // remove last ", " from string list
+    searchValue = searchValue.slice(0, -2);
+  }
+
   if (!item?.fieldSearch?.inputFields?.length && item?.cql) {
     searchValue += item.cql;
   }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import useHistory from "@/components/hooks/useHistory";
-import useFilters from "@/components/hooks/useFilters";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import useQ from "@/components/hooks/useQ";
 
@@ -16,9 +15,10 @@ import isEmpty from "lodash/isEmpty";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
 
-import styles from "./Simple.module.css";
-import { DesktopMaterialSelect } from "./select";
+import { getQuery as getFiltersFromQuery } from "@/components/hooks/useFilters";
 
+import styles from "./Simple.module.css";
+import { DesktopMaterialSelect, MobileMaterialSelect } from "./select";
 export function SimpleSearch({
   query,
   history,
@@ -30,46 +30,66 @@ export function SimpleSearch({
   onClose,
   onSearch,
   clearHistory,
+  onMaterialSelect,
 }) {
   return (
-    <div className={styles.simplesearch}>
-      <DesktopMaterialSelect className={styles.select} />
-      <Suggester
-        className={styles.suggester}
-        history={history}
-        clearHistory={clearHistory}
-        query={query}
-        selectedMaterial={selectedMaterial}
-        onSelect={onSelect}
-        onChange={onChange}
-        dataCy="simple-search-input"
-        onClose={onClose}
-        onKeyDown={onKeyDown}
-      />
-
-      {isMobileSize ? (
-        <FakeSearchInput className={styles.fake} />
-      ) : (
-        <Button
-          className={styles.button}
-          onClick={(e) => {
-            e?.preventDefault();
-            onSearch?.();
-            blurInput();
-          }}
-          data-cy="header-searchbutton"
-        >
-          {Translate({ context: "header", label: "search" })}
-        </Button>
+    <>
+      {isMobileSize && (
+        <MobileMaterialSelect
+          className={styles.materialSelectMobile}
+          selected={selectedMaterial}
+          onSelect={onMaterialSelect}
+        />
       )}
-    </div>
+
+      <div className={styles.simplesearch}>
+        <DesktopMaterialSelect
+          className={styles.select}
+          selected={selectedMaterial}
+          onSelect={onMaterialSelect}
+        />
+
+        <Suggester
+          className={styles.suggester}
+          history={history}
+          clearHistory={clearHistory}
+          query={query}
+          selectedMaterial={selectedMaterial}
+          onSelect={onSelect}
+          onChange={onChange}
+          dataCy="simple-search-input"
+          onClose={onClose}
+          onKeyDown={onKeyDown}
+        />
+
+        {isMobileSize ? (
+          <FakeSearchInput
+            className={styles.fake}
+            onClick={(e) => {
+              e?.preventDefault();
+              onSearch?.();
+            }}
+          />
+        ) : (
+          <Button
+            className={styles.button}
+            onClick={(e) => {
+              e?.preventDefault();
+              onSearch?.();
+              blurInput();
+            }}
+            data-cy="header-searchbutton"
+          >
+            {Translate({ context: "header", label: "search" })}
+          </Button>
+        )}
+      </div>
+    </>
   );
 }
 
-// ⚙️ "Smart" komponent med al logik
 export default function Wrap({ onCommit = () => {} }) {
   const router = useRouter();
-  const { getQuery, filters } = useFilters();
   const { q, setQ, setQuery, getQuery: getQ } = useQ();
   const [query, setQueryState] = useState(q[SuggestTypeEnum.ALL] || "");
   const [history, setHistory, clearHistory] = useHistory();
@@ -80,22 +100,26 @@ export default function Wrap({ onCommit = () => {} }) {
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
   const isMobileSuggester = isMobileSize && router?.query?.suggester;
 
-  const { workTypes } = getQuery();
+  // læs workTypes direkte fra URL (uden SWR/useFilters hook-subscription)
+  const { workTypes } = getFiltersFromQuery(router.query || {});
+  const urlWorkType = workTypes?.[0] || SuggestTypeEnum.ALL;
 
-  // accept null for an answer
-  const selectedMaterial = filters?.workTypes?.length
-    ? filters?.workTypes?.[0]
-    : SuggestTypeEnum.ALL;
+  // 🔹 lokal state for valgt materialetype
+  const [selectedMaterial, setSelectedMaterial] = useState(urlWorkType);
 
-  // Sync initial query
+  // Sync initial query tekst
   useEffect(() => {
     setQueryState(q[SuggestTypeEnum.ALL] || "");
   }, [q]);
 
+  // Sync selectedMaterial når URL-workType ændrer sig (fx via back/forward)
+  useEffect(() => {
+    setSelectedMaterial(urlWorkType);
+  }, [urlWorkType]);
+
   const doSearch = (value = query, suggestion = null) => {
-    // Differs from Url state params
     const queryDiffers = value !== init;
-    const workTypeDiffers = workTypes?.[0] !== selectedMaterial;
+    const workTypeDiffers = urlWorkType !== selectedMaterial;
 
     if (queryDiffers || workTypeDiffers) {
       const queryKey = "all";
@@ -106,11 +130,15 @@ export default function Wrap({ onCommit = () => {} }) {
       const extras = {
         tid: suggestion?.traceId,
         quickfilters: router?.query?.quickfilters,
-        workTypes: selectedMaterial,
+        // 🔹 send workType med som ekstra param – udenom useFilters
+        workTypes:
+          selectedMaterial === SuggestTypeEnum.ALL
+            ? undefined
+            : selectedMaterial,
       };
 
       // callback
-      onCommit?.(value);
+      onCommit?.(value, selectedMaterial);
 
       setQuery({
         include: newQ,
@@ -120,7 +148,7 @@ export default function Wrap({ onCommit = () => {} }) {
         method,
       });
 
-      document.activeElement.blur();
+      document.activeElement?.blur();
 
       setTimeout(() => {
         setHistory(value);
@@ -170,6 +198,8 @@ export default function Wrap({ onCommit = () => {} }) {
       onClose={handleClose}
       onSearch={() => doSearch()}
       clearHistory={clearHistory}
+      // 🔹 callback til både MobileMaterialSelect og DesktopMaterialSelect
+      onMaterialSelect={setSelectedMaterial}
     />
   );
 }
