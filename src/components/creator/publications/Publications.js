@@ -18,12 +18,11 @@ import styles from "./Publications.module.css";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import Text from "@/components/base/text";
-import { useCreatorOverview } from "../Overview";
 
 /**
  * Displays works for a specific publication year with lazy loading
  */
-function PublicationYearWorks({ year, creatorId, filters, debutYear }) {
+function PublicationYearWorks({ year, creatorId, filters }) {
   const fetcher = useFetcherWithCache({ revalidate: false });
   // Generate unique key using useMemo
   const cacheKey = useMemo(() => {
@@ -75,7 +74,7 @@ function PublicationYearWorks({ year, creatorId, filters, debutYear }) {
           }
         });
 
-        const parsedWorks = parseWorks(allWorks, creatorId, debutYear);
+        const parsedWorks = parseWorks(allWorks, creatorId);
         const filteredWorks = parsedWorks.filter((work) => {
           return String(work?.originalWorkYear) === String(year.key);
         });
@@ -127,7 +126,6 @@ export function Publications({
   selectedGenreAndForm,
   setSelectedGenreAndForm,
   isLoading,
-  debutYear,
 }) {
   const filters = useMemo(
     () => ({
@@ -231,7 +229,6 @@ export function Publications({
             year={year}
             filters={filters}
             creatorId={creatorId}
-            debutYear={debutYear}
           />
         ))}
       </div>
@@ -243,10 +240,6 @@ export function Publications({
  * Custom hook that fetches and sorts publication years for a creator
  */
 function usePublicationYears(creatorId, filters) {
-  const { data: creatorData, isLoading: isCreatorLoading } =
-    useCreatorOverview(creatorId);
-  const debutYear = creatorData?.generated?.debutYear;
-
   // Fetch all publication years for every work by this creator
   const { data, isLoading, error } = useData(
     creatorId &&
@@ -262,15 +255,12 @@ function usePublicationYears(creatorId, filters) {
       (facet) => facet.name === "facet.publicationyear"
     )?.values;
 
-    return allYears
-      ?.sort((a, b) => b.key - a.key)
-      .filter((year) => year.key >= debutYear);
-  }, [data, debutYear]);
+    return allYears?.sort((a, b) => b.key - a.key);
+  }, [data]);
   return {
     hitcount: data?.complexFacets?.hitcount,
     years,
-    debutYear,
-    isLoading: isLoading || isCreatorLoading,
+    isLoading,
     error,
   };
 }
@@ -299,16 +289,13 @@ export default function Wrap({ creatorId }) {
     initial: "",
   });
 
-  const { years, hitcount, isLoading, debutYear } = usePublicationYears(
-    creatorId,
-    {
-      generalMaterialType: selectedGeneralMaterialType,
-      creatorFunction: selectedCreatorFunction,
-      subjects: selectedSubjects,
-      language: selectedLanguage,
-      genreAndForm: selectedGenreAndForm,
-    }
-  );
+  const { years, hitcount, isLoading } = usePublicationYears(creatorId, {
+    generalMaterialType: selectedGeneralMaterialType,
+    creatorFunction: selectedCreatorFunction,
+    subjects: selectedSubjects,
+    language: selectedLanguage,
+    genreAndForm: selectedGenreAndForm,
+  });
 
   return (
     <Publications
@@ -326,7 +313,6 @@ export default function Wrap({ creatorId }) {
       selectedGenreAndForm={selectedGenreAndForm}
       setSelectedGenreAndForm={setSelectedGenreAndForm}
       isLoading={isLoading}
-      debutYear={debutYear}
     />
   );
 }

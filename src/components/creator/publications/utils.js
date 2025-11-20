@@ -2,7 +2,7 @@
  * Parse works to ensure data consistency and add missing fields
  * Sorts by year (newest first)
  */
-export function parseWorks(works, creatorId, debutYear) {
+export function parseWorks(works, creatorId) {
   if (!works || !Array.isArray(works)) {
     return [];
   }
@@ -16,10 +16,7 @@ export function parseWorks(works, creatorId, debutYear) {
     const manifestations =
       work?.manifestations?.mostRelevant || work?.manifestations?.all;
     manifestations?.forEach((manifestation) => {
-      if (
-        manifestation?.edition?.publicationYear?.year &&
-        manifestation?.edition?.publicationYear?.year >= debutYear
-      ) {
+      if (manifestation?.edition?.publicationYear?.year) {
         const year = manifestation?.edition?.publicationYear?.year;
         originalWorkYear = Math.min(
           originalWorkYear || Infinity,
