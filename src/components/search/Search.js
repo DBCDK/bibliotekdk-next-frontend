@@ -153,9 +153,6 @@ export default function Wrap() {
     handleCqlCommit,
   } = useSearchSync({ router, setQuery });
 
-  // 💡 Bruges kun til at skippe første effekt-kørsel
-  const hasRunOnceRef = useRef(false);
-
   const handleModeChange = useCallback(
     (nextMode) => {
       goToMode(nextMode);
