@@ -1,5 +1,5 @@
 // components/search/Search.jsx
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
@@ -23,9 +23,11 @@ import styles from "./Search.module.css";
 import HelpBtn from "./help";
 import IndexesBtn from "./indexes";
 
+let hasEverFocusedTabs = false;
+
 /**
  * Tab shell component. Keeps the UI minimal and delegates logic to the hook.
- * (Markup og classNames er uændret, så dine styles forbliver som før.)
+ * (Markup and classNames are unchanged, so your styles remain as before.)
  */
 export function Search({
   onWorkTypeSelect,
@@ -132,26 +134,28 @@ export function Search({
 }
 
 /**
- * Wrap-komponent: wiring til URL-sync.
- * - Mode afledes KUN fra path (ikke ?mode=)
- * - Tab-skift konverterer URL-structure til target mode
- * - WorkType ændrer kun workTypes og bevarer søgetermer
- * - Submit fra simple/advanced håndteres i hooken (ingen interpolation-fejl)
+ * Wrap component: wiring for URL sync.
+ * - Mode is derived ONLY from the path (not from ?mode=)
+ * - Tab changes convert URL structure to the target mode
+ * - WorkType only changes workTypes and preserves search terms
+ * - Submit from simple/advanced is handled in the hook (no interpolation errors)
  */
 export default function Wrap() {
-  const { setQuery } = useQ(); // beholdt for kompatibilitet, hvis du bruger den andre steder
+  const { setQuery } = useQ();
   const router = useRouter();
 
   const {
     mode,
-    goToMode, // tab navigation med URL-normalisering
-    setWorkType, // opdater kun workTypes i URL (bevar søgeparametre)
-    handleSimpleCommit, // Simple submit → sæt q.all og baseline
-    handleAdvancedCommit, // Advanced submit → sæt fieldSearch og evt. løft q.all
-    handleCqlCommit, // CQL submit → sæt cql param
+    goToMode,
+    setWorkType,
+    handleSimpleCommit,
+    handleAdvancedCommit,
+    handleCqlCommit,
   } = useSearchSync({ router, setQuery });
 
-  // Tabs: skift mode (URL bliver formateret rigtigt pr. mode)
+  // 💡 Bruges kun til at skippe første effekt-kørsel
+  const hasRunOnceRef = useRef(false);
+
   const handleModeChange = useCallback(
     (nextMode) => {
       goToMode(nextMode);
@@ -160,21 +164,26 @@ export default function Wrap() {
   );
 
   useEffect(() => {
-    // Lille delay så router + Tabs når at opdatere DOM først
-    const t = setTimeout(() => {
-      const activeTabButton = document.querySelector(
-        '.tabs-tabs button[role="tab"][aria-selected="true"]'
-      );
+    const TABS_SELECTOR = ".tabs-tabs";
+    const ACTIVE_TAB_SELECTOR = `${TABS_SELECTOR} button[role="tab"][aria-selected="true"]`;
+
+    // Skip the very first run (initial page load before any tab interaction)
+    if (!hasEverFocusedTabs) {
+      hasEverFocusedTabs = true;
+      return;
+    }
+
+    const frame = requestAnimationFrame(() => {
+      const activeTabButton = document.querySelector(ACTIVE_TAB_SELECTOR);
 
       if (activeTabButton instanceof HTMLElement) {
         activeTabButton.focus();
       }
-    }, 0);
+    });
 
-    return () => clearTimeout(t);
+    return () => cancelAnimationFrame(frame);
   }, [mode]);
 
-  // WorkType: rør kun workTypes
   const handleOnWorkTypeSelect = useCallback(
     (type) => {
       setWorkType(type);

@@ -13,10 +13,9 @@ import FilterButton from "../../filterButton";
 
 import styles from "./Select.module.css";
 
-// importér listen af tilladte workTypes (konstant) fra useFilters-filen
 import { workTypes as allowedWorkTypes } from "@/components/hooks/useFilters";
 
-/** Fælles label-helper */
+/** Shared label helper */
 function labelFor(value) {
   const isAll = value === "all";
   return Translate({
@@ -25,7 +24,7 @@ function labelFor(value) {
   });
 }
 
-/** Desktop – ren præsentationskomponent */
+/** Desktop – pure presentation component */
 export const Desktop = memo(function Desktop({
   options = [],
   onSelect,
@@ -75,7 +74,7 @@ export const Desktop = memo(function Desktop({
   );
 });
 
-/** Mobile – ren præsentationskomponent */
+/** Mobile – pure presentation component */
 export const Mobile = memo(function Mobile({
   options = [],
   onSelect,
@@ -104,8 +103,8 @@ export const Mobile = memo(function Mobile({
 });
 
 /**
- * MobileMaterialSelect – “tynd” wrap der kun sætter options-listen
- * (ingen useFilters, ingen global state)
+ * MobileMaterialSelect – “thin” wrapper that only sets the options list
+ * (no useFilters, no global state)
  */
 export function MobileMaterialSelect({ className = "", selected, onSelect }) {
   const options = useMemo(() => ["all", ...(allowedWorkTypes || [])], []);
@@ -120,7 +119,7 @@ export function MobileMaterialSelect({ className = "", selected, onSelect }) {
   );
 }
 
-/** DesktopMaterialSelect – samme princip */
+/** DesktopMaterialSelect – same principle */
 export function DesktopMaterialSelect({ className = "", selected, onSelect }) {
   const options = useMemo(() => ["all", ...(allowedWorkTypes || [])], []);
 

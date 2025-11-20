@@ -40,7 +40,6 @@
   z-index: 1;
 }
 
-/* Kun når en tab-knap er fokus via keyboard (focus-visible) */
 .tabs:has(button[role="tab"]:focus-visible) {
   outline: 2px solid var(--blue);
   outline-offset: var(--pt05);

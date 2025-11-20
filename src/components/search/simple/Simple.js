@@ -19,6 +19,7 @@ import { getQuery as getFiltersFromQuery } from "@/components/hooks/useFilters";
 
 import styles from "./Simple.module.css";
 import { DesktopMaterialSelect, MobileMaterialSelect } from "./select";
+
 export function SimpleSearch({
   query,
   history,
@@ -100,19 +101,19 @@ export default function Wrap({ onCommit = () => {} }) {
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
   const isMobileSuggester = isMobileSize && router?.query?.suggester;
 
-  // læs workTypes direkte fra URL (uden SWR/useFilters hook-subscription)
+  // read workTypes directly from the URL (without SWR/useFilters hook subscription)
   const { workTypes } = getFiltersFromQuery(router.query || {});
   const urlWorkType = workTypes?.[0] || SuggestTypeEnum.ALL;
 
-  // 🔹 lokal state for valgt materialetype
+  // local state for selected material type
   const [selectedMaterial, setSelectedMaterial] = useState(urlWorkType);
 
-  // Sync initial query tekst
+  // Sync initial query text
   useEffect(() => {
     setQueryState(q[SuggestTypeEnum.ALL] || "");
   }, [q]);
 
-  // Sync selectedMaterial når URL-workType ændrer sig (fx via back/forward)
+  // Sync selectedMaterial when the URL workType changes (e.g. via back/forward)
   useEffect(() => {
     setSelectedMaterial(urlWorkType);
   }, [urlWorkType]);
@@ -130,7 +131,7 @@ export default function Wrap({ onCommit = () => {} }) {
       const extras = {
         tid: suggestion?.traceId,
         quickfilters: router?.query?.quickfilters,
-        // 🔹 send workType med som ekstra param – udenom useFilters
+        // send workType as an extra param – bypassing useFilters
         workTypes:
           selectedMaterial === SuggestTypeEnum.ALL
             ? undefined
@@ -198,7 +199,7 @@ export default function Wrap({ onCommit = () => {} }) {
       onClose={handleClose}
       onSearch={() => doSearch()}
       clearHistory={clearHistory}
-      // 🔹 callback til både MobileMaterialSelect og DesktopMaterialSelect
+      // callback for both MobileMaterialSelect and DesktopMaterialSelect
       onMaterialSelect={setSelectedMaterial}
     />
   );
