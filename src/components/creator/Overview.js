@@ -13,6 +13,7 @@ import AiMarkdown from "@/components/base/markdown/AiMarkdown";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import animations from "@/components/base/animation/animations.module.css";
 import ExternalSvg from "@/public/icons/external_small.svg";
+import ArrowDownSvg from "@/public/icons/arrow_down_line.svg";
 import Link from "@/components/base/link";
 
 export function useCreatorOverview(creatorId) {
@@ -108,6 +109,36 @@ export function Overview({
             )}
             {!isLoading && creatorId && (
               <div className={`${styles.links} `}>
+                <IconLink
+                  className={styles.arrowDownLink}
+                  href={"#"}
+                  iconPlacement="right"
+                  iconSrc={ArrowDownSvg}
+                  iconAnimation={[
+                    animations["h-elastic"],
+                    animations["f-elastic"],
+                  ]}
+                  textType="text3"
+                  target="_blank"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const publications = document.getElementById(
+                      "creator-publications"
+                    );
+                    if (publications) {
+                      publications.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                >
+                  {" "}
+                  <Text type="text3" tag="span">
+                    {Translate({
+                      context: "creator",
+                      label: "view-publications",
+                    })}
+                  </Text>
+                </IconLink>
+
                 <Link
                   border={{ bottom: { keepVisible: true } }}
                   href={"/find?q.all=" + encodeURIComponent(`"${creatorId}"`)}
@@ -116,7 +147,6 @@ export function Overview({
                     {Translate({
                       context: "creator",
                       label: "creator-search",
-                      vars: [creatorId],
                     })}
                   </Text>
                 </Link>
