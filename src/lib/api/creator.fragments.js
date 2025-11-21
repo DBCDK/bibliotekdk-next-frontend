@@ -15,7 +15,7 @@ const createCqlString = ({
   publicationYears,
   genreAndForm,
 }) => {
-  let cql = `phrase.creator="${creatorId}"`; // CQL format for creator search using allowed index
+  let cql = `(phrase.creator="${creatorId}" OR phrase.creatorcontributorfunction="${creatorId} (skuespiller)")`;
   if (generalMaterialType) {
     cql += ` AND phrase.generalmaterialtype="${generalMaterialType}"`;
   }
