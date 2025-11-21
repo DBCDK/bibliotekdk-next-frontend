@@ -725,6 +725,7 @@ export function useSubmitOrders({ orders }) {
       const materialToOrder = {
         key: entry?.order?.bookmarkKey || orderKey,
         pids: entry?.pids,
+        exactEdition: !!entry?.order?.exactEdition,
       };
 
       if (periodicaForm) {
