@@ -82,6 +82,7 @@ export const AccessEnum = Object.freeze({
   EREOL: "Ereol",
   DIGITAL_ARTICLE_SERVICE: "DigitalArticleService",
   INTER_LIBRARY_LOAN: "InterLibraryLoan",
+  PUBLIZON: "Publizon",
 });
 
 export const WorkTypeEnum = Object.freeze({

@@ -17,10 +17,12 @@
 .content {
   display: grid;
   --grid_template_areas: "gridText" "gridImage";
-  gap: var(--pt2);
+  gap: var(--pt4);
   align-items: center;
-
   grid-template-areas: var(--grid_template_areas);
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
+  grid-template-columns: 1fr;
 }
 
 .grid__text {
@@ -28,25 +30,38 @@
   display: flex;
   flex-direction: column;
   gap: var(--pt2);
+  align-self: flex-start;
 }
 
 .grid__image {
   grid-area: gridImage;
+  width: 100%;
 }
 
 .button_width {
   width: fit-content;
 }
 
+.imagewrapper {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  margin-bottom: var(--pt2);
+}
+
 @media (min-width: 768px) {
   .content {
     --grid_template_areas: "gridText gridImage";
-    grid-auto-columns: 5fr 7fr;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--pt8);
+    flex-wrap: nowrap;
+    flex-direction: unset;
   }
-}
 
-.imagewrapper {
-  position: relative;
-  padding-bottom: 62%;
-  margin-bottom: var(--pt2);
+  .grid__text {
+    grid-area: gridText;
+    display: flex;
+    flex-direction: column;
+    gap: var(--pt2);
+    align-self: unset;
+  }
 }
