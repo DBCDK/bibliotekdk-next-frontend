@@ -80,12 +80,16 @@
         "en": "See all reviews"
       },
       "creator-search": {
-        "da": "Søg på %s",
-        "en": "Search for %s"
+        "da": "Søg på navn",
+        "en": "Search for name"
       },
       "creator-forfatterweb": {
-        "da": "Se forfatterportræt på Forfatterweb",
-        "en": "View author portrait on Forfatterweb"
+        "da": "Se på forfatterweb.dk",
+        "en": "View on forfatterweb.dk"
+      },
+      "view-publications": {
+        "da": "Se bibliografi",
+        "en": "View bibliography"
       }
     },
     "advanced_search_cql": {
