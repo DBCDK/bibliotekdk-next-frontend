@@ -57,6 +57,6 @@ describe("Keywords", () => {
       .children()
       .should("have.attr", "target", "_self")
       .should("have.attr", "href")
-      .and("include", "/find?q.all=");
+      .and("include", "/find/simpel?q.all=");
   });
 });

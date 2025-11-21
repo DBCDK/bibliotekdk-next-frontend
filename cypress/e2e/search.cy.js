@@ -419,7 +419,7 @@ describe("Search", () => {
 
       cy.get(`[data-cy=related-subject-${tag}]`)
         .should("have.attr", "href")
-        .and("include", "/find?q.all");
+        .and("include", "/find/simpel?q.all");
     });
 
     // skip for now - hitcount has been disabled

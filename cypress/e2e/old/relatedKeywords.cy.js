@@ -17,7 +17,7 @@ describe("Related Keywords", () => {
     await cy.visit("/iframe.html?id=work-relatedsubjects--default");
 
     const tag = "ridning";
-    const url = `/find?q.subject=${tag}`;
+    const url = `/find/simpel?q.subject=${tag}`;
 
     // Get selected tag
     cy.get(`[data-cy=related-subject-${tag}]`)
@@ -35,9 +35,9 @@ describe("Related Keywords", () => {
 
     cy.get("[data-cy=related-subject-savn]", {
       timeout: 10000,
-    }).should("have.attr", "href", "/find?q.all=%22savn%22&tid=t1");
+    }).should("have.attr", "href", "/find/simpel?q.all=%22savn%22&tid=t1");
     cy.get("[data-cy=related-subject-melankoli]", {
       timeout: 10000,
-    }).should("have.attr", "href", "/find?q.all=%22melankoli%22&tid=t2");
+    }).should("have.attr", "href", "/find/simpel?q.all=%22melankoli%22&tid=t2");
   });
 });
