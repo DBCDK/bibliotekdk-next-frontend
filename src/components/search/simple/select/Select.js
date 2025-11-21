@@ -1,22 +1,21 @@
 "use client";
 
-import React, { useEffect, useMemo, useState, useCallback, memo } from "react";
+import React, { useMemo, memo } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 
-import useFilters from "@/components/hooks/useFilters";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import Tag from "@/components/base/forms/tag";
 import Translate from "@/components/base/translate";
 import { cyKey } from "@/utils/trim";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-
 import FilterButton from "../../filterButton";
 
 import styles from "./Select.module.css";
-import { SuggestTypeEnum } from "@/lib/enums";
 
-/** Fælles label-helper */
+import { workTypes as allowedWorkTypes } from "@/components/hooks/useFilters";
+
+/** Shared label helper */
 function labelFor(value) {
   const isAll = value === "all";
   return Translate({
@@ -25,7 +24,7 @@ function labelFor(value) {
   });
 }
 
-/** Desktop */
+/** Desktop – pure presentation component */
 export const Desktop = memo(function Desktop({
   options = [],
   onSelect,
@@ -62,7 +61,7 @@ export const Desktop = memo(function Desktop({
               className={`${styles.dropdownitem} ${
                 isSelected ? styles.selectedItem : ""
               }`}
-              onClick={() => onSelect(elem)}
+              onClick={() => onSelect?.(elem)}
             >
               <Text tag="span" type="text3">
                 {labelFor(elem)}
@@ -75,7 +74,7 @@ export const Desktop = memo(function Desktop({
   );
 });
 
-/** Mobile */
+/** Mobile – pure presentation component */
 export const Mobile = memo(function Mobile({
   options = [],
   onSelect,
@@ -92,7 +91,7 @@ export const Mobile = memo(function Mobile({
           <Tag
             key={elem}
             selected={selected === elem}
-            onClick={() => onSelect(elem)}
+            onClick={() => onSelect?.(elem)}
           >
             {labelFor(elem)}
           </Tag>
@@ -104,64 +103,32 @@ export const Mobile = memo(function Mobile({
 });
 
 /**
- * Wrap
- * - Brug URL-værdien KUN til at initialisere lokalt state (ingen skriv til filters ved mount)
- * - Hold lokalt `selected` i sync med filters.workTypes
- * - Ved brugerinteraktion: opdatér lokalt + bevar øvrige filtre via `{ ...filters, ...next }`
+ * MobileMaterialSelect – “thin” wrapper that only sets the options list
+ * (no useFilters, no global state)
  */
-function Wrap({ children }) {
-  const { filters, setFilters, getQuery, workTypes, getCount } = useFilters();
-  const { workTypes: urlWorkTypes } = getQuery();
+export function MobileMaterialSelect({ className = "", selected, onSelect }) {
+  const options = useMemo(() => ["all", ...(allowedWorkTypes || [])], []);
 
-  // 1) Initial selected kun fra URL/filters ved mount
-  const initialSelected =
-    urlWorkTypes?.[0] ?? filters?.workTypes?.[0] ?? SuggestTypeEnum.ALL;
-
-  const [selected, setSelected] = useState(initialSelected);
-
-  // 2) Sync lokalt state når hooken (SWR) har initieret/ændret filters
-  useEffect(() => {
-    const fromFilters = filters?.workTypes?.[0] ?? SuggestTypeEnum.ALL;
-    if (fromFilters !== selected) {
-      setSelected(fromFilters);
-    }
-  }, [filters?.workTypes, selected]);
-
-  // 3) Håndter brugerens valg — bevar alle eksisterende filtre
-  const handleSelect = useCallback(
-    (elem) => {
-      if (elem !== selected) setSelected(elem);
-
-      const next = elem === "all" ? { workTypes: [] } : { workTypes: [elem] };
-
-      // Kritisk: bevar andre filterfelter
-      setFilters({ ...filters, ...next });
-    },
-    [selected, filters, setFilters]
-  );
-
-  const options = useMemo(() => ["all", ...(workTypes || [])], [workTypes]);
-
-  return React.cloneElement(children, {
-    options,
-    onSelect: handleSelect,
-    selected,
-    count: getCount(["workTypes"]),
-  });
-}
-
-export function MobileMaterialSelect(props) {
   return (
-    <Wrap>
-      <Mobile {...props} />
-    </Wrap>
+    <Mobile
+      className={className}
+      options={options}
+      selected={selected}
+      onSelect={onSelect}
+    />
   );
 }
 
-export function DesktopMaterialSelect(props) {
+/** DesktopMaterialSelect – same principle */
+export function DesktopMaterialSelect({ className = "", selected, onSelect }) {
+  const options = useMemo(() => ["all", ...(allowedWorkTypes || [])], []);
+
   return (
-    <Wrap>
-      <Desktop {...props} />
-    </Wrap>
+    <Desktop
+      className={className}
+      options={options}
+      selected={selected}
+      onSelect={onSelect}
+    />
   );
 }

@@ -40,6 +40,11 @@
   z-index: 1;
 }
 
+.tabs:has(button[role="tab"]:focus-visible) {
+  outline: 2px solid var(--blue);
+  outline-offset: var(--pt05);
+}
+
 @media (min-width: 992px) {
   .tabs li button {
     font-size: 20px;

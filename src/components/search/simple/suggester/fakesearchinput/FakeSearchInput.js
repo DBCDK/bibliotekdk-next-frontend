@@ -24,7 +24,11 @@ import useFilters from "@/components/hooks/useFilters";
  *
  * @returns {React.JSX.Element}
  */
-export default function FakeSearchInput({ className, showButton = true }) {
+export default function FakeSearchInput({
+  className,
+  onClick = () => {},
+  showButton = true,
+}) {
   const router = useRouter();
   const { q, setQ } = useQ();
   const filters = useFilters();
@@ -78,14 +82,18 @@ export default function FakeSearchInput({ className, showButton = true }) {
         </button>
       </div>
       {showButton && (
-        <div className={styles.fakebutton} data-cy="fake-search-input-button">
+        <button
+          className={styles.fakebutton}
+          onClick={onClick}
+          data-cy="fake-search-input-button"
+        >
           <Text type="text2">
             {Translate({
               context: "suggester",
               label: "search",
             })}
           </Text>
-        </div>
+        </button>
       )}
     </div>
   );

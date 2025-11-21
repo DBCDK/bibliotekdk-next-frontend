@@ -114,7 +114,7 @@ describe("Filter", () => {
 
   it.skip(`Restore filters when browser's back button is used`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q.all=katte&workType=article&materialTypes=avisartikel`
+      `${nextjsBaseUrl}/find/simpel?q.all=katte&workType=article&materialTypes=avisartikel`
     );
 
     cy.log("Ensure that 10 newspaper articles are on the first page");
