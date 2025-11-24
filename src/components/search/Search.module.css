@@ -98,4 +98,8 @@
   .paddingBottom {
     padding-bottom: var(--pt4);
   }
+
+  .help {
+    margin-right: 0 !important;
+  }
 }

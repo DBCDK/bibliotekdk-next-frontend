@@ -32,6 +32,7 @@ export function AdvancedFacets({
   isLoading,
   selectedFacets,
   onItemClick,
+  sortChronological,
   origin = "advancedSearch",
   translateContext = "complex-search-facets",
 }) {
@@ -88,6 +89,7 @@ export function AdvancedFacets({
           onItemClick={onItemClick}
           isLoading={isLoading}
           origin={origin}
+          sortChronological={sortChronological}
           translateContext={translateContext}
         />
       ))}
@@ -103,6 +105,7 @@ function AccordianItem({
   onItemClick,
   isLoading,
   origin,
+  sortChronological,
   translateContext,
 }) {
   if (isLoading) {
@@ -176,6 +179,7 @@ function AccordianItem({
           facetName={facetName}
           selectedFacets={selectedFacets}
           onItemClick={onItemClick}
+          sortChronological={sortChronological}
           origin={origin}
         />
       </Item>
@@ -183,11 +187,16 @@ function AccordianItem({
   );
 }
 
-function ListItem({ facet, facetName, selectedFacets, onItemClick, origin }) {
+function ListItem({
+  facet,
+  facetName,
+  selectedFacets,
+  sortChronological,
+  onItemClick,
+  origin,
+}) {
   const [numToShow, setNumToShow] = useState(5);
   const numberToShowMore = 20;
-
-  const { sortChronological } = useFacets();
 
   const current = selectedFacets?.find((sel) => {
     return sel?.searchIndex === facetName;
@@ -311,6 +320,7 @@ export default function Wrap({ cql, replace = false }) {
     removeFacet,
     selectedFacets,
     clearFacetsUrl,
+    sortChronological,
   } = useFacets();
 
   const router = useRouter();
@@ -365,6 +375,7 @@ export default function Wrap({ cql, replace = false }) {
       isLoading={isLoading}
       selectedFacets={selectedFacets}
       onItemClick={onItemClick}
+      sortChronological={sortChronological}
       origin="advancedSearch"
       translateContext="complex-search-facets"
     />

@@ -3,7 +3,11 @@
 }
 
 .facetsContainer {
-  padding-top: var(--pt8);
+  padding-top: var(--pt3);
+}
+
+.facetsContainer.simple {
+  padding-top: var(--pt6);
 }
 
 .filterButton {
@@ -57,10 +61,6 @@
   align-items: baseline;
 }
 
-.facetsContainer > div:first-child {
-  margin-bottom: 0;
-}
-
 .titleflex:last-of-type div:first-child > *:first-child {
   color: var(--blue);
   margin-right: var(--pt1);
@@ -82,6 +82,10 @@
 
 .supplementary > div {
   padding-top: var(--pt2);
+}
+
+.facetTags {
+  margin-bottom: var(--pt2);
 }
 
 @media (min-width: 992px) {

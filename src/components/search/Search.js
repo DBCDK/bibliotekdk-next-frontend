@@ -23,6 +23,9 @@ import styles from "./Search.module.css";
 import HelpBtn from "./help";
 import IndexesBtn from "./indexes";
 
+import { useFacets } from "./advancedSearch/useFacets";
+import { useQuickFilters } from "./advancedSearch/useQuickFilters";
+
 let hasEverFocusedTabs = false;
 
 /**
@@ -153,6 +156,10 @@ export default function Wrap() {
     handleCqlCommit,
   } = useSearchSync({ router, setQuery });
 
+  // Vi bruger kun reset-funktionerne her
+  const { resetFacets } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
+
   const handleModeChange = useCallback(
     (nextMode) => {
       goToMode(nextMode);
@@ -183,9 +190,14 @@ export default function Wrap() {
 
   const handleOnWorkTypeSelect = useCallback(
     (type) => {
+      // reset local facets and quickfilters
+      resetFacets();
+      resetQuickFilters();
+
+      // Update workType via useSearchSync
       setWorkType(type);
     },
-    [setWorkType]
+    [resetFacets, resetQuickFilters, setWorkType]
   );
 
   return (
