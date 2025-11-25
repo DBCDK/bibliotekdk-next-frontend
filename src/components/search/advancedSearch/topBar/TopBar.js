@@ -25,7 +25,7 @@ const hasValue = (v) => {
   return v !== undefined && v !== null && String(v).trim() !== "";
 };
 
-function FormattedQuery() {
+function FormattedQuery(props) {
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
   const { inputFields, dropdownSearchIndices, workType } =
     fieldSearchFromUrl || {};
@@ -50,10 +50,10 @@ function FormattedQuery() {
     );
   }
 
-  return <FormatFieldSearchIndexes fieldsearch={fieldsearch} />;
+  return <FormatFieldSearchIndexes fieldsearch={fieldsearch} {...props} />;
 }
 
-export function FormatFieldSearchIndexes({ fieldsearch }) {
+export function FormatFieldSearchIndexes({ fieldsearch, isSimple }) {
   const showAndForDropdowns =
     (fieldsearch?.inputFields?.length ?? 0) > 0 ||
     hasValue(fieldsearch?.workType);
@@ -64,6 +64,7 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
         <FormatWorkType workType={fieldsearch?.workType} />
         <FormatFieldInput
           inputFields={fieldsearch?.inputFields}
+          isSimple={isSimple}
           showAndOperator={hasValue(fieldsearch?.workType)}
         />
         <FormatDropdowns
@@ -83,7 +84,7 @@ function Operator({ label = "AND" }) {
   );
 }
 
-function FormatFieldInput({ inputFields = [], showAndOperator }) {
+function FormatFieldInput({ inputFields = [], showAndOperator, isSimple }) {
   return inputFields.map((field, index) => {
     if (!hasValue(field?.value)) return null;
     const showLeadingAnd = index === 0 && showAndOperator;
@@ -95,13 +96,15 @@ function FormatFieldInput({ inputFields = [], showAndOperator }) {
         {showLeadingAnd && <Operator label="AND" />}
         {showPrefixedOp && <Operator label={field.prefixLogicalOperator} />}
 
-        <Text type="text1">
-          {t(
-            "search",
-            `advanced-dropdown-${field?.label || field?.searchIndex}`
-          )}
-          :
-        </Text>
+        {!isSimple && (
+          <Text type="text1">
+            {t(
+              "search",
+              `advanced-dropdown-${field?.label || field?.searchIndex}`
+            )}
+            :
+          </Text>
+        )}
         <Text type="text2">{`"${field.value}"`}</Text>
       </Fragment>
     );
@@ -214,8 +217,10 @@ export default function TopBar({
   }, []);
 
   const mode = router?.query?.mode || "simpel"; // default fallback
+
   const labelKey =
     { simpel: "simple", avanceret: "advanced", cql: "cql" }[mode] || "simple";
+
   const searchHeading = t("search", `topbar-${labelKey}-search`);
 
   if (!hasAnyValues) return null;
@@ -233,7 +238,7 @@ export default function TopBar({
             lg={{ offset: 1, span: 7 }}
             className={styles.edit_search}
           >
-            <FormattedQuery />
+            <FormattedQuery isSimple={mode === "simpel"} />
             <div className={styles.edit}>
               <Link
                 onClick={scrollToTop}

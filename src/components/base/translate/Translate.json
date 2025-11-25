@@ -34,12 +34,12 @@
     },
     "advanced_search_sort": {
       "sort_button": {
-        "da": "sorter",
-        "en": "sort"
+        "da": "Sorter",
+        "en": "Sort"
       },
       "best_match": {
-        "da": "bedste match",
-        "en": "best match"
+        "da": "Bedste match",
+        "en": "Best match"
       },
       "asc_sort.latestpublicationdate": {
         "da": "Nyeste sidst",
@@ -3126,8 +3126,8 @@
         "en": "New fields search"
       },
       "topbar-simple-search": {
-        "da": "Simpel søgning",
-        "en": "Simple search"
+        "da": "Søg",
+        "en": "Search"
       },
       "topbar-advanced-search": {
         "da": "Avanceret søgning",
