@@ -47,7 +47,6 @@ export function useFacets() {
     setFacetsQuery(JSON.stringify(arr ?? []));
   }
 
-  // CHANGED: URL → state sync er altid aktiv
   useEffect(() => {
     const fromUrl = facetsFromUrl(router); // returnerer en STRING
     setFacetsQuery(fromUrl);
