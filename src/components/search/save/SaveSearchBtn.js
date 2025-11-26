@@ -17,6 +17,7 @@ import { useAdvancedSearchContext } from "../advancedSearch/advancedSearchContex
 import { useFacets } from "../advancedSearch/useFacets";
 import { useQuickFilters } from "../advancedSearch/useQuickFilters";
 import { useCurrentSearchHistoryItem } from "@/components/hooks/useSearchHistory";
+import { useMemo } from "react";
 
 // =====================
 // UI (dumb/presentational)
@@ -47,7 +48,8 @@ export function SaveSearchBtnUI({
 export default function SaveSearchBtn({ className = "" }) {
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
-  const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+  const { savedSearches, deleteSearches, useSavedSearchByCql } =
+    useSavedSearches();
   const currentSearchHistoryItem = useCurrentSearchHistoryItem();
 
   const advCtx = useAdvancedSearchContext();
@@ -71,35 +73,59 @@ export default function SaveSearchBtn({ className = "" }) {
       quickFilters: selectedQuickFilters,
     });
 
+  // bruges kun til CQL-lookup / modal
   const searchHistoryObj = { key: advancedCql };
 
-  const { savedObject, mutate } = useSavedSearchByCql({
+  const { mutate: mutateSavedByCql } = useSavedSearchByCql({
     cql: searchHistoryObj.key,
   });
 
-  const isSaved = !!savedObject?.id;
+  // fælles sandhed for om denne søgning er gemt:
+  const matchingSaved = useMemo(
+    () => savedSearches.find((ss) => ss.key === currentSearchHistoryItem?.key),
+    [savedSearches, currentSearchHistoryItem?.key]
+  );
+
+  const isSaved = !!matchingSaved?.id;
+
+  console.log("### savedSearches", savedSearches.length, {
+    isSaved,
+    matchingSaved,
+    currentKey: currentSearchHistoryItem?.key,
+  });
 
   const onSaveSearchClick = (e) => {
     e.stopPropagation();
+
     if (isSaved) {
-      // Unsaving
-      Promise.resolve(
-        deleteSearches({ idsToDelete: [savedObject?.id] })
-      ).finally(() => {
-        mutate();
+      const idToDelete = matchingSaved?.id;
+      if (!idToDelete) {
+        console.warn("Tried to unsave but no id found");
+        return;
+      }
+
+      deleteSearches({ idsToDelete: [idToDelete] }).then(() => {
+        // opdater evt. CQL-single-lookup
+        mutateSavedByCql && mutateSavedByCql();
       });
     } else {
-      // Saving
       modal.push("saveSearch", {
         item: currentSearchHistoryItem,
-        onSaveDone: mutate,
+        onSaveDone: mutateSavedByCql,
       });
     }
   };
 
   const onSaveSearchLogin = (e) => {
     e.stopPropagation();
-    openLoginModal({ modal });
+
+    const callbackUID = modal.saveToStore("saveSearch", {
+      item: currentSearchHistoryItem,
+      onSaveDone: mutateSavedByCql,
+      back: false,
+    });
+
+    openLoginModal({ modal, callbackUID });
   };
 
   const onClick = isAuthenticated ? onSaveSearchClick : onSaveSearchLogin;

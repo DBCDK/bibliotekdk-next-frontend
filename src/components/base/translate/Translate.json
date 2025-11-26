@@ -324,8 +324,8 @@
     },
     "advanced_search_worktypes": {
       "all": {
-        "da": "Alle materialer",
-        "en": "All materials"
+        "da": "Alle",
+        "en": "All"
       },
       "literature": {
         "da": "Bøger",

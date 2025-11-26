@@ -9,12 +9,8 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import { useSavedSearches } from "@/components/hooks/useSearchHistory";
-import IconButton from "@/components/base/iconButton";
-import { useModal } from "@/components/_modal";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import { useRouter } from "next/router";
+import SaveSearchBtn from "../../save";
 
 // Small helper to shorten Translate calls
 const t = (context, label) => Translate({ context, label });
@@ -158,59 +154,26 @@ function FormatDropdowns({ dropdowns = [], showAndOperator }) {
   });
 }
 
-export default function TopBar({
-  isLoading = false,
-  className = "",
-  searchHistoryObj,
-}) {
-  const modal = useModal();
-  const { isAuthenticated } = useAuthentication();
-  const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+export default function TopBar({ isLoading = false, className = "" }) {
   const router = useRouter();
 
   // Hide the entire TopBar if there are no query values at all
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
+
   const hasAnyValues = useMemo(() => {
     if (hasValue(cqlFromUrl)) return true;
+
     const {
       inputFields = [],
       dropdownSearchIndices = [],
       workType,
     } = fieldSearchFromUrl || {};
+
     if (hasValue(workType)) return true;
     if (inputFields.some((f) => hasValue(f?.value))) return true;
     if (dropdownSearchIndices.some((d) => hasValue(d?.value))) return true;
     return false;
   }, [cqlFromUrl, fieldSearchFromUrl]);
-
-  const { savedObject, mutate } = useSavedSearchByCql({
-    cql: searchHistoryObj?.key,
-  });
-  const isSaved = !!savedObject?.id;
-
-  const onSaveSearchClick = useCallback(
-    async (e) => {
-      e?.stopPropagation?.();
-      if (isSaved) {
-        await deleteSearches({ idsToDelete: [savedObject?.id] });
-        mutate();
-      } else {
-        modal.push("saveSearch", {
-          item: searchHistoryObj,
-          onSaveDone: mutate,
-        });
-      }
-    },
-    [isSaved, savedObject?.id, deleteSearches, modal, searchHistoryObj, mutate]
-  );
-
-  const onSaveSearchLogin = useCallback(
-    (e) => {
-      e?.stopPropagation?.();
-      openLoginModal({ modal });
-    },
-    [modal]
-  );
 
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -272,16 +235,7 @@ export default function TopBar({
                 </Text>
               </Link>
 
-              <IconButton
-                className={styles.saveSearchPaddingTop}
-                onClick={
-                  isAuthenticated ? onSaveSearchClick : onSaveSearchLogin
-                }
-                icon={isSaved ? "heart_filled" : "heart"}
-                keepUnderline
-              >
-                {t("search", "saveSearch")}
-              </IconButton>
+              <SaveSearchBtn />
             </div>
           </Col>
         </Row>

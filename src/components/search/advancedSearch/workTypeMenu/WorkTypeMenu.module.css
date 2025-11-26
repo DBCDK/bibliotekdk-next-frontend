@@ -14,13 +14,15 @@
   white-space: nowrap;
   overflow-y: hidden;
   margin-left: calc(var(--pt2) * -1);
-  padding: var(--pt2) var(--pt2) 0 var(--pt2);
+  padding: var(--pt2);
 }
 
 .tagWrapper {
   display: grid;
 }
 
-.tagItem {
-  box-shadow: none !important;
+@media (min-width: 992px) {
+  .tagContainer {
+    padding: var(--pt2) var(--pt2) 0 var(--pt2);
+  }
 }

@@ -33,10 +33,6 @@
   padding: var(--pt1) 0 var(--pt2) 0;
 }
 
-.worktypes {
-  /* Add any specific styling for worktypes if needed */
-}
-
 .links {
   display: none;
 }
@@ -51,6 +47,10 @@
 
 .tabRow {
   margin: 0;
+}
+
+.workTypesMobile {
+  margin-right: calc(var(--pt2) * -1);
 }
 
 @media (min-width: 992px) {

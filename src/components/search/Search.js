@@ -53,10 +53,7 @@ export function Search({
         <Row as="section" className={`${styles.section} ${paddingBottomClass}`}>
           <Col sm={12} lg={{ span: 2 }} className={styles.select}>
             {includeWorkTypeMenu && !isMobileSize && (
-              <WorkTypeMenu
-                className={styles.worktypes}
-                onClick={onWorkTypeSelect}
-              />
+              <WorkTypeMenu onClick={onWorkTypeSelect} />
             )}
           </Col>
 
@@ -102,7 +99,7 @@ export function Search({
                   <Col sm={12} lg={{ span: 9 }} className={styles.content}>
                     {isMobileSize && (
                       <WorkTypeMenu
-                        className={styles.workTypesMenu}
+                        className={styles.workTypesMobile}
                         onClick={onWorkTypeSelect}
                       />
                     )}

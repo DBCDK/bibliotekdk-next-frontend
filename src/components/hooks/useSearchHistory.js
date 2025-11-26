@@ -5,7 +5,7 @@
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import useSWR from "swr";
 import { getLanguage } from "@/components/base/translate";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import isEmpty from "lodash/isEmpty";
 import Translate from "@/components/base/translate";
 import { hasTranslation } from "@/components/base/translate";
@@ -28,7 +28,6 @@ import {
   savedSearchesQuery,
 } from "@/lib/api/user.fragments";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import * as searchFragments from "@/lib/api/search.fragments";
 import { hitcount as advancedHitcount } from "@/lib/api/complexSearch.fragments";
@@ -316,16 +315,20 @@ export const useSearchHistory = () => {
           (stor) => value?.key === stor?.key
         );
 
+        if (alreadyStored) {
+          deleteValue(value);
+        }
+
         value["timestamp"] = getTimeStamp(getUnixTimeStamp());
         value["unixtimestamp"] = getUnixTimeStamp();
-        if (!alreadyStored) {
-          // Add to beginning of history array
-          storedValue.unshift(value);
-          // maintain localstorage
-          setSessionStorageItem(KEY, JSON.stringify(storedValue));
-          // maintain state
-          mutate();
-        }
+        // if (!alreadyStored) {
+        // Add to beginning of history array
+        storedValue.unshift(value);
+        // maintain localstorage
+        setSessionStorageItem(KEY, JSON.stringify(storedValue));
+        // maintain state
+        mutate();
+        // }
       }
     } catch (err) {
       console.error(err);
@@ -337,7 +340,7 @@ export const useSearchHistory = () => {
       if (typeof window !== "undefined") {
         // get index of value to delete
         const valueIndex = storedValue.findIndex(
-          (stor) => stor.cql === value?.cql
+          (stor) => stor.key === value?.key
         );
         if (valueIndex > -1) {
           // Add to beginning of history array
@@ -387,12 +390,10 @@ const ITEMS_PER_PAGE = 10;
 export const useSavedSearches = () => {
   const { hasCulrUniqueId } = useAuthentication();
   const userDataMutation = useMutate();
-  const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs";
   const [currentPage, setCurrentPage] = useState(1);
-  const [savedSearches, setSavedSearches] = useState([]);
   const enhanceItem = useEnhanceSearchHistoryItem();
 
+  // useData er allerede SWR-baseret og deles på tværs af komponenter
   const { data, isLoading, mutate } = useData(
     hasCulrUniqueId &&
       savedSearchesQuery({
@@ -401,32 +402,29 @@ export const useSavedSearches = () => {
       })
   );
 
-  useEffect(() => {
-    if (data?.user?.savedSearches?.result) {
-      setSavedSearches((prev) => {
-        //if mobile, dont replace previous page. It should keep it and extend it with data from new page.
-        const prevPage = isMobile ? prev : [];
+  // Fælles kilde til sandhed: savedSearches = det der kommer fra data
+  const savedSearches = useMemo(() => {
+    const result = data?.user?.savedSearches?.result || [];
+    return result.map((search) => {
+      const searchObject = JSON.parse(search.searchObject);
+      const enhancedSearchObject = enhanceItem(searchObject);
 
-        // set of saved searches id's for fast lookup
-        const savedSearchIds = new Set(prevPage.map((search) => search.id));
-        return [
-          ...prevPage,
-          ...data.user.savedSearches.result
-            .filter((search) => !savedSearchIds.has(search.id))
-            .map((search) => {
-              const searchObject = JSON.parse(search.searchObject);
-              const enhancedSearchObject = enhanceItem(searchObject);
+      return {
+        ...enhancedSearchObject,
+        id: search.id,
+        createdAt: search.createdAt,
+      };
+    });
+  }, [data, enhanceItem]);
 
-              return {
-                ...enhancedSearchObject,
-                id: search.id,
-                createdAt: search.createdAt,
-              };
-            }),
-        ];
-      });
-    }
-  }, [data]);
+  const hitcount = useMemo(
+    () => data?.user?.savedSearches?.hitcount || 0,
+    [data]
+  );
+  const totalPages = useMemo(
+    () => Math.ceil(hitcount / ITEMS_PER_PAGE),
+    [hitcount]
+  );
 
   const mutateData = () => {
     setTimeout(() => {
@@ -434,16 +432,10 @@ export const useSavedSearches = () => {
     }, 100);
   };
 
-  const hitcount = useMemo(() => data?.user?.savedSearches?.hitcount, [data]);
-  const totalPages = useMemo(
-    () => Math.ceil(hitcount / ITEMS_PER_PAGE),
-    [hitcount]
-  );
-
   const saveSearch = async ({ searchObject }) => {
     try {
       await userDataMutation.post(addSavedSearch({ searchObject }));
-      mutateData();
+      mutateData(); // refetch hele listen
     } catch (err) {
       console.error(err);
     }
@@ -461,13 +453,7 @@ export const useSavedSearches = () => {
   const deleteSearches = async ({ idsToDelete }) => {
     try {
       await userDataMutation.post(deleteSavedSearches({ idsToDelete }));
-      if (isMobile) {
-        setSavedSearches((prev) =>
-          prev.filter((item) => !idsToDelete.includes(item.id))
-        );
-      } else {
-        mutateData();
-      }
+      mutateData(); // refetch – nu med elementet reelt væk på serveren
     } catch (err) {
       console.error(err);
     }
@@ -490,6 +476,7 @@ export const useSavedSearches = () => {
       }
 
       const jsonSearchObject = data.user.savedSearchByCql.searchObject;
+
       return {
         savedObject: {
           ...JSON.parse(jsonSearchObject || "{}"),
