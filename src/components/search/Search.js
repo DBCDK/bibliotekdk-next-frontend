@@ -173,7 +173,6 @@ export default function Wrap() {
     handleCqlCommit,
   } = useSearchSync({ router, setQuery });
 
-  // Vi bruger kun reset-funktionerne her
   const { resetFacets } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
 

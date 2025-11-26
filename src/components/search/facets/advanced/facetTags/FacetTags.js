@@ -30,10 +30,6 @@ function parseFilters(filters) {
   return parsedAsFacet;
 }
 
-/**
- * Ren UI-komponent – ingen hooks, ingen router.
- * Får data og callbacks via props fra WRAP.
- */
 export function FacetTags({ facets, onClear, onRemove, className = "" }) {
   if (!facets || facets.length < 1) {
     return null;
@@ -97,10 +93,6 @@ export function FacetTags({ facets, onClear, onRemove, className = "" }) {
   );
 }
 
-/**
- * WRAP-komponent – er “connected” (router, hooks, state)
- * og giver kun data + events videre til UI.
- */
 export default function Wrap(props) {
   const router = useRouter();
 

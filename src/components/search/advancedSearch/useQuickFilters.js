@@ -69,7 +69,6 @@ export function useQuickFilters() {
   /** De quickfilters som vises i UI */
   const quickFilters = QUICK_FILTERS;
 
-  // CHANGED: URL → state sync er altid aktiv
   useEffect(() => {
     const fromUrl = readQuickFiltersFromUrl(router);
     setSelectedQuickFiltersStr(JSON.stringify(fromUrl));

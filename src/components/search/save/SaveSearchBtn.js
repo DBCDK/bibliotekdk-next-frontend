@@ -73,14 +73,12 @@ export default function SaveSearchBtn({ className = "" }) {
       quickFilters: selectedQuickFilters,
     });
 
-  // bruges kun til CQL-lookup / modal
   const searchHistoryObj = { key: advancedCql };
 
   const { mutate: mutateSavedByCql } = useSavedSearchByCql({
     cql: searchHistoryObj.key,
   });
 
-  // fælles sandhed for om denne søgning er gemt:
   const matchingSaved = useMemo(
     () => savedSearches.find((ss) => ss.key === currentSearchHistoryItem?.key),
     [savedSearches, currentSearchHistoryItem?.key]
@@ -88,24 +86,16 @@ export default function SaveSearchBtn({ className = "" }) {
 
   const isSaved = !!matchingSaved?.id;
 
-  console.log("### savedSearches", savedSearches.length, {
-    isSaved,
-    matchingSaved,
-    currentKey: currentSearchHistoryItem?.key,
-  });
-
   const onSaveSearchClick = (e) => {
     e.stopPropagation();
 
     if (isSaved) {
       const idToDelete = matchingSaved?.id;
       if (!idToDelete) {
-        console.warn("Tried to unsave but no id found");
         return;
       }
 
       deleteSearches({ idsToDelete: [idToDelete] }).then(() => {
-        // opdater evt. CQL-single-lookup
         mutateSavedByCql && mutateSavedByCql();
       });
     } else {
