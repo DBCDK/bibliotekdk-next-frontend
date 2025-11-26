@@ -24,7 +24,10 @@ import {
 } from "@/components/search/advancedSearch/utils";
 
 import * as searchFragments from "@/lib/api/search.fragments";
-import { hitcount as advancedHitcount } from "@/lib/api/complexSearch.fragments";
+import {
+  hitcount as advancedHitcount,
+  extraHits,
+} from "@/lib/api/complexSearch.fragments";
 
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import TopBar from "@/components/search/advancedSearch/topBar/TopBar";
@@ -63,6 +66,8 @@ function Page({
   hasQuery,
   rawcql,
   advancedCql,
+  creatorHit,
+  seriesHit,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = ["xs", "sm", "md"].includes(breakpoint);
@@ -82,6 +87,8 @@ function Page({
 
   const shouldShowHistory = !isLoading && !hasActiveSearch;
   const shouldShowNoHits = !isLoading && hasActiveSearch && hitcount === 0;
+  const shouldShowCreator = Boolean(creatorHit);
+  const shouldShowSeries = !shouldShowCreator && Boolean(seriesHit);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -210,32 +217,19 @@ function Page({
             </div>
           </Col>
           <Col xs={12} lg={4}>
-            {/* <SeriesBox
-              title="Aske i munden, sand i skoen"
-              subtitle="Serie af Per Petterson"
-              body="Per Pettersons serie om Arvid og hans familie. Fortællinger om Arvid, der vokser op i Oslo i 1950'erne og erfarer, at livet kan være trygt og utrygt, stabilt og ustabilt, snævert og uendeligt - samtidig. Senere om Arvid Jansen da han er 37 år og kommer i midtlivskrise. Hans mor har fået konstateret kræft og hans kone forlanger skilsmisse."
-              note="Der er 6 bøger i serien"
-              imageUrl="https://fbiinfo-present.dbc.dk/images/ydF9rP7ARdGDtX6ng3HnWg/240px!ATqg0YZeBPgi0WIS6rlF1TwMVJ2bFfI-u-GYmnDjs1oTkQ"
-              thumbnails={[
-                "https://fbiinfo-present.dbc.dk/images/ydF9rP7ARdGDtX6ng3HnWg/240px!ATqg0YZeBPgi0WIS6rlF1TwMVJ2bFfI-u-GYmnDjs1oTkQ",
-                "https://fbiinfo-present.dbc.dk/images/ydF9rP7ARdGDtX6ng3HnWg/240px!ATqg0YZeBPgi0WIS6rlF1TwMVJ2bFfI-u-GYmnDjs1oTkQ",
-                "https://fbiinfo-present.dbc.dk/images/ydF9rP7ARdGDtX6ng3HnWg/240px!ATqg0YZeBPgi0WIS6rlF1TwMVJ2bFfI-u-GYmnDjs1oTkQ",
-              ]}
-              linkLabel="Se hele serien"
-              onLink={() => {
-                console.log("Se hele serien");
-              }}
-              className="search-block"
-              data-cy="search-block"
-            /> */}
-            <CreatorBox
-              title="Haruki Murakami"
-              role="Forfatter"
-              body="Per Petterson er en dansk forfatter og har skrevet mange bøger om Arvid og hans familie."
-              imageUrl="https://resize-me.dbc.dk/api/image?url=https://upload.wikimedia.org/wikipedia/commons/5/51/Conversatorio_Haruki_Murakami_%2812_de_12%29_%2845747009452%29_%28cropped%29.jpg&w=1200"
-              className="search-block"
-              data-cy="search-block"
-            />
+            {shouldShowCreator ? (
+              <CreatorBox
+                creatorHit={creatorHit}
+                className="search-block"
+                data-cy="search-block"
+              />
+            ) : shouldShowSeries ? (
+              <SeriesBox
+                seriesHit={seriesHit}
+                className="search-block"
+                data-cy="search-block"
+              />
+            ) : null}
           </Col>
         </Row>
       </Section>
@@ -261,6 +255,8 @@ Page.propTypes = {
   rawcql: PropTypes.string,
   advancedCql: PropTypes.string,
   selectedFacets: PropTypes.array,
+  creatorHit: PropTypes.object,
+  seriesHit: PropTypes.object,
 };
 
 // -------------------------------
@@ -318,12 +314,31 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       advancedHitcount({ cql: advancedCql })
   );
 
+  //todo do for simple search too
+  const extraHitsRes = useData(
+    isSimple
+      ? null
+      : (hasAdvancedSearch || hasCqlSearch) && extraHits({ cql: advancedCql })
+  );
+  console.log("extraHitsRes", extraHitsRes);
   const hitcount = isAdvanced
     ? advancedRes?.data?.complexSearch?.hitcount || 0
     : simpleRes?.data?.search?.hitcount || 0;
 
   const isLoading = isAdvanced ? advancedRes.isLoading : simpleRes.isLoading;
 
+
+
+  const seriesHit = isAdvanced
+    ? extraHitsRes?.data?.complexSearch?.seriesHit
+    : null;
+  console.log("seriesHit", seriesHit);
+
+  const creatorHit = isAdvanced
+    ? extraHitsRes?.data?.complexSearch?.creatorHit
+    : null;
+  console.log("creatorHit", creatorHit);
+  //  const creatorHit = null;
   // Store the current search history item in the local storage
   useEffect(() => {
     if (currentSearchHistoryItem) {
@@ -345,6 +360,8 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       rawcql={rawcql}
       advancedCql={advancedCql}
       selectedFacets={selectedFacets || filters}
+      creatorHit={creatorHit}
+      seriesHit={seriesHit}
     />
   );
 }
