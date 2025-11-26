@@ -56,10 +56,6 @@
   display: none;
 }
 
-.saveSearchPaddingTop {
-  padding-top: 3px;
-}
-
 /* === Mobile layout (standard) === */
 .your_search {
   margin-bottom: var(--pt1);

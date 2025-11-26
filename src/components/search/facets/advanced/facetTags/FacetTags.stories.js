@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import { FacetTags } from "@/components/search/facets/advanced/facetTags/facetTags";
+import FacetTags from "@/components/search/facets/advanced/facetTags";
 
 const exportedObject = {
   title: "advancedsearch/facettags",

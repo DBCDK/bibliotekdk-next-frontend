@@ -19,6 +19,8 @@ import { getQuery as getFiltersFromQuery } from "@/components/hooks/useFilters";
 
 import styles from "./Simple.module.css";
 import { DesktopMaterialSelect, MobileMaterialSelect } from "./select";
+import { useFacets } from "../advancedSearch/useFacets";
+import { useQuickFilters } from "../advancedSearch/useQuickFilters";
 
 export function SimpleSearch({
   query,
@@ -101,6 +103,9 @@ export default function Wrap({ onCommit = () => {} }) {
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
   const isMobileSuggester = isMobileSize && router?.query?.suggester;
 
+  const { resetFacets } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
+
   // read workTypes directly from the URL (without SWR/useFilters hook subscription)
   const { workTypes } = getFiltersFromQuery(router.query || {});
   const urlWorkType = workTypes?.[0] || SuggestTypeEnum.ALL;
@@ -137,6 +142,13 @@ export default function Wrap({ onCommit = () => {} }) {
             ? undefined
             : selectedMaterial,
       };
+
+      // reset facets if WorkType is changed
+      resetFacets();
+      // remove local quickFilters if WorkType is changed
+      resetQuickFilters();
+      // exclude quickFilters if WorkType is changed
+      delete extras.quickfilters;
 
       // callback
       onCommit?.(value, selectedMaterial);

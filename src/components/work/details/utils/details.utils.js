@@ -175,55 +175,6 @@ function getCreatorsAndContributors(manifestation) {
 }
 
 /**
- * Get óne work with the relation of type adaption - we want the DBC work - so we look
- * for pid that starts with 870970
- * @param manifestation
- * @returns {React.JSX.Element}
- *
- * @TODO - this one is  outcommented while we wait for data to be fixed
- */
-// function parseIsAdaptionOf(manifestation) {
-//   console.log(manifestation, "MANIFESTATIONS");
-//
-//   const work = manifestation?.relations?.isAdaptationOf?.find((rel) =>
-//     rel?.pid?.startsWith("870970")
-//   );
-//
-//   const unique = [
-//     ...new Set(
-//       manifestation?.relations?.isAdaptationOf?.map((item) => item.workId)
-//     ),
-//   ];
-//
-//   //return [];
-//
-//   const adaptations = manifestation?.relations?.isAdaptationOf?.filter(
-//     (rel) =>
-//       rel.pid.indexOf("870970") !== -1 && rel.workId.indexOf("870970") !== -1
-//   );
-//
-//   console.log(adaptations, "ADAPTIONS");
-//
-//   const result = [];
-//   const map = new Map();
-//   if (adaptations) {
-//     for (const item of adaptations) {
-//       if (!map.has(item.workId)) {
-//         map.set(item.workId, true); // set any value to Map
-//         result.push({
-//           id: item.workId,
-//           item,
-//         });
-//       }
-//     }
-//   }
-//   console.log(result, "RESULT");
-//   return result;
-//
-//   //return work;
-// }
-
-/**
  * jsxParser for creators - render function
  * @param values
  * @param skeleton

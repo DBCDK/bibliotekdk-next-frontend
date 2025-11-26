@@ -87,15 +87,11 @@ export default function Wrap({ onCommit = () => {} }) {
   } = useAdvancedSearchContext();
 
   const handleSearch = () => {
-    // Ryd facets/quickfilters for et "rent" submit
     resetFacets();
     resetQuickFilters();
 
-    // 1) Lad HOOKEN styre navigationen + URL
-    //    (Hooken læser stateToString som fieldSearch og sørger for workTypes-injektion)
     onCommit(stateToString, { tid: suggesterTid });
 
-    // 2) Opdater CQL-preview i UI (ingen navigation her)
     const cql = convertStateToCql({
       inputFields,
       dropdownSearchIndices,

@@ -93,7 +93,9 @@ export const Mobile = memo(function Mobile({
             selected={selected === elem}
             onClick={() => onSelect?.(elem)}
           >
-            {labelFor(elem)}
+            <Text type={selected === elem ? "text4" : "text3"}>
+              {labelFor(elem)}
+            </Text>
           </Tag>
         ))}
       </div>

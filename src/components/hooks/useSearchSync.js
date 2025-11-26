@@ -102,6 +102,7 @@ export function useSearchSync({ router }) {
         workTypeBefore: snap.workTypes,
         workTypeNext: workType,
       });
+
       const out = reduceCommit(
         { type: "SET_WORKTYPE", workType },
         snap,
@@ -119,6 +120,10 @@ export function useSearchSync({ router }) {
       } else {
         delete query.workTypes;
       }
+
+      delete query.facets;
+      delete query.quickfilters;
+      delete query.page;
 
       dbgSYNC("setWorkType() → pushUrl", { mode, query });
       pushUrl(MODE_PATH[mode] || MODE_PATH[MODE.SIMPLE], query);

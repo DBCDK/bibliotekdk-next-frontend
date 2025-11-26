@@ -41,13 +41,10 @@ function getWorkTypeFromQuery(query) {
  * - Når deferUrlUpdate = true: opdater KUN Advanced-context lokalt (ingen URL push)
  * - Når deferUrlUpdate = false: kald onClick(type) (typisk → useSearchSync.setWorkType → URL)
  */
-export default function WorkTypeMenu({
-  className = "",
-  onClick = () => {},
-  deferUrlUpdate = true,
-}) {
+export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
   const router = useRouter();
   const { workType: ctxWT, changeWorkType } = useAdvancedSearchContext();
+
   const breakpoint = useBreakpoint();
   const isSmallScreen =
     breakpoint === "md" || breakpoint === "xs" || breakpoint === "sm";
@@ -58,23 +55,11 @@ export default function WorkTypeMenu({
   }, [ctxWT, router.query?.workTypes, router.query?.fieldSearch]);
 
   const handleClick = (type) => {
-    if (deferUrlUpdate) {
-      // Advanced (defer): kun lokalt, ingen reset, ingen URL
-      if (typeof changeWorkType === "function") {
-        // Understøt både (type) og (type, options)
-        try {
-          changeWorkType(type, { reset: false });
-        } catch {
-          changeWorkType(type);
-        }
-      }
-    } else {
-      // Normal: lad Search.jsx → useSearchSync sætte global WT/URL
-      onClick(type);
-    }
+    changeWorkType(type);
+    onClick(type);
   };
 
-  const items = workTypes; // ["all", "literature", ...] i din json
+  const items = workTypes;
 
   if (isSmallScreen) {
     return (

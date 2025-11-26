@@ -30,7 +30,7 @@ import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearc
 import TopBar from "@/components/search/advancedSearch/topBar/TopBar";
 import AdvancedFacets from "@/components/search/facets/advanced/advancedFacets";
 import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
-import { FacetTags } from "@/components/search/facets/advanced/facetTags/facetTags";
+import FacetTags from "@/components/search/facets/advanced/facetTags";
 import { FacetButton } from "@/components/search/facets/advanced/facetButton/facetButton";
 import SimpleFacets from "@/components/search/facets/simple";
 
@@ -60,7 +60,6 @@ function Page({
   hasQuery,
   rawcql,
   advancedCql,
-  selectedFacets,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = ["xs", "sm", "md"].includes(breakpoint);
@@ -152,8 +151,12 @@ function Page({
         subtitle={
           hasActiveSearch &&
           !isMobile && (
-            <div className={styles.facetsContainer}>
-              <FacetTags selectedFacets={selectedFacets} />
+            <div
+              className={`${styles.facetsContainer} ${
+                isSimple ? styles.simple : ""
+              }`}
+            >
+              <FacetTags className={styles.facetTags} />
               <div className={styles.subtitleStyle}>
                 <Text type="text1">
                   {translate({ context: "search", label: "narrow-search" })}
