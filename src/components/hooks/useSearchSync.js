@@ -121,11 +121,9 @@ export function useSearchSync({ router }) {
         delete query.workTypes;
       }
 
-      // 🚨 VIGTIGT: ryd altid facetter/quickfilters ved workType-skift
       delete query.facets;
       delete query.quickfilters;
-      delete query.page; // paging giver sjældent mening efter workType-skift
-      // (evt. også: delete query.tid; hvis du ikke vil genbruge tracking-id)
+      delete query.page;
 
       dbgSYNC("setWorkType() → pushUrl", { mode, query });
       pushUrl(MODE_PATH[mode] || MODE_PATH[MODE.SIMPLE], query);
