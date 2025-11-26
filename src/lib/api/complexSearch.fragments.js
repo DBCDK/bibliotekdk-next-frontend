@@ -19,6 +19,8 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
   if (sort?.order) {
     sort = { ...sort, order: sort.order.toUpperCase() };
   }
+
+
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
@@ -26,6 +28,34 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
     query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $sort: [SortInput!], $facets: ComplexSearchFacetsInput) {
 			complexSearch(cql: $cql, facets: $facets) {
 				hitcount
+        creatorHit{
+          display
+
+          wikidata{
+                    image{
+          medium
+          attributionText
+          }
+          occupation
+          nationality
+          wikidataId
+          description
+          awards
+          }
+
+          generated{
+          summary{
+          text
+          disclaimer
+          }
+          shortSummary{
+          text
+          disclaimer
+          }
+          topSubjects
+          primaryPublicationPeriodStartYear
+          }
+        }
 				errorMessage
         facets {
           name
@@ -232,6 +262,98 @@ export function hitcount({ cql, offset, limit, sort, facets }) {
 			}
 		}`,
     variables: { cql, offset, limit, sort, facets },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * ExtraHits
+ *
+ * Separate query to fetch supplementary hits like creatorHit (and seriesHit)
+ * for complexSearch. Does not modify the existing hitcount query.
+ *
+ * @param {string} cql  the  cql-query
+ */
+export function extraHits({ cql }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query SearchHits($cql: String!) {
+			complexSearch(cql: $cql) {
+        creatorHit{
+          display
+          firstName
+          lastName
+          wikidata{
+            image{
+              medium
+              attributionText
+            }
+            occupation
+            nationality
+            wikidataId
+            description
+            awards
+          }
+          forfatterweb{
+            image{
+              medium{
+                url
+              }
+            }
+          }
+          generated{
+            summary{
+              text
+              disclaimer
+            }
+            shortSummary{
+              text
+              disclaimer
+            }
+            topSubjects
+            primaryPublicationPeriodStartYear
+          }
+        }
+        seriesHit{
+          hitcount
+          title
+          seriesId
+          traceId
+          identifyingAddition
+          description
+          alternativeTitles
+          parallelTitles
+          numberInSeries
+          readThisFirst
+          readThisWhenever
+          isPopular
+          workTypes
+          mainLanguages
+          members(limit: 10){
+            numberInSeries
+            work{
+              workId
+              traceId
+              titles{
+                main
+              }
+              creators{
+                display
+              }
+              manifestations{
+                mostRelevant{
+                  cover{
+                    detail: detail_207
+                  }
+                }
+              }
+            }
+          }
+        }
+			}
+		}`,
+    variables: { cql },
     slowThreshold: 3000,
   };
 }

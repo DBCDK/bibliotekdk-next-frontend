@@ -3,17 +3,11 @@ import Link from "@/components/base/link";
 
 import styles from "./CreatorBox.module.css";
 //TODO: pass one creator object instead of individual props
-//TODO make storybook? 
+//TODO make storybook?
 export default function CreatorBox({
-  imageUrl,
-  imageAlt = "",
-  title,
-  role,
-  seeAllLabel,
+  creatorHit,
   seeAllHref,
   onSeeAll,
-  body,
-  facts = [],
   moreLabel,
   moreHref,
   moreExternal = true,
@@ -22,6 +16,32 @@ export default function CreatorBox({
   className = "",
   "data-cy": dataCy,
 }) {
+  
+  if (!creatorHit) {
+    return null;
+  }
+  const display = creatorHit?.display;
+  const role = Array.isArray(creatorHit?.wikidata?.occupation)
+    ? creatorHit.wikidata.occupation[0]
+    : creatorHit?.wikidata?.occupation;
+  const body =
+    creatorHit?.generated?.shortSummary?.text ||
+    creatorHit?.generated?.summary?.text;
+  const imageUrl =
+    creatorHit?.forfatterweb?.image?.medium?.url ||
+    creatorHit?.wikidata?.image?.medium;
+  const imageAlt = creatorHit?.display || "";
+
+  const fullName = `${creatorHit?.firstName} ${creatorHit?.lastName}`;
+  const profileHref = display ? `/ophav/${encodeURIComponent(display)}` : "#";
+
+  const awards = Array.isArray(creatorHit?.wikidata?.awards)
+    ? creatorHit.wikidata.awards
+    : [];
+  const maxAwardsToShow = 3;
+  const displayedAwards = awards.slice(0, maxAwardsToShow);
+  const extraAwardsCount =
+    awards.length > maxAwardsToShow ? awards.length - maxAwardsToShow : 0;
   return (
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
       {imageUrl ? (
@@ -30,37 +50,36 @@ export default function CreatorBox({
         </div>
       ) : null}
 
-      {title ? <h3 className={styles.title}>{title}</h3> : null}
+      {display ? <h3 className={styles.title}>{display}</h3> : null}
       {role ? <div className={styles.role}>{role}</div> : null}
 
-
-        <div className={styles.linkRow}>
-          <Link
-            href={seeAllHref || "#"}
-            onClick={onSeeAll}
-            border={{ bottom: { keepVisible: true } }}
-          >
-            {"Se alle udgivelser"}
-          </Link>
-        </div>
-
+      <Link
+        href={seeAllHref || "#"}
+        onClick={onSeeAll}
+        border={{ bottom: { keepVisible: true } }}
+        className={styles.linkRow}
+      >
+        {"Se alle udgivelser"}
+      </Link>
 
       {body ? <p className={styles.description}>{body}</p> : null}
 
-      {Array.isArray(facts) && facts.length > 0 ? (
-        <div className={styles.facts}>
-          {facts.map((fact, idx) =>
-            fact?.label || fact?.value ? (
-              <p key={`${fact.label || "fact"}-${idx}`} className={styles.fact}>
-                {fact?.label ? (
-                  <span className={styles.factLabel}>{fact.label}</span>
-                ) : null}
-                {fact?.value ? <span>{fact.value}</span> : null}
-              </p>
-            ) : null
-          )}
-        </div>
-      ) : null}
+      <div className={styles.facts}>
+        <span className={styles.factLabel}>Priser:</span>{" "}
+        {displayedAwards.map((award, idx) => (
+          <span key={`${award}-${idx}`} className={styles.fact}>
+            {award}
+            {idx < displayedAwards.length - 1 || extraAwardsCount > 0
+              ? ", "
+              : ""}
+          </span>
+        ))}
+        {extraAwardsCount > 0 ? (
+          <span className={`${styles.fact} ${styles.extraFact}`}>
+            {`+${extraAwardsCount}`}
+          </span>
+        ) : null}
+      </div>
 
       {moreLabel && moreHref ? (
         <div className={styles.moreRow}>
@@ -97,8 +116,14 @@ export default function CreatorBox({
           ) : null}
         </div>
       ) : null}
+
+      <Link
+        href={profileHref}
+        border={{ bottom: { keepVisible: true } }}
+        className={styles.linkRow}
+      >
+        {`Mere om ${fullName}`}
+      </Link>
     </section>
   );
 }
-
-

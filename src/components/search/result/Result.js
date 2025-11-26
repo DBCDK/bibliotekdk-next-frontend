@@ -132,6 +132,7 @@ export default function Wrap({ page = 1, onWorkClick }) {
       : null
   );
 
+  console.log("complexResponse", complexResponse);
   const merged = { ...filters, ...mapped };
 
   const simpleResponse = useData(
