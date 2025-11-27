@@ -53,14 +53,7 @@ export default function CreatorBox({
       {display ? <h3 className={styles.title}>{display}</h3> : null}
       {role ? <div className={styles.role}>{role}</div> : null}
 
-      <Link
-        href={seeAllHref || "#"}
-        onClick={onSeeAll}
-        border={{ bottom: { keepVisible: true } }}
-        className={styles.linkRow}
-      >
-        {"Se alle udgivelser"}
-      </Link>
+
 
       {body ? <p className={styles.description}>{body}</p> : null}
 

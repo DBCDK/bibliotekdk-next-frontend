@@ -26,7 +26,7 @@ import {
 import * as searchFragments from "@/lib/api/search.fragments";
 import {
   hitcount as advancedHitcount,
-  extraHits,
+  extraHits as complexExtraHits,
 } from "@/lib/api/complexSearch.fragments";
 
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
@@ -44,11 +44,11 @@ import translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import styles from "./Page.module.css";
 import { useRouter } from "next/router";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import SaveSearchBtn from "../save";
 import Related from "../related/Related";
 import DidYouMean from "../didYouMean/DidYouMean";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import SeriesBox from "@/components/search/seriesBox/SeriesBox";
 import CreatorBox from "@/components/search/creatorBox/CreatorBox";
 // -------------------------------
@@ -104,6 +104,20 @@ function Page({
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const searchHitComponent = shouldShowCreator ? (
+    <CreatorBox
+      creatorHit={creatorHit}
+      className="search-block"
+      data-cy="search-block"
+    />
+  ) : shouldShowSeries ? (
+    <SeriesBox
+      seriesHit={seriesHit}
+      className="search-block"
+      data-cy="search-block"
+    />
+  ) : null;
 
   return (
     <>
@@ -176,8 +190,14 @@ function Page({
           )
         }
       >
-        <Row>
-          <Col xs={12} lg={8}>
+        <Row className={styles.resultGrid}>
+          {isMobile && searchHitComponent && (
+            <Col xs={12} className={styles.resultsSidebarMobile}>
+              {searchHitComponent}
+            </Col>
+          )}
+
+          <Col xs={12} lg={9} className={styles.resultsMain}>
             {shouldShowHistory && <History />}
             {shouldShowNoHits && <NoHitSearch isSimpleSearch={isSimple} />}
 
@@ -201,7 +221,7 @@ function Page({
               </div>
             )}
 
-            <div>
+            <div className={styles.resultsList}>
               {Array(isMobile ? currentPage : 1)
                 .fill({})
                 .map((_, index) => (
@@ -213,21 +233,12 @@ function Page({
                 ))}
             </div>
           </Col>
-          <Col xs={12} lg={4}>
-            {shouldShowCreator ? (
-              <CreatorBox
-                creatorHit={creatorHit}
-                className="search-block"
-                data-cy="search-block"
-              />
-            ) : shouldShowSeries ? (
-              <SeriesBox
-                seriesHit={seriesHit}
-                className="search-block"
-                data-cy="search-block"
-              />
-            ) : null}
-          </Col>
+
+          {!isMobile && searchHitComponent && (
+            <Col xs={12} lg={3} className={styles.resultsSidebar}>
+              {searchHitComponent}
+            </Col>
+          )}
         </Row>
       </Section>
       {hitcount > 0 && (
@@ -311,13 +322,16 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       advancedHitcount({ cql: advancedCql })
   );
 
-  //todo do for simple search too
+  const shouldFetchExtraHits = isSimple
+    ? hasQuery
+    : hasAdvancedSearch || hasCqlSearch;
   const extraHitsRes = useData(
-    isSimple
-      ? null
-      : (hasAdvancedSearch || hasCqlSearch) && extraHits({ cql: advancedCql })
+    shouldFetchExtraHits
+      ? isSimple
+        ? searchFragments.extraHits({ q, filters })
+        : complexExtraHits({ cql: advancedCql })
+      : null
   );
-  console.log("extraHitsRes", extraHitsRes);
   const hitcount = isAdvanced
     ? advancedRes?.data?.complexSearch?.hitcount || 0
     : simpleRes?.data?.search?.hitcount || 0;
@@ -328,13 +342,11 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
 
   const seriesHit = isAdvanced
     ? extraHitsRes?.data?.complexSearch?.seriesHit
-    : null;
-  console.log("seriesHit", seriesHit);
+    : extraHitsRes?.data?.search?.seriesHit || null;
 
   const creatorHit = isAdvanced
     ? extraHitsRes?.data?.complexSearch?.creatorHit
-    : null;
-  console.log("creatorHit", creatorHit);
+    : extraHitsRes?.data?.search?.creatorHit || null;
   //  const creatorHit = null;
   // Store the current search history item in the local storage
   useEffect(() => {
