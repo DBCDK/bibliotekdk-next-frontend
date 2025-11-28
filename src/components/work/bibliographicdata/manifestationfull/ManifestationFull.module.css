@@ -54,6 +54,7 @@
   --show-more-margin-left: var(--pt3) !important;
   --odd-background: none !important;
   --even-background: none !important;
+  --bottom-border: none !important;
 }
 
 @media (min-width: 768px) {

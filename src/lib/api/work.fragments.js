@@ -18,7 +18,7 @@ import {
   workTitleFragment,
 } from "@/lib/api/fragments.utils";
 
-export function workTableOfContents({ id }) {
+export function workTableOfContents({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query workTableOfContents($id: String!) {
@@ -69,7 +69,7 @@ export function workTableOfContents({ id }) {
         }
       }
     }`,
-    variables: { id },
+    variables: { id: workId },
     slowThreshold: 3000,
   };
 }

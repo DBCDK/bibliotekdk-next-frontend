@@ -105,6 +105,7 @@ function ColumnOne({ workId, manifestation }) {
           singleManifestation={true}
           buttonType="secondary"
           size="small"
+          exactEdition={true}
         />
         <BookmarkDropdown
           workId={workId}

@@ -18,7 +18,7 @@ export function frontpageHero() {
     apiUrl: ApiEnums.FBI_API,
     query: `
     query ($filter: EntityQueryFilterInput, $sort: [EntityQuerySortInput]) {
-      nodeQuery(limit: 40, filter: $filter, sort: $sort) {
+      nodeQuery(limit: 75, filter: $filter, sort: $sort) {
         entities {
           __typename
           ... on NodeHeroFrontpage {

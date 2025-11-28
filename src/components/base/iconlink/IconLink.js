@@ -57,6 +57,7 @@ export function IconLink({
           [styles.padding_element_right]: iconPlacement === "left",
           [styles.padding_element_left]: iconPlacement === "right",
         })}
+        style={{ lineHeight: "12px", alignSelf: "center" }}
       >
         <Icon
           size={{ w: 2, h: 2 }}
@@ -87,6 +88,7 @@ export function IconLink({
       disabled={disabled}
       target={target}
       skeleton={skeleton}
+      style={{ display: "flex" }}
     >
       {iconPlacement === "left" && <IconComponent />}
       <Link

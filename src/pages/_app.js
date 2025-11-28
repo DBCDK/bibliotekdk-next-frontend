@@ -124,6 +124,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
     // catches all errors thrown in fetcher
     onError: async (err) => {
       switch (err.status) {
+        case 401:
         case 403:
           // calls destroy to remove all session cookies
           destroy();

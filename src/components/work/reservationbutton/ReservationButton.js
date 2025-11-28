@@ -37,6 +37,7 @@ function TextAboveButton({ access, isAuthenticated }) {
  * @param {string} workId
  * @param {Array.<string>} selectedPids
  * @param {boolean} singleManifestation
+ * @param {boolean} exactEdition
  * @param {string} buttonType
  * @param {string} size
  * @param {string} shortText
@@ -50,6 +51,7 @@ function ReservationButtonWrapper({
   workId,
   selectedPids,
   singleManifestation = false,
+  exactEdition = false,
   buttonType = "primary",
   size = "large",
   shortText,
@@ -126,6 +128,7 @@ function ReservationButtonWrapper({
         pids: selectedPids,
         shortText,
         singleManifestation,
+        exactEdition,
         workId,
         overrideButtonText,
         modal,
@@ -168,6 +171,7 @@ export const ReservationButton = ({
   workTypes,
   materialTypes,
   hasPhysicalCopy,
+  exactEdition = false,
   bookmarkKey,
 }) => {
   access = sortEreolFirst(access);
@@ -222,7 +226,7 @@ export const ReservationButton = ({
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
     onClick: () => {
-      start({ orders: [{ pids, bookmarkKey: bookmarkKey }] });
+      start({ orders: [{ pids, bookmarkKey: bookmarkKey, exactEdition }] });
     },
   };
 

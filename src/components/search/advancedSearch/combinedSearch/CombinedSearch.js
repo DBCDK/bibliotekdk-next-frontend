@@ -13,7 +13,7 @@ import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 //max number of search queries to be combined
-const MAX_ITEMS = 4;
+const MAX_ITEMS = 10;
 
 /**
  * Merges facets form multiple

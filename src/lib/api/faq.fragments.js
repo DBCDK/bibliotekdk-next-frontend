@@ -5,7 +5,7 @@ export function promotedFaqs(language) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query($language: LanguageId! $langcode: [String]) {
-      faq: nodeQuery (limit:50 filter: {conditions: [
+      faq: nodeQuery (limit:75 filter: {conditions: [
         {field: "type", value: ["faq"]},
         {field: "status", value:"1"},
         {field: "promote", value:"1"},
@@ -51,7 +51,7 @@ export function publishedFaqs(language) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query($language: LanguageId! $langcode: [String]) {
-      faq: nodeQuery (limit:50 filter: {conditions: [
+      faq: nodeQuery (limit:75 filter: {conditions: [
         {field: "type", value: ["faq"]},
         {field: "status", value:"1"},
         {field: "langcode", value: $langcode}

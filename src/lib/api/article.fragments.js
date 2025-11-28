@@ -62,7 +62,7 @@ export function promotedArticles({ language = "EN_GB" }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query ( $language: LanguageId! $langcode: [String] ) {
-      nodeQuery (limit:40 filter: {conditions: [
+      nodeQuery (limit:75 filter: {conditions: [
         {field: "type", value: ["article"]}, 
         {field: "promote", value: "1"},
         {field: "status", value: "1"},
@@ -110,7 +110,7 @@ export function allArticles({ language = "EN_GB" }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query( $language: LanguageId! $langcode: [String] ) {
-      nodeQuery (limit:100 filter: {conditions: [
+      nodeQuery (limit:125 filter: {conditions: [
         {field: "type", value: ["article"]},
         {field: "status", value: "1"},
         {field: "langcode", value: $langcode}

@@ -1,7 +1,7 @@
 module.exports = {
   reporter: "junit",
   reporterOptions: {
-    mochaFile: "app/e2e/reports/test-result-[hash].xml",
+    mochaFile: "cypress/reports/test-result-[hash].xml",
     toConsole: true,
   },
   env: {
