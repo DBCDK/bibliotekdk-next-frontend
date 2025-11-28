@@ -24,7 +24,10 @@ import {
 } from "@/components/search/advancedSearch/utils";
 
 import * as searchFragments from "@/lib/api/search.fragments";
-import { hitcount as advancedHitcount } from "@/lib/api/complexSearch.fragments";
+import {
+  hitcount as advancedHitcount,
+  extraHits as complexExtraHits,
+} from "@/lib/api/complexSearch.fragments";
 
 import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearchSort/AdvancedSearchSort";
 import TopBar from "@/components/search/advancedSearch/topBar/TopBar";
@@ -41,10 +44,13 @@ import translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import styles from "./Page.module.css";
 import { useRouter } from "next/router";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import SaveSearchBtn from "../save";
 import Related from "../related/Related";
 import DidYouMean from "../didYouMean/DidYouMean";
-
+import SeriesBox from "@/components/search/seriesBox/SeriesBox";
+import CreatorBox from "@/components/search/creatorBox/CreatorBox";
 // -------------------------------
 // UI-komponent: kun rendering
 // -------------------------------
@@ -61,6 +67,8 @@ function Page({
   rawcql,
   advancedCql,
   selectedFacets,
+  creatorHit,
+  seriesHit,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = ["xs", "sm", "md"].includes(breakpoint);
@@ -80,6 +88,8 @@ function Page({
 
   const shouldShowHistory = !isLoading && !hasActiveSearch;
   const shouldShowNoHits = !isLoading && hasActiveSearch && hitcount === 0;
+  const shouldShowCreator = Boolean(creatorHit);
+  const shouldShowSeries = !shouldShowCreator && Boolean(seriesHit);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,6 +104,20 @@ function Page({
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const searchHitComponent = shouldShowCreator ? (
+    <CreatorBox
+      creatorHit={creatorHit}
+      className="search-block"
+      data-cy="search-block"
+    />
+  ) : shouldShowSeries ? (
+    <SeriesBox
+      seriesHit={seriesHit}
+      className="search-block"
+      data-cy="search-block"
+    />
+  ) : null;
 
   return (
     <>
@@ -166,40 +190,56 @@ function Page({
           )
         }
       >
-        {shouldShowHistory && <History />}
-        {shouldShowNoHits && <NoHitSearch isSimpleSearch={isSimple} />}
+        <Row className={styles.resultGrid}>
+          {isMobile && searchHitComponent && (
+            <Col xs={12} className={styles.resultsSidebarMobile}>
+              {searchHitComponent}
+            </Col>
+          )}
 
-        {!isSimple && !isMobile && hitcount > 0 && (
-          <div className={styles.advancedSearchActions}>
-            <AdvancedSearchSort className={styles.sort_container} />
-            <SaveSearchBtn />
-          </div>
-        )}
+          <Col xs={12} lg={9} className={styles.resultsMain}>
+            {shouldShowHistory && <History />}
+            {shouldShowNoHits && <NoHitSearch isSimpleSearch={isSimple} />}
 
-        {isSimple && !isLoading && hitcount > 0 && (
-          <div className={styles.actions}>
-            {isSimple && <FilterButton className={styles.filterButton} />}
+            {!isSimple && !isMobile && hitcount > 0 && (
+              <div className={styles.advancedSearchActions}>
+                <AdvancedSearchSort className={styles.sort_container} />
+                <SaveSearchBtn />
+              </div>
+            )}
 
-            <div className={styles.supplementary}>
-              <Related />
-              <DidYouMean />
+            {isSimple && !isLoading && hitcount > 0 && (
+              <div className={styles.actions}>
+                {isSimple && <FilterButton className={styles.filterButton} />}
+
+                <div className={styles.supplementary}>
+                  <Related />
+                  <DidYouMean />
+                </div>
+
+                {isSimple && <SaveSearchBtn />}
+              </div>
+            )}
+
+            <div className={styles.resultsList}>
+              {Array(isMobile ? currentPage : 1)
+                .fill({})
+                .map((_, index) => (
+                  <Result
+                    key={`result-${index}`}
+                    page={isMobile ? index + 1 : currentPage}
+                    onWorkClick={onWorkClick}
+                  />
+                ))}
             </div>
+          </Col>
 
-            {isSimple && <SaveSearchBtn />}
-          </div>
-        )}
-
-        <div>
-          {Array(isMobile ? currentPage : 1)
-            .fill({})
-            .map((_, index) => (
-              <Result
-                key={`result-${index}`}
-                page={isMobile ? index + 1 : currentPage}
-                onWorkClick={onWorkClick}
-              />
-            ))}
-        </div>
+          {!isMobile && searchHitComponent && (
+            <Col xs={12} lg={3} className={styles.resultsSidebar}>
+              {searchHitComponent}
+            </Col>
+          )}
+        </Row>
       </Section>
       {hitcount > 0 && (
         <Pagination
@@ -223,6 +263,8 @@ Page.propTypes = {
   rawcql: PropTypes.string,
   advancedCql: PropTypes.string,
   selectedFacets: PropTypes.array,
+  creatorHit: PropTypes.object,
+  seriesHit: PropTypes.object,
 };
 
 // -------------------------------
@@ -280,12 +322,32 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       advancedHitcount({ cql: advancedCql })
   );
 
+  const shouldFetchExtraHits = isSimple
+    ? hasQuery
+    : hasAdvancedSearch || hasCqlSearch;
+  const extraHitsRes = useData(
+    shouldFetchExtraHits
+      ? isSimple
+        ? searchFragments.extraHits({ q, filters })
+        : complexExtraHits({ cql: advancedCql })
+      : null
+  );
   const hitcount = isAdvanced
     ? advancedRes?.data?.complexSearch?.hitcount || 0
     : simpleRes?.data?.search?.hitcount || 0;
 
   const isLoading = isAdvanced ? advancedRes.isLoading : simpleRes.isLoading;
 
+
+
+  const seriesHit = isAdvanced
+    ? extraHitsRes?.data?.complexSearch?.seriesHit
+    : extraHitsRes?.data?.search?.seriesHit || null;
+
+  const creatorHit = isAdvanced
+    ? extraHitsRes?.data?.complexSearch?.creatorHit
+    : extraHitsRes?.data?.search?.creatorHit || null;
+  //  const creatorHit = null;
   // Store the current search history item in the local storage
   useEffect(() => {
     if (currentSearchHistoryItem) {
@@ -307,6 +369,8 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       rawcql={rawcql}
       advancedCql={advancedCql}
       selectedFacets={selectedFacets || filters}
+      creatorHit={creatorHit}
+      seriesHit={seriesHit}
     />
   );
 }
