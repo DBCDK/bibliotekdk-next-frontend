@@ -16,7 +16,7 @@ import { useData, useMutate } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 20;
 
 export const useSavedSearches = () => {
   const { hasCulrUniqueId } = useAuthentication();

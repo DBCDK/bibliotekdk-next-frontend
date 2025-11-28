@@ -4,7 +4,7 @@ def app
 
 pipeline {
     agent {
-        label 'devel10'
+        label 'devel11'
     }
     triggers {
         githubPush()
@@ -80,7 +80,8 @@ pipeline {
                 script {
                     // @TODO cypress:latest from docker-dbc.artifacts.dbccloud.dk
                     ansiColor("xterm") {
-                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
+                        sh "mkdir -p cypress/reports"
+                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/dbc-cypress:latest"
                         sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
                         sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
                     }
@@ -158,8 +159,8 @@ pipeline {
                 docker rmi ${IMAGE_NAME}
             '''
 
-            junit skipPublishingChecks: true, testResults: 'app/e2e/reports/*.xml'
-            archiveArtifacts 'cypress/screenshots/*, cypress/videos/*, logs/*'
+            junit skipPublishingChecks: true, allowEmptyResults: true, testResults: 'cypress/reports/*.xml'
+            archiveArtifacts artifacts: 'cypress/screenshots/**, cypress/videos/**, logs/**', allowEmptyArchive: true
         }
         failure {
             script {
