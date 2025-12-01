@@ -84,20 +84,25 @@ export default function Wrap({ onCommit = () => {} }) {
     resetObjectState,
     workType,
     suggesterTid,
+    fieldSearchFromUrl,
   } = useAdvancedSearchContext();
 
   const handleSearch = () => {
-    resetFacets();
-    resetQuickFilters();
+    const urlToString = JSON.stringify(fieldSearchFromUrl);
 
-    onCommit(stateToString, { tid: suggesterTid });
+    if (stateToString !== urlToString) {
+      resetFacets();
+      resetQuickFilters();
 
-    const cql = convertStateToCql({
-      inputFields,
-      dropdownSearchIndices,
-      workType,
-    });
-    setParsedCQL(cql);
+      onCommit(stateToString, { tid: suggesterTid });
+
+      const cql = convertStateToCql({
+        inputFields,
+        dropdownSearchIndices,
+        workType,
+      });
+      setParsedCQL(cql);
+    }
   };
 
   const handleClear = () => {

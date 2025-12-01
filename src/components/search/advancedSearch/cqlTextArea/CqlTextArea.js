@@ -149,20 +149,22 @@ export default function Wrap() {
   }, [parsedCQL, indexes]);
 
   const handleSearch = () => {
-    resetFacets();
-    resetQuickFilters();
-
     const cqlParsedFromUrl = fieldSearchFromUrl
       ? convertStateToCql(fieldSearchFromUrl)
       : cqlFromUrl;
 
-    const query =
-      !cqlFromUrl && parsedCQL === cqlParsedFromUrl
-        ? { fieldSearch: stateToString }
-        : { cql: parsedCQL };
+    if (parsedCQL !== (cqlParsedFromUrl || cqlFromUrl)) {
+      resetFacets();
+      resetQuickFilters();
 
-    router.push({ pathname: "/find/cql", query });
-    setShowPopover(false);
+      const query =
+        !cqlFromUrl && parsedCQL === cqlParsedFromUrl
+          ? { fieldSearch: stateToString }
+          : { cql: parsedCQL };
+
+      router.push({ pathname: "/find/cql", query });
+      setShowPopover(false);
+    }
   };
 
   const handleClear = () => {
