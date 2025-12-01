@@ -9,12 +9,8 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
-import { useSavedSearches } from "@/components/hooks/useSearchHistory";
-import IconButton from "@/components/base/iconButton";
-import { useModal } from "@/components/_modal";
-import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import { useRouter } from "next/router";
+import SaveSearchBtn from "../../save";
 
 // Small helper to shorten Translate calls
 const t = (context, label) => Translate({ context, label });
@@ -25,7 +21,7 @@ const hasValue = (v) => {
   return v !== undefined && v !== null && String(v).trim() !== "";
 };
 
-function FormattedQuery() {
+function FormattedQuery(props) {
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
   const { inputFields, dropdownSearchIndices, workType } =
     fieldSearchFromUrl || {};
@@ -50,10 +46,10 @@ function FormattedQuery() {
     );
   }
 
-  return <FormatFieldSearchIndexes fieldsearch={fieldsearch} />;
+  return <FormatFieldSearchIndexes fieldsearch={fieldsearch} {...props} />;
 }
 
-export function FormatFieldSearchIndexes({ fieldsearch }) {
+export function FormatFieldSearchIndexes({ fieldsearch, isSimple }) {
   const showAndForDropdowns =
     (fieldsearch?.inputFields?.length ?? 0) > 0 ||
     hasValue(fieldsearch?.workType);
@@ -64,6 +60,7 @@ export function FormatFieldSearchIndexes({ fieldsearch }) {
         <FormatWorkType workType={fieldsearch?.workType} />
         <FormatFieldInput
           inputFields={fieldsearch?.inputFields}
+          isSimple={isSimple}
           showAndOperator={hasValue(fieldsearch?.workType)}
         />
         <FormatDropdowns
@@ -83,7 +80,7 @@ function Operator({ label = "AND" }) {
   );
 }
 
-function FormatFieldInput({ inputFields = [], showAndOperator }) {
+function FormatFieldInput({ inputFields = [], showAndOperator, isSimple }) {
   return inputFields.map((field, index) => {
     if (!hasValue(field?.value)) return null;
     const showLeadingAnd = index === 0 && showAndOperator;
@@ -95,13 +92,15 @@ function FormatFieldInput({ inputFields = [], showAndOperator }) {
         {showLeadingAnd && <Operator label="AND" />}
         {showPrefixedOp && <Operator label={field.prefixLogicalOperator} />}
 
-        <Text type="text1">
-          {t(
-            "search",
-            `advanced-dropdown-${field?.label || field?.searchIndex}`
-          )}
-          :
-        </Text>
+        {!isSimple && (
+          <Text type="text1">
+            {t(
+              "search",
+              `advanced-dropdown-${field?.label || field?.searchIndex}`
+            )}
+            :
+          </Text>
+        )}
         <Text type="text2">{`"${field.value}"`}</Text>
       </Fragment>
     );
@@ -155,67 +154,36 @@ function FormatDropdowns({ dropdowns = [], showAndOperator }) {
   });
 }
 
-export default function TopBar({
-  isLoading = false,
-  className = "",
-  searchHistoryObj,
-}) {
-  const modal = useModal();
-  const { isAuthenticated } = useAuthentication();
-  const { deleteSearches, useSavedSearchByCql } = useSavedSearches();
+export default function TopBar({ isLoading = false, className = "" }) {
   const router = useRouter();
 
   // Hide the entire TopBar if there are no query values at all
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
+
   const hasAnyValues = useMemo(() => {
     if (hasValue(cqlFromUrl)) return true;
+
     const {
       inputFields = [],
       dropdownSearchIndices = [],
       workType,
     } = fieldSearchFromUrl || {};
+
     if (hasValue(workType)) return true;
     if (inputFields.some((f) => hasValue(f?.value))) return true;
     if (dropdownSearchIndices.some((d) => hasValue(d?.value))) return true;
     return false;
   }, [cqlFromUrl, fieldSearchFromUrl]);
 
-  const { savedObject, mutate } = useSavedSearchByCql({
-    cql: searchHistoryObj?.key,
-  });
-  const isSaved = !!savedObject?.id;
-
-  const onSaveSearchClick = useCallback(
-    async (e) => {
-      e?.stopPropagation?.();
-      if (isSaved) {
-        await deleteSearches({ idsToDelete: [savedObject?.id] });
-        mutate();
-      } else {
-        modal.push("saveSearch", {
-          item: searchHistoryObj,
-          onSaveDone: mutate,
-        });
-      }
-    },
-    [isSaved, savedObject?.id, deleteSearches, modal, searchHistoryObj, mutate]
-  );
-
-  const onSaveSearchLogin = useCallback(
-    (e) => {
-      e?.stopPropagation?.();
-      openLoginModal({ modal });
-    },
-    [modal]
-  );
-
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const mode = router?.query?.mode || "simpel"; // default fallback
+
   const labelKey =
     { simpel: "simple", avanceret: "advanced", cql: "cql" }[mode] || "simple";
+
   const searchHeading = t("search", `topbar-${labelKey}-search`);
 
   if (!hasAnyValues) return null;
@@ -233,7 +201,7 @@ export default function TopBar({
             lg={{ offset: 1, span: 7 }}
             className={styles.edit_search}
           >
-            <FormattedQuery />
+            <FormattedQuery isSimple={mode === "simpel"} />
             <div className={styles.edit}>
               <Link
                 onClick={scrollToTop}
@@ -267,16 +235,7 @@ export default function TopBar({
                 </Text>
               </Link>
 
-              <IconButton
-                className={styles.saveSearchPaddingTop}
-                onClick={
-                  isAuthenticated ? onSaveSearchClick : onSaveSearchLogin
-                }
-                icon={isSaved ? "heart_filled" : "heart"}
-                keepUnderline
-              >
-                {t("search", "saveSearch")}
-              </IconButton>
+              <SaveSearchBtn />
             </div>
           </Col>
         </Row>

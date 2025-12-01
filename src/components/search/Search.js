@@ -23,6 +23,9 @@ import styles from "./Search.module.css";
 import HelpBtn from "./help";
 import IndexesBtn from "./indexes";
 
+import { useFacets } from "./advancedSearch/useFacets";
+import { useQuickFilters } from "./advancedSearch/useQuickFilters";
+
 let hasEverFocusedTabs = false;
 
 /**
@@ -50,14 +53,11 @@ export function Search({
         <Row as="section" className={`${styles.section} ${paddingBottomClass}`}>
           <Col sm={12} lg={{ span: 2 }} className={styles.select}>
             {includeWorkTypeMenu && !isMobileSize && (
-              <WorkTypeMenu
-                className={styles.worktypes}
-                onClick={onWorkTypeSelect}
-              />
+              <WorkTypeMenu onClick={onWorkTypeSelect} />
             )}
           </Col>
 
-          <Col sm={12} lg={{ offset: 1, span: 7 }}>
+          <Col sm={12} lg={{ offset: 1, span: 9 }}>
             <Tabs
               active={activeTab}
               onSelect={(nextTab) => {
@@ -72,10 +72,20 @@ export function Search({
                   label: "simple",
                 })}
               >
-                <Col className={styles.content}>
-                  {/* Call onSimpleCommit(text) on submit inside SimpleSearch */}
-                  <SimpleSearch onCommit={onSimpleCommit} />
-                </Col>
+                <Row className={styles.tabRow}>
+                  <Col sm={12} lg={{ span: 9 }} className={styles.content}>
+                    {/* Call onSimpleCommit(text) on submit inside SimpleSearch */}
+                    <SimpleSearch onCommit={onSimpleCommit} />
+                  </Col>
+                  <Col className={styles.links} sm={12} lg={{ span: 3 }}>
+                    {!isHistory && (
+                      <div>
+                        <IndexesBtn className={styles.indexes} />
+                        <HelpBtn className={styles.help} />
+                      </div>
+                    )}
+                  </Col>
+                </Row>
               </Tab>
 
               <Tab
@@ -85,16 +95,25 @@ export function Search({
                   label: "advanced",
                 })}
               >
-                <Col className={styles.content}>
-                  {isMobileSize && (
-                    <WorkTypeMenu
-                      className={styles.workTypesMenu}
-                      onClick={onWorkTypeSelect}
-                    />
-                  )}
-                  {/* Call onAdvancedCommit(fieldSearchString) on submit inside AdvancedSearch */}
-                  <AdvancedSearch onCommit={onAdvancedCommit} />
-                </Col>
+                <Row className={styles.tabRow}>
+                  <Col sm={12} lg={{ span: 9 }} className={styles.content}>
+                    {isMobileSize && (
+                      <WorkTypeMenu
+                        className={styles.workTypesMobile}
+                        onClick={onWorkTypeSelect}
+                      />
+                    )}
+                    <AdvancedSearch onCommit={onAdvancedCommit} />
+                  </Col>
+                  <Col className={styles.links} sm={12} lg={{ span: 3 }}>
+                    {!isHistory && (
+                      <div>
+                        <IndexesBtn className={styles.indexes} />
+                        <HelpBtn className={styles.help} />
+                      </div>
+                    )}
+                  </Col>
+                </Row>
               </Tab>
 
               <Tab
@@ -104,9 +123,19 @@ export function Search({
                   label: isMobileSize ? "cql" : "cql-desktop",
                 })}
               >
-                <Col className={styles.content} lg={12} xs={12}>
-                  <CqlTextArea onCommit={onCQLCommit} />
-                </Col>
+                <Row className={styles.tabRow}>
+                  <Col sm={12} lg={{ span: 9 }} className={styles.content}>
+                    <CqlTextArea onCommit={onCQLCommit} />
+                  </Col>
+                  <Col className={styles.links} sm={12} lg={{ span: 3 }}>
+                    {!isHistory && (
+                      <div>
+                        <IndexesBtn className={styles.indexes} />
+                        <HelpBtn className={styles.help} />
+                      </div>
+                    )}
+                  </Col>
+                </Row>
               </Tab>
 
               <Tab
@@ -117,15 +146,6 @@ export function Search({
                 })}
               />
             </Tabs>
-          </Col>
-
-          <Col className={styles.links} sm={12} lg={{ span: 2 }}>
-            {!isHistory && (
-              <div>
-                <IndexesBtn className={styles.indexes} />
-                <HelpBtn className={styles.help} />
-              </div>
-            )}
           </Col>
         </Row>
       </Container>
@@ -152,6 +172,9 @@ export default function Wrap() {
     handleAdvancedCommit,
     handleCqlCommit,
   } = useSearchSync({ router, setQuery });
+
+  const { resetFacets } = useFacets();
+  const { resetQuickFilters } = useQuickFilters();
 
   const handleModeChange = useCallback(
     (nextMode) => {
@@ -183,9 +206,14 @@ export default function Wrap() {
 
   const handleOnWorkTypeSelect = useCallback(
     (type) => {
+      // reset local facets and quickfilters
+      resetFacets();
+      resetQuickFilters();
+
+      // Update workType via useSearchSync
       setWorkType(type);
     },
-    [setWorkType]
+    [resetFacets, resetQuickFilters, setWorkType]
   );
 
   return (

@@ -1,18 +1,25 @@
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { facetsFromUrl } from "@/components/search/advancedSearch/utils";
 
-export function useFacets() {
+export function useFacets({ syncWithUrl = true } = {}) {
   const router = useRouter();
-  const didInitRef = useRef(false);
 
-  // Keep storing as STRING for compatibility
-  const [facetsQuery, setFacetsQuery] = useGlobalState({
+  const initialFromUrl = facetsFromUrl(router);
+
+  const [globalFacetsQuery, setGlobalFacetsQuery] = useGlobalState({
     key: "GLOBALFACETS",
-    initial: facetsFromUrl(router),
+    initial: initialFromUrl,
   });
+
+  const [localFacetsQuery, setLocalFacetsQuery] = useState(initialFromUrl);
+
+  const facetsQuery = syncWithUrl ? globalFacetsQuery : localFacetsQuery;
+  const setFacetsQuery = syncWithUrl
+    ? setGlobalFacetsQuery
+    : setLocalFacetsQuery;
 
   const selectedFacets = useMemo(() => {
     try {
@@ -30,7 +37,6 @@ export function useFacets() {
 
   // ---------- Helpers ----------
 
-  // Normalize any input to a trimmed string
   const normVal = (value) =>
     (typeof value === "object"
       ? value?.value ?? value?.name ?? value?.key ?? ""
@@ -49,7 +55,16 @@ export function useFacets() {
     setFacetsQuery(JSON.stringify(arr ?? []));
   }
 
-  // Only push to router when URL would actually change
+  useEffect(() => {
+    if (!syncWithUrl) return;
+
+    const fromUrl = facetsFromUrl(router); // STRING
+    setFacetsQuery(fromUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [syncWithUrl, router?.query?.facets, router?.pathname]);
+
+  // ---------- URL sync helper ----------
+
   function syncUrlFromSelected(replace, next, traceId) {
     if (!next?.length) {
       clearFacetsUrl();
@@ -62,7 +77,7 @@ export function useFacets() {
         ? router.query.facets
         : JSON.stringify(router?.query?.facets ?? "");
 
-    if (currentStr === nextStr) return; // nothing to do
+    if (currentStr === nextStr) return;
 
     const query = { ...router?.query };
     if (query?.page) delete query.page;
@@ -77,27 +92,6 @@ export function useFacets() {
     if (replace) router.replace(url, as, opts);
     else router.push(url, as, opts);
   }
-
-  // ---------- Effects ----------
-
-  // One-time sync from URL when we first see the query
-  useEffect(() => {
-    if (!didInitRef.current) {
-      setFacetsQuery(facetsFromUrl(router));
-      didInitRef.current = true;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router?.query?.facets]);
-
-  // Reset when leaving /find (mount only)
-  useEffect(() => {
-    const onFindPage =
-      router?.pathname?.includes("/find") || process.env.STORYBOOK_ACTIVE;
-    if (didInitRef.current && !onFindPage) {
-      restartFacetsHook();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // ---------- Public API ----------
 
@@ -125,7 +119,7 @@ export function useFacets() {
       changed = true;
     }
 
-    if (!changed) return; // no-op; avoid redundant state/URL churn
+    if (!changed) return;
 
     setSelectedFacets(next);
     syncUrlFromSelected(replace, next, traceId);
@@ -140,11 +134,11 @@ export function useFacets() {
     }));
 
     const facetIdx = next.findIndex((f) => f.searchIndex === searchindex);
-    if (facetIdx === -1) return; // nothing to remove
+    if (facetIdx === -1) return;
 
     const vals = next[facetIdx].values;
     const valIdx = vals.findIndex((v) => v?.value === s || v?.name === s);
-    if (valIdx === -1) return; // nothing to remove
+    if (valIdx === -1) return;
 
     vals.splice(valIdx, 1);
     if (!vals.length) next.splice(facetIdx, 1);
@@ -172,7 +166,6 @@ export function useFacets() {
 
     const mapped = values.map((v) => toPair(normVal(v)));
 
-    // Skip if identical to current (order-sensitive compare)
     const same =
       facetIdx > -1 &&
       JSON.stringify(next[facetIdx].values) === JSON.stringify(mapped);
@@ -198,12 +191,6 @@ export function useFacets() {
 
     const [url, as, opts] = toUrlAndOpts(query);
     router.push(url, as, opts);
-
-    didInitRef.current = false;
-  }
-
-  function restartFacetsHook() {
-    if (didInitRef.current) didInitRef.current = false;
   }
 
   function resetFacets() {
@@ -222,7 +209,6 @@ export function useFacets() {
     facetsFromEnum,
     clearFacetsUrl,
     resetFacets,
-    restartFacetsHook,
     pushQuery,
     sortChronological,
   };

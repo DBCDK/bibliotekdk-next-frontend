@@ -44,7 +44,9 @@ export function FacetsLoading() {
 }
 
 export function FacetsInUrl() {
-  const { selectedFacets, addFacet, removeFacet } = useFacets();
+  const { selectedFacets, addFacet, removeFacet } = useFacets({
+    syncWithUrl: false, // for storybook we disable auto sync
+  });
 
   const replace = false;
   const onItemClick = ({ checked, value, facetName }) => {

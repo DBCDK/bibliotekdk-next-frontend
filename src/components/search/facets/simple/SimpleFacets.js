@@ -12,16 +12,14 @@ export function SimpleFacets({
   onItemClick = () => {},
 }) {
   return (
-    <>
-      <AdvancedFacets
-        facets={facets}
-        isLoading={isLoading}
-        selectedFacets={selectedFacets}
-        onItemClick={onItemClick}
-        origin="simpleSearch"
-        translateContext="facets"
-      />
-    </>
+    <AdvancedFacets
+      facets={facets}
+      isLoading={isLoading}
+      selectedFacets={selectedFacets}
+      onItemClick={onItemClick}
+      origin="simpleSearch"
+      translateContext="facets"
+    />
   );
 }
 

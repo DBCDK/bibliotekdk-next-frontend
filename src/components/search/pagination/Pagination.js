@@ -98,7 +98,7 @@ export default function Pagination({
             skeleton={isLoading}
             onClick={(e) => {
               onChangeChecked(currentPage + 1, false);
-              !disableScrollMobileView && e.target.scrollTo({ bottom: 0 });
+              !disableScrollMobileView && e?.target?.scrollTo?.({ bottom: 0 });
             }}
             onKeyDown={(event) => onKeyDown(event, currentPage + 1, false)}
           >
