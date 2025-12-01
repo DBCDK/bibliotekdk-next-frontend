@@ -1,17 +1,25 @@
 import { useRouter } from "next/router";
 import { AdvFacetsTypeEnum } from "@/lib/enums";
 import { useGlobalState } from "@/components/hooks/useGlobalState";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { facetsFromUrl } from "@/components/search/advancedSearch/utils";
 
-export function useFacets() {
+export function useFacets({ syncWithUrl = true } = {}) {
   const router = useRouter();
 
-  // Vi lagrer som STRING (kompatibelt med eksisterende kode)
-  const [facetsQuery, setFacetsQuery] = useGlobalState({
+  const initialFromUrl = facetsFromUrl(router);
+
+  const [globalFacetsQuery, setGlobalFacetsQuery] = useGlobalState({
     key: "GLOBALFACETS",
-    initial: facetsFromUrl(router),
+    initial: initialFromUrl,
   });
+
+  const [localFacetsQuery, setLocalFacetsQuery] = useState(initialFromUrl);
+
+  const facetsQuery = syncWithUrl ? globalFacetsQuery : localFacetsQuery;
+  const setFacetsQuery = syncWithUrl
+    ? setGlobalFacetsQuery
+    : setLocalFacetsQuery;
 
   const selectedFacets = useMemo(() => {
     try {
@@ -48,10 +56,12 @@ export function useFacets() {
   }
 
   useEffect(() => {
-    const fromUrl = facetsFromUrl(router); // returnerer en STRING
+    if (!syncWithUrl) return;
+
+    const fromUrl = facetsFromUrl(router); // STRING
     setFacetsQuery(fromUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router?.query?.facets, router?.pathname]);
+  }, [syncWithUrl, router?.query?.facets, router?.pathname]);
 
   // ---------- URL sync helper ----------
 

@@ -393,7 +393,6 @@ export const useSavedSearches = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const enhanceItem = useEnhanceSearchHistoryItem();
 
-  // useData er allerede SWR-baseret og deles på tværs af komponenter
   const { data, isLoading, mutate } = useData(
     hasCulrUniqueId &&
       savedSearchesQuery({
@@ -402,7 +401,6 @@ export const useSavedSearches = () => {
       })
   );
 
-  // Fælles kilde til sandhed: savedSearches = det der kommer fra data
   const savedSearches = useMemo(() => {
     const result = data?.user?.savedSearches?.result || [];
     return result.map((search) => {
@@ -435,7 +433,7 @@ export const useSavedSearches = () => {
   const saveSearch = async ({ searchObject }) => {
     try {
       await userDataMutation.post(addSavedSearch({ searchObject }));
-      mutateData(); // refetch hele listen
+      mutateData();
     } catch (err) {
       console.error(err);
     }
@@ -453,7 +451,7 @@ export const useSavedSearches = () => {
   const deleteSearches = async ({ idsToDelete }) => {
     try {
       await userDataMutation.post(deleteSavedSearches({ idsToDelete }));
-      mutateData(); // refetch – nu med elementet reelt væk på serveren
+      mutateData();
     } catch (err) {
       console.error(err);
     }
