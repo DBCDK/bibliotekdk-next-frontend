@@ -7,19 +7,14 @@ import styles from "./SeriesBox.module.css";
 
 const MEMBERS_PREVIEW_LIMIT = 3;
 
-function resolveTitle(titleField) {
-  if (!titleField) {
-    return null;
-  }
-  return Array.isArray(titleField) ? titleField[0] : titleField;
-}
-
 function buildMembersPreview(members = []) {
   return members
     ?.slice(0, MEMBERS_PREVIEW_LIMIT)
     .map((member, idx) => {
       const work = member?.work;
-      const title = resolveTitle(work?.titles?.main);
+      const title = Array.isArray(work?.titles?.main)
+        ? work?.titles?.main[0]
+        : work?.titles?.main;
       const number = member?.numberInSeries;
       const mostRelevant = work?.manifestations?.mostRelevant;
       const primaryManifestation = Array.isArray(mostRelevant)
@@ -47,6 +42,9 @@ function buildMembersPreview(members = []) {
     .filter(Boolean);
 }
 
+/**
+ * SeriesBox component for displaying series information in search results
+ */
 export default function SeriesBox({
   seriesHit,
   className = "",
@@ -59,15 +57,15 @@ export default function SeriesBox({
   const {
     title,
     description,
-    identifyingAddition,
-    hitcount,
-    alternativeTitles,
-    parallelTitles,
-    mainLanguages,
-    workTypes,
-    readThisFirst,
-    readThisWhenever,
-    isPopular,
+    // identifyingAddition,
+    // hitcount,
+    // alternativeTitles,
+    // parallelTitles,
+    // mainLanguages,
+    // workTypes,
+    // readThisFirst,
+    // readThisWhenever,
+    // isPopular,
     members,
     seriesId,
     traceId,
@@ -79,15 +77,15 @@ export default function SeriesBox({
 
   return (
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
-      {title ? (
+      {title && (
         <div className={styles.headerRow}>
-          {title ? <h3 className={styles.title}>{title}</h3> : null}
+          <h3 className={styles.title}>{title}</h3>
         </div>
-      ) : null}
+      )}
 
-      {description ? <p className={styles.description}>{description}</p> : null}
+      {description && <p className={styles.description}>{description}</p>}
 
-      {membersPreview?.length > 0 ? (
+      {membersPreview?.length > 0 && (
         <div className={styles.members}>
           <Text
             type="text1"
@@ -118,6 +116,7 @@ export default function SeriesBox({
                   <Link key={key} href={workUrl} className={styles.thumbLink}>
                     <div className={styles.thumb}>
                       <div className={styles.thumbImageWrapper}>
+                        {/**TODO: use next image? */}
                         <img
                           src={image}
                           alt={memberTitle || `Seriemedlem ${idx + 1}`}
@@ -134,9 +133,9 @@ export default function SeriesBox({
             )}
           </div>
         </div>
-      ) : null}
+      )}
 
-      {seriesLink ? (
+      {seriesLink && (
         <Link
           href={seriesLink}
           className={styles.seeAllLink}
@@ -144,63 +143,13 @@ export default function SeriesBox({
         >
           Se hele serien
         </Link>
-      ) : null}
+      )}
     </section>
   );
 }
 
 SeriesBox.propTypes = {
-  seriesHit: PropTypes.shape({
-    title: PropTypes.string,
-    description: PropTypes.string,
-    identifyingAddition: PropTypes.string,
-    hitcount: PropTypes.number,
-    alternativeTitles: PropTypes.arrayOf(PropTypes.string),
-    parallelTitles: PropTypes.arrayOf(PropTypes.string),
-    mainLanguages: PropTypes.arrayOf(PropTypes.string),
-    workTypes: PropTypes.arrayOf(PropTypes.string),
-    readThisFirst: PropTypes.bool,
-    readThisWhenever: PropTypes.bool,
-    isPopular: PropTypes.bool,
-    seriesId: PropTypes.string,
-    traceId: PropTypes.string,
-    members: PropTypes.arrayOf(
-      PropTypes.shape({
-        numberInSeries: PropTypes.string,
-        work: PropTypes.shape({
-          workId: PropTypes.string,
-          traceId: PropTypes.string,
-          titles: PropTypes.shape({
-            main: PropTypes.oneOfType([
-              PropTypes.arrayOf(PropTypes.string),
-              PropTypes.string,
-            ]),
-          }),
-          creators: PropTypes.arrayOf(
-            PropTypes.shape({
-              display: PropTypes.string,
-            })
-          ),
-          manifestations: PropTypes.shape({
-            mostRelevant: PropTypes.oneOfType([
-              PropTypes.arrayOf(
-                PropTypes.shape({
-                  cover: PropTypes.shape({
-                    detail: PropTypes.string,
-                  }),
-                })
-              ),
-              PropTypes.shape({
-                cover: PropTypes.shape({
-                  detail: PropTypes.string,
-                }),
-              }),
-            ]),
-          }),
-        }),
-      })
-    ),
-  }),
+  seriesHit: PropTypes.object,
   className: PropTypes.string,
   "data-cy": PropTypes.string,
 };

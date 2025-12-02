@@ -20,7 +20,6 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
     sort = { ...sort, order: sort.order.toUpperCase() };
   }
 
-
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging

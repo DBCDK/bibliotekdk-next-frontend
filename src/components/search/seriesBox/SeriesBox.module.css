@@ -1,24 +1,24 @@
 .block {
-    background: var(--jagged-ice);
-    border: none;
-    border-radius: 8px;
-    padding: var(--pt3);
-    color: var(--mine-shaft);
-  }
-  
-  .topImageWrapper {
-    width: 100px;
-    margin-bottom: var(--pt2);
-  }
-  
-  .topImage {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    object-fit: cover;
-  }
-  
+  background: var(--jagged-ice);
+  border: none;
+  border-radius: 8px;
+  padding: var(--pt3);
+  color: var(--mine-shaft);
+}
+
+.topImageWrapper {
+  width: 100px;
+  margin-bottom: var(--pt2);
+}
+
+.topImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -33,44 +33,43 @@
   align-items: flex-start;
   margin-bottom: var(--pt1);
 }
-  
-  .icon {
-    /* reserved for future layout overrides */
-    margin-right: 0;
-  }
-  
-  .title {
-    margin: 0;
-    font-family: var(--title-font);
-    font-size: 20px;
-    line-height: 28px;
-    color: var(--mine-shaft);
-  }
-  
-  .subtitle {
-    margin: 0 0 var(--pt2) 0;
-    font-family: var(--body-font);
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--mine-shaft);
-    font-weight: 600;
-  }
-  
-  .description {
-    margin: 0 0 var(--pt3) 0;
-    font-family: var(--body-font);
-    font-size: 16px;
-    line-height: 24px;
-    color: var(--mine-shaft);
-  }
-  
-  .note {
-    margin: 0 0 var(--pt2) 0;
-    font-size:14px;
-    color: var(--mine-shaft);
-   
-  }
-  
+
+.icon {
+  /* reserved for future layout overrides */
+  margin-right: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--title-font);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--mine-shaft);
+}
+
+.subtitle {
+  margin: 0 0 var(--pt2) 0;
+  font-family: var(--body-font);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--mine-shaft);
+  font-weight: 600;
+}
+
+.description {
+  margin: 0 0 var(--pt3) 0;
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--mine-shaft);
+}
+
+.note {
+  margin: 0 0 var(--pt2) 0;
+  font-size: 14px;
+  color: var(--mine-shaft);
+}
+
 .thumbs {
   display: flex;
   align-items: stretch;
@@ -87,35 +86,35 @@
   scroll-snap-align: start;
   margin-right: var(--pt1);
 }
-  
-  .thumb {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .thumbImageWrapper {
-    width: 80px;
-    height: 112px;
-    border-radius: 4px;
-    overflow: hidden;
-    background: var(--white);
-    border: 1px solid var(--iron);
-  }
-  
-  .thumbImage {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  
-  .thumbIndex {
-    margin-top: var(--pt0_5);
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--mine-shaft);
-  }
+
+.thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.thumbImageWrapper {
+  width: 80px;
+  height: 112px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--iron);
+}
+
+.thumbImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbIndex {
+  margin-top: var(--pt0_5);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--mine-shaft);
+}
 
 .thumbNumber {
   margin-top: var(--pt0_5);
@@ -124,70 +123,68 @@
   color: var(--mine-shaft);
   font-weight: 700;
 }
-  
-  .actions {
-    display: flex;
-    gap: var(--pt1);
-  }
-  
-  .linkRow {
-    margin-top: var(--pt1);
-  }
+
+.actions {
+  display: flex;
+  gap: var(--pt1);
+}
+
+.linkRow {
+  margin-top: var(--pt1);
+}
 
 .seeAllLink {
   white-space: nowrap;
 }
 
-  .badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--pt1);
-    margin-bottom: var(--pt2);
-  }
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pt1);
+  margin-bottom: var(--pt2);
+}
 
-  .badge {
-    background: var(--white);
-    border-radius: 999px;
-    padding: var(--pt0_5) var(--pt1);
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 600;
-    color: var(--mine-shaft);
-    border: 1px solid var(--iron);
-  }
+.badge {
+  background: var(--white);
+  border-radius: 999px;
+  padding: var(--pt0_5) var(--pt1);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--mine-shaft);
+  border: 1px solid var(--iron);
+}
 
-  .metaList {
-    margin: 0 0 var(--pt2) 0;
-    padding: 0;
-    list-style: none;
-  }
+.metaList {
+  margin: 0 0 var(--pt2) 0;
+  padding: 0;
+  list-style: none;
+}
 
-  .metaItem {
-    display: flex;
-    gap: var(--pt0_5);
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--mine-shaft);
-  }
+.metaItem {
+  display: flex;
+  gap: var(--pt0_5);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--mine-shaft);
+}
 
-  .metaLabel {
-    font-weight: 600;
-  }
+.metaLabel {
+  font-weight: 600;
+}
 
-  .metaValue {
-    flex: 1;
-  }
+.metaValue {
+  flex: 1;
+}
 
-  .thumbPlaceholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--mine-shaft);
-    background: var(--iron);
-  }
-  
-  
+.thumbPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mine-shaft);
+  background: var(--iron);
+}

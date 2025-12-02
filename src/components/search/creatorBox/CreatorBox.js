@@ -1,61 +1,63 @@
-import Icon from "@/components/base/icon/Icon";
 import Link from "@/components/base/link";
-
 import styles from "./CreatorBox.module.css";
-//TODO: pass one creator object instead of individual props
-//TODO make storybook?
+
+/**
+ * CreatorBox component for displaying creator information in search results
+ */
 export default function CreatorBox({
   creatorHit,
-  seeAllHref,
-  onSeeAll,
-  moreLabel,
-  moreHref,
-  moreExternal = true,
-  relatedTitle,
-  relatedLinks = [],
   className = "",
   "data-cy": dataCy,
 }) {
-  
   if (!creatorHit) {
     return null;
   }
-  const display = creatorHit?.display;
   const role = Array.isArray(creatorHit?.wikidata?.occupation)
     ? creatorHit.wikidata.occupation[0]
     : creatorHit?.wikidata?.occupation;
-  const body =
-    creatorHit?.generated?.shortSummary?.text ||
-    creatorHit?.generated?.summary?.text;
-  const imageUrl =
-    creatorHit?.forfatterweb?.image?.medium?.url ||
-    creatorHit?.wikidata?.image?.medium;
-  const imageAlt = creatorHit?.display || "";
-
-  const fullName = `${creatorHit?.firstName} ${creatorHit?.lastName}`;
-  const profileHref = display ? `/ophav/${encodeURIComponent(display)}` : "#";
-
-  const awards = Array.isArray(creatorHit?.wikidata?.awards)
-    ? creatorHit.wikidata.awards
-    : [];
   const maxAwardsToShow = 3;
-  const displayedAwards = awards.slice(0, maxAwardsToShow);
+  const displayedAwards = (
+    Array.isArray(creatorHit?.wikidata?.awards)
+      ? creatorHit.wikidata.awards
+      : []
+  ).slice(0, maxAwardsToShow);
   const extraAwardsCount =
-    awards.length > maxAwardsToShow ? awards.length - maxAwardsToShow : 0;
+    (Array.isArray(creatorHit?.wikidata?.awards)
+      ? creatorHit.wikidata.awards.length
+      : 0) > maxAwardsToShow
+      ? (Array.isArray(creatorHit?.wikidata?.awards)
+          ? creatorHit.wikidata.awards.length
+          : 0) - maxAwardsToShow
+      : 0;
+
   return (
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
-      {imageUrl ? (
+      {(creatorHit?.forfatterweb?.image?.medium?.url ||
+        creatorHit?.wikidata?.image?.medium) && (
         <div className={styles.portraitWrapper}>
-          <img src={imageUrl} alt={imageAlt} className={styles.portrait} />
+          <img
+            src={
+              creatorHit?.forfatterweb?.image?.medium?.url ||
+              creatorHit?.wikidata?.image?.medium
+            }
+            alt={creatorHit?.display || ""}
+            className={styles.portrait}
+          />
         </div>
-      ) : null}
+      )}
 
-      {display ? <h3 className={styles.title}>{display}</h3> : null}
-      {role ? <div className={styles.role}>{role}</div> : null}
+      {creatorHit?.display && (
+        <h3 className={styles.title}>{creatorHit.display}</h3>
+      )}
+      {role && <div className={styles.role}>{role}</div>}
 
-
-
-      {body ? <p className={styles.description}>{body}</p> : null}
+      {(creatorHit?.generated?.shortSummary?.text ||
+        creatorHit?.generated?.summary?.text) && (
+        <p className={styles.description}>
+          {creatorHit?.generated?.shortSummary?.text ||
+            creatorHit?.generated?.summary?.text}
+        </p>
+      )}
 
       <div className={styles.facts}>
         <span className={styles.factLabel}>Priser:</span>{" "}
@@ -67,55 +69,23 @@ export default function CreatorBox({
               : ""}
           </span>
         ))}
-        {extraAwardsCount > 0 ? (
+        {extraAwardsCount > 0 && (
           <span className={`${styles.fact} ${styles.extraFact}`}>
             {`+${extraAwardsCount}`}
           </span>
-        ) : null}
+        )}
       </div>
 
-      {moreLabel && moreHref ? (
-        <div className={styles.moreRow}>
-          <Link href={moreHref} border={{ bottom: { keepVisible: true } }}>
-            {moreLabel}
-          </Link>
-          {moreExternal ? (
-            <Icon src="external.svg" size={1} className={styles.externalIcon} />
-          ) : null}
-        </div>
-      ) : null}
-
-      {relatedTitle || (relatedLinks && relatedLinks.length > 0) ? (
-        <div className={styles.related}>
-          {relatedTitle ? (
-            <div className={styles.relatedTitle}>{relatedTitle}</div>
-          ) : null}
-          {Array.isArray(relatedLinks) && relatedLinks.length > 0 ? (
-            <div className={styles.relatedLinks}>
-              {relatedLinks.map((rl, idx) => (
-                <span key={`${rl.label}-${idx}`} className={styles.relatedItem}>
-                  <Link
-                    href={rl?.href || "#"}
-                    border={{ bottom: { keepVisible: true } }}
-                  >
-                    {rl?.label}
-                  </Link>
-                  {idx < relatedLinks.length - 1 ? (
-                    <span className={styles.separator}>,</span>
-                  ) : null}
-                </span>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-
       <Link
-        href={profileHref}
+        href={
+          creatorHit?.display
+            ? `/ophav/${encodeURIComponent(creatorHit.display)}`
+            : "#"
+        }
         border={{ bottom: { keepVisible: true } }}
         className={styles.linkRow}
       >
-        {`Mere om ${fullName}`}
+        {`Mere om ${creatorHit?.firstName} ${creatorHit?.lastName}`}
       </Link>
     </section>
   );
