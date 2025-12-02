@@ -191,7 +191,7 @@ function Page({
         }
       >
         <Row>
-          <Col xs={12} lg={9}>
+          <Col xs={12} lg={12}>
             {shouldShowHistory && <History />}
             {shouldShowNoHits && <NoHitSearch isSimpleSearch={isSimple} />}
 
