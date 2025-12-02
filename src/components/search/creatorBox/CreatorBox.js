@@ -1,4 +1,5 @@
 import Link from "@/components/base/link";
+import Translate from "@/components/base/translate";
 import styles from "./CreatorBox.module.css";
 
 /**
@@ -12,6 +13,9 @@ export default function CreatorBox({
   if (!creatorHit) {
     return null;
   }
+  const name =
+    creatorHit?.display ||
+    [creatorHit?.firstName, creatorHit?.lastName].filter(Boolean).join(" ");
   const role = Array.isArray(creatorHit?.wikidata?.occupation)
     ? creatorHit.wikidata.occupation[0]
     : creatorHit?.wikidata?.occupation;
@@ -60,7 +64,9 @@ export default function CreatorBox({
       )}
 
       <div className={styles.facts}>
-        <span className={styles.factLabel}>Priser:</span>{" "}
+        <span className={styles.factLabel}>
+          <Translate context="creator" label="awards" />
+        </span>{" "}
         {displayedAwards.map((award, idx) => (
           <span key={`${award}-${idx}`} className={styles.fact}>
             {award}
@@ -85,7 +91,11 @@ export default function CreatorBox({
         border={{ bottom: { keepVisible: true } }}
         className={styles.linkRow}
       >
-        {`Mere om ${creatorHit?.firstName} ${creatorHit?.lastName}`}
+        {Translate({
+          context: "creator",
+          label: "more_about",
+          vars: [name],
+        })}
       </Link>
     </section>
   );

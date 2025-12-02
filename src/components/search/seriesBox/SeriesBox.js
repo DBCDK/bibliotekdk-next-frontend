@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Link from "@/components/base/link";
 import { getSeriesUrl, getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text/Text";
+import Translate from "@/components/base/translate";
 import styles from "./SeriesBox.module.css";
 
 const MEMBERS_PREVIEW_LIMIT = 3;
@@ -90,7 +91,13 @@ export default function SeriesBox({
           <Text
             type="text1"
             className={styles.note}
-          >{`Der er ${membersPreview.length} bøger i serien`}</Text>
+          >
+            {Translate({
+              context: "series_page",
+              label: "parts_in_series",
+              vars: [membersPreview.length],
+            })}
+          </Text>
           <div className={styles.thumbs}>
             {membersPreview.map(
               (
@@ -119,7 +126,7 @@ export default function SeriesBox({
                         {/**TODO: use next image? */}
                         <img
                           src={image}
-                          alt={memberTitle || `Seriemedlem ${idx + 1}`}
+                          alt={memberTitle || ""}
                           className={styles.thumbImage}
                         />
                       </div>
@@ -141,7 +148,7 @@ export default function SeriesBox({
           className={styles.seeAllLink}
           border={{ bottom: { keepVisible: true } }}
         >
-          Se hele serien
+          {Translate({ context: "series", label: "go_to_series" })}
         </Link>
       )}
     </section>
