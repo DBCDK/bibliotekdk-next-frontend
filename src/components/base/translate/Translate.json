@@ -34,12 +34,12 @@
     },
     "advanced_search_sort": {
       "sort_button": {
-        "da": "Sorter",
-        "en": "Sort"
+        "da": "sorter",
+        "en": "sort"
       },
       "best_match": {
-        "da": "Bedste match",
-        "en": "Best match"
+        "da": "bedste match",
+        "en": "best match"
       },
       "asc_sort.latestpublicationdate": {
         "da": "Nyeste sidst",
@@ -332,8 +332,8 @@
     },
     "advanced_search_worktypes": {
       "all": {
-        "da": "Alle",
-        "en": "All"
+        "da": "Alle materialer",
+        "en": "All materials"
       },
       "literature": {
         "da": "Bøger",
@@ -2470,40 +2470,6 @@
         "en": "Menu"
       }
     },
-    "improved-search": {
-      "simple": {
-        "da": "Søg",
-        "en": "Search"
-      },
-      "advanced": {
-        "da": "Avanceret",
-        "en": "Advanced"
-      },
-      "cql": {
-        "da": "CQL",
-        "en": "CQL"
-      },
-      "cql-desktop": {
-        "da": "CQL-søgning",
-        "en": "CQL search"
-      },
-      "history-latest": {
-        "da": "Seneste søgninger",
-        "en": "Latest searches"
-      },
-      "history-empty-message": {
-        "da": "Her vil dine seneste søgninger dukke op, når du begynder at søge",
-        "en": "Your recent searches will appear here once you start searching"
-      },
-      "history": {
-        "da": "Søgehistorik",
-        "en": "Search History"
-      },
-      "clear-history": {
-        "da": "Ryd liste",
-        "en": "Clear list"
-      }
-    },
     "search": {
       "timestamp": {
         "da": "Kl. %s",
@@ -2516,10 +2482,6 @@
       "didyoumean": {
         "da": "Mente du",
         "en": "Did you mean"
-      },
-      "simplesearchlabel": {
-        "da": "Søg",
-        "en": "Search"
       },
       "cqlsearchlabel": {
         "da": "CQL-søgning",
@@ -2544,10 +2506,6 @@
       "filter-your-search": {
         "da": "Filtrer din søgning",
         "en": "Filter your search"
-      },
-      "filter": {
-        "da": "Filtrer",
-        "en": "Filters"
       },
       "filtersResultText": {
         "da": "Mest relevante resultater",
@@ -2790,8 +2748,8 @@
         "en": "Advanced Search"
       },
       "advancedSearch_button": {
-        "da": "Søg",
-        "en": "Search"
+        "da": "Søg avanceret",
+        "en": "Search advanced"
       },
       "advanced": {
         "da": "Avanceret",
@@ -3097,17 +3055,9 @@
         "da": "Seneste søgninger",
         "en": "Latest searches"
       },
-      "advanced-search-history-latest-mobile": {
-        "da": "Seneste",
-        "en": "Latest"
-      },
       "advanced-search-saved-search": {
         "da": "Gemte søgninger (%s)",
         "en": "Saved searches (%s)"
-      },
-      "advanced-search-saved-search-mobile": {
-        "da": "Gemte (%s)",
-        "en": "Saved (%s)"
       },
       "advanced-empty-search-history": {
         "da": "Her vil du kunne se en liste over de seneste søgninger, hvor der har været brugt avanceret søgning. Listen er midlertidig og nulstilles automatisk, når du lukker enten vinduet eller din browser. Hvis du vil gemme en søgning til senere, så tryk “Gem” ud for søgningen og den vil lægge sig på listen “Gemte søgninger”.\\n Du har ikke lavet nogen avancerede søgninger endnu.",
@@ -3132,18 +3082,6 @@
       "newFieldsSearch": {
         "da": "Ny feltsøgning",
         "en": "New fields search"
-      },
-      "topbar-simple-search": {
-        "da": "Søg",
-        "en": "Search"
-      },
-      "topbar-advanced-search": {
-        "da": "Avanceret søgning",
-        "en": "Advanced search"
-      },
-      "topbar-cql-search": {
-        "da": "CQL-søgning",
-        "en": "CQL search"
       },
       "yourSearch": {
         "da": "Din søgning",
@@ -3214,8 +3152,8 @@
         "en": "Clear"
       },
       "helpAndGuidance": {
-        "da": "Brug for hjælp?",
-        "en": "Need help with your search?"
+        "da": "Hjælp og vejledning",
+        "en": "Help and guidance"
       },
       "mobile_helpAndGuidance": {
         "da": "Hjælp",
