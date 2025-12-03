@@ -6,6 +6,9 @@ import { ApiEnums } from "@/lib/api/api";
 import { cacheWorkFragment } from "@/lib/api/fragments.utils";
 import { cacheWork } from "./work.fragments";
 
+// Functions/roles that are supported for contributor data summary
+const supportedContributorFunctions = ["skuespiller", "illustrator"];
+
 const createCqlString = ({
   creatorId,
   generalMaterialType,
@@ -15,7 +18,9 @@ const createCqlString = ({
   publicationYears,
   genreAndForm,
 }) => {
-  let cql = `(phrase.creator="${creatorId}" OR phrase.creatorcontributorfunction="${creatorId} (skuespiller)")`;
+  let cql = `phrase.creator="${creatorId}" OR ${supportedContributorFunctions
+    .map((role) => `phrase.creatorcontributorfunction="${creatorId} (${role})"`)
+    .join(" OR ")}`;
   if (generalMaterialType) {
     cql += ` AND phrase.generalmaterialtype="${generalMaterialType}"`;
   }

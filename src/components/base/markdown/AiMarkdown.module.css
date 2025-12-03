@@ -74,3 +74,6 @@
   z-index: 2;
   /* padding: var(--pt05) 0 0 var(--pt1_5); */
 }
+.toggle:focus-visible i {
+  background-color: black !important;
+}

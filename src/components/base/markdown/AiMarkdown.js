@@ -39,6 +39,7 @@ export default function AiMarkdown({
   const hasCheckedHeight = useRef(false);
   const lastTextRef = useRef(text);
   const justAutoExpanded = useRef(false);
+  const disableLinks = canToggle && !expanded;
 
   // Reset check when text changes
   useEffect(() => {
@@ -111,6 +112,9 @@ export default function AiMarkdown({
           },
 
           a(props) {
+            if (disableLinks) {
+              return <Text type="text2" tag="strong" {...props} />;
+            }
             return (
               <Link
                 border={{ bottom: { keepVisible: true } }}
@@ -125,7 +129,7 @@ export default function AiMarkdown({
         {text}
       </Markdown>
     );
-  }, [text, fadeIn]);
+  }, [text, fadeIn, disableLinks]);
 
   useEffect(() => {
     const el = contentRef.current;
@@ -173,14 +177,12 @@ export default function AiMarkdown({
         }}
       >
         {markdown}
-        {canToggle && !expanded && (
-          <button className={styles.toggle} onClick={() => setExpanded(true)}>
-            <Expand open={false} size={3} src="smallplus.svg" />
-          </button>
-        )}
-        {canToggle && expanded && (
-          <button className={styles.toggle} onClick={() => setExpanded(false)}>
-            <Expand open={true} size={3} src="smallplus.svg" />
+        {canToggle && (
+          <button
+            className={styles.toggle}
+            onClick={() => setExpanded(!expanded)}
+          >
+            <Expand open={expanded} size={3} src="smallplus.svg" />
           </button>
         )}
       </div>
