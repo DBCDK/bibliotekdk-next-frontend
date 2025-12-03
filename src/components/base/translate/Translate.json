@@ -317,6 +317,14 @@
         "da": "Alder",
         "en": "Age"
       },
+      "phrase.hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
+      },
+      "all_phrase.hostpublicationtype": {
+        "da": "Alle artikeltyper",
+        "en": "All article types"
+      },
       "more_filters": {
         "da": "Flere filtre",
         "en": "More filters"
