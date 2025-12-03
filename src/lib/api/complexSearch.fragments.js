@@ -302,6 +302,10 @@ export function extraHits({ cql }) {
             }
           }
           generated{
+          dataSummary{
+            text
+            disclaimer
+          }
             summary{
               text
               disclaimer

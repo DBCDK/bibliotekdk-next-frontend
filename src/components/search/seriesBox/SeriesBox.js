@@ -80,18 +80,21 @@ export default function SeriesBox({
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
       {title && (
         <div className={styles.headerRow}>
-          <h3 className={styles.title}>{title}</h3>
+          <Text type="title3" tag="h3" className={styles.title}>
+            {title}
+          </Text>
         </div>
       )}
 
-      {description && <p className={styles.description}>{description}</p>}
+      {description && (
+        <Text type="text2" className={styles.description}>
+          {description}
+        </Text>
+      )}
 
       {membersPreview?.length > 0 && (
         <div className={styles.members}>
-          <Text
-            type="text1"
-            className={styles.note}
-          >
+          <Text type="text1" className={styles.note}>
             {Translate({
               context: "series_page",
               label: "parts_in_series",
@@ -130,9 +133,13 @@ export default function SeriesBox({
                           className={styles.thumbImage}
                         />
                       </div>
-                      <span className={styles.thumbNumber}>
+                      <Text
+                        type="text3"
+                        tag="span"
+                        className={styles.thumbNumber}
+                      >
                         {number || `#${idx + 1}`}
-                      </span>
+                      </Text>
                     </div>
                   </Link>
                 );

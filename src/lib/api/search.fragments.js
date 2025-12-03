@@ -232,6 +232,10 @@ export function extraHits({ q, filters = {} }) {
             }
           }
           generated {
+            dataSummary {
+              text
+              disclaimer
+            }
             summary {
               text
               disclaimer
