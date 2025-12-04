@@ -134,14 +134,14 @@ export function buildSyntheticTocFromSpine(book) {
     .map((it, i) => {
       const href = it.href;
       const idref = it.idref || "";
-      const file = (href.split("/").pop() || idref || "Sektion").replace(
+      const file = (href.split("/").pop() || idref || "Indhold").replace(
         /\.(x?html?)$/i,
         ""
       );
 
       if (looksLikeGibberish(file)) {
         // Fallback navn, hvis vi “ved” at filnavnet er teknik-volapyk
-        return { href, label: `Sektion ${i + 1}` };
+        return { href, label: `Indhold ${i + 1}` };
       }
 
       // Ellers prøv at lave noget pænt ud af filnavnet

@@ -27,6 +27,8 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
 
   const [segIndex, setSegIndex] = useState(0);
   const [chapterIntra, setChapterIntra] = useState(0);
+
+  const [atBookStart, setAtBookStart] = useState(false);
   const [atBookEnd, setAtBookEnd] = useState(false);
 
   const [progressEnabled, setProgressEnabled] = useState(true);
@@ -123,6 +125,12 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     const book = r?.book || bookRef.current;
     const desc = describeTarget(target);
     lastDisplayTargetRef.current = target;
+
+    if (firstRenderDoneRef.current) {
+      return r?.__origDisplay
+        ? r.__origDisplay(target ?? undefined)
+        : r.display(target);
+    }
 
     await waitForBookAndLayout(r, containerRef.current);
 
@@ -336,8 +344,12 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       }
       const href = loc?.start?.href ? stripHashQuery(loc.start.href) : "";
       if (href) setActiveHref(href);
-      setAtBookEnd(!!loc?.atEnd);
+
       setChapterIntra(calcChapterIntra(loc));
+
+      // epub.js har et atEnd/atStart flag på location
+      setAtBookEnd(!!loc?.atEnd);
+      setAtBookStart(!!loc?.atStart);
 
       try {
         const spineIdx = currentSpineIndex(loc);
@@ -432,11 +444,16 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         color: "var(--epub-title-fg)",
         background: "var(--epub-title-bg)",
       },
-      arrow: { ...BaseReaderStyle.arrow, color: "var(--epub-arrow-fg)" },
+      arrow: {
+        ...BaseReaderStyle.arrow,
+        color: "var(--epub-arrow-fg)",
+        display: "none",
+      },
       arrowHover: {
         ...BaseReaderStyle.arrowHover,
         color: "var(--epub-arrow-hover-fg)",
         background: "var(--epub-arrow-hover-bg)",
+        display: "none",
       },
       tocArea: {
         ...BaseReaderStyle.tocArea,
@@ -937,6 +954,26 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     await r.display(href);
   }, []);
 
+  const handlePrev = useCallback(async () => {
+    const r = renditionRef.current;
+    if (!r) return;
+    try {
+      await r.prev();
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const handleNext = useCallback(async () => {
+    const r = renditionRef.current;
+    if (!r) return;
+    try {
+      await r.next();
+    } catch {
+      // ignore
+    }
+  }, []);
+
   // ------ Derivater til UI
   const segments = Math.max(1, tocFlat.length || 1);
   const labels = useMemo(() => {
@@ -1127,5 +1164,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     overallPctDerived,
     handleJump,
     progressEnabled,
+    atBookStart,
+    atBookEnd,
+    handlePrev,
+    handleNext,
   };
 }
