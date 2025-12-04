@@ -1,14 +1,14 @@
 .nav_element {
   --elements_min_width: 200px;
   --elements_max_height: 400px;
-  --box_shadow__dropdown: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  --box_shadow__dropdown: 0px 4px 4px rgba(0, 0, 0, 0.25);
   --border__dropdown: 1px solid var(--iron, #d6d6d7);
-
   --bottom_sticky_last_height: var(--pt5);
 }
 
+/* Mobile default */
 .toggler {
-  width: var(--elements_min_width);
+  width: 100%;
   height: var(--pt5);
   align-items: center;
   border: 0;
@@ -18,12 +18,11 @@
 
 .dropdown_items {
   background-color: var(--white);
-  overflow-y: scroll;
-  min-width: calc(var(--elements_min_width) + var(--pt5));
+  overflow-y: auto;
+  min-width: 100%;
   max-height: var(--elements_max_height);
   box-shadow: var(--box_shadow__dropdown);
   border: var(--border__dropdown);
-  /* bootstrap default styles override */
   border-radius: 0;
   padding: 0;
 }
@@ -34,16 +33,14 @@
 
 .sticky_base_class {
   position: sticky;
-  opacity: 100%;
+  top: 0;
   z-index: 2;
+  opacity: 1;
 
-  /* Small */
   font-size: 14px;
   line-height: 22px;
   font-family: var(--body-font);
   letter-spacing: 0.2px;
-
-  /* Bootstrap default override */
   margin: 0;
 }
 
@@ -60,25 +57,21 @@
 .helptxtlink {
   color: red;
   background-color: var(--iron);
-  /*padding: var(--pt1);*/
-  padding: var(--pt1) var(--pt1) var(--pt2) var(--pt1);
+  padding: var(--pt1) var(--pt1) var(--pt2);
 }
 
 .range_bar {
   display: flex;
   gap: var(--pt2);
-  align-items: end;
-
+  align-items: flex-end;
   bottom: var(--bottom_sticky_last_height);
   background-color: var(--white);
-
   padding-block: var(--pt2);
   padding-inline: var(--pt2);
 }
 
 .clear_content_bar {
   bottom: 0;
-
   background-color: var(--concrete);
   height: var(--bottom_sticky_last_height);
   padding-block: var(--pt1);
@@ -96,13 +89,21 @@
   align-items: center;
 }
 
-@media (max-width: 768px) {
-  .toggler {
-    width: 100%;
-  }
-}
-
 .selectedItem {
   background-color: var(--blue);
   color: var(--white);
+}
+
+/* Desktop adjustments */
+@media (min-width: 769px) {
+  .nav_element {
+    --elements_min_width: 175px;
+  }
+  .toggler {
+    width: var(--elements_min_width);
+  }
+
+  .dropdown_items {
+    min-width: calc(var(--elements_min_width) + var(--pt5));
+  }
 }

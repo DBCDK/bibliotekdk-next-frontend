@@ -20,8 +20,9 @@ import { LogicalOperatorsEnum } from "@/components/search/enums";
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function FieldInput({ index, fieldValue, doAdvancedSearch }) {
+function FieldInput({ index, numberOfItems, fieldValue, onSearch }) {
   const [suggestions, setSuggestions] = useState([]);
+  const [lastSelected, setLastSelected] = useState("");
 
   const inputId = `input-field-${index}`;
   const {
@@ -29,7 +30,6 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
     removeInputField,
     handleLogicalOperatorChange,
     workType,
-    showPopover,
     setSuggesterTid,
   } = useAdvancedSearchContext();
   //labels to show in SearchIndexDropdown
@@ -47,6 +47,7 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   });
 
   const isFirstItem = index === 0;
+  const isLastItem = numberOfItems === 1;
 
   // this is a bit quicky - should probably get the csType
   // from advancedSearchContext
@@ -58,19 +59,20 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
   /** @TODO csSuggest supports 4 indexer for now .. whatabout the NOT supported ? **/
   const { data } = useData(
     fieldValue?.value &&
+      fieldValue?.value !== lastSelected &&
       suggestFragments.csSuggest({ q: fieldValue.value, type: mappedCsType })
   );
 
   useEffect(() => {
+    const raw = data?.complexSuggest?.result ?? [];
+    const effective = fieldValue.value === lastSelected ? [] : raw;
     setSuggestions(
-      data?.complexSuggest?.result?.map((res) => {
-        return { value: res.term, traceId: res.traceId };
-      })
+      effective.map((res) => ({ value: res.term, traceId: res.traceId }))
     );
   }, [data]);
 
   return (
-    <div key={inputId}>
+    <div className={styles.row} key={inputId}>
       {!isFirstItem && (
         <LogicalOperatorDropDown
           onSelect={(value) => handleLogicalOperatorChange(index, value)}
@@ -78,68 +80,76 @@ function FieldInput({ index, fieldValue, doAdvancedSearch }) {
         />
       )}
 
-      <div className={`${styles.inputContainer} r`}>
+      <div className={styles.inputContainer}>
         <SearchIndexDropdown
           options={labels}
           className={styles.select}
           index={index}
         />
-        <div className={styles.trashAndSuggester}>
-          <div className={`${styles.suggesterContainer} `}>
-            <Suggester
-              id={inputId}
-              data={suggestions}
-              onSelect={(selectValue, suggestionObject) => {
-                const traceId = suggestionObject?.traceId;
-                setTimeout(() => {
-                  // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
-                  handleInputFieldChange(index, selectValue);
-                  setSuggesterTid(traceId);
-                }, 0);
-                document?.getElementById(inputId).blur();
-              }}
-              onClear={() => {
-                handleInputFieldChange(index, "");
-                setSuggesterTid("");
-              }}
-              className={styles.suggester}
-              initialValue={`${fieldValue.value}`}
-            >
-              <Input
-                id={inputId}
-                dataCy={`advanced-search-inputfield-${index}`}
-                className={styles.suggesterInput}
-                value={fieldValue?.value}
-                onChange={(e) => {
-                  handleInputFieldChange(index, e.target.value);
-                  //reset suggesterTid when user types
-                  setSuggesterTid("");
-                }}
-                placeholder={placeholder}
-                overrideValueControl={true}
-                tabIndex={showPopover ? "0" : "-1"}
-                // onKeyDown overrides suggesters onKeyDown, and we don't want that
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
 
-                    doAdvancedSearch();
-                  }
-                }}
-              />
-            </Suggester>
-          </div>
-          {!isFirstItem && (
-            <Icon
-              className={styles.removeIcon}
-              dataCy={"advanced-search-remove-input"}
-              onClick={() => removeInputField(index)}
-              size={{ w: 3, h: "auto" }}
-              alt=""
-              src={"trash-2.svg"}
+        <div className={`${styles.suggesterContainer} `}>
+          <Suggester
+            id={inputId}
+            data={suggestions}
+            onSelect={(selectValue, suggestionObject) => {
+              setLastSelected(selectValue);
+              const traceId = suggestionObject?.traceId;
+              setTimeout(() => {
+                // onSelect should be called after onChange. Otherwise onChange wil overrite the selected value
+                handleInputFieldChange(index, selectValue);
+                setSuggesterTid(traceId);
+              }, 0);
+              // document?.getElementById(inputId).blur();
+            }}
+            onClear={() => {
+              handleInputFieldChange(index, "");
+              setSuggesterTid("");
+              setLastSelected("");
+            }}
+            className={styles.suggester}
+            initialValue={`${fieldValue.value}`}
+          >
+            <Input
+              id={inputId}
+              dataCy={`advanced-search-inputfield-${index}`}
+              className={styles.suggesterInput}
+              value={fieldValue?.value}
+              onChange={(e) => {
+                handleInputFieldChange(index, e.target.value);
+                //reset suggesterTid when user types
+                setSuggesterTid("");
+                setLastSelected("");
+              }}
+              placeholder={placeholder}
+              overrideValueControl={true}
+              tabIndex="0"
+              // onKeyDown overrides suggesters onKeyDown, and we don't want that
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  onSearch();
+                }
+              }}
             />
-          )}
+          </Suggester>
         </div>
+
+        <Icon
+          className={styles.removeIcon}
+          // can't delete last item
+          disabled={isLastItem}
+          dataCy={"advanced-search-remove-input"}
+          onClick={() => removeInputField(index)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              removeInputField(index);
+            }
+          }}
+          size={{ w: 3, h: "auto" }}
+          alt=""
+          src={"trash-2.svg"}
+          tabIndex={isLastItem ? "-1" : "0"}
+        />
       </div>
     </div>
   );
@@ -225,21 +235,19 @@ export function LogicalOperatorDropDown({
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-export default function TextInputs({ doAdvancedSearch }) {
+export default function TextInputs({ handleSearch }) {
   const { inputFields, addInputField } = useAdvancedSearchContext();
 
   return (
     <>
-      <Text type="text1" className={styles.inputTitle}>
-        {Translate({ context: "search", label: "construct-your-search" })}
-      </Text>
       {inputFields?.map((field, index) => {
         return (
           <FieldInput
             key={`inputField-${index}`}
             index={index}
+            numberOfItems={inputFields.length}
             fieldValue={field}
-            doAdvancedSearch={doAdvancedSearch}
+            onSearch={handleSearch}
           />
         );
       })}

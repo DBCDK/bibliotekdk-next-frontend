@@ -79,6 +79,7 @@ function Icon({
   return (
     <Tag
       style={dynamicStyles}
+      data-disabled={disabled || null}
       className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle} ${scaleStyle}`}
       onClick={onClick}
       onKeyDown={onKeyDown}

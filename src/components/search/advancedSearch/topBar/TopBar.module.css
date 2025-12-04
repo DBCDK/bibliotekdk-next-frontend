@@ -1,0 +1,101 @@
+/* === Layout og struktur === */
+.topBar {
+  width: 100%;
+  background-color: var(--concrete);
+  position: fixed;
+  top: 0;
+  transform: translateY(
+    calc(-1 * (100% + 20px))
+  ); /* skjult ved default, styres med klasse */
+  left: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--iron);
+  box-shadow: var(--shadow-effect);
+}
+
+.container {
+  padding: var(--pt2);
+  --underline-font-hover-color: var(--mine-shaft); /* link styling */
+}
+
+.formatedQueryContainer {
+  /* beholder flex, hvis du vil have children ved siden af */
+  display: flex;
+  align-items: center;
+}
+
+.clampedText {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  flex: 1; /* så den fylder alt ledigt space */
+}
+
+.formatedQueryContainer p {
+  margin-right: var(--pt1);
+  display: inline;
+}
+
+/* === Typografi og links === */
+.operator_color {
+  color: var(--blue);
+}
+
+.editSearchMobile {
+  display: block;
+}
+
+.edit {
+  width: 100%;
+}
+
+.editSearchDesktop {
+  display: none;
+}
+
+/* === Mobile layout (standard) === */
+.your_search {
+  margin-bottom: var(--pt1);
+}
+
+.edit_search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt1);
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+}
+
+.saveSearchButton {
+  display: flex;
+  justify-content: start;
+  gap: var(--pt05);
+  margin-top: var(--pt1);
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+}
+
+.flexSwitchMobile {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* === Desktop overrides === */
+@media (min-width: 769px) {
+  .editSearchMobile {
+    display: none;
+  }
+
+  .editSearchDesktop {
+    display: inline-block;
+  }
+
+  .saveSearchButton {
+    justify-content: end;
+    margin-top: 0;
+  }
+}

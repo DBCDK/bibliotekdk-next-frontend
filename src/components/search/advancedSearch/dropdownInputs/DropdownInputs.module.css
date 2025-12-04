@@ -2,11 +2,6 @@
   padding-top: var(--pt4);
 }
 
-.dropdownTitle {
-  display: flex;
-  align-items: center;
-}
-
 /* TODO: Comment in when worktypes are ready */
 /*.subTitle {*/
 /*  font-style: italic;*/
@@ -16,7 +11,6 @@
 .flex_wrapper {
   display: flex;
   gap: var(--pt1);
-  padding-top: var(--pt2);
   flex-direction: row;
   flex-wrap: wrap;
   row-gap: var(--pt3);
@@ -28,15 +22,9 @@
   row-gap: var(--pt05);
 }
 
-@media (max-width: 640px) {
-  .dropdownTitle {
-    display: none;
-  }
-}
-
 @media (max-width: 768px) {
   .dropdown_with_title {
-    width: 48%;
+    width: calc(50% - var(--pt05));
   }
 }
 
@@ -58,7 +46,7 @@
   align-items: center;
 }
 .showMoreButton {
-  padding: 0 var(--pt2);
+  padding: 0 var(--pt1);
   gap: var(--pt1);
   display: flex;
   align-items: center;

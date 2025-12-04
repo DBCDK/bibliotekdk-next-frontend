@@ -1,0 +1,178 @@
+/* ===== Base (mobile first) ===== */
+
+.pagination {
+  margin-top: var(--pt4);
+}
+
+.historyHeaderActions {
+  border-bottom: 0 !important;
+}
+
+.container {
+  padding-inline: var(--pt1);
+}
+
+.searchPreview,
+.mobilePreview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.searchPreview {
+  margin-right: var(--pt3);
+}
+
+.mobilePreview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt1);
+}
+
+.tableHeaderBorder {
+  border-bottom: 1px solid var(--iron);
+}
+
+.removeItemIcon {
+  cursor: pointer;
+  justify-self: flex-end;
+}
+
+.accordionContentContainer {
+  cursor: pointer;
+  align-items: center;
+  padding-bottom: var(--pt2);
+}
+
+.accordioItem:last-child .accordionContentContainer {
+  border-bottom: 1px solid var(--iron);
+}
+
+.emptyListMessage {
+  white-space: pre-wrap;
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  padding: var(--pt2);
+}
+
+.empyListTitle {
+  margin-top: var(--pt5);
+}
+
+.notLoggedIn {
+  padding: var(--pt2);
+}
+
+.loginButton {
+  margin-top: var(--pt5);
+  padding-left: var(--pt5);
+  padding-right: var(--pt5);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  max-width: 200px;
+}
+
+.loginText {
+  white-space: pre-wrap;
+}
+
+.accordionContent {
+  display: grid;
+  padding: 0 var(--pt2);
+  column-gap: var(--pt2);
+  grid-template-columns: 14fr auto;
+}
+
+.accordionContent > div:nth-child(1),
+.accordionContent > div:nth-child(2) {
+  display: none;
+}
+
+.savedItemRow {
+  display: grid;
+  cursor: pointer;
+  grid-template-columns: 1fr 12fr 1fr;
+  column-gap: var(--pt1);
+  padding: var(--pt1_5) var(--pt2);
+  align-items: center;
+}
+
+.tableHeader {
+  display: none;
+}
+
+.accordionIcon {
+  justify-self: flex-end;
+  transition: transform 0.35s;
+  cursor: pointer;
+}
+
+.mobileContent {
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+  margin-top: var(--pt3);
+  padding: 0 var(--pt2);
+  grid-column-gap: var(--pt2);
+}
+
+.accordioItem a {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* ===== Media Queries ===== */
+
+/* ≥ 576px (sm) */
+@media (min-width: 576px) {
+  .container {
+    padding-inline: var(--pt2);
+  }
+
+  .pagination {
+    margin-top: var(--pt9);
+  }
+
+  .loginButton {
+    width: fit-content;
+  }
+
+  .savedItemRow {
+    grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
+    column-gap: var(--pt2);
+  }
+
+  .tableHeader {
+    display: grid;
+    grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
+    padding: var(--pt1_5) var(--pt2);
+    column-gap: var(--pt2);
+    background-color: var(--concrete);
+    align-items: center;
+  }
+
+  .tableHeader .checkbox {
+    margin-top: 3px;
+  }
+
+  .tableContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .accordionContent {
+    grid-template-columns: var(--pt2) var(--pt16) 14fr auto;
+  }
+
+  .accordionContent > div:nth-child(1),
+  .accordionContent > div:nth-child(2) {
+    display: unset;
+  }
+
+  .emptyListMessage,
+  .notLoggedIn {
+    padding: var(--pt5) var(--pt2) var(--pt2) var(--pt6);
+  }
+}

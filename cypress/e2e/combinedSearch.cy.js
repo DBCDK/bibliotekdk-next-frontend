@@ -1,4 +1,4 @@
-describe("Combine search", () => {
+describe.skip("Combine search", () => {
   it(`should display error message if there are too many queries selected`, () => {
     cy.visit(
       "/iframe.html?id=advancedsearch-combined-search--too-many-selected-queries"

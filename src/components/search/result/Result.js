@@ -1,146 +1,178 @@
 import PropTypes from "prop-types";
+import { Fragment, useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
+import isEmpty from "lodash/isEmpty";
 
-import Pagination from "@/components/search/pagination/Pagination";
-import Section from "@/components/base/section";
+import ResultRow from "./row";
+import SearchFeedBack from "@/components/base/searchfeedback";
+
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
-import useFilters from "@/components/hooks/useFilters";
+import * as complexSearchFragments from "@/lib/api/complexSearch.fragments";
+
 import useQ from "@/components/hooks/useQ";
+import useFilters from "@/components/hooks/useFilters";
+import useDataCollect from "@/lib/useDataCollect";
 
-import { subjects } from "@/lib/api/relatedSubjects.fragments";
+import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
+import { useFacets } from "@/components/search/advancedSearch/useFacets";
+import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
+import {
+  getCqlAndFacetsQuery,
+  convertStateToCql,
+} from "@/components/search/advancedSearch/utils";
+import { mapQuickFilters } from "@/components/search/facets/simple/SimpleFacets";
 
-import FilterButton from "../filterButton";
+/* -------------------------------- UI -------------------------------- */
 
-import useBreakpoint from "@/components/hooks/useBreakpoint";
+export function Result({ rows, isLoading, onWorkClick, showFeedback = true }) {
+  const list =
+    isLoading && (!rows || rows.length === 0)
+      ? Array.from({ length: 10 }, (_, i) => ({
+          __skeleton: true,
+          _k: `s-${i}`,
+        }))
+      : rows || [];
 
-import ResultPage from "./page";
+  if (list.length === 0) return null;
 
-import styles from "./Result.module.css";
-import { NoHitSearch } from "@/components/search/advancedSearch/advancedSearchResult/noHitSearch/NoHitSearch";
-
-/**
- * Search result
- *
- * @param {Object} props
- * See propTypes for specific props and types
- */
-export function Result({
-  page,
-  isLoading,
-  hitcount = 0,
-  onWorkClick,
-  onPageChange,
-  noRelatedSubjects,
-}) {
-  const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
-  const isTablet = breakpoint === "md";
-  const isDesktop = breakpoint === "lg" || breakpoint === "xl";
-
-  const numPages = Math.ceil(hitcount / 10);
-
-  const noRelatedSubjectsClass = noRelatedSubjects
-    ? styles.noRelatedSubjects
-    : "";
-
-  return (
-    <>
-      <Section
-        className={`${styles.section} ${noRelatedSubjectsClass}`}
-        divider={false}
-        title={
-          !isLoading && !isTablet && hitcount > 0 ? (
-            <FilterButton
-              className={`${styles.filterButton} ${styles.visible}`}
-            />
-          ) : (
-            <span />
-          )
+  return list.map((row, index) => (
+    <Fragment key={row?.workId ?? row?._k ?? index}>
+      <ResultRow
+        isLoading={!!row?.__skeleton || isLoading}
+        work={row?.__skeleton ? {} : row}
+        onClick={
+          onWorkClick && !row?.__skeleton
+            ? () => onWorkClick(index, row)
+            : undefined
         }
-        rightSideTitle={isDesktop}
-        colSize={{ lg: { offset: 3, span: true } }}
-        id="search-result-section"
-      >
-        {hitcount === 0 && !isLoading && <NoHitSearch isSimpleSearch={true} />}
-
-        {Array(isMobile ? page : 1)
-          .fill({})
-          .map((p, index) => (
-            <ResultPage
-              key={`result-page-${index}`}
-              page={isMobile ? index + 1 : page}
-              onWorkClick={onWorkClick}
-            />
-          ))}
-      </Section>
-      {hitcount > 0 && (
-        <Pagination
-          numPages={numPages}
-          currentPage={parseInt(page, 10)}
-          onChange={onPageChange}
-        />
-      )}
-    </>
-  );
+      />
+      {index === 0 && showFeedback && <SearchFeedBack />}
+    </Fragment>
+  ));
 }
 
 Result.propTypes = {
-  q: PropTypes.object,
-  page: PropTypes.number,
+  rows: PropTypes.array,
   isLoading: PropTypes.bool,
-  hitcount: PropTypes.number,
-  viewSelected: PropTypes.string,
-  onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,
+  showFeedback: PropTypes.bool,
 };
 
-/**
- * Wrap is a react component responsible for loading
- * data and displaying the right variant of the component
- *
- * @param {Object} props Component props
- * See propTypes for specific props and types
- *
- * @returns {React.JSX.Element}
- */
-export default function Wrap({ page, onWorkClick, onPageChange }) {
-  const { getQuery, hasQuery } = useQ();
-  const q = getQuery();
-  const { filters } = useFilters();
+/* ------------------------------- Wrap ------------------------------- */
 
-  // use the useData hook to fetch data
-  const fastResponse = useData(
-    hasQuery && searchFragments.hitcount({ q, filters })
+export default function Wrap({ page = 1, onWorkClick }) {
+  const limit = 10;
+  let offset = limit * (page - 1);
+
+  // Mode
+  const { query } = useRouter();
+  const isAdvancedMode = query?.mode === "avanceret";
+  const isCqlMode = query?.mode === "cql";
+
+  // Avanceret søgning inputs
+  const adv = useAdvancedSearchContext();
+  const { selectedFacets } = useFacets();
+  const { selectedQuickFilters } = useQuickFilters();
+
+  const mapped = mapQuickFilters(selectedQuickFilters);
+
+  const { cqlFromUrl, fieldSearchFromUrl, sort } = adv || {};
+
+  const hasAdvancedParams =
+    (isAdvancedMode || isCqlMode) && !isEmpty(fieldSearchFromUrl);
+  const hasCqlParams = isCqlMode && !isEmpty(cqlFromUrl);
+
+  // Byg CQL (memo for læsbarhed)
+  const cqlAndFacetsQuery = useMemo(
+    () =>
+      getCqlAndFacetsQuery({
+        cql: cqlFromUrl,
+        selectedFacets,
+        quickFilters: selectedQuickFilters,
+      }),
+    [cqlFromUrl, selectedFacets, selectedQuickFilters]
   );
 
-  // prioritized q type to get related subjects for
-  const query = q.subject || q.all || q.title || q.creator;
+  const cqlQuery = useMemo(
+    () =>
+      cqlAndFacetsQuery ||
+      convertStateToCql({
+        ...fieldSearchFromUrl,
+        facets: selectedFacets,
+        quickFilters: selectedQuickFilters,
+      }),
+    [
+      cqlAndFacetsQuery,
+      fieldSearchFromUrl,
+      selectedFacets,
+      selectedQuickFilters,
+    ]
+  );
 
-  const relatedSubjects = useData(query && subjects({ q: [query], limit: 7 }));
+  // Simpel søgning inputs
+  const { getQuery: getFiltersQuery, isSynced } = useFilters();
+  const { getQuery, hasQuery } = useQ();
 
-  if (fastResponse.error) {
-    return null;
-  }
+  const q = getQuery();
+  const filters = getFiltersQuery();
 
-  if (fastResponse.isLoading) {
-    return <Result page={page} isLoading={true} />;
-  }
+  const dataCollect = useDataCollect();
+  if (!isSynced) offset = 0;
+
+  // Data-kald (kun aktivt for gældende mode)
+  const complexResponse = useData(
+    hasAdvancedParams || hasCqlParams
+      ? complexSearchFragments.doComplexSearchAll({
+          cql: cqlQuery,
+          offset,
+          limit,
+          ...(!isEmpty(sort) && { sort }),
+        })
+      : null
+  );
+
+  const merged = { ...filters, ...mapped };
+
+  const simpleResponse = useData(
+    hasQuery ? searchFragments.all({ q, limit, offset, filters: merged }) : null
+  );
+
+  // Tracking for simpel søgning
+  useEffect(() => {
+    if ((!hasAdvancedParams || !hasCqlParams) && simpleResponse?.data) {
+      dataCollect.collectSearch({
+        search_request: { q, filters: merged },
+        search_response_works:
+          simpleResponse?.data?.search?.works?.map((w) => w.workId) || [],
+        search_offset: offset,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [simpleResponse?.data, hasAdvancedParams, hasCqlParams]);
+
+  // Data extraction
+  const rows =
+    hasAdvancedParams || hasCqlParams
+      ? complexResponse?.data?.complexSearch?.works
+      : simpleResponse?.data?.search?.works;
+
+  const isLoading =
+    hasAdvancedParams || hasCqlParams
+      ? !!complexResponse?.isLoading
+      : !!simpleResponse?.isLoading;
 
   return (
     <Result
-      page={page}
-      noRelatedSubjects={!relatedSubjects?.data?.relatedSubjects?.length > 0}
-      isLoading={relatedSubjects.isLoading}
-      hitcount={fastResponse?.data?.search?.hitcount}
+      rows={rows}
+      isLoading={isLoading}
       onWorkClick={onWorkClick}
-      onPageChange={onPageChange}
+      showFeedback={page === 1}
     />
   );
 }
 
 Wrap.propTypes = {
   page: PropTypes.number,
-  viewSelected: PropTypes.string,
-  onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,
 };

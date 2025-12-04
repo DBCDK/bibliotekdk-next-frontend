@@ -1,91 +1,96 @@
-/**
- * @file - search history for mobile suggester
- */
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SuggestTypeEnum } from "@/lib/enums";
 import { getLocalStorageItem, setLocalStorageItem } from "@/lib/utils";
 
 const KEY = "bibdk-search-history";
 
 /**
- * @function extractStoredValue
- * Ensures the localStorage uses the proper fields in `bibdk-search-history`.
- * That is `type` instead of `__typename` and `term` instead of `value`
- * @param {Array<Object>} prevItemArray -- The previous array of items
- * @returns {Array<Object>} -- The new and updated array of items
+ * Konverterer gamle entries til korrekt format med `type` og `term`
+ * @param {Array<Object>} prevItemArray
+ * @returns {Array<Object>}
  */
-function extractStoredValue(prevItemArray) {
-  let newItemArray = [];
-
-  for (let i = 0; i < prevItemArray?.length; i++) {
-    newItemArray.push({});
-    if (prevItemArray?.[i]?.type && prevItemArray?.[i]?.term) {
-      newItemArray[i] = prevItemArray[i];
-      continue;
-    }
-    if (prevItemArray?.[i]?.__typename) {
-      newItemArray[i].type = SuggestTypeEnum.HISTORY;
-    }
-    if (prevItemArray?.[i]?.value) {
-      newItemArray[i].term = prevItemArray[i].value;
-    }
-  }
-
-  return newItemArray;
+function extractStoredValue(prevItemArray = []) {
+  return prevItemArray.map((item) => {
+    if (item?.type && item?.term) return item;
+    return {
+      type: SuggestTypeEnum.HISTORY,
+      term: item?.value || "",
+    };
+  });
 }
 
+/**
+ * Henter historik fra localStorage og parser den sikkert
+ * @returns {Array<Object>}
+ */
+function getHistory() {
+  try {
+    const raw = getLocalStorageItem(KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return extractStoredValue(parsed);
+  } catch (err) {
+    console.error("Failed to read history from localStorage:", err);
+    return [];
+  }
+}
+
+/**
+ * Gemmer historik både i localStorage og lokal state
+ * @param {Array<Object>} data
+ * @param {Function} setStoredValue
+ */
+function saveHistory(data, setStoredValue) {
+  try {
+    setStoredValue(data);
+    setLocalStorageItem(KEY, JSON.stringify(data));
+  } catch (err) {
+    console.error("Failed to save history:", err);
+  }
+}
+
+/**
+ * @hook useHistory
+ * Returnerer søgehistorik, samt funktioner til at tilføje og rydde den
+ */
 export const useHistory = () => {
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      if (typeof window !== "undefined") {
-        const item = getLocalStorageItem(KEY);
-        return item ? extractStoredValue(JSON.parse(item)) : [];
-      }
-    } catch (err) {
-      console.error(err);
-      return [];
-    }
-  });
+  const [storedValue, setStoredValue] = useState([]);
 
+  // Hent historik efter første render (kun på klienten)
+  useEffect(() => {
+    const history = getHistory();
+    setStoredValue(history);
+  }, []);
+
+  /**
+   * Tilføjer en ny søgeterm til historikken
+   * @param {string} value
+   */
   const setValue = (value) => {
-    try {
-      if (typeof window !== "undefined") {
-        // Fetch clean
-        let freshStoredValue =
-          extractStoredValue(JSON.parse(getLocalStorageItem(KEY))) || "[]";
+    if (value && value !== "") {
+      const current = getHistory();
 
-        // New history obj
-        const obj = {
-          type: SuggestTypeEnum.HISTORY,
-          term: value,
-        };
-        // Remove duplicates if any
-        let valueToStore = freshStoredValue?.filter(
-          (h) => h?.term?.toLowerCase() !== value?.toLowerCase()
-        );
-        // Add to beginning of history array
-        valueToStore.unshift(obj);
-        // only save last 8 searches
-        valueToStore = valueToStore.slice(0, 8);
-        // Store again
-        setStoredValue(valueToStore);
-        setLocalStorageItem(KEY, JSON.stringify(valueToStore));
-      }
-    } catch (err) {
-      console.error(err);
+      const newItem = {
+        type: SuggestTypeEnum.HISTORY,
+        term: value,
+      };
+
+      // Fjern evt. duplikater
+      let updated = current.filter(
+        (item) => item.term?.toLowerCase() !== value?.toLowerCase()
+      );
+
+      updated.unshift(newItem); // Tilføj forrest
+      updated = updated.slice(0, 8); // Max 8 elementer
+
+      saveHistory(updated, setStoredValue);
     }
   };
 
+  /**
+   * Rydder hele historikken
+   */
   const clearValue = () => {
-    try {
-      if (typeof window !== "undefined") {
-        setStoredValue([]);
-        setLocalStorageItem(KEY, JSON.stringify([]));
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    saveHistory([], setStoredValue);
   };
 
   return [storedValue, setValue, clearValue];

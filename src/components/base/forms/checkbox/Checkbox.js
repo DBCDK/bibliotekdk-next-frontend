@@ -1,25 +1,20 @@
 import PropTypes from "prop-types";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 import Skeleton from "@/components/base/skeleton";
 import cx from "classnames";
 import styles from "./Checkbox.module.css";
 
 /**
- * The Component function
- *
- * @param {Object} props
- * See propTypes for specific props and types
- *
- * Get you value like <Input onChange={(value) => console.log(value)} ... />
- *
- * @returns {React.JSX.Element}
+ * Hvis `checked`-prop er givet, kører komponenten som *kontrolleret*.
+ * Ellers falder den tilbage til intern state (ukontrolleret).
  */
 export function Checkbox({
   className,
   tabIndex = "0",
   id,
-  checked = false,
+  checked, // gør komponenten kontrolleret, hvis ikke undefined
+  defaultChecked = false, // fallback til ukontrolleret brug
   disabled = false,
   onChange,
   dataCy = "checkbox",
@@ -27,23 +22,31 @@ export function Checkbox({
   ariaLabel = "",
   readOnly = false,
   required,
-  onClick,
+  onClick, // videregives til input hvis nødvendigt
 }) {
-  const [status, setStatus] = useState(checked);
-  const firstUpdate = useRef(true);
+  const isControlled = typeof checked === "boolean";
 
+  // Kun brugt i ukontrolleret mode:
+  const [internal, setInternal] = useState(!!defaultChecked);
+
+  // Sync intern state hvis vi skifter fra ukontrolleret → kontrolleret (sjældent, men sikkert)
   useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
+    if (!isControlled && typeof checked === "boolean") {
+      setInternal(!!checked);
     }
-    onChange && onChange(status);
-  }, [status]);
+  }, [checked, isControlled]);
 
-  //Update value if undefined/null at first render
-  useEffect(() => {
-    setStatus(checked);
-  }, [checked]);
+  const inputChecked = isControlled ? !!checked : internal;
+
+  const handleChange = (e) => {
+    if (readOnly) return;
+    const next = !!e.target.checked;
+
+    if (!isControlled) {
+      setInternal(next);
+    }
+    onChange && onChange(next); // Kald kun onChange direkte fra event
+  };
 
   return (
     <label
@@ -57,23 +60,16 @@ export function Checkbox({
         id={id}
         aria-labelledby={ariaLabelledBy}
         className={styles.input}
-        checked={status}
+        checked={inputChecked}
         type="checkbox"
         disabled={disabled}
         required={required}
         readOnly={readOnly}
         data-cy={dataCy}
         tabIndex={disabled ? "-1" : tabIndex}
-        onChange={(e) => {
-          if (readOnly) return;
-          setStatus(e.target.checked);
-        }}
-        onKeyDown={(e) => {
-          if (readOnly) return;
-          if (e.key === "Enter") {
-            setStatus(!status);
-          }
-        }}
+        onChange={handleChange}
+        // Fjern manuel toggle på Enter for at undgå dobbelt-events.
+        // Browseren håndterer keyboard (mellemrum) korrekt for checkboxes.
         onClick={onClick}
       />
       <div className={styles.border}>
@@ -84,14 +80,13 @@ export function Checkbox({
   );
 }
 
-// PropTypes for component
 Checkbox.propTypes = {
   id: PropTypes.string.isRequired,
   ariaLabel: PropTypes.string.isRequired,
   tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
-  checked: PropTypes.bool,
-  invalid: PropTypes.bool,
+  checked: PropTypes.bool, // kontrolleret
+  defaultChecked: PropTypes.bool, // ukontrolleret fallback
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
@@ -101,10 +96,6 @@ Checkbox.propTypes = {
   dataCy: PropTypes.string,
 };
 
-/**
- * Return loading version of component
- *
- */
 export function SkeletonCheckbox() {
   return (
     <div className={`${styles.input}`}>
@@ -113,14 +104,9 @@ export function SkeletonCheckbox() {
   );
 }
 
-/**
- * Return default wrap
- *
- */
 export default function Wrap(props) {
   if (props.skeleton) {
     return <SkeletonCheckbox />;
   }
-
   return <Checkbox {...props} />;
 }

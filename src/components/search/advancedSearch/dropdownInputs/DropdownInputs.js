@@ -112,19 +112,6 @@ export default function DropdownInputs() {
   return (
     <>
       <div className={styles.dropdown_inputs_wrapper}>
-        <div className={styles.dropdownTitle}>
-          <Text type="text1">
-            {Translate({ context: "search", label: "narrow-search-more" })}
-          </Text>
-          {/* TODO: Comment in, when workTypes are commented in */}
-          {/*<Text type="text3" className={styles.subTitle}>*/}
-          {/*  {Translate({*/}
-          {/*    context: "search",*/}
-          {/*    label: "adjusted-after-material-type",*/}
-          {/*  })}*/}
-          {/*</Text>*/}
-        </div>
-
         <div className={styles.flex_wrapper}>
           {dropdownUnitsToRender.map((unit) => {
             return (
