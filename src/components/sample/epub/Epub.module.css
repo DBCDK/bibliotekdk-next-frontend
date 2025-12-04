@@ -57,7 +57,7 @@
   overflow: visible !important;
 }
 
-.wrapper > div > div:last-of-type {
+.wrapper > div:first-of-type > div:last-of-type {
   display: none;
 }
 
