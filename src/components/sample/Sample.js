@@ -12,6 +12,7 @@ import { publizonSamples } from "@/lib/api/work.fragments";
 
 import styles from "./Sample.module.css";
 import { selectPublizonSample } from "./utils";
+import Disclaimer from "./disclaimer";
 
 // SAMPLE: kun UI (modtager alt via props)
 export function Sample({
@@ -57,6 +58,7 @@ export function Sample({
         isMp3={isMp3}
         className={styles.overlay}
       >
+        <Disclaimer data={data} />
         {isEpub && (
           <ReaderSample src={url} data={data} isFullscreen={isFullscreen} />
         )}

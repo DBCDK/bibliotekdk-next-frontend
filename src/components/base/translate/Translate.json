@@ -5754,6 +5754,10 @@
       "test-listen-btn-lbl": {
         "da": "Prøvelyt",
         "en": "Test listen"
+      },
+      "disclaimer-text": {
+        "da": "Indholdet kommer fra <strong>%s</strong>-udgaven",
+        "en": "Content comes from <strong>%s</strong>"
       }
     },
     "receipt": {
