@@ -88,7 +88,7 @@ function Page({
 
   const shouldShowHistory = !isLoading && !hasActiveSearch;
   const shouldShowNoHits = !isLoading && hasActiveSearch && hitcount === 0;
-  const shouldShowCreator = Boolean(creatorHit);
+  const shouldShowCreator = isLoading || Boolean(creatorHit);
   const shouldShowSeries = !shouldShowCreator && Boolean(seriesHit);
 
   useEffect(() => {
@@ -108,6 +108,7 @@ function Page({
   const searchHitComponent = shouldShowCreator ? (
     <CreatorBox
       creatorHit={creatorHit}
+      isLoading={isLoading}
       className="search-block"
       data-cy="search-block"
     />
@@ -133,8 +134,8 @@ function Page({
       <Section
         divider={false}
         colSize={{
-          lg: 10,
-          titel: 2,
+          titel: { lg: { offset: 3 } },
+          lg: { span: 9, offset: 0 },
         }}
         id="search-result-section"
         className={styles.section}
@@ -226,7 +227,11 @@ function Page({
             </Col>
           )}
 
-          <Col xs={12} lg={9} className={styles.resultsMain}>
+          <Col
+            xs={12}
+            lg={!isMobile && searchHitComponent ? 8 : 12}
+            className={styles.resultsMain}
+          >
             <div className={styles.resultsList}>
               {Array(isMobile ? currentPage : 1)
                 .fill({})
@@ -241,7 +246,7 @@ function Page({
           </Col>
 
           {!isMobile && searchHitComponent && (
-            <Col xs={12} lg={3} className={styles.resultsSidebar}>
+            <Col xs={12} lg={4} className={styles.resultsSidebar}>
               {searchHitComponent}
             </Col>
           )}

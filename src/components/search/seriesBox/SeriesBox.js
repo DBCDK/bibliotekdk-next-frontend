@@ -92,13 +92,13 @@ export default function SeriesBox({
         </Text>
       )}
 
-      {membersPreview?.length > 0 && (
+      {members?.length > 0 && (
         <div className={styles.members}>
           <Text type="text1" className={styles.note}>
             {Translate({
               context: "series_page",
               label: "parts_in_series",
-              vars: [membersPreview.length],
+              vars: [members.length],
             })}
           </Text>
           <div className={styles.thumbs}>

@@ -102,7 +102,7 @@
       "more_about": {
         "da": "Mere om %s",
         "en": "More about %s"
-    }
+      }
     },
     "advanced_search_cql": {
       "cql_error_link_href": {

@@ -2,6 +2,33 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 import styles from "./CreatorBox.module.css";
 import Text from "@/components/base/text";
+import Cover from "@/components/base/cover/Cover";
+import { useRouter } from "next/router";
+
+function formatListWithOg(items) {
+  const max = 3;
+  if (!Array.isArray(items)) return null;
+  const list = items.slice(0, max);
+
+  if (list.length === 0) return null;
+
+  const andWord = Translate({ context: "general", label: "and" });
+
+  if (list.length === 1) {
+    const only = list[0] ?? "";
+    return only.charAt(0).toUpperCase() + only.slice(1);
+  }
+
+  const allButLast = list.slice(0, -1);
+  const last = list[list.length - 1] ?? "";
+
+  const base =
+    allButLast.length === 1
+      ? `${allButLast[0]} ${andWord} ${last}`
+      : `${allButLast.join(", ")} ${andWord} ${last}`;
+
+  return base.charAt(0).toUpperCase() + base.slice(1);
+}
 
 /**
  * CreatorBox component for displaying creator information in search results
@@ -10,7 +37,9 @@ export default function CreatorBox({
   creatorHit,
   className = "",
   "data-cy": dataCy,
+  isLoading = false,
 }) {
+  const router = useRouter();
   if (!creatorHit) {
     return null;
   }
@@ -18,13 +47,11 @@ export default function CreatorBox({
     creatorHit?.generated?.shortSummary?.text ||
     creatorHit?.generated?.summary?.text ||
     creatorHit?.generated?.dataSummary?.text;
-    
+
   const name =
     creatorHit?.display ||
     [creatorHit?.firstName, creatorHit?.lastName].filter(Boolean).join(" ");
-  // const role = Array.isArray(creatorHit?.wikidata?.occupation)
-  //   ? creatorHit.wikidata.occupation[0]
-  //   : creatorHit?.wikidata?.occupation;
+  const occupation = formatListWithOg(creatorHit?.wikidata?.occupation);
   const maxAwardsToShow = 3;
   const displayedAwards = (
     Array.isArray(creatorHit?.wikidata?.awards)
@@ -40,19 +67,32 @@ export default function CreatorBox({
           : 0) - maxAwardsToShow
       : 0;
 
+  console.log(creatorHit?.forfatterweb?.image);
   return (
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
       {(creatorHit?.forfatterweb?.image?.medium?.url ||
         creatorHit?.wikidata?.image?.medium) && (
         <div className={styles.portraitWrapper}>
-          <img
-            src={
-              creatorHit?.forfatterweb?.image?.medium?.url ||
-              creatorHit?.wikidata?.image?.medium
+          <Cover
+            src={creatorHit?.forfatterweb?.image?.medium?.url}
+            alt={"creatorData?.display"}
+            skeleton={
+              isLoading && !creatorHit?.forfatterweb?.image?.medium?.url
             }
-            alt={creatorHit?.display || ""}
-            className={styles.portrait}
+            size="fill"
+            onClick={() => {
+              router.push(`/ophav/${encodeURIComponent(creatorHit.display)}`);
+            }}
           />
+            <Text
+              type="text5"
+              tag="p"
+              className={styles.attribution}
+              lines={2}
+              clamp
+            >
+              Forfatterweb.dk
+            </Text>
         </div>
       )}
 
@@ -61,13 +101,18 @@ export default function CreatorBox({
           {creatorHit.display}
         </Text>
       )}
-      {creatorHit?.wikidata?.description?.length > 0 && (
+      {/* {creatorHit?.wikidata?.description?.length > 0 && (
         <Text type="text2" className={styles.role}>
           {creatorHit?.wikidata?.description?.charAt(0)?.toUpperCase() +
             creatorHit?.wikidata?.description?.slice(1)}
         </Text>
-      )}
+      )} */}
 
+      {occupation && (
+        <Text type="text2" className={styles.role}>
+          {occupation}
+        </Text>
+      )}
       {summary && (
         <Text type="text2" className={styles.description}>
           {summary}
