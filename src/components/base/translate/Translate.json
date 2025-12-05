@@ -5945,6 +5945,16 @@
         "da": "Der skete en fejl ved bestillingen. Prøv at bestille igen.",
         "en": "There was an error creating the order. Try again."
       }
+    },
+    "creator": {
+      "awards": {
+        "da": "Priser:",
+        "en": "Awards:"
+      },
+      "more_about": {
+        "da": "Mere om %s",
+        "en": "More about %s"
+      }
     }
   }
 }
