@@ -70,7 +70,7 @@ export default function CreatorBox({
   console.log(creatorHit?.forfatterweb?.image);
   return (
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
-      {(creatorHit?.forfatterweb?.image?.medium?.url) && (
+      {creatorHit?.forfatterweb?.image?.medium?.url && (
         <div className={styles.portraitWrapper}>
           <Cover
             src={creatorHit?.forfatterweb?.image?.medium?.url}

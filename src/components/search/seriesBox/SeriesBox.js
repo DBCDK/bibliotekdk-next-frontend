@@ -79,7 +79,7 @@ export default function SeriesBox({
       )}
 
       {members?.length > 0 && (
-        <div >
+        <div>
           <Text type="text1" className={styles.note}>
             {Translate({
               context: "series_page",
@@ -113,10 +113,9 @@ export default function SeriesBox({
                       <Cover
                         src={image}
                         alt={memberTitle || ""}
-                     //  className={styles.thumbImage}
-                     size="fill-width"
+                        //  className={styles.thumbImage}
+                        size="fill-width"
                       />
-
                     </div>
                     <Text
                       type="text3"

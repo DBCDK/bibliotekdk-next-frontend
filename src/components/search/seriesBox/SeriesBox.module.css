@@ -6,6 +6,12 @@
   color: var(--mine-shaft);
 }
 
+@media (max-width: 992px) {
+  .block {
+    margin-bottom: var(--pt3);
+  }
+}
+
 .headerRow {
   display: flex;
   justify-content: space-between;
