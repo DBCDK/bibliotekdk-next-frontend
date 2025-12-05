@@ -15,6 +15,7 @@ import animations from "@/components/base/animation/animations.module.css";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import ArrowDownSvg from "@/public/icons/arrow_down_line.svg";
 import Link from "@/components/base/link";
+import Tooltip from "@/components/base/tooltip";
 
 export function useCreatorOverview(creatorId) {
   const { data, isLoading } = useData(creatorOverview({ display: creatorId }));
@@ -86,91 +87,110 @@ export function Overview({
             )}
             {creatorData?.wikidata?.awards?.length > 0 && (
               <div className={styles.awards}>
-                <Icon size={{ w: 3, h: 3 }} src="award.svg" alt="" />
-                <Text
-                  type="text3"
-                  tag="p"
-                  className={styles.award}
-                  lines={2}
-                  clamp
-                >
-                  {creatorData?.wikidata?.awards?.join(", ")}
+                <Icon size={{ w: 20, h: 20 }} src="award.svg" alt="" />
+                <Text type="text3" tag="p" className={styles.award} lines={2}>
+                  {Translate({
+                    context: "creator",
+                    label: "selected-prizes",
+                  })}
+                  : {creatorData?.wikidata?.awards?.join(", ")}
                 </Text>
               </div>
             )}
             {summaryText && (
-              <AiMarkdown
-                creatorId={creatorId}
-                text={summaryText}
-                urlTransform={(href) => `/materiale/title/${href}`}
-                fadeIn={false}
-                // disclaimer={tmpDisclaimer}
-              />
+              <div className={styles.summary}>
+                <AiMarkdown
+                  creatorId={creatorId}
+                  text={summaryText}
+                  urlTransform={(href) => `/materiale/title/${href}`}
+                  fadeIn={false}
+                  // disclaimer={tmpDisclaimer}
+                />
+              </div>
             )}
             {!isLoading && creatorId && (
-              <div className={`${styles.links} `}>
-                <IconLink
-                  className={styles.arrowDownLink}
-                  href={"#"}
-                  iconPlacement="right"
-                  iconSrc={ArrowDownSvg}
-                  iconAnimation={[
-                    animations["h-elastic"],
-                    animations["f-elastic"],
-                  ]}
-                  textType="text3"
-                  target="_blank"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const publications = document.getElementById(
-                      "creator-publications"
-                    );
-                    if (publications) {
-                      publications.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
-                >
-                  {" "}
-                  <Text type="text3" tag="span">
-                    {Translate({
-                      context: "creator",
-                      label: "view-publications",
-                    })}
-                  </Text>
-                </IconLink>
+              <>
+                <div className={styles.disclaimer}>
+                  <Tooltip
+                    labelToTranslate="tooltip-disclaimer"
+                    placement="bottom-start"
+                  >
+                    <Text
+                      type="text5"
+                      tag="div"
+                      className={styles.disclaimerLabel}
+                    >
+                      {Translate({
+                        context: "tooltip",
+                        label: "tooltip-disclaimer-label",
+                      })}
+                    </Text>
+                  </Tooltip>
+                </div>
 
-                <Link
-                  border={{ bottom: { keepVisible: true } }}
-                  href={"/find?q.all=" + encodeURIComponent(`"${creatorId}"`)}
-                >
-                  <Text type="text3" tag="span">
-                    {Translate({
-                      context: "creator",
-                      label: "creator-search",
-                    })}
-                  </Text>
-                </Link>
-                {forfatterwebUrl && (
+                <div className={`${styles.links} `}>
                   <IconLink
-                    className={styles.externalLink}
-                    href={forfatterwebUrl}
+                    className={styles.arrowDownLink}
+                    href={"#"}
                     iconPlacement="right"
-                    iconSrc={ExternalSvg}
+                    iconSrc={ArrowDownSvg}
                     iconAnimation={[
                       animations["h-elastic"],
                       animations["f-elastic"],
                     ]}
                     textType="text3"
                     target="_blank"
-                    iconStyle={{ stroke: "blue" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const publications = document.getElementById(
+                        "creator-publications"
+                      );
+                      if (publications) {
+                        publications.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
                   >
-                    {Translate({
-                      context: "creator",
-                      label: "creator-forfatterweb",
-                    })}
+                    {" "}
+                    <Text type="text3" tag="span">
+                      {Translate({
+                        context: "creator",
+                        label: "view-publications",
+                      })}
+                    </Text>
                   </IconLink>
-                )}
-              </div>
+                  <Link
+                    border={{ bottom: { keepVisible: true } }}
+                    href={"/find?q.all=" + encodeURIComponent(`"${creatorId}"`)}
+                  >
+                    <Text type="text3" tag="span">
+                      {Translate({
+                        context: "creator",
+                        label: "creator-search",
+                      })}
+                    </Text>
+                  </Link>
+                  {forfatterwebUrl && (
+                    <IconLink
+                      className={styles.externalLink}
+                      href={forfatterwebUrl}
+                      iconPlacement="right"
+                      iconSrc={ExternalSvg}
+                      iconAnimation={[
+                        animations["h-elastic"],
+                        animations["f-elastic"],
+                      ]}
+                      textType="text3"
+                      target="_blank"
+                      iconStyle={{ stroke: "blue" }}
+                    >
+                      {Translate({
+                        context: "creator",
+                        label: "creator-forfatterweb",
+                      })}
+                    </IconLink>
+                  )}
+                </div>
+              </>
             )}
           </Col>
           <Col
