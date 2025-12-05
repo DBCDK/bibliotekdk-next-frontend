@@ -234,7 +234,7 @@ function useQ() {
           query: !isEmpty(merged) ? merged : { "q.all": "" },
         },
         undefined,
-        { scroll: router.pathname !== "/find" }
+        { scroll: router.pathname !== "/find/simpel" }
       );
   };
 

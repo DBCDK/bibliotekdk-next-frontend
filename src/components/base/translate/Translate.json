@@ -324,7 +324,7 @@
     },
     "advanced_search_worktypes": {
       "all": {
-        "da": "Alle",
+        "da": "Alle materialer",
         "en": "All"
       },
       "literature": {
@@ -3136,6 +3136,18 @@
       "topbar-cql-search": {
         "da": "CQL-søgning",
         "en": "CQL search"
+      },
+      "topbar-simple-search-mobile": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "topbar-advanced-search-mobile": {
+        "da": "Avanceret",
+        "en": "Advanced"
+      },
+      "topbar-cql-search-mobile": {
+        "da": "CQL",
+        "en": "CQL"
       },
       "yourSearch": {
         "da": "Din søgning",

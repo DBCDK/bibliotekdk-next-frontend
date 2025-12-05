@@ -26,6 +26,8 @@ import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 
+import History from "@/components/search/history";
+
 import ArrowSvg from "@/public/icons/arrowleft.svg";
 import ClearSvg from "@/public/icons/close.svg";
 
@@ -34,6 +36,7 @@ import styles from "./Suggester.module.css";
 import useDataCollect from "@/lib/useDataCollect";
 import { SuggestTypeEnum } from "@/lib/enums";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { Container } from "react-bootstrap";
 
 const context = { context: "suggester" };
 
@@ -93,12 +96,7 @@ function highlightMatch(suggestion, query) {
   );
 }
 
-function renderSuggestionsContainer(
-  containerProps,
-  children,
-  isHistory,
-  clearHistory
-) {
+function renderSuggestionsContainer(containerProps, children, isHistory) {
   return (
     <div
       {...containerProps}
@@ -108,28 +106,13 @@ function renderSuggestionsContainer(
       }`}
       data-cy={cyKey({ name: "container", prefix: "suggester" })}
     >
-      {isHistory && (
-        <div className={styles.history}>
-          <Text type="text1" className={styles.title}>
-            {Translate({ ...context, label: "historyTitle" })}
-          </Text>
-          <Text
-            dataCy={cyKey({ name: "clear-history", prefix: "suggester" })}
-            type="text1"
-            className={styles.clear}
-            onClick={clearHistory}
-          >
-            <Link
-              tag="span"
-              onClick={(e) => e.preventDefault()}
-              border={{ bottom: { keepVisible: true } }}
-            >
-              {Translate({ ...context, label: "historyClear" })}
-            </Link>
-          </Text>
-        </div>
+      {isHistory ? (
+        <Container>
+          <History className={styles.history} />
+        </Container>
+      ) : (
+        children
       )}
-      {children}
     </div>
   );
 }

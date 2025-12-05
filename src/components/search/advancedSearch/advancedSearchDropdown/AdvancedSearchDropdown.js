@@ -39,6 +39,7 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link/Link";
 import { cyKey } from "@/utils/trim";
 import translate from "@/components/base/translate";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const specialFormTypes = new Set([FormTypeEnum.ACTION_LINK_CONTAINER]);
 
@@ -125,6 +126,9 @@ export default function AdvancedSearchDropdown({
 
   const [dropdownQuery, setDropdownQuery] = useState("");
 
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+
   const dropdownMenuId = useId();
   const listGroupId = useId();
   const inputId = useId();
@@ -185,8 +189,6 @@ export default function AdvancedSearchDropdown({
 
   return (
     <Dropdown
-      //hack to disable popper.js dynamic positioning of the dropdown
-      align={{ sm: "center" }}
       className={styles.nav_element}
       data-cy={`advanced-search-dropdown-${indexName}`}
     >
@@ -203,6 +205,9 @@ export default function AdvancedSearchDropdown({
         className={styles.toggler}
       />
       <Dropdown.Menu
+        //hack to disable popper.js dynamic positioning of the dropdown
+        align={isMobile ? "end" : "start"}
+        flip={true}
         id={dropdownMenuId}
         className={styles.dropdown_items}
         tabIndex="-1"

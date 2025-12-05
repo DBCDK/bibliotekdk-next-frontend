@@ -8,7 +8,6 @@ import Link from "@/components/base/link";
 import Skip from "@/components/base/skip";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
-import Section from "@/components/base/section";
 
 import { getUrlByType } from "@/components/search/advancedSearch/utils";
 
@@ -63,14 +62,7 @@ export function Related({ data = {}, isLoading }) {
     : "";
 
   return (
-    <Section
-      className={`${styles.section} ${noRelatedSubjectsClass}`}
-      divider={false}
-      space={{
-        bottom: "var(--pt4)",
-      }}
-      title={null}
-    >
+    <div className={`${styles.section} ${noRelatedSubjectsClass}`}>
       {(data.length > 0 || isLoading) && (
         <div>
           <Skip
@@ -95,7 +87,7 @@ export function Related({ data = {}, isLoading }) {
           </div>
         </div>
       )}
-    </Section>
+    </div>
   );
 }
 

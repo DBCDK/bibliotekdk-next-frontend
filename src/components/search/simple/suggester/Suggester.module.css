@@ -167,13 +167,6 @@
   max-width: 400px;
 }
 
-.history {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--pt1);
-}
-
 /* Suggestion element */
 
 .element {

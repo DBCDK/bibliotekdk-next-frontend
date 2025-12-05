@@ -108,7 +108,6 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
 export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
-  const { restartFacetsHook } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
   const searchItemsWrapper = useRef(null);
 
@@ -257,7 +256,6 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
               facets: JSON.stringify(facets),
               quickfilters: JSON.stringify(quickFilters),
             };
-            restartFacetsHook();
             resetQuickFilters();
             router.push({ pathname: "/avanceret", query });
           }}

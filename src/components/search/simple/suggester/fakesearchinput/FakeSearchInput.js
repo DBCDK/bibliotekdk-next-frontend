@@ -33,6 +33,8 @@ export default function FakeSearchInput({
   const { q, setQ } = useQ();
   const filters = useFilters();
 
+  console.log("sss", q);
+
   const hasQuery = !!q?.all;
   const hasQueryClass = hasQuery ? styles.hasQuery : "";
 

@@ -15,6 +15,10 @@
   margin-bottom: var(--pt2);
 }
 
+.saveSearchButton {
+  margin-bottom: var(--pt2);
+}
+
 .topbar-visible {
   transform: translateY(0);
   transition-duration: 0.3s;
@@ -29,8 +33,7 @@
 
 .sort_container {
   display: inline-flex;
-  gap: var(--pt1);
-  align-items: center;
+  align-items: baseline;
 }
 
 .sort_wrapper {
@@ -50,6 +53,7 @@
 
 .titleflex:last-child {
   padding-top: var(--pt2);
+  border: none;
 }
 
 .titleflex:first-child {
@@ -70,7 +74,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--pt3);
 
   flex-wrap: wrap;
 }
@@ -80,21 +83,17 @@
   order: 3;
 }
 
-.supplementary > div {
-  padding-top: var(--pt2);
-}
-
 .facetTags {
   margin-bottom: var(--pt2);
 }
 
 @media (min-width: 992px) {
-  .section {
-    padding-top: var(--pt1);
-  }
-
   .filterButton:not(.visible) {
     display: none;
+  }
+
+  .saveSearchButton {
+    margin: 0;
   }
 
   .actions {
@@ -102,11 +101,8 @@
   }
 
   .supplementary {
+    min-height: calc(var(--pt7) + 1px);
     order: unset;
-  }
-
-  .supplementary > div {
-    padding-top: unset;
   }
 
   .titleflex {
@@ -114,15 +110,17 @@
     align-items: baseline;
     justify-content: unset;
     padding: unset !important;
-    border: none;
-
     margin: unset;
+  }
+
+  .section :global(.section-title) {
+    margin-top: var(--pt2);
   }
 
   .advancedSearchActions {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: var(--pt2);
+    margin: var(--pt2) 0;
   }
 }

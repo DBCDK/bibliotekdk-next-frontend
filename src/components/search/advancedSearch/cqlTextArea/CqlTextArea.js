@@ -111,7 +111,7 @@ export function CqlTextAreaView({
 /**
  * Wrapper-komponent: håndterer data, logik og eventhandlers
  */
-export default function Wrap() {
+export default function Wrap({ onClear }) {
   const router = useRouter();
   const isMobile = useBreakpoint() === "xs";
 
@@ -169,6 +169,8 @@ export default function Wrap() {
 
   const handleClear = () => {
     resetObjectState();
+    onClear();
+
     router.push({
       pathname: router.pathname,
       ...(router.query?.mode === "cql" && { query: { mode: "cql" } }),

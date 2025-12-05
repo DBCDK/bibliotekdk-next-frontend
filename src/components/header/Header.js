@@ -37,6 +37,16 @@ export const MATERIAL_PAGES = [
   { path: "noder", label: "sheetmusic" },
 ];
 
+const getActiveMaterialPage = (router) => {
+  if (!router || !router.asPath) return null;
+
+  return (
+    MATERIAL_PAGES.find(({ path }) =>
+      router.asPath.includes(`/inspiration/${path}`)
+    ) || null
+  );
+};
+
 /**
  * The Component function
  *
@@ -70,7 +80,7 @@ export function Header({
       label: "search",
       icon: SearchIcon,
       className: styles.mobileSearch,
-      onClick: () => router.push("/find"),
+      onClick: () => router.push("/find/simpel"),
     },
     {
       label: getLoginLabel(),
@@ -101,6 +111,8 @@ export function Header({
     },
   ];
 
+  const activeMaterialObject = getActiveMaterialPage(router);
+
   return (
     <header
       className={cx({
@@ -130,9 +142,7 @@ export function Header({
               </Link>
 
               {MATERIAL_PAGES.map(({ path, label }) => {
-                const active =
-                  (router && router.asPath.includes(`/inspiration/${path}`)) ||
-                  false;
+                const active = activeMaterialObject?.label === label;
 
                 return (
                   <Link
@@ -157,7 +167,13 @@ export function Header({
                 size="small"
                 className={styles.searchButton}
                 onClick={() => {
-                  router.push("/find/simpel");
+                  let params = "";
+
+                  if (activeMaterialObject) {
+                    params = `?workTypes=${activeMaterialObject.label}`;
+                  }
+
+                  router.push(`/find/simpel${params}`);
                   setTimeout(() => focusInput(), 100);
                 }}
               >
