@@ -79,7 +79,7 @@ export default function SeriesBox({
       )}
 
       {members?.length > 0 && (
-        <div className={styles.members}>
+        <div >
           <Text type="text1" className={styles.note}>
             {Translate({
               context: "series_page",

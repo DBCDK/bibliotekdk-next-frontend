@@ -14,14 +14,6 @@
   cursor: pointer;
 }
 
-.portrait {
-  display: block;
-  width: 100%;
-  height: auto;
-  /* border-radius: 4px; */
-  object-fit: cover;
-}
-
 .title {
   margin: 0;
   font-family: var(--title-font);
@@ -73,42 +65,6 @@
   font-weight: 600;
   color: var(--mine-shaft);
   opacity: 0.7;
-}
-
-.moreRow {
-  margin-top: var(--pt1_5);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--pt0_5);
-}
-
-.externalIcon {
-  margin-left: var(--pt0_5);
-}
-
-.related {
-  margin-top: var(--pt2);
-}
-
-.relatedTitle {
-  font-family: var(--body-font);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--mine-shaft);
-  font-weight: 600;
-  margin-bottom: var(--pt0_5);
-}
-
-.relatedLinks {
-  display: inline;
-}
-
-.relatedItem {
-  display: inline;
-}
-
-.separator {
-  margin: 0 var(--pt0_25);
 }
 
 .linkRow {
