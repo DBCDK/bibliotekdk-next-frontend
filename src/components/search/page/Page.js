@@ -356,7 +356,6 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const creatorHit = isAdvanced
     ? extraHitsRes?.data?.complexSearch?.creatorHit
     : extraHitsRes?.data?.search?.creatorHit || null;
-  //  const creatorHit = null;
   // Store the current search history item in the local storage
   useEffect(() => {
     if (currentSearchHistoryItem) {

@@ -77,6 +77,8 @@
   overflow-x: auto;
   padding-bottom: var(--pt1);
   -webkit-overflow-scrolling: touch;
+  gap: var(--pt1);
+  overflow: hidden;
 }
 
 .thumbLink {
@@ -95,11 +97,6 @@
 
 .thumbImageWrapper {
   width: 80px;
-  height: 112px;
-  border-radius: 4px;
-  overflow: hidden;
-  background: var(--white);
-  border: 1px solid var(--iron);
 }
 
 .thumbImage {

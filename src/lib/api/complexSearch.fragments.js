@@ -27,34 +27,6 @@ export function doComplexSearchAll({ cql, offset, limit, sort, facets }) {
     query ComplexSearchAll($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $sort: [SortInput!], $facets: ComplexSearchFacetsInput) {
 			complexSearch(cql: $cql, facets: $facets) {
 				hitcount
-        creatorHit{
-          display
-
-          wikidata{
-                    image{
-          medium
-          attributionText
-          }
-          occupation
-          nationality
-          wikidataId
-          description
-          awards
-          }
-
-          generated{
-          summary{
-          text
-          disclaimer
-          }
-          shortSummary{
-          text
-          disclaimer
-          }
-          topSubjects
-          primaryPublicationPeriodStartYear
-          }
-        }
 				errorMessage
         facets {
           name

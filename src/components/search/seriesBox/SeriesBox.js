@@ -5,6 +5,7 @@ import { getSeriesUrl, getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import styles from "./SeriesBox.module.css";
+import Cover from "@/components/base/cover/Cover";
 
 const MEMBERS_PREVIEW_LIMIT = 3;
 
@@ -55,22 +56,7 @@ export default function SeriesBox({
     return null;
   }
 
-  const {
-    title,
-    description,
-    // identifyingAddition,
-    // hitcount,
-    // alternativeTitles,
-    // parallelTitles,
-    // mainLanguages,
-    // workTypes,
-    // readThisFirst,
-    // readThisWhenever,
-    // isPopular,
-    members,
-    seriesId,
-    traceId,
-  } = seriesHit;
+  const { title, description, members, seriesId, traceId } = seriesHit;
 
   const seriesLink = seriesId ? getSeriesUrl(seriesId, traceId) : null;
 
@@ -102,49 +88,47 @@ export default function SeriesBox({
             })}
           </Text>
           <div className={styles.thumbs}>
-            {membersPreview.map(
-              (
-                {
-                  key,
-                  title: memberTitle,
-                  number,
-                  image,
-                  workId,
-                  traceId: memberTraceId,
-                  creators,
-                },
-                idx
-              ) => {
-                const workUrl = getWorkUrl(
-                  memberTitle || title,
-                  creators,
-                  workId,
-                  memberTraceId
-                );
+            {membersPreview.map((member, idx) => {
+              const {
+                key,
+                title: memberTitle,
+                number,
+                image,
+                workId,
+                traceId: memberTraceId,
+                creators,
+              } = member;
 
-                return (
-                  <Link key={key} href={workUrl} className={styles.thumbLink}>
-                    <div className={styles.thumb}>
-                      <div className={styles.thumbImageWrapper}>
-                        {/**TODO: use next image? */}
-                        <img
-                          src={image}
-                          alt={memberTitle || ""}
-                          className={styles.thumbImage}
-                        />
-                      </div>
-                      <Text
-                        type="text3"
-                        tag="span"
-                        className={styles.thumbNumber}
-                      >
-                        {number || `#${idx + 1}`}
-                      </Text>
+              const workUrl = getWorkUrl(
+                memberTitle || title,
+                creators,
+                workId,
+                memberTraceId
+              );
+
+              return (
+                <Link key={key} href={workUrl} className={styles.thumbLink}>
+                  <div className={styles.thumb}>
+                    <div className={styles.thumbImageWrapper}>
+                      <Cover
+                        src={image}
+                        alt={memberTitle || ""}
+                     //  className={styles.thumbImage}
+                     size="fill-width"
+                      />
+
                     </div>
-                  </Link>
-                );
-              }
-            )}
+                    <Text
+                      type="text3"
+                      tag="span"
+                      className={styles.thumbNumber}
+                    >
+                      {number || `#${idx + 1}`}
+                    </Text>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}

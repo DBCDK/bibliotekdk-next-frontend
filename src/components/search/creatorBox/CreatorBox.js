@@ -5,7 +5,7 @@ import Text from "@/components/base/text";
 import Cover from "@/components/base/cover/Cover";
 import { useRouter } from "next/router";
 
-function formatListWithOg(items) {
+function formatOccupation(items) {
   const max = 3;
   if (!Array.isArray(items)) return null;
   const list = items.slice(0, max);
@@ -36,7 +36,7 @@ function formatListWithOg(items) {
 export default function CreatorBox({
   creatorHit,
   className = "",
-  "data-cy": dataCy,
+  dataCy: dataCy,
   isLoading = false,
 }) {
   const router = useRouter();
@@ -51,7 +51,7 @@ export default function CreatorBox({
   const name =
     creatorHit?.display ||
     [creatorHit?.firstName, creatorHit?.lastName].filter(Boolean).join(" ");
-  const occupation = formatListWithOg(creatorHit?.wikidata?.occupation);
+  const occupation = formatOccupation(creatorHit?.wikidata?.occupation);
   const maxAwardsToShow = 3;
   const displayedAwards = (
     Array.isArray(creatorHit?.wikidata?.awards)
@@ -70,8 +70,7 @@ export default function CreatorBox({
   console.log(creatorHit?.forfatterweb?.image);
   return (
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
-      {(creatorHit?.forfatterweb?.image?.medium?.url ||
-        creatorHit?.wikidata?.image?.medium) && (
+      {(creatorHit?.forfatterweb?.image?.medium?.url) && (
         <div className={styles.portraitWrapper}>
           <Cover
             src={creatorHit?.forfatterweb?.image?.medium?.url}
@@ -84,15 +83,15 @@ export default function CreatorBox({
               router.push(`/ophav/${encodeURIComponent(creatorHit.display)}`);
             }}
           />
-            <Text
-              type="text5"
-              tag="p"
-              className={styles.attribution}
-              lines={2}
-              clamp
-            >
-              Forfatterweb.dk
-            </Text>
+          <Text
+            type="text5"
+            tag="p"
+            className={styles.attribution}
+            lines={2}
+            clamp
+          >
+            Forfatterweb.dk
+          </Text>
         </div>
       )}
 
