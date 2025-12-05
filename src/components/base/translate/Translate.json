@@ -88,8 +88,12 @@
         "en": "View on forfatterweb.dk"
       },
       "view-publications": {
-        "da": "Se bibliografi",
-        "en": "View bibliography"
+        "da": "Alle værker",
+        "en": "All works"
+      },
+      "selected-prizes": {
+        "da": "Udvalgte priser",
+        "en": "Selected prizes"
       }
     },
     "advanced_search_cql": {
@@ -651,6 +655,14 @@
       }
     },
     "tooltip": {
+      "tooltip-disclaimer-label": {
+        "da": "Om data",
+        "en": "About data"
+      },
+      "tooltip-disclaimer": {
+        "da": "Information om roller og modtagne priser er hentet fra Wikidata. Evt. billeder er fra forfatterweb. Øvrige data er produceret af DBC Digital.",
+        "en": "Information about roles and received prizes are fetched from Wikidata. Any images are from forfatterweb. The rest of the data is produced by DBC Digital."
+      },
       "tooltip_change_email": {
         "da": "For at ændre din email skal du logge ind på dit biblioteks hjemmeside og ændre email-adresse i din profil",
         "en": "To change your email address - log on your library homepage and change your email in profile settings"

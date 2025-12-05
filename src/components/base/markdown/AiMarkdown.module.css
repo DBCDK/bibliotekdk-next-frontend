@@ -25,6 +25,9 @@
   flex-direction: column;
   padding-bottom: var(--pt4);
 }
+.noToggle {
+  padding-bottom: 0;
+}
 .content::after {
   content: "";
   position: absolute;
@@ -36,7 +39,7 @@
     to bottom,
     rgba(255, 255, 255, 0) 0%,
     rgba(242, 242, 242, 0.55) 20%,
-    rgba(242, 242, 242, 1) 100%
+    rgba(242, 242, 242, 1) 60%
   );
   pointer-events: none;
   opacity: 0;

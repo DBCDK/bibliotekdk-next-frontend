@@ -113,7 +113,7 @@ export default function AiMarkdown({
 
           a(props) {
             if (disableLinks) {
-              return <Text type="text2" tag="strong" {...props} />;
+              return <Text type="text2" tag="span" {...props} />;
             }
             return (
               <Link
@@ -167,7 +167,7 @@ export default function AiMarkdown({
         ref={contentRef}
         className={`${styles.content} ${!expanded ? styles.collapsed : ""} ${
           !fadeIn ? styles.noFade : ""
-        }`}
+        } ${!canToggle ? styles.noToggle : ""}`}
         style={{ maxHeight: inlineMaxHeight }}
         onTransitionEnd={(e) => {
           if (e.target !== contentRef.current) return;
