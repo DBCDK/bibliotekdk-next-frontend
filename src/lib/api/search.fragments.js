@@ -196,3 +196,97 @@ export function facets({
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Extra hits (creator/series) for simple search
+ *
+ * @param {Object} q Search query
+ * @param {Object} filters Search filters
+ */
+export function extraHits({ q, filters = {} }) {
+  return {
+    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
+    query: `
+    query SimpleSearchHits($q: SearchQueryInput!, $filters: SearchFiltersInput) {
+      search(q: $q, filters: $filters) {
+        creatorHit {
+          display
+          firstName
+          lastName
+          wikidata {
+            image {
+              medium
+              attributionText
+            }
+            occupation
+            nationality
+            wikidataId
+            description
+            awards
+          }
+          forfatterweb {
+            image {
+              medium {
+                url
+              }
+            }
+          }
+          generated {
+            dataSummary {
+              text
+              disclaimer
+            }
+            summary {
+              text
+              disclaimer
+            }
+            shortSummary {
+              text
+              disclaimer
+            }
+            topSubjects
+            primaryPublicationPeriodStartYear
+          }
+        }
+        seriesHit {
+          hitcount
+          title
+          seriesId
+          traceId
+          identifyingAddition
+          description
+          alternativeTitles
+          parallelTitles
+          numberInSeries
+          readThisFirst
+          readThisWhenever
+          isPopular
+          workTypes
+          mainLanguages
+          members(limit: 10) {
+            numberInSeries
+            work {
+              workId
+              traceId
+              titles {
+                main
+              }
+              creators {
+                display
+              }
+              manifestations {
+                mostRelevant {
+                  cover {
+                    detail: detail_207
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }`,
+    variables: { q, filters },
+    slowThreshold: 3000,
+  };
+}
