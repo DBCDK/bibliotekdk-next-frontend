@@ -18,6 +18,80 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "creator": {
+      "publications": {
+        "da": "Udgivelser",
+        "en": "Publications"
+      },
+      "publications-explanation": {
+        "da": "Værkerne er grupperet efter ældste registrerede udgave, men værket kan være skabt tidligere.",
+        "en": "Works are grouped by the oldest registered edition, but the work may have been created earlier."
+      },
+      "work-singular": {
+        "da": "værk",
+        "en": "work"
+      },
+      "work-plural": {
+        "da": "værker",
+        "en": "works"
+      },
+      "from": {
+        "da": "fra",
+        "en": "from"
+      },
+      "to": {
+        "da": "til",
+        "en": "to"
+      },
+      "no-results": {
+        "da": "Ingen publikationer fundet med de valgte filtre",
+        "en": "No publications found with the selected filters"
+      },
+      "keywords": {
+        "da": "Emneord",
+        "en": "Keywords"
+      },
+      "keywords-subtitle": {
+        "da": "%s beskæftiger sig ofte med",
+        "en": "Topics %s often explores"
+      },
+      "favorites-title": {
+        "da": "Udvalgte anmeldelser",
+        "en": "Selected reviews"
+      },
+      "creator-breadcrumb": {
+        "da": "Ophav",
+        "en": "Creator"
+      },
+      "publishedFrom": {
+        "da": "Udgivet fra",
+        "en": "Published from"
+      },
+      "publishedIn": {
+        "da": "Udgivet i",
+        "en": "Published in"
+      },
+      "reviewedIn": {
+        "da": "Anmeldt i",
+        "en": "Reviewed in"
+      },
+      "seeAllReviews": {
+        "da": "Se alle anmeldelser",
+        "en": "See all reviews"
+      },
+      "creator-search": {
+        "da": "Søg på navn",
+        "en": "Search for name"
+      },
+      "creator-forfatterweb": {
+        "da": "Se på forfatterweb.dk",
+        "en": "View on forfatterweb.dk"
+      },
+      "view-publications": {
+        "da": "Se bibliografi",
+        "en": "View bibliography"
+      }
+    },
     "advanced_search_cql": {
       "cql_error_link_href": {
         "da": "/hjaelp/soegning-baade-enkel-og-avanceret/179",
@@ -674,6 +748,10 @@
       "from": {
         "da": "Fra",
         "en": "From"
+      },
+      "authors": {
+        "da": "Forfattere",
+        "en": "Authors"
       },
       "new": {
         "da": "Ny",
@@ -1580,6 +1658,32 @@
       "fallback": {
         "da": "materialet",
         "en": "the material"
+      }
+    },
+    "workTypeSingularForm": {
+      "literature": {
+        "da": "bog",
+        "en": "book"
+      },
+      "movie": {
+        "da": "film",
+        "en": "movie"
+      },
+      "article": {
+        "da": "artikel",
+        "en": "article"
+      },
+      "music": {
+        "da": "musik",
+        "en": "music"
+      },
+      "game": {
+        "da": "spil",
+        "en": "game"
+      },
+      "sheetmusic": {
+        "da": "node",
+        "en": "sheet music"
       }
     },
     "holdings": {
@@ -3330,6 +3434,10 @@
       "label-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
+      },
+      "label-creatorfunction": {
+        "da": "Rolle",
+        "en": "Role"
       },
       "label-materialTypesSpecific": {
         "da": "Materialetype",

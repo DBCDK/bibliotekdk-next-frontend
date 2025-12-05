@@ -1,0 +1,83 @@
+.section {
+  margin-top: var(--pt8);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.yearTitle {
+  margin-top: var(--pt8);
+  margin-bottom: var(--pt2);
+  text-align: left;
+  margin-left: var(--pt2);
+}
+
+.filters + div .yearTitle {
+  margin-top: 0;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: calc(-1 * var(--pt2));
+  margin-right: calc(-1 * var(--pt2));
+  margin-bottom: var(--pt3);
+  padding-left: var(--pt1);
+  padding-right: var(--pt1);
+  flex-wrap: wrap;
+  gap: var(--pt1);
+}
+
+.filters > div {
+  flex-shrink: 0;
+}
+.filters button {
+  padding: 0 var(--pt1);
+}
+
+/* Begræns dropdown-bredden for filtre, så de ikke udvider viewport på mobil */
+.filters :global(.dropdown-menu) {
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Tillad linjeskift i filter-dropdowns på små skærme */
+.filters :global(.dropdown-menu .dropdown-item) {
+  white-space: normal;
+}
+
+/* Mobile first: hide subject and language by default */
+.subjectFilter,
+.languageFilter {
+  display: none;
+}
+.workscontainer {
+  margin-left: calc(-1 * var(--pt2));
+  margin-right: calc(-1 * var(--pt2));
+}
+
+/* From 576px and up: show subject and language filters */
+@media (min-width: 576px) {
+  .subjectFilter,
+  .languageFilter {
+    display: block;
+  }
+}
+
+.publishedFromText {
+  margin-top: var(--pt1);
+}
+
+@media (min-width: 992px) {
+  .filters {
+    margin-left: calc(-1 * var(--pt1));
+    justify-content: flex-end;
+  }
+  .workscontainer {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .yearTitle {
+    margin-left: var(--pt1);
+  }
+}

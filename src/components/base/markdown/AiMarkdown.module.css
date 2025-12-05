@@ -1,0 +1,79 @@
+.container {
+  position: relative;
+}
+.show {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+.hidden {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+.disclaimer {
+  color: var(--gray);
+  border-top: 1px solid var(--iron);
+  margin-top: var(--pt1_5);
+  padding-top: var(--pt1);
+}
+
+.content {
+  max-height: none;
+  overflow: hidden;
+  transition: max-height 300ms ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--pt4);
+}
+.content::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(242, 242, 242, 0.55) 20%,
+    rgba(242, 242, 242, 1) 100%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  z-index: 1;
+}
+.collapsed::after {
+  opacity: 1;
+}
+.content p {
+  padding-top: var(--pt1_5);
+}
+
+.noFade p {
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+.toggle {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin-top: var(--pt1);
+  color: var(--info);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* ensure it's clickable over content */
+  pointer-events: auto;
+  z-index: 2;
+  /* padding: var(--pt05) 0 0 var(--pt1_5); */
+}
+.toggle:focus-visible i {
+  background-color: black !important;
+}

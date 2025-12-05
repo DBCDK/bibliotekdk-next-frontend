@@ -1,0 +1,94 @@
+.background {
+  background-color: var(--concrete);
+}
+
+.links {
+  display: flex;
+  column-gap: var(--pt2);
+  row-gap: var(--pt1);
+  border-top: 1px solid var(--iron);
+  margin-top: var(--pt4);
+  padding-top: var(--pt1);
+  flex-wrap: wrap;
+}
+
+.arrowDownLink {
+  display: flex;
+  align-items: start;
+}
+.arrowDownLink span + span {
+  padding-left: var(--pt05);
+}
+.externalLink {
+  display: flex;
+  align-items: end;
+}
+.externalLink * {
+  stroke: var(--blue);
+}
+
+.overview {
+  padding: var(--pt3) 0 var(--pt7) 0;
+}
+
+.breadcrumbs {
+  padding-bottom: var(--pt3);
+}
+
+.attribution {
+  padding-top: var(--pt1);
+  color: var(--gray);
+  /* Aggressive wrapping for long attributions/URLs */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+  max-width: 320px;
+}
+
+/* Mobile-first: center image column only */
+.imageCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: var(--pt4);
+}
+
+@media (min-width: 1200px) {
+  .imageCol {
+    margin-bottom: 0;
+  }
+}
+.occupation {
+  text-transform: lowercase;
+  padding-top: var(--pt05);
+}
+.occupation::first-letter {
+  text-transform: uppercase;
+}
+.awards {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pt1);
+  margin-top: var(--pt05);
+}
+.award {
+  margin: 0;
+}
+.awards {
+  padding-top: var(--pt1);
+}
+@media (min-width: 768px) {
+  .overview {
+    padding: var(--pt8) 0 var(--pt7) 0;
+  }
+
+  .breadcrumbs {
+    padding-bottom: var(--pt4);
+  }
+}
+@media (min-width: 576px) {
+  .links {
+    column-gap: var(--pt3);
+  }
+}

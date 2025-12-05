@@ -118,6 +118,7 @@
     "react-dom": "^18.2.0",
     "react-focus-lock": "^2.9.6",
     "react-intersection-observer": "^8.34.0",
+    "react-markdown": "^10.1.0",
     "react-simple-code-editor": "^0.13.1",
     "sass": "^1.54.5",
     "smoothscroll-polyfill": "^0.4.4",
