@@ -113,7 +113,7 @@ export default function AiMarkdown({
 
           a(props) {
             if (disableLinks) {
-              return <Text type="text2" tag="strong" {...props} />;
+              return <Text type="text2" tag="span" {...props} />;
             }
             return (
               <Link
