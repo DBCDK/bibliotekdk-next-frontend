@@ -32,6 +32,7 @@ export const DropdownIndicesEnum = {
   CHAMBERMUSICTYPE: "phrase.chambermusictype",
   NOTA: "nota", //this is not an index in complex search. It will be converted to an index when state is converted to cql. The index used is term.source.
   MUSICALEXERCISE: "musicalexercise",
+  ARTICLE_TYPE: "phrase.hostpublicationtype",
 };
 
 const specialIndices = new Set([
@@ -557,6 +558,21 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     },
   };
 
+  const articleType = {
+    items: convertToDropdownInput({
+      prioritisedItems: [
+        { display: "Avisartikler", code: "avis" },
+        { display: "Tidsskriftartikler", code: "tidsskrift" },
+        { display: "andet", code: "andet" },
+      ],
+      prioritisedFormType: FormTypeEnum.CHECKBOX,
+      unprioritisedItems: [],
+      unprioritisedFormType: FormTypeEnum.CHECKBOX,
+      overrideValueAs: "key",
+    }),
+    indexName: DropdownIndicesEnum.ARTICLE_TYPE,
+  };
+
   const players = {
     items: convertToDropdownInput(dummy__players()),
     indexName: DropdownIndicesEnum.PLAYERS,
@@ -590,6 +606,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     // @TODO: issue.date ? - there is no such index :)
     article: [
       specificMaterialTypes,
+      articleType,
       genreAndForm,
       publicationYear,
       languages,

@@ -43,7 +43,7 @@ export const AdvFacetsTypeEnum = Object.freeze({
   INSTRUMENT: "instrument",
   CHOIRTYPE: "choirtype",
   CHAMBERMUSICTYPE: "chambermusictype",
-
+  HOSTPUBLICATIONTYPE: "hostpublicationtype",
   // CATALOGUECODE: "cataloguecode",
   // CONTRIBUTORFUNCTION: "contributorfunction",
   // CREATORCONTRIBUTOR: "creatorcontributor",
