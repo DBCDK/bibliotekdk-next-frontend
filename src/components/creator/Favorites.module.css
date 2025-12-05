@@ -1,0 +1,161 @@
+.sliderContainer {
+  position: relative;
+  margin-left: calc(var(--pt2) * -1);
+  margin-right: calc(var(--pt2) * -1);
+}
+
+.slider .itemLink:last-child .item {
+  border-right: none;
+}
+.slider .itemLink:first-child .item {
+  padding-left: var(--pt2);
+  scroll-margin-left: initial;
+}
+
+.itemLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  --underline-top-hover-color: var(--transparent);
+  --underline-bottom-hover-color: var(--transparent);
+  --underline-middle-hover-color: var(--transparent);
+  --underline-font-hover-color: inherit;
+}
+
+.itemLink:hover,
+.itemLink:focus {
+  color: inherit;
+}
+
+.itemLink:hover .item,
+.itemLink:focus .item,
+.itemLink:has(a:focus) .item,
+.itemLink:has(a:hover) .item {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.bottomLine {
+  position: absolute;
+  bottom: 0;
+  height: 1px;
+  left: 0;
+  width: 100%;
+  background: var(--blue);
+  transform: scaleX(0);
+}
+
+.itemLink:hover .bottomLine,
+.itemLink:focus .bottomLine {
+  transform: scaleX(1);
+  transition: transform 0.35s;
+}
+
+.itemLink:has(a:focus) .bottomLine,
+.itemLink:has(a:hover) .bottomLine {
+  transform: scaleX(1);
+  transition: none;
+}
+
+/* Underline animation colors for nested links */
+.link a,
+.allReviewsLink a {
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+  --underline-top-color: var(--iron);
+  --underline-top-hover-color: var(--blue);
+  --underline-middle-color: transparent;
+  --underline-middle-hover-color: transparent;
+}
+
+.item {
+  /* Fixed width across breakpoints */
+  flex: 0 0 420px;
+  min-width: 420px;
+  max-width: 520px;
+  scroll-snap-align: start;
+  scroll-margin-left: calc(var(--pt3) * -1);
+  position: relative;
+  padding-top: var(--pt2);
+  padding-left: var(--pt5);
+  padding-right: var(--pt5);
+  padding-bottom: var(--pt1);
+
+  border-right: 1px solid var(--iron);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--pt1);
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.link span {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+
+.row {
+  display: flex;
+  gap: var(--pt2);
+  align-items: flex-start;
+}
+
+/* cover wrapper for alignment */
+.cover {
+  max-width: 160px;
+}
+.cover img {
+  max-width: 160px !important;
+}
+
+.cover a:focus-visible,
+.cover a:focus {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+.cover a:hover {
+  outline: none;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-width: 0; /* allow text to shrink/ellipsis inside flex row */
+  overflow: hidden;
+}
+
+.date {
+  display: block;
+  margin-top: var(--pt1);
+}
+
+.date > *:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.allReviewsLink {
+  display: flex;
+  align-items: center;
+  gap: var(--pt1);
+  margin-top: var(--pt3);
+  white-space: nowrap;
+}
+
+.allReviewsLink span {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* No responsive overrides: width is fixed for consistency */
