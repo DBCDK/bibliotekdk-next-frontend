@@ -7,6 +7,10 @@
   border-bottom: 1px solid var(--concrete);
 }
 
+.container {
+  padding-top: var(--pt3);
+}
+
 .itemsheader {
   display: flex;
   align-items: center;
@@ -16,4 +20,10 @@
 
 .showmore {
   margin-top: var(--pt2);
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding-top: var(--pt5);
+  }
 }
