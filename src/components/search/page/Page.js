@@ -33,7 +33,7 @@ import AdvancedSearchSort from "@/components/search/advancedSearch/advancedSearc
 import TopBar from "@/components/search/advancedSearch/topBar/TopBar";
 import AdvancedFacets from "@/components/search/facets/advanced/advancedFacets";
 import QuickFilter from "@/components/search/advancedSearch/quickfilter/QuickFilter";
-import { FacetTags } from "@/components/search/facets/advanced/facetTags/facetTags";
+import FacetTags from "@/components/search/facets/advanced/facetTags";
 import { FacetButton } from "@/components/search/facets/advanced/facetButton/facetButton";
 import SimpleFacets from "@/components/search/facets/simple";
 

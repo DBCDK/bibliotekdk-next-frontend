@@ -6,9 +6,9 @@
   padding-top: var(--pt3);
 }
 
-.facetsContainer.simple {
+/* .facetsContainer.simple {
   padding-top: var(--pt6);
-}
+} */
 
 .filterButton {
   width: fit-content;
@@ -84,9 +84,9 @@
   padding-top: var(--pt2);
 }
 
-.facetTags {
+/* .facetTags {
   margin-bottom: var(--pt2);
-}
+} */
 
 @media (min-width: 992px) {
   .section {
