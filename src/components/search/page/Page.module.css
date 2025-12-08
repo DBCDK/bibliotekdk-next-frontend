@@ -79,6 +79,9 @@
   order: 3;
 }
 
+.supplementary > div {
+  padding-top: var(--pt2);
+}
 
 @media (min-width: 992px) {
   .filterButton:not(.visible) {
