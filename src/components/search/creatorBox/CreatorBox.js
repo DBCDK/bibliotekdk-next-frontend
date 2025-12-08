@@ -67,7 +67,6 @@ export default function CreatorBox({
           : 0) - maxAwardsToShow
       : 0;
 
-  console.log(creatorHit?.forfatterweb?.image);
   return (
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
       {creatorHit?.forfatterweb?.image?.medium?.url && (
@@ -100,12 +99,6 @@ export default function CreatorBox({
           {creatorHit.display}
         </Text>
       )}
-      {/* {creatorHit?.wikidata?.description?.length > 0 && (
-        <Text type="text2" className={styles.role}>
-          {creatorHit?.wikidata?.description?.charAt(0)?.toUpperCase() +
-            creatorHit?.wikidata?.description?.slice(1)}
-        </Text>
-      )} */}
 
       {occupation && (
         <Text type="text2" className={styles.role}>
