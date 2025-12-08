@@ -586,6 +586,10 @@
       "label-primarytarget": {
         "da": "Fagligt niveau",
         "en": "Level"
+      },
+      "label-hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
       }
     },
     "logo": {
