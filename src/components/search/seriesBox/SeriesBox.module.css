@@ -46,7 +46,6 @@
   display: flex;
   align-items: stretch;
   margin-bottom: var(--pt3);
-  overflow-x: auto;
   padding-bottom: var(--pt1);
   -webkit-overflow-scrolling: touch;
   gap: var(--pt1);
