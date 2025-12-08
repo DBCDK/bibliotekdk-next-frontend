@@ -223,7 +223,6 @@ export const Suggester = forwardRef(function Suggester(
     isMobile = false,
     skeleton = false,
     history = [],
-    clearHistory = null,
     selectedMaterial = null,
     onKeyDown = null,
   },
