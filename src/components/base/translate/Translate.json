@@ -395,6 +395,14 @@
         "da": "Alder",
         "en": "Age"
       },
+      "phrase.hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
+      },
+      "all_phrase.hostpublicationtype": {
+        "da": "Alle artikeltyper",
+        "en": "All article types"
+      },
       "more_filters": {
         "da": "Flere filtre",
         "en": "More filters"
@@ -582,6 +590,10 @@
       "label-primarytarget": {
         "da": "Fagligt niveau",
         "en": "Level"
+      },
+      "label-hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
       }
     },
     "logo": {
