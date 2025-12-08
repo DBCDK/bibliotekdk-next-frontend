@@ -46,6 +46,10 @@
 }
 
 @media (min-width: 992px) {
+  .tabs {
+    gap: var(--pt2);
+  }
+
   .tabs li button {
     font-size: 20px;
   }

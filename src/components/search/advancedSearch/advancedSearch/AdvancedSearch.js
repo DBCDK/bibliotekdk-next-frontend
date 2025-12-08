@@ -69,7 +69,7 @@ function AdvancedSearch({ onSearch, onClear, isMobile }) {
 /**
  * Wrapper komponent: håndterer kontekst og logik
  */
-export default function Wrap({ onCommit = () => {} }) {
+export default function Wrap({ onCommit = () => {}, onClear = () => {} }) {
   const router = useRouter();
   const isMobile = useBreakpoint() === "xs";
 
@@ -96,6 +96,8 @@ export default function Wrap({ onCommit = () => {} }) {
 
       onCommit(stateToString, { tid: suggesterTid });
 
+      isMobile && document?.activeElement?.blur();
+
       const cql = convertStateToCql({
         inputFields,
         dropdownSearchIndices,
@@ -108,6 +110,8 @@ export default function Wrap({ onCommit = () => {} }) {
   const handleClear = () => {
     // Nulstil avanceret state (felter, dropdowns, worktype, cql-preview)
     resetObjectState();
+
+    onClear();
 
     // Behold din nuværende “clear”-navigation – eller flyt den ind i hooken senere
     router.push({

@@ -94,8 +94,8 @@
   text-decoration: none;
 }
 
-/* Min-width: 992px –> Tablet og op */
-@media (min-width: 992px) {
+/* Min-width: 992px would be optimal, lag of space make os translate at 1075 instead */
+@media (min-width: 1075px) {
   .header {
     padding: var(--pt2_5) var(--pt2);
     height: auto;

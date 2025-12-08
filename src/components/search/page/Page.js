@@ -188,7 +188,7 @@ function Page({
               <DidYouMean />
             </div>
 
-            {isSimple && <SaveSearchBtn />}
+            {isSimple && <SaveSearchBtn className={styles.saveSearchButton} />}
           </div>
         )}
 

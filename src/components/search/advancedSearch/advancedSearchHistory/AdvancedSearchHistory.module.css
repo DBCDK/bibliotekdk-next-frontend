@@ -115,8 +115,8 @@
 }
 
 .inline {
-  display: inline;
-  padding: var(--pt2);
+  display: inline-block;
+  padding: var(--pt2) 0 0 0;
   margin-right: var(--pt05);
 }
 
@@ -164,7 +164,6 @@
 /* ≥ 576px (sm) */
 @media (min-width: 576px) {
   .container {
-    margin-top: var(--pt2);
     padding-inline: var(--pt2);
   }
 
@@ -204,11 +203,6 @@
 
   .itemsheader {
     background-color: unset;
-  }
-
-  .inline {
-    padding: 0;
-    padding-top: var(--pt2);
   }
 }
 

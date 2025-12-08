@@ -1,13 +1,11 @@
 // components/search/Search.jsx
 import React, { useCallback, useEffect } from "react";
-import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import useQ from "../hooks/useQ";
 import useBreakpoint from "../hooks/useBreakpoint";
 import { useSearchSync } from "../hooks/useSearchSync";
 import { MODE } from "../utils/searchSyncCore";
@@ -39,6 +37,7 @@ export function Search({
   onSimpleCommit,
   onAdvancedCommit,
   onCQLCommit,
+  onResetAll,
 }) {
   const breakpoint = useBreakpoint();
   const isMobileSize = ["xs", "sm", "md"].includes(breakpoint);
@@ -103,7 +102,10 @@ export function Search({
                         onClick={onWorkTypeSelect}
                       />
                     )}
-                    <AdvancedSearch onCommit={onAdvancedCommit} />
+                    <AdvancedSearch
+                      onCommit={onAdvancedCommit}
+                      onClear={onResetAll}
+                    />
                   </Col>
                   <Col className={styles.links} sm={12} lg={{ span: 3 }}>
                     {!isHistory && (
@@ -125,7 +127,7 @@ export function Search({
               >
                 <Row className={styles.tabRow}>
                   <Col sm={12} lg={{ span: 9 }} className={styles.content}>
-                    <CqlTextArea onCommit={onCQLCommit} />
+                    <CqlTextArea onCommit={onCQLCommit} onClear={onResetAll} />
                   </Col>
                   <Col className={styles.links} sm={12} lg={{ span: 3 }}>
                     {!isHistory && (
@@ -161,9 +163,6 @@ export function Search({
  * - Submit from simple/advanced is handled in the hook (no interpolation errors)
  */
 export default function Wrap() {
-  const { setQuery } = useQ();
-  const router = useRouter();
-
   const {
     mode,
     goToMode,
@@ -171,7 +170,8 @@ export default function Wrap() {
     handleSimpleCommit,
     handleAdvancedCommit,
     handleCqlCommit,
-  } = useSearchSync({ router, setQuery });
+    resetAll,
+  } = useSearchSync();
 
   const { resetFacets } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
@@ -216,6 +216,10 @@ export default function Wrap() {
     [resetFacets, resetQuickFilters, setWorkType]
   );
 
+  const handleResetAll = () => {
+    resetAll();
+  };
+
   return (
     <Search
       mode={mode}
@@ -224,6 +228,7 @@ export default function Wrap() {
       onSimpleCommit={handleSimpleCommit}
       onAdvancedCommit={handleAdvancedCommit}
       onCQLCommit={handleCqlCommit}
+      onResetAll={handleResetAll}
     />
   );
 }

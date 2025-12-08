@@ -6,7 +6,6 @@
 import useQ from "@/components/hooks/useQ";
 import { useData } from "@/lib/api/api";
 import { didYouMean } from "@/lib/api/search.fragments";
-import Section from "@/components/base/section";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import translate from "@/components/base/translate";
@@ -41,14 +40,7 @@ export function DidYouMean({ data, isLoading }) {
   }
 
   return (
-    <Section
-      divider={false}
-      className={styles.section}
-      space={{
-        bottom: "var(--pt4)",
-      }}
-      title={null}
-    >
+    <div className={styles.section}>
       <Text skeleton={isLoading} lines={1} tag="span">
         {translate({ context: "search", label: "didyoumean" })}:
       </Text>
@@ -77,7 +69,7 @@ export function DidYouMean({ data, isLoading }) {
           </Link>
         </span>
       ))}
-    </Section>
+    </div>
   );
 }
 

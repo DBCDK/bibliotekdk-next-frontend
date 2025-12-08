@@ -153,7 +153,7 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
           }
         }}
       >
-        <Icon size={{ w: "auto", h: 2 }} alt="">
+        <Icon size={{ w: "auto", h: 2 }} alt="" tabIndex="-1">
           <ClearSvg />
         </Icon>
       </span>

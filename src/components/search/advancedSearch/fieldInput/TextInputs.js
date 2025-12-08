@@ -99,7 +99,7 @@ function FieldInput({ index, numberOfItems, fieldValue, onSearch }) {
                 handleInputFieldChange(index, selectValue);
                 setSuggesterTid(traceId);
               }, 0);
-              // document?.getElementById(inputId).blur();
+              //
             }}
             onClear={() => {
               handleInputFieldChange(index, "");

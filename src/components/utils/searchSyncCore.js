@@ -53,7 +53,15 @@ function stringifySafe(obj) {
 }
 
 // ---------------- FieldSearch helpers ----------------
-function buildFSFromSimple(all) {
+export function buildFSFromValue(value = "") {
+  return stringifySafe({
+    inputFields: [
+      { value, prefixLogicalOperator: null, searchIndex: "term.default" },
+    ],
+  });
+}
+
+export function buildFSFromSimple(all) {
   const v = stripOuterQuotesOnce(all);
   if (!isNonEmpty(v)) return undefined;
   return stringifySafe({
@@ -63,7 +71,7 @@ function buildFSFromSimple(all) {
   });
 }
 
-function safeExtractWorkType(fieldSearchStr) {
+export function safeExtractWorkType(fieldSearchStr) {
   try {
     if (!fieldSearchStr) return null;
     const obj = JSON.parse(fieldSearchStr);
@@ -74,7 +82,7 @@ function safeExtractWorkType(fieldSearchStr) {
   }
 }
 
-function injectWorkTypeIntoFS(fieldSearch, workType) {
+export function injectWorkTypeIntoFS(fieldSearch, workType) {
   if (!isNonEmpty(fieldSearch)) return fieldSearch || "";
   if (!workType || workType === "all") return fieldSearch;
   const obj = parseJSONSafe(fieldSearch) || {};
@@ -275,7 +283,7 @@ export function computeUrlForMode(targetMode, snap, lastOrigin) {
     return {
       query: {
         fieldSearch: seeded,
-        ...(wt && wt !== "all" ? { workTypes: wt } : {}),
+        // ...(wt && wt !== "all" ? { workTypes: wt } : {}),
       },
     };
   };
@@ -323,9 +331,9 @@ export function computeUrlForMode(targetMode, snap, lastOrigin) {
     }
     // 2) ADVANCED → CQL (seed with fieldSearch and workType)
     if (lastOrigin === MODE.ADVANCED && isNonEmpty(snap.advanced.fieldSearch)) {
-      const wt = snap.workTypes || "all";
+      // const wt = snap.workTypes || "all";
       const q = { fieldSearch: snap.advanced.fieldSearch };
-      if (wt && wt !== "all") q.workTypes = wt;
+      // if (wt && wt !== "all") q.workTypes = wt;
       const out = { query: q };
       dbgCORE("computeUrlForMode() out ADV→CQL", out);
       return out;

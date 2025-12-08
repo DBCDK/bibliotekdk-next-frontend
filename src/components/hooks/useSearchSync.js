@@ -14,6 +14,7 @@ import {
   hydrateFromUrl,
 } from "@/components/utils/searchSyncCore";
 import { dbgSYNC } from "@/components/utils/debug";
+import { useRouter } from "next/router";
 
 /**
  * Helper: derive mode purely from pathname (NEVER from query)
@@ -35,9 +36,10 @@ function getModeFromRouter(router) {
  *   - hydrates from URL
  *   - emits URL updates (goToMode / commits / workType)
  */
-export function useSearchSync({ router }) {
+export function useSearchSync() {
   const [snap, setSnap] = useState(initialSnap);
   const lastOriginRef = useRef(null); // MODE of last commit (SIMPLE/ADVANCED/CQL) or null
+  const router = useRouter();
 
   const mode = useMemo(() => getModeFromRouter(router), [router.asPath]);
 
@@ -109,24 +111,6 @@ export function useSearchSync({ router }) {
         lastOriginRef.current
       );
       setSnap(out.snap);
-      lastOriginRef.current = out.lastOrigin; // unchanged by SET_WORKTYPE
-
-      // Build query for current visible mode using existing content rules
-      const { query } = computeUrlForMode(mode, out.snap, out.lastOrigin);
-
-      // Ensure workTypes mirrors state when relevant
-      if (out.snap.workTypes && out.snap.workTypes !== "all") {
-        query.workTypes = out.snap.workTypes;
-      } else {
-        delete query.workTypes;
-      }
-
-      delete query.facets;
-      delete query.quickfilters;
-      delete query.page;
-
-      dbgSYNC("setWorkType() → pushUrl", { mode, query });
-      pushUrl(MODE_PATH[mode] || MODE_PATH[MODE.SIMPLE], query);
     },
     [mode, snap, pushUrl]
   );
@@ -168,8 +152,8 @@ export function useSearchSync({ router }) {
       const q = {};
       if (out.snap.advanced.fieldSearch)
         q.fieldSearch = out.snap.advanced.fieldSearch;
-      if (out.snap.workTypes && out.snap.workTypes !== "all")
-        q.workTypes = out.snap.workTypes;
+      // if (out.snap.workTypes && out.snap.workTypes !== "all")
+      //   q.workTypes = out.snap.workTypes;
 
       dbgSYNC("handleAdvancedCommit() → pushUrl", { query: q });
       pushUrl(MODE_PATH[MODE.ADVANCED], q);
@@ -198,6 +182,21 @@ export function useSearchSync({ router }) {
     [snap, pushUrl]
   );
 
+  const resetAll = useCallback(() => {
+    dbgSYNC("resetAll()", {
+      prevSnap: snap,
+      lastOrigin: lastOriginRef.current,
+      urlQuery: router.query,
+      mode,
+    });
+
+    // Nulstil den interne snapshot
+    setSnap(initialSnap);
+
+    // Glem hvor sidste søgning kom fra
+    lastOriginRef.current = null;
+  }, [snap, router.query, mode, pushUrl]);
+
   return {
     mode,
     goToMode,
@@ -205,6 +204,7 @@ export function useSearchSync({ router }) {
     handleSimpleCommit,
     handleAdvancedCommit,
     handleCqlCommit,
+    resetAll,
   };
 }
 

@@ -9,7 +9,6 @@ import Button from "@/components/base/button/Button";
 import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fieldInput/TextInputs";
 import { FormatFieldSearchIndexes } from "../topBar/TopBar";
 import { FormatedFilters } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 //max number of search queries to be combined
@@ -108,7 +107,6 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
 export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
-  const { restartFacetsHook } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
   const searchItemsWrapper = useRef(null);
 
@@ -257,7 +255,6 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
               facets: JSON.stringify(facets),
               quickfilters: JSON.stringify(quickFilters),
             };
-            restartFacetsHook();
             resetQuickFilters();
             router.push({ pathname: "/avanceret", query });
           }}
