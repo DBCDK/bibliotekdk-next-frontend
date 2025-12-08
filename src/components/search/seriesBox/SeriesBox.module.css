@@ -1,0 +1,83 @@
+.block {
+  background: var(--jagged-ice);
+  border: none;
+  border-radius: 8px;
+  padding: var(--pt3);
+  color: var(--mine-shaft);
+}
+
+@media (max-width: 992px) {
+  .block {
+    margin-bottom: var(--pt3);
+  }
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--pt1);
+  align-items: flex-start;
+  margin-bottom: var(--pt1);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--title-font);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--mine-shaft);
+}
+
+.description {
+  margin: 0 0 var(--pt3) 0;
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--mine-shaft);
+}
+
+.note {
+  margin: 0 0 var(--pt2) 0;
+  font-size: 14px;
+  color: var(--mine-shaft);
+}
+
+.thumbs {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: var(--pt3);
+  padding-bottom: var(--pt1);
+  -webkit-overflow-scrolling: touch;
+  gap: var(--pt1);
+  overflow: hidden;
+}
+
+.thumbLink {
+  flex: 0 0 auto;
+  text-decoration: none;
+  color: inherit;
+  scroll-snap-align: start;
+  margin-right: var(--pt1);
+}
+
+.thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.thumbImageWrapper {
+  width: 80px;
+}
+
+.thumbNumber {
+  margin-top: var(--pt0_5);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--mine-shaft);
+  font-weight: 700;
+}
+
+.seeAllLink {
+  white-space: nowrap;
+}
