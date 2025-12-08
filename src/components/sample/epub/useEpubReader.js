@@ -99,7 +99,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     if (!r) return;
     await r.__origDisplay(hrefWithoutHash);
     if (!hash) return;
-
     const tryScroll = () => {
       try {
         const c = r.getContents?.()[0];
@@ -375,7 +374,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
             dlog.info("[COVER DBG] spread restored after leaving cover");
           }
         }
-
         if (
           typeof coverIdx === "number" &&
           typeof spineIdx === "number" &&
@@ -424,7 +422,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
   useEffect(() => {
     import("react-reader").then((m) => setBaseReaderStyle(m.ReactReaderStyle));
   }, []);
-
   const readerStyles = useMemo(() => {
     if (!BaseReaderStyle) return undefined;
     return {
@@ -485,7 +482,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     const H = Math.floor(rect.height);
     const loc = getRenditionLocationSafe();
     const target = loc?.start?.cfi || loc?.start?.href || null;
-
     try {
       r.reformat?.();
     } catch {}
@@ -506,7 +502,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         } catch {}
       });
     } catch {}
-
     setTimeout(async () => {
       try {
         r.resize?.(W, H);
@@ -655,7 +650,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
           }
         }
       });
-
       rendition.on("displayError", (e) => {
         dlog.error("[REND] displayError:", e);
       });
@@ -1019,7 +1013,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       const notInSpine = tocFlat.filter(
         (it) => typeof spineIndexOf(book, it.href) !== "number"
       );
-
       if (notInSpine.length) {
         dlog.group(
           `[EPUB DBG] Diagnose: ${notInSpine.length} TOC entries ikke i spine`

@@ -60,7 +60,6 @@ export function getFirstLinearHref(book) {
 export async function waitForBookAndLayout(rendition, hostEl) {
   const book = rendition?.book;
   if (!book) return;
-
   try {
     await book.ready;
   } catch {}
@@ -76,7 +75,6 @@ export async function waitForBookAndLayout(rendition, hostEl) {
     const rect = hostEl.getBoundingClientRect();
     return rect.width > 16 && rect.height > 16;
   };
-
   if (!hasSize()) {
     await new Promise((resolve) => {
       const ro = new ResizeObserver(() => {
@@ -99,7 +97,6 @@ export async function waitForBookAndLayout(rendition, hostEl) {
 }
 
 export const isHttp = (href) => /^https?:\/\//i.test(href || "");
-
 export const splitHash = (href = "") => {
   const i = href.indexOf("#");
   return i === -1 ? [href, ""] : [href.slice(0, i), href.slice(i + 1)];

@@ -95,7 +95,6 @@ export function spineIndexOfDebug(book, href) {
       tried.push({ candidate, ok: false, error: String(e) });
     }
   }
-
   return { idx, hit, tried };
 }
 
@@ -103,7 +102,6 @@ export function dumpBookOverview(book, tocFlat) {
   try {
     const spineItems = book?.spine?.spineItems || [];
     const navToc = book?.navigation?.toc || [];
-
     dlog.group("[EPUB DBG] OVERVIEW");
     dlog.info("Spine length:", spineItems.length);
     console.table(
@@ -115,7 +113,6 @@ export function dumpBookOverview(book, tocFlat) {
         properties: it?.properties,
       }))
     );
-
     dlog.info("Navigation TOC length:", navToc.length);
     if (navToc.length) {
       const flatten = (nodes) =>
