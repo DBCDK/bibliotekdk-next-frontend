@@ -102,6 +102,10 @@
       "more_about": {
         "da": "Mere om %s",
         "en": "More about %s"
+      },
+      "forfatterweb": {
+        "da": "Forfatterweb.dk",
+        "en": "forfatterweb.dk"
       }
     },
     "advanced_search_cql": {

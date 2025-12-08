@@ -110,14 +110,9 @@ function Page({
       creatorHit={creatorHit}
       isLoading={isLoading}
       className="search-block"
-      data-cy="search-block"
     />
   ) : shouldShowSeries ? (
-    <SeriesBox
-      seriesHit={seriesHit}
-      className="search-block"
-      data-cy="search-block"
-    />
+    <SeriesBox seriesHit={seriesHit} className="search-block" />
   ) : null;
 
   return (

@@ -40,9 +40,11 @@ export default function CreatorBox({
   isLoading = false,
 }) {
   const router = useRouter();
+
   if (!creatorHit) {
     return null;
   }
+
   const summary =
     creatorHit?.generated?.shortSummary?.text ||
     creatorHit?.generated?.summary?.text ||
@@ -52,12 +54,15 @@ export default function CreatorBox({
     creatorHit?.display ||
     [creatorHit?.firstName, creatorHit?.lastName].filter(Boolean).join(" ");
   const occupation = formatOccupation(creatorHit?.wikidata?.occupation);
+
   const maxAwardsToShow = 3;
+
   const displayedAwards = (
     Array.isArray(creatorHit?.wikidata?.awards)
       ? creatorHit.wikidata.awards
       : []
   ).slice(0, maxAwardsToShow);
+
   const extraAwardsCount =
     (Array.isArray(creatorHit?.wikidata?.awards)
       ? creatorHit.wikidata.awards.length
@@ -89,7 +94,7 @@ export default function CreatorBox({
             lines={2}
             clamp
           >
-            Forfatterweb.dk
+            {Translate({ context: "creator", label: "forfatterweb" })}
           </Text>
         </div>
       )}

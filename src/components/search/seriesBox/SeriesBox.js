@@ -50,7 +50,7 @@ function buildMembersPreview(members = []) {
 export default function SeriesBox({
   seriesHit,
   className = "",
-  "data-cy": dataCy,
+  dataCy: dataCy,
 }) {
   if (!seriesHit) {
     return null;
