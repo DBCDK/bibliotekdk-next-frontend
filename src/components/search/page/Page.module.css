@@ -79,7 +79,6 @@
   order: 3;
 }
 
-
 @media (min-width: 992px) {
   .filterButton:not(.visible) {
     display: none;
