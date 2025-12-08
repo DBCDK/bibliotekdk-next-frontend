@@ -111,7 +111,7 @@ export function CqlTextAreaView({
 /**
  * Wrapper-komponent: håndterer data, logik og eventhandlers
  */
-export default function Wrap() {
+export default function Wrap({ onClear }) {
   const router = useRouter();
   const isMobile = useBreakpoint() === "xs";
 
@@ -162,6 +162,8 @@ export default function Wrap() {
           ? { fieldSearch: stateToString }
           : { cql: parsedCQL };
 
+      isMobile && document?.activeElement?.blur();
+
       router.push({ pathname: "/find/cql", query });
       setShowPopover(false);
     }
@@ -169,6 +171,8 @@ export default function Wrap() {
 
   const handleClear = () => {
     resetObjectState();
+    onClear();
+
     router.push({
       pathname: router.pathname,
       ...(router.query?.mode === "cql" && { query: { mode: "cql" } }),

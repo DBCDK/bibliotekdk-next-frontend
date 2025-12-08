@@ -221,9 +221,9 @@ export function useCurrentSearchHistoryItem() {
 
 export function useEnhanceSearchHistoryItem() {
   const router = useRouter();
-  const { restartFacetsHook } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
   const { changeWorkType } = useAdvancedSearchContext();
+  const { setQ } = useQ();
 
   function enhanceItem(item) {
     const isSimple = item.mode === "simpel";
@@ -256,13 +256,16 @@ export function useEnhanceSearchHistoryItem() {
           });
         }
 
+        // update q for fakeSearchInput on mobile
+        // this is only needed when clicking on a search history item, which is already the actual search
+        setQ({ all: qValue });
+
         router.push(
           `/find/simpel?${qKey}=${encodeURIComponent(qValue)}${filtersStr}`
         );
         return;
       }
-      // restart the useFacets hook - this is a 'new' search
-      restartFacetsHook();
+
       resetQuickFilters();
 
       // set worktype from item

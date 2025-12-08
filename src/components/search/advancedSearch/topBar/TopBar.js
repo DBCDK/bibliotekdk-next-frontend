@@ -11,6 +11,7 @@ import Translate from "@/components/base/translate";
 import { formattersAndComparitors } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import { useRouter } from "next/router";
 import SaveSearchBtn from "../../save";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 // Small helper to shorten Translate calls
 const t = (context, label) => Translate({ context, label });
@@ -49,7 +50,7 @@ function FormattedQuery(props) {
   return <FormatFieldSearchIndexes fieldsearch={fieldsearch} {...props} />;
 }
 
-export function FormatFieldSearchIndexes({ fieldsearch, isSimple }) {
+export function FormatFieldSearchIndexes({ fieldsearch, heading, isSimple }) {
   const showAndForDropdowns =
     (fieldsearch?.inputFields?.length ?? 0) > 0 ||
     hasValue(fieldsearch?.workType);
@@ -57,6 +58,8 @@ export function FormatFieldSearchIndexes({ fieldsearch, isSimple }) {
   return (
     <div className={styles.formatedQueryContainer}>
       <div className={styles.clampedText}>
+        {heading && <Text type="text1">{heading}</Text>}
+
         <FormatWorkType workType={fieldsearch?.workType} />
         <FormatFieldInput
           inputFields={fieldsearch?.inputFields}
@@ -160,6 +163,8 @@ export default function TopBar({ isLoading = false, className = "" }) {
   // Hide the entire TopBar if there are no query values at all
   const { cqlFromUrl, fieldSearchFromUrl } = useAdvancedSearchContext();
 
+  const breakpoint = useBreakpoint();
+
   const hasAnyValues = useMemo(() => {
     if (hasValue(cqlFromUrl)) return true;
 
@@ -184,7 +189,10 @@ export default function TopBar({ isLoading = false, className = "" }) {
   const labelKey =
     { simpel: "simple", avanceret: "advanced", cql: "cql" }[mode] || "simple";
 
-  const searchHeading = t("search", `topbar-${labelKey}-search`);
+  const isMobile = breakpoint === "xs";
+  const mobileSurfix = isMobile ? "-mobile" : "";
+
+  const searchHeading = t("search", `topbar-${labelKey}-search${mobileSurfix}`);
 
   if (!hasAnyValues) return null;
 
@@ -192,16 +200,21 @@ export default function TopBar({ isLoading = false, className = "" }) {
     <div className={`${styles.topBar} ${className}`}>
       <Container fluid className={styles.container}>
         <Row>
-          <Col xs={12} lg={2} className={styles.your_search}>
-            <Text type="text1">{searchHeading}</Text>
-          </Col>
+          {!isMobile && (
+            <Col xs={12} lg={2} className={styles.your_search}>
+              <Text type="text1">{searchHeading}</Text>
+            </Col>
+          )}
 
           <Col
             xs={12}
             lg={{ offset: 1, span: 7 }}
             className={styles.edit_search}
           >
-            <FormattedQuery isSimple={mode === "simpel"} />
+            <FormattedQuery
+              heading={isMobile && searchHeading}
+              isSimple={mode === "simpel"}
+            />
             <div className={styles.edit}>
               <Link
                 onClick={scrollToTop}

@@ -1,9 +1,7 @@
 .section {
   margin: 0 calc(var(--pt1) * -2);
-  padding-bottom: var(--pt2) !important;
-
   border-top: 1px solid var(--iron);
-  border-bottom: 1px solid var(--iron);
+  padding: var(--pt2);
 }
 
 .skip {
@@ -27,7 +25,6 @@
 }
 
 .words {
-  padding: 0 var(--pt2) 0 var(--pt2);
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
@@ -44,7 +41,6 @@
 @media (min-width: 992px) {
   .section {
     margin: 0 0 0 calc(var(--pt1) * -2);
-    padding: 0 !important;
     border: none;
   }
 

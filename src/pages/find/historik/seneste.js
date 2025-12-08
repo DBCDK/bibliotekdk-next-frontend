@@ -22,7 +22,7 @@ export default function AdvancedSearchPage() {
           <Col
             lg={{ offset: 3, span: 9 }}
             md={{ span: 12 }}
-            style={{ paddingInline: "0px" }}
+            style={{ paddingInline: "0px", marginTop: "var(--pt4)" }}
           >
             <AdvancedSearchHistory />
           </Col>

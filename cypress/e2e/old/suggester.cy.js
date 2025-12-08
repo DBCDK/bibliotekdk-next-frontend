@@ -86,26 +86,6 @@ describe("Suggester (Storybook version)", () => {
       expect(str).to.equal("Valgt: Anders Matthesen (type: Creator)");
     });
   });
-
-  it("viser historik på mobil", () => {
-    cy.viewport(411, 731);
-    cy.get("[data-cy=button-mobile]").click();
-    cy.get("[data-cy=suggester-input]").clear();
-    cy.wait(300);
-
-    cy.get("[data-cy=suggester-container] ul li").should("have.length", 2);
-  });
-
-  it("rydder historik ved klik", () => {
-    cy.viewport(411, 731);
-    cy.get("[data-cy=button-mobile]").click();
-
-    cy.get("[data-cy=suggester-clear-history]").should("be.visible").click();
-
-    cy.on("window:alert", (str) => {
-      expect(str).to.equal("Historik ryddet");
-    });
-  });
 });
 
 // Fremtidig test for logging/data collection

@@ -10,7 +10,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import {
   convertStateToCql,
@@ -38,6 +37,7 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
     { searchIndex: DropdownIndicesEnum.GENERALAUDIENCE, value: [] },
     { searchIndex: DropdownIndicesEnum.NOTA, value: [] },
+    { searchIndex: DropdownIndicesEnum.ARTICLE_TYPE, value: [] },
     { searchIndex: DropdownIndicesEnum.INSTRUMENT, value: [] },
     { searchIndex: DropdownIndicesEnum.CHOIRTYPE, value: [] },
     { searchIndex: DropdownIndicesEnum.CHAMBERMUSICTYPE, value: [] },
@@ -52,7 +52,7 @@ export function getDefaultDropdownIndices() {
  * @param workType
  * @returns {[{prefixLogicalOperator: null, searchIndex: string, value: string},{prefixLogicalOperator: string, searchIndex: string, value: string}]}
  */
-export function getInitialInputFields(workType = "all") {
+export function getInitialInputFields() {
   return [
     {
       value: "",
@@ -60,132 +60,6 @@ export function getInitialInputFields(workType = "all") {
       searchIndex: "term.default",
     },
   ];
-
-  const inputFieldsByMaterialType = {
-    all: [
-      { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-    ],
-    literature: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creatorcontributor",
-        label: "literature_term.creatorcontributor",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.subject",
-      },
-    ],
-    article: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creatorcontributor",
-        label: "literature_term.creatorcontributor",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.subject",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.hostpublication",
-      },
-    ],
-    movie: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creatorcontributor",
-        label: "movie_term.creatorcontributor",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.subject",
-      },
-    ],
-    music: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creator",
-        label: "music_term.creator",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.contributor",
-        label: "music_term.contributor",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.publisher",
-        label: "music_term.publisher",
-      },
-    ],
-    sheetmusic: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creator",
-        label: "sheetmusic_term.creator",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-        label: "sheetmusic_term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.titlemanifestationpart",
-        label: "sheetmusic_term.titlemanifestationpart",
-      },
-    ],
-    game: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-        label: "movie_term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.publisher",
-        label: "game_term.publisher",
-      },
-    ],
-  };
-
-  return inputFieldsByMaterialType[workType];
 }
 
 const AdvancedSearchContext = createContext(undefined);

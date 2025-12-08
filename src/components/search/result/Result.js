@@ -71,13 +71,11 @@ export default function Wrap({ page = 1, onWorkClick }) {
   const isCqlMode = query?.mode === "cql";
 
   // Avanceret søgning inputs
-  const adv = useAdvancedSearchContext();
+  const { cqlFromUrl, fieldSearchFromUrl, sort } = useAdvancedSearchContext();
   const { selectedFacets } = useFacets();
   const { selectedQuickFilters } = useQuickFilters();
 
   const mapped = mapQuickFilters(selectedQuickFilters);
-
-  const { cqlFromUrl, fieldSearchFromUrl, sort } = adv || {};
 
   const hasAdvancedParams =
     (isAdvancedMode || isCqlMode) && !isEmpty(fieldSearchFromUrl);

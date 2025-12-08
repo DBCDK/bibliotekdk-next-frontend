@@ -407,6 +407,14 @@
         "da": "Alder",
         "en": "Age"
       },
+      "phrase.hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
+      },
+      "all_phrase.hostpublicationtype": {
+        "da": "Alle artikeltyper",
+        "en": "All article types"
+      },
       "more_filters": {
         "da": "Flere filtre",
         "en": "More filters"
@@ -414,7 +422,7 @@
     },
     "advanced_search_worktypes": {
       "all": {
-        "da": "Alle",
+        "da": "Alle materialer",
         "en": "All"
       },
       "literature": {
@@ -594,6 +602,10 @@
       "label-primarytarget": {
         "da": "Fagligt niveau",
         "en": "Level"
+      },
+      "label-hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
       }
     },
     "logo": {
@@ -3265,6 +3277,18 @@
         "da": "CQL-søgning",
         "en": "CQL search"
       },
+      "topbar-simple-search-mobile": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "topbar-advanced-search-mobile": {
+        "da": "Avanceret",
+        "en": "Advanced"
+      },
+      "topbar-cql-search-mobile": {
+        "da": "CQL",
+        "en": "CQL"
+      },
       "yourSearch": {
         "da": "Din søgning",
         "en": "Your search"
@@ -3280,6 +3304,10 @@
       "saveSearch": {
         "da": "Gem søgning",
         "en": "Save search"
+      },
+      "savedSearch": {
+        "da": "Gemt",
+        "en": "Saved"
       },
       "editSearch": {
         "da": "Rediger Søgning",
