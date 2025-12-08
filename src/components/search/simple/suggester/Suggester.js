@@ -1,5 +1,5 @@
 import Router, { useRouter } from "next/router";
-
+import Container from "react-bootstrap/Container";
 import PropTypes from "prop-types";
 import AutoSuggest from "react-autosuggest";
 import AutosuggestHighlightMatch from "autosuggest-highlight/match";
@@ -24,7 +24,6 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
-import Link from "@/components/base/link";
 
 import History from "@/components/search/history";
 
@@ -36,7 +35,6 @@ import styles from "./Suggester.module.css";
 import useDataCollect from "@/lib/useDataCollect";
 import { SuggestTypeEnum } from "@/lib/enums";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import { Container } from "react-bootstrap";
 
 const context = { context: "suggester" };
 

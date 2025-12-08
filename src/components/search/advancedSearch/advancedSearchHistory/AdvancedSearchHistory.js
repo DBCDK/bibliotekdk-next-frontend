@@ -268,8 +268,7 @@ export function HistoryHeaderActions({
       <div className={cx(styles.menuDropdown, className)}>
         <div className={styles.checkbox}>
           <Checkbox
-            ariaLabel="vælg alle"
-            tabIndex="-1"
+            ariaLabel={Translate({ context: "bookmark", label: "select-all" })}
             onClick={setAllChecked}
             id="selectall"
             checked={checked}
@@ -277,7 +276,12 @@ export function HistoryHeaderActions({
             dataCy="advanced-search-history-selectall-checkbox"
           />
         </div>
-        <Text type="text3" className={styles.checkboxLabel}>
+        <Text
+          tag="label"
+          for="selectall"
+          type="text3"
+          className={styles.checkboxLabel}
+        >
           {Translate({ context: "bookmark", label: "select-all" })}
         </Text>
         <div className={styles.menuDropdownContainer}>

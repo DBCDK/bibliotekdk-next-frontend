@@ -22,13 +22,12 @@ import { useMemo } from "react";
 // =====================
 // UI (dumb/presentational)
 // =====================
-export function SaveSearchBtnUI({
-  onClick,
-  isSaved,
-  label,
-  className,
-  ...props
-}) {
+export function SaveSearchBtnUI({ onClick, isSaved, className, ...props }) {
+  const label = Translate({
+    context: "search",
+    label: isSaved ? "savedSearch" : "saveSearch",
+  });
+
   return (
     <IconButton
       className={className}
@@ -119,14 +118,12 @@ export default function SaveSearchBtn({ className = "" }) {
   };
 
   const onClick = isAuthenticated ? onSaveSearchClick : onSaveSearchLogin;
-  const label = Translate({ context: "search", label: "saveSearch" });
 
   return (
     <SaveSearchBtnUI
       className={`${styles.wrap} ${className}`}
       onClick={onClick}
       isSaved={isSaved}
-      label={label}
     />
   );
 }

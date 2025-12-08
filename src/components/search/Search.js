@@ -1,13 +1,11 @@
 // components/search/Search.jsx
 import React, { useCallback, useEffect } from "react";
-import { useRouter } from "next/router";
 
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import useQ from "../hooks/useQ";
 import useBreakpoint from "../hooks/useBreakpoint";
 import { useSearchSync } from "../hooks/useSearchSync";
 import { MODE } from "../utils/searchSyncCore";

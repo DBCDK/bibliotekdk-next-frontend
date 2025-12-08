@@ -3165,6 +3165,10 @@
         "da": "Gem søgning",
         "en": "Save search"
       },
+      "savedSearch": {
+        "da": "Gemt",
+        "en": "Saved"
+      },
       "editSearch": {
         "da": "Rediger Søgning",
         "en": "Edit search"

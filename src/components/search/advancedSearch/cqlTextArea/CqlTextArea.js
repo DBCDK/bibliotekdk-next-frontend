@@ -162,6 +162,8 @@ export default function Wrap({ onClear }) {
           ? { fieldSearch: stateToString }
           : { cql: parsedCQL };
 
+      isMobile && document?.activeElement?.blur();
+
       router.push({ pathname: "/find/cql", query });
       setShowPopover(false);
     }

@@ -96,6 +96,8 @@ export default function Wrap({ onCommit = () => {}, onClear = () => {} }) {
 
       onCommit(stateToString, { tid: suggesterTid });
 
+      isMobile && document?.activeElement?.blur();
+
       const cql = convertStateToCql({
         inputFields,
         dropdownSearchIndices,

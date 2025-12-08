@@ -10,7 +10,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import {
   convertStateToCql,
