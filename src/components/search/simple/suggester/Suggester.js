@@ -307,8 +307,7 @@ export const Suggester = forwardRef(function Suggester(
         renderSuggestionsContainer(
           props.containerProps,
           props.children,
-          isHistory,
-          clearHistory
+          isHistory
         )
       }
       getSuggestionValue={(s) => s.term}
