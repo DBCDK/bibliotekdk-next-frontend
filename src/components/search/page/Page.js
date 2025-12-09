@@ -92,8 +92,6 @@ function Page({
   const shouldShowCreator = isLoading || Boolean(creatorHit);
   const shouldShowSeries = !shouldShowCreator && Boolean(seriesHit);
 
-  console.log("###", { shouldShowNoHits, hitcount, hasActiveSearch });
-
   useEffect(() => {
     const handleScroll = () => {
       const rect = searchRef.current?.getBoundingClientRect();
@@ -350,8 +348,6 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const hitcount = isAdvanced
     ? advancedRes?.data?.complexSearch?.hitcount || 0
     : simpleRes?.data?.search?.hitcount || 0;
-
-  console.log("###", { isAdvanced, hitcount });
 
   const isLoading = isAdvanced ? advancedRes.isLoading : simpleRes.isLoading;
 
