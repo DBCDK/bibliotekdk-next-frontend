@@ -1,7 +1,6 @@
 .block {
   background: var(--jagged-ice);
   border: none;
-  border-radius: 8px;
   padding: var(--pt3);
   color: var(--mine-shaft);
 }
