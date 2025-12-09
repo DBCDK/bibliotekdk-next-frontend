@@ -5,7 +5,7 @@ import Text from "@/components/base/text/Text";
 import styles from "./Disclaimer.module.css";
 import Icon from "@/components/base/icon";
 
-export default function Disclaimer({ data }) {
+export default function Disclaimer({ data, className = "" }) {
   const router = useRouter();
   const { type: typeFromUrl } = router.query;
 
@@ -27,14 +27,14 @@ export default function Disclaimer({ data }) {
   }
 
   return (
-    <div className={styles.disclaimer}>
-      <Icon
+    <div className={`${styles.disclaimer} ${className}`}>
+      {/* <Icon
         className={styles.icon}
         src="exclamationmark.svg"
         alt="info"
-        size="3"
-      />
-      <Text type="text2" className={styles.text}>
+        size="2"
+      /> */}
+      <Text type="text3" className={styles.text}>
         {Translate({
           context: "sample",
           label: "disclaimer-text",

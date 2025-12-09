@@ -16,7 +16,7 @@ import {
   buildSyntheticTocFromSpine,
 } from "./utils/epubHelpers";
 
-export function useEpubReader({ src, title, isFullscreen, containerRef }) {
+export function useEpubReader({ src, isFullscreen, containerRef }) {
   // -------- State
   const [location, setLocation] = useState(undefined);
   const [storageKey, setStorageKey] = useState(null);
@@ -341,8 +341,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         dlog.info("loc.start.index:", loc?.start?.index, "atEnd:", loc?.atEnd);
         dlog.end();
       }
-      const href = loc?.start?.href ? stripHashQuery(loc.start.href) : "";
-      if (href) setActiveHref(href);
 
       setChapterIntra(calcChapterIntra(loc));
 
@@ -970,14 +968,16 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
 
   // ------ Derivater til UI
   const segments = Math.max(1, tocFlat.length || 1);
-  const labels = useMemo(() => {
-    const activeNorm = stripHashQuery(activeHref);
-    return tocFlat.map((it) => ({
-      ...it,
-      hrefNorm: stripHashQuery(it.href),
-      active: stripHashQuery(it.href) === activeNorm,
-    }));
-  }, [tocFlat, activeHref]);
+  const labels = useMemo(
+    () =>
+      tocFlat.map((it, idx) => ({
+        ...it,
+        hrefNorm: stripHashQuery(it.href),
+        // Ét aktivt label: det segment vi er i
+        active: idx === segIndex,
+      })),
+    [tocFlat, segIndex]
+  );
 
   const isLastSeg = segIndex >= segments - 1;
   const intraEff =
@@ -1093,7 +1093,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
   const readerKey = `${isFullscreen ? "fs" : "modal"}:${bookVersion}`;
   const reactReaderProps = {
     url: src,
-    title,
     location: effectiveLocation,
     getRendition: handleGetRendition,
     tocChanged: (toc) => {

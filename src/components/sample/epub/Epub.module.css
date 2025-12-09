@@ -126,12 +126,9 @@
 }
 
 /* Venstre/højre placering */
-.arrowLeft {
-  left: 0.5rem;
-}
-
+.arrowLeft,
 .arrowRight {
-  right: 0.5rem;
+  display: none;
 }
 
 .arrowRight svg {
@@ -145,6 +142,19 @@
 }
 
 @media screen and (min-width: 576px) {
+  .arrowLeft,
+  .arrowRight {
+    display: unset;
+  }
+
+  .arrowLeft {
+    left: calc(var(--pt4) * -1);
+  }
+
+  .arrowRight {
+    right: calc(var(--pt4) * -1);
+  }
+
   /* Arrow left */
   .wrapper > div > div button {
     display: unset;
@@ -158,4 +168,7 @@
     left: unset !important;
     right: -40px !important;
   }
+}
+
+@media screen and (min-width: 576px) {
 }

@@ -1,0 +1,6 @@
+.disclaimer {
+  width: calc(100% - (var(--pt2) * 2));
+  position: absolute;
+  bottom: var(--pt2);
+  text-align: center;
+}

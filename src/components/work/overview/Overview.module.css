@@ -67,7 +67,7 @@
 .basket {
   padding-top: var(--pt3);
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .sample {

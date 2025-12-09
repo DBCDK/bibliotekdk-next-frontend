@@ -58,11 +58,11 @@ export function Sample({
         isMp3={isMp3}
         className={styles.overlay}
       >
-        <Disclaimer data={data} />
         {isEpub && (
           <ReaderSample src={url} data={data} isFullscreen={isFullscreen} />
         )}
         {isMp3 && <AudioSample src={url} data={data} />}
+        <Disclaimer data={data} className={styles.disclaimer} />
       </Overlay>
     </>
   );

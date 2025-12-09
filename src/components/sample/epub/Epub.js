@@ -18,11 +18,13 @@ const ReactReader = dynamic(
   { ssr: false }
 );
 
-export default function ReaderSample({ src, title, isFullscreen = false }) {
+export default function ReaderSample({ src, data, isFullscreen = false }) {
   const containerRef = useRef(null);
 
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+
+  const title = data?.title;
 
   const {
     readerKey,

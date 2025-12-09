@@ -1,8 +1,8 @@
 .disclaimer {
-  width: fit-content;
+  /* width: fit-content;
   margin: auto;
   display: flex;
   align-items: center;
   gap: var(--pt2);
-  padding: 0 0 var(--pt2) 0;
+  padding: 0 0 var(--pt2) 0; */
 }

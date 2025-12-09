@@ -22,6 +22,10 @@
   display: none;
 }
 
+.body {
+  position: relative;
+}
+
 /* remove expand icon when overlay is already full-width */
 @media (min-width: 700px) {
   .expand {

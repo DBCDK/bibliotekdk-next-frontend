@@ -1,4 +1,5 @@
 // components/sample/epub/EpubProgress.jsx
+import { useEffect, useRef, useMemo } from "react";
 import styles from "./Progress.module.css";
 
 export default function EpubProgress({
@@ -10,7 +11,59 @@ export default function EpubProgress({
   Text,
   show = true,
 }) {
+  const labelsRef = useRef(null);
+
   if (!show) return null;
+
+  // Aktivt label (kapitel)
+  const activeIndex = useMemo(
+    () => labels.findIndex((it) => it.active),
+    [labels]
+  );
+
+  const scrollToIndex = (index, behavior = "smooth") => {
+    const container = labelsRef.current;
+    if (!container) return;
+    if (index == null || index < 0) return;
+    if (typeof window !== "undefined" && window.innerWidth > 640) return; // kun mobil
+
+    const child = container.children[index];
+    if (!child) return;
+
+    // Hvor langt inde i containeren ligger elementet?
+    const childOffsetLeft = child.offsetLeft;
+
+    // Hvis du har padding-left på .labels
+    const paddingLeft = 0;
+
+    let targetScrollLeft = childOffsetLeft - paddingLeft;
+
+    // Clamp scrollLeft så vi ikke scroller for langt
+    const containerWidth = container.clientWidth;
+    const maxScroll = container.scrollWidth - containerWidth;
+    if (maxScroll <= 0) return;
+
+    if (targetScrollLeft < 0) targetScrollLeft = 0;
+    if (targetScrollLeft > maxScroll) targetScrollLeft = maxScroll;
+
+    container.scrollTo({
+      left: targetScrollLeft,
+      behavior,
+    });
+  };
+
+  // Auto-scroll når aktivt kapitel skifter (fx ved sideskift)
+  useEffect(() => {
+    if (activeIndex === -1) return;
+    scrollToIndex(activeIndex);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
+
+  const handleLabelClick = (href, index) => {
+    // Scroll pænt til det label, der blev klikket på
+    scrollToIndex(index);
+    onJump(href);
+  };
 
   return (
     <div className={styles.progress}>
@@ -20,6 +73,7 @@ export default function EpubProgress({
           role="navigation"
           aria-label="Bogsektioner"
           style={{ ["--segments"]: segments }}
+          ref={labelsRef}
         >
           {labels.map((it, i) => (
             <div
@@ -29,7 +83,7 @@ export default function EpubProgress({
             >
               <Link
                 title={it.label}
-                onClick={() => onJump(it.href)}
+                onClick={() => handleLabelClick(it.href, i)}
                 className={styles.labelText}
                 aria-current={it.active ? "true" : undefined}
               >
