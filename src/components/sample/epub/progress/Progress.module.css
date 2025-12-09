@@ -1,11 +1,11 @@
-/* components/sample/epub/EpubProgress.module.css */
+/* components/sample/epub/Progress.module.css */
 
 .progress {
   width: 90%;
   margin: auto;
 }
 
-/* ===== Labels (lige brede) — halv bredde & centreret ===== */
+/* ===== Labels – default (desktop/tablet) ===== */
 .labels {
   display: flex;
   max-width: 750px;
@@ -18,6 +18,8 @@
     rgba(255, 255, 255, 0.8)
   );
   z-index: 5;
+  /* ingen scroll som default */
+  overflow-x: hidden;
 }
 
 .labelBtn {
@@ -31,6 +33,7 @@
   border-right: 1px solid rgba(0, 0, 0, 0.06);
   transition: background-color 120ms ease, color 120ms ease;
 }
+
 .labelBtn:last-child {
   border-right: none;
 }
@@ -42,11 +45,12 @@
   max-width: 95%;
   cursor: pointer;
 }
+
 .active .labelText {
   color: var(--blue);
 }
 
-/* ===== Progressbar – halv bredde & centreret ===== */
+/* ===== Progressbar ===== */
 .progressTrack {
   position: relative;
   width: 100%;
@@ -70,17 +74,45 @@
   border-radius: 999px;
 }
 
-/* Små skærme */
+/* ===== Mobil-tilpasning (løsning kun på mobil) ===== */
 @media (max-width: 640px) {
   .labels {
-    width: 70%;
+    width: 100%;
+    margin: 8px auto 4px;
+    padding: 0;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
+
+  .labels > *:first-child {
+    margin: 8px 0;
+  }
+
+  .labels::-webkit-scrollbar {
+    display: none;
+  }
+
   .labelBtn {
+    width: auto !important;
+    flex: 0 0 auto;
     padding: 6px 10px;
+    border-right: none;
+    margin-right: 4px;
   }
+
+  .labelBtn:last-child {
+    margin-right: 0;
+  }
+
+  .labelText {
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+
   .progressTrack {
-    width: 70%;
+    width: 100%;
     height: 6px;
   }
 }

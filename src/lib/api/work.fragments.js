@@ -95,6 +95,50 @@ export function cacheWork({ workId }) {
   };
 }
 
+export function publizonSamples({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query PublizonSamples($id: String!) {
+              work(id: $id) {
+              manifestations {
+                mostRelevant {
+                  materialTypes {
+                    materialTypeGeneral {
+                      display
+                      code
+                    }
+                    materialTypeSpecific {
+                      display
+                      code
+                    }
+                  }
+                  titles {
+                    main
+                  }
+                  creators {
+                    display
+                  }
+                  cover {
+                    large {
+                      url
+                    }
+                  }
+                  access {
+                    __typename
+                    ... on Publizon {
+                      sample
+                      format
+                    }
+                  }
+                }
+              }
+            }
+            }`,
+    variables: { id: workId },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Recommendations for a work
  *

@@ -8,9 +8,11 @@ import ReaderSample from "./epub";
 import AudioSample from "./mp3";
 
 import { useData } from "@/lib/api/api";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import { publizonSamples } from "@/lib/api/work.fragments";
 
 import styles from "./Sample.module.css";
+import { selectPublizonSample } from "./utils";
+import Disclaimer from "./disclaimer";
 
 // SAMPLE: kun UI (modtager alt via props)
 export function Sample({
@@ -40,8 +42,11 @@ export function Sample({
 
   return (
     <>
-      <Button className={`${styles.button} ${className}`} onClick={onOpen} />
-
+      <Button
+        className={`${styles.button} ${className}`}
+        format={access?.format}
+        onClick={onOpen}
+      />
       <Overlay
         show={show}
         onShow={onOpen}
@@ -57,6 +62,7 @@ export function Sample({
           <ReaderSample src={url} data={data} isFullscreen={isFullscreen} />
         )}
         {isMp3 && <AudioSample src={url} data={data} />}
+        <Disclaimer data={data} className={styles.disclaimer} />
       </Overlay>
     </>
   );
@@ -64,9 +70,18 @@ export function Sample({
 
 // WRAP: data + routing + filtrering (minimale ændringer i øvrigt)
 export default function Wrap(props) {
-  const { selectedPids } = props;
+  // const {
+  //   specificMaterialType: specificMaterialTypeFromProps = null,
+  //   workId: workIdFromProps = null,
+  // } = props;
 
   const router = useRouter();
+
+  const { workId: workIdFromUrl, type: typeFromUrl } = router.query;
+
+  const workId = workIdFromUrl || null;
+
+  const SpecificSelectedMaterialType = typeFromUrl || null;
 
   // Hold state i sync med URL (loader + back/forward) — uændret logik
   const [show, setShow] = useState(false);
@@ -76,17 +91,14 @@ export default function Wrap(props) {
     data: samples,
     error,
     isLoading,
-  } = useData(manifestationFragments.publizonSamples({ pids: selectedPids }));
+  } = useData(publizonSamples({ workId }));
 
-  const manifestations = samples?.manifestations || [];
+  const manifestations = samples?.work?.manifestations?.mostRelevant || [];
 
   // Filtrér manifestationer
   const data = useMemo(
-    () =>
-      manifestations?.find((m) =>
-        m?.access?.some((a) => a?.__typename === "Publizon" && a?.sample)
-      ),
-    [manifestations]
+    () => selectPublizonSample(manifestations, SpecificSelectedMaterialType),
+    [manifestations, SpecificSelectedMaterialType]
   );
 
   useEffect(() => {
@@ -113,7 +125,6 @@ export default function Wrap(props) {
   const handleClose = () => {
     if (!router.isReady) return;
     if (router.query.sample === "true") {
-      // Fjern ?sample=true (uden ekstra history-step kan du evt. bruge replace)
       router.back();
     } else {
       setShow(false);

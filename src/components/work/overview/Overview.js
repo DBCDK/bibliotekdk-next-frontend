@@ -106,6 +106,12 @@ export function Overview({
 
   const isPeriodicaArticle = checkForPeriodicaArticle(selectedPids);
 
+  const samplePids = selectedPids.length
+    ? selectedPids
+    : flatPidsByType(["e-bog"]);
+
+  console.log("samplePids", samplePids);
+
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -170,16 +176,13 @@ export function Overview({
                   type={type}
                 />
               </Col>
-              <Col xs={12} sm={9} xl={8} className={styles.basket}>
+              <Col xs={12} sm={9} className={styles.basket}>
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
                 />
 
-                <SampleButton
-                  selectedPids={selectedPids}
-                  className={styles.sample}
-                />
+                <SampleButton workId={workId} className={styles.sample} />
 
                 <BookmarkDropdown
                   materialId={workId}

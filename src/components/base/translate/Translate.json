@@ -5746,6 +5746,20 @@
         "en": "LABEL: Mangler oversættelse!"
       }
     },
+    "sample": {
+      "test-read-btn-lbl": {
+        "da": "Prøvelæs",
+        "en": "Test read"
+      },
+      "test-listen-btn-lbl": {
+        "da": "Prøvelyt",
+        "en": "Test listen"
+      },
+      "disclaimer-text": {
+        "da": "Indholdet kommer fra <strong>%s</strong>-udgaven",
+        "en": "Content comes from <strong>%s</strong>"
+      }
+    },
     "receipt": {
       "seeLoansAndReservations": {
         "da": "Se dine lån og reserveringer",
