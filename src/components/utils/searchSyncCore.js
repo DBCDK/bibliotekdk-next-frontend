@@ -134,12 +134,15 @@ export function reduceCommit(action, snap, lastOrigin) {
       const qAll = norm(action.qAll);
       next.snap.simple.qAll = isNonEmpty(qAll) ? qAll : null;
 
-      // If we previously committed in CQL and now the user commits in SIMPLE,
-      // we RESET everything (spec requirement: 3 → 1 with a new search restarts flow)
+      // Simpel søgning har ikke workTypes-UI,
+      // så en ny simpel søgning resetter workTypes til "all"
+      if (isNonEmpty(qAll)) {
+        next.snap.workTypes = "all";
+      }
+
       if (lastOrigin === MODE.CQL) {
         next.snap.advanced.fieldSearch = null;
         next.snap.cql.cql = null;
-        // keep current workTypes (user may have chosen it in UI) – policy choice
       }
 
       next.lastOrigin = MODE.SIMPLE;
@@ -216,18 +219,33 @@ export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
     lastOrigin,
   };
 
-  // workTypes from URL (if present) – otherwise keep existing or default to "all"
+  // --- workTypes fra URL ---
   let wtParam = query?.workTypes;
   if (Array.isArray(wtParam)) wtParam = wtParam[0];
   const urlWT = norm(wtParam);
-  next.snap.workTypes = isNonEmpty(urlWT)
-    ? urlWT
-    : next.snap.workTypes || "all";
 
+  // Er der en simpel søgning i URL'en?
+  const simpleAllInUrl = norm(query?.["q.all"]);
+  const hasSimpleAll =
+    currentMode === MODE.SIMPLE && isNonEmpty(simpleAllInUrl);
+
+  if (isNonEmpty(urlWT)) {
+    // URL'en siger eksplicit hvad workTypes er (simpel søgning)
+    next.snap.workTypes = urlWT;
+  } else if (hasSimpleAll) {
+    // VIGTIGT:
+    // Vi står på simpel /find/simpel med q.all, men UDEN workTypes-param.
+    // Det betyder "all" og SKAL overskrive en gammel værdi som fx "article".
+    next.snap.workTypes = "all";
+  } else {
+    // Ellers: behold eksisterende eller default "all"
+    next.snap.workTypes = next.snap.workTypes || "all";
+  }
+
+  // --- resten af funktionen som du allerede har ---
   if (currentMode === MODE.CQL) {
     const cqlInUrl = norm(query?.cql);
     if (isNonEmpty(cqlInUrl)) {
-      // Same as COMMIT_CQL rules
       next.snap.cql.cql = cqlInUrl;
       next.snap.simple.qAll = null;
       next.snap.advanced.fieldSearch = null;
@@ -241,9 +259,8 @@ export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
     if (isNonEmpty(fsInUrl)) {
       next.snap.advanced.fieldSearch = fsInUrl;
       const wt = safeExtractWorkType(fsInUrl);
-      next.snap.workTypes = wt ?? "all"; // BUGFIX mirror
+      next.snap.workTypes = wt ?? "all";
 
-      // Only set origin on first-load/deep-link. Do not override seeded origin.
       if (!next.lastOrigin) {
         next.lastOrigin = MODE.ADVANCED;
       }
@@ -254,7 +271,6 @@ export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
     const allInUrl = norm(query?.["q.all"]);
     if (isNonEmpty(allInUrl)) {
       next.snap.simple.qAll = allInUrl;
-      // Same principle: mark origin only if unknown (initial load)
       if (!next.lastOrigin) next.lastOrigin = MODE.SIMPLE;
     }
   }
