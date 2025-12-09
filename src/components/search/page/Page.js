@@ -51,6 +51,7 @@ import Related from "../related/Related";
 import DidYouMean from "../didYouMean/DidYouMean";
 import SeriesBox from "@/components/search/seriesBox/SeriesBox";
 import CreatorBox from "@/components/search/creatorBox/CreatorBox";
+import { mapQuickFilters } from "../facets/simple/SimpleFacets";
 // -------------------------------
 // UI-komponent: kun rendering
 // -------------------------------
@@ -296,6 +297,8 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const { setValue } = useSearchHistory();
   const currentSearchHistoryItem = useCurrentSearchHistoryItem();
 
+  const mapped = mapQuickFilters(selectedQuickFilters);
+
   const hasAdvancedSearch = !isEmpty(advCtx?.fieldSearchFromUrl) && isAdvanced;
   const hasCqlSearch = !isEmpty(advCtx?.cqlFromUrl) && isAdvanced;
 
@@ -320,8 +323,10 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
 
   const rawcql = cqlAndFacetsQuery ? cql : fieldSearchQuery;
 
+  const merged = { ...filters, ...mapped };
+
   const simpleRes = useData(
-    isSimple && searchFragments.hitcount({ q, filters })
+    isSimple && searchFragments.hitcount({ q, filters: merged })
   );
 
   const advancedRes = useData(
