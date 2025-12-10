@@ -64,6 +64,7 @@ function Page({
   onPageChange,
   hasAdvancedSearch,
   hasCqlSearch,
+  allowAdvancedSubmit,
   hasQuery,
   rawcql,
   advancedCql,
@@ -83,7 +84,7 @@ function Page({
   const hasActiveSearch =
     {
       simpel: hasQuery,
-      avanceret: hasAdvancedSearch,
+      avanceret: hasAdvancedSearch && allowAdvancedSubmit,
       cql: hasCqlSearch || hasAdvancedSearch,
     }[mode] ?? false;
 
@@ -286,7 +287,14 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   const filters = getFiltersQuery();
   const router = useRouter();
 
-  const mode = router?.query?.mode;
+  const { query, isReady } = router;
+
+  // Block result fetch on submit=false url parameter
+  const submit = query?.submit;
+  const allowAdvancedSubmit = isReady && submit !== "false";
+
+  // mode
+  const mode = query?.mode;
 
   const isSimple = mode === "simpel";
   const isAdvanced = !isSimple;
@@ -330,14 +338,15 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
   );
 
   const advancedRes = useData(
-    !isSimple &&
+    allowAdvancedSubmit &&
+      !isSimple &&
       (hasAdvancedSearch || hasCqlSearch) &&
       advancedHitcount({ cql: advancedCql })
   );
 
   const shouldFetchExtraHits = isSimple
     ? hasQuery
-    : hasAdvancedSearch || hasCqlSearch;
+    : allowAdvancedSubmit && (hasAdvancedSearch || hasCqlSearch);
   const extraHitsRes = useData(
     shouldFetchExtraHits
       ? isSimple
@@ -376,6 +385,7 @@ export default function Wrap({ page = 1, onPageChange, onWorkClick }) {
       hasQuery={hasQuery}
       hasAdvancedSearch={hasAdvancedSearch}
       hasCqlSearch={hasCqlSearch}
+      allowAdvancedSubmit={allowAdvancedSubmit}
       rawcql={rawcql}
       advancedCql={advancedCql}
       selectedFacets={selectedFacets || filters}

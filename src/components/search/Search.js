@@ -212,8 +212,11 @@ export default function Wrap() {
 
       // Update workType via useSearchSync
       setWorkType(type);
+
+      // handle workType change as a commit
+      handleAdvancedCommit({ workType: type });
     },
-    [resetFacets, resetQuickFilters, setWorkType]
+    [resetFacets, resetQuickFilters, setWorkType, handleAdvancedCommit]
   );
 
   const handleResetAll = () => {

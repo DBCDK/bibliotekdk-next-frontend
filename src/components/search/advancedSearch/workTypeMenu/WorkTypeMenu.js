@@ -43,7 +43,7 @@ function getWorkTypeFromQuery(query) {
  */
 export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
   const router = useRouter();
-  const { workType: ctxWT, changeWorkType } = useAdvancedSearchContext();
+  const { workType: ctxWT } = useAdvancedSearchContext();
 
   const breakpoint = useBreakpoint();
   const isSmallScreen =
@@ -55,7 +55,24 @@ export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
   }, [ctxWT, router.query?.workTypes, router.query?.fieldSearch]);
 
   const handleClick = (type) => {
-    changeWorkType(type);
+    const workType = type === "all" ? null : type;
+
+    let params = {};
+    if (type !== "all") {
+      params = { fieldSearch: JSON.stringify({ workType }) };
+    }
+
+    router.replace({
+      pathname: router.pathname,
+      ...(router.query?.mode === "avanceret" && {
+        query: {
+          mode: "avanceret",
+          ...params,
+          submit: false, // <----------- OBS! prevent useData fetch in search/page and search/result compoenents
+        },
+      }),
+    });
+
     onClick(type);
   };
 
