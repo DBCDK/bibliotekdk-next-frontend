@@ -3,6 +3,7 @@
   border: none;
   padding: var(--pt3);
   color: var(--mine-shaft);
+  margin-bottom: var(--pt2);
 }
 
 @media (max-width: 992px) {
@@ -43,7 +44,7 @@
 
 .thumbs {
   display: flex;
-  align-items: stretch;
+  align-items: flex-end;
   margin-bottom: var(--pt3);
   padding-bottom: var(--pt1);
   -webkit-overflow-scrolling: touch;

@@ -115,13 +115,7 @@ function Page({
     searchHitComponent = (
       <>
         {shouldShowSeries && (
-          <div
-            style={
-              shouldShowCreator ? { marginBottom: "var(--pt2)" } : undefined
-            }
-          >
-            <SeriesBox seriesHit={seriesHit} className="search-block" />
-          </div>
+          <SeriesBox seriesHit={seriesHit} className="search-block" />
         )}
         {shouldShowCreator && (
           <CreatorBox
