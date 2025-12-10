@@ -66,9 +66,13 @@ export default function Wrap({ page = 1, onWorkClick }) {
   let offset = limit * (page - 1);
 
   // Mode
-  const { query } = useRouter();
+  const { query, isReady } = useRouter();
   const isAdvancedMode = query?.mode === "avanceret";
   const isCqlMode = query?.mode === "cql";
+
+  // Block result fetch on submit=false url parameter
+  const submit = query?.submit;
+  const allowAdvancedSubmit = isReady && submit !== "false";
 
   // Avanceret søgning inputs
   const { cqlFromUrl, fieldSearchFromUrl, sort } = useAdvancedSearchContext();
@@ -120,7 +124,7 @@ export default function Wrap({ page = 1, onWorkClick }) {
 
   // Data-kald (kun aktivt for gældende mode)
   const complexResponse = useData(
-    hasAdvancedParams || hasCqlParams
+    allowAdvancedSubmit && (hasAdvancedParams || hasCqlParams)
       ? complexSearchFragments.doComplexSearchAll({
           cql: cqlQuery,
           offset,
@@ -157,7 +161,7 @@ export default function Wrap({ page = 1, onWorkClick }) {
 
   const isLoading =
     hasAdvancedParams || hasCqlParams
-      ? !!complexResponse?.isLoading
+      ? allowAdvancedSubmit && !!complexResponse?.isLoading
       : !!simpleResponse?.isLoading;
 
   return (
