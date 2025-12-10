@@ -106,9 +106,6 @@ function Page({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  console.log("page.creatorHit", creatorHit);
-  console.log("page.seriesHit", seriesHit);
-
   let searchHitComponent = null;
 
   if (shouldShowCreator || shouldShowSeries) {

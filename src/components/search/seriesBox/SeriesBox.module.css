@@ -36,12 +36,6 @@
   color: var(--mine-shaft);
 }
 
-.note {
-  margin: 0 0 var(--pt2) 0;
-  font-size: 14px;
-  color: var(--mine-shaft);
-}
-
 .thumbs {
   display: flex;
   align-items: flex-end;
