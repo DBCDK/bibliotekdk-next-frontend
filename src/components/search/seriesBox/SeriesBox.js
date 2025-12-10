@@ -80,13 +80,6 @@ export default function SeriesBox({
 
       {members?.length > 0 && (
         <div>
-          <Text type="text1" className={styles.note}>
-            {Translate({
-              context: "series_page",
-              label: "parts_in_series",
-              vars: [members.length],
-            })}
-          </Text>
           <div className={styles.thumbs}>
             {membersPreview.map((member, idx) => {
               const {

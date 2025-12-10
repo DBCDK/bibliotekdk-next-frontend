@@ -1,9 +1,9 @@
 .block {
   background: var(--jagged-ice);
   border: none;
-  border-radius: 8px;
   padding: var(--pt3);
   color: var(--mine-shaft);
+  margin-bottom: var(--pt2);
 }
 
 @media (max-width: 992px) {
@@ -36,15 +36,9 @@
   color: var(--mine-shaft);
 }
 
-.note {
-  margin: 0 0 var(--pt2) 0;
-  font-size: 14px;
-  color: var(--mine-shaft);
-}
-
 .thumbs {
   display: flex;
-  align-items: stretch;
+  align-items: flex-end;
   margin-bottom: var(--pt3);
   padding-bottom: var(--pt1);
   -webkit-overflow-scrolling: touch;

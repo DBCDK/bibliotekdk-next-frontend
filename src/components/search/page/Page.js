@@ -90,7 +90,7 @@ function Page({
   const shouldShowHistory = !isLoading && !hasActiveSearch;
   const shouldShowNoHits = !isLoading && hasActiveSearch && hitcount === 0;
   const shouldShowCreator = isLoading || Boolean(creatorHit);
-  const shouldShowSeries = !shouldShowCreator && Boolean(seriesHit);
+  const shouldShowSeries = Boolean(seriesHit);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -106,15 +106,24 @@ function Page({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const searchHitComponent = shouldShowCreator ? (
-    <CreatorBox
-      creatorHit={creatorHit}
-      isLoading={isLoading}
-      className="search-block"
-    />
-  ) : shouldShowSeries ? (
-    <SeriesBox seriesHit={seriesHit} className="search-block" />
-  ) : null;
+  let searchHitComponent = null;
+
+  if (shouldShowCreator || shouldShowSeries) {
+    searchHitComponent = (
+      <>
+        {shouldShowSeries && (
+          <SeriesBox seriesHit={seriesHit} className="search-block" />
+        )}
+        {shouldShowCreator && (
+          <CreatorBox
+            creatorHit={creatorHit}
+            isLoading={isLoading}
+            className="search-block"
+          />
+        )}
+      </>
+    );
+  }
 
   return (
     <>
