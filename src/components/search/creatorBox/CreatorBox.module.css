@@ -3,6 +3,7 @@
   padding: var(--pt3);
   color: var(--mine-shaft);
   max-width: fit-content;
+  margin-bottom: var(--pt2);
 }
 
 .portraitWrapper {
