@@ -164,8 +164,6 @@ export default function Wrap({ page = 1, onWorkClick }) {
       ? allowAdvancedSubmit && !!complexResponse?.isLoading
       : !!simpleResponse?.isLoading;
 
-  console.log("### isLoading", isLoading, allowAdvancedSubmit);
-
   return (
     <Result
       rows={rows}
