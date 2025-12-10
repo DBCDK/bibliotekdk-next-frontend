@@ -43,7 +43,7 @@ function getWorkTypeFromQuery(query) {
  */
 export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
   const router = useRouter();
-  const { workType: ctxWT } = useAdvancedSearchContext();
+  const { workType: ctxWT, changeWorkType } = useAdvancedSearchContext();
 
   const breakpoint = useBreakpoint();
   const isSmallScreen =
@@ -55,6 +55,7 @@ export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
   }, [ctxWT, router.query?.workTypes, router.query?.fieldSearch]);
 
   const handleClick = (type) => {
+    changeWorkType(type);
     const workType = type === "all" ? null : type;
 
     let params = {};

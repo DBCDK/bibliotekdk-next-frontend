@@ -214,7 +214,7 @@ export default function Wrap() {
       setWorkType(type);
 
       // handle workType change as a commit
-      handleAdvancedCommit({ workType: type });
+      handleAdvancedCommit(JSON.stringify({ workType: type }));
     },
     [resetFacets, resetQuickFilters, setWorkType, handleAdvancedCommit]
   );
