@@ -58,7 +58,7 @@ export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
     const workType = type === "all" ? null : type;
 
     let params = {};
-    if (type !== "all") {
+    if (workType) {
       params = { fieldSearch: JSON.stringify({ workType }) };
     }
 
