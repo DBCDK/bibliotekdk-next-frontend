@@ -239,6 +239,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     stateToString,
     popoverRef,
     resetMenuItemsEvent,
+    resetDropdownIndices,
+    dispatchResetMenuItemsEvent,
     suggesterTid,
     setSuggesterTid,
   };

@@ -21,6 +21,7 @@ import styles from "./Simple.module.css";
 import { DesktopMaterialSelect, MobileMaterialSelect } from "./select";
 import { useFacets } from "../advancedSearch/useFacets";
 import { useQuickFilters } from "../advancedSearch/useQuickFilters";
+import { useAdvancedSearchContext } from "../advancedSearch/advancedSearchContext";
 
 export function SimpleSearch({
   query,
@@ -97,6 +98,9 @@ export default function Wrap({ onCommit = () => {} }) {
   const [query, setQueryState] = useState(q[SuggestTypeEnum.ALL] || "");
   const [history, setHistory, clearHistory] = useHistory();
 
+  const { resetDropdownIndices, dispatchResetMenuItemsEvent } =
+    useAdvancedSearchContext();
+
   const init = getQ()[SuggestTypeEnum.ALL] || "";
 
   const breakpoint = useBreakpoint();
@@ -149,6 +153,10 @@ export default function Wrap({ onCommit = () => {} }) {
       resetQuickFilters();
       // exclude quickFilters if WorkType is changed
       delete extras.quickfilters;
+
+      // reset advanced search filters;
+      resetDropdownIndices();
+      dispatchResetMenuItemsEvent();
 
       // callback
       onCommit?.(value, selectedMaterial);
