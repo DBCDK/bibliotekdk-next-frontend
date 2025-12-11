@@ -154,10 +154,6 @@ export default function Wrap({ onCommit = () => {} }) {
       // exclude quickFilters if WorkType is changed
       delete extras.quickfilters;
 
-      // reset advanced search filters;
-      resetDropdownIndices();
-      dispatchResetMenuItemsEvent();
-
       // callback
       onCommit?.(value, selectedMaterial);
 
@@ -170,6 +166,12 @@ export default function Wrap({ onCommit = () => {} }) {
       });
 
       document.activeElement?.blur();
+
+      // reset advanced dropdowns (After setQuery! important!)
+      setTimeout(() => {
+        resetDropdownIndices();
+        dispatchResetMenuItemsEvent();
+      }, 0);
 
       setTimeout(() => {
         setHistory(value);
