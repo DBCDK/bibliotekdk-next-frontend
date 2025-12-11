@@ -69,9 +69,8 @@ CreatorPage.getInitialProps = async (ctx) => {
     true
   );
   const queries = Object.values(init.initialData);
-
   // Check if creator exists
-  if (!queries[0]?.data?.generated?.dataSummary?.text) {
+  if (!queries[0]?.data?.creatorByDisplay?.generated?.dataSummary?.text) {
     if (ctx.res) {
       ctx.res.statusCode = 404;
     }
