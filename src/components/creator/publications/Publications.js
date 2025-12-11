@@ -22,7 +22,7 @@ import Text from "@/components/base/text";
 /**
  * Displays works for a specific publication year with lazy loading
  */
-function PublicationYearWorks({ year, creatorId, filters }) {
+function PublicationYearWorks({ year, creatorId, filters, yearsSet }) {
   const fetcher = useFetcherWithCache({ revalidate: false });
   // Generate unique key using useMemo
   const cacheKey = useMemo(() => {
@@ -74,7 +74,7 @@ function PublicationYearWorks({ year, creatorId, filters }) {
           }
         });
 
-        const parsedWorks = parseWorks(allWorks, creatorId);
+        const parsedWorks = parseWorks(allWorks, creatorId, yearsSet);
         const filteredWorks = parsedWorks.filter((work) => {
           return String(work?.originalWorkYear) === String(year.key);
         });
@@ -142,6 +142,11 @@ export function Publications({
       selectedLanguage,
       selectedGenreAndForm,
     ]
+  );
+
+  const yearsSet = useMemo(
+    () => new Set(years?.map((year) => year.key)),
+    [years]
   );
 
   const titleText =
@@ -230,6 +235,7 @@ export function Publications({
             year={year}
             filters={filters}
             creatorId={creatorId}
+            yearsSet={yearsSet}
           />
         ))}
       </div>
