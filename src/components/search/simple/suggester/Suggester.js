@@ -364,6 +364,16 @@ export default function Wrap(props) {
     }
   }, [query, data?.suggest?.result]);
 
+  // autofocus if query param focus=1 is set
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (router.query.focus !== "1") return;
+
+    requestAnimationFrame(() => {
+      setTimeout(() => focusInput(), 150);
+    });
+  }, [router.isReady, router.query.focus]);
+
   if (props.skeleton || isLoading) {
     className = `${className} ${styles.skeleton}`;
   }

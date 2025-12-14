@@ -173,7 +173,10 @@ export function Header({
                     params = `?workTypes=${activeMaterialObject.label}`;
                   }
 
-                  router.push(`/find/simpel${params}`);
+                  router.push(
+                    `/find/simpel${params}${params ? "&" : "?"}focus=1`
+                  );
+
                   setTimeout(() => focusInput(), 100);
                 }}
               >
