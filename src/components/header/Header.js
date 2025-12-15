@@ -173,10 +173,12 @@ export function Header({
                     params = `?workTypes=${activeMaterialObject.label}`;
                   }
 
+                  // windows input focus
                   router.push(
                     `/find/simpel${params}${params ? "&" : "?"}focus=1`
                   );
 
+                  // input fccus
                   setTimeout(() => focusInput(), 100);
                 }}
               >

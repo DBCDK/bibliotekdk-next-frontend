@@ -371,6 +371,12 @@ export default function Wrap(props) {
 
     requestAnimationFrame(() => {
       setTimeout(() => focusInput(), 150);
+
+      const { focus, ...rest } = router.query;
+      router.replace({ pathname: router.pathname, query: rest }, undefined, {
+        shallow: true,
+        scroll: false,
+      });
     });
   }, [router.isReady, router.query.focus]);
 
