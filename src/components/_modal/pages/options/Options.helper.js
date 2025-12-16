@@ -18,9 +18,34 @@ export const getTemplateProps = {
   [AccessEnum.INTER_LIBRARY_LOAN](props) {
     return templateProps?.propsForPhysicalOrderLink?.(props);
   },
+  [AccessEnum.PUBLIZON](props) {
+    return templateProps?.propsForLocalLibrary?.(props);
+  },
 };
 
 const templateProps = {
+  propsForLocalLibrary(props) {
+    const isLoggedIn = props?.isAuthenticated;
+    const hasValidUrl = props?.agencyUrl;
+    const onClick = () => props?.onLoginPrompt();
+
+    const linkProps = !isLoggedIn
+      ? { onClick }
+      : { href: props?.agencyUrl, target: "_blank", disabled: !hasValidUrl };
+
+    return {
+      linkProps,
+      linkText: Translate({
+        context: "options",
+        label: "local-link-title",
+        vars: [formatMaterialTypesToPresentation(props?.materialTypesArray)],
+      }),
+      descriptionText: Translate({
+        context: "options",
+        label: "local-link-description",
+      }),
+    };
+  },
   propsForOnline(props) {
     return {
       linkProps: { href: props?.url, target: "_blank" },

@@ -57,18 +57,39 @@ export function workTypeTranslator(workTypes) {
  * @param {Object} isAuthenticated
  * @returns
  */
-export function handleGoToLogin(modal, access, isAuthenticated) {
-  // if this is an infomedia article it should open in same window
-  const urlTarget = access[0]?.id ? "_self" : "_blank";
-  // check if we should open login modal on click
+export function handleGoToLogin(modal, access, isAuthenticated, type) {
+  const a0 = access?.[0];
+  if (!a0) return;
+
+  // Publizon always requires login
+  const isPublizon = a0.__typename === "Publizon";
+
+  // Infomedia articles (have an id) should open in the same window/tab
+  const urlTarget = a0.id ? "_self" : "_blank";
+
+  // Add a CMS type query param for agencyUrl (only when relevant)
+  const agencyUrl = a0.agencyUrl;
+  const selector = agencyUrl?.includes("?") ? "&" : "?";
+  const urlSuffix = type ? `${selector}type=${type}` : "";
+
+  // Use agencyUrl for Publizon (with optional suffix), otherwise use the direct url
+  const url = isPublizon
+    ? agencyUrl
+      ? agencyUrl + urlSuffix
+      : undefined
+    : a0.url;
+
+  // Avoid pushing/opening an undefined URL
+  if (!url) return;
+
+  // Decide whether we should show the login modal instead of redirecting
   const goToLogin =
-    !isAuthenticated &&
-    access[0]?.loginRequired &&
-    isEbookCentralOrEbscohost(access?.[0]?.url);
+    (isPublizon && !isAuthenticated) ||
+    (!isAuthenticated && a0.loginRequired && isEbookCentralOrEbscohost(url));
 
   return goToLogin
-    ? openLoginModal({ modal }) //TODO should we give url as param to redirect to ebookcentral or ebscohost?
-    : goToRedirectUrl(access[0]?.url, urlTarget);
+    ? openLoginModal({ modal }) // TODO: pass url to allow redirect after login?
+    : goToRedirectUrl(url, urlTarget);
 }
 
 /**
@@ -210,12 +231,12 @@ export const constructButtonText = (
 };
 
 /**
- * sorts a list of access so eReolen comes first in the list.
+ * sorts a list of access so publizon comes first in the list.
  * @param {*} access list of access objects [{origin}]
  * @returns
  */
-export const sortEreolFirst = (access) => {
+export const sortPublizonFirst = (access) => {
   return access?.sort((a, b) =>
-    a?.origin === "eReolen" ? -1 : b?.origin === "eReolen" ? 1 : 0
+    a?.__typename === "Publizon" ? -1 : b?.__typename === "Publizon" ? 1 : 0
   );
 };

@@ -1,7 +1,7 @@
 import {
   context,
   getBaseUrl,
-  sortEreolFirst,
+  sortPublizonFirst,
 } from "@/components/work/reservationbutton/utils";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
@@ -30,7 +30,7 @@ function OrderButtonTextBelow({
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
     Boolean(isPeriodica),
-    hasDigitalCopy,
+    hasDigitalCopy || Boolean(access?.[0]?.__typename === AccessEnum.PUBLIZON),
     hasPhysicalCopy,
   ];
 
@@ -95,7 +95,7 @@ export default function Wrap({ selectedPids, skeleton }) {
     return null;
   }
 
-  const sortedAccess = sortEreolFirst(access);
+  const sortedAccess = sortPublizonFirst(access);
 
   return (
     <OrderButtonTextBelow

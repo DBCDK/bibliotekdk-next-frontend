@@ -6,6 +6,11 @@ export function accessForManifestations({ pids }) {
     query: `query AccessForManifestations($pids: [String!]!) {
       manifestations(pid: $pids) {
         pid
+        materialTypes {
+          materialTypeSpecific {
+            display
+          }
+        }
         unit {
           manifestations {
             pid
@@ -15,6 +20,7 @@ export function accessForManifestations({ pids }) {
             creators {
               display
             }
+
             access {
               __typename
               ... on AccessUrl {
@@ -40,6 +46,9 @@ export function accessForManifestations({ pids }) {
               ... on InterLibraryLoan {
                 loanIsPossible
                 accessNew
+              }
+              ... on Publizon {
+                agencyUrl
               }
             }
           }

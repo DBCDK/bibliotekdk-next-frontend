@@ -110,8 +110,6 @@ export function Overview({
     ? selectedPids
     : flatPidsByType(["e-bog"]);
 
-  console.log("samplePids", samplePids);
-
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>

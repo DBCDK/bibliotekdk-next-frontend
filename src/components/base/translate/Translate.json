@@ -3661,6 +3661,14 @@
         "da": "Du kan bestille en artikel eller et bestemt eksemplar",
         "en": "LABEL mangler oversættelse"
       },
+      "local-link-title": {
+        "da": "Link til %s på dit lokale bibliotek",
+        "en": "Link to %s on your local library"
+      },
+      "local-link-description": {
+        "da": "Lånes online på på dit lokale bibliotek (Kræver login)",
+        "en": "Borrowed online at your local library (Requires login)"
+      },
       "online-link-title": {
         "da": "Link til %s på %s",
         "en": "Link to %s on %s"

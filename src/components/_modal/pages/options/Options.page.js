@@ -4,9 +4,12 @@ import { getTemplateProps } from "@/components/_modal/pages/options/Options.help
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import { useOrderFlow } from "@/components/hooks/order";
+import { useModal } from "@/components/_modal";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { openLoginModal } from "../login/utils";
 
 /**
  * Component helper for link and description in options
@@ -16,7 +19,7 @@ import * as manifestationFragments from "@/lib/api/manifestation.fragments";
  */
 export function OptionsLinkAndDescription({ props, templateProps }) {
   const { className } = props;
-  const { linkProps, linkText, descriptionText } = templateProps;
+  const { linkProps = {}, linkText = "", descriptionText = "" } = templateProps;
 
   return (
     <li className={`${className} ${styles.item}`}>
@@ -46,6 +49,8 @@ function optionsListAllArgs({
   selectedPids,
   manifestations,
   startOrderFlow,
+  loginPrompt,
+  isAuthenticated,
 }) {
   //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
   const currentManifestation = manifestations?.find(
@@ -59,11 +64,14 @@ function optionsListAllArgs({
   const props = {
     ...access,
     materialTypesArray: materialTypeArray,
+    isAuthenticated,
     className: styles.item,
     onOrder: () => {
       startOrderFlow({ orders: [{ pids: selectedPids }] });
     },
+    onLoginPrompt: () => loginPrompt(),
   };
+
   return (
     <OptionsLinkAndDescription
       key={access.accessType + "-" + index}
@@ -76,6 +84,10 @@ function optionsListAllArgs({
 export function Options({ context }) {
   const { title, selectedPids } = { ...context };
   const { start } = useOrderFlow();
+
+  const modal = useModal();
+
+  const { isAuthenticated } = useAuthentication();
 
   const { access } = useManifestationAccess({
     pids: selectedPids,
@@ -94,6 +106,8 @@ export function Options({ context }) {
       index,
       selectedPids,
       manifestations,
+      isAuthenticated,
+      loginPrompt: () => openLoginModal({ modal }),
       startOrderFlow: start,
     });
 
