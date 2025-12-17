@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useSearchHistory, {
   getDateTime,
   getTimeStamp,
@@ -22,6 +22,7 @@ import CombinedSearch from "@/components/search/advancedSearch/combinedSearch/Co
 import { useSavedSearches } from "@/components/hooks/useSearchHistory";
 import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import Pagination from "@/components/search/pagination/Pagination";
 
 //Component to render facets
 export function FormatedFilters({ facets, quickFilters = [], className }) {
@@ -515,56 +516,103 @@ function splitHistoryItems(storedValues) {
 
 export function AdvancedSearchHistory() {
   const { storedValue, deleteValue } = useSearchHistory();
-  const [checkboxList, setCheckboxList] = useState([]);
+  const [checkboxSet, setCheckboxSet] = useState(() => new Set());
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const breakpoint = useBreakpoint();
   const { isAuthenticated } = useAuthentication();
+
+  const isMobile = breakpoint === "xs";
+  const ITEMS_PER_PAGE = 10;
+
+  const totalPages = useMemo(() => {
+    const hitcount = storedValue?.length || 0;
+    return Math.max(1, Math.ceil(hitcount / ITEMS_PER_PAGE));
+  }, [storedValue]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+      // If page is auto-adjusted on desktop, clear selection to keep behavior consistent
+      if (!isMobile) {
+        setCheckboxSet(new Set());
+      }
+    }
+  }, [currentPage, totalPages, isMobile]);
+
+  const pagedStoredValue = useMemo(() => {
+    if (!Array.isArray(storedValue)) return [];
+    if (isMobile) {
+      // Mobile UX: "se mere" shows accumulated pages
+      return storedValue.slice(0, currentPage * ITEMS_PER_PAGE);
+    }
+    // Desktop UX: traditional pages
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return storedValue.slice(start, start + ITEMS_PER_PAGE);
+  }, [storedValue, currentPage, isMobile]);
+
+  const onPageChange = (newPage) => {
+    const clamped = Math.min(Math.max(1, newPage), totalPages);
+    setCurrentPage(clamped);
+    // Desktop pages: keep selection per page (matches saved searches behavior).
+    if (!isMobile) {
+      setCheckboxSet(new Set());
+    }
+  };
 
   /**
    * Set or unset ALL checkboxes in search history
    */
   const setAllChecked = () => {
-    if (storedValue.length === checkboxList.length) {
-      setCheckboxList([]);
-    } else {
-      setCheckboxList(storedValue.map((stored) => stored.key));
+    if (!pagedStoredValue?.length) {
+      setCheckboxSet(new Set());
+      return;
     }
+    const visibleKeys = pagedStoredValue.map((stored) => stored.key);
+    const allVisibleChecked = visibleKeys.every((k) => checkboxSet.has(k));
+    setCheckboxSet((prev) => {
+      const next = new Set(prev);
+      if (allVisibleChecked) {
+        visibleKeys.forEach((k) => next.delete(k));
+      } else {
+        visibleKeys.forEach((k) => next.add(k));
+      }
+      return next;
+    });
   };
 
   /**
    * Delete selected entries in search history
    */
   const onDeleteSelected = () => {
-    checkboxList.forEach((check) => {
-      const historyItem = storedValue.find((stored) => stored.key === check);
-      historyItem && deleteValue(historyItem);
-      //remove item from checklist too
-      onSelect(historyItem, false);
+    if (!pagedStoredValue?.length || checkboxSet.size === 0) {
+      return;
+    }
+    pagedStoredValue.forEach((item) => {
+      if (checkboxSet.has(item.key)) {
+        deleteValue(item);
+      }
     });
+    setCheckboxSet(new Set());
   };
 
   /**
    * Add/remove item in list when selected/deselected
    */
   const onSelect = (item, selected = false) => {
-    // if select is FALSE it has been deselected on gui
-    const newCheckList = [...checkboxList];
-    // if item is already in checkboxlist -> remove
-    const checkindex = checkboxList.findIndex((check) => check === item.key);
-    if (checkindex !== -1) {
-      // item found in list - if deselected remove it
-      if (!selected) {
-        newCheckList.splice(checkindex, 1);
+    if (!item?.key) return;
+    setCheckboxSet((prev) => {
+      const next = new Set(prev);
+      if (selected) {
+        next.add(item.key);
+      } else {
+        next.delete(item.key);
       }
-    }
-    // if not -> add it to list .. if selected
-    else if (selected) {
-      newCheckList.push(item.key);
-    }
-    setCheckboxList(newCheckList);
+      return next;
+    });
   };
 
-  const splittedValues = splitHistoryItems(storedValue);
+  const splittedValues = splitHistoryItems(pagedStoredValue);
 
   const HistoryItemPerDay = ({ group, groupIndex }) => {
     return (
@@ -581,9 +629,7 @@ export function AdvancedSearchHistory() {
               key={item.key}
               item={item}
               index={index}
-              checked={
-                checkboxList.findIndex((check) => check === item.key) !== -1
-              }
+              checked={checkboxSet.has(item.key)}
               deleteSelected={onDeleteSelected}
               onSelect={onSelect}
             />
@@ -592,9 +638,10 @@ export function AdvancedSearchHistory() {
     );
   };
 
-  const checkedObjects = storedValue?.filter((obj) =>
-    checkboxList.includes(obj.key)
-  );
+  const checkedObjects = useMemo(() => {
+    if (!pagedStoredValue?.length || checkboxSet.size === 0) return [];
+    return pagedStoredValue.filter((obj) => checkboxSet.has(obj.key));
+  }, [pagedStoredValue, checkboxSet]);
 
   return (
     <div className={styles.container}>
@@ -609,9 +656,12 @@ export function AdvancedSearchHistory() {
           <HistoryHeaderActions
             deleteSelected={onDeleteSelected}
             setAllChecked={setAllChecked}
-            checked={storedValue?.length === checkboxList?.length}
-            partiallyChecked={checkboxList?.length > 0}
-            disabled={storedValue?.length === 0}
+            checked={
+              pagedStoredValue?.length > 0 &&
+              pagedStoredValue.every((i) => checkboxSet.has(i.key))
+            }
+            partiallyChecked={checkboxSet.size > 0}
+            disabled={pagedStoredValue?.length === 0}
             checkedObjects={checkedObjects}
             showCombinedSearch={showCombinedSearch}
             setShowCombinedSearch={setShowCombinedSearch}
@@ -622,8 +672,11 @@ export function AdvancedSearchHistory() {
         {breakpoint !== "xs" && (
           <HistoryHeader
             setAllChecked={setAllChecked}
-            checked={storedValue?.length === checkboxList?.length}
-            disabled={storedValue?.length === 0}
+            checked={
+              pagedStoredValue?.length > 0 &&
+              pagedStoredValue.every((i) => checkboxSet.has(i.key))
+            }
+            disabled={pagedStoredValue?.length === 0}
             isAuthenticated={isAuthenticated}
           />
         )}
@@ -641,6 +694,14 @@ export function AdvancedSearchHistory() {
           ))
         )}
       </div>
+      {storedValue?.length > 0 && totalPages > 1 && (
+        <Pagination
+          className={styles.pagination}
+          numPages={totalPages}
+          currentPage={currentPage}
+          onChange={onPageChange}
+        />
+      )}
     </div>
   );
 }

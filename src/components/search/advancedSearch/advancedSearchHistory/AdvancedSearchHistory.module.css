@@ -1,5 +1,9 @@
 /* ===== Base (mobile first) ===== */
 
+.pagination {
+  margin-top: var(--pt4);
+}
+
 .historyFilters {
   display: flex;
   flex-wrap: wrap;
@@ -165,6 +169,10 @@
 @media (min-width: 576px) {
   .container {
     padding-inline: var(--pt2);
+  }
+
+  .pagination {
+    margin-top: var(--pt9);
   }
 
   .table_container {
