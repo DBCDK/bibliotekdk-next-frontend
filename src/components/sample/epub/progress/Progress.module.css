@@ -5,7 +5,6 @@
   margin: auto;
 }
 
-/* ===== Labels – default (desktop/tablet) ===== */
 .labels {
   display: flex;
   max-width: 750px;
@@ -18,7 +17,6 @@
     rgba(255, 255, 255, 0.8)
   );
   z-index: 5;
-  /* ingen scroll som default */
   overflow-x: hidden;
 }
 
@@ -74,7 +72,6 @@
   border-radius: 999px;
 }
 
-/* ===== Mobil-tilpasning (løsning kun på mobil) ===== */
 @media (max-width: 640px) {
   .labels {
     width: 100%;

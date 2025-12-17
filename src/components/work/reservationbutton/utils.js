@@ -73,11 +73,13 @@ export function handleGoToLogin(modal, access, isAuthenticated, type) {
   const urlSuffix = type ? `${selector}type=${type}` : "";
 
   // Use agencyUrl for Publizon (with optional suffix), otherwise use the direct url
-  const url = isPublizon
-    ? agencyUrl
-      ? agencyUrl + urlSuffix
-      : undefined
-    : a0.url;
+  let url = a0.url;
+
+  if (isPublizon) {
+    // Publizon uses agencyUrl; if it's missing we can't redirect (unless we show login)
+    if (!agencyUrl) url = undefined;
+    else url = `${agencyUrl}${urlSuffix}`;
+  }
 
   // Avoid pushing/opening an undefined URL
   if (!url && isAuthenticated) return;

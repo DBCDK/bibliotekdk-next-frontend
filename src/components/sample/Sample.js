@@ -14,7 +14,6 @@ import styles from "./Sample.module.css";
 import { selectPublizonSample } from "./utils";
 import Disclaimer from "./disclaimer";
 
-// SAMPLE: kun UI (modtager alt via props)
 export function Sample({
   className = "",
   show,
@@ -68,13 +67,7 @@ export function Sample({
   );
 }
 
-// WRAP: data + routing + filtrering (minimale ændringer i øvrigt)
 export default function Wrap(props) {
-  // const {
-  //   specificMaterialType: specificMaterialTypeFromProps = null,
-  //   workId: workIdFromProps = null,
-  // } = props;
-
   const router = useRouter();
 
   const { workId: workIdFromUrl, type: typeFromUrl } = router.query;
@@ -83,7 +76,6 @@ export default function Wrap(props) {
 
   const SpecificSelectedMaterialType = typeFromUrl || null;
 
-  // Hold state i sync med URL (loader + back/forward) — uændret logik
   const [show, setShow] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -95,7 +87,6 @@ export default function Wrap(props) {
 
   const manifestations = samples?.work?.manifestations?.mostRelevant || [];
 
-  // Filtrér manifestationer
   const data = useMemo(
     () => selectPublizonSample(manifestations, SpecificSelectedMaterialType),
     [manifestations, SpecificSelectedMaterialType]

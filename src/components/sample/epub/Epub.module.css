@@ -82,10 +82,9 @@
 /* Custom arrows */
 
 .wrapper {
-  position: relative; /* hvis den ikke allerede er det */
+  position: relative;
 }
 
-/* Fælles arrow-style */
 .arrow {
   position: absolute;
   top: 50%;
@@ -125,7 +124,6 @@
   fill: var(--white);
 }
 
-/* Venstre/højre placering */
 .arrowLeft,
 .arrowRight {
   display: none;
@@ -135,7 +133,6 @@
   transform: rotate(180deg);
 }
 
-/* Når vi er i starten/slutningen → pilen “forsvinder” */
 .arrow:disabled {
   opacity: 0;
   pointer-events: none;

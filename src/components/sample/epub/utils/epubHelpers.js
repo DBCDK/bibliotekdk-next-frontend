@@ -6,7 +6,6 @@ export function getCoverHref(book) {
   try {
     const items = book?.spine?.spineItems || [];
 
-    // 1) properties der ligner “cover”
     const byProp = items.find(
       (it) =>
         /\bcover\b/i.test(it?.properties || "") ||
@@ -102,22 +101,17 @@ export const splitHash = (href = "") => {
   return i === -1 ? [href, ""] : [href.slice(0, i), href.slice(i + 1)];
 };
 
-/**
- * Build synthetic TOC ud fra spine, når navigation.toc er tom.
- */
 export function buildSyntheticTocFromSpine(book) {
   const items = book?.spine?.spineItems || [];
 
   const looksLikeGibberish = (base) => {
     const b = base.toLowerCase();
 
-    // typiske mønstre fra dine eksempler:
-    // index_split_000, index_split_003, index000, id227, osv.
     if (/^index(_split)?_\d+$/.test(b)) return true;
     if (/^index\d+$/.test(b)) return true;
     if (/^id\d+$/.test(b)) return true;
 
-    // meget korte “navne” er også sjældent gode labels
+    // omit short names
     if (b.length <= 3) return true;
 
     return false;
