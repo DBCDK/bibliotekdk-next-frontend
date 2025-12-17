@@ -1,4 +1,3 @@
-// components/sample/epub/EpubProgress.jsx
 import { useEffect, useRef, useMemo } from "react";
 import styles from "./Progress.module.css";
 
@@ -13,9 +12,7 @@ export default function EpubProgress({
 }) {
   const labelsRef = useRef(null);
 
-  if (!show) return null;
-
-  // Aktivt label (kapitel)
+  // Aktivt label (kapitel) — hook kaldes altid
   const activeIndex = useMemo(
     () => labels.findIndex((it) => it.active),
     [labels]
@@ -30,15 +27,11 @@ export default function EpubProgress({
     const child = container.children[index];
     if (!child) return;
 
-    // Hvor langt inde i containeren ligger elementet?
     const childOffsetLeft = child.offsetLeft;
-
-    // Hvis du har padding-left på .labels
     const paddingLeft = 0;
 
     let targetScrollLeft = childOffsetLeft - paddingLeft;
 
-    // Clamp scrollLeft så vi ikke scroller for langt
     const containerWidth = container.clientWidth;
     const maxScroll = container.scrollWidth - containerWidth;
     if (maxScroll <= 0) return;
@@ -46,24 +39,24 @@ export default function EpubProgress({
     if (targetScrollLeft < 0) targetScrollLeft = 0;
     if (targetScrollLeft > maxScroll) targetScrollLeft = maxScroll;
 
-    container.scrollTo({
-      left: targetScrollLeft,
-      behavior,
-    });
+    container.scrollTo({ left: targetScrollLeft, behavior });
   };
 
-  // Auto-scroll når aktivt kapitel skifter (fx ved sideskift)
+  // Auto-scroll — hook kaldes altid, men gør intet når show=false
   useEffect(() => {
+    if (!show) return;
     if (activeIndex === -1) return;
     scrollToIndex(activeIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex]);
+  }, [show, activeIndex]);
 
   const handleLabelClick = (href, index) => {
-    // Scroll pænt til det label, der blev klikket på
     scrollToIndex(index);
     onJump(href);
   };
+
+  // Render-guard efter hooks
+  if (!show) return null;
 
   return (
     <div className={styles.progress}>

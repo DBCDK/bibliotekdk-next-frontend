@@ -23,7 +23,6 @@ export function useEpubReader({ src, isFullscreen, containerRef }) {
   const [bookVersion, setBookVersion] = useState(0);
 
   const [tocFlat, setTocFlat] = useState([]);
-  const [activeHref, setActiveHref] = useState("");
 
   const [segIndex, setSegIndex] = useState(0);
   const [chapterIntra, setChapterIntra] = useState(0);
@@ -1042,7 +1041,6 @@ export function useEpubReader({ src, isFullscreen, containerRef }) {
     setLocation(undefined);
     setStorageKey(null);
     setTocFlat([]);
-    setActiveHref("");
     setSegIndex(0);
     setChapterIntra(0);
     setAtBookEnd(false);

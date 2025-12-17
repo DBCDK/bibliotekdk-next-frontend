@@ -27,11 +27,18 @@ const templateProps = {
   propsForLocalLibrary(props) {
     const isLoggedIn = props?.isAuthenticated;
     const hasValidUrl = props?.agencyUrl;
+    const type = props?.materialTypesArray?.[0];
+
+    const selector = props?.agencyUrl?.includes("?") ? "&" : "?";
+    const urlSuffix = type ? `${selector}type=${type}` : "";
+
+    const url = props.agencyUrl + urlSuffix;
+
     const onClick = () => props?.onLoginPrompt();
 
     const linkProps = !isLoggedIn
       ? { onClick }
-      : { href: props?.agencyUrl, target: "_blank", disabled: !hasValidUrl };
+      : { href: url, target: "_blank", disabled: !hasValidUrl };
 
     return {
       linkProps,

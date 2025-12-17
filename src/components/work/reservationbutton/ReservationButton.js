@@ -273,7 +273,10 @@ export const ReservationButton = ({
     if (publizonAccess) {
       return {
         props: accessibleOnlineWithLoginProps,
-        text: "Lån via dit lokale bibliotek",
+        text: Translate({
+          context: "overview",
+          label: "publizon-local-library-btn",
+        }),
         preferSecondary: false,
       };
     }

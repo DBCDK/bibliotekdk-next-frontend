@@ -80,7 +80,7 @@ export function handleGoToLogin(modal, access, isAuthenticated, type) {
     : a0.url;
 
   // Avoid pushing/opening an undefined URL
-  if (!url) return;
+  if (!url && isAuthenticated) return;
 
   // Decide whether we should show the login modal instead of redirecting
   const goToLogin =

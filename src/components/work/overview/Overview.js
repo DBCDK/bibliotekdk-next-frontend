@@ -106,10 +106,6 @@ export function Overview({
 
   const isPeriodicaArticle = checkForPeriodicaArticle(selectedPids);
 
-  const samplePids = selectedPids.length
-    ? selectedPids
-    : flatPidsByType(["e-bog"]);
-
   return (
     <section className={`${styles.background} ${className}`}>
       <Container fluid>

@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./Disclaimer.module.css";
-import Icon from "@/components/base/icon";
 
 export default function Disclaimer({ data, className = "" }) {
   const router = useRouter();
@@ -28,12 +27,6 @@ export default function Disclaimer({ data, className = "" }) {
 
   return (
     <div className={`${styles.disclaimer} ${className}`}>
-      {/* <Icon
-        className={styles.icon}
-        src="exclamationmark.svg"
-        alt="info"
-        size="2"
-      /> */}
       <Text type="text3" className={styles.text}>
         {Translate({
           context: "sample",
