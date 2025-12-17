@@ -4,6 +4,7 @@ import Link from "@/components/base/link";
 import { getSeriesUrl, getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
+import useDataCollect from "@/lib/useDataCollect";
 import styles from "./SeriesBox.module.css";
 import Cover from "@/components/base/cover/Cover";
 
@@ -52,6 +53,8 @@ export default function SeriesBox({
   className = "",
   dataCy: dataCy,
 }) {
+  const collect = useDataCollect();
+
   if (!seriesHit) {
     return null;
   }
@@ -128,6 +131,12 @@ export default function SeriesBox({
       {seriesLink && (
         <Link
           href={seriesLink}
+          onClick={() =>
+            collect.collectSeriesTeaserClick({
+              seriesId,
+              title,
+            })
+          }
           className={styles.seeAllLink}
           border={{ bottom: { keepVisible: true } }}
         >
