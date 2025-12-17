@@ -533,8 +533,12 @@ export function AdvancedSearchHistory() {
   useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
+      // If page is auto-adjusted on desktop, clear selection to keep behavior consistent
+      if (!isMobile) {
+        setCheckboxSet(new Set());
+      }
     }
-  }, [currentPage, totalPages]);
+  }, [currentPage, totalPages, isMobile]);
 
   const pagedStoredValue = useMemo(() => {
     if (!Array.isArray(storedValue)) return [];
@@ -584,19 +588,12 @@ export function AdvancedSearchHistory() {
     if (!pagedStoredValue?.length || checkboxSet.size === 0) {
       return;
     }
-    const visibleKeySet = new Set(pagedStoredValue.map((i) => i.key));
-    const keysToDelete = Array.from(checkboxSet).filter((k) =>
-      visibleKeySet.has(k)
-    );
-    keysToDelete.forEach((key) => {
-      const historyItem = pagedStoredValue.find((stored) => stored.key === key);
-      historyItem && deleteValue(historyItem);
+    pagedStoredValue.forEach((item) => {
+      if (checkboxSet.has(item.key)) {
+        deleteValue(item);
+      }
     });
-    setCheckboxSet((prev) => {
-      const next = new Set(prev);
-      keysToDelete.forEach((k) => next.delete(k));
-      return next;
-    });
+    setCheckboxSet(new Set());
   };
 
   /**
