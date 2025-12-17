@@ -202,7 +202,7 @@ export const ReservationButton = ({
     access?.filter((entry) => entry?.__typename === "Publizon").length > 0
   );
 
-  const type = materialTypesMap[access?.[0]?.pids?.[0]];
+  const type = materialTypesMap?.[access?.[0]?.pids?.[0]];
 
   const noSelectedManifestationsProps = {
     dataCy: "button-order-overview-disabled",

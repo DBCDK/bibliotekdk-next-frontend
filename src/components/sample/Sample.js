@@ -69,27 +69,22 @@ export function Sample({
 
 export default function Wrap(props) {
   const router = useRouter();
-
-  const { workId: workIdFromUrl, type: typeFromUrl } = router.query;
-
-  const workId = workIdFromUrl || null;
-
-  const SpecificSelectedMaterialType = typeFromUrl || null;
-
   const [show, setShow] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const { workId, type } = props;
 
   const {
     data: samples,
     error,
     isLoading,
-  } = useData(publizonSamples({ workId }));
+  } = useData(workId && publizonSamples({ workId }));
 
   const manifestations = samples?.work?.manifestations?.mostRelevant || [];
 
   const data = useMemo(
-    () => selectPublizonSample(manifestations, SpecificSelectedMaterialType),
-    [manifestations, SpecificSelectedMaterialType]
+    () => selectPublizonSample(manifestations, type),
+    [manifestations, type]
   );
 
   useEffect(() => {
