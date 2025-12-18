@@ -7,7 +7,7 @@ import {
   constructButtonText,
   context,
   handleGoToLogin,
-  sortEreolFirst,
+  sortPublizonFirst,
 } from "@/components/work/reservationbutton/utils";
 import isEmpty from "lodash/isEmpty";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
@@ -17,18 +17,22 @@ import { overviewWork } from "@/lib/api/work.fragments";
 import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
 
 function TextAboveButton({ access, isAuthenticated }) {
+  const a0 = access?.[0];
+
+  const loginRequired =
+    a0?.loginRequired ||
+    ["InfomediaService", "Publizon"].includes(a0?.__typename);
+
+  if (!loginRequired || isAuthenticated) return null;
+
   return (
-    (access?.[0]?.loginRequired ||
-      access?.[0]?.__typename === "InfomediaService") &&
-    !isAuthenticated && (
-      <Text
-        type="text3"
-        className={styles.textAboveButton}
-        dataCy={"text-above-order-button"}
-      >
-        {Translate({ ...context, label: "url_login_required" })}
-      </Text>
-    )
+    <Text
+      type="text3"
+      className={styles.textAboveButton}
+      dataCy="text-above-order-button"
+    >
+      {Translate({ ...context, label: "url_login_required" })}
+    </Text>
   );
 }
 
@@ -66,6 +70,7 @@ function ReservationButtonWrapper({
 
   const {
     access,
+    materialTypesMap,
     hasPhysicalCopy,
     hasDigitalCopy,
     isLoading: isLoadingAccess,
@@ -121,6 +126,7 @@ function ReservationButtonWrapper({
     <ReservationButton
       {...{
         access,
+        materialTypesMap,
         isAuthenticated,
         isGuestUser,
         buttonType,
@@ -161,6 +167,7 @@ export default ReservationButtonWrapper;
  */
 export const ReservationButton = ({
   access,
+  materialTypesMap,
   isAuthenticated,
   buttonType,
   size,
@@ -174,7 +181,7 @@ export const ReservationButton = ({
   exactEdition = false,
   bookmarkKey,
 }) => {
-  access = sortEreolFirst(access);
+  access = sortPublizonFirst(access);
 
   const { start } = useOrderFlow();
   const noSelectedManifestations = Boolean(isEmpty(access));
@@ -190,6 +197,12 @@ export const ReservationButton = ({
       (entry) => entry?.url && entry?.__typename === "InfomediaService"
     ).length > 0
   );
+
+  const publizonAccess = Boolean(
+    access?.filter((entry) => entry?.__typename === "Publizon").length > 0
+  );
+
+  const type = materialTypesMap?.[access?.[0]?.pids?.[0]];
 
   const noSelectedManifestationsProps = {
     dataCy: "button-order-overview-disabled",
@@ -220,8 +233,9 @@ export const ReservationButton = ({
   const accessibleOnlineWithLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, isAuthenticated),
+    onClick: () => handleGoToLogin(modal, access, isAuthenticated, type),
   };
+
   const loginRequiredProps = {
     skeleton: isEmpty(access),
     dataCy: `button-order-overview-enabled`,
@@ -256,7 +270,18 @@ export const ReservationButton = ({
       };
     }
 
-    //ACCESS_URL,EREOL
+    if (publizonAccess) {
+      return {
+        props: accessibleOnlineWithLoginProps,
+        text: Translate({
+          context: "overview",
+          label: "publizon-local-library-btn",
+        }),
+        preferSecondary: false,
+      };
+    }
+
+    //ACCESS_URL
     if (onlineMaterialWithoutLoginOrLoginAtUrl) {
       return {
         props: accessibleOnlineAndNoLoginProps,
@@ -264,6 +289,7 @@ export const ReservationButton = ({
         preferSecondary: shortText, // Becomes secondary button if button links to material (not ordering)
       };
     }
+
     //DIGITAL_ARTICLE_SERVICE, INTER_LIBRARY_LOAN
     return {
       props: loginRequiredProps,
@@ -273,6 +299,7 @@ export const ReservationButton = ({
   };
 
   const { props, text, preferSecondary } = getProps();
+
   return (
     <>
       <TextAboveButton access={access} isAuthenticated={isAuthenticated} />

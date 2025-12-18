@@ -1693,6 +1693,10 @@
       }
     },
     "overview": {
+      "publizon-local-library-btn": {
+        "da": "Lån via dit lokale bibliotek",
+        "en": "Loan via your local library"
+      },
       "check_branch_holding": {
         "da": "Se om den er hjemme på dit bibliotek",
         "en": "Check your library"
@@ -3660,6 +3664,14 @@
       "periodica-link-description": {
         "da": "Du kan bestille en artikel eller et bestemt eksemplar",
         "en": "LABEL mangler oversættelse"
+      },
+      "local-link-title": {
+        "da": "Link til %s på dit lokale bibliotek",
+        "en": "Link to %s on your local library"
+      },
+      "local-link-description": {
+        "da": "Lånes online på på dit lokale bibliotek (Kræver login)",
+        "en": "Borrowed online at your local library (Requires login)"
       },
       "online-link-title": {
         "da": "Link til %s på %s",
@@ -5744,6 +5756,20 @@
       "noLibrariesMessage": {
         "da": "Du har ingen tilknyttede biblioteker",
         "en": "LABEL: Mangler oversættelse!"
+      }
+    },
+    "sample": {
+      "test-read-btn-lbl": {
+        "da": "Prøvelæs",
+        "en": "Test read"
+      },
+      "test-listen-btn-lbl": {
+        "da": "Prøvelyt",
+        "en": "Test listen"
+      },
+      "disclaimer-text": {
+        "da": "Indholdet kommer fra <strong>%s</strong>-udgaven",
+        "en": "Content comes from <strong>%s</strong>"
       }
     },
     "receipt": {

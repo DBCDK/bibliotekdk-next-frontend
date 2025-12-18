@@ -170,14 +170,15 @@ export function Overview({
                   type={type}
                 />
               </Col>
-              <Col xs={12} sm={9} xl={8} className={styles.basket}>
+              <Col xs={12} sm={9} className={styles.basket}>
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
                 />
 
                 <SampleButton
-                  selectedPids={selectedPids}
+                  workId={workId}
+                  type={type?.[0]}
                   className={styles.sample}
                 />
 

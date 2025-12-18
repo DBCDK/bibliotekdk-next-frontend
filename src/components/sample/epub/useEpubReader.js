@@ -4,7 +4,6 @@ import {
   DEBUG,
   dlog,
   describeTarget,
-  normalizeHrefForMatch,
   spineIndexOfDebug,
   dumpBookOverview,
 } from "./utils/epubDebug";
@@ -14,20 +13,24 @@ import {
   waitForBookAndLayout,
   isHttp,
   splitHash,
+  buildSyntheticTocFromSpine,
 } from "./utils/epubHelpers";
 
-export function useEpubReader({ src, title, isFullscreen, containerRef }) {
+export function useEpubReader({ src, isFullscreen, containerRef }) {
   // -------- State
   const [location, setLocation] = useState(undefined);
   const [storageKey, setStorageKey] = useState(null);
   const [bookVersion, setBookVersion] = useState(0);
 
   const [tocFlat, setTocFlat] = useState([]);
-  const [activeHref, setActiveHref] = useState("");
 
   const [segIndex, setSegIndex] = useState(0);
   const [chapterIntra, setChapterIntra] = useState(0);
+
+  const [atBookStart, setAtBookStart] = useState(false);
   const [atBookEnd, setAtBookEnd] = useState(false);
+
+  const [progressEnabled, setProgressEnabled] = useState(true);
 
   // -------- Refs
   const renditionRef = useRef(null);
@@ -48,11 +51,13 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
   const pendingSpreadRestoreRef = useRef(false);
   const coverShownOnceRef = useRef(false);
 
-  // Initial override (kun én gang) – og kun hvis IKKE gendannet position
+  // Initial override (kun hvis IKKE gendannet position)
   const initialOverrideDoneRef = useRef(false);
   const hasLoadedLocationRef = useRef(false);
 
-  // ------ Helpers (lokale)
+  const lastDisplayTargetRef = useRef(null);
+
+  // ------ Helpers
   const stripHashQuery = (s = "") => s.split("#")[0].split("?")[0];
 
   const spineIndexOf = (book, href) => {
@@ -82,7 +87,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         const idx = spineIndexOf(book, href);
         if (typeof idx === "number") return href;
       }
-    } catch {}
+    } catch {
+      // ignore
+    }
     return null;
   };
 
@@ -99,22 +106,29 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
           el.scrollIntoView({ block: "start" });
           return true;
         }
-      } catch {}
+      } catch {
+        // ignore
+      }
       return false;
     };
+
     if (tryScroll()) return;
     setTimeout(tryScroll, 50);
     setTimeout(tryScroll, 250);
   }
 
   // -------- Safe display
-  const lastDisplayTargetRef = useRef(null);
-
   const safeDisplay = async (target) => {
     const r = renditionRef.current;
     const book = r?.book || bookRef.current;
     const desc = describeTarget(target);
     lastDisplayTargetRef.current = target;
+
+    if (firstRenderDoneRef.current) {
+      return r?.__origDisplay
+        ? r.__origDisplay(target ?? undefined)
+        : r.display(target);
+    }
 
     await waitForBookAndLayout(r, containerRef.current);
 
@@ -131,7 +145,7 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         return;
       }
 
-      // Overstyr KUN første display hvis vi IKKE gendanner en saved location
+      // Overstyr KUN første display hvis vi IKKE gendanner saved location
       if (!initialOverrideDoneRef.current && !hasLoadedLocationRef.current) {
         initialOverrideDoneRef.current = true;
 
@@ -146,10 +160,10 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
             (desc.kind === "cfi" && /\bcover\b/i.test(String(desc.raw)));
 
           if (!isTargetCover) {
-            // anti-flicker: single page på første paint
             r.spread?.("none");
-            if (r.settings)
+            if (r.settings) {
               r.settings.minSpreadWidth = Number.POSITIVE_INFINITY;
+            }
             pendingSpreadRestoreRef.current = true;
             dlog.info("[COVER DBG] initial override → display cover");
             await r.__origDisplay(coverHref);
@@ -168,7 +182,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         const fb = coverHref || linearHref || firstValidSpineHref(book);
         if (coverHref && !firstRenderDoneRef.current) {
           r.spread?.("none");
-          if (r.settings) r.settings.minSpreadWidth = Number.POSITIVE_INFINITY;
+          if (r.settings) {
+            r.settings.minSpreadWidth = Number.POSITIVE_INFINITY;
+          }
           pendingSpreadRestoreRef.current = true;
           dlog.info(
             "[COVER DBG] temp single-page spread for first display (cover)"
@@ -183,8 +199,8 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         const hashIdx = raw.indexOf("#");
         const rawPath = hashIdx === -1 ? raw : raw.slice(0, hashIdx);
         const rawHash = hashIdx === -1 ? "" : raw.slice(hashIdx + 1);
-        const test = spineIndexOfDebug(book, rawPath);
 
+        const test = spineIndexOfDebug(book, rawPath);
         if (test.idx == null) {
           const coverHref = coverHrefRef.current || getCoverHref(book);
           const linearHref = getFirstLinearHref(book);
@@ -248,10 +264,14 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         const loc = r.currentLocation();
         if (loc) return loc;
       }
-    } catch {}
+    } catch {
+      // ignore
+    }
     try {
       if (r.location) return r.location;
-    } catch {}
+    } catch {
+      // ignore
+    }
     return null;
   }, []);
 
@@ -283,14 +303,18 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rebuildTocSpineIndex]);
 
-  const currentSpineIndex = useCallback((loc) => {
-    const book = renditionRef.current?.book || bookRef.current;
-    if (!book || !loc?.start?.href) return null;
-    const idx = spineIndexOf(book, loc.start.href);
-    if (typeof idx === "number") return idx;
-    if (typeof loc?.start?.index === "number") return loc.start.index;
-    return null;
-  }, []);
+  const currentSpineIndex = useCallback(
+    (loc) => {
+      const book = renditionRef.current?.book || bookRef.current;
+      if (!book || !loc?.start?.href) return null;
+      const idx = spineIndexOf(book, loc.start.href);
+      if (typeof idx === "number") return idx;
+      if (typeof loc?.start?.index === "number") return loc.start.index;
+      return null;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const segmentFromSpine = useCallback((spineIdx) => {
     const map = tocSpineIdxRef.current;
@@ -316,10 +340,12 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         dlog.info("loc.start.index:", loc?.start?.index, "atEnd:", loc?.atEnd);
         dlog.end();
       }
-      const href = loc?.start?.href ? stripHashQuery(loc.start.href) : "";
-      if (href) setActiveHref(href);
-      setAtBookEnd(!!loc?.atEnd);
+
       setChapterIntra(calcChapterIntra(loc));
+
+      // epub.js har et atEnd/atStart flag på location
+      setAtBookEnd(!!loc?.atEnd);
+      setAtBookStart(!!loc?.atStart);
 
       try {
         const spineIdx = currentSpineIndex(loc);
@@ -354,9 +380,12 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         }
 
         const seg = segmentFromSpine(spineIdx);
-        if (typeof seg === "number")
+        if (typeof seg === "number") {
           setSegIndex((prev) => (seg !== prev ? seg : prev));
-      } catch {}
+        }
+      } catch {
+        // ignore
+      }
     },
     [currentSpineIndex, segmentFromSpine]
   );
@@ -371,13 +400,17 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       setLocation(loc);
       try {
         const key = storageKey || "epub:location:default";
-        if (loc)
+        if (loc) {
           localStorage.setItem(
             key,
             typeof loc === "string" ? loc : String(loc)
           );
-        else localStorage.removeItem(key);
-      } catch {}
+        } else {
+          localStorage.removeItem(key);
+        }
+      } catch {
+        // ignore
+      }
     },
     [storageKey]
   );
@@ -405,11 +438,16 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         color: "var(--epub-title-fg)",
         background: "var(--epub-title-bg)",
       },
-      arrow: { ...BaseReaderStyle.arrow, color: "var(--epub-arrow-fg)" },
+      arrow: {
+        ...BaseReaderStyle.arrow,
+        color: "var(--epub-arrow-fg)",
+        display: "none",
+      },
       arrowHover: {
         ...BaseReaderStyle.arrowHover,
         color: "var(--epub-arrow-hover-fg)",
         background: "var(--epub-arrow-hover-bg)",
+        display: "none",
       },
       tocArea: {
         ...BaseReaderStyle.tocArea,
@@ -447,7 +485,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     try {
       r.resize?.(W, H);
     } catch {}
+
     await safeDisplay(target);
+
     try {
       const contents = r.getContents?.() || [];
       contents.forEach((c) => {
@@ -474,7 +514,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       renditionRef.current = rendition;
       if (rendition.book) bookRef.current = rendition.book;
 
-      // Patch display → safeDisplay
       if (!rendition.__origDisplay) {
         rendition.__origDisplay = rendition.display.bind(rendition);
         rendition.display = (target) => safeDisplay(target ?? null);
@@ -493,7 +532,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
 
       const book = rendition.book;
 
-      // Debug hooks (ressourcer/fejl)
       book?.on?.("book:resourcerequested", (res) =>
         dlog.info("[RES] requested:", res?.href)
       );
@@ -507,23 +545,84 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         const href = section?.href;
         const loc = rendition.currentLocation?.();
         const total = loc?.start?.displayed?.total;
+
         dlog.info("[REND] displayed:", href);
         dlog.info("[COVER DBG] displayed:", href, "pagesInSection=", total);
 
-        // Markér cover vist
         try {
+          const book = rendition.book || bookRef.current;
+          const contents = rendition.getContents?.()[0];
+          const doc = contents?.document;
           const currentIdx =
             typeof loc?.start?.index === "number" ? loc.start.index : null;
-          const coverIdx = coverIdxRef.current;
-          const isCover =
-            (typeof coverIdx === "number" && currentIdx === coverIdx) ||
-            (href &&
-              coverHrefRef.current &&
-              normalizeHrefForMatch(href).includes(coverHrefRef.current));
-          if (isCover) coverShownOnceRef.current = true;
-        } catch {}
 
-        // Første display → restore spread hvis IKKE på cover
+          if (book && doc && typeof currentIdx === "number") {
+            const bookTitle = (book?.package?.metadata?.title || "").trim();
+
+            const rawDocTitle = (
+              doc.querySelector("title")?.textContent || ""
+            ).trim();
+            const h1 = (
+              doc.querySelector("h1,h2,.title,[role='heading']")?.textContent ||
+              ""
+            ).trim();
+
+            // 1) Foretræk H1 frem for <title>
+            // 2) Ignorer <title>, hvis det bare er bogens titel
+            let best = "";
+            if (h1 && h1.length > 2) {
+              best = h1;
+            } else if (
+              rawDocTitle &&
+              rawDocTitle.length > 2 &&
+              rawDocTitle.toLowerCase() !== bookTitle.toLowerCase()
+            ) {
+              best = rawDocTitle;
+            }
+
+            if (best) {
+              setTocFlat((prev) => {
+                if (!prev || prev.length === 0) return prev;
+
+                const idx = prev.findIndex((it) => {
+                  const i = spineIndexOf(book, it.href);
+                  return typeof i === "number" && i === currentIdx;
+                });
+                if (idx === -1) return prev;
+
+                const old = prev[idx];
+                if (!old) return prev;
+
+                // Hvis label allerede ser fin ud, behold den
+                const oldLabel = (old.label || "").trim();
+                if (oldLabel && oldLabel.toLowerCase() === best.toLowerCase()) {
+                  return prev;
+                }
+
+                // Hvis vi syntetisk har kaldt det “Sektion X” eller noget filnavne-agtigt,
+                // så må vi gerne opgradere til `best`
+                const looksSynthetic =
+                  /^Sektion \d+$/i.test(oldLabel) ||
+                  (/^[A-Za-z0-9 _-]+$/.test(oldLabel) &&
+                    /\b(index|split|titlepage|kapitel|chapter|x?html?)\b/i.test(
+                      oldLabel
+                    ));
+
+                if (!looksSynthetic) {
+                  return prev;
+                }
+
+                const next = prev.slice();
+                next[idx] = { ...old, label: best };
+                return next;
+              });
+            }
+          }
+        } catch {
+          // ignore
+        }
+
+        // Første display → restore spread hvis vi ikke er på cover
         if (!firstRenderDoneRef.current) {
           firstRenderDoneRef.current = true;
 
@@ -552,7 +651,6 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         dlog.error("[REND] displayError:", e);
       });
 
-      // Themes + link-clicks
       rendition.themes?.default({
         html: { height: "100% !important" },
         body: {
@@ -676,7 +774,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
 
         try {
           contents.document.documentElement.classList.add("dbc-epub");
-        } catch {}
+        } catch {
+          // ignore
+        }
 
         // Link-navigation (interne/eksterne)
         try {
@@ -684,8 +784,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
             const r = renditionRef.current;
             const book = r?.book || bookRef.current;
             if (!rawHref) return;
-            if (isHttp(rawHref))
+            if (isHttp(rawHref)) {
               return window.open(rawHref, "_blank", "noopener,noreferrer");
+            }
             const [path, hash] = splitHash(rawHref);
             const currentHref = contents?.section?.href || "";
             if (!path || sameSpineFile(book, path, currentHref)) {
@@ -699,7 +800,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
             }
             await r.display(path + (hash ? `#${hash}` : ""));
           });
-        } catch {}
+        } catch {
+          // ignore
+        }
 
         try {
           contents.document.addEventListener(
@@ -728,7 +831,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
             },
             true
           );
-        } catch {}
+        } catch {
+          // ignore
+        }
       });
 
       rendition.on("relocated", handleRelocated);
@@ -750,7 +855,8 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       r.settings.minSpreadWidth = Number.POSITIVE_INFINITY;
     }
     pokeRendition();
-  }, [isFullscreen]); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFullscreen]);
 
   const handleBookReady = useCallback(
     async (book) => {
@@ -762,12 +868,10 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         dlog.end();
       }
 
-      // husk cover (href + index)
       const ch = getCoverHref(book);
       coverHrefRef.current = ch;
       coverIdxRef.current = ch ? spineIndexOf(book, ch) : null;
 
-      // storage-key pr. bog
       const bookId =
         book?.package?.metadata?.identifier ||
         book?.package?.metadata?.title ||
@@ -775,12 +879,13 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       const key = `epub:location:${bookId}`;
       setStorageKey(key);
 
-      // hent gemt position (hvis valid)
       let loaded = undefined;
       try {
         const v = localStorage.getItem(key);
         loaded = v || undefined;
-      } catch {}
+      } catch {
+        // ignore
+      }
       if (loaded && !isValidLocation(book, loaded)) {
         dlog.warn("[EPUB] Ugyldig gemt location → rydder");
         try {
@@ -790,13 +895,11 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       }
       hasLoadedLocationRef.current = !!loaded;
 
-      // initialt target: (saved) eller cover eller første linear eller første spine
       const coverHref = ch;
       const firstLinear = getFirstLinearHref(book);
       const firstSpine = book.spine?.spineItems?.[0]?.href || null;
-      const initialTarget = loaded
-        ? loaded
-        : coverHref || firstLinear || firstSpine || null;
+      const initialTarget =
+        loaded || coverHref || firstLinear || firstSpine || null;
 
       setLocation(loaded || null);
       dlog.info("[COVER DBG] initial pick:", {
@@ -817,7 +920,9 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         initialTarget === coverHref
       ) {
         r?.spread?.("none");
-        if (r?.settings) r.settings.minSpreadWidth = Number.POSITIVE_INFINITY;
+        if (r?.settings) {
+          r.settings.minSpreadWidth = Number.POSITIVE_INFINITY;
+        }
         pendingSpreadRestoreRef.current = true;
         dlog.info(
           "[COVER DBG] temp single-page spread for initial cover (defer restore)"
@@ -832,7 +937,7 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       setTimeout(updateIfReady, 0);
     },
     [rebuildTocSpineIndex, updateIfReady, src]
-  ); // eslint-disable-line react-hooks/exhaustive-deps
+  );
 
   const handleJump = useCallback(async (href) => {
     const r = renditionRef.current;
@@ -840,28 +945,65 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     await r.display(href);
   }, []);
 
+  const handlePrev = useCallback(async () => {
+    const r = renditionRef.current;
+    if (!r) return;
+    try {
+      await r.prev();
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const handleNext = useCallback(async () => {
+    const r = renditionRef.current;
+    if (!r) return;
+    try {
+      await r.next();
+    } catch {
+      // ignore
+    }
+  }, []);
+
   // ------ Derivater til UI
   const segments = Math.max(1, tocFlat.length || 1);
-  const labels = useMemo(() => {
-    const activeNorm = stripHashQuery(activeHref);
-    return tocFlat.map((it) => ({
-      ...it,
-      hrefNorm: stripHashQuery(it.href),
-      active: stripHashQuery(it.href) === activeNorm,
-    }));
-  }, [tocFlat, activeHref]);
+  const labels = useMemo(
+    () =>
+      tocFlat.map((it, idx) => ({
+        ...it,
+        hrefNorm: stripHashQuery(it.href),
+        // Ét aktivt label: det segment vi er i
+        active: idx === segIndex,
+      })),
+    [tocFlat, segIndex]
+  );
 
   const isLastSeg = segIndex >= segments - 1;
   const intraEff =
     isLastSeg && (atBookEnd || chapterIntra >= 0.995) ? 1 : chapterIntra;
   const overallPctDerived = ((segIndex + intraEff) / segments) * 100;
 
-  // Diagnose: TOC vs spine
+  // Diagnose: TOC vs spine + enable/disable progress
   useEffect(() => {
     const book = renditionRef.current?.book || bookRef.current;
-    if (!book || tocFlat.length === 0) return;
+    if (!book) return;
+
     try {
       const spineItems = book.spine?.spineItems || [];
+      const spineLen = spineItems.length;
+
+      if (!tocFlat.length && spineLen > 1) {
+        // Ingen toc, flere spine-sektioner → progress giver ikke rigtig mening
+        setProgressEnabled(false);
+      } else if (spineLen > 1 && tocFlat.length <= 1) {
+        // Kun én segment men mange spine-items → disable
+        setProgressEnabled(false);
+      } else {
+        setProgressEnabled(true);
+      }
+
+      if (!tocFlat.length) return;
+
       const spineList = spineItems.map((it, i) => ({
         i,
         href: it?.href,
@@ -884,8 +1026,10 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
           `[EPUB DBG] Diagnose: TOC matcher spine (${tocFlat.length} entries)`
         );
       }
-    } catch {}
-  }, [tocFlat]); // eslint-disable-line react-hooks/exhaustive-deps
+    } catch {
+      // ignore
+    }
+  }, [tocFlat]);
 
   const effectiveLocation = useMemo(() => {
     const book = bookRef.current;
@@ -897,10 +1041,11 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     setLocation(undefined);
     setStorageKey(null);
     setTocFlat([]);
-    setActiveHref("");
     setSegIndex(0);
     setChapterIntra(0);
     setAtBookEnd(false);
+    setProgressEnabled(true);
+
     try {
       renditionRef.current?.destroy?.();
     } catch {}
@@ -919,7 +1064,7 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     setBookVersion((v) => v + 1);
   }, [src]);
 
-  // “No Section found” diag
+  // “No Section found” diag → slå progress fra som fallback
   useEffect(() => {
     if (!DEBUG) return;
     const onUR = (ev) => {
@@ -935,6 +1080,7 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
         const book = renditionRef.current?.book || bookRef.current;
         if (book) dumpBookOverview(book, tocFlat);
         dlog.end();
+        setProgressEnabled(false);
       }
     };
     window.addEventListener("unhandledrejection", onUR);
@@ -945,11 +1091,10 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
   const readerKey = `${isFullscreen ? "fs" : "modal"}:${bookVersion}`;
   const reactReaderProps = {
     url: src,
-    title,
     location: effectiveLocation,
     getRendition: handleGetRendition,
     tocChanged: (toc) => {
-      const flat = (toc || []).flatMap((node) => {
+      const flatFromNav = (toc || []).flatMap((node) => {
         const out = [];
         const walk = (n) => {
           if (n?.href) out.push({ href: n.href, label: n.label });
@@ -960,13 +1105,20 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
       });
 
       const book = renditionRef.current?.book || bookRef.current;
+
+      let flat = flatFromNav;
+      if ((!flat || flat.length === 0) && book) {
+        // Fallback: syntetisk TOC fra spine
+        flat = buildSyntheticTocFromSpine(book);
+      }
+
       let filtered = flat;
-      if (book)
+      if (book) {
         filtered = flat.filter(
           (it) => typeof spineIndexOf(book, it.href) === "number"
         );
+      }
 
-      // Sørg for at cover er i labels (hvis i spine men ikke i TOC)
       if (book?.spine?.spineItems?.length) {
         const coverHref = coverHrefRef.current || getCoverHref(book);
         if (coverHref) {
@@ -1001,5 +1153,10 @@ export function useEpubReader({ src, title, isFullscreen, containerRef }) {
     segments,
     overallPctDerived,
     handleJump,
+    progressEnabled,
+    atBookStart,
+    atBookEnd,
+    handlePrev,
+    handleNext,
   };
 }

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useMemo } from "react";
 import styles from "./Progress.module.css";
 
 export default function EpubProgress({
@@ -7,7 +8,56 @@ export default function EpubProgress({
   onJump,
   Link,
   Text,
+  show = true,
 }) {
+  const labelsRef = useRef(null);
+
+  // Aktivt label (kapitel) — hook kaldes altid
+  const activeIndex = useMemo(
+    () => labels.findIndex((it) => it.active),
+    [labels]
+  );
+
+  const scrollToIndex = (index, behavior = "smooth") => {
+    const container = labelsRef.current;
+    if (!container) return;
+    if (index == null || index < 0) return;
+    if (typeof window !== "undefined" && window.innerWidth > 640) return; // kun mobil
+
+    const child = container.children[index];
+    if (!child) return;
+
+    const childOffsetLeft = child.offsetLeft;
+    const paddingLeft = 0;
+
+    let targetScrollLeft = childOffsetLeft - paddingLeft;
+
+    const containerWidth = container.clientWidth;
+    const maxScroll = container.scrollWidth - containerWidth;
+    if (maxScroll <= 0) return;
+
+    if (targetScrollLeft < 0) targetScrollLeft = 0;
+    if (targetScrollLeft > maxScroll) targetScrollLeft = maxScroll;
+
+    container.scrollTo({ left: targetScrollLeft, behavior });
+  };
+
+  // Auto-scroll — hook kaldes altid, men gør intet når show=false
+  useEffect(() => {
+    if (!show) return;
+    if (activeIndex === -1) return;
+    scrollToIndex(activeIndex);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [show, activeIndex]);
+
+  const handleLabelClick = (href, index) => {
+    scrollToIndex(index);
+    onJump(href);
+  };
+
+  // Render-guard efter hooks
+  if (!show) return null;
+
   return (
     <div className={styles.progress}>
       {!!labels.length && (
@@ -16,6 +66,7 @@ export default function EpubProgress({
           role="navigation"
           aria-label="Bogsektioner"
           style={{ ["--segments"]: segments }}
+          ref={labelsRef}
         >
           {labels.map((it, i) => (
             <div
@@ -25,7 +76,7 @@ export default function EpubProgress({
             >
               <Link
                 title={it.label}
-                onClick={() => onJump(it.href)}
+                onClick={() => handleLabelClick(it.href, i)}
                 className={styles.labelText}
                 aria-current={it.active ? "true" : undefined}
               >

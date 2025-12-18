@@ -57,13 +57,18 @@
   overflow: visible !important;
 }
 
-.wrapper > div > div button {
-  left: -40px !important;
-  opacity: 0.5;
+.wrapper > div:first-of-type > div:last-of-type {
+  display: none;
 }
+
+/* ReactReader Arrow left */
+.wrapper > div > div button {
+  display: none;
+}
+
+/* ReactReader Arrow right */
 .wrapper > div > div button:last-of-type {
-  left: unset !important;
-  right: -40px !important;
+  display: none;
 }
 
 .wrapper body {
@@ -72,4 +77,95 @@
 }
 .wrapper img {
   display: none;
+}
+
+/* Custom arrows */
+
+.wrapper {
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--pt5);
+  height: var(--pt5);
+  border-radius: 50%;
+  border: none;
+  background-color: var(--white);
+  color: var(--blue);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--pt3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.arrow path {
+  fill: var(--blue);
+}
+
+.arrow:hover,
+.arrow:focus-visible {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: var(--pt05);
+}
+
+.arrow:hover path,
+.arrow:focus-visible path {
+  fill: var(--white);
+}
+
+.arrowLeft,
+.arrowRight {
+  display: none;
+}
+
+.arrowRight svg {
+  transform: rotate(180deg);
+}
+
+.arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media screen and (min-width: 576px) {
+  .arrowLeft,
+  .arrowRight {
+    display: unset;
+  }
+
+  .arrowLeft {
+    left: calc(var(--pt4) * -1);
+  }
+
+  .arrowRight {
+    right: calc(var(--pt4) * -1);
+  }
+
+  /* Arrow left */
+  .wrapper > div > div button {
+    display: unset;
+    left: -40px !important;
+    opacity: 0.5;
+  }
+
+  /* Arrow right */
+  .wrapper > div > div button:last-of-type {
+    display: unset;
+    left: unset !important;
+    right: -40px !important;
+  }
+}
+
+@media screen and (min-width: 576px) {
 }
