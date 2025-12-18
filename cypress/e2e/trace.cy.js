@@ -115,7 +115,7 @@ describe("Trace", () => {
       cy.get('[data-cy="advanced-search-inputfield-0"]').type("hest");
       cy.get('ul[role="listbox"] > li').first().click();
       //search
-      cy.get('[data-cy="button-søg-avanceret"]').click();
+      cy.get('[data-cy="button-søg"]').click();
 
       // Check that tid is set as URL param
       cy.url()
@@ -138,7 +138,7 @@ describe("Trace", () => {
       cy.get('[data-cy="advanced-search-inputfield-0"]').type("hest");
       cy.get('ul[role="listbox"] > li').first().click();
       //search
-      cy.get('[data-cy="button-søg-avanceret"]').click();
+      cy.get('[data-cy="button-søg"]').click();
 
       // Click on first result
       cy.get(':nth-child(1) > [data-cy="result-row"]').click();
@@ -160,25 +160,21 @@ describe("Trace", () => {
     cy.visit(`${nextjsBaseUrl}/inspiration/boeger?workTypes=literature`);
     cy.consentAllowAll(); //allow cookies
 
-
     //click on fist element in inspiration belt
     cy.get('[data-cy="inspiration-slider"]')
-    .find('[data-cy="link"]') 
-    .first() 
-    .click();
-
+      .find('[data-cy="link"]')
+      .first()
+      .click();
 
     cy.url()
-    .should("include", "tid=")
-    .then((url) => {
-      const params = new URLSearchParams(url.split("?")[1]);
-      const tid = params.get("tid");
+      .should("include", "tid=")
+      .then((url) => {
+        const params = new URLSearchParams(url.split("?")[1]);
+        const tid = params.get("tid");
 
-      expect(tid).to.exist;
-      expect(tid.length).to.be.greaterThan(20);
-    });
-
-
+        expect(tid).to.exist;
+        expect(tid.length).to.be.greaterThan(20);
+      });
   });
 
   it("traceid universes in details", () => {
@@ -284,21 +280,20 @@ describe("Trace", () => {
   it(`TraceId from suggest response is available as URL parameter when clicking`, () => {
     cy.visit(
       `${nextjsBaseUrl}/avanceret?fieldSearch=%7B"inputFields"%3A%5B%7B"value"%3A"hest"%2C"prefixLogicalOperator"%3Anull%2C"searchIndex"%3A"term.default"%7D%5D%7D#0-specificmaterialtype`
-    );    
+    );
 
     //we check that tid is not set as URL param
     cy.url().then((url) => {
-      const params = new URLSearchParams(url.split("?")[1]); 
-      const tid = params.get("tid"); 
-      expect(tid).to.not.exist; 
+      const params = new URLSearchParams(url.split("?")[1]);
+      const tid = params.get("tid");
+      expect(tid).to.not.exist;
     });
-    
+
     cy.consentAllowAll(); //allow cookies
 
     //click on a facet
     cy.get('[data-cy="li-specificmaterialtype-bog"]').click();
 
-  
     // Check that tid is set as URL param
     cy.url()
       .should("include", "tid=")
