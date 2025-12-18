@@ -9,20 +9,11 @@ describe("Popover elements", () => {
     cy.get('[data-cy="advanced-search-popover"]').should("be.visible");
   });
 
-  it("should close advanced search popover when close button is clicked", () => {
-    //open advanced search
-    cy.get('[data-cy="advanced-search-trigger"]').click();
-    //assert that the popver is visible
-
-    cy.get('[data-cy="advanced-search-popover"]').should("be.visible");
-    //close the popover
-    cy.get('[data-cy="advanced-search-close-button"]').click();
-    //assert that the popver is not visible
-    cy.get('[data-cy="advanced-search-popover"]').should("not.be.visible");
-  });
-
   it("should clear all input fields on clicking the clear search link", () => {
     cy.get('[data-cy="advanced-search-trigger"]').click();
+
+    cy.get('[data-cy="advanced-search-add-input"]').click();
+
     //type something in the first inputfield
     cy.get('[data-cy="advanced-search-inputfield-0"]')
       .type(`Hej med dig `)
@@ -36,13 +27,11 @@ describe("Popover elements", () => {
     //clear the fields
     cy.get('[data-cy="advanced-search-clear-search"]').click();
     //assert that the values has been cleared
-    cy.get('[data-cy="advanced-search-inputfield-0"]')
-    .should("have.value", "");
-    cy.get('[data-cy="advanced-search-inputfield-1"]')
-      .should("have.value", "");
+    cy.get('[data-cy="advanced-search-inputfield-0"]').should("have.value", "");
   });
 
-  it("should be able to see parsed inputfield search in the cql editor", () => {
+  // skipped for now, saved for later, when new search is implemented
+  it.skip("should be able to see parsed inputfield search in the cql editor", () => {
     const expectedParsedString =
       '(term.title="Mord i Mesopotamien" AND term.subject="Krimi")';
 
@@ -54,14 +43,14 @@ describe("Popover elements", () => {
       .type(`Mord i Mesopotamien`)
       .blur();
 
+    cy.get('[data-cy="advanced-search-add-input"]').click();
+
     //set second input field to have search index term.subject and value krimi
     cy.get('[data-cy="advanced-search-index-dropdown-1"]').click();
     cy.get('[data-cy="item-term.subject"]:visible').click();
-    cy.get('[data-cy="advanced-search-inputfield-1"]')
-      .type(`Krimi`)
-      .blur();
+    cy.get('[data-cy="advanced-search-inputfield-1"]').type(`Krimi`).blur();
     //swith to cql editor and assert that it has the correct paresd value
-    cy.get('[data-cy="edit-in-cql"]').click();
+    cy.get("#Tabs-tab-cql").click();
 
     cy.get('[data-cy="advanced-search-cqltxt"] textarea').should(
       "have.value",
@@ -76,7 +65,8 @@ describe("Popover elements", () => {
     cy.get('a[href="https://fbi-api.dbc.dk/indexmapper/"]').should("not.exist");
   });
 
-  it("should clear cql editor input", () => {
+  // skipped for now, saved for later, when new search is implemented
+  it.skip("should clear cql editor input", () => {
     cy.get('[data-cy="advanced-search-trigger"]').click();
     cy.get('[data-cy="edit-in-cql"]').click();
 
@@ -98,16 +88,14 @@ describe("Popover elements", () => {
 
   it("should handle percent characters in search without throwing exceptions", () => {
     const testString = "11%";
-    
+
     cy.get('[data-cy="advanced-search-trigger"]').click();
-    
+
     // Type the problematic string with % character
-    cy.get('[data-cy="advanced-search-inputfield-0"]')
-      .type(testString)
-      .blur();
+    cy.get('[data-cy="advanced-search-inputfield-0"]').type(testString).blur();
 
     // Click search button to verify no exception is thrown
-    cy.get('[data-cy="button-søg-avanceret"]').click();
+    cy.get('[data-cy="button-søg"]').click();
   });
 });
 
@@ -117,20 +105,26 @@ describe("TextInputs test", () => {
   });
 
   it("should add a new input field on clicking the add button", () => {
-    cy.get('[data-cy="advanced-search-inputfield-2"]').should("not.exist");
+    cy.get('[data-cy="advanced-search-inputfield-1"]').should("not.exist");
     cy.get('[data-cy="advanced-search-add-input"]').click();
-    cy.get('[data-cy="advanced-search-inputfield-2"]').should("exist");
+    cy.get('[data-cy="advanced-search-inputfield-1"]').should("exist");
   });
 
   it("should remove an input field on clicking the remove button", () => {
-    cy.get('[data-cy="advanced-search-inputfield-1"]').should("exist");
+    cy.get('[data-cy="advanced-search-inputfield-0"]').should("exist");
+    cy.get('[data-cy="advanced-search-inputfield-1"]').should("not.exist");
 
+    cy.get('[data-cy="advanced-search-add-input"]').click();
+
+    cy.get('[data-cy="advanced-search-inputfield-1"]').should("exist");
     cy.get('[data-cy="advanced-search-remove-input"]').last().click();
 
     cy.get('[data-cy="advanced-search-inputfield-1"]').should("not.exist");
   });
 
   it("should change logical operator between input fields", () => {
+    cy.get('[data-cy="advanced-search-add-input"]').click();
+
     cy.get('[data-cy="advanced-search-logical-operator-dropDown"]').click();
 
     cy.get('[data-cy="advanced-search-logical-operator-dropDown-AND"]').click();

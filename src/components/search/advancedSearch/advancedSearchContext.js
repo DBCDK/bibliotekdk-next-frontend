@@ -10,15 +10,18 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { LogicalOperatorsEnum } from "@/components/search/enums";
 import { DropdownIndicesEnum } from "@/components/search/advancedSearch/useDefaultItemsForDropdownUnits";
 import {
   convertStateToCql,
   parseSearchUrl,
+  stripOuterQuotesOnce,
 } from "@/components/search/advancedSearch/utils";
 import { useInputFields } from "@/components/search/advancedSearch/useInputFields";
 import { useDropdownSearchIndices } from "@/components/search/advancedSearch/useDropdownSearchIndices";
 import isEmpty from "lodash/isEmpty";
+
+const norm = (v) => (v == null ? "" : String(v).trim());
+const isNonEmpty = (v) => norm(v) !== "";
 
 export function getDefaultDropdownIndices() {
   return [
@@ -34,6 +37,7 @@ export function getDefaultDropdownIndices() {
     { searchIndex: DropdownIndicesEnum.PEGI, value: [] },
     { searchIndex: DropdownIndicesEnum.GENERALAUDIENCE, value: [] },
     { searchIndex: DropdownIndicesEnum.NOTA, value: [] },
+    { searchIndex: DropdownIndicesEnum.ARTICLE_TYPE, value: [] },
     { searchIndex: DropdownIndicesEnum.INSTRUMENT, value: [] },
     { searchIndex: DropdownIndicesEnum.CHOIRTYPE, value: [] },
     { searchIndex: DropdownIndicesEnum.CHAMBERMUSICTYPE, value: [] },
@@ -48,137 +52,14 @@ export function getDefaultDropdownIndices() {
  * @param workType
  * @returns {[{prefixLogicalOperator: null, searchIndex: string, value: string},{prefixLogicalOperator: string, searchIndex: string, value: string}]}
  */
-export function getInitialInputFields(workType = "all") {
-  const inputFieldsByMaterialType = {
-    all: [
-      { value: "", prefixLogicalOperator: null, searchIndex: "term.default" },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.default",
-      },
-    ],
-    literature: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creatorcontributor",
-        label: "literature_term.creatorcontributor",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.subject",
-      },
-    ],
-    article: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creatorcontributor",
-        label: "literature_term.creatorcontributor",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.subject",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.hostpublication",
-      },
-    ],
-    movie: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creatorcontributor",
-        label: "movie_term.creatorcontributor",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.subject",
-      },
-    ],
-    music: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creator",
-        label: "music_term.creator",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.contributor",
-        label: "music_term.contributor",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.publisher",
-        label: "music_term.publisher",
-      },
-    ],
-    sheetmusic: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.creator",
-        label: "sheetmusic_term.creator",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-        label: "sheetmusic_term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.titlemanifestationpart",
-        label: "sheetmusic_term.titlemanifestationpart",
-      },
-    ],
-    game: [
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.title",
-        label: "movie_term.title",
-      },
-      {
-        value: "",
-        prefixLogicalOperator: LogicalOperatorsEnum.AND,
-        searchIndex: "term.publisher",
-        label: "game_term.publisher",
-      },
-    ],
-  };
-
-  return inputFieldsByMaterialType[workType];
+export function getInitialInputFields() {
+  return [
+    {
+      value: "",
+      prefixLogicalOperator: null,
+      searchIndex: "term.default",
+    },
+  ];
 }
 
 const AdvancedSearchContext = createContext(undefined);
@@ -190,16 +71,32 @@ export function useAdvancedSearchContext() {
   return useContext(AdvancedSearchContext);
 }
 
+export function getFieldSearchFromUrl(query) {
+  const { fieldSearch, "q.all": q = null } = query;
+
+  const fieldSearchFromUrl = parseSearchUrl(fieldSearch);
+  if (fieldSearchFromUrl && !isEmpty(fieldSearchFromUrl)) {
+    return fieldSearchFromUrl;
+  }
+
+  if (q) {
+    // Ensure Advanced default seed does not carry outer quotes from Simple.
+    const arr = getInitialInputFields();
+    arr[0].value = stripOuterQuotesOnce(q);
+    return { inputFields: arr };
+  }
+
+  return {};
+}
+
 export default function AdvancedSearchProvider({ children, router }) {
   const {
     page = "1",
     cql: cqlFromUrl = null,
-    fieldSearch = "{}",
     sort: sortFromUrl = "{}",
   } = router.query;
 
-  const fieldSearchFromUrl = parseSearchUrl(fieldSearch);
-
+  const fieldSearchFromUrl = getFieldSearchFromUrl(router?.query);
   const sort = parseSearchUrl(sortFromUrl);
 
   //// ----  Popup Trigger ----
@@ -218,6 +115,22 @@ export default function AdvancedSearchProvider({ children, router }) {
       popoverRef?.current?.focus();
     }
   }, [showPopover, popoverRef.current]);
+
+  useEffect(() => {
+    const { workTypes: wtParam, fieldSearch: fsParam } = router.query;
+
+    let wt = "all";
+    if (isNonEmpty(wtParam)) {
+      wt = Array.isArray(wtParam) ? wtParam[0] || "all" : wtParam;
+    } else if (fsParam) {
+      const fs = parseSearchUrl(fsParam);
+      wt = fs?.workType || "all";
+    }
+
+    if (wt !== workType) {
+      setWorkType(wt);
+    }
+  }, [router.query?.workTypes, router.query?.fieldSearch]); // eslint-disable-line
 
   //tracking id for the selected suggestion from inputfield. For now we only save one tid.
   const [suggesterTid, setSuggesterTid] = useState("");
@@ -279,9 +192,11 @@ export default function AdvancedSearchProvider({ children, router }) {
     setParsedCQL(cqlFromUrl || updatedCql);
   }, [inputFields, dropdownSearchIndices, cqlFromUrl]);
 
-  //reset worktype on url change
   useEffect(() => {
-    setWorkType(fieldSearchFromUrl.workType || "all");
+    const nextWT = fieldSearchFromUrl.workType || "all";
+    if (nextWT !== workType) {
+      setWorkType(nextWT);
+    }
   }, [JSON.stringify(fieldSearchFromUrl.workType)]);
 
   function resetObjectState() {
@@ -324,6 +239,8 @@ export default function AdvancedSearchProvider({ children, router }) {
     stateToString,
     popoverRef,
     resetMenuItemsEvent,
+    resetDropdownIndices,
+    dispatchResetMenuItemsEvent,
     suggesterTid,
     setSuggesterTid,
   };

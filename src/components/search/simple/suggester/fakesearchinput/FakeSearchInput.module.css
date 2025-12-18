@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  user-select: none;
+  cursor: pointer;
+}
+.container:hover,
+.container:focus {
+  outline: 2px solid var(--blue);
+}
+.container:hover .fakeinput,
+.container:focus .fakeinput {
+  border: 1px solid white;
+}
+.fakeinput {
+  position: relative;
+  background: white;
+  height: var(--pt7);
+  border: 1px solid var(--gray);
+  box-sizing: border-box;
+  flex-grow: 2;
+  overflow: hidden;
+}
+.fakeinput p {
+  color: var(--gray);
+  line-height: var(--pt7);
+  text-align: left;
+  margin-left: var(--pt2);
+}
+
+.hasQuery .fakeinput p {
+  color: var(--mine-shaft);
+}
+
+.fakebutton {
+  background: var(--blue);
+  width: 68px;
+  height: var(--pt7);
+}
+.fakebutton p {
+  color: white;
+  font-family: var(--body-font-medium);
+  font-size: 20px;
+  line-height: var(--pt7);
+  text-align: center;
+}
+
+.clear {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: scale(0);
+  transition: transform 0.3s;
+  cursor: pointer;
+  background-color: white;
+
+  /* override dynamic style */
+  min-width: 56px;
+  height: var(--pt7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clear.visible {
+  transform: scale(1);
+  transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+}
+
+.clear path {
+  fill: var(--blue);
+}

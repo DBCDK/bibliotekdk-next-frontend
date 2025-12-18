@@ -95,7 +95,7 @@
 
 @media (max-width: 768px) {
   .row_wrapper {
-    gap: var(--pt1);
+    gap: var(--pt2);
     padding-left: 0;
   }
   .col_wrapper {

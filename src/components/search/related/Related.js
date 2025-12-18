@@ -8,10 +8,10 @@ import Link from "@/components/base/link";
 import Skip from "@/components/base/skip";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
-import Section from "@/components/base/section";
+
+import { getUrlByType } from "@/components/search/advancedSearch/utils";
 
 import styles from "./Related.module.css";
-import { getUrlByType } from "@/components/search/advancedSearch/utils";
 
 /**
  *
@@ -54,7 +54,7 @@ export function Words({ data, isLoading }) {
  *
  * Related subjects used in a section component
  */
-export function Related({ data, isLoading }) {
+export function Related({ data = {}, isLoading }) {
   const noRelatedSubjects = data.length === 0 && !isLoading;
 
   const noRelatedSubjectsClass = noRelatedSubjects
@@ -62,14 +62,7 @@ export function Related({ data, isLoading }) {
     : "";
 
   return (
-    <Section
-      className={`${styles.section} ${noRelatedSubjectsClass}`}
-      divider={false}
-      space={{
-        bottom: "var(--pt4)",
-      }}
-      title={<span />}
-    >
+    <div className={`${styles.section} ${noRelatedSubjectsClass}`}>
       {(data.length > 0 || isLoading) && (
         <div>
           <Skip
@@ -81,22 +74,20 @@ export function Related({ data, isLoading }) {
             })}
           />
 
-          <div className={styles.related}>
-            <div className={styles.words} data-cy="words-container">
-              <Text
-                skeleton={isLoading}
-                lines={1}
-                tag={"span"}
-                className={styles.oneline}
-              >
-                {Translate({ context: "search", label: "relatedSubjects" })}
-              </Text>
-              <Words data={data} isLoading={isLoading} />
-            </div>
+          <div className={styles.words} data-cy="words-container">
+            <Text
+              skeleton={isLoading}
+              lines={1}
+              tag={"span"}
+              className={styles.oneline}
+            >
+              {Translate({ context: "search", label: "relatedSubjects" })}
+            </Text>
+            <Words data={data} isLoading={isLoading} />
           </div>
         </div>
       )}
-    </Section>
+    </div>
   );
 }
 
@@ -127,6 +118,11 @@ export default function Wrap() {
     { subject: "skolebøger" },
     { subject: "hesteavl" },
   ];
+
+  // If no sugestions was found - when finished loading
+  if (!isLoading && !data?.recommendations?.subjects?.length) {
+    return null;
+  }
 
   return (
     <Related

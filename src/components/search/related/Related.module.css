@@ -1,6 +1,7 @@
 .section {
-  padding-top: var(--pt2);
-  padding-bottom: 0 !important;
+  margin: 0 calc(var(--pt1) * -2);
+  border-top: 1px solid var(--iron);
+  padding: var(--pt2);
 }
 
 .skip {
@@ -16,15 +17,7 @@
 }
 
 .section :global(.section-content) {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.related {
-  display: block;
-  margin: var(--pt2);
-  overflow-x: auto;
-  overflow-y: hidden;
+  padding: 0;
 }
 
 .oneline {
@@ -32,10 +25,12 @@
 }
 
 .words {
-  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  display: inline-flex;
   align-items: center;
   column-gap: var(--pt1_5);
-  margin-bottom: var(--pt1);
 }
 
 .word {
@@ -45,8 +40,8 @@
 
 @media (min-width: 992px) {
   .section {
-    padding-top: var(--pt3);
-    padding-bottom: unset;
+    margin: 0 0 0 calc(var(--pt1) * -2);
+    border: none;
   }
 
   .section.noRelatedSubjects {

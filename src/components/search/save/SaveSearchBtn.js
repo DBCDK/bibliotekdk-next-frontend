@@ -1,0 +1,129 @@
+// SaveSearchBtn.js — split into Wrap (logic) and UI (presentational)
+
+import IconButton from "@/components/base/iconButton";
+import styles from "./SaveSearchBtn.module.css";
+
+// --- Wrap (handles hooks, data, side-effects) ---
+import Translate from "@/components/base/translate";
+import { useSavedSearches } from "@/components/hooks/useSearchHistory";
+import { useModal } from "@/components/_modal";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import {
+  convertStateToCql,
+  getCqlAndFacetsQuery,
+} from "../advancedSearch/utils";
+import { useAdvancedSearchContext } from "../advancedSearch/advancedSearchContext";
+import { useFacets } from "../advancedSearch/useFacets";
+import { useQuickFilters } from "../advancedSearch/useQuickFilters";
+import { useCurrentSearchHistoryItem } from "@/components/hooks/useSearchHistory";
+import { useMemo } from "react";
+
+// =====================
+// UI (dumb/presentational)
+// =====================
+export function SaveSearchBtnUI({ onClick, isSaved, className, ...props }) {
+  const label = Translate({
+    context: "search",
+    label: isSaved ? "savedSearch" : "saveSearch",
+  });
+
+  return (
+    <IconButton
+      className={className}
+      onClick={onClick}
+      icon={isSaved ? "heart_filled" : "heart"}
+      keepUnderline
+      {...props}
+    >
+      {label}
+    </IconButton>
+  );
+}
+
+// =====================
+// Wrap (logic/container)
+// =====================
+export default function SaveSearchBtn({ className = "" }) {
+  const modal = useModal();
+  const { isAuthenticated } = useAuthentication();
+  const { savedSearches, deleteSearches, useSavedSearchByCql } =
+    useSavedSearches();
+  const currentSearchHistoryItem = useCurrentSearchHistoryItem();
+
+  const advCtx = useAdvancedSearchContext();
+  const { selectedFacets } = useFacets();
+  const { selectedQuickFilters } = useQuickFilters();
+
+  const cql = advCtx?.cqlFromUrl;
+  const fieldSearch = advCtx?.fieldSearchFromUrl;
+
+  const cqlAndFacetsQuery = getCqlAndFacetsQuery({
+    cql,
+    selectedFacets,
+    quickFilters: selectedQuickFilters,
+  });
+
+  const advancedCql =
+    cqlAndFacetsQuery ||
+    convertStateToCql({
+      ...fieldSearch,
+      facets: selectedFacets,
+      quickFilters: selectedQuickFilters,
+    });
+
+  const searchHistoryObj = { key: advancedCql };
+
+  const { mutate: mutateSavedByCql } = useSavedSearchByCql({
+    cql: searchHistoryObj.key,
+  });
+
+  const matchingSaved = useMemo(
+    () => savedSearches.find((ss) => ss.key === currentSearchHistoryItem?.key),
+    [savedSearches, currentSearchHistoryItem?.key]
+  );
+
+  const isSaved = !!matchingSaved?.id;
+
+  const onSaveSearchClick = (e) => {
+    e.stopPropagation();
+
+    if (isSaved) {
+      const idToDelete = matchingSaved?.id;
+      if (!idToDelete) {
+        return;
+      }
+
+      deleteSearches({ idsToDelete: [idToDelete] }).then(() => {
+        mutateSavedByCql && mutateSavedByCql();
+      });
+    } else {
+      modal.push("saveSearch", {
+        item: currentSearchHistoryItem,
+        onSaveDone: mutateSavedByCql,
+      });
+    }
+  };
+
+  const onSaveSearchLogin = (e) => {
+    e.stopPropagation();
+
+    const callbackUID = modal.saveToStore("saveSearch", {
+      item: currentSearchHistoryItem,
+      onSaveDone: mutateSavedByCql,
+      back: false,
+    });
+
+    openLoginModal({ modal, callbackUID });
+  };
+
+  const onClick = isAuthenticated ? onSaveSearchClick : onSaveSearchLogin;
+
+  return (
+    <SaveSearchBtnUI
+      className={`${styles.wrap} ${className}`}
+      onClick={onClick}
+      isSaved={isSaved}
+    />
+  );
+}

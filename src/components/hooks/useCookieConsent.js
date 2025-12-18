@@ -6,6 +6,22 @@ const useFixedSessionId = config?.publicRuntimeConfig?.useFixedSessionId;
 
 const isClient = typeof window !== "undefined";
 
+function getVisitorFingerprint() {
+  if (typeof window === "undefined") {
+    return "";
+  }
+  if (useFixedSessionId) {
+    return "fp_test";
+  }
+  try {
+    return "fp_" + getBrowserFingerprint();
+  } catch {
+    return "";
+  }
+}
+
+const visitorFingerprint = getVisitorFingerprint();
+
 export default function useCookieConsent() {
   // eslint-disable-next-line no-unused-vars
   const [_, forceRender] = useState();
@@ -13,23 +29,6 @@ export default function useCookieConsent() {
   // The cookiebot script is downloaded and executed before any NextJS stuff
   // hence Cookiebot should be available on first render
   const consent = isClient ? window.Cookiebot?.consent : null;
-
-  const visitorFingerprint = useMemo(() => {
-    if (typeof window === "undefined") {
-      return "";
-    }
-
-    if (useFixedSessionId) {
-      return "fp_test";
-    }
-
-    try {
-      const fingerprint = getBrowserFingerprint();
-      return "fp_" + fingerprint;
-    } catch (e) {
-      return "";
-    }
-  }, [consent?.statistics]);
 
   // Extract matomo visitor id from cookie
   // It only exists of user has given statistics consent

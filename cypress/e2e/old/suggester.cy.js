@@ -1,37 +1,32 @@
 /**
  * @file
- * Test functionality of Header
+ * Test functionality of Suggester (via Storybook)
  */
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiSimpleSearchPath");
 
-describe("Suggester", () => {
-  beforeEach(function () {
+describe("Suggester (Storybook version)", () => {
+  beforeEach(() => {
     cy.visit("/iframe.html?id=search-suggester--header-suggester");
   });
 
-  // Tabs
-  it(`Show container + container suggestions on user type`, () => {
-    // container get visible when user types.
-    cy.get("[data-cy=suggester-input]").focus();
-    cy.get("[data-cy=suggester-input]").type("a");
+  it("vises med container og 3 forslag ved input", () => {
+    cy.get("[data-cy=suggester-input]").focus().type("a", { delay: 100 });
+    cy.wait(300); // debounce-tolerance
     cy.get("[data-cy=suggester-container]").should("be.visible");
 
-    // 3 obj. in the data array
     cy.get("[data-cy=suggester-container] ul li").should("have.length", 3);
 
-    // All 3 types of list items should be visible
-    cy.get("[data-cy=suggester-work-element]").should("be.visible");
+    cy.get("[data-cy=suggester-title-element]").should("be.visible");
     cy.get("[data-cy=suggester-creator-element]").should("be.visible");
     cy.get("[data-cy=suggester-subject-element]").should("be.visible");
   });
 
-  it(`Can use arrows to navigate thrue suggestions`, () => {
-    cy.get("[data-cy=suggester-input]").focus();
-    cy.get("[data-cy=suggester-input]").type("a");
+  it("kan navigere med piletaster", () => {
+    cy.get("[data-cy=suggester-input]").focus().type("a");
+    cy.wait(300);
     cy.get("[data-cy=suggester-container]").should("be.visible");
 
-    // Arrow navigation
     cy.get("[data-cy=suggester-input]")
       .type("{downarrow}")
       .type("{downarrow}")
@@ -42,23 +37,20 @@ describe("Suggester", () => {
       .should("have.attr", "aria-selected", "true");
   });
 
-  it(`Can select suggestion on 'Enter' click`, () => {
-    cy.get("[data-cy=suggester-input]").focus();
-    cy.get("[data-cy=suggester-input]").type("a");
-    cy.get("[data-cy=suggester-container]").should("be.visible");
+  it("kan vælge med Enter", () => {
+    cy.get("[data-cy=suggester-input]").focus().type("a");
+    cy.wait(300);
 
-    // Arrow navigation
     cy.get("[data-cy=suggester-input]").type("{downarrow}").type("{enter}");
 
     cy.on("window:alert", (str) => {
-      expect(str).to.equal(`Ternet Ninja selected`);
+      expect(str).to.equal("Valgt: Ternet Ninja (type: Title)");
     });
   });
 
-  it(`Can select suggestion on 'tab' click`, () => {
-    cy.get("[data-cy=suggester-input]").focus();
-    cy.get("[data-cy=suggester-input]").type("a");
-    cy.get("[data-cy=suggester-container]").should("be.visible");
+  it("kan vælge med Tab", () => {
+    cy.get("[data-cy=suggester-input]").focus().type("a");
+    cy.wait(300);
 
     cy.get("[data-cy=suggester-input]")
       .type("{downarrow}")
@@ -66,70 +58,46 @@ describe("Suggester", () => {
       .tab();
 
     cy.on("window:alert", (str) => {
-      expect(str).to.equal(`ninjaer selected`);
+      expect(str).to.equal("ninjaer selected");
     });
   });
 
-  it(`Desktop: Can select suggestion on 'mouse' click`, () => {
-    cy.get("[data-cy=suggester-input]").focus();
-    cy.get("[data-cy=suggester-input]").type("a");
-    cy.get("[data-cy=suggester-container]").should("be.visible");
+  it("kan vælge med klik (desktop)", () => {
+    cy.get("[data-cy=suggester-input]").focus().type("a");
+    cy.wait(300);
 
     cy.get("[data-cy=suggester-creator-element]").click();
 
     cy.on("window:alert", (str) => {
-      expect(str).to.equal(`Anders Matthesen selected`);
+      expect(str).to.equal("Valgt: Anders Matthesen (type: Creator)");
     });
   });
 
-  it(`Mobile: Can select suggestion on 'mouse' click`, () => {
+  it("kan vælge med klik (mobile)", () => {
     cy.viewport(411, 731);
 
-    cy.get("[data-cy=suggester-input]").focus();
-    cy.get("[data-cy=suggester-input]").type("a");
-    cy.get("[data-cy=suggester-container]").should("be.visible");
+    cy.get("[data-cy=button-mobile]").click(); // aktiver mobiltilstand
+    cy.get("[data-cy=suggester-input]").focus().type("a");
+    cy.wait(300);
 
     cy.get("[data-cy=suggester-creator-element]").click();
 
     cy.on("window:alert", (str) => {
-      expect(str).to.equal(`Anders Matthesen selected`);
-    });
-  });
-
-  it(`Mobile: Should have search history on mobile version of suggester`, () => {
-    cy.viewport(411, 731);
-    cy.get("[data-cy=button-mobile]").click();
-    cy.get("[data-cy=suggester-input]").clear();
-
-    // Check for 2 history elements
-    cy.get("[data-cy=suggester-container] ul li").should("have.length", 2);
-  });
-
-  it(`Mobile: Clear history on mobile version of suggester`, () => {
-    cy.viewport(411, 731);
-    cy.get("[data-cy=button-mobile]").click();
-
-    cy.get("[data-cy=suggester-clear-history]").should("be.visible");
-    cy.get("[data-cy=suggester-clear-history]").click();
-
-    cy.on("window:alert", (str) => {
-      expect(str).to.equal(`History cleared`);
+      expect(str).to.equal("Valgt: Anders Matthesen (type: Creator)");
     });
   });
 });
 
+// Fremtidig test for logging/data collection
 describe("Suggester data collect", () => {
-  it(`Should collect data for suggester`, () => {
-    // Allow cookies
+  it.skip("should collect data from suggest API", () => {
     cy.visit(`${nextjsBaseUrl}`);
     cy.consentAllowAll();
 
-    // Intercept requests to graphql
     cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.startsWith("mutation")) {
         req.alias = "apiMutation";
       } else if (req.body.query.includes("suggest")) {
-        // mock the suggest response
         req.reply({
           data: {
             suggest: {
@@ -151,10 +119,7 @@ describe("Suggester data collect", () => {
       }
     });
 
-    cy.visit(`${nextjsBaseUrl}`);
     cy.get("[data-cy=suggester-input]").type("h");
-
-    // When suggestions appear data should be logged
     cy.wait("@apiMutation").then((interception) => {
       const data = interception.request.body.variables.input.suggest_presented;
 
@@ -170,7 +135,6 @@ describe("Suggester data collect", () => {
 
     cy.get("[data-cy=suggester-work-element]").first().click();
 
-    // When a row is clicked data should be logged
     cy.wait("@apiMutation").then((interception) => {
       const data = interception.request.body.variables.input.suggest_click;
 

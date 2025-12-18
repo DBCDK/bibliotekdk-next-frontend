@@ -6,20 +6,19 @@
 import useQ from "@/components/hooks/useQ";
 import { useData } from "@/lib/api/api";
 import { didYouMean } from "@/lib/api/search.fragments";
-import Section from "@/components/base/section";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import translate from "@/components/base/translate";
 import styles from "./DidYouMean.module.css";
 
-export function DidYouMean({ didyoumean, isLoading }) {
-  const { q, setQuery } = useQ();
+export function DidYouMean({ data, isLoading }) {
+  const { q, mode, setQuery } = useQ();
 
   if (isLoading) {
     return null;
   }
 
-  if (!didyoumean) {
+  if (!data) {
     return null;
   }
 
@@ -30,7 +29,7 @@ export function DidYouMean({ didyoumean, isLoading }) {
   const numberToShow = 1;
 
   // filter out result with low score
-  let results = didyoumean?.filter((did) => Number(did.score) > highscore);
+  let results = data?.filter((did) => Number(did.score) > highscore);
   if (results?.length < 1) {
     return null;
   }
@@ -41,14 +40,7 @@ export function DidYouMean({ didyoumean, isLoading }) {
   }
 
   return (
-    <Section
-      divider={false}
-      space={{
-        bottom: "var(--pt4)",
-      }}
-      // fake the section title - use <span/> to keep the side section
-      title={<span />}
-    >
+    <div className={styles.section}>
       <Text skeleton={isLoading} lines={1} tag="span">
         {translate({ context: "search", label: "didyoumean" })}:
       </Text>
@@ -62,6 +54,7 @@ export function DidYouMean({ didyoumean, isLoading }) {
                 include: { all: res.query },
                 query: {
                   workTypes: null,
+                  mode,
                   tid: res.traceId,
                 },
                 method: "push",
@@ -76,7 +69,7 @@ export function DidYouMean({ didyoumean, isLoading }) {
           </Link>
         </span>
       ))}
-    </Section>
+    </div>
   );
 }
 
@@ -110,12 +103,13 @@ function parseDidYouMean(searchresponse) {
   return searchresponse?.search?.didYouMean;
 }
 
-export default function Wrap({ q }) {
+export default function Wrap() {
+  const q = useQ().getQuery();
+
   // limit for query
   const limit = 5;
   // use the usedata hook to get data
   const { isLoading, data } = useData(didYouMean({ q: q, limit: limit }));
-  return (
-    <DidYouMean didyoumean={parseDidYouMean(data)} isLoading={isLoading} />
-  );
+
+  return <DidYouMean data={parseDidYouMean(data)} isLoading={isLoading} />;
 }

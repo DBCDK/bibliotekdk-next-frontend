@@ -1,7 +1,19 @@
+.section {
+  margin: 0 calc(var(--pt1) * -2);
+  padding: var(--pt2);
+  border-top: 1px solid var(--iron);
+}
+
 .result {
   margin-left: var(--pt1);
 }
 
 .highlight {
   font-family: var(--body-font-semibold);
+}
+
+@media (min-width: 992px) {
+  .section {
+    border: none;
+  }
 }

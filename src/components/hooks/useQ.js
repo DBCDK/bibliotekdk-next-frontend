@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { SuggestTypeEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
 
 /**
  * Hook for q search param sync across components 🤯
@@ -233,7 +234,7 @@ function useQ() {
           query: !isEmpty(merged) ? merged : { "q.all": "" },
         },
         undefined,
-        { scroll: router.pathname !== "/find" }
+        { scroll: router.pathname !== "/find/simpel" }
       );
   };
 
@@ -260,6 +261,18 @@ function useQ() {
   }
 
   /**
+   * isSynced returns true if url and q is syncronized
+   *
+   *
+   * @returns {boolean}
+   */
+  function _isSynced() {
+    const remote = _getQuery();
+    const locale = _q || {};
+    return isEqual(remote, locale);
+  }
+
+  /**
    * Boolean to check if q contains a value
    */
   const obj = _getQuery();
@@ -271,6 +284,8 @@ function useQ() {
       obj[SuggestTypeEnum.SUBJECT]
   );
 
+  const _mode = router?.query?.mode || "simpel";
+
   return {
     // functions
     setQ,
@@ -278,8 +293,10 @@ function useQ() {
     getQuery: _getQuery,
     setQuery,
     getCount,
+    isSynced: _isSynced,
     // constants
     q: _q || {},
+    mode: _mode,
     hasQuery: _hasQuery,
     types,
     base: buildQ(),

@@ -28,11 +28,28 @@
   align-items: center;
 }
 
-.input_wrap .clear.visible,
-.input_wrap .clear:hover,
+.input_wrap .clear.visible {
+  transform: scale(0.8);
+  transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+}
+
 .input_wrap .clear:focus-visible {
   transform: scale(1);
-  transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+}
+
+.input_wrap .clear:focus-visible {
+  transform: scale(1);
+}
+
+/* Prevent clear cross "hanging" on touch devices */
+@media (hover: hover) {
+  .input_wrap .clear:hover {
+    transform: scale(1);
+  }
+}
+
+.input_wrap .clear:focus-visible {
+  border: 2px solid var(--blue);
 }
 
 .input_wrap .clear path {

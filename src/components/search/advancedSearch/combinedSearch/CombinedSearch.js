@@ -7,9 +7,8 @@ import Translate from "@/components/base/translate";
 
 import Button from "@/components/base/button/Button";
 import { LogicalOperatorDropDown } from "@/components/search/advancedSearch/fieldInput/TextInputs";
-import { FormatFieldSearchIndexes } from "../advancedSearchResult/topBar/TopBar";
+import { FormatFieldSearchIndexes } from "../topBar/TopBar";
 import { FormatedFilters } from "@/components/search/advancedSearch/advancedSearchHistory/AdvancedSearchHistory";
-import { useFacets } from "@/components/search/advancedSearch/useFacets";
 import { useQuickFilters } from "@/components/search/advancedSearch/useQuickFilters";
 
 //max number of search queries to be combined
@@ -108,7 +107,6 @@ function SearchItem({ item, index, updatePrefixLogicalOperator }) {
 export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
   //queriesItems are the queries selected for combination and shown in the combine queries overview.
   const [queriesItems, setQueriesItems] = useState([]);
-  const { restartFacetsHook } = useFacets();
   const { resetQuickFilters } = useQuickFilters();
   const searchItemsWrapper = useRef(null);
 
@@ -118,7 +116,9 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
       searchItemsWrapper.current.style.overflow = `hidden`;
       searchItemsWrapper.current.style.maxHeight = `${currentHeight}px`;
       setTimeout(() => {
-        searchItemsWrapper.current.style.overflow = `visible`;
+        if (searchItemsWrapper.current?.style) {
+          searchItemsWrapper.current.style.overflow = `visible`;
+        }
       }, 300);
     }
   }, [queriesItems, queries]);
@@ -145,6 +145,27 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
       if (newQueriesItems.length >= MAX_ITEMS) {
         return;
       }
+
+      const searchValue =
+        item?.q?.all || item?.q?.creator || item?.q?.subject || "";
+      //can only combine queries with fieldSearch
+      // Convert simple search to fieldSearch
+      if (!item?.fieldSearch) {
+        item = {
+          ...item,
+          cql: `term.default="${searchValue?.replace(/"/g, '\\"')}"`,
+          fieldSearch: {
+            inputFields: [
+              {
+                value: searchValue,
+                prefixLogicalOperator: null,
+                searchIndex: "term.default",
+              },
+            ],
+          },
+        };
+      }
+
       //add to list of queries to be combined
       if (!keys.includes(item.key)) {
         newQueriesItems.push({
@@ -234,7 +255,6 @@ export default function CombinedSearch({ queries = [], cancelCombinedSearch }) {
               facets: JSON.stringify(facets),
               quickfilters: JSON.stringify(quickFilters),
             };
-            restartFacetsHook();
             resetQuickFilters();
             router.push({ pathname: "/avanceret", query });
           }}

@@ -18,6 +18,96 @@
         "en": "Label: mangler oversættelse"
       }
     },
+    "creator": {
+      "publications": {
+        "da": "Udgivelser",
+        "en": "Publications"
+      },
+      "publications-explanation": {
+        "da": "Værkerne er grupperet efter ældste registrerede udgave, men værket kan være skabt tidligere.",
+        "en": "Works are grouped by the oldest registered edition, but the work may have been created earlier."
+      },
+      "work-singular": {
+        "da": "værk",
+        "en": "work"
+      },
+      "work-plural": {
+        "da": "værker",
+        "en": "works"
+      },
+      "from": {
+        "da": "fra",
+        "en": "from"
+      },
+      "to": {
+        "da": "til",
+        "en": "to"
+      },
+      "no-results": {
+        "da": "Ingen publikationer fundet med de valgte filtre",
+        "en": "No publications found with the selected filters"
+      },
+      "keywords": {
+        "da": "Emneord",
+        "en": "Keywords"
+      },
+      "keywords-subtitle": {
+        "da": "%s beskæftiger sig ofte med",
+        "en": "Topics %s often explores"
+      },
+      "favorites-title": {
+        "da": "Udvalgte anmeldelser",
+        "en": "Selected reviews"
+      },
+      "creator-breadcrumb": {
+        "da": "Ophav",
+        "en": "Creator"
+      },
+      "publishedFrom": {
+        "da": "Udgivet fra",
+        "en": "Published from"
+      },
+      "publishedIn": {
+        "da": "Udgivet i",
+        "en": "Published in"
+      },
+      "reviewedIn": {
+        "da": "Anmeldt i",
+        "en": "Reviewed in"
+      },
+      "seeAllReviews": {
+        "da": "Se alle anmeldelser",
+        "en": "See all reviews"
+      },
+      "creator-search": {
+        "da": "Søg på navn",
+        "en": "Search for name"
+      },
+      "creator-forfatterweb": {
+        "da": "Se på forfatterweb.dk",
+        "en": "View on forfatterweb.dk"
+      },
+      "view-publications": {
+        "da": "Alle værker",
+        "en": "All works"
+      },
+      "selected-prizes": {
+        "da": "Udvalgte priser",
+        "en": "Selected prizes"
+      },
+      "awards": {
+        "da": "Priser:",
+        "en": "Awards:"
+      },
+      "more_about": {
+        "da": "Mere om %s",
+        "en": "More about %s"
+      },
+      "forfatterweb": {
+        "da": "Forfatterweb.dk",
+        "en": "forfatterweb.dk"
+      }
+    },
     "advanced_search_cql": {
       "cql_error_link_href": {
         "da": "/hjaelp/soegning-baade-enkel-og-avanceret/179",
@@ -34,12 +124,12 @@
     },
     "advanced_search_sort": {
       "sort_button": {
-        "da": "sorter",
-        "en": "sort"
+        "da": "Sorter",
+        "en": "Sort"
       },
       "best_match": {
-        "da": "bedste match",
-        "en": "best match"
+        "da": "Bedste match",
+        "en": "Best match"
       },
       "asc_sort.latestpublicationdate": {
         "da": "Nyeste sidst",
@@ -317,6 +407,14 @@
         "da": "Alder",
         "en": "Age"
       },
+      "phrase.hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
+      },
+      "all_phrase.hostpublicationtype": {
+        "da": "Alle artikeltyper",
+        "en": "All article types"
+      },
       "more_filters": {
         "da": "Flere filtre",
         "en": "More filters"
@@ -325,7 +423,7 @@
     "advanced_search_worktypes": {
       "all": {
         "da": "Alle materialer",
-        "en": "All materials"
+        "en": "All"
       },
       "literature": {
         "da": "Bøger",
@@ -504,6 +602,10 @@
       "label-primarytarget": {
         "da": "Fagligt niveau",
         "en": "Level"
+      },
+      "label-hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
       }
     },
     "logo": {
@@ -577,6 +679,14 @@
       }
     },
     "tooltip": {
+      "tooltip-disclaimer-label": {
+        "da": "Om data",
+        "en": "About data"
+      },
+      "tooltip-disclaimer": {
+        "da": "Information om roller og modtagne priser er hentet fra Wikidata. Evt. billeder er fra forfatterweb. Øvrige data er produceret af DBC Digital.",
+        "en": "Information about roles and received prizes are fetched from Wikidata. Any images are from forfatterweb. The rest of the data is produced by DBC Digital."
+      },
       "tooltip_change_email": {
         "da": "For at ændre din email skal du logge ind på dit biblioteks hjemmeside og ændre email-adresse i din profil",
         "en": "To change your email address - log on your library homepage and change your email in profile settings"
@@ -666,6 +776,10 @@
       "from": {
         "da": "Fra",
         "en": "From"
+      },
+      "authors": {
+        "da": "Forfattere",
+        "en": "Authors"
       },
       "new": {
         "da": "Ny",
@@ -1574,6 +1688,32 @@
         "en": "the material"
       }
     },
+    "workTypeSingularForm": {
+      "literature": {
+        "da": "bog",
+        "en": "book"
+      },
+      "movie": {
+        "da": "film",
+        "en": "movie"
+      },
+      "article": {
+        "da": "artikel",
+        "en": "article"
+      },
+      "music": {
+        "da": "musik",
+        "en": "music"
+      },
+      "game": {
+        "da": "spil",
+        "en": "game"
+      },
+      "sheetmusic": {
+        "da": "node",
+        "en": "sheet music"
+      }
+    },
     "holdings": {
       "text_no_localizations": {
         "da": "Ingen biblioteker matcher din søgning. \\n Se status for dit foretrukne bibliotek ved at søge på navn, postnr. eller by.",
@@ -2466,6 +2606,40 @@
         "en": "Menu"
       }
     },
+    "improved-search": {
+      "simple": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "advanced": {
+        "da": "Avanceret",
+        "en": "Advanced"
+      },
+      "cql": {
+        "da": "CQL",
+        "en": "CQL"
+      },
+      "cql-desktop": {
+        "da": "CQL-søgning",
+        "en": "CQL search"
+      },
+      "history-latest": {
+        "da": "Seneste søgninger",
+        "en": "Latest searches"
+      },
+      "history-empty-message": {
+        "da": "Her vil dine seneste søgninger dukke op, når du begynder at søge",
+        "en": "Your recent searches will appear here once you start searching"
+      },
+      "history": {
+        "da": "Søgehistorik",
+        "en": "Search History"
+      },
+      "clear-history": {
+        "da": "Ryd liste",
+        "en": "Clear list"
+      }
+    },
     "search": {
       "timestamp": {
         "da": "Kl. %s",
@@ -2478,6 +2652,10 @@
       "didyoumean": {
         "da": "Mente du",
         "en": "Did you mean"
+      },
+      "simplesearchlabel": {
+        "da": "Søg",
+        "en": "Search"
       },
       "cqlsearchlabel": {
         "da": "CQL-søgning",
@@ -2502,6 +2680,10 @@
       "filter-your-search": {
         "da": "Filtrer din søgning",
         "en": "Filter your search"
+      },
+      "filter": {
+        "da": "Filtrer",
+        "en": "Filters"
       },
       "filtersResultText": {
         "da": "Mest relevante resultater",
@@ -2744,8 +2926,8 @@
         "en": "Advanced Search"
       },
       "advancedSearch_button": {
-        "da": "Søg avanceret",
-        "en": "Search advanced"
+        "da": "Søg",
+        "en": "Search"
       },
       "advanced": {
         "da": "Avanceret",
@@ -3051,9 +3233,17 @@
         "da": "Seneste søgninger",
         "en": "Latest searches"
       },
+      "advanced-search-history-latest-mobile": {
+        "da": "Seneste",
+        "en": "Latest"
+      },
       "advanced-search-saved-search": {
         "da": "Gemte søgninger (%s)",
         "en": "Saved searches (%s)"
+      },
+      "advanced-search-saved-search-mobile": {
+        "da": "Gemte (%s)",
+        "en": "Saved (%s)"
       },
       "advanced-empty-search-history": {
         "da": "Her vil du kunne se en liste over de seneste søgninger, hvor der har været brugt avanceret søgning. Listen er midlertidig og nulstilles automatisk, når du lukker enten vinduet eller din browser. Hvis du vil gemme en søgning til senere, så tryk “Gem” ud for søgningen og den vil lægge sig på listen “Gemte søgninger”.\\n Du har ikke lavet nogen avancerede søgninger endnu.",
@@ -3079,6 +3269,30 @@
         "da": "Ny feltsøgning",
         "en": "New fields search"
       },
+      "topbar-simple-search": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "topbar-advanced-search": {
+        "da": "Avanceret søgning",
+        "en": "Advanced search"
+      },
+      "topbar-cql-search": {
+        "da": "CQL-søgning",
+        "en": "CQL search"
+      },
+      "topbar-simple-search-mobile": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "topbar-advanced-search-mobile": {
+        "da": "Avanceret",
+        "en": "Advanced"
+      },
+      "topbar-cql-search-mobile": {
+        "da": "CQL",
+        "en": "CQL"
+      },
       "yourSearch": {
         "da": "Din søgning",
         "en": "Your search"
@@ -3094,6 +3308,10 @@
       "saveSearch": {
         "da": "Gem søgning",
         "en": "Save search"
+      },
+      "savedSearch": {
+        "da": "Gemt",
+        "en": "Saved"
       },
       "editSearch": {
         "da": "Rediger Søgning",
@@ -3148,8 +3366,8 @@
         "en": "Clear"
       },
       "helpAndGuidance": {
-        "da": "Hjælp og vejledning",
-        "en": "Help and guidance"
+        "da": "Brug for hjælp?",
+        "en": "Need help with your search?"
       },
       "mobile_helpAndGuidance": {
         "da": "Hjælp",
@@ -3264,6 +3482,10 @@
       "label-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
+      },
+      "label-creatorfunction": {
+        "da": "Rolle",
+        "en": "Role"
       },
       "label-materialTypesSpecific": {
         "da": "Materialetype",

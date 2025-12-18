@@ -314,7 +314,6 @@ function validateRangeLiterals(tokens) {
  * Validate all tokens
  */
 export function validateTokens(tokens, allowedFieldsSet = ALLOWED_FIELDS_SET) {
-  console.log("allowedFieldsSet", allowedFieldsSet);
   validateUnclosed(tokens);
   validateGrammar(tokens);
   validateFields(tokens, allowedFieldsSet);

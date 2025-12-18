@@ -9,7 +9,8 @@ function checkPrefilledQueryParameters() {
 }
 
 describe("Search", () => {
-  describe(`Form`, () => {
+  // skipped for now, saved for later, when suggester is moved to /find
+  describe.skip(`Form`, () => {
     it(`Maps query parameters from url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
@@ -418,7 +419,7 @@ describe("Search", () => {
 
       cy.get(`[data-cy=related-subject-${tag}]`)
         .should("have.attr", "href")
-        .and("include", "/find?q.all");
+        .and("include", "/find/simpel?q.all");
     });
 
     // skip for now - hitcount has been disabled

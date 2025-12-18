@@ -144,10 +144,16 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
       <span
         data-cy={`${inputProps.dataCy}-clear`}
         className={`${styles.clear} ${clearVisibleClass}`}
+        tabIndex={showClear ? "0" : "-1"}
         onClick={() => onClear()}
-        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            onClear();
+          }
+        }}
       >
-        <Icon size={{ w: "auto", h: 2 }} alt="">
+        <Icon size={{ w: "auto", h: 2 }} alt="" tabIndex="-1">
           <ClearSvg />
         </Icon>
       </span>
@@ -170,11 +176,10 @@ function Suggester({
   data = [],
   children,
   skeleton = false,
-  onClear = null,
   onSelect = null,
   onChange = null,
   onBlur = null,
-
+  onClearCallback,
   initialValue = "",
 }) {
   // Make copy of all suggestion objects
@@ -240,21 +245,17 @@ function Suggester({
       id={id}
       theme={theme}
       suggestions={data}
-      shouldRenderSuggestions={(value) => {
-        // type to see suggestions
-        return value.trim().length > 0;
-      }}
-      onSuggestionsFetchRequested={({}) => {
-        // func is required
-      }}
-      onSuggestionsClearRequested={() => {
-        // func is required
-      }}
+      // shouldRenderSuggestions={(value) => {
+      //   // type to see suggestionss
+      //   return value.trim().length > 0;
+      // }}
+      onSuggestionsFetchRequested={() => {}}
+      onSuggestionsClearRequested={() => {}}
       onSuggestionSelected={(_, entry) => {
+        _.preventBubbleHack = true;
         const { suggestionValue, suggestion, suggestionIndex } = entry;
         onSelect && onSelect(suggestionValue, suggestion, suggestionIndex);
         setState({ q: suggestionValue, _q: null });
-        // blurInput(id);
       }}
       renderSuggestionsContainer={(props) =>
         renderSuggestionsContainer(props.containerProps, props.children)
@@ -273,17 +274,11 @@ function Suggester({
           inputProps: merged,
           onClear: () => {
             setState({ q: "", _q: null });
-            onClear && onClear();
             focusInput(id);
+            onClearCallback();
           },
         });
       }}
-      // onSuggestionHighlighted={({ suggestion }) => {
-      //   if (suggestion?.value !== state._q) {
-      //     setState({ ...state, _q: suggestion?.value });
-      //   }
-      // }}
-
       focusInputOnSuggestionClick={false}
       highlightFirstSuggestion={false}
       inputProps={inputProps}
@@ -300,7 +295,7 @@ function Suggester({
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  let { className, data } = props;
+  let { className, onClear = () => {}, data } = props;
   const { skeleton, onSelect, children } = props;
 
   if (skeleton) {
@@ -315,6 +310,7 @@ export default function Wrap(props) {
       onSelect={(val, obj, i) => {
         onSelect && onSelect(val, obj, i);
       }}
+      onClearCallback={onClear}
     />
   );
 }

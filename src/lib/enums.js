@@ -20,6 +20,11 @@ export const FacetValidDatabases = Object.freeze({
   KONGELIGE_TEATER_PROGRAMARTIKLER: "Kongelige Teater programartikler",
 });
 
+export const SimpleFacetsTypeEnum = Object.freeze({
+  SPECIFICMATERIALTYPE: "materialTypesSpecific",
+  FICTIONALCHARACTERS: "fictionalCharacters",
+});
+
 export const AdvFacetsTypeEnum = Object.freeze({
   SPECIFICMATERIALTYPE: "specificmaterialtype",
   CREATOR: "creator",
@@ -38,7 +43,7 @@ export const AdvFacetsTypeEnum = Object.freeze({
   INSTRUMENT: "instrument",
   CHOIRTYPE: "choirtype",
   CHAMBERMUSICTYPE: "chambermusictype",
-
+  HOSTPUBLICATIONTYPE: "hostpublicationtype",
   // CATALOGUECODE: "cataloguecode",
   // CONTRIBUTORFUNCTION: "contributorfunction",
   // CREATORCONTRIBUTOR: "creatorcontributor",

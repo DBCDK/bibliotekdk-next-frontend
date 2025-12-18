@@ -1,0 +1,80 @@
+.block {
+  background: var(--pippin);
+  padding: var(--pt3);
+  color: var(--mine-shaft);
+  max-width: fit-content;
+  margin-bottom: var(--pt2);
+}
+
+.portraitWrapper {
+  width: 260px;
+  max-width: 100%;
+  margin-bottom: var(--pt2);
+  cursor: pointer;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--title-font);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--mine-shaft);
+}
+
+.role {
+  margin-top: var(--pt0_5);
+  font-family: var(--body-font);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--mine-shaft);
+  font-weight: 600;
+}
+
+.linkRow {
+  margin-top: var(--pt1);
+}
+
+.description {
+  margin: var(--pt2) 0 var(--pt2) 0;
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--mine-shaft);
+}
+
+.facts {
+  margin-top: var(--pt1);
+  font-family: var(--body-font);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--mine-shaft);
+}
+
+.factLabel {
+  font-weight: 700;
+  margin-right: var(--pt0_5);
+  display: inline-block;
+}
+
+.fact {
+  display: inline;
+}
+
+.extraFact {
+  font-weight: 600;
+  color: var(--mine-shaft);
+  opacity: 0.7;
+}
+
+.linkRow {
+  font-size: 14px;
+}
+
+.attribution {
+  color: var(--gray);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+  max-width: 320px;
+  text-align: center;
+}

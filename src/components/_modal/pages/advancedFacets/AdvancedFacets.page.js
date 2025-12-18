@@ -1,4 +1,4 @@
-import AdvancedFacets from "@/components/search/advancedSearch/facets/advancedFacets";
+import AdvancedFacets from "@/components/search/facets/advanced/advancedFacets";
 import Top from "@/components/_modal/pages/base/top";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { convertStateToCql } from "@/components/search/advancedSearch/utils";
@@ -22,7 +22,7 @@ export default function Wrap({ context, modal }) {
   const { cqlFromUrl: cql, fieldSearchFromUrl: fieldSearch } =
     useAdvancedSearchContext();
 
-  /**  update resultpage when modal is closed **/
+  /**  update result page when modal is closed **/
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
       pushQuery(false, selectedFacets);

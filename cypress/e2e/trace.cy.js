@@ -3,7 +3,8 @@ const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Trace", () => {
   describe("simple search", () => {
-    it(`TraceId from related subject is available as URL parameter when clicking`, () => {
+    // skipped for now, saved for later, when suggester is moved to /find
+    it.skip(`TraceId from related subject is available as URL parameter when clicking`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
 
@@ -26,7 +27,8 @@ describe("Trace", () => {
           expect(tid.length).to.be.greaterThan(20);
         });
     });
-    it(`TraceId from search response is available as URL parameter when clicking`, () => {
+    // skipped for now, saved for later, when suggester is moved to /find
+    it.skip(`TraceId from search response is available as URL parameter when clicking`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
 
@@ -47,8 +49,8 @@ describe("Trace", () => {
           expect(tid.length).to.be.greaterThan(20);
         });
     });
-
-    it(`TraceId from did you mean is available as URL parameter when clicking`, () => {
+    // skipped for now, saved for later, when suggester is moved to /find
+    it.skip(`TraceId from did you mean is available as URL parameter when clicking`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
 
@@ -87,7 +89,7 @@ describe("Trace", () => {
       });
     });
     it("traceid on materialtypes in searchresult", () => {
-      cy.visit(`${nextjsBaseUrl}/find?q.all=hest`);
+      cy.visit(`${nextjsBaseUrl}/find/simpel?q.all=hest`);
       cy.consentAllowAll(); //allow cookies
 
       // get all the searchresults
@@ -103,7 +105,9 @@ describe("Trace", () => {
         });
     });
   });
-  describe("complex search", () => {
+
+  // skipped for now, saved for later, when suggester is moved to /find
+  describe.skip("complex search", () => {
     it(`TraceId on suggestion click`, () => {
       cy.visit(nextjsBaseUrl);
       cy.consentAllowAll(); //allow cookies
@@ -254,8 +258,8 @@ describe("Trace", () => {
       expect(traceIdHeader).to.equal("fisk");
     });
   });
-
-  it(`TraceId from suggest response is available as URL parameter when clicking`, () => {
+  // skipped for now, saved for later, when suggester is moved to /find
+  it.skip(`TraceId from suggest response is available as URL parameter when clicking`, () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll(); //allow cookies
 

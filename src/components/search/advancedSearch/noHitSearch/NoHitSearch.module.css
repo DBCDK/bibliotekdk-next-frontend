@@ -1,0 +1,20 @@
+.no_hits {
+  padding-top: var(--pt7);
+}
+
+.no_hits__description {
+  padding-top: var(--pt3);
+}
+
+.no_hits__list_item {
+  margin-left: var(--pt2_5);
+  padding-left: var(--pt075);
+}
+
+.no_hits__list_item::marker {
+  font-size: 0.8em;
+}
+
+.no_hits__help_text {
+  padding-top: var(--pt3);
+}

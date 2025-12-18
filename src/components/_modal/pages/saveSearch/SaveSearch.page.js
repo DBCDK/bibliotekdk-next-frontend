@@ -11,14 +11,22 @@ import Button from "@/components/base/button";
 import styles from "./SaveSearch.module.css";
 import Input from "@/components/base/forms/input";
 import { useEffect, useState } from "react";
-import useSavedSearches from "@/components/hooks/useSavedSearches";
+import { useSavedSearches } from "@/components/hooks/useSearchHistory";
 
 export default function SaveSearch({ modal, context }) {
   const { item, back, onSaveDone } = context;
   const [searchName, onSearchNameChange] = useState("");
   const { updateSearch, saveSearch } = useSavedSearches();
+
   useEffect(() => {
-    onSearchNameChange(item?.name || item?.cql || "");
+    onSearchNameChange(
+      item?.name ||
+        item?.cql ||
+        item?.q?.all ||
+        item?.q?.creator ||
+        item?.q?.subject ||
+        ""
+    );
   }, [item]);
   //check user has saved the search item
 
