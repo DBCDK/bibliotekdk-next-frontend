@@ -28,7 +28,6 @@ export default function CreatorPage() {
     data?.generated?.dataSummary?.text ||
     "Se værker og udgivelser relateret til denne person.";
   const imageUrl = data?.image?.url;
-  console.log("description", description);
   return (
     <>
       <Head>

@@ -27,6 +27,16 @@ export default function useDataCollect() {
     collectSuggestClick: (obj) => fetcher(collectSuggestClick(obj)),
     collectRecommenderClick: (obj) => fetcher(collectRecommenderClick(obj)),
     collectSearchFeedback: (obj) => fetcher(collectSearchFeedback(obj)),
+    collectSeriesTeaserClick: async ({ seriesId, title }) => {
+      matomoPushEvent([
+        "Teaserbox",
+        "Klik på serielink",
+        `${title} (${seriesId})`,
+      ]);
+    },
+    collectCreatorTeaserClick: async ({ name }) => {
+      matomoPushEvent(["Teaserbox", "Klik på ophavslink", name]);
+    },
     collectAddBookmark: async ({ title, materialType }) => {
       matomoPushEvent(["Huskeliste", "Tilføj", `${title} (${materialType})`]);
     },
