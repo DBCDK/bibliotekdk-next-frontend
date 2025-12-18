@@ -87,7 +87,7 @@
     "next-unused": "^0.0.6",
     "prettier": "^2.3.2",
     "sass-loader": "^13.3.2",
-    "storybook": "^7.0.25",
+    "storybook": "^7.6.21",
     "style-loader": "^3.3.3"
   },
   "dependencies": {
