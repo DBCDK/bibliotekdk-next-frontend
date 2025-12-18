@@ -195,4 +195,29 @@ describe("Recent searches", () => {
     cy.contains(testLabel(2)).should("be.visible");
     cy.contains(testLabel(3)).should("be.visible");
   });
+
+  it("can select across pages (2 selected total)", () => {
+    // 25 items => 3 desktop pages
+    visitRecentSearchesWithHistoryCount(25);
+
+    cy.consentAllowAll();
+    cy.location("pathname").should("include", "/find/historik/seneste");
+
+    // Page 1: select first row (test-1 is newest => first row)
+    cy.contains(testLabel(1)).should("be.visible");
+    cy.contains("label", "select-item-0")
+      .find('input[type="checkbox"]')
+      .click({ force: true });
+    cy.contains(/^1 valgt$/).should("be.visible");
+
+    // Page 2: select first row (test-11 is first on page 2)
+    cy.contains("button", /^2$/).click();
+    cy.contains(testLabel(11)).should("be.visible");
+    cy.contains("label", "select-item-0")
+      .find('input[type="checkbox"]')
+      .click({ force: true });
+
+    // Selection count should be global across pages
+    cy.contains(/^2 valgt$/).should("be.visible");
+  });
 });
