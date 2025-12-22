@@ -2640,6 +2640,24 @@
         "en": "Clear list"
       }
     },
+    "publizon": {
+      "nofolk-missing-url-title": {
+        "da": "Vi kunne ikke finde dit folkebibliotek",
+        "en": "Publizon - missing URL"
+      },
+      "nofolk-missing-url-text": {
+        "da": "For at kunne tilgå e-materialer skal du være oprettet på et folkebibliotek. </br></br> Opret dig via. dit lokale folkebiblioteks hjemmeside for at få adgang.",
+        "en": "There is no URL available for this material in Publizon."
+      },
+      "hasfolk-missing-url-title": {
+        "da": "Vi kunne ikke sende dig videre",
+        "en": "...."
+      },
+      "hasfolk-missing-url-text": {
+        "da": "Noget gik galt da vi forsøgte at sende dig videre til materialet på dit lokale folkebiblioteks hjemmeside. </br></br> Find materialet på dit lokale bibliotek, for at få adgang.",
+        "en": "There is no URL available for this material in Publizon."
+      }
+    },
     "search": {
       "timestamp": {
         "da": "Kl. %s",

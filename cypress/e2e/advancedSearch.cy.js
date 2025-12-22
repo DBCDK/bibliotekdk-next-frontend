@@ -28,6 +28,7 @@ describe("Popover elements", () => {
     cy.get('[data-cy="advanced-search-clear-search"]').click();
     //assert that the values has been cleared
     cy.get('[data-cy="advanced-search-inputfield-0"]').should("have.value", "");
+    cy.get('[data-cy="advanced-search-inputfield-1"]').should("have.value", "");
   });
 
   // skipped for now, saved for later, when new search is implemented

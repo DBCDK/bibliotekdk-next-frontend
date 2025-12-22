@@ -19,8 +19,8 @@ import useDataCollect from "@/lib/useDataCollect";
  * @param {string} callbackUrl
  * @returns
  */
-export default function MitIDButton({ callBackUUID }) {
-  const callBackUrl = getCallbackUrl(null, callBackUUID);
+export default function MitIDButton({ callBackUUID, redirectPath }) {
+  const callBackUrl = getCallbackUrl(null, callBackUUID, { redirectPath });
   const { removeLastLoginBranch } = useLastLoginBranch();
   const collect = useDataCollect();
   const onMitIdLogin = () => {

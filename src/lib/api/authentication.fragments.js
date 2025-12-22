@@ -14,6 +14,9 @@ export function authentication() {
         loggedInBranchId
         identityProviderUsed
         hasCulrUniqueId
+        omittedCulrData {
+          hasOmittedCulrUniqueId
+        }
       }
       session {
         userParameters {
