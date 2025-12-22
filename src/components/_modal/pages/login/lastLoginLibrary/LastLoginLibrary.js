@@ -17,7 +17,8 @@ export default function LastLoginLibrary({ context }) {
     // @PJO 28/10/24 we need a callback uuid here
     const callbackUrl = getCallbackUrl(
       lastLoginBranch?.branchId,
-      context?.callbackUID
+      context?.callbackUID,
+      { redirectPath: context?.redirectPath }
     );
     signIn(
       "adgangsplatformen",

@@ -3,6 +3,7 @@ export const context = { context: "overview" };
 import { goToRedirectUrl } from "@/components/work/utils";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
+import { _isFFUAgency } from "@/utils/agency";
 
 /**
  * Example:
@@ -49,6 +50,24 @@ export function workTypeTranslator(workTypes) {
       });
 }
 
+export async function setLoginIntent({ pid, provider }) {
+  if (!pid) return;
+
+  try {
+    await fetch("/api/login/intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pid,
+        provider,
+      }),
+    });
+  } catch {
+    // Ignorér fejl: worst case virker redirect ikke efter login,
+    // og brugeren kan prøve igen.
+  }
+}
+
 /**
  * Open login modal if user is not authenticated and material is neither ebescost or ebookcentral and material requires login
  * otherwise open redirect url in new tab
@@ -57,7 +76,13 @@ export function workTypeTranslator(workTypes) {
  * @param {Object} isAuthenticated
  * @returns
  */
-export function handleGoToLogin(modal, access, isAuthenticated, type) {
+export async function handleGoToLogin(
+  modal,
+  access,
+  isAuthenticated,
+  isFolkUser,
+  type
+) {
   const a0 = access?.[0];
   if (!a0) return;
 
@@ -82,16 +107,49 @@ export function handleGoToLogin(modal, access, isAuthenticated, type) {
   }
 
   // Avoid pushing/opening an undefined URL
-  if (!url && isAuthenticated) return;
+  if (isPublizon && isAuthenticated && !url) {
+    const titleLabel = isFolkUser
+      ? "hasfolk-missing-url-title"
+      : "nofolk-missing-url-title";
+
+    const textLabel = isFolkUser
+      ? "hasfolk-missing-url-text"
+      : "nofolk-missing-url-text";
+
+    modal.push("statusMessage", {
+      title: Translate({
+        context: "publizon",
+        label: titleLabel,
+        renderAsHtml: true,
+      }),
+      text: Translate({
+        context: "publizon",
+        label: textLabel,
+        renderAsHtml: true,
+      }),
+    });
+
+    return;
+  }
 
   // Decide whether we should show the login modal instead of redirecting
   const goToLogin =
     (isPublizon && !isAuthenticated) ||
     (!isAuthenticated && a0.loginRequired && isEbookCentralOrEbscohost(url));
 
-  return goToLogin
-    ? openLoginModal({ modal }) // TODO: pass url to allow redirect after login?
-    : goToRedirectUrl(url, urlTarget);
+  if (goToLogin) {
+    if (isPublizon) {
+      // Set redirect path for Publizon to internal redirect handler
+      const pid = access?.[0]?.pids?.[0];
+      const provider = "ReservationButton_Publizon";
+      await setLoginIntent({ pid, provider });
+    }
+
+    return openLoginModal({ modal, redirectPath: "/api/redirect" });
+  }
+
+  // Directly redirect
+  return goToRedirectUrl(url, urlTarget);
 }
 
 /**
