@@ -22,7 +22,6 @@ import { usePeriodica } from "@/components/hooks/order";
  */
 function OrderButtonTextBelow({
   access,
-  skeleton,
   hasPhysicalCopy,
   hasDigitalCopy,
   isPeriodica,

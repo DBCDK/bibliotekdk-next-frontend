@@ -428,7 +428,6 @@ function Page(props) {
         returnFocus
         whiteList={whiteList}
       >
-        {console.log("modal context", props.context)}
         <props.component {...passedProps} />
         <div ref={ref} className="page_bottom" />
       </FocusLock>

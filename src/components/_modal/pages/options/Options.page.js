@@ -10,7 +10,6 @@ import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { openLoginModal } from "../login/utils";
-import { _isFFUAgency } from "@/utils/agency";
 import Translate from "@/components/base/translate";
 import { setLoginIntent } from "@/components/work/reservationbutton/utils";
 

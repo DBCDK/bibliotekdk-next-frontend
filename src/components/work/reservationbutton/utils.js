@@ -3,7 +3,6 @@ export const context = { context: "overview" };
 import { goToRedirectUrl } from "@/components/work/utils";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
-import { _isFFUAgency } from "@/utils/agency";
 
 /**
  * Example:
