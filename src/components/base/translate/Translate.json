@@ -2642,20 +2642,28 @@
     },
     "publizon": {
       "nofolk-missing-url-title": {
-        "da": "Vi kunne ikke finde dit folkebibliotek",
-        "en": "Publizon - missing URL"
+        "da": "Vi kunne ikke finde dit lokale folkebibliotek",
+        "en": "You are not registered with a public library"
       },
       "nofolk-missing-url-text": {
-        "da": "For at kunne tilgå e-materialer skal du være oprettet på et folkebibliotek. </br></br> Opret dig via. dit lokale folkebiblioteks hjemmeside for at få adgang.",
-        "en": "There is no URL available for this material in Publizon."
+        "da": "For at få adgang til e-materialer skal du være oprettet på folkebiblioteket i din bopælskommune.</br></br>Opret dig via dit lokale folkebiblioteks hjemmeside for at få adgang.",
+        "en": "To access digital materials, you must be registered with a public library in your municipality.</br></br>Please sign up via your local public library’s website to gain access."
       },
       "hasfolk-missing-url-title": {
         "da": "Vi kunne ikke sende dig videre",
-        "en": "...."
+        "en": "We couldn’t redirect you"
       },
       "hasfolk-missing-url-text": {
-        "da": "Noget gik galt da vi forsøgte at sende dig videre til materialet på dit lokale folkebiblioteks hjemmeside. </br></br> Find materialet på dit lokale bibliotek, for at få adgang.",
-        "en": "There is no URL available for this material in Publizon."
+        "da": "Der opstod en fejl, da vi forsøgte at sende dig videre til materialet på dit lokale folkebiblioteks hjemmeside.</br></br>Du kan i stedet finde materialet direkte via dit lokale bibliotek for at få adgang.",
+        "en": "An error occurred while we were trying to redirect you to the material on your local public library’s website.</br></br>You can instead find the material directly via your local library to gain access."
+      },
+      "not-logged-in-title": {
+        "da": "Log ind mislykkedes",
+        "en": "Sign-in failed"
+      },
+      "not-logged-in-text": {
+        "da": "Der opstod en fejl, da vi forsøgte at logge dig ind.</br></br>Prøv igen, eller kontakt kundeservice på kundeservice@dbc.dk, hvis problemet fortsætter.",
+        "en": "An error occurred while we were trying to sign you in.</br></br>Please try again, or contact customer support at kundeservice@dbc.dk if the problem persists."
       }
     },
     "search": {
@@ -6005,6 +6013,14 @@
       },
       "test-listen-btn-lbl": {
         "da": "Prøvelyt",
+        "en": "Test listen"
+      },
+      "overlay-test-read-title": {
+        "da": "Prøvelæs:",
+        "en": "Test read"
+      },
+      "overlay-test-listen-title": {
+        "da": "Prøvelyt:",
         "en": "Test listen"
       },
       "disclaimer-text": {

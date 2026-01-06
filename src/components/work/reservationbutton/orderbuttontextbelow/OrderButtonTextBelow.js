@@ -56,12 +56,11 @@ function OrderButtonTextBelow({
     index > -1 &&
     access?.[0]?.id !== null &&
     translationForButtonText?.[index] !== null && (
-      <Col xs={12} className={styles.info}>
+      <Col xs={12} sm={9} className={styles.info}>
         <Text
           dataCy={"reservation-button-txt"}
+          className={styles.text}
           type="text3"
-          skeleton={skeleton}
-          lines={2}
         >
           {translationForButtonText?.[index]?.()}
         </Text>
@@ -85,7 +84,11 @@ export default function Wrap({ selectedPids, skeleton }) {
   });
 
   if (isLoadingAccess || isLoadingPeriodica) {
-    return <Skeleton lines={1} className={styles.skeletonstyle} />;
+    return (
+      <Col xs={12} sm={9}>
+        <Skeleton lines={1} className={styles.skeletonstyle} />
+      </Col>
+    );
   }
 
   if (

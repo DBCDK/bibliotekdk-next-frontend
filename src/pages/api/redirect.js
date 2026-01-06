@@ -12,6 +12,15 @@ import { publizonSampleRedirect } from "@/lib/api/manifestation.fragments";
 const PROFILE = "bibdk21";
 const AUTH_COOKIE_NAME = "next-auth.session-token";
 
+// Keep redirect_error values predictable (nice for UI + avoids odd URL values)
+const REDIRECT_REASONS = {
+  UNKNOWN: "unknown",
+  NOT_LOGGED_IN: "not_logged_in",
+  NO_URL: "no_url",
+};
+
+const ALLOWED_REASONS = new Set(Object.values(REDIRECT_REASONS));
+
 /**
  * Best-effort: determine our own origin (works behind proxies too)
  */
@@ -50,10 +59,26 @@ async function callProfileGraphql(req, profile, queryObj) {
   return { status: res.status, json: await res.json() };
 }
 
-function fallbackToPid(req, res, pid) {
+function safeReason(reason) {
+  return ALLOWED_REASONS.has(reason) ? reason : REDIRECT_REASONS.UNKNOWN;
+}
+
+function redirectWithError(req, res, path, reason) {
+  const u = new URL(path, getAppOrigin(req));
+  u.searchParams.set("redirect_error", safeReason(reason));
+  // Keep it relative
+  return res.redirect(302, `${u.pathname}${u.search}`);
+}
+
+function fallbackToPid(req, res, pid, reason = REDIRECT_REASONS.UNKNOWN) {
   // If we have a pid, go to /work/<pid> as requested; otherwise go home
   if (!pid) return res.redirect(302, "/");
-  return res.redirect(302, `/work/${encodeURIComponent(pid)}`);
+  return redirectWithError(
+    req,
+    res,
+    `/work/${encodeURIComponent(pid)}`,
+    reason
+  );
 }
 
 export default async function handler(req, res) {
@@ -66,17 +91,20 @@ export default async function handler(req, res) {
   // No intent -> go home (and clear just in case)
   if (!intent?.pid) {
     clearIntentCookie(res);
-    return res.redirect(302, "/");
+    return redirectWithError(req, res, "/", REDIRECT_REASONS.UNKNOWN);
   }
 
   const pid = intent.pid;
 
   // Optional: login-check (if not logged in, we still fallback to /work/<pid> per your rule)
-  const jwt = await decodeCookie(req.cookies?.[AUTH_COOKIE_NAME]);
+  const sessionCookie = req.cookies?.[AUTH_COOKIE_NAME];
+  const jwt = sessionCookie ? await decodeCookie(sessionCookie) : null;
+
   const isLoggedIn = !!jwt?.attributes?.userId || !!jwt?.attributes?.uniqueId;
 
   if (!isLoggedIn) {
-    return fallbackToPid(req, res, pid);
+    // You wanted a specific code for this
+    return fallbackToPid(req, res, pid, REDIRECT_REASONS.NOT_LOGGED_IN);
   }
 
   try {
@@ -87,7 +115,7 @@ export default async function handler(req, res) {
     // Any non-200 or GraphQL errors => fallback
     if (status !== 200 || json?.errors?.length) {
       clearIntentCookie(res);
-      return fallbackToPid(req, res, pid);
+      return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
     }
 
     const accessList = json?.data?.manifestation?.access || [];
@@ -99,15 +127,16 @@ export default async function handler(req, res) {
         ?.display || null;
 
     if (!agencyUrl) {
+      // Covers "no Publizon access" OR "Publizon without agencyUrl"
       clearIntentCookie(res);
-      return fallbackToPid(req, res, pid);
+      return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
     }
 
     const destination = addTypeParam(agencyUrl, type);
 
     if (!isSafeRedirectUrl(destination)) {
       clearIntentCookie(res);
-      return fallbackToPid(req, res, pid);
+      return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
     }
 
     // Success: clear intent and redirect to destination
@@ -116,6 +145,6 @@ export default async function handler(req, res) {
   } catch (e) {
     // Any unexpected failure => fallback to /work/<pid>
     clearIntentCookie(res);
-    return fallbackToPid(req, res, pid);
+    return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
   }
 }

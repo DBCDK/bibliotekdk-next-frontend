@@ -21,7 +21,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import Page from "@/components/work/page";
 import Header from "@/components/work/page/Header";
 import { signIn } from "@dbcdk/login-nextjs/client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToUrl,
@@ -38,22 +38,27 @@ export default function WorkPage() {
   const { workId, type } = router.query;
   const [query, setQuery] = useState({});
 
-  useMemo(() => {
-    if (query.type) {
-      router.replace(
-        { pathname: router.pathname, query: query },
-        {
-          pathname: router.asPath.split("#")[0].replace(/\?.*/, ""),
-          query: query,
-          ...(window.location.hash &&
-            !router.query.type && {
-              hash: window.location.hash,
-            }),
-        },
-        { shallow: true, scroll: false }
-      );
-    }
-  }, [query]);
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (!query?.type) return;
+
+    // dynamic params (must exist internally, but should not appear in the URL querystring)
+    const { title_author, workId, ...rest } = router.query;
+
+    // what we actually want in the visible querystring
+    const visibleQuery = { ...rest, ...query };
+
+    // internal query used to satisfy the dynamic route
+    const internalQuery = { title_author, workId, ...visibleQuery };
+
+    const asPathWithoutQuery = router.asPath.split("#")[0].replace(/\?.*/, "");
+
+    router.replace(
+      { pathname: router.pathname, query: internalQuery },
+      { pathname: asPathWithoutQuery, query: visibleQuery },
+      { shallow: true, scroll: false }
+    );
+  }, [router.isReady, query?.type]);
 
   /**
    * Updates the query params in the url

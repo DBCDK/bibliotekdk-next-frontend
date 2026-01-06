@@ -111,7 +111,7 @@ export function getCallbackUrl(pickupBranch, callbackUID, opts = {}) {
 
   let callback;
   if (redirectPath) {
-    // ✅ provider-friendly: absolute callback url
+    // absolute callback url
     callback = getAbsoluteInternalUrl(redirectPath);
   } else {
     // Default: current page, but remove modal param if any

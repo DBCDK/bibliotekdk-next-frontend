@@ -3,6 +3,7 @@ import Text from "@/components/base/text";
 import { Close } from "@/components/_modal/pages/base/top";
 import Expand from "../icons/expand";
 import styles from "./Overlay.module.css";
+import Translate from "@/components/base/translate";
 
 export default function Overlay({
   show,
@@ -16,7 +17,12 @@ export default function Overlay({
   className = "",
 }) {
   const title = data?.titles?.main[0] || "Prøveeksempel";
-  const type = isEpub ? "Prøvelæs" : "Prøvelyt";
+  const type = isEpub ? "read" : "listen";
+
+  const prefix = Translate({
+    context: "sample",
+    label: `overlay-test-${type}-title`,
+  });
 
   const maximized = isFullscreen ? styles.maximize : "";
   const typeClass = isEpub ? styles.epub : isMp3 ? styles.mp3 : "";
@@ -48,7 +54,7 @@ export default function Overlay({
         />
         <Offcanvas.Title className={styles.title}>
           <Text type="1" lines={1} clamp>
-            {`${type} ${title}`}
+            {`${prefix} ${title}`}
           </Text>
         </Offcanvas.Title>
         <Close className={styles.close} onClose={onHide} />

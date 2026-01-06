@@ -2,6 +2,7 @@
   margin-top: var(--pt2);
   position: relative;
   height: var(--pt2);
+  width: calc(100% - (2 * var(--pt7) + var(--pt4)));
 }
 
 .info {
