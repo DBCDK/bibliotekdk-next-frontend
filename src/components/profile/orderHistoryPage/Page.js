@@ -293,7 +293,7 @@ function TableItem({ order, key }) {
 function WorkInfo({ title, creator, workId, isDigitalOrder }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
-  const workTitle = title || "Titel ikke fundet";
+  const workTitle = title || "titel ikke fundet";
 
   return (
     <>
