@@ -213,7 +213,7 @@ function TableItem({ order, key }) {
   const { orderId, creationDate, work } = order;
   const isDigitalOrder = !orderId; //digital acrticle service orders do not have orderId
 
-  const title = work?.titles?.main[0];
+  const title = work?.titles?.main?.[0];
   const creator = work?.creators[0]?.display;
   const { day, monthName, isToday, hours, minutes } = parseDate(creationDate);
   const time = `Kl. ${hours}.${minutes}`;
@@ -293,6 +293,8 @@ function TableItem({ order, key }) {
 function WorkInfo({ title, creator, workId, isDigitalOrder }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+  const workTitle =
+    title || Translate({ context: "profile", label: "titleNotFound" });
 
   return (
     <>
@@ -313,19 +315,25 @@ function WorkInfo({ title, creator, workId, isDigitalOrder }) {
             ? "youHaveOrderedDigitalOrder"
             : "youHaveOrdered",
         }) + " "}
-        <Link
-          href={getWorkUrlForProfile({ workId })}
-          border={{
-            top: false,
-            bottom: {
-              keepVisible: true,
-            },
-          }}
-        >
+        {workId ? (
+          <Link
+            href={getWorkUrlForProfile({ workId })}
+            border={{
+              top: false,
+              bottom: {
+                keepVisible: true,
+              },
+            }}
+          >
+            <Text type="text1" tag="span">
+              {workTitle}
+            </Text>
+          </Link>
+        ) : (
           <Text type="text1" tag="span">
-            {title}
+            {workTitle}
           </Text>
-        </Link>
+        )}
         {creator &&
           !isDigitalOrder &&
           ` ${Translate({ context: "general", label: "by" })} ${creator}`}
