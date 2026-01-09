@@ -21,7 +21,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import Page from "@/components/work/page";
 import Header from "@/components/work/page/Header";
 import { signIn } from "@dbcdk/login-nextjs/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToUrl,
@@ -37,18 +37,12 @@ export default function WorkPage() {
   const router = useRouter();
   const { workId, type } = router.query;
   const [query, setQuery] = useState({});
+  const cleanedRef = useRef(false);
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    if (!query?.type) return;
+  function syncUrl(extraVisibleQuery = {}) {
+    const { title_author, workId, setPickupAgency, ...rest } = router.query;
 
-    // dynamic params (must exist internally, but should not appear in the URL querystring)
-    const { title_author, workId, ...rest } = router.query;
-
-    // what we actually want in the visible querystring
-    const visibleQuery = { ...rest, ...query };
-
-    // internal query used to satisfy the dynamic route
+    const visibleQuery = { ...rest, ...extraVisibleQuery };
     const internalQuery = { title_author, workId, ...visibleQuery };
 
     const asPathWithoutQuery = router.asPath.split("#")[0].replace(/\?.*/, "");
@@ -58,28 +52,38 @@ export default function WorkPage() {
       { pathname: asPathWithoutQuery, query: visibleQuery },
       { shallow: true, scroll: false }
     );
+  }
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (cleanedRef.current) return;
+
+    if ("setPickupAgency" in router.query) {
+      cleanedRef.current = true;
+      syncUrl();
+    } else {
+      cleanedRef.current = true;
+    }
+  }, [router.isReady, router.asPath]);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (!query?.type) return;
+
+    syncUrl(query);
   }, [router.isReady, query?.type]);
 
-  /**
-   * Updates the query params in the url
-   * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
-   *
-   * @param {Object} queryInput
-   */
   function handleOnTypeChange(queryInput) {
     let newQuery = {
       ...queryInput,
       type: formatMaterialTypesToUrl(queryInput?.type),
     };
-    // Keep tid when changing URL
-    if (router?.query?.tid) {
-      newQuery.tid = router?.query?.tid;
-    }
+    if (router?.query?.tid) newQuery.tid = router?.query?.tid;
     setQuery(newQuery);
   }
 
   return (
-    <React.Fragment>
+    <>
       <Header workId={workId} />
       <Page
         workId={workId}
@@ -87,7 +91,7 @@ export default function WorkPage() {
         login={signIn}
         type={formatMaterialTypesFromUrl(type)}
       />
-    </React.Fragment>
+    </>
   );
 }
 
