@@ -40,7 +40,9 @@ export default function WorkPage() {
   const cleanedRef = useRef(false);
 
   function syncUrl(extraVisibleQuery = {}) {
-    const { title_author, workId, setPickupAgency, ...rest } = router.query;
+    const { title_author, workId, ...rest } = router.query;
+
+    delete rest.setPickupAgency;
 
     const visibleQuery = { ...rest, ...extraVisibleQuery };
     const internalQuery = { title_author, workId, ...visibleQuery };
