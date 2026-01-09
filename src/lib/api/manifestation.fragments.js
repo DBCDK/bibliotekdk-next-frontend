@@ -36,6 +36,33 @@ export function ris(pids) {
   };
 }
 
+export function publizonSampleRedirect({ pid = "" }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query PublizonSamples($pid: String!) {
+              manifestation(pid: $pid) {
+                pid
+                materialTypes {
+                  materialTypeSpecific {
+                    display
+                  }
+                }
+                ownerWork {
+                  workId
+                }
+                access {
+                  __typename
+                  ... on Publizon {
+                    agencyUrl
+                  }
+                }
+              }
+            }`,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
 export function publizonSamples({ pids = [] }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -330,6 +357,9 @@ const accessFragment = `fragment accessFragment on Manifestation {
     ... on InterLibraryLoan {
       loanIsPossible
       accessNew
+    }
+    ... on Publizon {
+      agencyUrl
     }
   }
 }`;

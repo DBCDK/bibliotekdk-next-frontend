@@ -1,6 +1,7 @@
 import { useData } from "@/lib/api/api";
 import { useSession } from "next-auth/react";
 import { authentication as authenticationFragment } from "@/lib/api/authentication.fragments";
+import { _isFFUAgency } from "@/utils/agency";
 
 /**
  * Custom React hook for getting authentication state.
@@ -33,15 +34,29 @@ export default function useAuthentication() {
     !isAuthenticated &&
     Object.keys(data?.session?.userParameters || {}).length > 0;
 
+  const isFolkUser =
+    // not undefined - for some reason
+    loggedInAgencyId &&
+    // mitid user with no libraries
+    loggedInAgencyId !== "190101" &&
+    // not an FFU user
+    !_isFFUAgency(loggedInAgencyId);
+
+  // User has another account, which exist in CULR
+  const hasOmittedCulrData =
+    !!data?.user?.omittedCulrData?.hasOmittedCulrUniqueId;
+
   const identityProviderUsed = data?.user?.identityProviderUsed;
 
   return {
     isAuthenticated,
     hasCulrUniqueId,
     isGuestUser,
+    isFolkUser,
     isCPRValidated,
     loggedInAgencyId,
     loggedInBranchId,
+    hasOmittedCulrData,
     identityProviderUsed,
     isLoading: isSessionLoading || isLoading,
   };

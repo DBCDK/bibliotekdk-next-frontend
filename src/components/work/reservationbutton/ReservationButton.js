@@ -93,6 +93,7 @@ function ReservationButtonWrapper({
 
   const {
     isAuthenticated,
+    isFolkUser,
     isGuestUser,
     isLoading: isLoadingAuthentication,
   } = useAuthentication();
@@ -127,6 +128,7 @@ function ReservationButtonWrapper({
       {...{
         access,
         materialTypesMap,
+        isFolkUser,
         isAuthenticated,
         isGuestUser,
         buttonType,
@@ -169,6 +171,7 @@ export const ReservationButton = ({
   access,
   materialTypesMap,
   isAuthenticated,
+  isFolkUser,
   buttonType,
   size,
   pids,
@@ -233,7 +236,8 @@ export const ReservationButton = ({
   const accessibleOnlineWithLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
-    onClick: () => handleGoToLogin(modal, access, isAuthenticated, type),
+    onClick: () =>
+      handleGoToLogin(modal, access, isAuthenticated, isFolkUser, type),
   };
 
   const loginRequiredProps = {

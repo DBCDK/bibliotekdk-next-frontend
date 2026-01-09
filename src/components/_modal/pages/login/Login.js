@@ -56,6 +56,7 @@ export function Login({
   context,
 }) {
   const allBranches = data?.result;
+
   const {
     title,
     mode = LOGIN_MODE.PLAIN_LOGIN,
@@ -64,8 +65,10 @@ export function Login({
     selectedAccesses = [],
     workId = null,
     singleManifestation = null,
+    redirectPath,
     callbackUID = null,
   } = context || {};
+
   const windowWidth = useWindowSize().width;
   const isMobile = windowWidth <= 414;
 
@@ -90,6 +93,7 @@ export function Login({
         name: branch.name,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
         callbackUID: callbackUID,
+        redirectPath,
       });
       return;
     }
@@ -134,7 +138,7 @@ export function Login({
         onLibrarySelect={onSelect}
         context={context}
       />
-      {isMobile && <LastLoginLibrary />}
+      {isMobile && <LastLoginLibrary context={context} />}
       {/* shown up to 414px /> */}
       <MobileLoginButton
         title={title}
@@ -154,7 +158,9 @@ export function Login({
           includeArrows={includeArrows}
         />
       )}
-      {showMitIDLogin && <MitIDButton callBackUUID={callbackUID} />}
+      {showMitIDLogin && (
+        <MitIDButton callBackUUID={callbackUID} redirectPath={redirectPath} />
+      )}
     </div>
   );
 }

@@ -2,12 +2,17 @@
   padding-top: var(--pt1);
 }
 
+.text {
+  width: calc(100% - (2 * var(--pt7) + var(--pt4)));
+}
+
 .info p:first-letter {
   text-transform: uppercase;
 }
 
 .skeletonstyle {
   margin-top: var(--pt2);
+  width: calc(100% - (2 * var(--pt7) + var(--pt4)));
   position: relative;
   height: var(--pt2);
 }

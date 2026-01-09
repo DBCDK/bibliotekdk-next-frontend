@@ -34,11 +34,23 @@ const templateProps = {
 
     const url = props.agencyUrl + urlSuffix;
 
-    const onClick = () => props?.onLoginPrompt();
+    const pid = props?.pids?.[0];
+    const redirectPath = "/api/redirect";
 
-    const linkProps = !isLoggedIn
-      ? { onClick }
-      : { href: url, target: "_blank", disabled: !hasValidUrl };
+    const onClick = (e) => {
+      e?.preventDefault?.();
+
+      if (isLoggedIn && !hasValidUrl) {
+        props?.onErrorPrompt?.();
+        return;
+      }
+
+      props?.onLoginPrompt?.(redirectPath);
+      props?.onSetIntent?.(pid);
+    };
+
+    const linkProps =
+      isLoggedIn && hasValidUrl ? { href: url, target: "_blank" } : { onClick };
 
     return {
       linkProps,

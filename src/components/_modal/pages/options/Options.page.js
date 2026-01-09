@@ -10,6 +10,8 @@ import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import { openLoginModal } from "../login/utils";
+import Translate from "@/components/base/translate";
+import { setLoginIntent } from "@/components/work/reservationbutton/utils";
 
 /**
  * Component helper for link and description in options
@@ -50,6 +52,8 @@ function optionsListAllArgs({
   manifestations,
   startOrderFlow,
   loginPrompt,
+  statusPrompt,
+  setIntent,
   isAuthenticated,
 }) {
   //add order modal to store, to be able to access when coming back from adgangsplatform/mitid?
@@ -69,7 +73,9 @@ function optionsListAllArgs({
     onOrder: () => {
       startOrderFlow({ orders: [{ pids: selectedPids }] });
     },
-    onLoginPrompt: () => loginPrompt(),
+    onSetIntent: (pid) => setIntent(pid),
+    onLoginPrompt: (redirectPath) => loginPrompt(redirectPath),
+    onErrorPrompt: () => statusPrompt(),
   };
 
   return (
@@ -87,7 +93,7 @@ export function Options({ context }) {
 
   const modal = useModal();
 
-  const { isAuthenticated } = useAuthentication();
+  const { isAuthenticated, isFolkUser } = useAuthentication();
 
   const { access } = useManifestationAccess({
     pids: selectedPids,
@@ -100,6 +106,14 @@ export function Options({ context }) {
 
   const manifestations = manifestationResponse?.data?.manifestations;
 
+  const titleLabel = isFolkUser
+    ? "hasfolk-missing-url-title"
+    : "nofolk-missing-url-title";
+
+  const textLabel = isFolkUser
+    ? "hasfolk-missing-url-text"
+    : "nofolk-missing-url-text";
+
   const optionsList = (access, index) =>
     optionsListAllArgs({
       access,
@@ -107,7 +121,23 @@ export function Options({ context }) {
       selectedPids,
       manifestations,
       isAuthenticated,
-      loginPrompt: () => openLoginModal({ modal }),
+      loginPrompt: (redirectPath = null) =>
+        openLoginModal({ modal, redirectPath }),
+      setIntent: async (pid) =>
+        setLoginIntent({ pid, provider: "Options_Publizon" }),
+      statusPrompt: () =>
+        modal.push("statusMessage", {
+          title: Translate({
+            context: "publizon",
+            label: titleLabel,
+            renderAsHtml: true,
+          }),
+          text: Translate({
+            context: "publizon",
+            label: textLabel,
+            renderAsHtml: true,
+          }),
+        }),
       startOrderFlow: start,
     });
 

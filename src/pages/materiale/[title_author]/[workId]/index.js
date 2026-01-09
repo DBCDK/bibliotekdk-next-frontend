@@ -21,7 +21,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import Page from "@/components/work/page";
 import Header from "@/components/work/page/Header";
 import { signIn } from "@dbcdk/login-nextjs/client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToUrl,
@@ -37,44 +37,55 @@ export default function WorkPage() {
   const router = useRouter();
   const { workId, type } = router.query;
   const [query, setQuery] = useState({});
+  const cleanedRef = useRef(false);
 
-  useMemo(() => {
-    if (query.type) {
-      router.replace(
-        { pathname: router.pathname, query: query },
-        {
-          pathname: router.asPath.split("#")[0].replace(/\?.*/, ""),
-          query: query,
-          ...(window.location.hash &&
-            !router.query.type && {
-              hash: window.location.hash,
-            }),
-        },
-        { shallow: true, scroll: false }
-      );
+  function syncUrl(extraVisibleQuery = {}) {
+    const { title_author, workId, ...rest } = router.query;
+
+    delete rest.setPickupAgency;
+
+    const visibleQuery = { ...rest, ...extraVisibleQuery };
+    const internalQuery = { title_author, workId, ...visibleQuery };
+
+    const asPathWithoutQuery = router.asPath.split("#")[0].replace(/\?.*/, "");
+
+    router.replace(
+      { pathname: router.pathname, query: internalQuery },
+      { pathname: asPathWithoutQuery, query: visibleQuery },
+      { shallow: true, scroll: false }
+    );
+  }
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (cleanedRef.current) return;
+
+    if ("setPickupAgency" in router.query) {
+      cleanedRef.current = true;
+      syncUrl();
+    } else {
+      cleanedRef.current = true;
     }
-  }, [query]);
+  }, [router.isReady, router.asPath]);
 
-  /**
-   * Updates the query params in the url
-   * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
-   *
-   * @param {Object} queryInput
-   */
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (!query?.type) return;
+
+    syncUrl(query);
+  }, [router.isReady, query?.type]);
+
   function handleOnTypeChange(queryInput) {
     let newQuery = {
       ...queryInput,
       type: formatMaterialTypesToUrl(queryInput?.type),
     };
-    // Keep tid when changing URL
-    if (router?.query?.tid) {
-      newQuery.tid = router?.query?.tid;
-    }
+    if (router?.query?.tid) newQuery.tid = router?.query?.tid;
     setQuery(newQuery);
   }
 
   return (
-    <React.Fragment>
+    <>
       <Header workId={workId} />
       <Page
         workId={workId}
@@ -82,7 +93,7 @@ export default function WorkPage() {
         login={signIn}
         type={formatMaterialTypesFromUrl(type)}
       />
-    </React.Fragment>
+    </>
   );
 }
 

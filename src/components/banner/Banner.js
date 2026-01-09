@@ -9,8 +9,6 @@ import { IconLink } from "../base/iconlink/IconLink";
 import Bubble from "@/public/icons/bubble.svg";
 import styles from "./Banner.module.css";
 
-import styles from "./Banner.module.css";
-
 export default function Banner() {
   return (
     <div className={styles.bannerWrap}>

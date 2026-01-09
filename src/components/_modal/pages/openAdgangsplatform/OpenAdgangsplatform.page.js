@@ -15,11 +15,13 @@ import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
  * @returns
  */
 export function OpenAdgangsplatform({ context, isLoading = false }) {
-  const { agencyName, name, title, text, branchId, callbackUID } = context;
+  const { agencyName, name, title, text, branchId, callbackUID, redirectPath } =
+    context;
   const { setLastLoginBranch } = useLastLoginBranch();
 
   const onLogin = () => {
-    const callbackUrl = getCallbackUrl(branchId, callbackUID);
+    const callbackUrl = getCallbackUrl(branchId, callbackUID, { redirectPath });
+
     if (branchId && name) {
       setLastLoginBranch({ branchId, name });
     }

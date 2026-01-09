@@ -54,6 +54,7 @@ import useIsOnline from "@/components/hooks/useIsOnline";
 import { UseManyProvider } from "@/components/hooks/useMany";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { buildCookieHeader } from "@/lib/cookies";
+import RedirectErrorListener from "@/components/sample/RedirectErrorListener";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -267,6 +268,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Listener.FFU />
               <Listener.Create />
               <Listener.HasProfile />
+              <RedirectErrorListener />
               <UseManyProvider />
             </Modal.Provider>
 
