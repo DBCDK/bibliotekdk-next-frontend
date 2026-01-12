@@ -37,7 +37,7 @@ const templateProps = {
     const pid = props?.pids?.[0];
     const redirectPath = "/api/redirect";
 
-    const onClick = (e) => {
+    const onClick = async (e) => {
       e?.preventDefault?.();
 
       if (isLoggedIn && !hasValidUrl) {
@@ -45,8 +45,9 @@ const templateProps = {
         return;
       }
 
+      await props?.onSetIntent?.(pid);
+
       props?.onLoginPrompt?.(redirectPath);
-      props?.onSetIntent?.(pid);
     };
 
     const linkProps =

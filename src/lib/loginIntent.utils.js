@@ -4,6 +4,19 @@ import { encodeCookie, decodeCookie } from "@/utils/jwt";
 export const LOGIN_INTENT_COOKIE = "login.intent";
 const MAX_AGE_SEC = 10 * 60;
 
+function isHttps(req) {
+  // Works behind proxies (supports comma-separated header values)
+  const xfProto = String(req.headers["x-forwarded-proto"] || "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase();
+
+  if (xfProto) return xfProto === "https";
+
+  // Fallback for direct node https
+  return !!req.socket?.encrypted;
+}
+
 export async function encodeIntent(intent) {
   const nowSec = Math.floor(Date.now() / 1000);
   return await encodeCookie({
@@ -25,21 +38,22 @@ export async function decodeIntent(token) {
   return payload;
 }
 
-export function setIntentCookie(res, jwt) {
+export function setIntentCookie(req, res, jwt) {
   const parts = [
-    `${LOGIN_INTENT_COOKIE}=${jwt}`,
+    `${LOGIN_INTENT_COOKIE}=${encodeURIComponent(jwt)}`,
     "Path=/",
     "HttpOnly",
     "SameSite=Lax",
     `Max-Age=${MAX_AGE_SEC}`,
   ];
 
-  if (process.env.NODE_ENV === "production") parts.push("Secure");
+  // ✅ Secure depends on the *actual* connection
+  if (isHttps(req)) parts.push("Secure");
 
   appendSetCookie(res, parts.join("; "));
 }
 
-export function clearIntentCookie(res) {
+export function clearIntentCookie(req, res) {
   const parts = [
     `${LOGIN_INTENT_COOKIE}=`,
     "Path=/",
@@ -48,7 +62,8 @@ export function clearIntentCookie(res) {
     "Max-Age=0",
   ];
 
-  if (process.env.NODE_ENV === "production") parts.push("Secure");
+  // ✅ Must match the attributes used when setting, to reliably clear
+  if (isHttps(req)) parts.push("Secure");
 
   appendSetCookie(res, parts.join("; "));
 }

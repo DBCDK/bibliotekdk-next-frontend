@@ -60,6 +60,8 @@ export async function setLoginIntent({ pid, provider }) {
         pid,
         provider,
       }),
+      credentials: "include",
+      keepalive: true,
     });
   } catch {
     // Ignorér fejl: worst case virker redirect ikke efter login,

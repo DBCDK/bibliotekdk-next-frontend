@@ -124,7 +124,7 @@ export function Options({ context }) {
       loginPrompt: (redirectPath = null) =>
         openLoginModal({ modal, redirectPath }),
       setIntent: async (pid) =>
-        setLoginIntent({ pid, provider: "Options_Publizon" }),
+        await setLoginIntent({ pid, provider: "Options_Publizon" }),
       statusPrompt: () =>
         modal.push("statusMessage", {
           title: Translate({

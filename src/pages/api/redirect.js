@@ -90,7 +90,7 @@ export default async function handler(req, res) {
 
   // No intent -> go home (and clear just in case)
   if (!intent?.pid) {
-    clearIntentCookie(res);
+    clearIntentCookie(req, res);
     return redirectWithError(req, res, "/", REDIRECT_REASONS.UNKNOWN);
   }
 
@@ -114,7 +114,7 @@ export default async function handler(req, res) {
 
     // Any non-200 or GraphQL errors => fallback
     if (status !== 200 || json?.errors?.length) {
-      clearIntentCookie(res);
+      clearIntentCookie(req, res);
       return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
     }
 
@@ -128,23 +128,23 @@ export default async function handler(req, res) {
 
     if (!agencyUrl) {
       // Covers "no Publizon access" OR "Publizon without agencyUrl"
-      clearIntentCookie(res);
+      clearIntentCookie(req, res);
       return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
     }
 
     const destination = addTypeParam(agencyUrl, type);
 
     if (!isSafeRedirectUrl(destination)) {
-      clearIntentCookie(res);
+      clearIntentCookie(req, res);
       return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
     }
 
     // Success: clear intent and redirect to destination
-    clearIntentCookie(res);
+    clearIntentCookie(req, res);
     return res.redirect(302, destination);
   } catch (e) {
     // Any unexpected failure => fallback to /work/<pid>
-    clearIntentCookie(res);
+    clearIntentCookie(req, res);
     return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
   }
 }
