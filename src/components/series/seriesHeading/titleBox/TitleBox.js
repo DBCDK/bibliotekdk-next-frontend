@@ -13,7 +13,7 @@ import { getUniverseUrl } from "@/lib/utils";
 export function LinkToCreator({ creator, isLoading }) {
   // @TODO .. do we need some refactoring ?? - this inputfield is
   // used manywhere :)
-  const href = !creator ? `/ophav/${encodeURIComponent(creator)}` : "#";
+  const href = creator ? `/ophav/${encodeURIComponent(creator)}` : "#";
 
   return (
     <Link
