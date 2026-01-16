@@ -1,4 +1,4 @@
-/* components/sample/epub/Progress.module.css */
+/* components/sample/epub/progress/Progress.module.css */
 
 .progress {
   width: 90%;
@@ -48,7 +48,7 @@
   color: var(--blue);
 }
 
-/* ===== Progressbar ===== */
+/* ===== Progressbar (segmented) ===== */
 .progressTrack {
   position: relative;
   width: 100%;
@@ -58,6 +58,24 @@
   background: var(--concrete);
   overflow: hidden;
   border-radius: 999px;
+}
+
+.progressSegments {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 2px;
+  padding: 0 2px;
+  align-items: center;
+}
+
+.progressSegment {
+  position: relative;
+  flex: 1 1 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
 }
 
 .progressFill {
@@ -79,10 +97,6 @@
     padding: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-  }
-
-  .labels > *:first-child {
-    margin: 8px 0;
   }
 
   .labels::-webkit-scrollbar {

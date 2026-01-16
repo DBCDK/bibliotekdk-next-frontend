@@ -33,16 +33,24 @@ const headers = [
       "default-src 'self'; " +
       "media-src 'self' https://samples.pubhub.dk https://samples.qa.pubhub.dk https://*.wedobooks.io data: blob: http://localhost:*; " +
       "script-src 'self' *.dbc.dk https://consent.cookiebot.eu https://consentcdn.cookiebot.eu 'unsafe-eval' 'unsafe-inline' http://localhost:*; " +
-      "style-src 'self' 'unsafe-inline'; " +
+      // ✅ allow blob CSS
+      "style-src 'self' 'unsafe-inline' blob:; " +
+      // ✅ ensure link-based stylesheets are allowed too
+      "style-src-elem 'self' 'unsafe-inline' blob:; " +
       "img-src 'self' blob: https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:* https://upload.wikimedia.org; " +
       "connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk https://samples.pubhub.dk https://samples.qa.pubhub.dk https://*.wedobooks.io http://localhost:* ws://localhost:*; " +
-      "frame-src 'self' *.dbc.dk https://consentcdn.cookiebot.eu; " +
-      "font-src 'self' data:; " +
+      // ✅ allow blob frames (some epubjs setups / srcdoc variations)
+      "frame-src 'self' *.dbc.dk https://consentcdn.cookiebot.eu blob:; " +
+      // ✅ fonts sometimes come from blob URLs
+      "font-src 'self' data: blob:; " +
       "worker-src 'self' blob:; ",
   },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
-  { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=31536000; includeSubDomains",
+  },
   { key: "Referrer-Policy", value: "origin-when-cross-origin" },
 ];
 

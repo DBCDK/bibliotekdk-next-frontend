@@ -29,8 +29,9 @@ function OrderButtonTextBelow({
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
     Boolean(isPeriodica),
-    hasDigitalCopy || Boolean(access?.[0]?.__typename === AccessEnum.PUBLIZON),
+    hasDigitalCopy,
     hasPhysicalCopy,
+    Boolean(access?.[0]?.__typename === AccessEnum.PUBLIZON),
   ];
 
   const translationForButtonText = [
@@ -47,6 +48,7 @@ function OrderButtonTextBelow({
       }),
     () => Translate({ ...context, label: "addToCart-line2" }),
     () => Translate({ ...context, label: "addToCart-line1" }),
+    () => Translate({ ...context, label: "addToCart-line3" }),
   ];
 
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);

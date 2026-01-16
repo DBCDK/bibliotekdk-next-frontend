@@ -1,0 +1,519 @@
+{
+  "version": 2,
+  "generatedAt": "2026-01-16T16:26:06.779Z",
+  "fileName": "9788740028621.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Selfies",
+    "creator": "Jussi Adler-Olsen",
+    "language": "da-DK"
+  },
+  "counts": {
+    "spineLen": 9,
+    "tocLen": 59,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "Selfies.xhtml",
+      "idref": "Selfies",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "Selfies-1.xhtml",
+      "idref": "Selfies-1",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "Selfies-2.xhtml",
+      "idref": "Selfies-2",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "Selfies-3.xhtml",
+      "idref": "Selfies-3",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "Selfies-4.xhtml",
+      "idref": "Selfies-4",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "Selfies-5.xhtml",
+      "idref": "Selfies-5",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "Selfies-6.xhtml",
+      "idref": "Selfies-6",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 8,
+      "href": "Selfies-7.xhtml",
+      "idref": "Selfies-7",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "Selfies-1.xhtml#_idParaDest-1",
+      "hrefNoFrag": "Selfies-1.xhtml",
+      "label": "Af Jussi Adler-Olsen",
+      "spineIndex": 2,
+      "spineHit": "Selfies-1.xhtml"
+    },
+    {
+      "href": "Selfies-4.xhtml#_idParaDest-2",
+      "hrefNoFrag": "Selfies-4.xhtml",
+      "label": "PROLOG",
+      "spineIndex": 5,
+      "spineHit": "Selfies-4.xhtml"
+    },
+    {
+      "href": "Selfies-5.xhtml#_idParaDest-3",
+      "hrefNoFrag": "Selfies-5.xhtml",
+      "label": "1 ",
+      "spineIndex": 6,
+      "spineHit": "Selfies-5.xhtml"
+    },
+    {
+      "href": "Selfies-6.xhtml#_idParaDest-4",
+      "hrefNoFrag": "Selfies-6.xhtml",
+      "label": "2",
+      "spineIndex": 7,
+      "spineHit": "Selfies-6.xhtml"
+    },
+    {
+      "href": "Selfies-7.xhtml#_idParaDest-5",
+      "hrefNoFrag": "Selfies-7.xhtml",
+      "label": "3 ",
+      "spineIndex": 8,
+      "spineHit": "Selfies-7.xhtml"
+    },
+    {
+      "href": "Selfies-8.xhtml#_idParaDest-6",
+      "hrefNoFrag": "Selfies-8.xhtml",
+      "label": "4",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-9.xhtml#_idParaDest-7",
+      "hrefNoFrag": "Selfies-9.xhtml",
+      "label": "5",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-10.xhtml#_idParaDest-8",
+      "hrefNoFrag": "Selfies-10.xhtml",
+      "label": "6",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-11.xhtml#_idParaDest-9",
+      "hrefNoFrag": "Selfies-11.xhtml",
+      "label": "7 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-12.xhtml#_idParaDest-10",
+      "hrefNoFrag": "Selfies-12.xhtml",
+      "label": "8",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-13.xhtml#_idParaDest-11",
+      "hrefNoFrag": "Selfies-13.xhtml",
+      "label": "9",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-14.xhtml#_idParaDest-12",
+      "hrefNoFrag": "Selfies-14.xhtml",
+      "label": "10",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-15.xhtml#_idParaDest-13",
+      "hrefNoFrag": "Selfies-15.xhtml",
+      "label": "11",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-16.xhtml#_idParaDest-14",
+      "hrefNoFrag": "Selfies-16.xhtml",
+      "label": "12 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-17.xhtml#_idParaDest-15",
+      "hrefNoFrag": "Selfies-17.xhtml",
+      "label": "13",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-18.xhtml#_idParaDest-16",
+      "hrefNoFrag": "Selfies-18.xhtml",
+      "label": "14",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-19.xhtml#_idParaDest-17",
+      "hrefNoFrag": "Selfies-19.xhtml",
+      "label": "15 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-20.xhtml#_idParaDest-18",
+      "hrefNoFrag": "Selfies-20.xhtml",
+      "label": "16",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-21.xhtml#_idParaDest-19",
+      "hrefNoFrag": "Selfies-21.xhtml",
+      "label": "17 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-22.xhtml#_idParaDest-20",
+      "hrefNoFrag": "Selfies-22.xhtml",
+      "label": "18",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-23.xhtml#_idParaDest-21",
+      "hrefNoFrag": "Selfies-23.xhtml",
+      "label": "19",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-24.xhtml#_idParaDest-22",
+      "hrefNoFrag": "Selfies-24.xhtml",
+      "label": "20",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-25.xhtml#_idParaDest-23",
+      "hrefNoFrag": "Selfies-25.xhtml",
+      "label": "21",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-26.xhtml#_idParaDest-24",
+      "hrefNoFrag": "Selfies-26.xhtml",
+      "label": "22",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-27.xhtml#_idParaDest-25",
+      "hrefNoFrag": "Selfies-27.xhtml",
+      "label": "23",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-28.xhtml#_idParaDest-26",
+      "hrefNoFrag": "Selfies-28.xhtml",
+      "label": "24 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-29.xhtml#_idParaDest-27",
+      "hrefNoFrag": "Selfies-29.xhtml",
+      "label": "25",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-30.xhtml#_idParaDest-28",
+      "hrefNoFrag": "Selfies-30.xhtml",
+      "label": "26",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-31.xhtml#_idParaDest-29",
+      "hrefNoFrag": "Selfies-31.xhtml",
+      "label": "27 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-32.xhtml#_idParaDest-30",
+      "hrefNoFrag": "Selfies-32.xhtml",
+      "label": "28",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-33.xhtml#_idParaDest-31",
+      "hrefNoFrag": "Selfies-33.xhtml",
+      "label": "29",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-34.xhtml#_idParaDest-32",
+      "hrefNoFrag": "Selfies-34.xhtml",
+      "label": "30",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-35.xhtml#_idParaDest-33",
+      "hrefNoFrag": "Selfies-35.xhtml",
+      "label": "31 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-36.xhtml#_idParaDest-34",
+      "hrefNoFrag": "Selfies-36.xhtml",
+      "label": "32",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-37.xhtml#_idParaDest-35",
+      "hrefNoFrag": "Selfies-37.xhtml",
+      "label": "33",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-38.xhtml#_idParaDest-36",
+      "hrefNoFrag": "Selfies-38.xhtml",
+      "label": "34 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-39.xhtml#_idParaDest-37",
+      "hrefNoFrag": "Selfies-39.xhtml",
+      "label": "35",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-40.xhtml#_idParaDest-38",
+      "hrefNoFrag": "Selfies-40.xhtml",
+      "label": "36",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-41.xhtml#_idParaDest-39",
+      "hrefNoFrag": "Selfies-41.xhtml",
+      "label": "37",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-42.xhtml#_idParaDest-40",
+      "hrefNoFrag": "Selfies-42.xhtml",
+      "label": "38",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-43.xhtml#_idParaDest-41",
+      "hrefNoFrag": "Selfies-43.xhtml",
+      "label": "39",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-44.xhtml#_idParaDest-42",
+      "hrefNoFrag": "Selfies-44.xhtml",
+      "label": "40",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-45.xhtml#_idParaDest-43",
+      "hrefNoFrag": "Selfies-45.xhtml",
+      "label": "41",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-46.xhtml#_idParaDest-44",
+      "hrefNoFrag": "Selfies-46.xhtml",
+      "label": "42",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-47.xhtml#_idParaDest-45",
+      "hrefNoFrag": "Selfies-47.xhtml",
+      "label": "43",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-48.xhtml#_idParaDest-46",
+      "hrefNoFrag": "Selfies-48.xhtml",
+      "label": "44",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-49.xhtml#_idParaDest-47",
+      "hrefNoFrag": "Selfies-49.xhtml",
+      "label": "45",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-50.xhtml#_idParaDest-48",
+      "hrefNoFrag": "Selfies-50.xhtml",
+      "label": "46",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-51.xhtml#_idParaDest-49",
+      "hrefNoFrag": "Selfies-51.xhtml",
+      "label": "47",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-52.xhtml#_idParaDest-50",
+      "hrefNoFrag": "Selfies-52.xhtml",
+      "label": "48",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-53.xhtml#_idParaDest-51",
+      "hrefNoFrag": "Selfies-53.xhtml",
+      "label": "49",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-54.xhtml#_idParaDest-52",
+      "hrefNoFrag": "Selfies-54.xhtml",
+      "label": "50",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-55.xhtml#_idParaDest-53",
+      "hrefNoFrag": "Selfies-55.xhtml",
+      "label": "51",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-56.xhtml#_idParaDest-54",
+      "hrefNoFrag": "Selfies-56.xhtml",
+      "label": "52",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-57.xhtml#_idParaDest-55",
+      "hrefNoFrag": "Selfies-57.xhtml",
+      "label": "53",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-58.xhtml#_idParaDest-56",
+      "hrefNoFrag": "Selfies-58.xhtml",
+      "label": "54 ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-59.xhtml#_idParaDest-57",
+      "hrefNoFrag": "Selfies-59.xhtml",
+      "label": "55",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-60.xhtml#_idParaDest-58",
+      "hrefNoFrag": "Selfies-60.xhtml",
+      "label": "Epilog",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Selfies-61.xhtml#_idParaDest-59",
+      "hrefNoFrag": "Selfies-61.xhtml",
+      "label": "Kolofon",
+      "spineIndex": null,
+      "spineHit": null
+    }
+  ],
+  "heuristics": {
+    "structure": {
+      "mode": "fallback",
+      "score": 55,
+      "reasons": [
+        "weak-or-index-like-labels",
+        "low-label-uniqueness",
+        "many-toc-hrefs-not-in-spine"
+      ],
+      "metrics": {
+        "spineLen": 0,
+        "tocLen": 59,
+        "mapped": 0,
+        "mappedUnique": 0,
+        "tocSpineRatio": 0,
+        "invalidHrefRatio": 1,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0.932,
+        "chapterRatio": 0,
+        "uniqRatio": 0.085
+      }
+    }
+  }
+}

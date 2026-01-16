@@ -1,20 +1,16 @@
-// src/components/sample/epub/epub/useEpubReader.js
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  stripHashQuery,
-  spineIndexOfDebug,
-  normalizeToSpineHref,
-  calcFileIntra,
-  prettyLabelFromHref,
-  buildFlatTocFromNav,
-  prependMissingSpineSections,
-  dedupeTocBySpineHref,
-  computeEpubStructureScore,
-  collapseToSingleSectionPreserveFrontmatter,
-} from "./epubLogic";
+const CANDIDATE_PREFIXES = [
+  "",
+  "OPS/",
+  "OEBPS/",
+  "EPUB/",
+  "Text/",
+  "XHTML/",
+  "xhtml/",
+];
 
 function clearViewerEl(el) {
   if (!el) return;
@@ -28,6 +24,94 @@ function isZipArrayBuffer(ab) {
   } catch {
     return false;
   }
+}
+
+function normalizeHrefForMatch(s = "") {
+  const raw = String(s);
+  const noFrag = raw.split("#")[0].split("?")[0];
+  let clean;
+  try {
+    clean = decodeURIComponent(noFrag);
+  } catch {
+    clean = noFrag;
+  }
+
+  const fileName = clean.split("/").pop();
+  const unique = new Set([clean, fileName]);
+
+  for (const p of CANDIDATE_PREFIXES) {
+    if (p && clean.startsWith(p)) unique.add(clean.slice(p.length));
+  }
+
+  const bases = Array.from(unique);
+  for (const b of bases) {
+    for (const pref of CANDIDATE_PREFIXES) unique.add(pref + b);
+  }
+
+  return Array.from(new Set(Array.from(unique).filter(Boolean)));
+}
+
+function spineIndexOfDebug(book, href) {
+  if (!book || !href) return { idx: null, hit: null };
+  for (const candidate of normalizeHrefForMatch(href)) {
+    try {
+      const item = book.spine?.get?.(candidate);
+      if (item && typeof item.index === "number")
+        return { idx: item.index, hit: candidate };
+    } catch {}
+  }
+  return { idx: null, hit: null };
+}
+
+function normalizeToSpineHref(book, href) {
+  const r = spineIndexOfDebug(book, href);
+  return typeof r.idx === "number" ? r.hit || href : null;
+}
+
+function stripHashQuery(s = "") {
+  return String(s).split("#")[0].split("?")[0];
+}
+
+function calcFileIntra(loc) {
+  const s = loc?.start?.displayed?.page ?? 0;
+  const e = loc?.end?.displayed?.page ?? s;
+  const total = loc?.start?.displayed?.total ?? 0;
+  if (!s || !total) return 0;
+
+  const visible = Math.max(1, e - s + 1);
+  const completed = Math.min(total, s + visible - 1);
+
+  let intra = completed / total;
+  if (loc?.atEnd || intra >= 0.995) intra = 1;
+  return Math.max(0, Math.min(1, intra));
+}
+
+function prettyLabelFromHref(href, fallback = "Indhold") {
+  const base = (href.split("/").pop() || fallback).replace(/\.(x?html?)$/i, "");
+  const b = base.toLowerCase();
+
+  if (
+    /^index(_split)?[_-]?\d+$/i.test(b) ||
+    /^index\d+$/i.test(b) ||
+    /^id\d+$/i.test(b) ||
+    b.length <= 3
+  ) {
+    return fallback;
+  }
+  return base.replace(/[_\-]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function guessCoverHref(book) {
+  const items = book?.spine?.spineItems || [];
+  const byProp = items.find((it) => /\bcover\b/i.test(it?.properties || ""));
+  if (byProp?.href) return byProp.href;
+
+  const byName = items.find(
+    (it) => /cover/i.test(it?.idref || "") || /cover/i.test(it?.href || "")
+  );
+  if (byName?.href) return byName.href;
+
+  return items[0]?.href || null;
 }
 
 function injectStyle(doc) {
@@ -74,6 +158,81 @@ function injectStyle(doc) {
   doc.head?.appendChild(style);
 }
 
+function buildFlatTocFromNav(book) {
+  const navToc = book?.navigation?.toc || [];
+  const out = [];
+  const walk = (n) => {
+    if (n?.href) out.push({ href: n.href, label: n.label || "" });
+    (n?.subitems || []).forEach(walk);
+  };
+  navToc.forEach(walk);
+  return out;
+}
+
+function prependMissingSpineSections(book, filteredToc) {
+  const spineItems = book?.spine?.spineItems || [];
+  if (!spineItems.length) return filteredToc;
+
+  const firstTocHref = filteredToc?.[0]?.href;
+  const firstTocIdx = firstTocHref
+    ? spineIndexOfDebug(book, firstTocHref).idx
+    : null;
+
+  const coverHref = guessCoverHref(book);
+  const coverIdx = coverHref ? spineIndexOfDebug(book, coverHref).idx : null;
+
+  if (!filteredToc?.length) {
+    return spineItems
+      .filter((it) => it?.href)
+      .map((it, i) => {
+        const href = it.href;
+        const idx = spineIndexOfDebug(book, href).idx ?? i;
+        const isCover =
+          typeof coverIdx === "number" ? idx === coverIdx : /cover/i.test(href);
+        return {
+          href,
+          label: isCover
+            ? "Forside"
+            : prettyLabelFromHref(href, `Indhold ${idx + 1}`),
+        };
+      });
+  }
+
+  if (typeof firstTocIdx !== "number") return filteredToc;
+
+  const existing = new Set(filteredToc.map((x) => stripHashQuery(x.href)));
+  const prepend = [];
+
+  for (let i = 0; i < firstTocIdx; i++) {
+    const href = spineItems[i]?.href;
+    if (!href) continue;
+    const key = stripHashQuery(href);
+    if (existing.has(key)) continue;
+
+    const isCover =
+      typeof coverIdx === "number" ? i === coverIdx : /cover/i.test(href);
+    prepend.push({
+      href,
+      label: isCover
+        ? "Forside"
+        : prettyLabelFromHref(href, `Indhold ${i + 1}`),
+    });
+  }
+
+  if (typeof coverIdx === "number" && coverIdx >= 0) {
+    const coverKey = stripHashQuery(
+      spineItems[coverIdx]?.href || coverHref || ""
+    );
+    const hasCover = [...prepend, ...filteredToc].some(
+      (x) => stripHashQuery(x.href) === coverKey
+    );
+    if (!hasCover && coverHref)
+      prepend.unshift({ href: coverHref, label: "Forside" });
+  }
+
+  return prepend.length ? [...prepend, ...filteredToc] : filteredToc;
+}
+
 function waitForLayout(el, timeoutMs = 1400) {
   if (!el) return Promise.resolve();
   const start = Date.now();
@@ -106,6 +265,98 @@ function waitForLayout(el, timeoutMs = 1400) {
       }
     }, 60);
   });
+}
+
+function shouldCollapseToSingleSection(book, tocFlat) {
+  try {
+    const spineLen = book?.spine?.spineItems?.length || 0;
+    if (spineLen < 2) return false;
+
+    if (!tocFlat?.length || tocFlat.length < 10) return false;
+
+    const labels = tocFlat
+      .map((x) => String(x?.label || "").trim())
+      .filter(Boolean);
+
+    if (labels.length < 10) return false;
+
+    const chapterRe = /^(kapitel|chapter)\s+\d+\b/i;
+    const chapterHits = labels.filter((l) => chapterRe.test(l)).length;
+    const chapterRatio = chapterHits / labels.length;
+
+    const normalized = labels.map((l) =>
+      l.toLowerCase().replace(/\d+/g, "#").replace(/\s+/g, " ").trim()
+    );
+    const uniq = new Set(normalized);
+    const uniqRatio = uniq.size / normalized.length;
+
+    if (chapterRatio >= 0.75) return true;
+    if (uniqRatio <= 0.35) return true;
+
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+function collapseToSingleSectionPreserveFrontmatter(book, tocFlat) {
+  const spineItems = book?.spine?.spineItems || [];
+  if (!spineItems.length) return tocFlat;
+
+  const frontRe =
+    /^(forside|cover|titel|titelblad|title\s?page|title|kolofon|copyright)\b/i;
+
+  const frontEntries = (tocFlat || []).filter((it) =>
+    frontRe.test(String(it?.label || "").trim())
+  );
+
+  const firstHref =
+    spineItems.find((it) => it?.href)?.href || tocFlat?.[0]?.href || null;
+  if (!frontEntries.length)
+    return firstHref ? [{ href: firstHref, label: "Indhold" }] : tocFlat;
+
+  const frontIdx = [];
+  for (const it of frontEntries) {
+    const r = spineIndexOfDebug(book, it.href);
+    if (typeof r.idx === "number") frontIdx.push(r.idx);
+  }
+  if (!frontIdx.length)
+    return firstHref ? [{ href: firstHref, label: "Indhold" }] : tocFlat;
+
+  const lastFrontSpineIdx = Math.max(...frontIdx);
+
+  // Keep all TOC entries that map to spine <= lastFrontSpineIdx
+  const kept = [];
+  const keptKeys = new Set();
+  for (const it of tocFlat || []) {
+    const hit = normalizeToSpineHref(book, it.href);
+    if (!hit) continue;
+    const idx = spineIndexOfDebug(book, hit).idx;
+    if (typeof idx === "number" && idx <= lastFrontSpineIdx) {
+      const key = stripHashQuery(hit);
+      if (!keptKeys.has(key)) {
+        keptKeys.add(key);
+        kept.push({ ...it, href: hit });
+      }
+    }
+  }
+
+  // Find first spine href AFTER frontmatter
+  let contentHref = null;
+  for (let i = lastFrontSpineIdx + 1; i < spineItems.length; i++) {
+    const href = spineItems[i]?.href;
+    if (href) {
+      contentHref = href;
+      break;
+    }
+  }
+  if (!contentHref) contentHref = firstHref;
+
+  if (!contentHref) return kept.length ? kept : tocFlat;
+
+  const contentKey = stripHashQuery(contentHref);
+  const hasAlready = kept.some((x) => stripHashQuery(x.href) === contentKey);
+  return hasAlready ? kept : [...kept, { href: contentHref, label: "Indhold" }];
 }
 
 export function useEpubReader({
@@ -285,15 +536,13 @@ export function useEpubReader({
 
       await waitForLayout(viewerRef.current);
 
-      if (!isZipArrayBuffer(src)) {
+      if (!isZipArrayBuffer(src))
         throw new Error("EPUB buffer er ikke ZIP (mangler 'PK' header)");
-      }
 
       const mod = await import("epubjs");
       const ePub = mod?.default || mod?.ePub || mod;
-      if (typeof ePub !== "function") {
+      if (typeof ePub !== "function")
         throw new Error("epubjs import gav ikke en funktion");
-      }
 
       if (cancelled || genRef.current !== gen) return;
 
@@ -333,7 +582,7 @@ export function useEpubReader({
       const relocatedHandler = (loc) => onRelocatedRef.current?.(loc);
       rendition.on("relocated", relocatedHandler);
 
-      // ---- TOC build ----
+      // TOC
       let flat = buildFlatTocFromNav(book);
       if (!flat.length) {
         const spineItems = book?.spine?.spineItems || [];
@@ -345,7 +594,6 @@ export function useEpubReader({
           }));
       }
 
-      // normalize to spine
       const filtered = [];
       for (const it of flat) {
         const hit = normalizeToSpineHref(book, it.href);
@@ -353,21 +601,12 @@ export function useEpubReader({
         filtered.push({ ...it, href: hit });
       }
 
-      // ✅ NEW: one section per spine href (removes multiple headers on same page)
-      const deduped = dedupeTocBySpineHref(book, filtered);
+      let withFrontmatter = prependMissingSpineSections(book, filtered);
 
-      // add missing spine items before first toc (cover/title/etc.)
-      let withFrontmatter = prependMissingSpineSections(book, deduped);
-
-      // Decide structure mode (chapter vs fallback)
-      const struct = computeEpubStructureScore(book, withFrontmatter);
-
-      if (debugEnabled) {
-        log("STRUCT", struct);
-      }
-
-      if (struct.mode === "fallback") {
-        log("TOC looks messy → collapsing (preserve frontmatter) + Indhold");
+      if (shouldCollapseToSingleSection(book, withFrontmatter)) {
+        log(
+          "TOC looks page-like → collapsing (preserve frontmatter) + Indhold"
+        );
         withFrontmatter = collapseToSingleSectionPreserveFrontmatter(
           book,
           withFrontmatter
@@ -421,13 +660,14 @@ export function useEpubReader({
     let cancelled = false;
 
     (async () => {
+      // read live ref as late as possible
       const r = renditionRef.current;
       if (!r) return;
 
-      // per your request: safe optional chain
       let loc = null;
       try {
-        loc = r?.currentLocation?.();
+        loc =
+          typeof r.currentLocation === "function" ? r.currentLocation() : null;
       } catch {
         loc = null;
       }
@@ -445,16 +685,16 @@ export function useEpubReader({
         r.spread?.(isFullscreen ? "both" : "none");
       } catch {}
       try {
-        if (r.settings) {
+        if (r.settings)
           r.settings.minSpreadWidth = isFullscreen
             ? 0
             : Number.POSITIVE_INFINITY;
-        }
       } catch {}
 
       await waitForLayout(host, 1600);
       if (cancelled) return;
 
+      // read live ref again after await
       const r2 = renditionRef.current;
       if (!r2) return;
 
@@ -485,9 +725,12 @@ export function useEpubReader({
   }, [isFullscreen, viewerRef, debugEnabled]);
 
   /**
-   * ResizeObserver for viewer (debounced + safe)
-   * - avoids calling display() on resize (prevents spam / loops)
-   * - only resize if width/height changed
+   * ✅ ResizeObserver for viewer (debounced + safe)
+   * Key changes vs earlier:
+   * - hard guards against teardown races (destroyed flag + live ref reads)
+   * - avoids calling currentLocation on undefined
+   * - avoids calling display() on resize (huge spam + races)
+   * - avoids loops by only resizing when width/height changed
    */
   useEffect(() => {
     const host = viewerRef?.current;
@@ -503,6 +746,7 @@ export function useEpubReader({
       const r = renditionRef.current;
       if (!r) return;
 
+      // Only act if host has real size
       let rect;
       try {
         rect = host.getBoundingClientRect();
@@ -514,6 +758,7 @@ export function useEpubReader({
       const h = Math.floor(rect.height);
       if (w <= 16 || h <= 16) return;
 
+      // Avoid feedback loops / spam when size didn't change
       if (lastRectRef.current.w === w && lastRectRef.current.h === h) return;
       lastRectRef.current = { w, h };
 
@@ -527,6 +772,9 @@ export function useEpubReader({
       try {
         r.reformat?.();
       } catch {}
+
+      // NOTE: intentionally no r.display(...) here.
+      // Relocation is handled by epubjs and your fullscreen toggle logic.
     };
 
     const onResize = () => {
@@ -604,6 +852,7 @@ export function useEpubReader({
     handleJump,
 
     progressEnabled,
+
     retry,
   };
 }

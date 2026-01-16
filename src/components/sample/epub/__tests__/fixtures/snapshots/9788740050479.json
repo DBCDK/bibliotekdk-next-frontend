@@ -1,0 +1,553 @@
+{
+  "version": 2,
+  "generatedAt": "2026-01-16T16:26:06.833Z",
+  "fileName": "9788740050479.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Blodspor",
+    "creator": "Julie Hastrup",
+    "language": "da-DK"
+  },
+  "counts": {
+    "spineLen": 8,
+    "tocLen": 65,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "Blodspor.xhtml",
+      "idref": "Blodspor",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "Blodspor-1.xhtml",
+      "idref": "Blodspor-1",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "Blodspor-2.xhtml",
+      "idref": "Blodspor-2",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "Blodspor-3.xhtml",
+      "idref": "Blodspor-3",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "Blodspor-4.xhtml",
+      "idref": "Blodspor-4",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "Blodspor-5.xhtml",
+      "idref": "Blodspor-5",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "Blodspor-6.xhtml",
+      "idref": "Blodspor-6",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "Blodspor-3.xhtml#_idParaDest-1",
+      "hrefNoFrag": "Blodspor-3.xhtml",
+      "label": "Prolog",
+      "spineIndex": 4,
+      "spineHit": "Blodspor-3.xhtml"
+    },
+    {
+      "href": "Blodspor-4.xhtml#_idParaDest-2",
+      "hrefNoFrag": "Blodspor-4.xhtml",
+      "label": "Stockholm",
+      "spineIndex": 5,
+      "spineHit": "Blodspor-4.xhtml"
+    },
+    {
+      "href": "Blodspor-5.xhtml#_idParaDest-3",
+      "hrefNoFrag": "Blodspor-5.xhtml",
+      "label": "Forrige sommer ",
+      "spineIndex": 6,
+      "spineHit": "Blodspor-5.xhtml"
+    },
+    {
+      "href": "Blodspor-6.xhtml#_idParaDest-4",
+      "hrefNoFrag": "Blodspor-6.xhtml",
+      "label": "Birkerød",
+      "spineIndex": 7,
+      "spineHit": "Blodspor-6.xhtml"
+    },
+    {
+      "href": "Blodspor-7.xhtml#_idParaDest-5",
+      "hrefNoFrag": "Blodspor-7.xhtml",
+      "label": "Forrige vinter ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-8.xhtml#_idParaDest-6",
+      "hrefNoFrag": "Blodspor-8.xhtml",
+      "label": "Birkerød",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-9.xhtml#_idParaDest-7",
+      "hrefNoFrag": "Blodspor-9.xhtml",
+      "label": "København ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-10.xhtml#_idParaDest-8",
+      "hrefNoFrag": "Blodspor-10.xhtml",
+      "label": "Forrige sommer ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-11.xhtml#_idParaDest-9",
+      "hrefNoFrag": "Blodspor-11.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-12.xhtml#_idParaDest-10",
+      "hrefNoFrag": "Blodspor-12.xhtml",
+      "label": "Forrige vinter ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-13.xhtml#_idParaDest-11",
+      "hrefNoFrag": "Blodspor-13.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-14.xhtml#_idParaDest-12",
+      "hrefNoFrag": "Blodspor-14.xhtml",
+      "label": "Forrige sommer ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-15.xhtml#_idParaDest-13",
+      "hrefNoFrag": "Blodspor-15.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-16.xhtml#_idParaDest-14",
+      "hrefNoFrag": "Blodspor-16.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-17.xhtml#_idParaDest-15",
+      "hrefNoFrag": "Blodspor-17.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-18.xhtml#_idParaDest-16",
+      "hrefNoFrag": "Blodspor-18.xhtml",
+      "label": "Forrige vinter ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-19.xhtml#_idParaDest-17",
+      "hrefNoFrag": "Blodspor-19.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-20.xhtml#_idParaDest-18",
+      "hrefNoFrag": "Blodspor-20.xhtml",
+      "label": "Forrige sommer ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-21.xhtml#_idParaDest-19",
+      "hrefNoFrag": "Blodspor-21.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-22.xhtml#_idParaDest-20",
+      "hrefNoFrag": "Blodspor-22.xhtml",
+      "label": "Forrige sommer ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-23.xhtml#_idParaDest-21",
+      "hrefNoFrag": "Blodspor-23.xhtml",
+      "label": "Birkerød",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-24.xhtml#_idParaDest-22",
+      "hrefNoFrag": "Blodspor-24.xhtml",
+      "label": "Forrige vinter ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-25.xhtml#_idParaDest-23",
+      "hrefNoFrag": "Blodspor-25.xhtml",
+      "label": "København ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-26.xhtml#_idParaDest-24",
+      "hrefNoFrag": "Blodspor-26.xhtml",
+      "label": "Forrige sommer ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-27.xhtml#_idParaDest-25",
+      "hrefNoFrag": "Blodspor-27.xhtml",
+      "label": "Virum",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-28.xhtml#_idParaDest-26",
+      "hrefNoFrag": "Blodspor-28.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-29.xhtml#_idParaDest-27",
+      "hrefNoFrag": "Blodspor-29.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-30.xhtml#_idParaDest-28",
+      "hrefNoFrag": "Blodspor-30.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-31.xhtml#_idParaDest-29",
+      "hrefNoFrag": "Blodspor-31.xhtml",
+      "label": "Forrige vinter ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-32.xhtml#_idParaDest-30",
+      "hrefNoFrag": "Blodspor-32.xhtml",
+      "label": "København ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-33.xhtml#_idParaDest-31",
+      "hrefNoFrag": "Blodspor-33.xhtml",
+      "label": "Forrige sommer ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-34.xhtml#_idParaDest-32",
+      "hrefNoFrag": "Blodspor-34.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-35.xhtml#_idParaDest-33",
+      "hrefNoFrag": "Blodspor-35.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-36.xhtml#_idParaDest-34",
+      "hrefNoFrag": "Blodspor-36.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-37.xhtml#_idParaDest-35",
+      "hrefNoFrag": "Blodspor-37.xhtml",
+      "label": "Forrige sommer ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-38.xhtml#_idParaDest-36",
+      "hrefNoFrag": "Blodspor-38.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-39.xhtml#_idParaDest-37",
+      "hrefNoFrag": "Blodspor-39.xhtml",
+      "label": "Forrige vinter ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-40.xhtml#_idParaDest-38",
+      "hrefNoFrag": "Blodspor-40.xhtml",
+      "label": "Gerlev",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-41.xhtml#_idParaDest-39",
+      "hrefNoFrag": "Blodspor-41.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-42.xhtml#_idParaDest-40",
+      "hrefNoFrag": "Blodspor-42.xhtml",
+      "label": "Frederikssund",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-43.xhtml#_idParaDest-41",
+      "hrefNoFrag": "Blodspor-43.xhtml",
+      "label": "Forrige vinter ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-44.xhtml#_idParaDest-42",
+      "hrefNoFrag": "Blodspor-44.xhtml",
+      "label": "Frederikssund",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-45.xhtml#_idParaDest-43",
+      "hrefNoFrag": "Blodspor-45.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-46.xhtml#_idParaDest-44",
+      "hrefNoFrag": "Blodspor-46.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-47.xhtml#_idParaDest-45",
+      "hrefNoFrag": "Blodspor-47.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-48.xhtml#_idParaDest-46",
+      "hrefNoFrag": "Blodspor-48.xhtml",
+      "label": "København ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-49.xhtml#_idParaDest-47",
+      "hrefNoFrag": "Blodspor-49.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-50.xhtml#_idParaDest-48",
+      "hrefNoFrag": "Blodspor-50.xhtml",
+      "label": "Forrige vinter ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-51.xhtml#_idParaDest-49",
+      "hrefNoFrag": "Blodspor-51.xhtml",
+      "label": "Holbæk",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-52.xhtml#_idParaDest-50",
+      "hrefNoFrag": "Blodspor-52.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-53.xhtml#_idParaDest-51",
+      "hrefNoFrag": "Blodspor-53.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-54.xhtml#_idParaDest-52",
+      "hrefNoFrag": "Blodspor-54.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-55.xhtml#_idParaDest-53",
+      "hrefNoFrag": "Blodspor-55.xhtml",
+      "label": "Madrid ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-56.xhtml#_idParaDest-54",
+      "hrefNoFrag": "Blodspor-56.xhtml",
+      "label": "København ",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-57.xhtml#_idParaDest-55",
+      "hrefNoFrag": "Blodspor-57.xhtml",
+      "label": "Tølløse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-58.xhtml#_idParaDest-56",
+      "hrefNoFrag": "Blodspor-58.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-59.xhtml#_idParaDest-57",
+      "hrefNoFrag": "Blodspor-59.xhtml",
+      "label": "Tølløse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-60.xhtml#_idParaDest-58",
+      "hrefNoFrag": "Blodspor-60.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-61.xhtml#_idParaDest-59",
+      "hrefNoFrag": "Blodspor-61.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-62.xhtml#_idParaDest-60",
+      "hrefNoFrag": "Blodspor-62.xhtml",
+      "label": "Tølløse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-63.xhtml#_idParaDest-61",
+      "hrefNoFrag": "Blodspor-63.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-64.xhtml#_idParaDest-62",
+      "hrefNoFrag": "Blodspor-64.xhtml",
+      "label": "København",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-65.xhtml#_idParaDest-63",
+      "hrefNoFrag": "Blodspor-65.xhtml",
+      "label": "Epilog",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-66.xhtml#_idParaDest-64",
+      "hrefNoFrag": "Blodspor-66.xhtml",
+      "label": "Tak",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Blodspor-67.xhtml#_idParaDest-65",
+      "hrefNoFrag": "Blodspor-67.xhtml",
+      "label": "Kolofon",
+      "spineIndex": null,
+      "spineHit": null
+    }
+  ],
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 35,
+      "reasons": [
+        "low-label-uniqueness",
+        "many-toc-hrefs-not-in-spine"
+      ],
+      "metrics": {
+        "spineLen": 0,
+        "tocLen": 65,
+        "mapped": 0,
+        "mappedUnique": 0,
+        "tocSpineRatio": 0,
+        "invalidHrefRatio": 1,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0.015,
+        "chapterRatio": 0,
+        "uniqRatio": 0.231
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "version": 2,
+  "generatedAt": "2026-01-16T16:26:06.879Z",
+  "fileName": "9788771082982.zip",
+  "parser": "manual-zip",
+  "metadata": {
+    "title": null,
+    "creator": null,
+    "language": null
+  },
+  "counts": {
+    "spineLen": 6,
+    "tocLen": 0,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "OPS/xhtml/cover.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 1,
+      "href": "OPS/xhtml/title.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 2,
+      "href": "OPS/xhtml/dedikation.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 3,
+      "href": "OPS/xhtml/chapter01.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 4,
+      "href": "OPS/xhtml/chapter02.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 5,
+      "href": "OPS/xhtml/chapter03.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    }
+  ],
+  "tocFlat": [],
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 0,
+      "reasons": [],
+      "metrics": {
+        "spineLen": 6,
+        "tocLen": 0,
+        "mapped": 0,
+        "mappedUnique": 0,
+        "tocSpineRatio": 0,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1
+      }
+    }
+  }
+}

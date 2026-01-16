@@ -57,6 +57,11 @@
   overflow: visible !important;
 }
 
+.innerWrapper {
+  height: 100%;
+  width: 100%;
+}
+
 .wrapper > div:first-of-type > div:last-of-type {
   display: none;
 }

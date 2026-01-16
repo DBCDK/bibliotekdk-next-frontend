@@ -1,0 +1,255 @@
+{
+  "version": 2,
+  "generatedAt": "2026-01-16T16:26:06.749Z",
+  "fileName": "9788702421484.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Skyggen foran mig",
+    "creator": "Kim Fupz Aakeson",
+    "language": "dan"
+  },
+  "counts": {
+    "spineLen": 15,
+    "tocLen": 15,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [
+        "svg"
+      ],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "titlepage.xhtml",
+      "idref": "titlepage",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "colophon.xhtml",
+      "idref": "colophon",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "chapter001.xhtml",
+      "idref": "chapter001",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "chapter002.xhtml",
+      "idref": "chapter002",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "chapter003.xhtml",
+      "idref": "chapter003",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "chapter004.xhtml",
+      "idref": "chapter004",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "chapter005.xhtml",
+      "idref": "chapter005",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 8,
+      "href": "chapter006.xhtml",
+      "idref": "chapter006",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 9,
+      "href": "chapter007.xhtml",
+      "idref": "chapter007",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 10,
+      "href": "chapter008.xhtml",
+      "idref": "chapter008",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 11,
+      "href": "chapter009.xhtml",
+      "idref": "chapter009",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 12,
+      "href": "chapter010.xhtml",
+      "idref": "chapter010",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 13,
+      "href": "chapter011.xhtml",
+      "idref": "chapter011",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 14,
+      "href": "chapter012.xhtml",
+      "idref": "chapter012",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "cover.xhtml",
+      "hrefNoFrag": "cover.xhtml",
+      "label": "Forside",
+      "spineIndex": 0,
+      "spineHit": "cover.xhtml"
+    },
+    {
+      "href": "titlepage.xhtml",
+      "hrefNoFrag": "titlepage.xhtml",
+      "label": "Titelblad",
+      "spineIndex": 1,
+      "spineHit": "titlepage.xhtml"
+    },
+    {
+      "href": "colophon.xhtml",
+      "hrefNoFrag": "colophon.xhtml",
+      "label": "Kolofon",
+      "spineIndex": 2,
+      "spineHit": "colophon.xhtml"
+    },
+    {
+      "href": "chapter001.xhtml",
+      "hrefNoFrag": "chapter001.xhtml",
+      "label": "Kapitel 1",
+      "spineIndex": 3,
+      "spineHit": "chapter001.xhtml"
+    },
+    {
+      "href": "chapter002.xhtml",
+      "hrefNoFrag": "chapter002.xhtml",
+      "label": "Kapitel 2",
+      "spineIndex": 4,
+      "spineHit": "chapter002.xhtml"
+    },
+    {
+      "href": "chapter003.xhtml",
+      "hrefNoFrag": "chapter003.xhtml",
+      "label": "Kapitel 3",
+      "spineIndex": 5,
+      "spineHit": "chapter003.xhtml"
+    },
+    {
+      "href": "chapter004.xhtml",
+      "hrefNoFrag": "chapter004.xhtml",
+      "label": "Kapitel 4",
+      "spineIndex": 6,
+      "spineHit": "chapter004.xhtml"
+    },
+    {
+      "href": "chapter005.xhtml",
+      "hrefNoFrag": "chapter005.xhtml",
+      "label": "Kapitel 5",
+      "spineIndex": 7,
+      "spineHit": "chapter005.xhtml"
+    },
+    {
+      "href": "chapter006.xhtml",
+      "hrefNoFrag": "chapter006.xhtml",
+      "label": "Kapitel 6",
+      "spineIndex": 8,
+      "spineHit": "chapter006.xhtml"
+    },
+    {
+      "href": "chapter007.xhtml",
+      "hrefNoFrag": "chapter007.xhtml",
+      "label": "Kapitel 7",
+      "spineIndex": 9,
+      "spineHit": "chapter007.xhtml"
+    },
+    {
+      "href": "chapter008.xhtml",
+      "hrefNoFrag": "chapter008.xhtml",
+      "label": "Kapitel 8",
+      "spineIndex": 10,
+      "spineHit": "chapter008.xhtml"
+    },
+    {
+      "href": "chapter009.xhtml",
+      "hrefNoFrag": "chapter009.xhtml",
+      "label": "Kapitel 9",
+      "spineIndex": 11,
+      "spineHit": "chapter009.xhtml"
+    },
+    {
+      "href": "chapter010.xhtml",
+      "hrefNoFrag": "chapter010.xhtml",
+      "label": "Kapitel 10",
+      "spineIndex": 12,
+      "spineHit": "chapter010.xhtml"
+    },
+    {
+      "href": "chapter011.xhtml",
+      "hrefNoFrag": "chapter011.xhtml",
+      "label": "Kapitel 11",
+      "spineIndex": 13,
+      "spineHit": "chapter011.xhtml"
+    },
+    {
+      "href": "chapter012.xhtml",
+      "hrefNoFrag": "chapter012.xhtml",
+      "label": "Kapitel 12",
+      "spineIndex": 14,
+      "spineHit": "chapter012.xhtml"
+    }
+  ],
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 15,
+      "reasons": [
+        "low-label-uniqueness",
+        "many-toc-hrefs-not-in-spine",
+        "chapter-like-labels"
+      ],
+      "metrics": {
+        "spineLen": 0,
+        "tocLen": 15,
+        "mapped": 0,
+        "mappedUnique": 0,
+        "tocSpineRatio": 0,
+        "invalidHrefRatio": 1,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0.8,
+        "uniqRatio": 0.267
+      }
+    }
+  }
+}

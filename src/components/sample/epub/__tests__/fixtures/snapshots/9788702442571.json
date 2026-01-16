@@ -1,0 +1,169 @@
+{
+  "version": 2,
+  "generatedAt": "2026-01-16T16:26:06.767Z",
+  "fileName": "9788702442571.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Hest, hest, tiger, tiger",
+    "creator": "Mette Eike Neerlin",
+    "language": "dan"
+  },
+  "counts": {
+    "spineLen": 9,
+    "tocLen": 9,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [
+        "svg"
+      ],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "titlepage.xhtml",
+      "idref": "titlepage",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "colophon.xhtml",
+      "idref": "colophon",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "chapter001.xhtml",
+      "idref": "chapter001",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "chapter002.xhtml",
+      "idref": "chapter002",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "chapter003.xhtml",
+      "idref": "chapter003",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "chapter004.xhtml",
+      "idref": "chapter004",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "chapter005.xhtml",
+      "idref": "chapter005",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 8,
+      "href": "chapter006.xhtml",
+      "idref": "chapter006",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "cover.xhtml",
+      "hrefNoFrag": "cover.xhtml",
+      "label": "Forside",
+      "spineIndex": 0,
+      "spineHit": "cover.xhtml"
+    },
+    {
+      "href": "titlepage.xhtml",
+      "hrefNoFrag": "titlepage.xhtml",
+      "label": "Titelblad",
+      "spineIndex": 1,
+      "spineHit": "titlepage.xhtml"
+    },
+    {
+      "href": "colophon.xhtml",
+      "hrefNoFrag": "colophon.xhtml",
+      "label": "Kolofon",
+      "spineIndex": 2,
+      "spineHit": "colophon.xhtml"
+    },
+    {
+      "href": "chapter001.xhtml",
+      "hrefNoFrag": "chapter001.xhtml",
+      "label": "Kapitel 1 – Om mad i næsen",
+      "spineIndex": 3,
+      "spineHit": "chapter001.xhtml"
+    },
+    {
+      "href": "chapter002.xhtml",
+      "hrefNoFrag": "chapter002.xhtml",
+      "label": "Kapitel 2 – Om muskler, kanelgifler og andre ting",
+      "spineIndex": 4,
+      "spineHit": "chapter002.xhtml"
+    },
+    {
+      "href": "chapter003.xhtml",
+      "hrefNoFrag": "chapter003.xhtml",
+      "label": "Kapitel 3 – Om aftensmad",
+      "spineIndex": 5,
+      "spineHit": "chapter003.xhtml"
+    },
+    {
+      "href": "chapter004.xhtml",
+      "hrefNoFrag": "chapter004.xhtml",
+      "label": "Kapitel 4 – Om en tur på Dyrehavsbakken",
+      "spineIndex": 6,
+      "spineHit": "chapter004.xhtml"
+    },
+    {
+      "href": "chapter005.xhtml",
+      "hrefNoFrag": "chapter005.xhtml",
+      "label": "Kapitel 5 – Om at lyve og om jordbærkage",
+      "spineIndex": 7,
+      "spineHit": "chapter005.xhtml"
+    },
+    {
+      "href": "chapter006.xhtml",
+      "hrefNoFrag": "chapter006.xhtml",
+      "label": "Kapitel 6 – Om mere løgn og dengang med passeren",
+      "spineIndex": 8,
+      "spineHit": "chapter006.xhtml"
+    }
+  ],
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 0,
+      "reasons": [
+        "chapter-like-labels"
+      ],
+      "metrics": {
+        "spineLen": 0,
+        "tocLen": 9,
+        "mapped": 0,
+        "mappedUnique": 0,
+        "tocSpineRatio": 0,
+        "invalidHrefRatio": 1,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0.667,
+        "uniqRatio": 1
+      }
+    }
+  }
+}
