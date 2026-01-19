@@ -51,7 +51,9 @@ function OrderButtonTextBelow({
   ];
 
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
-const isNota = getBaseUrl(access?.[0]?.url) === "nota.dk" || access?.[0]?.origin === "nota.dk";
+  const isNota =
+    getBaseUrl(access?.[0]?.url) === "nota.dk" ||
+    access?.[0]?.origin === "nota.dk";
   return (
     index > -1 &&
     access?.[0]?.id !== null &&
