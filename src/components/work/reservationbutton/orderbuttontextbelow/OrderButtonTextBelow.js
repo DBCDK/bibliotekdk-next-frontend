@@ -51,7 +51,7 @@ function OrderButtonTextBelow({
   ];
 
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
-
+const isNota = getBaseUrl(access?.[0]?.url) === "nota.dk" || access?.[0]?.origin === "nota.dk";
   return (
     index > -1 &&
     access?.[0]?.id !== null &&
@@ -65,6 +65,16 @@ function OrderButtonTextBelow({
         >
           {translationForButtonText?.[index]?.()}
         </Text>
+        {isNota ? (
+          <Text
+            dataCy={"reservation-button-nota-access-info"}
+            type="text3"
+            skeleton={skeleton}
+            lines={2}
+          >
+            {Translate({ ...context, label: "nota-access-restriction" })}
+          </Text>
+        ) : null}
       </Col>
     )
   );
