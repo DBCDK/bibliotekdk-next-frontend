@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "generatedAt": "2026-01-16T16:26:06.767Z",
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.118Z",
   "fileName": "9788702442571.zip",
   "parser": "epubjs",
   "metadata": {
@@ -145,25 +145,200 @@
       "spineHit": "chapter006.xhtml"
     }
   ],
-  "heuristics": {
-    "structure": {
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Kapitel 1 – Om mad i næsen"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "Kapitel 2 – Om muskler, kanelgifler og andre ting"
+      },
+      {
+        "href": "chapter003.xhtml",
+        "label": "Kapitel 3 – Om aftensmad"
+      },
+      {
+        "href": "chapter004.xhtml",
+        "label": "Kapitel 4 – Om en tur på Dyrehavsbakken"
+      },
+      {
+        "href": "chapter005.xhtml",
+        "label": "Kapitel 5 – Om at lyve og om jordbærkage"
+      },
+      {
+        "href": "chapter006.xhtml",
+        "label": "Kapitel 6 – Om mere løgn og dengang med passeren"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Kapitel 1 – Om mad i næsen"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "Kapitel 2 – Om muskler, kanelgifler og andre ting"
+      },
+      {
+        "href": "chapter003.xhtml",
+        "label": "Kapitel 3 – Om aftensmad"
+      },
+      {
+        "href": "chapter004.xhtml",
+        "label": "Kapitel 4 – Om en tur på Dyrehavsbakken"
+      },
+      {
+        "href": "chapter005.xhtml",
+        "label": "Kapitel 5 – Om at lyve og om jordbærkage"
+      },
+      {
+        "href": "chapter006.xhtml",
+        "label": "Kapitel 6 – Om mere løgn og dengang med passeren"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Kapitel 1 – Om mad i næsen"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "Kapitel 2 – Om muskler, kanelgifler og andre ting"
+      },
+      {
+        "href": "chapter003.xhtml",
+        "label": "Kapitel 3 – Om aftensmad"
+      },
+      {
+        "href": "chapter004.xhtml",
+        "label": "Kapitel 4 – Om en tur på Dyrehavsbakken"
+      },
+      {
+        "href": "chapter005.xhtml",
+        "label": "Kapitel 5 – Om at lyve og om jordbærkage"
+      },
+      {
+        "href": "chapter006.xhtml",
+        "label": "Kapitel 6 – Om mere løgn og dengang med passeren"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Kapitel 1 – Om mad i næsen"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "Kapitel 2 – Om muskler, kanelgifler og andre ting"
+      },
+      {
+        "href": "chapter003.xhtml",
+        "label": "Kapitel 3 – Om aftensmad"
+      },
+      {
+        "href": "chapter004.xhtml",
+        "label": "Kapitel 4 – Om en tur på Dyrehavsbakken"
+      },
+      {
+        "href": "chapter005.xhtml",
+        "label": "Kapitel 5 – Om at lyve og om jordbærkage"
+      },
+      {
+        "href": "chapter006.xhtml",
+        "label": "Kapitel 6 – Om mere løgn og dengang med passeren"
+      }
+    ],
+    "score": {
       "mode": "chapter",
-      "score": 0,
+      "score": 20,
       "reasons": [
-        "chapter-like-labels"
+        "toc-close-to-spine-size"
       ],
       "metrics": {
-        "spineLen": 0,
+        "spineLen": 9,
         "tocLen": 9,
-        "mapped": 0,
-        "mappedUnique": 0,
-        "tocSpineRatio": 0,
-        "invalidHrefRatio": 1,
+        "mapped": 9,
+        "mappedUnique": 9,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
         "dupSpineRatio": 0,
         "weakLabelRatio": 0,
         "chapterRatio": 0.667,
         "uniqRatio": 1
       }
-    }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": [
+        "toc-close-to-spine-size"
+      ],
+      "metrics": {
+        "spineLen": 9,
+        "tocLen": 9,
+        "mapped": 9,
+        "mappedUnique": 9,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0.667,
+        "uniqRatio": 1
+      }
+    },
+    "collapse": false
   }
 }

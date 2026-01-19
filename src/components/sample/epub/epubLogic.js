@@ -95,6 +95,11 @@ export function prettyLabelFromHref(href, fallback = "Indhold") {
   );
   const b = base.toLowerCase();
 
+  // Deterministic frontmatter mapping
+  if (/^(cover|forside)$/.test(b) || /cover/.test(b)) return "Forside";
+  if (/^(titlepage|title|titelblad|titel)$/.test(b)) return "Titelblad";
+  if (/^(colophon|kolofon|copyright)$/.test(b)) return "Kolofon";
+
   // Index-like, id-like, or too short => fallback
   if (
     /^index(_split)?[_-]?\d+$/i.test(b) ||
@@ -202,15 +207,7 @@ export function pickBestLabel(candidates, fallback) {
 }
 
 /**
- * ✅ Key fix: ensure "1 section per spine href".
- * Many epubs have toc entries like "chapter.xhtml#h1", "chapter.xhtml#h2", ...
- * They should NOT become multiple segments/progress bars.
- *
- * Strategy:
- * - normalize each toc href to something in spine
- * - strip hash/query => baseHref
- * - group by spine index (if available) else baseHref
- * - pick best label among candidates
+ * ✅ Ensure "1 section per spine href".
  */
 export function dedupeTocBySpineHref(book, tocFlat) {
   const groups = new Map();
@@ -253,8 +250,7 @@ export function dedupeTocBySpineHref(book, tocFlat) {
 }
 
 /**
- * Ensure missing spine sections before first toc entry are prepended
- * (e.g. cover/title page that toc doesn't include).
+ * Ensure missing spine sections before first toc entry are prepended.
  */
 export function prependMissingSpineSections(book, filteredToc) {
   const spineItems = book?.spine?.spineItems || [];
@@ -274,14 +270,8 @@ export function prependMissingSpineSections(book, filteredToc) {
       .map((it, i) => {
         const href = it.href;
         const idx = spineIndexOfDebug(book, href).idx ?? i;
-        const isCover =
-          typeof coverIdx === "number" ? idx === coverIdx : /cover/i.test(href);
-        return {
-          href,
-          label: isCover
-            ? "Forside"
-            : prettyLabelFromHref(href, `Indhold ${idx + 1}`),
-        };
+        const label = prettyLabelFromHref(href, `Indhold ${idx + 1}`);
+        return { href, label };
       });
   }
 
@@ -299,17 +289,10 @@ export function prependMissingSpineSections(book, filteredToc) {
     const key = stripHashQuery(href);
     if (existing.has(key)) continue;
 
-    const isCover =
-      typeof coverIdx === "number" ? i === coverIdx : /cover/i.test(href);
-    prepend.push({
-      href,
-      label: isCover
-        ? "Forside"
-        : prettyLabelFromHref(href, `Indhold ${i + 1}`),
-    });
+    const label = prettyLabelFromHref(href, `Indhold ${i + 1}`);
+    prepend.push({ href, label });
   }
 
-  // Ensure cover explicitly
   if (typeof coverIdx === "number" && coverIdx >= 0) {
     const coverKey = stripHashQuery(
       spineItems[coverIdx]?.href || coverHref || ""
@@ -317,8 +300,9 @@ export function prependMissingSpineSections(book, filteredToc) {
     const hasCover = [...prepend, ...filteredToc].some(
       (x) => stripHashQuery(x.href) === coverKey
     );
-    if (!hasCover && coverHref)
+    if (!hasCover && coverHref) {
       prepend.unshift({ href: coverHref, label: "Forside" });
+    }
   }
 
   return prepend.length ? [...prepend, ...filteredToc] : filteredToc;
@@ -368,6 +352,7 @@ export function computeEpubStructureScore(book, tocFlat) {
   const labels = (tocFlat || [])
     .map((x) => String(x?.label || "").trim())
     .filter(Boolean);
+
   const weakLabelRatio = labels.length
     ? labels.filter(
         (l) => isBadLabel(l) || /^index(\d+)?$/i.test(l) || /^id\d+$/i.test(l)
@@ -407,11 +392,20 @@ export function computeEpubStructureScore(book, tocFlat) {
     score += 20;
   }
 
-  // NOTE: chapter-like labels can indicate "page-like chapters" for some ebooks.
-  // We don't always fallback solely on this, but it can contribute.
   if (chapterRatio >= 0.75 && labels.length >= 10) {
     reasons.push("chapter-like-labels");
     score += 10;
+  }
+
+  // ✅ IMPORTANT FIX:
+  // Page-like chapter TOCs should be treated as fallback (not just "collapse later").
+  // This is the "Skyggen foran mig" pattern.
+  const looksLikePageChapters =
+    tocLen >= 10 && chapterRatio >= 0.75 && uniqRatio <= 0.35;
+
+  if (looksLikePageChapters) {
+    reasons.push("page-like-chapter-toc");
+    score += 25; // enough to cross fallback threshold in typical cases
   }
 
   const mode = score >= 55 ? "fallback" : "chapter";
@@ -446,8 +440,18 @@ export function computeEpubStructureScore(book, tocFlat) {
 }
 
 /**
- * Collapse logic: keep frontmatter (Forside/Titel/Kolofon/etc.) + a single "Indhold" section.
- * Used when computeEpubStructureScore decides mode="fallback".
+ * Runtime decision helper (used by UI + snapshots + tests).
+ *
+ * After the scoring fix above, collapse is simply: score.mode === "fallback".
+ * That keeps semantics consistent.
+ */
+export function shouldCollapseToSingleSection(book, tocFlat) {
+  const s = computeEpubStructureScore(book, tocFlat);
+  return s.mode === "fallback";
+}
+
+/**
+ * Collapse logic: keep frontmatter + a single "Indhold" section.
  */
 export function collapseToSingleSectionPreserveFrontmatter(book, tocFlat) {
   const spineItems = book?.spine?.spineItems || [];
@@ -488,7 +492,9 @@ export function collapseToSingleSectionPreserveFrontmatter(book, tocFlat) {
       const key = stripHashQuery(hit);
       if (!keptKeys.has(key)) {
         keptKeys.add(key);
-        kept.push({ ...it, href: hit });
+
+        const label = prettyLabelFromHref(hit, String(it?.label || "Indhold"));
+        kept.push({ ...it, href: hit, label });
       }
     }
   }
@@ -503,7 +509,6 @@ export function collapseToSingleSectionPreserveFrontmatter(book, tocFlat) {
   }
 
   if (!contentHref) contentHref = firstHref;
-
   if (!contentHref) return kept.length ? kept : tocFlat;
 
   const contentKey = stripHashQuery(contentHref);

@@ -80,12 +80,18 @@ async function main() {
         `  ✓ snapshot: fixtures/snapshots/${id}.json (spine=${c.spineLen}, toc=${c.tocLen}, dupSpine=${c.duplicateSpineIndexCount})`
       );
 
-      if (snap?.heuristics?.structure) {
-        const s = snap.heuristics.structure;
-        const reasons = Array.isArray(s.reasons) ? s.reasons.join(",") : "";
+      const struct = snap?.heuristics?.structure;
+      if (struct) {
+        const reasons = Array.isArray(struct.reasons)
+          ? struct.reasons.join(",")
+          : "";
         console.log(
-          `  [STRUCT] mode=${s.mode} score=${s.score} reasons=${reasons}`
+          `  [STRUCT] mode=${struct.mode} score=${struct.score} reasons=${reasons}`
         );
+      }
+
+      if (typeof snap?.heuristics?.collapse === "boolean") {
+        console.log(`  [COLLAPSE] ${snap.heuristics.collapse ? "yes" : "no"}`);
       }
 
       console.log("");

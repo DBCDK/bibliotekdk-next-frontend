@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "generatedAt": "2026-01-16T16:26:06.779Z",
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.133Z",
   "fileName": "9788740028621.zip",
   "parser": "epubjs",
   "metadata": {
@@ -493,27 +493,782 @@
       "spineHit": null
     }
   ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "Selfies-1.xhtml#_idParaDest-1",
+        "label": "Af Jussi Adler-Olsen"
+      },
+      {
+        "href": "Selfies-4.xhtml#_idParaDest-2",
+        "label": "PROLOG"
+      },
+      {
+        "href": "Selfies-5.xhtml#_idParaDest-3",
+        "label": "1 "
+      },
+      {
+        "href": "Selfies-6.xhtml#_idParaDest-4",
+        "label": "2"
+      },
+      {
+        "href": "Selfies-7.xhtml#_idParaDest-5",
+        "label": "3 "
+      },
+      {
+        "href": "Selfies-8.xhtml#_idParaDest-6",
+        "label": "4"
+      },
+      {
+        "href": "Selfies-9.xhtml#_idParaDest-7",
+        "label": "5"
+      },
+      {
+        "href": "Selfies-10.xhtml#_idParaDest-8",
+        "label": "6"
+      },
+      {
+        "href": "Selfies-11.xhtml#_idParaDest-9",
+        "label": "7 "
+      },
+      {
+        "href": "Selfies-12.xhtml#_idParaDest-10",
+        "label": "8"
+      },
+      {
+        "href": "Selfies-13.xhtml#_idParaDest-11",
+        "label": "9"
+      },
+      {
+        "href": "Selfies-14.xhtml#_idParaDest-12",
+        "label": "10"
+      },
+      {
+        "href": "Selfies-15.xhtml#_idParaDest-13",
+        "label": "11"
+      },
+      {
+        "href": "Selfies-16.xhtml#_idParaDest-14",
+        "label": "12 "
+      },
+      {
+        "href": "Selfies-17.xhtml#_idParaDest-15",
+        "label": "13"
+      },
+      {
+        "href": "Selfies-18.xhtml#_idParaDest-16",
+        "label": "14"
+      },
+      {
+        "href": "Selfies-19.xhtml#_idParaDest-17",
+        "label": "15 "
+      },
+      {
+        "href": "Selfies-20.xhtml#_idParaDest-18",
+        "label": "16"
+      },
+      {
+        "href": "Selfies-21.xhtml#_idParaDest-19",
+        "label": "17 "
+      },
+      {
+        "href": "Selfies-22.xhtml#_idParaDest-20",
+        "label": "18"
+      },
+      {
+        "href": "Selfies-23.xhtml#_idParaDest-21",
+        "label": "19"
+      },
+      {
+        "href": "Selfies-24.xhtml#_idParaDest-22",
+        "label": "20"
+      },
+      {
+        "href": "Selfies-25.xhtml#_idParaDest-23",
+        "label": "21"
+      },
+      {
+        "href": "Selfies-26.xhtml#_idParaDest-24",
+        "label": "22"
+      },
+      {
+        "href": "Selfies-27.xhtml#_idParaDest-25",
+        "label": "23"
+      },
+      {
+        "href": "Selfies-28.xhtml#_idParaDest-26",
+        "label": "24 "
+      },
+      {
+        "href": "Selfies-29.xhtml#_idParaDest-27",
+        "label": "25"
+      },
+      {
+        "href": "Selfies-30.xhtml#_idParaDest-28",
+        "label": "26"
+      },
+      {
+        "href": "Selfies-31.xhtml#_idParaDest-29",
+        "label": "27 "
+      },
+      {
+        "href": "Selfies-32.xhtml#_idParaDest-30",
+        "label": "28"
+      },
+      {
+        "href": "Selfies-33.xhtml#_idParaDest-31",
+        "label": "29"
+      },
+      {
+        "href": "Selfies-34.xhtml#_idParaDest-32",
+        "label": "30"
+      },
+      {
+        "href": "Selfies-35.xhtml#_idParaDest-33",
+        "label": "31 "
+      },
+      {
+        "href": "Selfies-36.xhtml#_idParaDest-34",
+        "label": "32"
+      },
+      {
+        "href": "Selfies-37.xhtml#_idParaDest-35",
+        "label": "33"
+      },
+      {
+        "href": "Selfies-38.xhtml#_idParaDest-36",
+        "label": "34 "
+      },
+      {
+        "href": "Selfies-39.xhtml#_idParaDest-37",
+        "label": "35"
+      },
+      {
+        "href": "Selfies-40.xhtml#_idParaDest-38",
+        "label": "36"
+      },
+      {
+        "href": "Selfies-41.xhtml#_idParaDest-39",
+        "label": "37"
+      },
+      {
+        "href": "Selfies-42.xhtml#_idParaDest-40",
+        "label": "38"
+      },
+      {
+        "href": "Selfies-43.xhtml#_idParaDest-41",
+        "label": "39"
+      },
+      {
+        "href": "Selfies-44.xhtml#_idParaDest-42",
+        "label": "40"
+      },
+      {
+        "href": "Selfies-45.xhtml#_idParaDest-43",
+        "label": "41"
+      },
+      {
+        "href": "Selfies-46.xhtml#_idParaDest-44",
+        "label": "42"
+      },
+      {
+        "href": "Selfies-47.xhtml#_idParaDest-45",
+        "label": "43"
+      },
+      {
+        "href": "Selfies-48.xhtml#_idParaDest-46",
+        "label": "44"
+      },
+      {
+        "href": "Selfies-49.xhtml#_idParaDest-47",
+        "label": "45"
+      },
+      {
+        "href": "Selfies-50.xhtml#_idParaDest-48",
+        "label": "46"
+      },
+      {
+        "href": "Selfies-51.xhtml#_idParaDest-49",
+        "label": "47"
+      },
+      {
+        "href": "Selfies-52.xhtml#_idParaDest-50",
+        "label": "48"
+      },
+      {
+        "href": "Selfies-53.xhtml#_idParaDest-51",
+        "label": "49"
+      },
+      {
+        "href": "Selfies-54.xhtml#_idParaDest-52",
+        "label": "50"
+      },
+      {
+        "href": "Selfies-55.xhtml#_idParaDest-53",
+        "label": "51"
+      },
+      {
+        "href": "Selfies-56.xhtml#_idParaDest-54",
+        "label": "52"
+      },
+      {
+        "href": "Selfies-57.xhtml#_idParaDest-55",
+        "label": "53"
+      },
+      {
+        "href": "Selfies-58.xhtml#_idParaDest-56",
+        "label": "54 "
+      },
+      {
+        "href": "Selfies-59.xhtml#_idParaDest-57",
+        "label": "55"
+      },
+      {
+        "href": "Selfies-60.xhtml#_idParaDest-58",
+        "label": "Epilog"
+      },
+      {
+        "href": "Selfies-61.xhtml#_idParaDest-59",
+        "label": "Kolofon"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "Selfies-1.xhtml",
+        "label": "Af Jussi Adler-Olsen"
+      },
+      {
+        "href": "Selfies-4.xhtml",
+        "label": "PROLOG"
+      },
+      {
+        "href": "Selfies-5.xhtml",
+        "label": "Selfies 5"
+      },
+      {
+        "href": "Selfies-6.xhtml",
+        "label": "Selfies 6"
+      },
+      {
+        "href": "Selfies-7.xhtml",
+        "label": "Selfies 7"
+      },
+      {
+        "href": "Selfies-8.xhtml",
+        "label": "Selfies 8"
+      },
+      {
+        "href": "Selfies-9.xhtml",
+        "label": "Selfies 9"
+      },
+      {
+        "href": "Selfies-10.xhtml",
+        "label": "Selfies 10"
+      },
+      {
+        "href": "Selfies-11.xhtml",
+        "label": "Selfies 11"
+      },
+      {
+        "href": "Selfies-12.xhtml",
+        "label": "Selfies 12"
+      },
+      {
+        "href": "Selfies-13.xhtml",
+        "label": "Selfies 13"
+      },
+      {
+        "href": "Selfies-14.xhtml",
+        "label": "10"
+      },
+      {
+        "href": "Selfies-15.xhtml",
+        "label": "11"
+      },
+      {
+        "href": "Selfies-16.xhtml",
+        "label": "12"
+      },
+      {
+        "href": "Selfies-17.xhtml",
+        "label": "13"
+      },
+      {
+        "href": "Selfies-18.xhtml",
+        "label": "14"
+      },
+      {
+        "href": "Selfies-19.xhtml",
+        "label": "15"
+      },
+      {
+        "href": "Selfies-20.xhtml",
+        "label": "16"
+      },
+      {
+        "href": "Selfies-21.xhtml",
+        "label": "17"
+      },
+      {
+        "href": "Selfies-22.xhtml",
+        "label": "18"
+      },
+      {
+        "href": "Selfies-23.xhtml",
+        "label": "19"
+      },
+      {
+        "href": "Selfies-24.xhtml",
+        "label": "20"
+      },
+      {
+        "href": "Selfies-25.xhtml",
+        "label": "21"
+      },
+      {
+        "href": "Selfies-26.xhtml",
+        "label": "22"
+      },
+      {
+        "href": "Selfies-27.xhtml",
+        "label": "23"
+      },
+      {
+        "href": "Selfies-28.xhtml",
+        "label": "24"
+      },
+      {
+        "href": "Selfies-29.xhtml",
+        "label": "25"
+      },
+      {
+        "href": "Selfies-30.xhtml",
+        "label": "26"
+      },
+      {
+        "href": "Selfies-31.xhtml",
+        "label": "27"
+      },
+      {
+        "href": "Selfies-32.xhtml",
+        "label": "28"
+      },
+      {
+        "href": "Selfies-33.xhtml",
+        "label": "29"
+      },
+      {
+        "href": "Selfies-34.xhtml",
+        "label": "30"
+      },
+      {
+        "href": "Selfies-35.xhtml",
+        "label": "31"
+      },
+      {
+        "href": "Selfies-36.xhtml",
+        "label": "32"
+      },
+      {
+        "href": "Selfies-37.xhtml",
+        "label": "33"
+      },
+      {
+        "href": "Selfies-38.xhtml",
+        "label": "34"
+      },
+      {
+        "href": "Selfies-39.xhtml",
+        "label": "35"
+      },
+      {
+        "href": "Selfies-40.xhtml",
+        "label": "36"
+      },
+      {
+        "href": "Selfies-41.xhtml",
+        "label": "37"
+      },
+      {
+        "href": "Selfies-42.xhtml",
+        "label": "38"
+      },
+      {
+        "href": "Selfies-43.xhtml",
+        "label": "39"
+      },
+      {
+        "href": "Selfies-44.xhtml",
+        "label": "40"
+      },
+      {
+        "href": "Selfies-45.xhtml",
+        "label": "41"
+      },
+      {
+        "href": "Selfies-46.xhtml",
+        "label": "42"
+      },
+      {
+        "href": "Selfies-47.xhtml",
+        "label": "43"
+      },
+      {
+        "href": "Selfies-48.xhtml",
+        "label": "44"
+      },
+      {
+        "href": "Selfies-49.xhtml",
+        "label": "45"
+      },
+      {
+        "href": "Selfies-50.xhtml",
+        "label": "46"
+      },
+      {
+        "href": "Selfies-51.xhtml",
+        "label": "47"
+      },
+      {
+        "href": "Selfies-52.xhtml",
+        "label": "48"
+      },
+      {
+        "href": "Selfies-53.xhtml",
+        "label": "49"
+      },
+      {
+        "href": "Selfies-54.xhtml",
+        "label": "50"
+      },
+      {
+        "href": "Selfies-55.xhtml",
+        "label": "51"
+      },
+      {
+        "href": "Selfies-56.xhtml",
+        "label": "52"
+      },
+      {
+        "href": "Selfies-57.xhtml",
+        "label": "53"
+      },
+      {
+        "href": "Selfies-58.xhtml",
+        "label": "54"
+      },
+      {
+        "href": "Selfies-59.xhtml",
+        "label": "55"
+      },
+      {
+        "href": "Selfies-60.xhtml",
+        "label": "Epilog"
+      },
+      {
+        "href": "Selfies-61.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Selfies.xhtml",
+        "label": "Selfies"
+      },
+      {
+        "href": "Selfies-1.xhtml",
+        "label": "Af Jussi Adler-Olsen"
+      },
+      {
+        "href": "Selfies-4.xhtml",
+        "label": "PROLOG"
+      },
+      {
+        "href": "Selfies-5.xhtml",
+        "label": "Selfies 5"
+      },
+      {
+        "href": "Selfies-6.xhtml",
+        "label": "Selfies 6"
+      },
+      {
+        "href": "Selfies-7.xhtml",
+        "label": "Selfies 7"
+      },
+      {
+        "href": "Selfies-8.xhtml",
+        "label": "Selfies 8"
+      },
+      {
+        "href": "Selfies-9.xhtml",
+        "label": "Selfies 9"
+      },
+      {
+        "href": "Selfies-10.xhtml",
+        "label": "Selfies 10"
+      },
+      {
+        "href": "Selfies-11.xhtml",
+        "label": "Selfies 11"
+      },
+      {
+        "href": "Selfies-12.xhtml",
+        "label": "Selfies 12"
+      },
+      {
+        "href": "Selfies-13.xhtml",
+        "label": "Selfies 13"
+      },
+      {
+        "href": "Selfies-14.xhtml",
+        "label": "10"
+      },
+      {
+        "href": "Selfies-15.xhtml",
+        "label": "11"
+      },
+      {
+        "href": "Selfies-16.xhtml",
+        "label": "12"
+      },
+      {
+        "href": "Selfies-17.xhtml",
+        "label": "13"
+      },
+      {
+        "href": "Selfies-18.xhtml",
+        "label": "14"
+      },
+      {
+        "href": "Selfies-19.xhtml",
+        "label": "15"
+      },
+      {
+        "href": "Selfies-20.xhtml",
+        "label": "16"
+      },
+      {
+        "href": "Selfies-21.xhtml",
+        "label": "17"
+      },
+      {
+        "href": "Selfies-22.xhtml",
+        "label": "18"
+      },
+      {
+        "href": "Selfies-23.xhtml",
+        "label": "19"
+      },
+      {
+        "href": "Selfies-24.xhtml",
+        "label": "20"
+      },
+      {
+        "href": "Selfies-25.xhtml",
+        "label": "21"
+      },
+      {
+        "href": "Selfies-26.xhtml",
+        "label": "22"
+      },
+      {
+        "href": "Selfies-27.xhtml",
+        "label": "23"
+      },
+      {
+        "href": "Selfies-28.xhtml",
+        "label": "24"
+      },
+      {
+        "href": "Selfies-29.xhtml",
+        "label": "25"
+      },
+      {
+        "href": "Selfies-30.xhtml",
+        "label": "26"
+      },
+      {
+        "href": "Selfies-31.xhtml",
+        "label": "27"
+      },
+      {
+        "href": "Selfies-32.xhtml",
+        "label": "28"
+      },
+      {
+        "href": "Selfies-33.xhtml",
+        "label": "29"
+      },
+      {
+        "href": "Selfies-34.xhtml",
+        "label": "30"
+      },
+      {
+        "href": "Selfies-35.xhtml",
+        "label": "31"
+      },
+      {
+        "href": "Selfies-36.xhtml",
+        "label": "32"
+      },
+      {
+        "href": "Selfies-37.xhtml",
+        "label": "33"
+      },
+      {
+        "href": "Selfies-38.xhtml",
+        "label": "34"
+      },
+      {
+        "href": "Selfies-39.xhtml",
+        "label": "35"
+      },
+      {
+        "href": "Selfies-40.xhtml",
+        "label": "36"
+      },
+      {
+        "href": "Selfies-41.xhtml",
+        "label": "37"
+      },
+      {
+        "href": "Selfies-42.xhtml",
+        "label": "38"
+      },
+      {
+        "href": "Selfies-43.xhtml",
+        "label": "39"
+      },
+      {
+        "href": "Selfies-44.xhtml",
+        "label": "40"
+      },
+      {
+        "href": "Selfies-45.xhtml",
+        "label": "41"
+      },
+      {
+        "href": "Selfies-46.xhtml",
+        "label": "42"
+      },
+      {
+        "href": "Selfies-47.xhtml",
+        "label": "43"
+      },
+      {
+        "href": "Selfies-48.xhtml",
+        "label": "44"
+      },
+      {
+        "href": "Selfies-49.xhtml",
+        "label": "45"
+      },
+      {
+        "href": "Selfies-50.xhtml",
+        "label": "46"
+      },
+      {
+        "href": "Selfies-51.xhtml",
+        "label": "47"
+      },
+      {
+        "href": "Selfies-52.xhtml",
+        "label": "48"
+      },
+      {
+        "href": "Selfies-53.xhtml",
+        "label": "49"
+      },
+      {
+        "href": "Selfies-54.xhtml",
+        "label": "50"
+      },
+      {
+        "href": "Selfies-55.xhtml",
+        "label": "51"
+      },
+      {
+        "href": "Selfies-56.xhtml",
+        "label": "52"
+      },
+      {
+        "href": "Selfies-57.xhtml",
+        "label": "53"
+      },
+      {
+        "href": "Selfies-58.xhtml",
+        "label": "54"
+      },
+      {
+        "href": "Selfies-59.xhtml",
+        "label": "55"
+      },
+      {
+        "href": "Selfies-60.xhtml",
+        "label": "Epilog"
+      },
+      {
+        "href": "Selfies-61.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Selfies.xhtml",
+        "label": "Indhold"
+      }
+    ],
+    "score": {
+      "mode": "fallback",
+      "score": 55,
+      "reasons": [
+        "many-toc-hrefs-not-in-spine",
+        "low-label-uniqueness"
+      ],
+      "metrics": {
+        "spineLen": 9,
+        "tocLen": 61,
+        "mapped": 7,
+        "mappedUnique": 7,
+        "tocSpineRatio": 0.778,
+        "invalidHrefRatio": 0.885,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.131
+      }
+    },
+    "collapse": true
+  },
   "heuristics": {
     "structure": {
       "mode": "fallback",
       "score": 55,
       "reasons": [
-        "weak-or-index-like-labels",
-        "low-label-uniqueness",
-        "many-toc-hrefs-not-in-spine"
+        "many-toc-hrefs-not-in-spine",
+        "low-label-uniqueness"
       ],
       "metrics": {
-        "spineLen": 0,
-        "tocLen": 59,
-        "mapped": 0,
-        "mappedUnique": 0,
-        "tocSpineRatio": 0,
-        "invalidHrefRatio": 1,
+        "spineLen": 9,
+        "tocLen": 61,
+        "mapped": 7,
+        "mappedUnique": 7,
+        "tocSpineRatio": 0.778,
+        "invalidHrefRatio": 0.885,
         "dupSpineRatio": 0,
-        "weakLabelRatio": 0.932,
+        "weakLabelRatio": 0,
         "chapterRatio": 0,
-        "uniqRatio": 0.085
+        "uniqRatio": 0.131
       }
-    }
+    },
+    "collapse": true
   }
 }

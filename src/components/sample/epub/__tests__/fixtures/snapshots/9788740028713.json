@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "generatedAt": "2026-01-16T16:26:06.807Z",
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.174Z",
   "fileName": "9788740028713.zip",
   "parser": "epubjs",
   "metadata": {
@@ -1116,27 +1116,1782 @@
       "spineHit": null
     }
   ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "Kastanjemanden-2.xhtml#_idParaDest-1",
+        "label": "Tirsdag den 31. oktober 1989"
+      },
+      {
+        "href": "Kastanjemanden-3.xhtml#_idParaDest-2",
+        "label": "1"
+      },
+      {
+        "href": "Kastanjemanden-4.xhtml#_idParaDest-3",
+        "label": "Mandag den 5. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-5.xhtml#_idParaDest-4",
+        "label": "2"
+      },
+      {
+        "href": "Kastanjemanden-6.xhtml#_idParaDest-5",
+        "label": "Tirsdag den 6. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-7.xhtml#_idParaDest-6",
+        "label": "3"
+      },
+      {
+        "href": "Kastanjemanden-8.xhtml#_idParaDest-7",
+        "label": "4"
+      },
+      {
+        "href": "Kastanjemanden-9.xhtml#_idParaDest-8",
+        "label": "5"
+      },
+      {
+        "href": "Kastanjemanden-10.xhtml#_idParaDest-9",
+        "label": "6"
+      },
+      {
+        "href": "Kastanjemanden-11.xhtml#_idParaDest-10",
+        "label": "7"
+      },
+      {
+        "href": "Kastanjemanden-12.xhtml#_idParaDest-11",
+        "label": "8"
+      },
+      {
+        "href": "Kastanjemanden-13.xhtml#_idParaDest-12",
+        "label": "9"
+      },
+      {
+        "href": "Kastanjemanden-14.xhtml#_idParaDest-13",
+        "label": "10"
+      },
+      {
+        "href": "Kastanjemanden-15.xhtml#_idParaDest-14",
+        "label": "11"
+      },
+      {
+        "href": "Kastanjemanden-16.xhtml#_idParaDest-15",
+        "label": "12"
+      },
+      {
+        "href": "Kastanjemanden-17.xhtml#_idParaDest-16",
+        "label": "13"
+      },
+      {
+        "href": "Kastanjemanden-18.xhtml#_idParaDest-17",
+        "label": "14"
+      },
+      {
+        "href": "Kastanjemanden-19.xhtml#_idParaDest-18",
+        "label": "15"
+      },
+      {
+        "href": "Kastanjemanden-20.xhtml#_idParaDest-19",
+        "label": "16"
+      },
+      {
+        "href": "Kastanjemanden-21.xhtml#_idParaDest-20",
+        "label": "17"
+      },
+      {
+        "href": "Kastanjemanden-22.xhtml#_idParaDest-21",
+        "label": "18"
+      },
+      {
+        "href": "Kastanjemanden-23.xhtml#_idParaDest-22",
+        "label": "19"
+      },
+      {
+        "href": "Kastanjemanden-24.xhtml#_idParaDest-23",
+        "label": "20"
+      },
+      {
+        "href": "Kastanjemanden-25.xhtml#_idParaDest-24",
+        "label": "21"
+      },
+      {
+        "href": "Kastanjemanden-26.xhtml#_idParaDest-25",
+        "label": "22"
+      },
+      {
+        "href": "Kastanjemanden-27.xhtml#_idParaDest-26",
+        "label": "23"
+      },
+      {
+        "href": "Kastanjemanden-28.xhtml#_idParaDest-27",
+        "label": "24"
+      },
+      {
+        "href": "Kastanjemanden-29.xhtml#_idParaDest-28",
+        "label": "25"
+      },
+      {
+        "href": "Kastanjemanden-30.xhtml#_idParaDest-29",
+        "label": "26"
+      },
+      {
+        "href": "Kastanjemanden-31.xhtml#_idParaDest-30",
+        "label": "27"
+      },
+      {
+        "href": "Kastanjemanden-32.xhtml#_idParaDest-31",
+        "label": "Mandag den 12. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-33.xhtml#_idParaDest-32",
+        "label": "28"
+      },
+      {
+        "href": "Kastanjemanden-34.xhtml#_idParaDest-33",
+        "label": "29"
+      },
+      {
+        "href": "Kastanjemanden-35.xhtml#_idParaDest-34",
+        "label": "30"
+      },
+      {
+        "href": "Kastanjemanden-36.xhtml#_idParaDest-35",
+        "label": "31"
+      },
+      {
+        "href": "Kastanjemanden-37.xhtml#_idParaDest-36",
+        "label": "32"
+      },
+      {
+        "href": "Kastanjemanden-38.xhtml#_idParaDest-37",
+        "label": "33"
+      },
+      {
+        "href": "Kastanjemanden-39.xhtml#_idParaDest-38",
+        "label": "34"
+      },
+      {
+        "href": "Kastanjemanden-40.xhtml#_idParaDest-39",
+        "label": "35"
+      },
+      {
+        "href": "Kastanjemanden-41.xhtml#_idParaDest-40",
+        "label": "36"
+      },
+      {
+        "href": "Kastanjemanden-42.xhtml#_idParaDest-41",
+        "label": "37"
+      },
+      {
+        "href": "Kastanjemanden-43.xhtml#_idParaDest-42",
+        "label": "38"
+      },
+      {
+        "href": "Kastanjemanden-44.xhtml#_idParaDest-43",
+        "label": "39"
+      },
+      {
+        "href": "Kastanjemanden-45.xhtml#_idParaDest-44",
+        "label": "40"
+      },
+      {
+        "href": "Kastanjemanden-46.xhtml#_idParaDest-45",
+        "label": "41"
+      },
+      {
+        "href": "Kastanjemanden-47.xhtml#_idParaDest-46",
+        "label": "42"
+      },
+      {
+        "href": "Kastanjemanden-48.xhtml#_idParaDest-47",
+        "label": "43"
+      },
+      {
+        "href": "Kastanjemanden-49.xhtml#_idParaDest-48",
+        "label": "44"
+      },
+      {
+        "href": "Kastanjemanden-50.xhtml#_idParaDest-49",
+        "label": "Tirsdag den 13. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-51.xhtml#_idParaDest-50",
+        "label": "45"
+      },
+      {
+        "href": "Kastanjemanden-52.xhtml#_idParaDest-51",
+        "label": "46"
+      },
+      {
+        "href": "Kastanjemanden-53.xhtml#_idParaDest-52",
+        "label": "47"
+      },
+      {
+        "href": "Kastanjemanden-54.xhtml#_idParaDest-53",
+        "label": "48"
+      },
+      {
+        "href": "Kastanjemanden-55.xhtml#_idParaDest-54",
+        "label": "49"
+      },
+      {
+        "href": "Kastanjemanden-56.xhtml#_idParaDest-55",
+        "label": "50"
+      },
+      {
+        "href": "Kastanjemanden-57.xhtml#_idParaDest-56",
+        "label": "51"
+      },
+      {
+        "href": "Kastanjemanden-58.xhtml#_idParaDest-57",
+        "label": "52"
+      },
+      {
+        "href": "Kastanjemanden-59.xhtml#_idParaDest-58",
+        "label": "53"
+      },
+      {
+        "href": "Kastanjemanden-60.xhtml#_idParaDest-59",
+        "label": "54"
+      },
+      {
+        "href": "Kastanjemanden-61.xhtml#_idParaDest-60",
+        "label": "55"
+      },
+      {
+        "href": "Kastanjemanden-62.xhtml#_idParaDest-61",
+        "label": "56"
+      },
+      {
+        "href": "Kastanjemanden-63.xhtml#_idParaDest-62",
+        "label": "57"
+      },
+      {
+        "href": "Kastanjemanden-64.xhtml#_idParaDest-63",
+        "label": "58"
+      },
+      {
+        "href": "Kastanjemanden-65.xhtml#_idParaDest-64",
+        "label": "59"
+      },
+      {
+        "href": "Kastanjemanden-66.xhtml#_idParaDest-65",
+        "label": "60"
+      },
+      {
+        "href": "Kastanjemanden-67.xhtml#_idParaDest-66",
+        "label": "61"
+      },
+      {
+        "href": "Kastanjemanden-68.xhtml#_idParaDest-67",
+        "label": "62"
+      },
+      {
+        "href": "Kastanjemanden-69.xhtml#_idParaDest-68",
+        "label": "Fredag den 16. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-70.xhtml#_idParaDest-69",
+        "label": "63"
+      },
+      {
+        "href": "Kastanjemanden-71.xhtml#_idParaDest-70",
+        "label": "64"
+      },
+      {
+        "href": "Kastanjemanden-72.xhtml#_idParaDest-71",
+        "label": "65"
+      },
+      {
+        "href": "Kastanjemanden-73.xhtml#_idParaDest-72",
+        "label": "66"
+      },
+      {
+        "href": "Kastanjemanden-74.xhtml#_idParaDest-73",
+        "label": "67"
+      },
+      {
+        "href": "Kastanjemanden-75.xhtml#_idParaDest-74",
+        "label": "68"
+      },
+      {
+        "href": "Kastanjemanden-76.xhtml#_idParaDest-75",
+        "label": "69"
+      },
+      {
+        "href": "Kastanjemanden-77.xhtml#_idParaDest-76",
+        "label": "70"
+      },
+      {
+        "href": "Kastanjemanden-78.xhtml#_idParaDest-77",
+        "label": "71"
+      },
+      {
+        "href": "Kastanjemanden-79.xhtml#_idParaDest-78",
+        "label": "72"
+      },
+      {
+        "href": "Kastanjemanden-80.xhtml#_idParaDest-79",
+        "label": "73"
+      },
+      {
+        "href": "Kastanjemanden-81.xhtml#_idParaDest-80",
+        "label": "74"
+      },
+      {
+        "href": "Kastanjemanden-82.xhtml#_idParaDest-81",
+        "label": "75"
+      },
+      {
+        "href": "Kastanjemanden-83.xhtml#_idParaDest-82",
+        "label": "76"
+      },
+      {
+        "href": "Kastanjemanden-84.xhtml#_idParaDest-83",
+        "label": "77"
+      },
+      {
+        "href": "Kastanjemanden-85.xhtml#_idParaDest-84",
+        "label": "78"
+      },
+      {
+        "href": "Kastanjemanden-86.xhtml#_idParaDest-85",
+        "label": "Tirsdag den 20. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-87.xhtml#_idParaDest-86",
+        "label": "79"
+      },
+      {
+        "href": "Kastanjemanden-88.xhtml#_idParaDest-87",
+        "label": "80"
+      },
+      {
+        "href": "Kastanjemanden-89.xhtml#_idParaDest-88",
+        "label": "81"
+      },
+      {
+        "href": "Kastanjemanden-90.xhtml#_idParaDest-89",
+        "label": "82"
+      },
+      {
+        "href": "Kastanjemanden-91.xhtml#_idParaDest-90",
+        "label": "83"
+      },
+      {
+        "href": "Kastanjemanden-92.xhtml#_idParaDest-91",
+        "label": "84"
+      },
+      {
+        "href": "Kastanjemanden-93.xhtml#_idParaDest-92",
+        "label": "85"
+      },
+      {
+        "href": "Kastanjemanden-94.xhtml#_idParaDest-93",
+        "label": "86"
+      },
+      {
+        "href": "Kastanjemanden-95.xhtml#_idParaDest-94",
+        "label": "87"
+      },
+      {
+        "href": "Kastanjemanden-96.xhtml#_idParaDest-95",
+        "label": "88"
+      },
+      {
+        "href": "Kastanjemanden-97.xhtml#_idParaDest-96",
+        "label": "89"
+      },
+      {
+        "href": "Kastanjemanden-98.xhtml#_idParaDest-97",
+        "label": "90"
+      },
+      {
+        "href": "Kastanjemanden-99.xhtml#_idParaDest-98",
+        "label": "91"
+      },
+      {
+        "href": "Kastanjemanden-100.xhtml#_idParaDest-99",
+        "label": "92"
+      },
+      {
+        "href": "Kastanjemanden-101.xhtml#_idParaDest-100",
+        "label": "93"
+      },
+      {
+        "href": "Kastanjemanden-102.xhtml#_idParaDest-101",
+        "label": "94"
+      },
+      {
+        "href": "Kastanjemanden-103.xhtml#_idParaDest-102",
+        "label": "95"
+      },
+      {
+        "href": "Kastanjemanden-104.xhtml#_idParaDest-103",
+        "label": "96"
+      },
+      {
+        "href": "Kastanjemanden-105.xhtml#_idParaDest-104",
+        "label": "97"
+      },
+      {
+        "href": "Kastanjemanden-106.xhtml#_idParaDest-105",
+        "label": "98"
+      },
+      {
+        "href": "Kastanjemanden-107.xhtml#_idParaDest-106",
+        "label": "Fredag den 30. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-108.xhtml#_idParaDest-107",
+        "label": "99"
+      },
+      {
+        "href": "Kastanjemanden-109.xhtml#_idParaDest-108",
+        "label": "100"
+      },
+      {
+        "href": "Kastanjemanden-110.xhtml#_idParaDest-109",
+        "label": "101"
+      },
+      {
+        "href": "Kastanjemanden-111.xhtml#_idParaDest-110",
+        "label": "102"
+      },
+      {
+        "href": "Kastanjemanden-112.xhtml#_idParaDest-111",
+        "label": "103"
+      },
+      {
+        "href": "Kastanjemanden-113.xhtml#_idParaDest-112",
+        "label": "104"
+      },
+      {
+        "href": "Kastanjemanden-114.xhtml#_idParaDest-113",
+        "label": "105"
+      },
+      {
+        "href": "Kastanjemanden-115.xhtml#_idParaDest-114",
+        "label": "106"
+      },
+      {
+        "href": "Kastanjemanden-116.xhtml#_idParaDest-115",
+        "label": "107"
+      },
+      {
+        "href": "Kastanjemanden-117.xhtml#_idParaDest-116",
+        "label": "108"
+      },
+      {
+        "href": "Kastanjemanden-118.xhtml#_idParaDest-117",
+        "label": "109"
+      },
+      {
+        "href": "Kastanjemanden-119.xhtml#_idParaDest-118",
+        "label": "110"
+      },
+      {
+        "href": "Kastanjemanden-120.xhtml#_idParaDest-119",
+        "label": "111"
+      },
+      {
+        "href": "Kastanjemanden-121.xhtml#_idParaDest-120",
+        "label": "112"
+      },
+      {
+        "href": "Kastanjemanden-122.xhtml#_idParaDest-121",
+        "label": "113"
+      },
+      {
+        "href": "Kastanjemanden-123.xhtml#_idParaDest-122",
+        "label": "114"
+      },
+      {
+        "href": "Kastanjemanden-124.xhtml#_idParaDest-123",
+        "label": "115"
+      },
+      {
+        "href": "Kastanjemanden-125.xhtml#_idParaDest-124",
+        "label": "116"
+      },
+      {
+        "href": "Kastanjemanden-126.xhtml#_idParaDest-125",
+        "label": "117"
+      },
+      {
+        "href": "Kastanjemanden-127.xhtml#_idParaDest-126",
+        "label": "118"
+      },
+      {
+        "href": "Kastanjemanden-128.xhtml#_idParaDest-127",
+        "label": "119"
+      },
+      {
+        "href": "Kastanjemanden-129.xhtml#_idParaDest-128",
+        "label": "120"
+      },
+      {
+        "href": "Kastanjemanden-130.xhtml#_idParaDest-129",
+        "label": "121"
+      },
+      {
+        "href": "Kastanjemanden-131.xhtml#_idParaDest-130",
+        "label": "122"
+      },
+      {
+        "href": "Kastanjemanden-132.xhtml#_idParaDest-131",
+        "label": "123"
+      },
+      {
+        "href": "Kastanjemanden-133.xhtml#_idParaDest-132",
+        "label": "Tirsdag den 3. november, nutid"
+      },
+      {
+        "href": "Kastanjemanden-134.xhtml#_idParaDest-133",
+        "label": "124"
+      },
+      {
+        "href": "Kastanjemanden-135.xhtml#_idParaDest-134",
+        "label": "125"
+      },
+      {
+        "href": "Kastanjemanden-136.xhtml#_idParaDest-135",
+        "label": "126"
+      },
+      {
+        "href": "Kastanjemanden-137.xhtml#_idParaDest-136",
+        "label": "127"
+      },
+      {
+        "href": "Kastanjemanden-138.xhtml#_idParaDest-137",
+        "label": "128"
+      },
+      {
+        "href": "Kastanjemanden-139.xhtml#_idParaDest-138",
+        "label": "Onsdag den 4. november, nutid"
+      },
+      {
+        "href": "Kastanjemanden-140.xhtml#_idParaDest-139",
+        "label": "129"
+      },
+      {
+        "href": "Kastanjemanden-141.xhtml#_idParaDest-140",
+        "label": "130"
+      },
+      {
+        "href": "Kastanjemanden-142.xhtml#_idParaDest-141",
+        "label": "Tak"
+      },
+      {
+        "href": "Kastanjemanden-143.xhtml#_idParaDest-142",
+        "label": "Kolofon"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "Kastanjemanden-2.xhtml",
+        "label": "Tirsdag den 31. oktober 1989"
+      },
+      {
+        "href": "Kastanjemanden-3.xhtml",
+        "label": "Kastanjemanden 3"
+      },
+      {
+        "href": "Kastanjemanden-4.xhtml",
+        "label": "Mandag den 5. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-5.xhtml",
+        "label": "Kastanjemanden 5"
+      },
+      {
+        "href": "Kastanjemanden-6.xhtml",
+        "label": "Tirsdag den 6. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-7.xhtml",
+        "label": "Kastanjemanden 7"
+      },
+      {
+        "href": "Kastanjemanden-8.xhtml",
+        "label": "Kastanjemanden 8"
+      },
+      {
+        "href": "Kastanjemanden-9.xhtml",
+        "label": "Kastanjemanden 9"
+      },
+      {
+        "href": "Kastanjemanden-10.xhtml",
+        "label": "Kastanjemanden 10"
+      },
+      {
+        "href": "Kastanjemanden-11.xhtml",
+        "label": "Kastanjemanden 11"
+      },
+      {
+        "href": "Kastanjemanden-12.xhtml",
+        "label": "Kastanjemanden 12"
+      },
+      {
+        "href": "Kastanjemanden-13.xhtml",
+        "label": "Kastanjemanden 13"
+      },
+      {
+        "href": "Kastanjemanden-14.xhtml",
+        "label": "10"
+      },
+      {
+        "href": "Kastanjemanden-15.xhtml",
+        "label": "11"
+      },
+      {
+        "href": "Kastanjemanden-16.xhtml",
+        "label": "12"
+      },
+      {
+        "href": "Kastanjemanden-17.xhtml",
+        "label": "13"
+      },
+      {
+        "href": "Kastanjemanden-18.xhtml",
+        "label": "14"
+      },
+      {
+        "href": "Kastanjemanden-19.xhtml",
+        "label": "15"
+      },
+      {
+        "href": "Kastanjemanden-20.xhtml",
+        "label": "16"
+      },
+      {
+        "href": "Kastanjemanden-21.xhtml",
+        "label": "17"
+      },
+      {
+        "href": "Kastanjemanden-22.xhtml",
+        "label": "18"
+      },
+      {
+        "href": "Kastanjemanden-23.xhtml",
+        "label": "19"
+      },
+      {
+        "href": "Kastanjemanden-24.xhtml",
+        "label": "20"
+      },
+      {
+        "href": "Kastanjemanden-25.xhtml",
+        "label": "21"
+      },
+      {
+        "href": "Kastanjemanden-26.xhtml",
+        "label": "22"
+      },
+      {
+        "href": "Kastanjemanden-27.xhtml",
+        "label": "23"
+      },
+      {
+        "href": "Kastanjemanden-28.xhtml",
+        "label": "24"
+      },
+      {
+        "href": "Kastanjemanden-29.xhtml",
+        "label": "25"
+      },
+      {
+        "href": "Kastanjemanden-30.xhtml",
+        "label": "26"
+      },
+      {
+        "href": "Kastanjemanden-31.xhtml",
+        "label": "27"
+      },
+      {
+        "href": "Kastanjemanden-32.xhtml",
+        "label": "Mandag den 12. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-33.xhtml",
+        "label": "28"
+      },
+      {
+        "href": "Kastanjemanden-34.xhtml",
+        "label": "29"
+      },
+      {
+        "href": "Kastanjemanden-35.xhtml",
+        "label": "30"
+      },
+      {
+        "href": "Kastanjemanden-36.xhtml",
+        "label": "31"
+      },
+      {
+        "href": "Kastanjemanden-37.xhtml",
+        "label": "32"
+      },
+      {
+        "href": "Kastanjemanden-38.xhtml",
+        "label": "33"
+      },
+      {
+        "href": "Kastanjemanden-39.xhtml",
+        "label": "34"
+      },
+      {
+        "href": "Kastanjemanden-40.xhtml",
+        "label": "35"
+      },
+      {
+        "href": "Kastanjemanden-41.xhtml",
+        "label": "36"
+      },
+      {
+        "href": "Kastanjemanden-42.xhtml",
+        "label": "37"
+      },
+      {
+        "href": "Kastanjemanden-43.xhtml",
+        "label": "38"
+      },
+      {
+        "href": "Kastanjemanden-44.xhtml",
+        "label": "39"
+      },
+      {
+        "href": "Kastanjemanden-45.xhtml",
+        "label": "40"
+      },
+      {
+        "href": "Kastanjemanden-46.xhtml",
+        "label": "41"
+      },
+      {
+        "href": "Kastanjemanden-47.xhtml",
+        "label": "42"
+      },
+      {
+        "href": "Kastanjemanden-48.xhtml",
+        "label": "43"
+      },
+      {
+        "href": "Kastanjemanden-49.xhtml",
+        "label": "44"
+      },
+      {
+        "href": "Kastanjemanden-50.xhtml",
+        "label": "Tirsdag den 13. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-51.xhtml",
+        "label": "45"
+      },
+      {
+        "href": "Kastanjemanden-52.xhtml",
+        "label": "46"
+      },
+      {
+        "href": "Kastanjemanden-53.xhtml",
+        "label": "47"
+      },
+      {
+        "href": "Kastanjemanden-54.xhtml",
+        "label": "48"
+      },
+      {
+        "href": "Kastanjemanden-55.xhtml",
+        "label": "49"
+      },
+      {
+        "href": "Kastanjemanden-56.xhtml",
+        "label": "50"
+      },
+      {
+        "href": "Kastanjemanden-57.xhtml",
+        "label": "51"
+      },
+      {
+        "href": "Kastanjemanden-58.xhtml",
+        "label": "52"
+      },
+      {
+        "href": "Kastanjemanden-59.xhtml",
+        "label": "53"
+      },
+      {
+        "href": "Kastanjemanden-60.xhtml",
+        "label": "54"
+      },
+      {
+        "href": "Kastanjemanden-61.xhtml",
+        "label": "55"
+      },
+      {
+        "href": "Kastanjemanden-62.xhtml",
+        "label": "56"
+      },
+      {
+        "href": "Kastanjemanden-63.xhtml",
+        "label": "57"
+      },
+      {
+        "href": "Kastanjemanden-64.xhtml",
+        "label": "58"
+      },
+      {
+        "href": "Kastanjemanden-65.xhtml",
+        "label": "59"
+      },
+      {
+        "href": "Kastanjemanden-66.xhtml",
+        "label": "60"
+      },
+      {
+        "href": "Kastanjemanden-67.xhtml",
+        "label": "61"
+      },
+      {
+        "href": "Kastanjemanden-68.xhtml",
+        "label": "62"
+      },
+      {
+        "href": "Kastanjemanden-69.xhtml",
+        "label": "Fredag den 16. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-70.xhtml",
+        "label": "63"
+      },
+      {
+        "href": "Kastanjemanden-71.xhtml",
+        "label": "64"
+      },
+      {
+        "href": "Kastanjemanden-72.xhtml",
+        "label": "65"
+      },
+      {
+        "href": "Kastanjemanden-73.xhtml",
+        "label": "66"
+      },
+      {
+        "href": "Kastanjemanden-74.xhtml",
+        "label": "67"
+      },
+      {
+        "href": "Kastanjemanden-75.xhtml",
+        "label": "68"
+      },
+      {
+        "href": "Kastanjemanden-76.xhtml",
+        "label": "69"
+      },
+      {
+        "href": "Kastanjemanden-77.xhtml",
+        "label": "70"
+      },
+      {
+        "href": "Kastanjemanden-78.xhtml",
+        "label": "71"
+      },
+      {
+        "href": "Kastanjemanden-79.xhtml",
+        "label": "72"
+      },
+      {
+        "href": "Kastanjemanden-80.xhtml",
+        "label": "73"
+      },
+      {
+        "href": "Kastanjemanden-81.xhtml",
+        "label": "74"
+      },
+      {
+        "href": "Kastanjemanden-82.xhtml",
+        "label": "75"
+      },
+      {
+        "href": "Kastanjemanden-83.xhtml",
+        "label": "76"
+      },
+      {
+        "href": "Kastanjemanden-84.xhtml",
+        "label": "77"
+      },
+      {
+        "href": "Kastanjemanden-85.xhtml",
+        "label": "78"
+      },
+      {
+        "href": "Kastanjemanden-86.xhtml",
+        "label": "Tirsdag den 20. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-87.xhtml",
+        "label": "79"
+      },
+      {
+        "href": "Kastanjemanden-88.xhtml",
+        "label": "80"
+      },
+      {
+        "href": "Kastanjemanden-89.xhtml",
+        "label": "81"
+      },
+      {
+        "href": "Kastanjemanden-90.xhtml",
+        "label": "82"
+      },
+      {
+        "href": "Kastanjemanden-91.xhtml",
+        "label": "83"
+      },
+      {
+        "href": "Kastanjemanden-92.xhtml",
+        "label": "84"
+      },
+      {
+        "href": "Kastanjemanden-93.xhtml",
+        "label": "85"
+      },
+      {
+        "href": "Kastanjemanden-94.xhtml",
+        "label": "86"
+      },
+      {
+        "href": "Kastanjemanden-95.xhtml",
+        "label": "87"
+      },
+      {
+        "href": "Kastanjemanden-96.xhtml",
+        "label": "88"
+      },
+      {
+        "href": "Kastanjemanden-97.xhtml",
+        "label": "89"
+      },
+      {
+        "href": "Kastanjemanden-98.xhtml",
+        "label": "90"
+      },
+      {
+        "href": "Kastanjemanden-99.xhtml",
+        "label": "91"
+      },
+      {
+        "href": "Kastanjemanden-100.xhtml",
+        "label": "92"
+      },
+      {
+        "href": "Kastanjemanden-101.xhtml",
+        "label": "93"
+      },
+      {
+        "href": "Kastanjemanden-102.xhtml",
+        "label": "94"
+      },
+      {
+        "href": "Kastanjemanden-103.xhtml",
+        "label": "95"
+      },
+      {
+        "href": "Kastanjemanden-104.xhtml",
+        "label": "96"
+      },
+      {
+        "href": "Kastanjemanden-105.xhtml",
+        "label": "97"
+      },
+      {
+        "href": "Kastanjemanden-106.xhtml",
+        "label": "98"
+      },
+      {
+        "href": "Kastanjemanden-107.xhtml",
+        "label": "Fredag den 30. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-108.xhtml",
+        "label": "99"
+      },
+      {
+        "href": "Kastanjemanden-109.xhtml",
+        "label": "100"
+      },
+      {
+        "href": "Kastanjemanden-110.xhtml",
+        "label": "101"
+      },
+      {
+        "href": "Kastanjemanden-111.xhtml",
+        "label": "102"
+      },
+      {
+        "href": "Kastanjemanden-112.xhtml",
+        "label": "103"
+      },
+      {
+        "href": "Kastanjemanden-113.xhtml",
+        "label": "104"
+      },
+      {
+        "href": "Kastanjemanden-114.xhtml",
+        "label": "105"
+      },
+      {
+        "href": "Kastanjemanden-115.xhtml",
+        "label": "106"
+      },
+      {
+        "href": "Kastanjemanden-116.xhtml",
+        "label": "107"
+      },
+      {
+        "href": "Kastanjemanden-117.xhtml",
+        "label": "108"
+      },
+      {
+        "href": "Kastanjemanden-118.xhtml",
+        "label": "109"
+      },
+      {
+        "href": "Kastanjemanden-119.xhtml",
+        "label": "110"
+      },
+      {
+        "href": "Kastanjemanden-120.xhtml",
+        "label": "111"
+      },
+      {
+        "href": "Kastanjemanden-121.xhtml",
+        "label": "112"
+      },
+      {
+        "href": "Kastanjemanden-122.xhtml",
+        "label": "113"
+      },
+      {
+        "href": "Kastanjemanden-123.xhtml",
+        "label": "114"
+      },
+      {
+        "href": "Kastanjemanden-124.xhtml",
+        "label": "115"
+      },
+      {
+        "href": "Kastanjemanden-125.xhtml",
+        "label": "116"
+      },
+      {
+        "href": "Kastanjemanden-126.xhtml",
+        "label": "117"
+      },
+      {
+        "href": "Kastanjemanden-127.xhtml",
+        "label": "118"
+      },
+      {
+        "href": "Kastanjemanden-128.xhtml",
+        "label": "119"
+      },
+      {
+        "href": "Kastanjemanden-129.xhtml",
+        "label": "120"
+      },
+      {
+        "href": "Kastanjemanden-130.xhtml",
+        "label": "121"
+      },
+      {
+        "href": "Kastanjemanden-131.xhtml",
+        "label": "122"
+      },
+      {
+        "href": "Kastanjemanden-132.xhtml",
+        "label": "123"
+      },
+      {
+        "href": "Kastanjemanden-133.xhtml",
+        "label": "Tirsdag den 3. november, nutid"
+      },
+      {
+        "href": "Kastanjemanden-134.xhtml",
+        "label": "124"
+      },
+      {
+        "href": "Kastanjemanden-135.xhtml",
+        "label": "125"
+      },
+      {
+        "href": "Kastanjemanden-136.xhtml",
+        "label": "126"
+      },
+      {
+        "href": "Kastanjemanden-137.xhtml",
+        "label": "127"
+      },
+      {
+        "href": "Kastanjemanden-138.xhtml",
+        "label": "128"
+      },
+      {
+        "href": "Kastanjemanden-139.xhtml",
+        "label": "Onsdag den 4. november, nutid"
+      },
+      {
+        "href": "Kastanjemanden-140.xhtml",
+        "label": "129"
+      },
+      {
+        "href": "Kastanjemanden-141.xhtml",
+        "label": "130"
+      },
+      {
+        "href": "Kastanjemanden-142.xhtml",
+        "label": "Tak"
+      },
+      {
+        "href": "Kastanjemanden-143.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Kastanjemanden.xhtml",
+        "label": "Kastanjemanden"
+      },
+      {
+        "href": "Kastanjemanden-1.xhtml",
+        "label": "Kastanjemanden 1"
+      },
+      {
+        "href": "Kastanjemanden-2.xhtml",
+        "label": "Tirsdag den 31. oktober 1989"
+      },
+      {
+        "href": "Kastanjemanden-3.xhtml",
+        "label": "Kastanjemanden 3"
+      },
+      {
+        "href": "Kastanjemanden-4.xhtml",
+        "label": "Mandag den 5. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-5.xhtml",
+        "label": "Kastanjemanden 5"
+      },
+      {
+        "href": "Kastanjemanden-6.xhtml",
+        "label": "Tirsdag den 6. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-7.xhtml",
+        "label": "Kastanjemanden 7"
+      },
+      {
+        "href": "Kastanjemanden-8.xhtml",
+        "label": "Kastanjemanden 8"
+      },
+      {
+        "href": "Kastanjemanden-9.xhtml",
+        "label": "Kastanjemanden 9"
+      },
+      {
+        "href": "Kastanjemanden-10.xhtml",
+        "label": "Kastanjemanden 10"
+      },
+      {
+        "href": "Kastanjemanden-11.xhtml",
+        "label": "Kastanjemanden 11"
+      },
+      {
+        "href": "Kastanjemanden-12.xhtml",
+        "label": "Kastanjemanden 12"
+      },
+      {
+        "href": "Kastanjemanden-13.xhtml",
+        "label": "Kastanjemanden 13"
+      },
+      {
+        "href": "Kastanjemanden-14.xhtml",
+        "label": "10"
+      },
+      {
+        "href": "Kastanjemanden-15.xhtml",
+        "label": "11"
+      },
+      {
+        "href": "Kastanjemanden-16.xhtml",
+        "label": "12"
+      },
+      {
+        "href": "Kastanjemanden-17.xhtml",
+        "label": "13"
+      },
+      {
+        "href": "Kastanjemanden-18.xhtml",
+        "label": "14"
+      },
+      {
+        "href": "Kastanjemanden-19.xhtml",
+        "label": "15"
+      },
+      {
+        "href": "Kastanjemanden-20.xhtml",
+        "label": "16"
+      },
+      {
+        "href": "Kastanjemanden-21.xhtml",
+        "label": "17"
+      },
+      {
+        "href": "Kastanjemanden-22.xhtml",
+        "label": "18"
+      },
+      {
+        "href": "Kastanjemanden-23.xhtml",
+        "label": "19"
+      },
+      {
+        "href": "Kastanjemanden-24.xhtml",
+        "label": "20"
+      },
+      {
+        "href": "Kastanjemanden-25.xhtml",
+        "label": "21"
+      },
+      {
+        "href": "Kastanjemanden-26.xhtml",
+        "label": "22"
+      },
+      {
+        "href": "Kastanjemanden-27.xhtml",
+        "label": "23"
+      },
+      {
+        "href": "Kastanjemanden-28.xhtml",
+        "label": "24"
+      },
+      {
+        "href": "Kastanjemanden-29.xhtml",
+        "label": "25"
+      },
+      {
+        "href": "Kastanjemanden-30.xhtml",
+        "label": "26"
+      },
+      {
+        "href": "Kastanjemanden-31.xhtml",
+        "label": "27"
+      },
+      {
+        "href": "Kastanjemanden-32.xhtml",
+        "label": "Mandag den 12. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-33.xhtml",
+        "label": "28"
+      },
+      {
+        "href": "Kastanjemanden-34.xhtml",
+        "label": "29"
+      },
+      {
+        "href": "Kastanjemanden-35.xhtml",
+        "label": "30"
+      },
+      {
+        "href": "Kastanjemanden-36.xhtml",
+        "label": "31"
+      },
+      {
+        "href": "Kastanjemanden-37.xhtml",
+        "label": "32"
+      },
+      {
+        "href": "Kastanjemanden-38.xhtml",
+        "label": "33"
+      },
+      {
+        "href": "Kastanjemanden-39.xhtml",
+        "label": "34"
+      },
+      {
+        "href": "Kastanjemanden-40.xhtml",
+        "label": "35"
+      },
+      {
+        "href": "Kastanjemanden-41.xhtml",
+        "label": "36"
+      },
+      {
+        "href": "Kastanjemanden-42.xhtml",
+        "label": "37"
+      },
+      {
+        "href": "Kastanjemanden-43.xhtml",
+        "label": "38"
+      },
+      {
+        "href": "Kastanjemanden-44.xhtml",
+        "label": "39"
+      },
+      {
+        "href": "Kastanjemanden-45.xhtml",
+        "label": "40"
+      },
+      {
+        "href": "Kastanjemanden-46.xhtml",
+        "label": "41"
+      },
+      {
+        "href": "Kastanjemanden-47.xhtml",
+        "label": "42"
+      },
+      {
+        "href": "Kastanjemanden-48.xhtml",
+        "label": "43"
+      },
+      {
+        "href": "Kastanjemanden-49.xhtml",
+        "label": "44"
+      },
+      {
+        "href": "Kastanjemanden-50.xhtml",
+        "label": "Tirsdag den 13. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-51.xhtml",
+        "label": "45"
+      },
+      {
+        "href": "Kastanjemanden-52.xhtml",
+        "label": "46"
+      },
+      {
+        "href": "Kastanjemanden-53.xhtml",
+        "label": "47"
+      },
+      {
+        "href": "Kastanjemanden-54.xhtml",
+        "label": "48"
+      },
+      {
+        "href": "Kastanjemanden-55.xhtml",
+        "label": "49"
+      },
+      {
+        "href": "Kastanjemanden-56.xhtml",
+        "label": "50"
+      },
+      {
+        "href": "Kastanjemanden-57.xhtml",
+        "label": "51"
+      },
+      {
+        "href": "Kastanjemanden-58.xhtml",
+        "label": "52"
+      },
+      {
+        "href": "Kastanjemanden-59.xhtml",
+        "label": "53"
+      },
+      {
+        "href": "Kastanjemanden-60.xhtml",
+        "label": "54"
+      },
+      {
+        "href": "Kastanjemanden-61.xhtml",
+        "label": "55"
+      },
+      {
+        "href": "Kastanjemanden-62.xhtml",
+        "label": "56"
+      },
+      {
+        "href": "Kastanjemanden-63.xhtml",
+        "label": "57"
+      },
+      {
+        "href": "Kastanjemanden-64.xhtml",
+        "label": "58"
+      },
+      {
+        "href": "Kastanjemanden-65.xhtml",
+        "label": "59"
+      },
+      {
+        "href": "Kastanjemanden-66.xhtml",
+        "label": "60"
+      },
+      {
+        "href": "Kastanjemanden-67.xhtml",
+        "label": "61"
+      },
+      {
+        "href": "Kastanjemanden-68.xhtml",
+        "label": "62"
+      },
+      {
+        "href": "Kastanjemanden-69.xhtml",
+        "label": "Fredag den 16. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-70.xhtml",
+        "label": "63"
+      },
+      {
+        "href": "Kastanjemanden-71.xhtml",
+        "label": "64"
+      },
+      {
+        "href": "Kastanjemanden-72.xhtml",
+        "label": "65"
+      },
+      {
+        "href": "Kastanjemanden-73.xhtml",
+        "label": "66"
+      },
+      {
+        "href": "Kastanjemanden-74.xhtml",
+        "label": "67"
+      },
+      {
+        "href": "Kastanjemanden-75.xhtml",
+        "label": "68"
+      },
+      {
+        "href": "Kastanjemanden-76.xhtml",
+        "label": "69"
+      },
+      {
+        "href": "Kastanjemanden-77.xhtml",
+        "label": "70"
+      },
+      {
+        "href": "Kastanjemanden-78.xhtml",
+        "label": "71"
+      },
+      {
+        "href": "Kastanjemanden-79.xhtml",
+        "label": "72"
+      },
+      {
+        "href": "Kastanjemanden-80.xhtml",
+        "label": "73"
+      },
+      {
+        "href": "Kastanjemanden-81.xhtml",
+        "label": "74"
+      },
+      {
+        "href": "Kastanjemanden-82.xhtml",
+        "label": "75"
+      },
+      {
+        "href": "Kastanjemanden-83.xhtml",
+        "label": "76"
+      },
+      {
+        "href": "Kastanjemanden-84.xhtml",
+        "label": "77"
+      },
+      {
+        "href": "Kastanjemanden-85.xhtml",
+        "label": "78"
+      },
+      {
+        "href": "Kastanjemanden-86.xhtml",
+        "label": "Tirsdag den 20. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-87.xhtml",
+        "label": "79"
+      },
+      {
+        "href": "Kastanjemanden-88.xhtml",
+        "label": "80"
+      },
+      {
+        "href": "Kastanjemanden-89.xhtml",
+        "label": "81"
+      },
+      {
+        "href": "Kastanjemanden-90.xhtml",
+        "label": "82"
+      },
+      {
+        "href": "Kastanjemanden-91.xhtml",
+        "label": "83"
+      },
+      {
+        "href": "Kastanjemanden-92.xhtml",
+        "label": "84"
+      },
+      {
+        "href": "Kastanjemanden-93.xhtml",
+        "label": "85"
+      },
+      {
+        "href": "Kastanjemanden-94.xhtml",
+        "label": "86"
+      },
+      {
+        "href": "Kastanjemanden-95.xhtml",
+        "label": "87"
+      },
+      {
+        "href": "Kastanjemanden-96.xhtml",
+        "label": "88"
+      },
+      {
+        "href": "Kastanjemanden-97.xhtml",
+        "label": "89"
+      },
+      {
+        "href": "Kastanjemanden-98.xhtml",
+        "label": "90"
+      },
+      {
+        "href": "Kastanjemanden-99.xhtml",
+        "label": "91"
+      },
+      {
+        "href": "Kastanjemanden-100.xhtml",
+        "label": "92"
+      },
+      {
+        "href": "Kastanjemanden-101.xhtml",
+        "label": "93"
+      },
+      {
+        "href": "Kastanjemanden-102.xhtml",
+        "label": "94"
+      },
+      {
+        "href": "Kastanjemanden-103.xhtml",
+        "label": "95"
+      },
+      {
+        "href": "Kastanjemanden-104.xhtml",
+        "label": "96"
+      },
+      {
+        "href": "Kastanjemanden-105.xhtml",
+        "label": "97"
+      },
+      {
+        "href": "Kastanjemanden-106.xhtml",
+        "label": "98"
+      },
+      {
+        "href": "Kastanjemanden-107.xhtml",
+        "label": "Fredag den 30. oktober, nutid"
+      },
+      {
+        "href": "Kastanjemanden-108.xhtml",
+        "label": "99"
+      },
+      {
+        "href": "Kastanjemanden-109.xhtml",
+        "label": "100"
+      },
+      {
+        "href": "Kastanjemanden-110.xhtml",
+        "label": "101"
+      },
+      {
+        "href": "Kastanjemanden-111.xhtml",
+        "label": "102"
+      },
+      {
+        "href": "Kastanjemanden-112.xhtml",
+        "label": "103"
+      },
+      {
+        "href": "Kastanjemanden-113.xhtml",
+        "label": "104"
+      },
+      {
+        "href": "Kastanjemanden-114.xhtml",
+        "label": "105"
+      },
+      {
+        "href": "Kastanjemanden-115.xhtml",
+        "label": "106"
+      },
+      {
+        "href": "Kastanjemanden-116.xhtml",
+        "label": "107"
+      },
+      {
+        "href": "Kastanjemanden-117.xhtml",
+        "label": "108"
+      },
+      {
+        "href": "Kastanjemanden-118.xhtml",
+        "label": "109"
+      },
+      {
+        "href": "Kastanjemanden-119.xhtml",
+        "label": "110"
+      },
+      {
+        "href": "Kastanjemanden-120.xhtml",
+        "label": "111"
+      },
+      {
+        "href": "Kastanjemanden-121.xhtml",
+        "label": "112"
+      },
+      {
+        "href": "Kastanjemanden-122.xhtml",
+        "label": "113"
+      },
+      {
+        "href": "Kastanjemanden-123.xhtml",
+        "label": "114"
+      },
+      {
+        "href": "Kastanjemanden-124.xhtml",
+        "label": "115"
+      },
+      {
+        "href": "Kastanjemanden-125.xhtml",
+        "label": "116"
+      },
+      {
+        "href": "Kastanjemanden-126.xhtml",
+        "label": "117"
+      },
+      {
+        "href": "Kastanjemanden-127.xhtml",
+        "label": "118"
+      },
+      {
+        "href": "Kastanjemanden-128.xhtml",
+        "label": "119"
+      },
+      {
+        "href": "Kastanjemanden-129.xhtml",
+        "label": "120"
+      },
+      {
+        "href": "Kastanjemanden-130.xhtml",
+        "label": "121"
+      },
+      {
+        "href": "Kastanjemanden-131.xhtml",
+        "label": "122"
+      },
+      {
+        "href": "Kastanjemanden-132.xhtml",
+        "label": "123"
+      },
+      {
+        "href": "Kastanjemanden-133.xhtml",
+        "label": "Tirsdag den 3. november, nutid"
+      },
+      {
+        "href": "Kastanjemanden-134.xhtml",
+        "label": "124"
+      },
+      {
+        "href": "Kastanjemanden-135.xhtml",
+        "label": "125"
+      },
+      {
+        "href": "Kastanjemanden-136.xhtml",
+        "label": "126"
+      },
+      {
+        "href": "Kastanjemanden-137.xhtml",
+        "label": "127"
+      },
+      {
+        "href": "Kastanjemanden-138.xhtml",
+        "label": "128"
+      },
+      {
+        "href": "Kastanjemanden-139.xhtml",
+        "label": "Onsdag den 4. november, nutid"
+      },
+      {
+        "href": "Kastanjemanden-140.xhtml",
+        "label": "129"
+      },
+      {
+        "href": "Kastanjemanden-141.xhtml",
+        "label": "130"
+      },
+      {
+        "href": "Kastanjemanden-142.xhtml",
+        "label": "Tak"
+      },
+      {
+        "href": "Kastanjemanden-143.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Kastanjemanden.xhtml",
+        "label": "Indhold"
+      }
+    ],
+    "score": {
+      "mode": "fallback",
+      "score": 55,
+      "reasons": [
+        "many-toc-hrefs-not-in-spine",
+        "low-label-uniqueness"
+      ],
+      "metrics": {
+        "spineLen": 15,
+        "tocLen": 145,
+        "mapped": 15,
+        "mappedUnique": 15,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0.897,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.083
+      }
+    },
+    "collapse": true
+  },
   "heuristics": {
     "structure": {
       "mode": "fallback",
       "score": 55,
       "reasons": [
-        "weak-or-index-like-labels",
-        "low-label-uniqueness",
-        "many-toc-hrefs-not-in-spine"
+        "many-toc-hrefs-not-in-spine",
+        "low-label-uniqueness"
       ],
       "metrics": {
-        "spineLen": 0,
-        "tocLen": 142,
-        "mapped": 0,
-        "mappedUnique": 0,
-        "tocSpineRatio": 0,
-        "invalidHrefRatio": 1,
+        "spineLen": 15,
+        "tocLen": 145,
+        "mapped": 15,
+        "mappedUnique": 15,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0.897,
         "dupSpineRatio": 0,
-        "weakLabelRatio": 0.923,
+        "weakLabelRatio": 0,
         "chapterRatio": 0,
-        "uniqRatio": 0.063
+        "uniqRatio": 0.083
       }
-    }
+    },
+    "collapse": true
   }
 }

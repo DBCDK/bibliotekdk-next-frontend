@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 // components/sample/Sample.jsx
@@ -25,25 +25,17 @@ export function Sample({
 }) {
   const access = data?.access?.find?.((a) => a?.__typename === "Publizon");
 
-  // Return null if no publizon access type was found
-  if (!access) {
-    return null;
-  }
+  if (!access) return null;
 
-  // Test url samples
-  // const url = "https://samples.pubhub.dk/9788758817842.epub";
-  // const url = "https://samples.pubhub.dk/9788741509884.mp3";
-  const url = access?.sample;
-
-  // access sample format
-  const isEpub = access?.format === "epub";
-  const isMp3 = access?.format === "mp3";
+  const url = access.sample;
+  const isEpub = access.format === "epub";
+  const isMp3 = access.format === "mp3";
 
   return (
     <>
       <Button
         className={`${styles.button} ${className}`}
-        format={access?.format}
+        format={access.format}
         onClick={onOpen}
       />
       <Overlay
@@ -74,6 +66,18 @@ export default function Wrap(props) {
 
   const { workId, type } = props;
 
+  /**
+   * Was sample=true present when the page first loaded?
+   * (deep link vs user interaction)
+   */
+  const hadSampleOnMountRef = useRef(null);
+
+  /**
+   * Did *we* push sample=true during this session?
+   * (used to decide between back() vs replace())
+   */
+  const didPushSampleRef = useRef(false);
+
   const {
     data: samples,
     error,
@@ -87,15 +91,31 @@ export default function Wrap(props) {
     [manifestations, type]
   );
 
+  /**
+   * Sync modal visibility with URL
+   */
   useEffect(() => {
     if (!router.isReady) return;
+
     const inUrl = router.query.sample === "true";
-    setShow((prev) => (prev !== inUrl ? inUrl : prev));
+
+    if (hadSampleOnMountRef.current === null) {
+      hadSampleOnMountRef.current = inUrl;
+    }
+
+    setShow(inUrl);
   }, [router.isReady, router.query.sample]);
 
+  /**
+   * Open modal
+   * -> push sample=true so back-button can close it
+   */
   const handleOpen = () => {
     if (!router.isReady) return;
+
     if (router.query.sample !== "true") {
+      didPushSampleRef.current = true;
+
       router.push(
         {
           pathname: router.pathname,
@@ -105,23 +125,52 @@ export default function Wrap(props) {
         { shallow: true, scroll: false }
       );
     }
+
     setShow(true);
   };
 
+  /**
+   * Close modal
+   *
+   * Case 1: User opened modal -> router.back()
+   * Case 2: Deep link -> remove sample=true via replace()
+   */
   const handleClose = () => {
     if (!router.isReady) return;
-    if (router.query.sample === "true") {
-      router.back();
-    } else {
+
+    if (router.query.sample !== "true") {
       setShow(false);
+      return;
     }
+
+    const hadSampleOnMount = hadSampleOnMountRef.current === true;
+    const didPushSample = didPushSampleRef.current === true;
+
+    // Opened by user -> back closes modal
+    if (!hadSampleOnMount && didPushSample) {
+      didPushSampleRef.current = false;
+      router.back();
+      return;
+    }
+
+    // Deep link -> remove sample param without leaving page
+    const { sample, ...rest } = router.query;
+
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: rest,
+      },
+      undefined,
+      { shallow: true, scroll: false }
+    );
+
+    setShow(false);
   };
 
   const handleToggleFullscreen = () => setIsFullscreen((v) => !v);
 
-  if (error) {
-    return null;
-  }
+  if (error) return null;
 
   if (isLoading) {
     return (

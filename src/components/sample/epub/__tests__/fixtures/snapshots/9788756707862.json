@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "generatedAt": "2026-01-16T16:26:06.871Z",
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.248Z",
   "fileName": "9788756707862.zip",
   "parser": "manual-zip",
   "metadata": {
@@ -65,23 +65,110 @@
     }
   ],
   "tocFlat": [],
-  "heuristics": {
-    "structure": {
+  "pipeline": {
+    "tocRaw": [],
+    "tocDeduped": [],
+    "tocWithFront": [
+      {
+        "href": "OPS/xhtml/cover.html",
+        "label": "Forside"
+      },
+      {
+        "href": "OPS/xhtml/title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "OPS/xhtml/forfatterens.html",
+        "label": "Forfatterens"
+      },
+      {
+        "href": "OPS/xhtml/parttitleI.html",
+        "label": "ParttitleI"
+      },
+      {
+        "href": "OPS/xhtml/chapter01.html",
+        "label": "Chapter01"
+      },
+      {
+        "href": "OPS/xhtml/chapter02.html",
+        "label": "Chapter02"
+      },
+      {
+        "href": "OPS/xhtml/chapter03.html",
+        "label": "Chapter03"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "OPS/xhtml/cover.html",
+        "label": "Forside"
+      },
+      {
+        "href": "OPS/xhtml/title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "OPS/xhtml/forfatterens.html",
+        "label": "Forfatterens"
+      },
+      {
+        "href": "OPS/xhtml/parttitleI.html",
+        "label": "ParttitleI"
+      },
+      {
+        "href": "OPS/xhtml/chapter01.html",
+        "label": "Chapter01"
+      },
+      {
+        "href": "OPS/xhtml/chapter02.html",
+        "label": "Chapter02"
+      },
+      {
+        "href": "OPS/xhtml/chapter03.html",
+        "label": "Chapter03"
+      }
+    ],
+    "score": {
       "mode": "chapter",
-      "score": 0,
-      "reasons": [],
+      "score": 20,
+      "reasons": [
+        "toc-close-to-spine-size"
+      ],
       "metrics": {
         "spineLen": 7,
-        "tocLen": 0,
-        "mapped": 0,
-        "mappedUnique": 0,
-        "tocSpineRatio": 0,
+        "tocLen": 7,
+        "mapped": 7,
+        "mappedUnique": 7,
+        "tocSpineRatio": 1,
         "invalidHrefRatio": 0,
         "dupSpineRatio": 0,
         "weakLabelRatio": 0,
         "chapterRatio": 0,
-        "uniqRatio": 1
+        "uniqRatio": 0.714
       }
-    }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": [
+        "toc-close-to-spine-size"
+      ],
+      "metrics": {
+        "spineLen": 7,
+        "tocLen": 7,
+        "mapped": 7,
+        "mappedUnique": 7,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.714
+      }
+    },
+    "collapse": false
   }
 }

@@ -6,6 +6,7 @@
 // - If epubjs fails with "No Metadata Found", fall back to manual ZIP parsing (JSZip)
 // - NEVER fail because metadata is missing
 // - Return deterministic JSON-friendly snapshot
+// - IMPORTANT: compute heuristics + pipeline BEFORE destroying the book
 //
 // NOTE: Comments in English per request.
 
@@ -118,9 +119,7 @@ function ensureDomGlobals() {
 
   const dom = new JSDOM(
     "<!doctype html><html><head></head><body></body></html>",
-    {
-      url: "http://localhost/",
-    }
+    { url: "http://localhost/" }
   );
 
   defineGlobalIfPossible("window", dom.window);
@@ -304,21 +303,6 @@ async function importLogicModule() {
   return { ...(fromDefault || {}), ...(mod || {}) };
 }
 
-function runOptionalHeuristics(logic, args) {
-  const out = {};
-  const fnScore = logic?.computeEpubStructureScore || null;
-
-  if (typeof fnScore === "function") {
-    try {
-      out.structure = fnScore(args.book, args.tocFlat, { debug: false });
-    } catch (e) {
-      out.structure = { error: String(e?.message || e) };
-    }
-  }
-
-  return out;
-}
-
 function suppressNoisyConsoleErrors({ debug }) {
   const orig = console.error;
 
@@ -462,12 +446,6 @@ async function readZipText(zip, filePath) {
   return await file.async("text");
 }
 
-async function readZipBinary(zip, filePath) {
-  const file = zip.file(filePath);
-  if (!file) return null;
-  return await file.async("uint8array");
-}
-
 function buildMiniBookFromSpine(spineHrefs) {
   const spineItems = spineHrefs.map((href, idx) => ({
     href,
@@ -480,7 +458,6 @@ function buildMiniBookFromSpine(spineHrefs) {
   const map = new Map();
   for (const it of spineItems) {
     map.set(it.href, it);
-    // also map stripped variants
     map.set(stripHashQuery(it.href), it);
     map.set(it.href.split("/").pop(), it);
   }
@@ -559,12 +536,7 @@ async function manualZipExtractSnapshot(ab, { debug }) {
   }
 
   const containerDoc = parseXml(containerXml);
-  const rootfileEl =
-    containerDoc.getElementsByTagName("rootfile")?.[0] ||
-    containerDoc
-      .getElementsByTagName("container")?.[0]
-      ?.getElementsByTagName("rootfile")?.[0] ||
-    null;
+  const rootfileEl = containerDoc.getElementsByTagName("rootfile")?.[0] || null;
 
   const opfPath = getAttr(rootfileEl, "full-path");
   if (!opfPath)
@@ -627,7 +599,6 @@ async function manualZipExtractSnapshot(ab, { debug }) {
   // TOC: EPUB3 nav or EPUB2 ncx
   let tocFlat = [];
 
-  // EPUB3 nav
   const navItem = Array.from(manifest.values()).find((m) =>
     /\bnav\b/i.test(m.properties)
   );
@@ -651,9 +622,7 @@ async function manualZipExtractSnapshot(ab, { debug }) {
     }
   }
 
-  // EPUB2 ncx (only if nav empty)
   if (!tocFlat.length) {
-    // find ncx by media-type
     const ncxItem =
       Array.from(manifest.values()).find(
         (m) => m.mediaType === "application/x-dtbncx+xml"
@@ -677,10 +646,8 @@ async function manualZipExtractSnapshot(ab, { debug }) {
     }
   }
 
-  // Build minimal "book" adapter for computeEpubStructureScore
   const miniBook = buildMiniBookFromSpine(spineHrefs);
 
-  // Build spine + toc in same shape as epubjs snapshot
   const spine = spineHrefs.map((href, idx) => ({
     index: idx,
     href,
@@ -700,7 +667,6 @@ async function manualZipExtractSnapshot(ab, { debug }) {
     };
   });
 
-  // Duplicates
   const countsBySpine = {};
   for (const t of tocFlatMapped) {
     const k = typeof t.spineIndex === "number" ? String(t.spineIndex) : "null";
@@ -723,6 +689,10 @@ async function manualZipExtractSnapshot(ab, { debug }) {
   };
 }
 
+// -----------------------------
+// Snapshot (public)
+// -----------------------------
+
 export async function buildEpubLogicSnapshot(
   zipBytes,
   { fileName = null, debug = false } = {}
@@ -737,6 +707,7 @@ export async function buildEpubLogicSnapshot(
   }
 
   const ePub = await importEpubJsFactory();
+  const logic = await importLogicModule();
 
   let book = null;
   let spine = [];
@@ -745,108 +716,160 @@ export async function buildEpubLogicSnapshot(
   let meta = { title: null, creator: null, language: null };
   let usedManual = false;
 
-  // Try epubjs first
-  try {
-    book = await openBookWithFallback(ePub, ab, { debug });
+  // Pipeline artifacts (raw -> dedupe -> prepend -> score -> maybe collapse)
+  let pipeline = {
+    tocRaw: [],
+    tocDeduped: [],
+    tocWithFront: [],
+    tocFinal: [],
+    score: null,
+    collapse: false,
+  };
 
-    const spineItems = book?.spine?.spineItems || [];
-    spine = spineItems.map((it, i) => ({
-      index: typeof it?.index === "number" ? it.index : i,
-      href: it?.href || null,
-      idref: it?.idref || null,
-      properties: it?.properties || null,
-      linear: it?.linear ?? null,
+  try {
+    // Try epubjs first
+    try {
+      book = await openBookWithFallback(ePub, ab, { debug });
+
+      const spineItems = book?.spine?.spineItems || [];
+      spine = spineItems.map((it, i) => ({
+        index: typeof it?.index === "number" ? it.index : i,
+        href: it?.href || null,
+        idref: it?.idref || null,
+        properties: it?.properties || null,
+        linear: it?.linear ?? null,
+      }));
+
+      const tocFlatRaw = flattenNavTocFromEpubjs(book);
+      tocFlat = tocFlatRaw.map((it) => {
+        const r = spineIndexOf(book, it.href);
+        return {
+          href: it.href,
+          hrefNoFrag: stripHashQuery(it.href),
+          label: it.label || "",
+          spineIndex: typeof r.idx === "number" ? r.idx : null,
+          spineHit: r.hit || null,
+        };
+      });
+
+      const countsBySpine = {};
+      for (const t of tocFlat) {
+        const k =
+          typeof t.spineIndex === "number" ? String(t.spineIndex) : "null";
+        countsBySpine[k] = (countsBySpine[k] || 0) + 1;
+      }
+      duplicateSpineIndexCount = Object.entries(countsBySpine).filter(
+        ([k, v]) => k !== "null" && v > 1
+      ).length;
+
+      meta = safePickMetadata(book);
+    } catch (e) {
+      const msg = String(e?.message || e);
+
+      if (msg.includes("No Metadata Found")) {
+        usedManual = true;
+        if (debug) {
+          // eslint-disable-next-line no-console
+          console.log(
+            "[SNAPSHOT] epubjs failed with 'No Metadata Found' -> using manual ZIP parser fallback"
+          );
+        }
+
+        const manual = await manualZipExtractSnapshot(ab, { debug });
+        book = manual.book;
+        spine = manual.spine;
+        tocFlat = manual.tocFlat;
+        meta = manual.metadata;
+        duplicateSpineIndexCount = manual.duplicateSpineIndexCount;
+      } else {
+        throw e;
+      }
+    }
+
+    // -----------------------------
+    // IMPORTANT: run pipeline + heuristics BEFORE destroying book
+    // -----------------------------
+    const tocRaw = (tocFlat || []).map((x) => ({
+      href: x.href,
+      label: x.label,
     }));
 
-    const tocFlatRaw = flattenNavTocFromEpubjs(book);
-    tocFlat = tocFlatRaw.map((it) => {
-      const r = spineIndexOf(book, it.href);
-      return {
-        href: it.href,
-        hrefNoFrag: stripHashQuery(it.href),
-        label: it.label || "",
-        spineIndex: typeof r.idx === "number" ? r.idx : null,
-        spineHit: r.hit || null,
-      };
-    });
+    const tocDeduped =
+      typeof logic.dedupeTocBySpineHref === "function"
+        ? logic.dedupeTocBySpineHref(book, tocRaw)
+        : tocRaw;
 
-    const countsBySpine = {};
-    for (const t of tocFlat) {
-      const k =
-        typeof t.spineIndex === "number" ? String(t.spineIndex) : "null";
-      countsBySpine[k] = (countsBySpine[k] || 0) + 1;
+    const tocWithFront =
+      typeof logic.prependMissingSpineSections === "function"
+        ? logic.prependMissingSpineSections(book, tocDeduped)
+        : tocDeduped;
+
+    const score =
+      typeof logic.computeEpubStructureScore === "function"
+        ? logic.computeEpubStructureScore(book, tocWithFront)
+        : null;
+
+    const collapse =
+      typeof logic.shouldCollapseToSingleSection === "function"
+        ? logic.shouldCollapseToSingleSection(book, tocWithFront)
+        : score?.mode === "fallback";
+
+    const tocFinal =
+      collapse &&
+      typeof logic.collapseToSingleSectionPreserveFrontmatter === "function"
+        ? logic.collapseToSingleSectionPreserveFrontmatter(book, tocWithFront)
+        : tocWithFront;
+
+    pipeline = {
+      tocRaw,
+      tocDeduped,
+      tocWithFront,
+      tocFinal,
+      score,
+      collapse,
+    };
+
+    const snapshot = {
+      version: 3,
+      generatedAt: new Date().toISOString(),
+      fileName: fileName || null,
+      parser: usedManual ? "manual-zip" : "epubjs",
+      metadata: meta, // allowed to be nulls
+      counts: {
+        spineLen: spine.length,
+        tocLen: tocFlat.length,
+        duplicateSpineIndexCount,
+      },
+      spine,
+      tocFlat,
+      pipeline,
+      heuristics: {
+        // Keep old location for compatibility, but make it UI-truthful:
+        structure: score,
+        collapse,
+      },
+    };
+
+    if (debug) {
+      // eslint-disable-next-line no-console
+      console.log("[SNAPSHOT]", {
+        fileName: snapshot.fileName,
+        parser: snapshot.parser,
+        spineLen: snapshot.counts.spineLen,
+        tocLen: snapshot.counts.tocLen,
+        dupSpine: snapshot.counts.duplicateSpineIndexCount,
+        meta: snapshot.metadata,
+        struct: snapshot.heuristics?.structure || null,
+        collapse: snapshot.heuristics?.collapse || false,
+        tocRaw: snapshot.pipeline?.tocRaw?.length || 0,
+        tocFinal: snapshot.pipeline?.tocFinal?.length || 0,
+      });
     }
-    duplicateSpineIndexCount = Object.entries(countsBySpine).filter(
-      ([k, v]) => k !== "null" && v > 1
-    ).length;
 
-    meta = safePickMetadata(book);
-  } catch (e) {
-    const msg = String(e?.message || e);
-
-    // If epubjs fails because Packaging.parse throws "No Metadata Found",
-    // we fall back to manual ZIP parsing.
-    if (msg.includes("No Metadata Found")) {
-      usedManual = true;
-      if (debug) {
-        // eslint-disable-next-line no-console
-        console.log(
-          "[SNAPSHOT] epubjs failed with 'No Metadata Found' -> using manual ZIP parser fallback"
-        );
-      }
-
-      const manual = await manualZipExtractSnapshot(ab, { debug });
-      book = manual.book;
-      spine = manual.spine;
-      tocFlat = manual.tocFlat;
-      meta = manual.metadata;
-      duplicateSpineIndexCount = manual.duplicateSpineIndexCount;
-    } else {
-      throw e;
-    }
+    return snapshot;
   } finally {
     try {
       book?.destroy?.();
     } catch {}
   }
-
-  let heuristics = {};
-  try {
-    const logic = await importLogicModule();
-    heuristics = runOptionalHeuristics(logic, { book, tocFlat });
-  } catch (e) {
-    heuristics = { error: String(e?.message || e) };
-  }
-
-  const snapshot = {
-    version: 2,
-    generatedAt: new Date().toISOString(),
-    fileName: fileName || null,
-    parser: usedManual ? "manual-zip" : "epubjs",
-    metadata: meta, // allowed to be nulls
-    counts: {
-      spineLen: spine.length,
-      tocLen: tocFlat.length,
-      duplicateSpineIndexCount,
-    },
-    spine,
-    tocFlat,
-    heuristics,
-  };
-
-  if (debug) {
-    // eslint-disable-next-line no-console
-    console.log("[SNAPSHOT]", {
-      fileName: snapshot.fileName,
-      parser: snapshot.parser,
-      spineLen: snapshot.counts.spineLen,
-      tocLen: snapshot.counts.tocLen,
-      dupSpine: snapshot.counts.duplicateSpineIndexCount,
-      meta: snapshot.metadata,
-      struct:
-        snapshot.heuristics?.structure || snapshot.heuristics?.error || null,
-    });
-  }
-
-  return snapshot;
 }

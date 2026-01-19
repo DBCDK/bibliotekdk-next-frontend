@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "generatedAt": "2026-01-16T16:26:06.749Z",
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.097Z",
   "fileName": "9788702421484.zip",
   "parser": "epubjs",
   "metadata": {
@@ -229,27 +229,258 @@
       "spineHit": "chapter012.xhtml"
     }
   ],
-  "heuristics": {
-    "structure": {
-      "mode": "chapter",
-      "score": 15,
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Kapitel 1"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "Kapitel 2"
+      },
+      {
+        "href": "chapter003.xhtml",
+        "label": "Kapitel 3"
+      },
+      {
+        "href": "chapter004.xhtml",
+        "label": "Kapitel 4"
+      },
+      {
+        "href": "chapter005.xhtml",
+        "label": "Kapitel 5"
+      },
+      {
+        "href": "chapter006.xhtml",
+        "label": "Kapitel 6"
+      },
+      {
+        "href": "chapter007.xhtml",
+        "label": "Kapitel 7"
+      },
+      {
+        "href": "chapter008.xhtml",
+        "label": "Kapitel 8"
+      },
+      {
+        "href": "chapter009.xhtml",
+        "label": "Kapitel 9"
+      },
+      {
+        "href": "chapter010.xhtml",
+        "label": "Kapitel 10"
+      },
+      {
+        "href": "chapter011.xhtml",
+        "label": "Kapitel 11"
+      },
+      {
+        "href": "chapter012.xhtml",
+        "label": "Kapitel 12"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Kapitel 1"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "Kapitel 2"
+      },
+      {
+        "href": "chapter003.xhtml",
+        "label": "Kapitel 3"
+      },
+      {
+        "href": "chapter004.xhtml",
+        "label": "Kapitel 4"
+      },
+      {
+        "href": "chapter005.xhtml",
+        "label": "Kapitel 5"
+      },
+      {
+        "href": "chapter006.xhtml",
+        "label": "Kapitel 6"
+      },
+      {
+        "href": "chapter007.xhtml",
+        "label": "Kapitel 7"
+      },
+      {
+        "href": "chapter008.xhtml",
+        "label": "Kapitel 8"
+      },
+      {
+        "href": "chapter009.xhtml",
+        "label": "Kapitel 9"
+      },
+      {
+        "href": "chapter010.xhtml",
+        "label": "Kapitel 10"
+      },
+      {
+        "href": "chapter011.xhtml",
+        "label": "Kapitel 11"
+      },
+      {
+        "href": "chapter012.xhtml",
+        "label": "Kapitel 12"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Kapitel 1"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "Kapitel 2"
+      },
+      {
+        "href": "chapter003.xhtml",
+        "label": "Kapitel 3"
+      },
+      {
+        "href": "chapter004.xhtml",
+        "label": "Kapitel 4"
+      },
+      {
+        "href": "chapter005.xhtml",
+        "label": "Kapitel 5"
+      },
+      {
+        "href": "chapter006.xhtml",
+        "label": "Kapitel 6"
+      },
+      {
+        "href": "chapter007.xhtml",
+        "label": "Kapitel 7"
+      },
+      {
+        "href": "chapter008.xhtml",
+        "label": "Kapitel 8"
+      },
+      {
+        "href": "chapter009.xhtml",
+        "label": "Kapitel 9"
+      },
+      {
+        "href": "chapter010.xhtml",
+        "label": "Kapitel 10"
+      },
+      {
+        "href": "chapter011.xhtml",
+        "label": "Kapitel 11"
+      },
+      {
+        "href": "chapter012.xhtml",
+        "label": "Kapitel 12"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Indhold"
+      }
+    ],
+    "score": {
+      "mode": "fallback",
+      "score": 75,
       "reasons": [
+        "toc-close-to-spine-size",
         "low-label-uniqueness",
-        "many-toc-hrefs-not-in-spine",
-        "chapter-like-labels"
+        "chapter-like-labels",
+        "page-like-chapter-toc"
       ],
       "metrics": {
-        "spineLen": 0,
+        "spineLen": 15,
         "tocLen": 15,
-        "mapped": 0,
-        "mappedUnique": 0,
-        "tocSpineRatio": 0,
-        "invalidHrefRatio": 1,
+        "mapped": 15,
+        "mappedUnique": 15,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
         "dupSpineRatio": 0,
         "weakLabelRatio": 0,
         "chapterRatio": 0.8,
         "uniqRatio": 0.267
       }
-    }
+    },
+    "collapse": true
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "fallback",
+      "score": 75,
+      "reasons": [
+        "toc-close-to-spine-size",
+        "low-label-uniqueness",
+        "chapter-like-labels",
+        "page-like-chapter-toc"
+      ],
+      "metrics": {
+        "spineLen": 15,
+        "tocLen": 15,
+        "mapped": 15,
+        "mappedUnique": 15,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0.8,
+        "uniqRatio": 0.267
+      }
+    },
+    "collapse": true
   }
 }
