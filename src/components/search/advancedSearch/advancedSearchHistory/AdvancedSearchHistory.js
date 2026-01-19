@@ -299,7 +299,7 @@ export function HistoryHeaderActions({
   return (
     <div className={cx(styles.actionheader)}>
       {selectedCount > 0 && (
-        <Text type="text3">{`${selectedCount} ${Translate({
+        <Text type="text3" className={styles.selectedCount}>{`${selectedCount} ${Translate({
           context: "form",
           label: "icon-label-selected",
         })}`}</Text>
