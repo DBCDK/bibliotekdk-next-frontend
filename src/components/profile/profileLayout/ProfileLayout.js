@@ -10,7 +10,6 @@ import NavigationDropdown from "@/components/base/dropdown/navigationDropdown/Na
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate/Translate";
-import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
 import { useModal } from "@/components/_modal";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
@@ -18,6 +17,7 @@ import { useRouter } from "next/router";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { removeAlreadyOrderedFromSession } from "@/components/_modal/pages/order/utils/order.utils";
+import useLogout from "@/components/hooks/useLogout";
 
 const CONTEXT = "profile";
 const MENUITEMS = [
@@ -135,6 +135,7 @@ export default function ProfileLayout({ title, children }) {
 const LogoutButton = () => {
   const { isAuthenticated } = useAuthentication();
   const { loanerInfo, isLoading } = useLoanerInfo();
+  const { logout } = useLogout();
 
   if (!isAuthenticated) {
     return;
@@ -157,7 +158,7 @@ const LogoutButton = () => {
           removeAlreadyOrderedFromSession();
           if (isAuthenticated) {
             const redirectUrl = window?.location?.origin;
-            signOut(redirectUrl);
+            logout(redirectUrl);
           }
         }}
         className={styles.logoutBtn}

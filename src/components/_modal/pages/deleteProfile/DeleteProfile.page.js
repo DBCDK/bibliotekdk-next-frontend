@@ -10,9 +10,9 @@ import Text from "@/components/base/text";
 import { useEffect } from "react";
 import Button from "@/components/base/button";
 import { deleteUser } from "@/lib/api/userData.mutations";
-import { signOut } from "@dbcdk/login-nextjs/client";
 import Translate from "@/components/base/translate/Translate";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import useLogout from "@/components/hooks/useLogout";
 
 /**
  * This is a confirmation modal for user deletion.
@@ -22,6 +22,7 @@ export function DeleteProfile({ modal }) {
   const userDataMutation = useMutate();
   const { hasCulrUniqueId } = useAuthentication();
   const { mutate } = useData(hasCulrUniqueId && userFragments.extendedData());
+  const { logout } = useLogout();
 
   useEffect(() => {
     if (modal.isVisible) {
@@ -33,7 +34,7 @@ export function DeleteProfile({ modal }) {
     const redirectUrl = window?.location?.origin;
 
     await deleteUser({ userDataMutation });
-    signOut(redirectUrl);
+    logout(redirectUrl);
   };
 
   return (
