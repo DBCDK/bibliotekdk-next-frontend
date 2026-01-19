@@ -9,11 +9,15 @@ const useLogout = () => {
   const { clearValues } = useSearchHistory();
 
   const logout = (redirectUrl) => {
+    const url =
+      redirectUrl ??
+      (typeof window !== "undefined" ? window?.location?.origin : undefined);
+
     // Clear client-side search history
     clearValues();
 
     // Trigger sign out with the provided redirect URL
-    signOut(redirectUrl);
+    signOut(url);
   };
 
   return { logout };
