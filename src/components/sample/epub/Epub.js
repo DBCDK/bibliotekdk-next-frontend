@@ -157,6 +157,7 @@ export default function Epub({ src, data, isFullscreen = false }) {
         Link={Link}
         Text={Text}
         show={showProgress}
+        expanded={isFullscreen}
       />
     </div>
   );

@@ -6024,12 +6024,12 @@
     },
     "sample": {
       "test-read-btn-lbl": {
-        "da": "Prøvelæs",
-        "en": "Test read"
+        "da": "Prøv",
+        "en": "Sample"
       },
       "test-listen-btn-lbl": {
-        "da": "Prøvelyt",
-        "en": "Test listen"
+        "da": "Prøv",
+        "en": "Sample"
       },
       "overlay-test-read-title": {
         "da": "Prøvelæs:",

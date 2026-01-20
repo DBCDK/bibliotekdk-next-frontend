@@ -95,11 +95,6 @@ export function prettyLabelFromHref(href, fallback = "Indhold") {
   );
   const b = base.toLowerCase();
 
-  // Deterministic frontmatter mapping
-  if (/^(cover|forside)$/.test(b) || /cover/.test(b)) return "Forside";
-  if (/^(titlepage|title|titelblad|titel)$/.test(b)) return "Titelblad";
-  if (/^(colophon|kolofon|copyright)$/.test(b)) return "Kolofon";
-
   // Index-like, id-like, or too short => fallback
   if (
     /^index(_split)?[_-]?\d+$/i.test(b) ||
@@ -208,6 +203,8 @@ export function pickBestLabel(candidates, fallback) {
 
 /**
  * ✅ Ensure "1 section per spine href".
+ * Many epubs have toc entries like "chapter.xhtml#h1", "chapter.xhtml#h2", ...
+ * They should NOT become multiple segments/progress bars.
  */
 export function dedupeTocBySpineHref(book, tocFlat) {
   const groups = new Map();
@@ -250,7 +247,8 @@ export function dedupeTocBySpineHref(book, tocFlat) {
 }
 
 /**
- * Ensure missing spine sections before first toc entry are prepended.
+ * Ensure missing spine sections before first toc entry are prepended
+ * (e.g. cover/title page that toc doesn't include).
  */
 export function prependMissingSpineSections(book, filteredToc) {
   const spineItems = book?.spine?.spineItems || [];
@@ -270,8 +268,14 @@ export function prependMissingSpineSections(book, filteredToc) {
       .map((it, i) => {
         const href = it.href;
         const idx = spineIndexOfDebug(book, href).idx ?? i;
-        const label = prettyLabelFromHref(href, `Indhold ${idx + 1}`);
-        return { href, label };
+        const isCover =
+          typeof coverIdx === "number" ? idx === coverIdx : /cover/i.test(href);
+        return {
+          href,
+          label: isCover
+            ? "Forside"
+            : prettyLabelFromHref(href, `Indhold ${idx + 1}`),
+        };
       });
   }
 
@@ -289,10 +293,17 @@ export function prependMissingSpineSections(book, filteredToc) {
     const key = stripHashQuery(href);
     if (existing.has(key)) continue;
 
-    const label = prettyLabelFromHref(href, `Indhold ${i + 1}`);
-    prepend.push({ href, label });
+    const isCover =
+      typeof coverIdx === "number" ? i === coverIdx : /cover/i.test(href);
+    prepend.push({
+      href,
+      label: isCover
+        ? "Forside"
+        : prettyLabelFromHref(href, `Indhold ${i + 1}`),
+    });
   }
 
+  // Ensure cover explicitly
   if (typeof coverIdx === "number" && coverIdx >= 0) {
     const coverKey = stripHashQuery(
       spineItems[coverIdx]?.href || coverHref || ""
@@ -300,19 +311,70 @@ export function prependMissingSpineSections(book, filteredToc) {
     const hasCover = [...prepend, ...filteredToc].some(
       (x) => stripHashQuery(x.href) === coverKey
     );
-    if (!hasCover && coverHref) {
+    if (!hasCover && coverHref)
       prepend.unshift({ href: coverHref, label: "Forside" });
-    }
   }
 
   return prepend.length ? [...prepend, ...filteredToc] : filteredToc;
+}
+
+// -----------------------------
+// NEW: "Solution A" trigger for Blå Stjerne style labels
+// -----------------------------
+
+function normalizeForUniq(s) {
+  return String(s || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .replace(/[._\-]+/g, " ")
+    .trim();
+}
+
+function stripTrailingNumber(s) {
+  return normalizeForUniq(s)
+    .replace(/\s+\d+\s*$/g, "")
+    .trim();
+}
+
+function detectTitleLikeRepetition(labels, metaTitle) {
+  const cleanLabels = (labels || [])
+    .map((l) => String(l || "").trim())
+    .filter(Boolean);
+  if (cleanLabels.length < 5) return { hit: false, ratio: 0 };
+
+  const bases = cleanLabels.map((l) => stripTrailingNumber(l));
+  const uniqBases = new Set(bases);
+
+  // If almost everything shares the same base, we consider it "title-like repetition"
+  const mostCommonBase = (() => {
+    const m = new Map();
+    for (const b of bases) m.set(b, (m.get(b) || 0) + 1);
+    let best = { base: null, n: 0 };
+    for (const [base, n] of m.entries()) if (n > best.n) best = { base, n };
+    return best;
+  })();
+
+  const ratio = cleanLabels.length ? mostCommonBase.n / cleanLabels.length : 0;
+
+  // Optionally align with metadata title (if provided)
+  const titleBase = stripTrailingNumber(metaTitle || "");
+  const matchesTitle =
+    titleBase && mostCommonBase.base && mostCommonBase.base === titleBase;
+
+  // We trigger if:
+  // - a single base dominates (>= 0.75), OR
+  // - it matches metadata title base with decent dominance (>= 0.6)
+  const hit = ratio >= 0.75 || (matchesTitle && ratio >= 0.6);
+
+  return { hit, ratio };
 }
 
 /**
  * Detect page-like / broken TOC structures and decide whether to fallback.
  * Returns { mode, score, reasons, metrics }
  */
-export function computeEpubStructureScore(book, tocFlat) {
+export function computeEpubStructureScore(book, tocFlat, opts = {}) {
   const spineLen = book?.spine?.spineItems?.length || 0;
   const tocLen = tocFlat?.length || 0;
 
@@ -392,22 +454,24 @@ export function computeEpubStructureScore(book, tocFlat) {
     score += 20;
   }
 
+  // NOTE: chapter-like labels can indicate "page-like chapters" for some ebooks.
   if (chapterRatio >= 0.75 && labels.length >= 10) {
     reasons.push("chapter-like-labels");
     score += 10;
   }
 
-  // ✅ IMPORTANT FIX:
-  // Page-like chapter TOCs should be treated as fallback (not just "collapse later").
-  // This is the "Skyggen foran mig" pattern.
-  const looksLikePageChapters =
-    tocLen >= 10 && chapterRatio >= 0.75 && uniqRatio <= 0.35;
-
-  if (looksLikePageChapters) {
-    reasons.push("page-like-chapter-toc");
-    score += 25; // enough to cross fallback threshold in typical cases
+  // ✅ Solution A: repetitive title-like labels (Blå Stjerne / BlaaStjerne 1/2/3/4)
+  const metaTitle = opts?.metaTitle || null;
+  const rep = detectTitleLikeRepetition(labels, metaTitle);
+  if (rep.hit) {
+    reasons.push("repeated-title-like-labels");
+    score += 35;
   }
 
+  // Cap
+  score = Math.max(0, Math.min(100, score));
+
+  // We keep the existing threshold
   const mode = score >= 55 ? "fallback" : "chapter";
 
   return {
@@ -435,31 +499,54 @@ export function computeEpubStructureScore(book, tocFlat) {
         ? Number(chapterRatio.toFixed(3))
         : 0,
       uniqRatio: Number.isFinite(uniqRatio) ? Number(uniqRatio.toFixed(3)) : 0,
+      titleRepeatRatio: Number.isFinite(rep.ratio)
+        ? Number(rep.ratio.toFixed(3))
+        : 0,
     },
   };
 }
 
 /**
- * Runtime decision helper (used by UI + snapshots + tests).
- *
- * After the scoring fix above, collapse is simply: score.mode === "fallback".
- * That keeps semantics consistent.
+ * Decide whether UI should collapse into "frontmatter + Indhold".
+ * This is intentionally separate from score.mode, so we can force collapse
+ * for known-bad patterns (Solution A), without having to move thresholds too much.
  */
-export function shouldCollapseToSingleSection(book, tocFlat) {
-  const s = computeEpubStructureScore(book, tocFlat);
-  return s.mode === "fallback";
+export function shouldCollapseToSingleSection(book, tocFlat, opts = {}) {
+  const score = computeEpubStructureScore(book, tocFlat, opts);
+
+  if (score.mode === "fallback") return true;
+
+  // If the score didn't cross threshold, but we still hit the title-repeat pattern,
+  // we can collapse anyway (this is what you wanted for Blå Stjerne style).
+  if (score.reasons.includes("repeated-title-like-labels")) return true;
+
+  return false;
 }
 
 /**
- * Collapse logic: keep frontmatter + a single "Indhold" section.
+ * Collapse logic: keep frontmatter (Forside/Titel/Kolofon/etc.) + a single "Indhold" section.
+ * Used when fallback/collapse is true.
+ *
+ * IMPORTANT: This function MUST NEVER return [] (otherwise progressbar disappears).
  */
-export function collapseToSingleSectionPreserveFrontmatter(book, tocFlat) {
+export function collapseToSingleSectionPreserveFrontmatter(
+  book,
+  tocFlat,
+  opts = {}
+) {
   const spineItems = book?.spine?.spineItems || [];
-  if (!spineItems.length) return tocFlat;
+  if (!spineItems.length) {
+    // Absolute safety: if no spine, keep at least 1 item from toc, else synthesize.
+    const first = tocFlat?.[0]?.href || null;
+    return first
+      ? [{ href: first, label: "Indhold" }]
+      : [{ href: null, label: "Indhold" }];
+  }
 
   const frontRe =
     /^(forside|cover|titel|titelblad|title\s?page|title|kolofon|copyright)\b/i;
 
+  // Keep existing front entries from toc labels if present
   const frontEntries = (tocFlat || []).filter((it) =>
     frontRe.test(String(it?.label || "").trim())
   );
@@ -467,20 +554,30 @@ export function collapseToSingleSectionPreserveFrontmatter(book, tocFlat) {
   const firstHref =
     spineItems.find((it) => it?.href)?.href || tocFlat?.[0]?.href || null;
 
-  if (!frontEntries.length)
-    return firstHref ? [{ href: firstHref, label: "Indhold" }] : tocFlat;
+  // If no detectable front entries, keep cover if we can, then Indhold
+  if (!frontEntries.length) {
+    const coverHref = guessCoverHref(book);
+    const contentHref = findFirstContentHrefAfter(book, coverHref);
+    const out = [];
 
+    if (coverHref) out.push({ href: coverHref, label: "Forside" });
+    out.push({ href: contentHref || firstHref, label: "Indhold" });
+
+    return ensureNonEmptyToc(out, book);
+  }
+
+  // Find the last frontmatter spine index
   const frontIdx = [];
   for (const it of frontEntries) {
-    const r = spineIndexOfDebug(book, it.href);
+    const hit = normalizeToSpineHref(book, it.href);
+    if (!hit) continue;
+    const r = spineIndexOfDebug(book, hit);
     if (typeof r.idx === "number") frontIdx.push(r.idx);
   }
 
-  if (!frontIdx.length)
-    return firstHref ? [{ href: firstHref, label: "Indhold" }] : tocFlat;
+  const lastFrontSpineIdx = frontIdx.length ? Math.max(...frontIdx) : 0;
 
-  const lastFrontSpineIdx = Math.max(...frontIdx);
-
+  // Keep unique front spine hrefs (stable)
   const kept = [];
   const keptKeys = new Set();
 
@@ -492,13 +589,20 @@ export function collapseToSingleSectionPreserveFrontmatter(book, tocFlat) {
       const key = stripHashQuery(hit);
       if (!keptKeys.has(key)) {
         keptKeys.add(key);
-
-        const label = prettyLabelFromHref(hit, String(it?.label || "Indhold"));
-        kept.push({ ...it, href: hit, label });
+        kept.push({ ...it, href: hit });
       }
     }
   }
 
+  // Ensure cover explicitly if possible
+  const coverHref = guessCoverHref(book);
+  if (coverHref) {
+    const coverKey = stripHashQuery(coverHref);
+    const hasCover = kept.some((x) => stripHashQuery(x.href) === coverKey);
+    if (!hasCover) kept.unshift({ href: coverHref, label: "Forside" });
+  }
+
+  // Pick a content href right after frontmatter
   let contentHref = null;
   for (let i = lastFrontSpineIdx + 1; i < spineItems.length; i++) {
     const href = spineItems[i]?.href;
@@ -507,12 +611,51 @@ export function collapseToSingleSectionPreserveFrontmatter(book, tocFlat) {
       break;
     }
   }
+  if (!contentHref)
+    contentHref = findFirstContentHrefAfter(book, coverHref) || firstHref;
 
-  if (!contentHref) contentHref = firstHref;
-  if (!contentHref) return kept.length ? kept : tocFlat;
+  // Add Indhold section if not already present
+  const contentKey = contentHref ? stripHashQuery(contentHref) : null;
+  const hasAlready = contentKey
+    ? kept.some((x) => stripHashQuery(x.href) === contentKey)
+    : false;
 
-  const contentKey = stripHashQuery(contentHref);
-  const hasAlready = kept.some((x) => stripHashQuery(x.href) === contentKey);
+  const out = hasAlready
+    ? kept
+    : [...kept, { href: contentHref, label: "Indhold" }];
 
-  return hasAlready ? kept : [...kept, { href: contentHref, label: "Indhold" }];
+  return ensureNonEmptyToc(out, book);
+}
+
+function findFirstContentHrefAfter(book, coverHref) {
+  const spineItems = book?.spine?.spineItems || [];
+  if (!spineItems.length) return null;
+
+  let start = 0;
+  if (coverHref) {
+    const r = spineIndexOfDebug(book, coverHref);
+    if (typeof r.idx === "number") start = Math.max(0, r.idx);
+  }
+
+  // Skip obvious cover/title/colophon-ish
+  const skipRe = /(cover|title|titel|kolofon|colophon|copyright)/i;
+
+  for (let i = start; i < spineItems.length; i++) {
+    const href = spineItems[i]?.href;
+    if (!href) continue;
+    if (skipRe.test(href)) continue;
+    return href;
+  }
+
+  return spineItems[0]?.href || null;
+}
+
+function ensureNonEmptyToc(arr, book) {
+  const cleaned = (arr || []).filter(
+    (x) => x && (x.href || x.href === null) && String(x.label || "").trim()
+  );
+  if (cleaned.length) return cleaned;
+
+  const firstHref = book?.spine?.spineItems?.[0]?.href || null;
+  return [{ href: firstHref, label: "Indhold" }];
 }

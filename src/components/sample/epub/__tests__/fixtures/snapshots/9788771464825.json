@@ -1,0 +1,147 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-20T14:01:16.236Z",
+  "fileName": "9788771464825.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Blå Stjerne",
+    "creator": "Jan Guillou",
+    "language": "da-DK"
+  },
+  "counts": {
+    "spineLen": 6,
+    "tocLen": 0,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "Text/CoverImage.xhtml",
+      "idref": "CoverImage",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "Text/BlaaStjerne_epub.xhtml",
+      "idref": "BlaaStjerne_epub",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "Text/BlaaStjerne_epub-1.xhtml",
+      "idref": "BlaaStjerne_epub-1",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "Text/BlaaStjerne_epub-2.xhtml",
+      "idref": "BlaaStjerne_epub-2",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "Text/BlaaStjerne_epub-3.xhtml",
+      "idref": "BlaaStjerne_epub-3",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "Text/BlaaStjerne_epub-4.xhtml",
+      "idref": "BlaaStjerne_epub-4",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [],
+  "pipeline": {
+    "tocRaw": [],
+    "tocDeduped": [],
+    "tocWithFront": [
+      {
+        "href": "Text/CoverImage.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Text/BlaaStjerne_epub.xhtml",
+        "label": "BlaaStjerne Epub"
+      },
+      {
+        "href": "Text/BlaaStjerne_epub-1.xhtml",
+        "label": "BlaaStjerne Epub 1"
+      },
+      {
+        "href": "Text/BlaaStjerne_epub-2.xhtml",
+        "label": "BlaaStjerne Epub 2"
+      },
+      {
+        "href": "Text/BlaaStjerne_epub-3.xhtml",
+        "label": "BlaaStjerne Epub 3"
+      },
+      {
+        "href": "Text/BlaaStjerne_epub-4.xhtml",
+        "label": "BlaaStjerne Epub 4"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "Text/CoverImage.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Text/BlaaStjerne_epub.xhtml",
+        "label": "Indhold"
+      }
+    ],
+    "score": {
+      "mode": "fallback",
+      "score": 55,
+      "reasons": [
+        "toc-close-to-spine-size",
+        "repeated-title-like-labels"
+      ],
+      "metrics": {
+        "spineLen": 6,
+        "tocLen": 6,
+        "mapped": 6,
+        "mappedUnique": 6,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.5,
+        "titleRepeatRatio": 0.833
+      }
+    },
+    "collapse": true
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "fallback",
+      "score": 55,
+      "reasons": [
+        "toc-close-to-spine-size",
+        "repeated-title-like-labels"
+      ],
+      "metrics": {
+        "spineLen": 6,
+        "tocLen": 6,
+        "mapped": 6,
+        "mappedUnique": 6,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.5,
+        "titleRepeatRatio": 0.833
+      }
+    },
+    "collapse": true
+  }
+}

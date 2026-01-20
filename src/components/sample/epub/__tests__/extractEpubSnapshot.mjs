@@ -2,8 +2,10 @@
 // Usage:
 //   node src/components/sample/epub/__tests__/extractEpubSnapshot.mjs
 //   node src/components/sample/epub/__tests__/extractEpubSnapshot.mjs --debug
+//   node src/components/sample/epub/__tests__/extractEpubSnapshot.mjs --overwrite
 //
-// It scans fixtures/epubs/*.zip and writes fixtures/snapshots/<isbn>.json
+// Default: skips a book if fixtures/snapshots/<isbn>.json already exists.
+// Use --overwrite to intentionally regenerate snapshots.
 
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -36,6 +38,15 @@ async function listZipFiles(dir) {
     .map((n) => path.join(dir, n));
 }
 
+async function fileExists(p) {
+  try {
+    await fs.access(p);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function writeJson(filePath, obj) {
   const json = JSON.stringify(obj, null, 2) + "\n";
   await fs.writeFile(filePath, json, "utf8");
@@ -43,6 +54,7 @@ async function writeJson(filePath, obj) {
 
 async function main() {
   const debug = argHas("--debug");
+  const overwrite = argHas("--overwrite");
 
   const epubsDir = path.join(__dirname, "fixtures", "epubs");
   const snapDir = path.join(__dirname, "fixtures", "snapshots");
@@ -54,15 +66,27 @@ async function main() {
   console.log(`Found ${zipFiles.length} EPUB(s).`);
   console.log(`EPUB dir: ${epubsDir}`);
   console.log(`Snap dir: ${snapDir}`);
+  console.log(`Mode    : ${overwrite ? "overwrite" : "skip-existing"}`);
   console.log("");
 
   let ok = 0;
+  let skipped = 0;
   let fail = 0;
   const failures = [];
 
   for (const filePath of zipFiles) {
     const id = baseNameNoExt(filePath);
-    console.log(`\u2192 ${id}`);
+    const outFile = path.join(snapDir, `${id}.json`);
+
+    if (!overwrite && (await fileExists(outFile))) {
+      console.log(`→ ${id}`);
+      console.log(`  ↷ skipped: fixtures/snapshots/${id}.json already exists`);
+      console.log("");
+      skipped++;
+      continue;
+    }
+
+    console.log(`→ ${id}`);
 
     try {
       const bytes = await fs.readFile(filePath);
@@ -72,7 +96,6 @@ async function main() {
         debug,
       });
 
-      const outFile = path.join(snapDir, `${id}.json`);
       await writeJson(outFile, snap);
 
       const c = snap?.counts || {};
@@ -91,7 +114,9 @@ async function main() {
       }
 
       if (typeof snap?.heuristics?.collapse === "boolean") {
-        console.log(`  [COLLAPSE] ${snap.heuristics.collapse ? "yes" : "no"}`);
+        console.log(
+          `  [COLLAPSE] ${snap.heuristics.collapse ? "true" : "false"}`
+        );
       }
 
       console.log("");
@@ -113,14 +138,20 @@ async function main() {
 
   console.log("Done.");
   console.log(`Success: ${ok}`);
+  console.log(`Skipped: ${skipped}`);
   console.log(`Failed : ${fail}`);
 
   if (failures.length) {
     console.log("");
     console.log("Failures:");
-    for (const f of failures) {
-      console.log(`- ${f.id}: ${f.message}`);
-    }
+    for (const f of failures) console.log(`- ${f.id}: ${f.message}`);
+  }
+
+  if (!overwrite) {
+    console.log("");
+    console.log(
+      "Tip: run with --overwrite to intentionally regenerate existing snapshots."
+    );
   }
 }
 

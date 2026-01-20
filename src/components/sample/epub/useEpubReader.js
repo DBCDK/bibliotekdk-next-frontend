@@ -16,6 +16,8 @@ import {
   collapseToSingleSectionPreserveFrontmatter,
 } from "./epubLogic";
 
+import { deriveBookEdgesFromLoc } from "./epubNavUtils";
+
 function clearViewerEl(el) {
   if (!el) return;
   while (el.firstChild) el.removeChild(el.firstChild);
@@ -212,14 +214,11 @@ export function useEpubReader({
 
   const onRelocatedRef = useRef(null);
   onRelocatedRef.current = (loc) => {
-    setAtBookEnd(!!loc?.atEnd);
-    setAtBookStart(!!loc?.atStart);
+    const book = bookRef.current;
+    if (!book) return;
 
     if (loc?.start?.cfi) lastCfiRef.current = loc.start.cfi;
     if (loc?.start?.href) lastHrefRef.current = loc.start.href;
-
-    const book = bookRef.current;
-    if (!book) return;
 
     const currentSpineIdx =
       typeof loc?.start?.index === "number"
@@ -229,6 +228,13 @@ export function useEpubReader({
         : null;
 
     if (typeof currentSpineIdx !== "number") return;
+
+    const edges = deriveBookEdgesFromLoc(
+      { ...loc, start: { ...(loc?.start || {}), index: currentSpineIdx } },
+      spineLenRef.current || 0
+    );
+    setAtBookStart(!!edges.derivedAtStart);
+    setAtBookEnd(!!edges.derivedAtEnd);
 
     const seg = segmentFromSpine(currentSpineIdx);
     setSegIndex((prev) => (seg !== prev ? seg : prev));
@@ -250,11 +256,15 @@ export function useEpubReader({
         segIntra,
         href: loc?.start?.href,
         cfi: loc?.start?.cfi,
+        derivedAtStart: edges.derivedAtStart,
+        derivedAtEnd: edges.derivedAtEnd,
+        locAtStart: !!loc?.atStart,
+        locAtEnd: !!loc?.atEnd,
       });
     }
   };
 
-  // ✅ INIT: only when src changes (or retryCount), NOT isFullscreen
+  // INIT (only when src changes / retryCount)
   useEffect(() => {
     if (!(src instanceof ArrayBuffer)) return;
     if (!viewerRef?.current) return;
@@ -353,7 +363,7 @@ export function useEpubReader({
         filtered.push({ ...it, href: hit });
       }
 
-      // ✅ NEW: one section per spine href (removes multiple headers on same page)
+      // one section per spine href
       const deduped = dedupeTocBySpineHref(book, filtered);
 
       // add missing spine items before first toc (cover/title/etc.)
@@ -361,10 +371,7 @@ export function useEpubReader({
 
       // Decide structure mode (chapter vs fallback)
       const struct = computeEpubStructureScore(book, withFrontmatter);
-
-      if (debugEnabled) {
-        log("STRUCT", struct);
-      }
+      if (debugEnabled) log("STRUCT", struct);
 
       if (struct.mode === "fallback") {
         log("TOC looks messy → collapsing (preserve frontmatter) + Indhold");
@@ -380,7 +387,13 @@ export function useEpubReader({
       const spineLen = book?.spine?.spineItems?.length || 0;
       setProgressEnabled(!(spineLen > 1 && withFrontmatter.length <= 1));
 
-      await rendition.display();
+      // Start at first spine item (cover) when possible
+      let startTarget = null;
+      try {
+        const items = book?.spine?.spineItems || [];
+        startTarget = items?.[0]?.href || null;
+      } catch {}
+      await rendition.display(startTarget || undefined);
 
       if (cancelled || genRef.current !== gen) return;
 
@@ -411,9 +424,10 @@ export function useEpubReader({
     bookId,
     title,
     retryCount,
+    isFullscreen, // ok in init since you already had it, but it can also be removed
   ]);
 
-  // ✅ Apply fullscreen layout WITHOUT resetting location (guarded)
+  // Fullscreen toggle (kept)
   useEffect(() => {
     const host = viewerRef?.current;
     if (!host) return;
@@ -424,7 +438,6 @@ export function useEpubReader({
       const r = renditionRef.current;
       if (!r) return;
 
-      // per your request: safe optional chain
       let loc = null;
       try {
         loc = r?.currentLocation?.();
@@ -484,11 +497,7 @@ export function useEpubReader({
     };
   }, [isFullscreen, viewerRef, debugEnabled]);
 
-  /**
-   * ResizeObserver for viewer (debounced + safe)
-   * - avoids calling display() on resize (prevents spam / loops)
-   * - only resize if width/height changed
-   */
+  // ResizeObserver (kept)
   useEffect(() => {
     const host = viewerRef?.current;
     if (!host) return;
@@ -520,7 +529,6 @@ export function useEpubReader({
       try {
         r.resize?.(w, h);
       } catch {}
-
       try {
         r.reflow?.();
       } catch {}
@@ -563,17 +571,133 @@ export function useEpubReader({
     }));
   }, [tocFlat, segIndex]);
 
-  const handlePrev = useCallback(async () => {
+  const safeLoc = (r) => {
     try {
-      await renditionRef.current?.prev?.();
-    } catch {}
+      return r?.currentLocation?.() || null;
+    } catch {
+      return null;
+    }
+  };
+
+  const getSpineIdxFromLoc = useCallback((loc) => {
+    const book = bookRef.current;
+    if (!loc || !book) return null;
+
+    if (typeof loc?.start?.index === "number") return loc.start.index;
+    if (typeof loc?.start?.href === "string") {
+      const r = spineIndexOfDebug(book, loc.start.href);
+      return typeof r.idx === "number" ? r.idx : null;
+    }
+    return null;
   }, []);
 
-  const handleNext = useCallback(async () => {
+  const forceDisplaySpine = useCallback(async (delta) => {
+    const r = renditionRef.current;
+    const book = bookRef.current;
+    if (!r || !book) return false;
+
+    const loc = safeLoc(r);
+    const href = loc?.start?.href || lastHrefRef.current || null;
+    if (!href) return false;
+
+    const cur = spineIndexOfDebug(book, href).idx;
+    if (typeof cur !== "number") return false;
+
+    const items = book?.spine?.spineItems || [];
+    const nextIdx = cur + delta;
+    if (nextIdx < 0 || nextIdx >= items.length) return false;
+
+    const nextHref = items?.[nextIdx]?.href;
+    if (!nextHref) return false;
+
     try {
-      await renditionRef.current?.next?.();
-    } catch {}
+      await r.display(nextHref);
+      return true;
+    } catch {
+      return false;
+    }
   }, []);
+
+  /**
+   * FIX: prev/next can "move" internally (change CFI/reflow) but still stay on same spine item.
+   * We detect stuck by comparing spineIndex before/after.
+   */
+  const handlePrev = useCallback(async () => {
+    const r = renditionRef.current;
+    if (!r) return;
+
+    const before = safeLoc(r);
+    const beforeIdx = getSpineIdxFromLoc(before);
+    const beforeIntra = calcFileIntra(before);
+
+    try {
+      await r.prev?.();
+    } catch {}
+
+    const after = safeLoc(r);
+    const afterIdx = getSpineIdxFromLoc(after);
+
+    // If we didn't change spine, and we're at file-start, force to previous spine item.
+    const epsStart = 0.02;
+    const atFileStart = !!before?.atStart || (beforeIntra ?? 0) <= epsStart;
+
+    if (
+      typeof beforeIdx === "number" &&
+      typeof afterIdx === "number" &&
+      beforeIdx === afterIdx &&
+      beforeIdx > 0 &&
+      atFileStart
+    ) {
+      if (debugEnabled)
+        log("prev() stuck on same spine → force spine -1", {
+          beforeIdx,
+          afterIdx,
+          beforeIntra,
+          locAtStart: !!before?.atStart,
+        });
+      await forceDisplaySpine(-1);
+    }
+  }, [debugEnabled, forceDisplaySpine, getSpineIdxFromLoc]);
+
+  const handleNext = useCallback(async () => {
+    const r = renditionRef.current;
+    if (!r) return;
+
+    const before = safeLoc(r);
+    const beforeIdx = getSpineIdxFromLoc(before);
+    const beforeIntra = calcFileIntra(before);
+
+    try {
+      await r.next?.();
+    } catch {}
+
+    const after = safeLoc(r);
+    const afterIdx = getSpineIdxFromLoc(after);
+
+    const spineLen = spineLenRef.current || 0;
+    const lastIdx = Math.max(0, spineLen - 1);
+
+    // If we didn't change spine, and we're at file-end, force to next spine item.
+    const epsEnd = 0.98;
+    const atFileEnd = !!before?.atEnd || (beforeIntra ?? 1) >= epsEnd;
+
+    if (
+      typeof beforeIdx === "number" &&
+      typeof afterIdx === "number" &&
+      beforeIdx === afterIdx &&
+      beforeIdx < lastIdx &&
+      atFileEnd
+    ) {
+      if (debugEnabled)
+        log("next() stuck on same spine → force spine +1", {
+          beforeIdx,
+          afterIdx,
+          beforeIntra,
+          locAtEnd: !!before?.atEnd,
+        });
+      await forceDisplaySpine(+1);
+    }
+  }, [debugEnabled, forceDisplaySpine, getSpineIdxFromLoc]);
 
   const handleJump = useCallback(async (href) => {
     const r = renditionRef.current;
