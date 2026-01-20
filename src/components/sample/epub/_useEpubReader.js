@@ -368,6 +368,7 @@ export function useEpubReader({
   bookId,
   title,
 }) {
+  void containerRef;
   const [status, setStatus] = useState("idle");
   const [initError, setInitError] = useState(null);
 

@@ -67,7 +67,12 @@ export default function Error({ show, error, onRetry, disabled }) {
 
           <div className={styles.actions}>
             {onRetry ? (
-              <button type="button" className={styles.button} onClick={onRetry}>
+              <button
+                type="button"
+                className={styles.button}
+                onClick={onRetry}
+                disabled={disabled}
+              >
                 {retryLabel}
               </button>
             ) : null}

@@ -344,7 +344,6 @@ function detectTitleLikeRepetition(labels, metaTitle) {
   if (cleanLabels.length < 5) return { hit: false, ratio: 0 };
 
   const bases = cleanLabels.map((l) => stripTrailingNumber(l));
-  const uniqBases = new Set(bases);
 
   // If almost everything shares the same base, we consider it "title-like repetition"
   const mostCommonBase = (() => {
@@ -534,6 +533,7 @@ export function collapseToSingleSectionPreserveFrontmatter(
   tocFlat,
   opts = {}
 ) {
+  void opts;
   const spineItems = book?.spine?.spineItems || [];
   if (!spineItems.length) {
     // Absolute safety: if no spine, keep at least 1 item from toc, else synthesize.

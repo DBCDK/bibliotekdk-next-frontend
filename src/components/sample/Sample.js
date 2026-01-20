@@ -154,7 +154,8 @@ export default function Wrap(props) {
     }
 
     // Deep link -> remove sample param without leaving page
-    const { sample, ...rest } = router.query;
+    const rest = { ...router.query };
+    delete rest.sample;
 
     router.replace(
       {
