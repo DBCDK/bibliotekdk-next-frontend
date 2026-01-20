@@ -1878,8 +1878,8 @@
         "en": "Get"
       },
       "nota-access-restriction": {
-        "da": "Du skal have dokumenteret læsehandicap for at få adgang til Notas materialer",
-        "en": "You must have a documented reading disability to access Nota's materials"
+        "da": "Du bliver sendt til nota.dk - Adgang kræver dokumenteret læsehandicap",
+        "en": "You will be sent to nota.dk - Access requires documented reading disability"
       },
       "onlineAccessAt": {
         "da": "Du bliver sendt til",
