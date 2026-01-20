@@ -28,8 +28,8 @@ function OrderButtonTextBelow({
   isPeriodica,
 }) {
   const isNota =
-    getBaseUrl(access?.[0]?.url) === "nota.dk" ||
-    access?.[0]?.origin === "nota.dk";
+    access?.[0]?.url?.includes("nota.dk") ||
+    access?.[0]?.origin?.includes("nota.dk");
 
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
