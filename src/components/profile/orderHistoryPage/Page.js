@@ -29,8 +29,10 @@ export default function OrderHistoryPage() {
   const { hasCulrUniqueId } = useAuthentication();
   const breakpoint = useBreakpoint();
   const modal = useModal();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm";
-  const [totalPages, setTotalPages] = useState(0);
+//  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+const isMobile = ["xs", "sm", "md"].includes(breakpoint);
+
+const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHistoryData, setOrderHistoryData] = useState([]);
   //fetch paginated orderhistorydata
