@@ -100,10 +100,7 @@
     "score": {
       "mode": "fallback",
       "score": 55,
-      "reasons": [
-        "toc-close-to-spine-size",
-        "repeated-title-like-labels"
-      ],
+      "reasons": ["toc-close-to-spine-size", "repeated-title-like-labels"],
       "metrics": {
         "spineLen": 6,
         "tocLen": 6,
@@ -124,10 +121,7 @@
     "structure": {
       "mode": "fallback",
       "score": 55,
-      "reasons": [
-        "toc-close-to-spine-size",
-        "repeated-title-like-labels"
-      ],
+      "reasons": ["toc-close-to-spine-size", "repeated-title-like-labels"],
       "metrics": {
         "spineLen": 6,
         "tocLen": 6,

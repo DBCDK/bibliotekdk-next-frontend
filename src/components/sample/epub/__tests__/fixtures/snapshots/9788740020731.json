@@ -4604,9 +4604,7 @@
     "score": {
       "mode": "chapter",
       "score": 35,
-      "reasons": [
-        "many-toc-hrefs-not-in-spine"
-      ],
+      "reasons": ["many-toc-hrefs-not-in-spine"],
       "metrics": {
         "spineLen": 16,
         "tocLen": 196,
@@ -4627,9 +4625,7 @@
     "structure": {
       "mode": "chapter",
       "score": 35,
-      "reasons": [
-        "many-toc-hrefs-not-in-spine"
-      ],
+      "reasons": ["many-toc-hrefs-not-in-spine"],
       "metrics": {
         "spineLen": 16,
         "tocLen": 196,

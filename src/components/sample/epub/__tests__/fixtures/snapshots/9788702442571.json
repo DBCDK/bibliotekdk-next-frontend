@@ -18,9 +18,7 @@
       "index": 0,
       "href": "cover.xhtml",
       "idref": "cover",
-      "properties": [
-        "svg"
-      ],
+      "properties": ["svg"],
       "linear": true
     },
     {
@@ -301,9 +299,7 @@
     "score": {
       "mode": "chapter",
       "score": 20,
-      "reasons": [
-        "toc-close-to-spine-size"
-      ],
+      "reasons": ["toc-close-to-spine-size"],
       "metrics": {
         "spineLen": 9,
         "tocLen": 9,
@@ -323,9 +319,7 @@
     "structure": {
       "mode": "chapter",
       "score": 20,
-      "reasons": [
-        "toc-close-to-spine-size"
-      ],
+      "reasons": ["toc-close-to-spine-size"],
       "metrics": {
         "spineLen": 9,
         "tocLen": 9,

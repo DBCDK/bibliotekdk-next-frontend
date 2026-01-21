@@ -1344,10 +1344,7 @@
     "score": {
       "mode": "fallback",
       "score": 55,
-      "reasons": [
-        "many-toc-hrefs-not-in-spine",
-        "low-label-uniqueness"
-      ],
+      "reasons": ["many-toc-hrefs-not-in-spine", "low-label-uniqueness"],
       "metrics": {
         "spineLen": 8,
         "tocLen": 69,
@@ -1367,10 +1364,7 @@
     "structure": {
       "mode": "fallback",
       "score": 55,
-      "reasons": [
-        "many-toc-hrefs-not-in-spine",
-        "low-label-uniqueness"
-      ],
+      "reasons": ["many-toc-hrefs-not-in-spine", "low-label-uniqueness"],
       "metrics": {
         "spineLen": 8,
         "tocLen": 69,

@@ -18,9 +18,7 @@
       "index": 0,
       "href": "cover.xhtml",
       "idref": "cover",
-      "properties": [
-        "svg"
-      ],
+      "properties": ["svg"],
       "linear": true
     },
     {

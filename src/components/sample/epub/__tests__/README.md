@@ -2,7 +2,7 @@
 
 This folder contains **regression tests + snapshot tooling** for the EPUB reader logic.
 
-EPUB files vary *a lot* in structure (EPUB2/EPUB3, nav vs ncx, broken metadata, weird TOCs, duplicate anchors, etc.).  
+EPUB files vary _a lot_ in structure (EPUB2/EPUB3, nav vs ncx, broken metadata, weird TOCs, duplicate anchors, etc.).  
 The purpose of this setup is to let us improve parsing heuristics **without breaking books that already worked**.
 
 ---
@@ -10,10 +10,10 @@ The purpose of this setup is to let us improve parsing heuristics **without brea
 ## The big idea
 
 1. **Collect real EPUB examples** (fixtures)
-2. **Generate snapshots** (`.json`) that capture what our logic *thinks* the structure is
+2. **Generate snapshots** (`.json`) that capture what our logic _thinks_ the structure is
 3. **Run Jest tests** that compare current behavior against the snapshots
 
-When we improve the logic, we regenerate snapshots *only when the change is intentional* and then commit them.  
+When we improve the logic, we regenerate snapshots _only when the change is intentional_ and then commit them.  
 That gives us a clean “contract” of expected behavior.
 
 ---
@@ -31,7 +31,7 @@ A snapshot typically contains:
 
 In practice, snapshots represent:
 
-- detected sections / labels (e.g. *Forside, Titelblad, Kolofon, Kapitel, Indhold*)
+- detected sections / labels (e.g. _Forside, Titelblad, Kolofon, Kapitel, Indhold_)
 - deduping rules (e.g. multiple anchors inside the same HTML file should not become multiple sections)
 - fallback decisions (collapsed “Indhold” mode)
 - structural metrics that drive the decision (spine/TOC mapping, weak labels, “page-like chapters”, etc.)
@@ -41,14 +41,17 @@ In practice, snapshots represent:
 ## Chapter mode vs fallback mode
 
 ### Chapter mode (`mode="chapter"`)
+
 We trust the TOC enough to show multiple sections/chapters.
 
 Typical indicators:
+
 - TOC labels look meaningful
 - TOC maps well to spine
 - label variety is reasonable
 
 ### Fallback mode (`mode="fallback"`)
+
 We do **not** trust the TOC enough to expose it as chapters.  
 Instead we collapse everything after frontmatter into a single section:
 
@@ -56,6 +59,7 @@ Instead we collapse everything after frontmatter into a single section:
 - Add one section: **Indhold** (the rest of the book)
 
 Fallback is used for “ugly” or misleading books, for example:
+
 - TOC is missing/empty
 - TOC hrefs don’t map to the spine
 - TOC labels are weak/junk (e.g. `-`, `•`, `index1`, etc.)
@@ -68,7 +72,7 @@ Fallback is used for “ugly” or misleading books, for example:
 Our logic computes a structure score:
 
 - `score`: **0–100**
-- `reasons`: human-readable flags explaining *why* points were added
+- `reasons`: human-readable flags explaining _why_ points were added
 - `metrics`: values that drive the reasons
 
 A simplified mental model:
@@ -83,9 +87,10 @@ Typical reasons include:
 - `weak-or-index-like-labels`
 - `low-label-uniqueness`
 - `chapter-like-labels`
-- `page-like-chapter-toc` (important: triggers fallback for books like *Skyggen foran mig*)
+- `page-like-chapter-toc` (important: triggers fallback for books like _Skyggen foran mig_)
 
 ### What is `collapse`?
+
 `collapse` is the decision to actually collapse the sections in the UI.
 
 **Rule of thumb:** `collapse === (mode === "fallback")`
@@ -151,6 +156,7 @@ Add a new EPUB fixture when:
 - fallback mode is triggered unexpectedly (or not triggered when it should be)
 
 This lets us:
+
 - improve detection heuristics
 - add coverage for new EPUB structures
 - keep already-supported books stable

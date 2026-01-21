@@ -131,9 +131,7 @@
     "score": {
       "mode": "chapter",
       "score": 20,
-      "reasons": [
-        "toc-close-to-spine-size"
-      ],
+      "reasons": ["toc-close-to-spine-size"],
       "metrics": {
         "spineLen": 7,
         "tocLen": 7,
@@ -153,9 +151,7 @@
     "structure": {
       "mode": "chapter",
       "score": 20,
-      "reasons": [
-        "toc-close-to-spine-size"
-      ],
+      "reasons": ["toc-close-to-spine-size"],
       "metrics": {
         "spineLen": 7,
         "tocLen": 7,
