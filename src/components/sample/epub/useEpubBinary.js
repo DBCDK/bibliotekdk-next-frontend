@@ -166,8 +166,7 @@ export function useEpubBinary(
         setError(e);
         debug.err(e, { step: "useEpubBinary" });
       } finally {
-        if (!alive) return;
-        setIsLoading(false);
+        if (alive) setIsLoading(false);
       }
     })();
 
