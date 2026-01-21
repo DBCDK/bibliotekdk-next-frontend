@@ -1,5 +1,6 @@
 import { useId } from "react";
 import styles from "./Expand.module.css";
+import Icon from "@/components/base/icon";
 
 /**
  * Maximize/Minimize toggle-ikon til modal (docket højre <-> fuldskærm).
@@ -43,22 +44,17 @@ export default function ExpandIcon({
         aria-disabled={disabled || undefined}
         onKeyDown={disabled ? undefined : onKeyDown}
       >
-        <span className={styles.icon} aria-hidden="true">
-          {/* Minimize (højre-docket sidebar) */}
-          <svg className={styles.mini} viewBox="0 0 20 20">
-            {/* skærmramme */}
-            <rect x="3" y="4" width="14" height="12" rx="2" fill="none" />
-            {/* højre sidebar */}
-            <rect x="11" y="6" width="4" height="8" rx="1" />
-          </svg>
-
-          {/* Maximize (fullscreen corners) */}
-          <svg className={styles.max} viewBox="0 0 20 20">
-            <path d="M6 4h-2v2" />
-            <path d="M14 4h2v2" />
-            <path d="M6 16h-2v-2" />
-            <path d="M14 16h2v-2" />
-          </svg>
+        <span className={styles.iconWrap} aria-hidden="true">
+          <Icon
+            className={`${styles.icon} ${styles.minimize}`}
+            size={3}
+            src={"minimize.svg"}
+          />
+          <Icon
+            className={`${styles.icon} ${styles.maximize}`}
+            size={3}
+            src={"maximize.svg"}
+          />
         </span>
       </label>
     </span>

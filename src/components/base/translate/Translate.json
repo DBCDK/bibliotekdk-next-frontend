@@ -1885,6 +1885,10 @@
         "da": "Digitale materialer bliver du sendt videre til",
         "en": "You will be forwarded to digital materials"
       },
+      "addToCart-line3-not-logged-in": {
+        "da": "Kræver login. Digitale materialer bliver du sendt videre til",
+        "en": "You will be forwarded to digital materials"
+      },
       "goto": {
         "da": "Gå til",
         "en": "Get"
@@ -6032,11 +6036,11 @@
         "en": "Sample"
       },
       "overlay-test-read-title": {
-        "da": "Prøvelæs:",
+        "da": "Læseprøve:",
         "en": "Test read"
       },
       "overlay-test-listen-title": {
-        "da": "Prøvelyt:",
+        "da": "Lytteprøve:",
         "en": "Test listen"
       },
       "disclaimer-text": {

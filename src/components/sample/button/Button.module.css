@@ -11,19 +11,15 @@
 }
 
 .icon {
-  width: var(--pt5);
-  height: var(--pt5);
-  /* border: 2px solid var(--white); */
-  border-radius: 50%;
-  font-style: normal;
-  padding: 0 0 4px 4px;
-  font-size: 22px;
+  padding: 2px;
 }
 
 .text {
-  top: 100%;
-  padding: var(--pt1) 0 0 0;
   position: absolute;
-  color: var(--mine-shaft);
+  width: 100%;
+  text-align: center;
+  top: 100%;
   left: 0;
+  padding: var(--pt1) 0 0 0;
+  color: var(--mine-shaft);
 }

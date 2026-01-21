@@ -20,8 +20,7 @@ function TextAboveButton({ access, isAuthenticated }) {
   const a0 = access?.[0];
 
   const loginRequired =
-    a0?.loginRequired ||
-    ["InfomediaService", "Publizon"].includes(a0?.__typename);
+    a0?.loginRequired || ["InfomediaService"].includes(a0?.__typename);
 
   if (!loginRequired || isAuthenticated) return null;
 

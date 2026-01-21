@@ -22,12 +22,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: var(--pt5);
+  height: var(--pt5);
   border-radius: 9999px;
   background: transparent;
   color: var(--mine-shaft);
-  border: 1px solid var(--mine-shaft);
   cursor: pointer;
   user-select: none;
   line-height: 1;
@@ -36,7 +35,7 @@
 }
 
 .button:hover {
-  background: var(--mine-shaft);
+  background: var(--iron);
   color: var(--white); /* ikonfarve følger currentColor */
 }
 
@@ -60,58 +59,47 @@
 }
 
 /* Ikon-container (fast størrelse) */
-.icon {
+.iconWrap {
   position: relative;
-  width: 14px;
-  height: 14px;
+  width: var(--pt3);
+  height: var(--pt3);
 }
 
-/* Grundopsætning for begge SVG’er */
-.icon svg {
+/* Grundopsætning for begge ikoner */
+.icon {
   position: absolute;
   inset: 0;
-  width: 14px;
-  height: 14px;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  fill: none;
-  transition: transform 180ms ease, opacity 150ms ease, stroke 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms ease, opacity 150ms ease;
   transform-origin: 50% 50%;
-}
-
-/* Minimize-grafik: sidebar fyldes */
-.mini rect:nth-of-type(2) {
-  fill: currentColor;
-  stroke: currentColor;
-}
-.max path {
-  stroke-linecap: round;
 }
 
 /* -------- STATE: "ikon viser næste handling" -------- */
 /* Unchecked = docket højre -> vis MAXIMIZE (næste handling) */
-.input + .button .mini {
+.input + .button .minimize {
   opacity: 0;
   transform: scale(0.9);
 }
-.input + .button .max {
+.input + .button .maximize {
   opacity: 1;
   transform: scale(1);
 }
 
 /* Checked = fuldskærm -> vis MINIMIZE (næste handling) */
-.input:checked + .button .mini {
+.input:checked + .button .minimize {
   opacity: 1;
   transform: scale(1);
 }
-.input:checked + .button .max {
+.input:checked + .button .maximize {
   opacity: 0;
   transform: scale(0.9);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .button,
-  .icon svg {
+  .icon {
     transition: none !important;
   }
 }

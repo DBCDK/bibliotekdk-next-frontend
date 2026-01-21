@@ -4,6 +4,7 @@ import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 
 import styles from "./Button.module.css";
+import Icon from "@/components/base/icon";
 
 export default function SampleButton({
   className = "",
@@ -21,7 +22,7 @@ export default function SampleButton({
       skeleton={isLoading}
       onClick={onClick}
     >
-      <i className={styles.icon}>▶</i>
+      <Icon className={styles.icon} size={3} src={"play.svg"} />
       <div className={`${styles.text}`}>
         <Text type="text3">
           {Translate({
