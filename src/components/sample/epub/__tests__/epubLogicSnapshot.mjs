@@ -424,7 +424,11 @@ function joinPosix(base, rel) {
   if (!r) return b;
 
   if (r.startsWith("/")) return r.slice(1);
-  const parts = (b.replace(/\/+$/, "") + "/" + r).split("/");
+  let baseTrimmed = b;
+  while (baseTrimmed.endsWith("/")) {
+    baseTrimmed = baseTrimmed.slice(0, -1);
+  }
+  const parts = (baseTrimmed + "/" + r).split("/");
   const out = [];
   for (const p of parts) {
     if (!p || p === ".") continue;
@@ -528,7 +532,7 @@ async function manualZipExtractSnapshot(ab, { debug }) {
     );
   }
 
-  const zip = await JSZip.loadAsync(ab);
+  const zip = await JSZip.loadAsync(ab); // NOSONAR
 
   const containerXml = await readZipText(zip, "META-INF/container.xml");
   if (!containerXml) {

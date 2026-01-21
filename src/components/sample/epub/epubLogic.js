@@ -332,9 +332,14 @@ function normalizeForUniq(s) {
 }
 
 function stripTrailingNumber(s) {
-  return normalizeForUniq(s)
-    .replace(/\s+\d+\s*$/g, "")
-    .trim();
+  const norm = normalizeForUniq(s);
+  let i = norm.length - 1;
+  while (i >= 0 && norm[i] === " ") i--;
+  let j = i;
+  while (j >= 0 && norm[j] >= "0" && norm[j] <= "9") j--;
+  if (j === i) return norm;
+  while (j >= 0 && norm[j] === " ") j--;
+  return norm.slice(0, j + 1);
 }
 
 function detectTitleLikeRepetition(labels, metaTitle) {

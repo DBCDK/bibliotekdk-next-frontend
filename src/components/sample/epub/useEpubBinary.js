@@ -89,6 +89,7 @@ export function useEpubBinary(
 
   const [buffer, setBuffer] = useState(null);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // version bruges gerne som key i UI for at remounte viewer
   const [version, setVersion] = useState(0);
@@ -108,9 +109,11 @@ export function useEpubBinary(
     setBuffer(null);
     setError(null);
     setVersion((v) => v + 1);
+    setIsLoading(true);
 
     if (!srcUrl || typeof srcUrl !== "string") {
       // Hvis du vil have hard error i stedet, kan du sætte setError her.
+      setIsLoading(false);
       return;
     }
 
@@ -162,18 +165,23 @@ export function useEpubBinary(
 
         setError(e);
         debug.err(e, { step: "useEpubBinary" });
+      } finally {
+        if (!alive) return;
+        setIsLoading(false);
       }
     })();
 
     return () => {
       alive = false;
       abortRef.current?.abort?.();
+      setIsLoading(false);
     };
   }, [srcUrl, useProxy, debug, retryCount]);
 
   return {
     buffer,
     error,
+    isLoading,
     version,
     retry,
     getDebugBundle: (extra = {}) =>

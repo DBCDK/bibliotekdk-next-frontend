@@ -38,7 +38,7 @@ function normalizeError(err) {
   return { message: String(err) };
 }
 
-export default function Error({ show, error, onRetry, disabled }) {
+export default function EpubError({ show, error, onRetry, disabled }) {
   const normalized = useMemo(() => normalizeError(error), [error]);
 
   if (!show || !normalized) return null;

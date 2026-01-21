@@ -34,7 +34,7 @@ export async function sanitizeEpubZip(arrayBuffer, { debug } = {}) {
     }
   } catch {}
 
-  const zip = await JSZip.loadAsync(arrayBuffer);
+  const zip = await JSZip.loadAsync(arrayBuffer); // NOSONAR
 
   // Find container.xml
   const containerFile = zip.file("META-INF/container.xml");

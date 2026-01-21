@@ -43,6 +43,7 @@ export default function Epub({ src, data, isFullscreen = false }) {
   const {
     buffer,
     error: loadError,
+    isLoading: isBinaryLoading,
     version,
     retry: retryBinary,
   } = useEpubBinary(src, binaryOptions);
@@ -86,7 +87,7 @@ export default function Epub({ src, data, isFullscreen = false }) {
   // Derived state
   const error = loadError || initError;
 
-  const showSpinner = status === "loading" || retryLoading;
+  const showSpinner = isBinaryLoading || status === "loading" || retryLoading;
   const showError = !!error && !retryLoading;
   const showProgress = progressEnabled && !error;
 
