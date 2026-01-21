@@ -18,6 +18,18 @@ import {
 
 import { deriveBookEdgesFromLoc } from "./epubNavUtils";
 
+const FULLSCREEN_MIN_SPREAD_WIDTH = 800;
+
+function applySpreadForWidth(rendition, fullscreen) {
+  if (!rendition) return;
+  try {
+    rendition.spread?.(
+      fullscreen ? "auto" : "none",
+      FULLSCREEN_MIN_SPREAD_WIDTH
+    );
+  } catch {}
+}
+
 function clearViewerEl(el) {
   if (!el) return;
   while (el.firstChild) el.removeChild(el.firstChild);
@@ -76,6 +88,53 @@ function injectStyle(doc) {
   doc.head?.appendChild(style);
 }
 
+function registerSwipeHandlers(doc, swipeEnabledRef, handlersRef) {
+  if (!doc) return;
+
+  let start = null;
+
+  const isInteractive = (el) =>
+    !!el?.closest?.("a,button,input,select,textarea,label");
+
+  const onStart = (e) => {
+    if (!swipeEnabledRef.current) return;
+    if (isInteractive(e.target)) return;
+    const t = e.touches?.[0];
+    if (!t) return;
+    start = { x: t.clientX, y: t.clientY, time: Date.now() };
+  };
+
+  const onEnd = (e) => {
+    if (!swipeEnabledRef.current || !start) return;
+    const t = e.changedTouches?.[0];
+    if (!t) return;
+
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    const startedAt = start.time;
+    start = null;
+
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+    const elapsed = Date.now() - startedAt;
+
+    if (absX < 40 || absX < absY * 1.2) return;
+    if (elapsed > 700) return;
+
+    const { next, prev } = handlersRef.current || {};
+    if (dx < 0) next?.();
+    else prev?.();
+  };
+
+  const onCancel = () => {
+    start = null;
+  };
+
+  doc.addEventListener("touchstart", onStart, { passive: true });
+  doc.addEventListener("touchend", onEnd, { passive: true });
+  doc.addEventListener("touchcancel", onCancel, { passive: true });
+}
+
 function waitForLayout(el, timeoutMs = 1400) {
   if (!el) return Promise.resolve();
   const start = Date.now();
@@ -116,6 +175,7 @@ export function useEpubReader({
   containerRef, // kept for compatibility
   viewerRef,
   debugEnabled = false,
+  swipeable = false,
   bookId,
   title,
 }) {
@@ -144,11 +204,17 @@ export function useEpubReader({
 
   const genRef = useRef(0);
   const failedKeyRef = useRef(null);
+  const swipeEnabledRef = useRef(swipeable);
+  const swipeHandlersRef = useRef({ prev: null, next: null });
 
   // resize guard
   const lastRectRef = useRef({ w: 0, h: 0 });
 
   const log = (...a) => debugEnabled && console.log("[EPUB]", ...a);
+
+  useEffect(() => {
+    swipeEnabledRef.current = swipeable;
+  }, [swipeable]);
 
   const destroyEpub = useCallback(() => {
     try {
@@ -330,15 +396,17 @@ export function useEpubReader({
         width: "100%",
         height: "100%",
         flow: "paginated",
-        spread: isFullscreen ? "both" : "none",
-        minSpreadWidth: isFullscreen ? 0 : Number.POSITIVE_INFINITY,
+        spread: "none",
+        minSpreadWidth: Number.POSITIVE_INFINITY,
       });
       renditionRef.current = rendition;
 
       try {
-        rendition.hooks?.content?.register?.((contents) =>
-          injectStyle(contents?.document)
-        );
+        rendition.hooks?.content?.register?.((contents) => {
+          const doc = contents?.document;
+          injectStyle(doc);
+          registerSwipeHandlers(doc, swipeEnabledRef, swipeHandlersRef);
+        });
       } catch {}
 
       const relocatedHandler = (loc) => onRelocatedRef.current?.(loc);
@@ -425,7 +493,6 @@ export function useEpubReader({
     bookId,
     title,
     retryCount,
-    isFullscreen, // ok in init since you already had it, but it can also be removed
   ]);
 
   // Fullscreen toggle (kept)
@@ -455,18 +522,8 @@ export function useEpubReader({
 
       if (debugEnabled) log("fullscreen toggle", { isFullscreen, target });
 
-      try {
-        r.spread?.(isFullscreen ? "both" : "none");
-      } catch {}
-      try {
-        if (r.settings) {
-          r.settings.minSpreadWidth = isFullscreen
-            ? 0
-            : Number.POSITIVE_INFINITY;
-        }
-      } catch {}
-
       await waitForLayout(host, 1600);
+      await new Promise((resolve) => setTimeout(resolve, 350));
       if (cancelled) return;
 
       const r2 = renditionRef.current;
@@ -474,6 +531,7 @@ export function useEpubReader({
 
       try {
         const rect = host.getBoundingClientRect();
+        applySpreadForWidth(r2, isFullscreen);
         r2.resize?.(Math.floor(rect.width), Math.floor(rect.height));
       } catch {}
 
@@ -528,6 +586,7 @@ export function useEpubReader({
       lastRectRef.current = { w, h };
 
       try {
+        applySpreadForWidth(r, isFullscreen);
         r.resize?.(w, h);
       } catch {}
       try {
@@ -560,7 +619,7 @@ export function useEpubReader({
         ro.disconnect();
       } catch {}
     };
-  }, [viewerRef]);
+  }, [viewerRef, isFullscreen]);
 
   const segments = Math.max(1, tocFlat.length || 1);
 
@@ -699,6 +758,10 @@ export function useEpubReader({
       await forceDisplaySpine(+1);
     }
   }, [debugEnabled, forceDisplaySpine, getSpineIdxFromLoc]);
+
+  useEffect(() => {
+    swipeHandlersRef.current = { prev: handlePrev, next: handleNext };
+  }, [handlePrev, handleNext]);
 
   const handleJump = useCallback(async (href) => {
     const r = renditionRef.current;

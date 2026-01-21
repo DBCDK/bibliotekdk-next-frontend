@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 
-import Text from "@/components/base/text";
-import Link from "@/components/base/link";
 import ArrowSvg from "@/public/icons/arrowleft.svg";
 
 import { useEpubBinary } from "./useEpubBinary";
@@ -119,7 +117,12 @@ export default function Epub({ src, data, isFullscreen = false }) {
   }, [loadError, retryBinary, retryReader]);
 
   return (
-    <div className={`${styles.wrapper} readerWrapper`} ref={containerRef}>
+    <div
+      className={`${styles.wrapper} ${
+        isFullscreen ? styles.fullscreen : ""
+      } readerWrapper`}
+      ref={containerRef}
+    >
       {/* Remount viewer DOM on version bumps for a clean epubjs host */}
       <div key={version} className={styles.innerWrapper} ref={viewerRef} />
 
@@ -154,10 +157,9 @@ export default function Epub({ src, data, isFullscreen = false }) {
         chapterIntra={chapterIntra}
         atBookEnd={atBookEnd}
         onJump={handleJump}
-        Link={Link}
-        Text={Text}
         show={showProgress}
         expanded={isFullscreen}
+        isMobile={isMobile}
       />
     </div>
   );

@@ -1,5 +1,8 @@
 // components/sample/epub/progress/Progress.js
 import { useEffect, useMemo, useRef } from "react";
+
+import Text from "@/components/base/text";
+import Link from "@/components/base/link";
 import styles from "./Progress.module.css";
 
 export default function EpubProgress({
@@ -9,11 +12,13 @@ export default function EpubProgress({
   chapterIntra,
   atBookEnd,
   onJump,
-  Link,
-  Text,
   show = true,
+  expanded = false,
+  isMobile = false,
 }) {
   const labelsRef = useRef(null);
+  const compactLabelsThreshold = expanded && !isMobile ? 14 : 8;
+  const useCompactLabels = labels.length > compactLabelsThreshold;
 
   // Active label index (only meaningful when labels include many chapters)
   const activeIndex = useMemo(
@@ -58,7 +63,6 @@ export default function EpubProgress({
 
   if (!show) return null;
 
-  const labelCount = Math.max(1, labels?.length || 1);
   const segCount = Math.max(1, Number(segments) || 1);
 
   // Fill per progress segment (this fixes the “only first bar fills then resets” bug)
@@ -74,7 +78,11 @@ export default function EpubProgress({
   };
 
   return (
-    <div className={styles.progress}>
+    <div
+      className={`${styles.progress} ${
+        useCompactLabels ? styles.compact : ""
+      } ${expanded ? styles.expanded : ""}`}
+    >
       {!!labels.length && (
         <div
           className={styles.labels}
@@ -86,15 +94,29 @@ export default function EpubProgress({
             <div
               className={`${styles.labelBtn} ${it.active ? styles.active : ""}`}
               key={`${it.href}-${i}`}
-              style={{ width: `calc(100% / ${labelCount})` }}
             >
               <Link
                 title={it.label}
                 onClick={() => handleLabelClick(it.href, i)}
-                className={styles.labelText}
+                className={`${styles.labelText} ${
+                  useCompactLabels ? styles.compactLabel : ""
+                } ${
+                  useCompactLabels && !it.active ? styles.compactDotOnly : ""
+                }`}
                 aria-current={it.active ? "true" : undefined}
+                aria-label={it.label}
               >
-                <Text type="text5">{it.label}</Text>
+                {useCompactLabels ? (
+                  it.active ? (
+                    <span className={styles.compactTitle}>
+                      <Text type="text5">{it.label}</Text>
+                    </span>
+                  ) : (
+                    <span className={styles.compactDot} aria-hidden="true" />
+                  )
+                ) : (
+                  <Text type="text5">{it.label}</Text>
+                )}
               </Link>
             </div>
           ))}
@@ -111,7 +133,9 @@ export default function EpubProgress({
             return (
               <div
                 key={i}
-                className={styles.progressSegment}
+                className={`${styles.progressSegment} ${
+                  i === 0 ? styles.progressSegmentStart : ""
+                } ${i === segCount - 1 ? styles.progressSegmentEnd : ""}`}
                 role="progressbar"
                 aria-label={`Sektion ${i + 1}`}
                 aria-valuemin={0}

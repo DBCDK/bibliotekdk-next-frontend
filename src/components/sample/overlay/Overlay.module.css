@@ -40,6 +40,11 @@
     box-shadow: -2px 0 6px rgba(0, 0, 0, 0.3);
   }
 
+  .offcanvas.epub.maximize,
+  .offcanvas.mp3.maximize {
+    --bs-offcanvas-width: 100%;
+  }
+
   .offcanvas.epub {
     --bs-offcanvas-width: 700px;
   }
