@@ -1877,6 +1877,10 @@
         "da": "Gå til",
         "en": "Get"
       },
+      "nota-access-restriction": {
+        "da": "Du bliver sendt til nota.dk - Adgang kræver dokumenteret læsehandicap",
+        "en": "You will be sent to nota.dk - Access requires documented reading disability"
+      },
       "onlineAccessAt": {
         "da": "Du bliver sendt til",
         "en": "You will be sent to"

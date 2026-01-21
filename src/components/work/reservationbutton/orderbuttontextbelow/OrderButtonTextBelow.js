@@ -27,6 +27,10 @@ function OrderButtonTextBelow({
   hasDigitalCopy,
   isPeriodica,
 }) {
+  const isNota =
+    access?.[0]?.url?.includes("nota.dk") ||
+    access?.[0]?.origin?.includes("nota.dk");
+
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
     Boolean(isPeriodica),
@@ -36,6 +40,10 @@ function OrderButtonTextBelow({
 
   const translationForButtonText = [
     () => {
+      if (isNota) {
+        return Translate({ ...context, label: "nota-access-restriction" });
+      }
+
       return [
         Translate({ ...context, label: "onlineAccessAt" }),
         access?.[0]?.origin || getBaseUrl(access?.[0]?.url),
@@ -51,7 +59,6 @@ function OrderButtonTextBelow({
   ];
 
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
-
   return (
     index > -1 &&
     access?.[0]?.id !== null &&
