@@ -1016,6 +1016,10 @@
       "month": {
         "da": "Måned",
         "en": "Month"
+      },
+      "retry": {
+        "da": "Prøv igen",
+        "en": "Retry"
       }
     },
     "periodica": {
@@ -1877,6 +1881,10 @@
         "da": "Digitale materialer bliver du sendt videre til",
         "en": "You will be forwarded to digital materials"
       },
+      "addToCart-line3": {
+        "da": "Digitale materialer bliver du sendt videre til",
+        "en": "You will be forwarded to digital materials"
+      },
       "goto": {
         "da": "Gå til",
         "en": "Get"
@@ -2664,6 +2672,14 @@
       "not-logged-in-text": {
         "da": "Der opstod en fejl, da vi forsøgte at logge dig ind.</br></br>Prøv igen, eller kontakt kundeservice på kundeservice@dbc.dk, hvis problemet fortsætter.",
         "en": "An error occurred while we were trying to sign you in.</br></br>Please try again, or contact customer support at kundeservice@dbc.dk if the problem persists."
+      },
+      "epub-error-title": {
+        "da": "Fejl ved indlæsning af e-bog",
+        "en": "Error loading e-book"
+      },
+      "epub-unknown-error-message": {
+        "da": "Der opstod en ukendt fejl",
+        "en": "An unknown error occurred"
       }
     },
     "search": {
@@ -6008,12 +6024,12 @@
     },
     "sample": {
       "test-read-btn-lbl": {
-        "da": "Prøvelæs",
-        "en": "Test read"
+        "da": "Prøv",
+        "en": "Sample"
       },
       "test-listen-btn-lbl": {
-        "da": "Prøvelyt",
-        "en": "Test listen"
+        "da": "Prøv",
+        "en": "Sample"
       },
       "overlay-test-read-title": {
         "da": "Prøvelæs:",

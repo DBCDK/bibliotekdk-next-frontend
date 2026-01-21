@@ -11,13 +11,13 @@
 }
 
 .icon {
-  width: var(--pt4);
-  height: var(--pt4);
-  border: 3px solid var(--white);
+  width: var(--pt5);
+  height: var(--pt5);
+  /* border: 2px solid var(--white); */
   border-radius: 50%;
   font-style: normal;
-  padding: 0 0 2px 3px;
-  font-size: 17px;
+  padding: 0 0 4px 4px;
+  font-size: 22px;
 }
 
 .text {

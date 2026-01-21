@@ -1,0 +1,229 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.212Z",
+  "fileName": "9788740066111.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Den tavse enke",
+    "creator": "Sara Blædel",
+    "language": "da-DK"
+  },
+  "counts": {
+    "spineLen": 6,
+    "tocLen": 5,
+    "duplicateSpineIndexCount": 1
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "Dentavseenke.xhtml",
+      "idref": "Dentavseenke",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "Dentavseenke-1.xhtml",
+      "idref": "Dentavseenke-1",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "Dentavseenke-2.xhtml",
+      "idref": "Dentavseenke-2",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "Dentavseenke-3.xhtml",
+      "idref": "Dentavseenke-3",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "Dentavseenke-4.xhtml",
+      "idref": "Dentavseenke-4",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "Dentavseenke-1.xhtml#_idParaDest-1",
+      "hrefNoFrag": "Dentavseenke-1.xhtml",
+      "label": "Af samme forfatter",
+      "spineIndex": 2,
+      "spineHit": "Dentavseenke-1.xhtml"
+    },
+    {
+      "href": "Dentavseenke-2.xhtml#_idParaDest-2",
+      "hrefNoFrag": "Dentavseenke-2.xhtml",
+      "label": "Til Lars og Andreas",
+      "spineIndex": 3,
+      "spineHit": "Dentavseenke-2.xhtml"
+    },
+    {
+      "href": "Dentavseenke-2.xhtml#_idParaDest-3",
+      "hrefNoFrag": "Dentavseenke-2.xhtml",
+      "label": "Den tavse enke",
+      "spineIndex": 3,
+      "spineHit": "Dentavseenke-2.xhtml"
+    },
+    {
+      "href": "Dentavseenke-51.xhtml#_idParaDest-4",
+      "hrefNoFrag": "Dentavseenke-51.xhtml",
+      "label": "Tak",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Dentavseenke-52.xhtml#_idParaDest-5",
+      "hrefNoFrag": "Dentavseenke-52.xhtml",
+      "label": "Kolofon",
+      "spineIndex": null,
+      "spineHit": null
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "Dentavseenke-1.xhtml#_idParaDest-1",
+        "label": "Af samme forfatter"
+      },
+      {
+        "href": "Dentavseenke-2.xhtml#_idParaDest-2",
+        "label": "Til Lars og Andreas"
+      },
+      {
+        "href": "Dentavseenke-2.xhtml#_idParaDest-3",
+        "label": "Den tavse enke"
+      },
+      {
+        "href": "Dentavseenke-51.xhtml#_idParaDest-4",
+        "label": "Tak"
+      },
+      {
+        "href": "Dentavseenke-52.xhtml#_idParaDest-5",
+        "label": "Kolofon"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "Dentavseenke-1.xhtml",
+        "label": "Af samme forfatter"
+      },
+      {
+        "href": "Dentavseenke-2.xhtml",
+        "label": "Til Lars og Andreas"
+      },
+      {
+        "href": "Dentavseenke-51.xhtml",
+        "label": "Tak"
+      },
+      {
+        "href": "Dentavseenke-52.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Dentavseenke.xhtml",
+        "label": "Dentavseenke"
+      },
+      {
+        "href": "Dentavseenke-1.xhtml",
+        "label": "Af samme forfatter"
+      },
+      {
+        "href": "Dentavseenke-2.xhtml",
+        "label": "Til Lars og Andreas"
+      },
+      {
+        "href": "Dentavseenke-51.xhtml",
+        "label": "Tak"
+      },
+      {
+        "href": "Dentavseenke-52.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Dentavseenke.xhtml",
+        "label": "Dentavseenke"
+      },
+      {
+        "href": "Dentavseenke-1.xhtml",
+        "label": "Af samme forfatter"
+      },
+      {
+        "href": "Dentavseenke-2.xhtml",
+        "label": "Til Lars og Andreas"
+      },
+      {
+        "href": "Dentavseenke-51.xhtml",
+        "label": "Tak"
+      },
+      {
+        "href": "Dentavseenke-52.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 6,
+        "tocLen": 6,
+        "mapped": 4,
+        "mappedUnique": 4,
+        "tocSpineRatio": 0.667,
+        "invalidHrefRatio": 0.333,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 6,
+        "tocLen": 6,
+        "mapped": 4,
+        "mappedUnique": 4,
+        "tocSpineRatio": 0.667,
+        "invalidHrefRatio": 0.333,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1
+      }
+    },
+    "collapse": false
+  }
+}

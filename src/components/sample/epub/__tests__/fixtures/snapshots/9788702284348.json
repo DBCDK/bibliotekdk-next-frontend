@@ -1,0 +1,660 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.059Z",
+  "fileName": "9788702284348.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Kvinden der samlede verden (Læseprøve)",
+    "creator": "Eva Tind",
+    "language": "dan"
+  },
+  "counts": {
+    "spineLen": 19,
+    "tocLen": 21,
+    "duplicateSpineIndexCount": 2
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": ["svg"],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "titlepage.xhtml",
+      "idref": "titlepage",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "colophon.xhtml",
+      "idref": "colophon",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "preface001.xhtml",
+      "idref": "preface001",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "chapter001.xhtml",
+      "idref": "chapter001",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "chapter001-002.xhtml",
+      "idref": "chapter001-002",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "chapter001-003.xhtml",
+      "idref": "chapter001-003",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "chapter001-004.xhtml",
+      "idref": "chapter001-004",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 8,
+      "href": "chapter001-005.xhtml",
+      "idref": "chapter001-005",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 9,
+      "href": "chapter001-006.xhtml",
+      "idref": "chapter001-006",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 10,
+      "href": "chapter001-007.xhtml",
+      "idref": "chapter001-007",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 11,
+      "href": "chapter001-008.xhtml",
+      "idref": "chapter001-008",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 12,
+      "href": "chapter002.xhtml",
+      "idref": "chapter002",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 13,
+      "href": "chapter002-002.xhtml",
+      "idref": "chapter002-002",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 14,
+      "href": "chapter002-003.xhtml",
+      "idref": "chapter002-003",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 15,
+      "href": "chapter002-004.xhtml",
+      "idref": "chapter002-004",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 16,
+      "href": "chapter002-005.xhtml",
+      "idref": "chapter002-005",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 17,
+      "href": "chapter002-006.xhtml",
+      "idref": "chapter002-006",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 18,
+      "href": "social-media.xhtml",
+      "idref": "social-media",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "cover.xhtml",
+      "hrefNoFrag": "cover.xhtml",
+      "label": "Forside",
+      "spineIndex": 0,
+      "spineHit": "cover.xhtml"
+    },
+    {
+      "href": "titlepage.xhtml",
+      "hrefNoFrag": "titlepage.xhtml",
+      "label": "Titelblad",
+      "spineIndex": 1,
+      "spineHit": "titlepage.xhtml"
+    },
+    {
+      "href": "colophon.xhtml",
+      "hrefNoFrag": "colophon.xhtml",
+      "label": "Kolofon",
+      "spineIndex": 2,
+      "spineHit": "colophon.xhtml"
+    },
+    {
+      "href": "preface001.xhtml",
+      "hrefNoFrag": "preface001.xhtml",
+      "label": "PROLOG, 1948",
+      "spineIndex": 3,
+      "spineHit": "preface001.xhtml"
+    },
+    {
+      "href": "chapter001.xhtml",
+      "hrefNoFrag": "chapter001.xhtml",
+      "label": "1907-​1921: KØBENHAVN, KOKKEDAL, NIVÅ",
+      "spineIndex": 4,
+      "spineHit": "chapter001.xhtml"
+    },
+    {
+      "href": "chapter001.xhtml#chapter001-001",
+      "hrefNoFrag": "chapter001.xhtml",
+      "label": "1907",
+      "spineIndex": 4,
+      "spineHit": "chapter001.xhtml"
+    },
+    {
+      "href": "chapter001-002.xhtml",
+      "hrefNoFrag": "chapter001-002.xhtml",
+      "label": "1911",
+      "spineIndex": 5,
+      "spineHit": "chapter001-002.xhtml"
+    },
+    {
+      "href": "chapter001-003.xhtml",
+      "hrefNoFrag": "chapter001-003.xhtml",
+      "label": "1912",
+      "spineIndex": 6,
+      "spineHit": "chapter001-003.xhtml"
+    },
+    {
+      "href": "chapter001-004.xhtml",
+      "hrefNoFrag": "chapter001-004.xhtml",
+      "label": "1915",
+      "spineIndex": 7,
+      "spineHit": "chapter001-004.xhtml"
+    },
+    {
+      "href": "chapter001-005.xhtml",
+      "hrefNoFrag": "chapter001-005.xhtml",
+      "label": "–",
+      "spineIndex": 8,
+      "spineHit": "chapter001-005.xhtml"
+    },
+    {
+      "href": "chapter001-006.xhtml",
+      "hrefNoFrag": "chapter001-006.xhtml",
+      "label": "–",
+      "spineIndex": 9,
+      "spineHit": "chapter001-006.xhtml"
+    },
+    {
+      "href": "chapter001-007.xhtml",
+      "hrefNoFrag": "chapter001-007.xhtml",
+      "label": "–",
+      "spineIndex": 10,
+      "spineHit": "chapter001-007.xhtml"
+    },
+    {
+      "href": "chapter001-008.xhtml",
+      "hrefNoFrag": "chapter001-008.xhtml",
+      "label": "1918",
+      "spineIndex": 11,
+      "spineHit": "chapter001-008.xhtml"
+    },
+    {
+      "href": "chapter002.xhtml",
+      "hrefNoFrag": "chapter002.xhtml",
+      "label": "1921-​1926: NIVÅ",
+      "spineIndex": 12,
+      "spineHit": "chapter002.xhtml"
+    },
+    {
+      "href": "chapter002.xhtml#chapter002-001",
+      "hrefNoFrag": "chapter002.xhtml",
+      "label": "1921",
+      "spineIndex": 12,
+      "spineHit": "chapter002.xhtml"
+    },
+    {
+      "href": "chapter002-002.xhtml",
+      "hrefNoFrag": "chapter002-002.xhtml",
+      "label": "–",
+      "spineIndex": 13,
+      "spineHit": "chapter002-002.xhtml"
+    },
+    {
+      "href": "chapter002-003.xhtml",
+      "hrefNoFrag": "chapter002-003.xhtml",
+      "label": "–",
+      "spineIndex": 14,
+      "spineHit": "chapter002-003.xhtml"
+    },
+    {
+      "href": "chapter002-004.xhtml",
+      "hrefNoFrag": "chapter002-004.xhtml",
+      "label": "1922",
+      "spineIndex": 15,
+      "spineHit": "chapter002-004.xhtml"
+    },
+    {
+      "href": "chapter002-005.xhtml",
+      "hrefNoFrag": "chapter002-005.xhtml",
+      "label": "1923",
+      "spineIndex": 16,
+      "spineHit": "chapter002-005.xhtml"
+    },
+    {
+      "href": "chapter002-006.xhtml",
+      "hrefNoFrag": "chapter002-006.xhtml",
+      "label": "1925",
+      "spineIndex": 17,
+      "spineHit": "chapter002-006.xhtml"
+    },
+    {
+      "href": "social-media.xhtml",
+      "hrefNoFrag": "social-media.xhtml",
+      "label": "Vil du opdateres på vores nyheder?",
+      "spineIndex": 18,
+      "spineHit": "social-media.xhtml"
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "preface001.xhtml",
+        "label": "PROLOG, 1948"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "1907-​1921: KØBENHAVN, KOKKEDAL, NIVÅ"
+      },
+      {
+        "href": "chapter001.xhtml#chapter001-001",
+        "label": "1907"
+      },
+      {
+        "href": "chapter001-002.xhtml",
+        "label": "1911"
+      },
+      {
+        "href": "chapter001-003.xhtml",
+        "label": "1912"
+      },
+      {
+        "href": "chapter001-004.xhtml",
+        "label": "1915"
+      },
+      {
+        "href": "chapter001-005.xhtml",
+        "label": "–"
+      },
+      {
+        "href": "chapter001-006.xhtml",
+        "label": "–"
+      },
+      {
+        "href": "chapter001-007.xhtml",
+        "label": "–"
+      },
+      {
+        "href": "chapter001-008.xhtml",
+        "label": "1918"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "1921-​1926: NIVÅ"
+      },
+      {
+        "href": "chapter002.xhtml#chapter002-001",
+        "label": "1921"
+      },
+      {
+        "href": "chapter002-002.xhtml",
+        "label": "–"
+      },
+      {
+        "href": "chapter002-003.xhtml",
+        "label": "–"
+      },
+      {
+        "href": "chapter002-004.xhtml",
+        "label": "1922"
+      },
+      {
+        "href": "chapter002-005.xhtml",
+        "label": "1923"
+      },
+      {
+        "href": "chapter002-006.xhtml",
+        "label": "1925"
+      },
+      {
+        "href": "social-media.xhtml",
+        "label": "Vil du opdateres på vores nyheder?"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "preface001.xhtml",
+        "label": "PROLOG, 1948"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "1907-​1921: KØBENHAVN, KOKKEDAL, NIVÅ"
+      },
+      {
+        "href": "chapter001-002.xhtml",
+        "label": "1911"
+      },
+      {
+        "href": "chapter001-003.xhtml",
+        "label": "1912"
+      },
+      {
+        "href": "chapter001-004.xhtml",
+        "label": "1915"
+      },
+      {
+        "href": "chapter001-005.xhtml",
+        "label": "Chapter001 005"
+      },
+      {
+        "href": "chapter001-006.xhtml",
+        "label": "Chapter001 006"
+      },
+      {
+        "href": "chapter001-007.xhtml",
+        "label": "Chapter001 007"
+      },
+      {
+        "href": "chapter001-008.xhtml",
+        "label": "1918"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "1921-​1926: NIVÅ"
+      },
+      {
+        "href": "chapter002-002.xhtml",
+        "label": "Chapter002 002"
+      },
+      {
+        "href": "chapter002-003.xhtml",
+        "label": "Chapter002 003"
+      },
+      {
+        "href": "chapter002-004.xhtml",
+        "label": "1922"
+      },
+      {
+        "href": "chapter002-005.xhtml",
+        "label": "1923"
+      },
+      {
+        "href": "chapter002-006.xhtml",
+        "label": "1925"
+      },
+      {
+        "href": "social-media.xhtml",
+        "label": "Vil du opdateres på vores nyheder?"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "preface001.xhtml",
+        "label": "PROLOG, 1948"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "1907-​1921: KØBENHAVN, KOKKEDAL, NIVÅ"
+      },
+      {
+        "href": "chapter001-002.xhtml",
+        "label": "1911"
+      },
+      {
+        "href": "chapter001-003.xhtml",
+        "label": "1912"
+      },
+      {
+        "href": "chapter001-004.xhtml",
+        "label": "1915"
+      },
+      {
+        "href": "chapter001-005.xhtml",
+        "label": "Chapter001 005"
+      },
+      {
+        "href": "chapter001-006.xhtml",
+        "label": "Chapter001 006"
+      },
+      {
+        "href": "chapter001-007.xhtml",
+        "label": "Chapter001 007"
+      },
+      {
+        "href": "chapter001-008.xhtml",
+        "label": "1918"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "1921-​1926: NIVÅ"
+      },
+      {
+        "href": "chapter002-002.xhtml",
+        "label": "Chapter002 002"
+      },
+      {
+        "href": "chapter002-003.xhtml",
+        "label": "Chapter002 003"
+      },
+      {
+        "href": "chapter002-004.xhtml",
+        "label": "1922"
+      },
+      {
+        "href": "chapter002-005.xhtml",
+        "label": "1923"
+      },
+      {
+        "href": "chapter002-006.xhtml",
+        "label": "1925"
+      },
+      {
+        "href": "social-media.xhtml",
+        "label": "Vil du opdateres på vores nyheder?"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "titlepage.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      },
+      {
+        "href": "preface001.xhtml",
+        "label": "PROLOG, 1948"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "1907-​1921: KØBENHAVN, KOKKEDAL, NIVÅ"
+      },
+      {
+        "href": "chapter001-002.xhtml",
+        "label": "1911"
+      },
+      {
+        "href": "chapter001-003.xhtml",
+        "label": "1912"
+      },
+      {
+        "href": "chapter001-004.xhtml",
+        "label": "1915"
+      },
+      {
+        "href": "chapter001-005.xhtml",
+        "label": "Chapter001 005"
+      },
+      {
+        "href": "chapter001-006.xhtml",
+        "label": "Chapter001 006"
+      },
+      {
+        "href": "chapter001-007.xhtml",
+        "label": "Chapter001 007"
+      },
+      {
+        "href": "chapter001-008.xhtml",
+        "label": "1918"
+      },
+      {
+        "href": "chapter002.xhtml",
+        "label": "1921-​1926: NIVÅ"
+      },
+      {
+        "href": "chapter002-002.xhtml",
+        "label": "Chapter002 002"
+      },
+      {
+        "href": "chapter002-003.xhtml",
+        "label": "Chapter002 003"
+      },
+      {
+        "href": "chapter002-004.xhtml",
+        "label": "1922"
+      },
+      {
+        "href": "chapter002-005.xhtml",
+        "label": "1923"
+      },
+      {
+        "href": "chapter002-006.xhtml",
+        "label": "1925"
+      },
+      {
+        "href": "social-media.xhtml",
+        "label": "Vil du opdateres på vores nyheder?"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 19,
+        "tocLen": 19,
+        "mapped": 19,
+        "mappedUnique": 19,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.474
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 19,
+        "tocLen": 19,
+        "mapped": 19,
+        "mappedUnique": 19,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.474
+      }
+    },
+    "collapse": false
+  }
+}

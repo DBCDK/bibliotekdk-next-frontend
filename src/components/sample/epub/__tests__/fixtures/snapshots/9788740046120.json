@@ -1,0 +1,411 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.183Z",
+  "fileName": "9788740046120.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Den, der lever stille",
+    "creator": "Leonora Christina Skov",
+    "language": "da-DK"
+  },
+  "counts": {
+    "spineLen": 5,
+    "tocLen": 12,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "Den_der_lever_stille.xhtml",
+      "idref": "Den_der_lever_stille",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "Den_der_lever_stille-1.xhtml",
+      "idref": "Den_der_lever_stille-1",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "Den_der_lever_stille-2.xhtml",
+      "idref": "Den_der_lever_stille-2",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "Den_der_lever_stille-3.xhtml",
+      "idref": "Den_der_lever_stille-3",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "Den_der_lever_stille-3.xhtml#_idParaDest-1",
+      "hrefNoFrag": "Den_der_lever_stille-3.xhtml",
+      "label": "Under indflydelse af døden",
+      "spineIndex": 4,
+      "spineHit": "Den_der_lever_stille-3.xhtml"
+    },
+    {
+      "href": "Den_der_lever_stille-5.xhtml#_idParaDest-2",
+      "hrefNoFrag": "Den_der_lever_stille-5.xhtml",
+      "label": "Den stille fornemmelse af det tabte",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-6.xhtml#_idParaDest-3",
+      "hrefNoFrag": "Den_der_lever_stille-6.xhtml",
+      "label": "Den tomme stol",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-7.xhtml#_idParaDest-4",
+      "hrefNoFrag": "Den_der_lever_stille-7.xhtml",
+      "label": "Faste rammer",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-8.xhtml#_idParaDest-5",
+      "hrefNoFrag": "Den_der_lever_stille-8.xhtml",
+      "label": "Grader af adskillelse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-9.xhtml#_idParaDest-6",
+      "hrefNoFrag": "Den_der_lever_stille-9.xhtml",
+      "label": "En ny begyndelse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-10.xhtml#_idParaDest-7",
+      "hrefNoFrag": "Den_der_lever_stille-10.xhtml",
+      "label": "På visse betingelser",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-11.xhtml#_idParaDest-8",
+      "hrefNoFrag": "Den_der_lever_stille-11.xhtml",
+      "label": "Efter udslettelsen",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-12.xhtml#_idParaDest-9",
+      "hrefNoFrag": "Den_der_lever_stille-12.xhtml",
+      "label": "Knytnæven gennem muren",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-13.xhtml#_idParaDest-10",
+      "hrefNoFrag": "Den_der_lever_stille-13.xhtml",
+      "label": "Den lange parentes",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-14.xhtml#_idParaDest-11",
+      "hrefNoFrag": "Den_der_lever_stille-14.xhtml",
+      "label": "Den, der lever stille",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "Den_der_lever_stille-16.xhtml#_idParaDest-12",
+      "hrefNoFrag": "Den_der_lever_stille-16.xhtml",
+      "label": "Kolofon",
+      "spineIndex": null,
+      "spineHit": null
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "Den_der_lever_stille-3.xhtml#_idParaDest-1",
+        "label": "Under indflydelse af døden"
+      },
+      {
+        "href": "Den_der_lever_stille-5.xhtml#_idParaDest-2",
+        "label": "Den stille fornemmelse af det tabte"
+      },
+      {
+        "href": "Den_der_lever_stille-6.xhtml#_idParaDest-3",
+        "label": "Den tomme stol"
+      },
+      {
+        "href": "Den_der_lever_stille-7.xhtml#_idParaDest-4",
+        "label": "Faste rammer"
+      },
+      {
+        "href": "Den_der_lever_stille-8.xhtml#_idParaDest-5",
+        "label": "Grader af adskillelse"
+      },
+      {
+        "href": "Den_der_lever_stille-9.xhtml#_idParaDest-6",
+        "label": "En ny begyndelse"
+      },
+      {
+        "href": "Den_der_lever_stille-10.xhtml#_idParaDest-7",
+        "label": "På visse betingelser"
+      },
+      {
+        "href": "Den_der_lever_stille-11.xhtml#_idParaDest-8",
+        "label": "Efter udslettelsen"
+      },
+      {
+        "href": "Den_der_lever_stille-12.xhtml#_idParaDest-9",
+        "label": "Knytnæven gennem muren"
+      },
+      {
+        "href": "Den_der_lever_stille-13.xhtml#_idParaDest-10",
+        "label": "Den lange parentes"
+      },
+      {
+        "href": "Den_der_lever_stille-14.xhtml#_idParaDest-11",
+        "label": "Den, der lever stille"
+      },
+      {
+        "href": "Den_der_lever_stille-16.xhtml#_idParaDest-12",
+        "label": "Kolofon"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "Den_der_lever_stille-3.xhtml",
+        "label": "Under indflydelse af døden"
+      },
+      {
+        "href": "Den_der_lever_stille-5.xhtml",
+        "label": "Den stille fornemmelse af det tabte"
+      },
+      {
+        "href": "Den_der_lever_stille-6.xhtml",
+        "label": "Den tomme stol"
+      },
+      {
+        "href": "Den_der_lever_stille-7.xhtml",
+        "label": "Faste rammer"
+      },
+      {
+        "href": "Den_der_lever_stille-8.xhtml",
+        "label": "Grader af adskillelse"
+      },
+      {
+        "href": "Den_der_lever_stille-9.xhtml",
+        "label": "En ny begyndelse"
+      },
+      {
+        "href": "Den_der_lever_stille-10.xhtml",
+        "label": "På visse betingelser"
+      },
+      {
+        "href": "Den_der_lever_stille-11.xhtml",
+        "label": "Efter udslettelsen"
+      },
+      {
+        "href": "Den_der_lever_stille-12.xhtml",
+        "label": "Knytnæven gennem muren"
+      },
+      {
+        "href": "Den_der_lever_stille-13.xhtml",
+        "label": "Den lange parentes"
+      },
+      {
+        "href": "Den_der_lever_stille-14.xhtml",
+        "label": "Den, der lever stille"
+      },
+      {
+        "href": "Den_der_lever_stille-16.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Den_der_lever_stille.xhtml",
+        "label": "Den Der Lever Stille"
+      },
+      {
+        "href": "Den_der_lever_stille-1.xhtml",
+        "label": "Den Der Lever Stille 1"
+      },
+      {
+        "href": "Den_der_lever_stille-2.xhtml",
+        "label": "Den Der Lever Stille 2"
+      },
+      {
+        "href": "Den_der_lever_stille-3.xhtml",
+        "label": "Under indflydelse af døden"
+      },
+      {
+        "href": "Den_der_lever_stille-5.xhtml",
+        "label": "Den stille fornemmelse af det tabte"
+      },
+      {
+        "href": "Den_der_lever_stille-6.xhtml",
+        "label": "Den tomme stol"
+      },
+      {
+        "href": "Den_der_lever_stille-7.xhtml",
+        "label": "Faste rammer"
+      },
+      {
+        "href": "Den_der_lever_stille-8.xhtml",
+        "label": "Grader af adskillelse"
+      },
+      {
+        "href": "Den_der_lever_stille-9.xhtml",
+        "label": "En ny begyndelse"
+      },
+      {
+        "href": "Den_der_lever_stille-10.xhtml",
+        "label": "På visse betingelser"
+      },
+      {
+        "href": "Den_der_lever_stille-11.xhtml",
+        "label": "Efter udslettelsen"
+      },
+      {
+        "href": "Den_der_lever_stille-12.xhtml",
+        "label": "Knytnæven gennem muren"
+      },
+      {
+        "href": "Den_der_lever_stille-13.xhtml",
+        "label": "Den lange parentes"
+      },
+      {
+        "href": "Den_der_lever_stille-14.xhtml",
+        "label": "Den, der lever stille"
+      },
+      {
+        "href": "Den_der_lever_stille-16.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "Den_der_lever_stille.xhtml",
+        "label": "Den Der Lever Stille"
+      },
+      {
+        "href": "Den_der_lever_stille-1.xhtml",
+        "label": "Den Der Lever Stille 1"
+      },
+      {
+        "href": "Den_der_lever_stille-2.xhtml",
+        "label": "Den Der Lever Stille 2"
+      },
+      {
+        "href": "Den_der_lever_stille-3.xhtml",
+        "label": "Under indflydelse af døden"
+      },
+      {
+        "href": "Den_der_lever_stille-5.xhtml",
+        "label": "Den stille fornemmelse af det tabte"
+      },
+      {
+        "href": "Den_der_lever_stille-6.xhtml",
+        "label": "Den tomme stol"
+      },
+      {
+        "href": "Den_der_lever_stille-7.xhtml",
+        "label": "Faste rammer"
+      },
+      {
+        "href": "Den_der_lever_stille-8.xhtml",
+        "label": "Grader af adskillelse"
+      },
+      {
+        "href": "Den_der_lever_stille-9.xhtml",
+        "label": "En ny begyndelse"
+      },
+      {
+        "href": "Den_der_lever_stille-10.xhtml",
+        "label": "På visse betingelser"
+      },
+      {
+        "href": "Den_der_lever_stille-11.xhtml",
+        "label": "Efter udslettelsen"
+      },
+      {
+        "href": "Den_der_lever_stille-12.xhtml",
+        "label": "Knytnæven gennem muren"
+      },
+      {
+        "href": "Den_der_lever_stille-13.xhtml",
+        "label": "Den lange parentes"
+      },
+      {
+        "href": "Den_der_lever_stille-14.xhtml",
+        "label": "Den, der lever stille"
+      },
+      {
+        "href": "Den_der_lever_stille-16.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 35,
+      "reasons": ["many-toc-hrefs-not-in-spine"],
+      "metrics": {
+        "spineLen": 5,
+        "tocLen": 16,
+        "mapped": 5,
+        "mappedUnique": 5,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0.688,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.938
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 35,
+      "reasons": ["many-toc-hrefs-not-in-spine"],
+      "metrics": {
+        "spineLen": 5,
+        "tocLen": 16,
+        "mapped": 5,
+        "mappedUnique": 5,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0.688,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.938
+      }
+    },
+    "collapse": false
+  }
+}

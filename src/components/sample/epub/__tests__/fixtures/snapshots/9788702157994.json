@@ -1,0 +1,472 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-20T14:01:16.148Z",
+  "fileName": "9788702157994.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Afgrunden (Prøve)",
+    "creator": "Kim Leine",
+    "language": "da"
+  },
+  "counts": {
+    "spineLen": 9,
+    "tocLen": 21,
+    "duplicateSpineIndexCount": 1
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "forside.html",
+      "idref": "cover",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "title.html",
+      "idref": "body002",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "toc.html",
+      "idref": "body001",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "dedikation.html",
+      "idref": "body003",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "rapport.html",
+      "idref": "body004",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "rigshospitalet.html",
+      "idref": "body005",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "chapter001.html",
+      "idref": "body006",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "af_samme_forfatter.html",
+      "idref": "body014",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 8,
+      "href": "kolofon.html",
+      "idref": "body015",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "forside.html",
+      "hrefNoFrag": "forside.html",
+      "label": "Forside",
+      "spineIndex": 0,
+      "spineHit": "forside.html"
+    },
+    {
+      "href": "title.html",
+      "hrefNoFrag": "title.html",
+      "label": "Titelblad",
+      "spineIndex": 1,
+      "spineHit": "title.html"
+    },
+    {
+      "href": "toc.html",
+      "hrefNoFrag": "toc.html",
+      "label": "Indhold",
+      "spineIndex": 2,
+      "spineHit": "toc.html"
+    },
+    {
+      "href": "dedikation.html",
+      "hrefNoFrag": "dedikation.html",
+      "label": "Dedikation",
+      "spineIndex": 3,
+      "spineHit": "dedikation.html"
+    },
+    {
+      "href": "rapport.html",
+      "hrefNoFrag": "rapport.html",
+      "label": "Rapport",
+      "spineIndex": 4,
+      "spineHit": "rapport.html"
+    },
+    {
+      "href": "rigshospitalet.html",
+      "hrefNoFrag": "rigshospitalet.html",
+      "label": "Rigshospitalet",
+      "spineIndex": 5,
+      "spineHit": "rigshospitalet.html"
+    },
+    {
+      "href": "chapter001.html",
+      "hrefNoFrag": "chapter001.html",
+      "label": "FØRSTE DEL · FALDET",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h1",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Nattog til Stockholm",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h2",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Det strømmende vands by",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h3",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Kære Fader",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h4",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Træningslejr",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h5",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Patrulje",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h6",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Morgenmad",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h7",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Dagsbefaling",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h8",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Krigen kort",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h9",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Reserve",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h10",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Stormen på Tammerfors I",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h11",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Sygevisit",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "chapter001.html#ch01h12",
+      "hrefNoFrag": "chapter001.html",
+      "label": "Friheden",
+      "spineIndex": 6,
+      "spineHit": "chapter001.html"
+    },
+    {
+      "href": "af_samme_forfatter.html",
+      "hrefNoFrag": "af_samme_forfatter.html",
+      "label": "Af samme forfatter",
+      "spineIndex": 7,
+      "spineHit": "af_samme_forfatter.html"
+    },
+    {
+      "href": "kolofon.html",
+      "hrefNoFrag": "kolofon.html",
+      "label": "Kolofon",
+      "spineIndex": 8,
+      "spineHit": "kolofon.html"
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "forside.html",
+        "label": "Forside"
+      },
+      {
+        "href": "title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "toc.html",
+        "label": "Indhold"
+      },
+      {
+        "href": "dedikation.html",
+        "label": "Dedikation"
+      },
+      {
+        "href": "rapport.html",
+        "label": "Rapport"
+      },
+      {
+        "href": "rigshospitalet.html",
+        "label": "Rigshospitalet"
+      },
+      {
+        "href": "chapter001.html",
+        "label": "FØRSTE DEL · FALDET"
+      },
+      {
+        "href": "chapter001.html#ch01h1",
+        "label": "Nattog til Stockholm"
+      },
+      {
+        "href": "chapter001.html#ch01h2",
+        "label": "Det strømmende vands by"
+      },
+      {
+        "href": "chapter001.html#ch01h3",
+        "label": "Kære Fader"
+      },
+      {
+        "href": "chapter001.html#ch01h4",
+        "label": "Træningslejr"
+      },
+      {
+        "href": "chapter001.html#ch01h5",
+        "label": "Patrulje"
+      },
+      {
+        "href": "chapter001.html#ch01h6",
+        "label": "Morgenmad"
+      },
+      {
+        "href": "chapter001.html#ch01h7",
+        "label": "Dagsbefaling"
+      },
+      {
+        "href": "chapter001.html#ch01h8",
+        "label": "Krigen kort"
+      },
+      {
+        "href": "chapter001.html#ch01h9",
+        "label": "Reserve"
+      },
+      {
+        "href": "chapter001.html#ch01h10",
+        "label": "Stormen på Tammerfors I"
+      },
+      {
+        "href": "chapter001.html#ch01h11",
+        "label": "Sygevisit"
+      },
+      {
+        "href": "chapter001.html#ch01h12",
+        "label": "Friheden"
+      },
+      {
+        "href": "af_samme_forfatter.html",
+        "label": "Af samme forfatter"
+      },
+      {
+        "href": "kolofon.html",
+        "label": "Kolofon"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "forside.html",
+        "label": "Forside"
+      },
+      {
+        "href": "title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "toc.html",
+        "label": "Indhold"
+      },
+      {
+        "href": "dedikation.html",
+        "label": "Dedikation"
+      },
+      {
+        "href": "rapport.html",
+        "label": "Rapport"
+      },
+      {
+        "href": "rigshospitalet.html",
+        "label": "Rigshospitalet"
+      },
+      {
+        "href": "chapter001.html",
+        "label": "FØRSTE DEL · FALDET"
+      },
+      {
+        "href": "af_samme_forfatter.html",
+        "label": "Af samme forfatter"
+      },
+      {
+        "href": "kolofon.html",
+        "label": "Kolofon"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "forside.html",
+        "label": "Forside"
+      },
+      {
+        "href": "title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "toc.html",
+        "label": "Indhold"
+      },
+      {
+        "href": "dedikation.html",
+        "label": "Dedikation"
+      },
+      {
+        "href": "rapport.html",
+        "label": "Rapport"
+      },
+      {
+        "href": "rigshospitalet.html",
+        "label": "Rigshospitalet"
+      },
+      {
+        "href": "chapter001.html",
+        "label": "FØRSTE DEL · FALDET"
+      },
+      {
+        "href": "af_samme_forfatter.html",
+        "label": "Af samme forfatter"
+      },
+      {
+        "href": "kolofon.html",
+        "label": "Kolofon"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "forside.html",
+        "label": "Forside"
+      },
+      {
+        "href": "title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "toc.html",
+        "label": "Indhold"
+      },
+      {
+        "href": "dedikation.html",
+        "label": "Dedikation"
+      },
+      {
+        "href": "rapport.html",
+        "label": "Rapport"
+      },
+      {
+        "href": "rigshospitalet.html",
+        "label": "Rigshospitalet"
+      },
+      {
+        "href": "chapter001.html",
+        "label": "FØRSTE DEL · FALDET"
+      },
+      {
+        "href": "af_samme_forfatter.html",
+        "label": "Af samme forfatter"
+      },
+      {
+        "href": "kolofon.html",
+        "label": "Kolofon"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 9,
+        "tocLen": 9,
+        "mapped": 9,
+        "mappedUnique": 9,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1,
+        "titleRepeatRatio": 0.111
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 9,
+        "tocLen": 9,
+        "mapped": 9,
+        "mappedUnique": 9,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1,
+        "titleRepeatRatio": 0.111
+      }
+    },
+    "collapse": false
+  }
+}

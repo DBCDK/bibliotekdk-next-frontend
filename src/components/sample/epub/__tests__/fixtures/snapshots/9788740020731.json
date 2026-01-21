@@ -1,0 +1,4645 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-20T14:01:16.219Z",
+  "fileName": "9788740020731.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Alt det lys vi ikke ser",
+    "creator": "Anthony Doerr",
+    "language": "da-DK"
+  },
+  "counts": {
+    "spineLen": 16,
+    "tocLen": 193,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [],
+      "linear": false
+    },
+    {
+      "index": 1,
+      "href": "altdetlysviikkeser_ebog.xhtml",
+      "idref": "altdetlysviikkeser_ebog",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "altdetlysviikkeser_ebog-1.xhtml",
+      "idref": "altdetlysviikkeser_ebog-1",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "altdetlysviikkeser_ebog-2.xhtml",
+      "idref": "altdetlysviikkeser_ebog-2",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "altdetlysviikkeser_ebog-3.xhtml",
+      "idref": "altdetlysviikkeser_ebog-3",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "altdetlysviikkeser_ebog-4.xhtml",
+      "idref": "altdetlysviikkeser_ebog-4",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "altdetlysviikkeser_ebog-5.xhtml",
+      "idref": "altdetlysviikkeser_ebog-5",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "altdetlysviikkeser_ebog-6.xhtml",
+      "idref": "altdetlysviikkeser_ebog-6",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 8,
+      "href": "altdetlysviikkeser_ebog-7.xhtml",
+      "idref": "altdetlysviikkeser_ebog-7",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 9,
+      "href": "altdetlysviikkeser_ebog-8.xhtml",
+      "idref": "altdetlysviikkeser_ebog-8",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 10,
+      "href": "altdetlysviikkeser_ebog-9.xhtml",
+      "idref": "altdetlysviikkeser_ebog-9",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 11,
+      "href": "altdetlysviikkeser_ebog-10.xhtml",
+      "idref": "altdetlysviikkeser_ebog-10",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 12,
+      "href": "altdetlysviikkeser_ebog-11.xhtml",
+      "idref": "altdetlysviikkeser_ebog-11",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 13,
+      "href": "altdetlysviikkeser_ebog-12.xhtml",
+      "idref": "altdetlysviikkeser_ebog-12",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 14,
+      "href": "altdetlysviikkeser_ebog-13.xhtml",
+      "idref": "altdetlysviikkeser_ebog-13",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 15,
+      "href": "altdetlysviikkeser_ebog-14.xhtml",
+      "idref": "altdetlysviikkeser_ebog-14",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "altdetlysviikkeser_ebog-2.xhtml#_idParaDest-1",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-2.xhtml",
+      "label": "Nul - 7. august 1944",
+      "spineIndex": 3,
+      "spineHit": "altdetlysviikkeser_ebog-2.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-3.xhtml#_idParaDest-2",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-3.xhtml",
+      "label": "Flyveblade",
+      "spineIndex": 4,
+      "spineHit": "altdetlysviikkeser_ebog-3.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-4.xhtml#_idParaDest-3",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-4.xhtml",
+      "label": "Bombefly",
+      "spineIndex": 5,
+      "spineHit": "altdetlysviikkeser_ebog-4.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-5.xhtml#_idParaDest-4",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-5.xhtml",
+      "label": "Pigen",
+      "spineIndex": 6,
+      "spineHit": "altdetlysviikkeser_ebog-5.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-6.xhtml#_idParaDest-5",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-6.xhtml",
+      "label": "Drengen",
+      "spineIndex": 7,
+      "spineHit": "altdetlysviikkeser_ebog-6.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-7.xhtml#_idParaDest-6",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-7.xhtml",
+      "label": "Saint-Malo",
+      "spineIndex": 8,
+      "spineHit": "altdetlysviikkeser_ebog-7.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-8.xhtml#_idParaDest-7",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-8.xhtml",
+      "label": "Rue Vauborel 4",
+      "spineIndex": 9,
+      "spineHit": "altdetlysviikkeser_ebog-8.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-9.xhtml#_idParaDest-8",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-9.xhtml",
+      "label": "Kælder",
+      "spineIndex": 10,
+      "spineHit": "altdetlysviikkeser_ebog-9.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-10.xhtml#_idParaDest-9",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-10.xhtml",
+      "label": "Smid bomberne",
+      "spineIndex": 11,
+      "spineHit": "altdetlysviikkeser_ebog-10.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-11.xhtml#_idParaDest-10",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-11.xhtml",
+      "label": "Et - 1934",
+      "spineIndex": 12,
+      "spineHit": "altdetlysviikkeser_ebog-11.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-12.xhtml#_idParaDest-11",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-12.xhtml",
+      "label": "Muséum National d’Histoire Naturelle",
+      "spineIndex": 13,
+      "spineHit": "altdetlysviikkeser_ebog-12.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-13.xhtml#_idParaDest-12",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-13.xhtml",
+      "label": "Zollverein",
+      "spineIndex": 14,
+      "spineHit": "altdetlysviikkeser_ebog-13.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-14.xhtml#_idParaDest-13",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-14.xhtml",
+      "label": "Nøglerummet",
+      "spineIndex": 15,
+      "spineHit": "altdetlysviikkeser_ebog-14.xhtml"
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-15.xhtml#_idParaDest-14",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-15.xhtml",
+      "label": "Radio",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-16.xhtml#_idParaDest-15",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-16.xhtml",
+      "label": "Før os hjem",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-17.xhtml#_idParaDest-16",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-17.xhtml",
+      "label": "Noget nyt er på vej",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-18.xhtml#_idParaDest-17",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-18.xhtml",
+      "label": "Lys",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-19.xhtml#_idParaDest-18",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-19.xhtml",
+      "label": "Vores flag vajer foran os",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-20.xhtml#_idParaDest-19",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-20.xhtml",
+      "label": "Jorden rundt på firs dage",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-21.xhtml#_idParaDest-20",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-21.xhtml",
+      "label": "Professoren",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-22.xhtml#_idParaDest-21",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-22.xhtml",
+      "label": "Flammernes Hav",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-23.xhtml#_idParaDest-22",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-23.xhtml",
+      "label": "Åbn dine øjne",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-24.xhtml#_idParaDest-23",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-24.xhtml",
+      "label": "Dagdrømme",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-25.xhtml#_idParaDest-24",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-25.xhtml",
+      "label": "Mekanikkens principper",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-26.xhtml#_idParaDest-25",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-26.xhtml",
+      "label": "Rygter",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-27.xhtml#_idParaDest-26",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-27.xhtml",
+      "label": "Større, hurtigere, mere",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-28.xhtml#_idParaDest-27",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-28.xhtml",
+      "label": "Uhyrerne",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-30.xhtml#_idParaDest-28",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-30.xhtml",
+      "label": "Godaften. Eller Heil Hitler hvis De synes.",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-31.xhtml#_idParaDest-29",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-31.xhtml",
+      "label": "Ciao, blinde pige",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-32.xhtml#_idParaDest-30",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-32.xhtml",
+      "label": "Sokker",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-33.xhtml#_idParaDest-31",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-33.xhtml",
+      "label": "Flugt",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-34.xhtml#_idParaDest-32",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-34.xhtml",
+      "label": "Herr Siedler",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-35.xhtml#_idParaDest-33",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-35.xhtml",
+      "label": "Exodus",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-36.xhtml#_idParaDest-34",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-36.xhtml",
+      "label": "To - 8. august 1944",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-37.xhtml#_idParaDest-35",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-37.xhtml",
+      "label": "Saint-Malo",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-38.xhtml#_idParaDest-36",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-38.xhtml",
+      "label": "Rue Vauborel nummer 4",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-39.xhtml#_idParaDest-37",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-39.xhtml",
+      "label": "Biernes Hotel",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-40.xhtml#_idParaDest-38",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-40.xhtml",
+      "label": "Fem trapper ned",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-41.xhtml#_idParaDest-39",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-41.xhtml",
+      "label": "Fanget",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-42.xhtml#_idParaDest-40",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-42.xhtml",
+      "label": "Tre - Juni 1940",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-43.xhtml#_idParaDest-41",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-43.xhtml",
+      "label": "Château",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-44.xhtml#_idParaDest-42",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-44.xhtml",
+      "label": "Optagelsesprøve",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-45.xhtml#_idParaDest-43",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-45.xhtml",
+      "label": "Bretagne",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-46.xhtml#_idParaDest-44",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-46.xhtml",
+      "label": "Madame Manec",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-47.xhtml#_idParaDest-45",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-47.xhtml",
+      "label": "Du er blevet udvalgt",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-48.xhtml#_idParaDest-46",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-48.xhtml",
+      "label": "Occupation",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-49.xhtml#_idParaDest-47",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-49.xhtml",
+      "label": "Du skal ikke lyve",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-50.xhtml#_idParaDest-48",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-50.xhtml",
+      "label": "Etienne",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-51.xhtml#_idParaDest-49",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-51.xhtml",
+      "label": "Jungmänner",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-52.xhtml#_idParaDest-50",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-52.xhtml",
+      "label": "Wien",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-53.xhtml#_idParaDest-51",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-53.xhtml",
+      "label": "Les boches",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-54.xhtml#_idParaDest-52",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-54.xhtml",
+      "label": "Hauptmann",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-55.xhtml#_idParaDest-53",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-55.xhtml",
+      "label": "Den Flyvende Sofa",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-56.xhtml#_idParaDest-54",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-56.xhtml",
+      "label": "Summen af vinkler",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-57.xhtml#_idParaDest-55",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-57.xhtml",
+      "label": "Professoren",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-58.xhtml#_idParaDest-56",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-58.xhtml",
+      "label": "Parfumehandler",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-59.xhtml#_idParaDest-57",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-59.xhtml",
+      "label": "Strudsenes tid",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-60.xhtml#_idParaDest-58",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-60.xhtml",
+      "label": "Den svageste",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-61.xhtml#_idParaDest-59",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-61.xhtml",
+      "label": "Beslaglæggelse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-62.xhtml#_idParaDest-60",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-62.xhtml",
+      "label": "Museum",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-63.xhtml#_idParaDest-61",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-63.xhtml",
+      "label": "Klædeskabet",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-64.xhtml#_idParaDest-62",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-64.xhtml",
+      "label": "Spurveflokke",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-66.xhtml#_idParaDest-63",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-66.xhtml",
+      "label": "Bad",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-67.xhtml#_idParaDest-64",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-67.xhtml",
+      "label": "Den svageste (2)",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-68.xhtml#_idParaDest-65",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-68.xhtml",
+      "label": "Låsesmedens anholdelse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-69.xhtml#_idParaDest-66",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-69.xhtml",
+      "label": "Fire - 8. august 1944",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-70.xhtml#_idParaDest-67",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-70.xhtml",
+      "label": "Fæstningen La Cité",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-71.xhtml#_idParaDest-68",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-71.xhtml",
+      "label": "Atelier de Réparation",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-72.xhtml#_idParaDest-69",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-72.xhtml",
+      "label": "To dåser",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-73.xhtml#_idParaDest-70",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-73.xhtml",
+      "label": "Rue Vauborel 4",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-74.xhtml#_idParaDest-71",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-74.xhtml",
+      "label": "Hvad de har",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-75.xhtml#_idParaDest-72",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-75.xhtml",
+      "label": "Snubletråd",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-76.xhtml#_idParaDest-73",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-76.xhtml",
+      "label": "Fem - Januar 1941",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-77.xhtml#_idParaDest-74",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-77.xhtml",
+      "label": "Vinterferie",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-78.xhtml#_idParaDest-75",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-78.xhtml",
+      "label": "Han kommer ikke tilbage",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-79.xhtml#_idParaDest-76",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-79.xhtml",
+      "label": "Fange",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-80.xhtml#_idParaDest-77",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-80.xhtml",
+      "label": "Plage du Môle",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-81.xhtml#_idParaDest-78",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-81.xhtml",
+      "label": "Stensliberen",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-83.xhtml#_idParaDest-79",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-83.xhtml",
+      "label": "Entropi",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-84.xhtml#_idParaDest-80",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-84.xhtml",
+      "label": "Runderne",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-85.xhtml#_idParaDest-81",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-85.xhtml",
+      "label": "Nadel im Heuhaufen",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-86.xhtml#_idParaDest-82",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-86.xhtml",
+      "label": "Et forslag",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-87.xhtml#_idParaDest-83",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-87.xhtml",
+      "label": "Du har andre venner",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-88.xhtml#_idParaDest-84",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-88.xhtml",
+      "label": "De gamle damers modstandsklub",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-89.xhtml#_idParaDest-85",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-89.xhtml",
+      "label": "Diagnose",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-90.xhtml#_idParaDest-86",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-90.xhtml",
+      "label": "Den svageste (3)",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-92.xhtml#_idParaDest-87",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-92.xhtml",
+      "label": "Grotte",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-93.xhtml#_idParaDest-88",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-93.xhtml",
+      "label": "Beruset",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-94.xhtml#_idParaDest-89",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-94.xhtml",
+      "label": "Kniven og konkylien",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-95.xhtml#_idParaDest-90",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-95.xhtml",
+      "label": "Leve før du dør",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-96.xhtml#_idParaDest-91",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-96.xhtml",
+      "label": "Ingen udvej",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-97.xhtml#_idParaDest-92",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-97.xhtml",
+      "label": "Hubert Bazins forsvinden",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-98.xhtml#_idParaDest-93",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-98.xhtml",
+      "label": "Alt er forgiftet",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-99.xhtml#_idParaDest-94",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-99.xhtml",
+      "label": "Gæster",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-101.xhtml#_idParaDest-95",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-101.xhtml",
+      "label": "Frøen koger",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-102.xhtml#_idParaDest-96",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-102.xhtml",
+      "label": "Ordrer",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-103.xhtml#_idParaDest-97",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-103.xhtml",
+      "label": "Lungebetændelse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-105.xhtml#_idParaDest-98",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-105.xhtml",
+      "label": "Behandling",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-106.xhtml#_idParaDest-99",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-106.xhtml",
+      "label": "Himlen",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-107.xhtml#_idParaDest-100",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-107.xhtml",
+      "label": "Frederick",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-108.xhtml#_idParaDest-101",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-108.xhtml",
+      "label": "Tilbagefald",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-109.xhtml#_idParaDest-102",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-109.xhtml",
+      "label": "Seks - 8. august 1944",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-110.xhtml#_idParaDest-103",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-110.xhtml",
+      "label": "Nogen i huset",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-111.xhtml#_idParaDest-104",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-111.xhtml",
+      "label": "Walther Bernds død",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-112.xhtml#_idParaDest-105",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-112.xhtml",
+      "label": "Værelse på femte sal",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-113.xhtml#_idParaDest-106",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-113.xhtml",
+      "label": "Radioen laves",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-114.xhtml#_idParaDest-107",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-114.xhtml",
+      "label": "På loftet",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-115.xhtml#_idParaDest-108",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-115.xhtml",
+      "label": "Syv - August 1942",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-116.xhtml#_idParaDest-109",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-116.xhtml",
+      "label": "Fanger",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-117.xhtml#_idParaDest-110",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-117.xhtml",
+      "label": "Klædeskabet",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-118.xhtml#_idParaDest-111",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-118.xhtml",
+      "label": "Øst",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-119.xhtml#_idParaDest-112",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-119.xhtml",
+      "label": "Det almindelige brød",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-120.xhtml#_idParaDest-113",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-120.xhtml",
+      "label": "Volkheimer",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-121.xhtml#_idParaDest-114",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-121.xhtml",
+      "label": "Efterår",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-122.xhtml#_idParaDest-115",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-122.xhtml",
+      "label": "Solsikker",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-123.xhtml#_idParaDest-116",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-123.xhtml",
+      "label": "Sten",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-124.xhtml#_idParaDest-117",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-124.xhtml",
+      "label": "Grotte",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-125.xhtml#_idParaDest-118",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-125.xhtml",
+      "label": "På jagt",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-126.xhtml#_idParaDest-119",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-126.xhtml",
+      "label": "Meddelelser",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-127.xhtml#_idParaDest-120",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-127.xhtml",
+      "label": "Loudenvielle",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-128.xhtml#_idParaDest-121",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-128.xhtml",
+      "label": "Gråt",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-129.xhtml#_idParaDest-122",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-129.xhtml",
+      "label": "Feber",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-130.xhtml#_idParaDest-123",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-130.xhtml",
+      "label": "Den tredje sten",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-131.xhtml#_idParaDest-124",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-131.xhtml",
+      "label": "Broen",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-132.xhtml#_idParaDest-125",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-132.xhtml",
+      "label": "Rue des Patriarches",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-133.xhtml#_idParaDest-126",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-133.xhtml",
+      "label": "Den hvide by",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-134.xhtml#_idParaDest-127",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-134.xhtml",
+      "label": "En verdensomsejling under havet",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-135.xhtml#_idParaDest-128",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-135.xhtml",
+      "label": "Telegram",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-136.xhtml#_idParaDest-129",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-136.xhtml",
+      "label": "Otte - 9. august 1944",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-137.xhtml#_idParaDest-130",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-137.xhtml",
+      "label": "Fort National",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-138.xhtml#_idParaDest-131",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-138.xhtml",
+      "label": "På loftet",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-139.xhtml#_idParaDest-132",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-139.xhtml",
+      "label": "Hovederne",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-140.xhtml#_idParaDest-133",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-140.xhtml",
+      "label": "Delirium",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-141.xhtml#_idParaDest-134",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-141.xhtml",
+      "label": "Vand",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-142.xhtml#_idParaDest-135",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-142.xhtml",
+      "label": "Bjælkerne",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-143.xhtml#_idParaDest-136",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-143.xhtml",
+      "label": "Senderen",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-144.xhtml#_idParaDest-137",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-144.xhtml",
+      "label": "En stemme",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-145.xhtml#_idParaDest-138",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-145.xhtml",
+      "label": "Ni - Maj 1944",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-146.xhtml#_idParaDest-139",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-146.xhtml",
+      "label": "Ved verdens kant",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-147.xhtml#_idParaDest-140",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-147.xhtml",
+      "label": "Tal",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-148.xhtml#_idParaDest-141",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-148.xhtml",
+      "label": "Maj",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-149.xhtml#_idParaDest-142",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-149.xhtml",
+      "label": "På jagt (igen)",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-151.xhtml#_idParaDest-143",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-151.xhtml",
+      "label": "Clair de Lune",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-152.xhtml#_idParaDest-144",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-152.xhtml",
+      "label": "Antenne",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-153.xhtml#_idParaDest-145",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-153.xhtml",
+      "label": "Store Claude",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-154.xhtml#_idParaDest-146",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-154.xhtml",
+      "label": "Boulangerie",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-155.xhtml#_idParaDest-147",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-155.xhtml",
+      "label": "Grotte",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-156.xhtml#_idParaDest-148",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-156.xhtml",
+      "label": "Agorafobi",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-157.xhtml#_idParaDest-149",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-157.xhtml",
+      "label": "Ingenting",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-158.xhtml#_idParaDest-150",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-158.xhtml",
+      "label": "Fyrre minutter",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-159.xhtml#_idParaDest-151",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-159.xhtml",
+      "label": "Pigen",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-160.xhtml#_idParaDest-152",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-160.xhtml",
+      "label": "Lille hus",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-161.xhtml#_idParaDest-153",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-161.xhtml",
+      "label": "Tal",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-162.xhtml#_idParaDest-154",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-162.xhtml",
+      "label": "Flammernes Hav",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-163.xhtml#_idParaDest-155",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-163.xhtml",
+      "label": "Etienne LeBlancs anholdelse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-164.xhtml#_idParaDest-156",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-164.xhtml",
+      "label": "7. august 1944",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-165.xhtml#_idParaDest-157",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-165.xhtml",
+      "label": "Flyveblade",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-166.xhtml#_idParaDest-158",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-166.xhtml",
+      "label": "Ti - 12. august 1944",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-167.xhtml#_idParaDest-159",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-167.xhtml",
+      "label": "Begravet",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-168.xhtml#_idParaDest-160",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-168.xhtml",
+      "label": "Fort National",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-169.xhtml#_idParaDest-161",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-169.xhtml",
+      "label": "Kaptajn Nemos sidste ord",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-170.xhtml#_idParaDest-162",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-170.xhtml",
+      "label": "Gæst",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-171.xhtml#_idParaDest-163",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-171.xhtml",
+      "label": "Sidste sætning",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-172.xhtml#_idParaDest-164",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-172.xhtml",
+      "label": "Musik 1",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-173.xhtml#_idParaDest-165",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-173.xhtml",
+      "label": "Musik 2",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-174.xhtml#_idParaDest-166",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-174.xhtml",
+      "label": "Musik 3",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-175.xhtml#_idParaDest-167",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-175.xhtml",
+      "label": "Ud",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-176.xhtml#_idParaDest-168",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-176.xhtml",
+      "label": "Klædeskab",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-177.xhtml#_idParaDest-169",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-177.xhtml",
+      "label": "Kammerater",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-178.xhtml#_idParaDest-170",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-178.xhtml",
+      "label": "Samtidige øjeblikke",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-179.xhtml#_idParaDest-171",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-179.xhtml",
+      "label": "Er du der?",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-180.xhtml#_idParaDest-172",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-180.xhtml",
+      "label": "Den anden dåse",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-181.xhtml#_idParaDest-173",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-181.xhtml",
+      "label": "Amerikas fugle",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-182.xhtml#_idParaDest-174",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-182.xhtml",
+      "label": "Våbenhvile",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-183.xhtml#_idParaDest-175",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-183.xhtml",
+      "label": "Chokolade",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-184.xhtml#_idParaDest-176",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-184.xhtml",
+      "label": "Lys",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-185.xhtml#_idParaDest-177",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-185.xhtml",
+      "label": "Elleve - 1945",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-186.xhtml#_idParaDest-178",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-186.xhtml",
+      "label": "Berlin",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-187.xhtml#_idParaDest-179",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-187.xhtml",
+      "label": "Paris",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-188.xhtml#_idParaDest-180",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-188.xhtml",
+      "label": "Tolv - 1974",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-189.xhtml#_idParaDest-181",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-189.xhtml",
+      "label": "Volkheimer",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-190.xhtml#_idParaDest-182",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-190.xhtml",
+      "label": "Jutta",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-191.xhtml#_idParaDest-183",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-191.xhtml",
+      "label": "Taske",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-192.xhtml#_idParaDest-184",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-192.xhtml",
+      "label": "Saint-Malo",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-193.xhtml#_idParaDest-185",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-193.xhtml",
+      "label": "Laboratorium",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-194.xhtml#_idParaDest-186",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-194.xhtml",
+      "label": "Gæst",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-195.xhtml#_idParaDest-187",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-195.xhtml",
+      "label": "Papirfly",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-196.xhtml#_idParaDest-188",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-196.xhtml",
+      "label": "Nøglen",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-197.xhtml#_idParaDest-189",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-197.xhtml",
+      "label": "Flammernes Hav",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-198.xhtml#_idParaDest-190",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-198.xhtml",
+      "label": "Frederick",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-199.xhtml#_idParaDest-191",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-199.xhtml",
+      "label": "Tretten - 2014",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-201.xhtml#_idParaDest-192",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-201.xhtml",
+      "label": "Tak",
+      "spineIndex": null,
+      "spineHit": null
+    },
+    {
+      "href": "altdetlysviikkeser_ebog-202.xhtml#_idParaDest-193",
+      "hrefNoFrag": "altdetlysviikkeser_ebog-202.xhtml",
+      "label": "Kolofon",
+      "spineIndex": null,
+      "spineHit": null
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "altdetlysviikkeser_ebog-2.xhtml#_idParaDest-1",
+        "label": "Nul - 7. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-3.xhtml#_idParaDest-2",
+        "label": "Flyveblade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-4.xhtml#_idParaDest-3",
+        "label": "Bombefly"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-5.xhtml#_idParaDest-4",
+        "label": "Pigen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-6.xhtml#_idParaDest-5",
+        "label": "Drengen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-7.xhtml#_idParaDest-6",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-8.xhtml#_idParaDest-7",
+        "label": "Rue Vauborel 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-9.xhtml#_idParaDest-8",
+        "label": "Kælder"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-10.xhtml#_idParaDest-9",
+        "label": "Smid bomberne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-11.xhtml#_idParaDest-10",
+        "label": "Et - 1934"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-12.xhtml#_idParaDest-11",
+        "label": "Muséum National d’Histoire Naturelle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-13.xhtml#_idParaDest-12",
+        "label": "Zollverein"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-14.xhtml#_idParaDest-13",
+        "label": "Nøglerummet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-15.xhtml#_idParaDest-14",
+        "label": "Radio"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-16.xhtml#_idParaDest-15",
+        "label": "Før os hjem"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-17.xhtml#_idParaDest-16",
+        "label": "Noget nyt er på vej"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-18.xhtml#_idParaDest-17",
+        "label": "Lys"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-19.xhtml#_idParaDest-18",
+        "label": "Vores flag vajer foran os"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-20.xhtml#_idParaDest-19",
+        "label": "Jorden rundt på firs dage"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-21.xhtml#_idParaDest-20",
+        "label": "Professoren"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-22.xhtml#_idParaDest-21",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-23.xhtml#_idParaDest-22",
+        "label": "Åbn dine øjne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-24.xhtml#_idParaDest-23",
+        "label": "Dagdrømme"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-25.xhtml#_idParaDest-24",
+        "label": "Mekanikkens principper"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-26.xhtml#_idParaDest-25",
+        "label": "Rygter"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-27.xhtml#_idParaDest-26",
+        "label": "Større, hurtigere, mere"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-28.xhtml#_idParaDest-27",
+        "label": "Uhyrerne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-30.xhtml#_idParaDest-28",
+        "label": "Godaften. Eller Heil Hitler hvis De synes."
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-31.xhtml#_idParaDest-29",
+        "label": "Ciao, blinde pige"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-32.xhtml#_idParaDest-30",
+        "label": "Sokker"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-33.xhtml#_idParaDest-31",
+        "label": "Flugt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-34.xhtml#_idParaDest-32",
+        "label": "Herr Siedler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-35.xhtml#_idParaDest-33",
+        "label": "Exodus"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-36.xhtml#_idParaDest-34",
+        "label": "To - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-37.xhtml#_idParaDest-35",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-38.xhtml#_idParaDest-36",
+        "label": "Rue Vauborel nummer 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-39.xhtml#_idParaDest-37",
+        "label": "Biernes Hotel"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-40.xhtml#_idParaDest-38",
+        "label": "Fem trapper ned"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-41.xhtml#_idParaDest-39",
+        "label": "Fanget"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-42.xhtml#_idParaDest-40",
+        "label": "Tre - Juni 1940"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-43.xhtml#_idParaDest-41",
+        "label": "Château"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-44.xhtml#_idParaDest-42",
+        "label": "Optagelsesprøve"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-45.xhtml#_idParaDest-43",
+        "label": "Bretagne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-46.xhtml#_idParaDest-44",
+        "label": "Madame Manec"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-47.xhtml#_idParaDest-45",
+        "label": "Du er blevet udvalgt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-48.xhtml#_idParaDest-46",
+        "label": "Occupation"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-49.xhtml#_idParaDest-47",
+        "label": "Du skal ikke lyve"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-50.xhtml#_idParaDest-48",
+        "label": "Etienne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-51.xhtml#_idParaDest-49",
+        "label": "Jungmänner"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-52.xhtml#_idParaDest-50",
+        "label": "Wien"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-53.xhtml#_idParaDest-51",
+        "label": "Les boches"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-54.xhtml#_idParaDest-52",
+        "label": "Hauptmann"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-55.xhtml#_idParaDest-53",
+        "label": "Den Flyvende Sofa"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-56.xhtml#_idParaDest-54",
+        "label": "Summen af vinkler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-57.xhtml#_idParaDest-55",
+        "label": "Professoren"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-58.xhtml#_idParaDest-56",
+        "label": "Parfumehandler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-59.xhtml#_idParaDest-57",
+        "label": "Strudsenes tid"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-60.xhtml#_idParaDest-58",
+        "label": "Den svageste"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-61.xhtml#_idParaDest-59",
+        "label": "Beslaglæggelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-62.xhtml#_idParaDest-60",
+        "label": "Museum"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-63.xhtml#_idParaDest-61",
+        "label": "Klædeskabet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-64.xhtml#_idParaDest-62",
+        "label": "Spurveflokke"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-66.xhtml#_idParaDest-63",
+        "label": "Bad"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-67.xhtml#_idParaDest-64",
+        "label": "Den svageste (2)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-68.xhtml#_idParaDest-65",
+        "label": "Låsesmedens anholdelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-69.xhtml#_idParaDest-66",
+        "label": "Fire - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-70.xhtml#_idParaDest-67",
+        "label": "Fæstningen La Cité"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-71.xhtml#_idParaDest-68",
+        "label": "Atelier de Réparation"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-72.xhtml#_idParaDest-69",
+        "label": "To dåser"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-73.xhtml#_idParaDest-70",
+        "label": "Rue Vauborel 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-74.xhtml#_idParaDest-71",
+        "label": "Hvad de har"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-75.xhtml#_idParaDest-72",
+        "label": "Snubletråd"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-76.xhtml#_idParaDest-73",
+        "label": "Fem - Januar 1941"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-77.xhtml#_idParaDest-74",
+        "label": "Vinterferie"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-78.xhtml#_idParaDest-75",
+        "label": "Han kommer ikke tilbage"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-79.xhtml#_idParaDest-76",
+        "label": "Fange"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-80.xhtml#_idParaDest-77",
+        "label": "Plage du Môle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-81.xhtml#_idParaDest-78",
+        "label": "Stensliberen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-83.xhtml#_idParaDest-79",
+        "label": "Entropi"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-84.xhtml#_idParaDest-80",
+        "label": "Runderne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-85.xhtml#_idParaDest-81",
+        "label": "Nadel im Heuhaufen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-86.xhtml#_idParaDest-82",
+        "label": "Et forslag"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-87.xhtml#_idParaDest-83",
+        "label": "Du har andre venner"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-88.xhtml#_idParaDest-84",
+        "label": "De gamle damers modstandsklub"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-89.xhtml#_idParaDest-85",
+        "label": "Diagnose"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-90.xhtml#_idParaDest-86",
+        "label": "Den svageste (3)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-92.xhtml#_idParaDest-87",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-93.xhtml#_idParaDest-88",
+        "label": "Beruset"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-94.xhtml#_idParaDest-89",
+        "label": "Kniven og konkylien"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-95.xhtml#_idParaDest-90",
+        "label": "Leve før du dør"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-96.xhtml#_idParaDest-91",
+        "label": "Ingen udvej"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-97.xhtml#_idParaDest-92",
+        "label": "Hubert Bazins forsvinden"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-98.xhtml#_idParaDest-93",
+        "label": "Alt er forgiftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-99.xhtml#_idParaDest-94",
+        "label": "Gæster"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-101.xhtml#_idParaDest-95",
+        "label": "Frøen koger"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-102.xhtml#_idParaDest-96",
+        "label": "Ordrer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-103.xhtml#_idParaDest-97",
+        "label": "Lungebetændelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-105.xhtml#_idParaDest-98",
+        "label": "Behandling"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-106.xhtml#_idParaDest-99",
+        "label": "Himlen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-107.xhtml#_idParaDest-100",
+        "label": "Frederick"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-108.xhtml#_idParaDest-101",
+        "label": "Tilbagefald"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-109.xhtml#_idParaDest-102",
+        "label": "Seks - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-110.xhtml#_idParaDest-103",
+        "label": "Nogen i huset"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-111.xhtml#_idParaDest-104",
+        "label": "Walther Bernds død"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-112.xhtml#_idParaDest-105",
+        "label": "Værelse på femte sal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-113.xhtml#_idParaDest-106",
+        "label": "Radioen laves"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-114.xhtml#_idParaDest-107",
+        "label": "På loftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-115.xhtml#_idParaDest-108",
+        "label": "Syv - August 1942"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-116.xhtml#_idParaDest-109",
+        "label": "Fanger"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-117.xhtml#_idParaDest-110",
+        "label": "Klædeskabet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-118.xhtml#_idParaDest-111",
+        "label": "Øst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-119.xhtml#_idParaDest-112",
+        "label": "Det almindelige brød"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-120.xhtml#_idParaDest-113",
+        "label": "Volkheimer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-121.xhtml#_idParaDest-114",
+        "label": "Efterår"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-122.xhtml#_idParaDest-115",
+        "label": "Solsikker"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-123.xhtml#_idParaDest-116",
+        "label": "Sten"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-124.xhtml#_idParaDest-117",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-125.xhtml#_idParaDest-118",
+        "label": "På jagt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-126.xhtml#_idParaDest-119",
+        "label": "Meddelelser"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-127.xhtml#_idParaDest-120",
+        "label": "Loudenvielle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-128.xhtml#_idParaDest-121",
+        "label": "Gråt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-129.xhtml#_idParaDest-122",
+        "label": "Feber"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-130.xhtml#_idParaDest-123",
+        "label": "Den tredje sten"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-131.xhtml#_idParaDest-124",
+        "label": "Broen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-132.xhtml#_idParaDest-125",
+        "label": "Rue des Patriarches"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-133.xhtml#_idParaDest-126",
+        "label": "Den hvide by"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-134.xhtml#_idParaDest-127",
+        "label": "En verdensomsejling under havet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-135.xhtml#_idParaDest-128",
+        "label": "Telegram"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-136.xhtml#_idParaDest-129",
+        "label": "Otte - 9. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-137.xhtml#_idParaDest-130",
+        "label": "Fort National"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-138.xhtml#_idParaDest-131",
+        "label": "På loftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-139.xhtml#_idParaDest-132",
+        "label": "Hovederne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-140.xhtml#_idParaDest-133",
+        "label": "Delirium"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-141.xhtml#_idParaDest-134",
+        "label": "Vand"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-142.xhtml#_idParaDest-135",
+        "label": "Bjælkerne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-143.xhtml#_idParaDest-136",
+        "label": "Senderen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-144.xhtml#_idParaDest-137",
+        "label": "En stemme"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-145.xhtml#_idParaDest-138",
+        "label": "Ni - Maj 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-146.xhtml#_idParaDest-139",
+        "label": "Ved verdens kant"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-147.xhtml#_idParaDest-140",
+        "label": "Tal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-148.xhtml#_idParaDest-141",
+        "label": "Maj"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-149.xhtml#_idParaDest-142",
+        "label": "På jagt (igen)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-151.xhtml#_idParaDest-143",
+        "label": "Clair de Lune"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-152.xhtml#_idParaDest-144",
+        "label": "Antenne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-153.xhtml#_idParaDest-145",
+        "label": "Store Claude"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-154.xhtml#_idParaDest-146",
+        "label": "Boulangerie"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-155.xhtml#_idParaDest-147",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-156.xhtml#_idParaDest-148",
+        "label": "Agorafobi"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-157.xhtml#_idParaDest-149",
+        "label": "Ingenting"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-158.xhtml#_idParaDest-150",
+        "label": "Fyrre minutter"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-159.xhtml#_idParaDest-151",
+        "label": "Pigen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-160.xhtml#_idParaDest-152",
+        "label": "Lille hus"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-161.xhtml#_idParaDest-153",
+        "label": "Tal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-162.xhtml#_idParaDest-154",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-163.xhtml#_idParaDest-155",
+        "label": "Etienne LeBlancs anholdelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-164.xhtml#_idParaDest-156",
+        "label": "7. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-165.xhtml#_idParaDest-157",
+        "label": "Flyveblade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-166.xhtml#_idParaDest-158",
+        "label": "Ti - 12. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-167.xhtml#_idParaDest-159",
+        "label": "Begravet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-168.xhtml#_idParaDest-160",
+        "label": "Fort National"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-169.xhtml#_idParaDest-161",
+        "label": "Kaptajn Nemos sidste ord"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-170.xhtml#_idParaDest-162",
+        "label": "Gæst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-171.xhtml#_idParaDest-163",
+        "label": "Sidste sætning"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-172.xhtml#_idParaDest-164",
+        "label": "Musik 1"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-173.xhtml#_idParaDest-165",
+        "label": "Musik 2"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-174.xhtml#_idParaDest-166",
+        "label": "Musik 3"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-175.xhtml#_idParaDest-167",
+        "label": "Ud"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-176.xhtml#_idParaDest-168",
+        "label": "Klædeskab"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-177.xhtml#_idParaDest-169",
+        "label": "Kammerater"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-178.xhtml#_idParaDest-170",
+        "label": "Samtidige øjeblikke"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-179.xhtml#_idParaDest-171",
+        "label": "Er du der?"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-180.xhtml#_idParaDest-172",
+        "label": "Den anden dåse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-181.xhtml#_idParaDest-173",
+        "label": "Amerikas fugle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-182.xhtml#_idParaDest-174",
+        "label": "Våbenhvile"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-183.xhtml#_idParaDest-175",
+        "label": "Chokolade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-184.xhtml#_idParaDest-176",
+        "label": "Lys"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-185.xhtml#_idParaDest-177",
+        "label": "Elleve - 1945"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-186.xhtml#_idParaDest-178",
+        "label": "Berlin"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-187.xhtml#_idParaDest-179",
+        "label": "Paris"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-188.xhtml#_idParaDest-180",
+        "label": "Tolv - 1974"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-189.xhtml#_idParaDest-181",
+        "label": "Volkheimer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-190.xhtml#_idParaDest-182",
+        "label": "Jutta"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-191.xhtml#_idParaDest-183",
+        "label": "Taske"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-192.xhtml#_idParaDest-184",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-193.xhtml#_idParaDest-185",
+        "label": "Laboratorium"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-194.xhtml#_idParaDest-186",
+        "label": "Gæst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-195.xhtml#_idParaDest-187",
+        "label": "Papirfly"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-196.xhtml#_idParaDest-188",
+        "label": "Nøglen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-197.xhtml#_idParaDest-189",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-198.xhtml#_idParaDest-190",
+        "label": "Frederick"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-199.xhtml#_idParaDest-191",
+        "label": "Tretten - 2014"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-201.xhtml#_idParaDest-192",
+        "label": "Tak"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-202.xhtml#_idParaDest-193",
+        "label": "Kolofon"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "altdetlysviikkeser_ebog-2.xhtml",
+        "label": "Nul - 7. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-3.xhtml",
+        "label": "Flyveblade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-4.xhtml",
+        "label": "Bombefly"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-5.xhtml",
+        "label": "Pigen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-6.xhtml",
+        "label": "Drengen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-7.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-8.xhtml",
+        "label": "Rue Vauborel 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-9.xhtml",
+        "label": "Kælder"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-10.xhtml",
+        "label": "Smid bomberne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-11.xhtml",
+        "label": "Et - 1934"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-12.xhtml",
+        "label": "Muséum National d’Histoire Naturelle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-13.xhtml",
+        "label": "Zollverein"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-14.xhtml",
+        "label": "Nøglerummet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-15.xhtml",
+        "label": "Radio"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-16.xhtml",
+        "label": "Før os hjem"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-17.xhtml",
+        "label": "Noget nyt er på vej"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-18.xhtml",
+        "label": "Lys"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-19.xhtml",
+        "label": "Vores flag vajer foran os"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-20.xhtml",
+        "label": "Jorden rundt på firs dage"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-21.xhtml",
+        "label": "Professoren"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-22.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-23.xhtml",
+        "label": "Åbn dine øjne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-24.xhtml",
+        "label": "Dagdrømme"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-25.xhtml",
+        "label": "Mekanikkens principper"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-26.xhtml",
+        "label": "Rygter"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-27.xhtml",
+        "label": "Større, hurtigere, mere"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-28.xhtml",
+        "label": "Uhyrerne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-30.xhtml",
+        "label": "Godaften. Eller Heil Hitler hvis De synes."
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-31.xhtml",
+        "label": "Ciao, blinde pige"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-32.xhtml",
+        "label": "Sokker"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-33.xhtml",
+        "label": "Flugt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-34.xhtml",
+        "label": "Herr Siedler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-35.xhtml",
+        "label": "Exodus"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-36.xhtml",
+        "label": "To - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-37.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-38.xhtml",
+        "label": "Rue Vauborel nummer 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-39.xhtml",
+        "label": "Biernes Hotel"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-40.xhtml",
+        "label": "Fem trapper ned"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-41.xhtml",
+        "label": "Fanget"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-42.xhtml",
+        "label": "Tre - Juni 1940"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-43.xhtml",
+        "label": "Château"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-44.xhtml",
+        "label": "Optagelsesprøve"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-45.xhtml",
+        "label": "Bretagne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-46.xhtml",
+        "label": "Madame Manec"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-47.xhtml",
+        "label": "Du er blevet udvalgt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-48.xhtml",
+        "label": "Occupation"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-49.xhtml",
+        "label": "Du skal ikke lyve"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-50.xhtml",
+        "label": "Etienne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-51.xhtml",
+        "label": "Jungmänner"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-52.xhtml",
+        "label": "Wien"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-53.xhtml",
+        "label": "Les boches"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-54.xhtml",
+        "label": "Hauptmann"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-55.xhtml",
+        "label": "Den Flyvende Sofa"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-56.xhtml",
+        "label": "Summen af vinkler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-57.xhtml",
+        "label": "Professoren"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-58.xhtml",
+        "label": "Parfumehandler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-59.xhtml",
+        "label": "Strudsenes tid"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-60.xhtml",
+        "label": "Den svageste"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-61.xhtml",
+        "label": "Beslaglæggelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-62.xhtml",
+        "label": "Museum"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-63.xhtml",
+        "label": "Klædeskabet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-64.xhtml",
+        "label": "Spurveflokke"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-66.xhtml",
+        "label": "Bad"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-67.xhtml",
+        "label": "Den svageste (2)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-68.xhtml",
+        "label": "Låsesmedens anholdelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-69.xhtml",
+        "label": "Fire - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-70.xhtml",
+        "label": "Fæstningen La Cité"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-71.xhtml",
+        "label": "Atelier de Réparation"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-72.xhtml",
+        "label": "To dåser"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-73.xhtml",
+        "label": "Rue Vauborel 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-74.xhtml",
+        "label": "Hvad de har"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-75.xhtml",
+        "label": "Snubletråd"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-76.xhtml",
+        "label": "Fem - Januar 1941"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-77.xhtml",
+        "label": "Vinterferie"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-78.xhtml",
+        "label": "Han kommer ikke tilbage"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-79.xhtml",
+        "label": "Fange"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-80.xhtml",
+        "label": "Plage du Môle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-81.xhtml",
+        "label": "Stensliberen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-83.xhtml",
+        "label": "Entropi"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-84.xhtml",
+        "label": "Runderne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-85.xhtml",
+        "label": "Nadel im Heuhaufen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-86.xhtml",
+        "label": "Et forslag"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-87.xhtml",
+        "label": "Du har andre venner"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-88.xhtml",
+        "label": "De gamle damers modstandsklub"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-89.xhtml",
+        "label": "Diagnose"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-90.xhtml",
+        "label": "Den svageste (3)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-92.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-93.xhtml",
+        "label": "Beruset"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-94.xhtml",
+        "label": "Kniven og konkylien"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-95.xhtml",
+        "label": "Leve før du dør"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-96.xhtml",
+        "label": "Ingen udvej"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-97.xhtml",
+        "label": "Hubert Bazins forsvinden"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-98.xhtml",
+        "label": "Alt er forgiftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-99.xhtml",
+        "label": "Gæster"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-101.xhtml",
+        "label": "Frøen koger"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-102.xhtml",
+        "label": "Ordrer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-103.xhtml",
+        "label": "Lungebetændelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-105.xhtml",
+        "label": "Behandling"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-106.xhtml",
+        "label": "Himlen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-107.xhtml",
+        "label": "Frederick"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-108.xhtml",
+        "label": "Tilbagefald"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-109.xhtml",
+        "label": "Seks - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-110.xhtml",
+        "label": "Nogen i huset"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-111.xhtml",
+        "label": "Walther Bernds død"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-112.xhtml",
+        "label": "Værelse på femte sal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-113.xhtml",
+        "label": "Radioen laves"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-114.xhtml",
+        "label": "På loftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-115.xhtml",
+        "label": "Syv - August 1942"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-116.xhtml",
+        "label": "Fanger"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-117.xhtml",
+        "label": "Klædeskabet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-118.xhtml",
+        "label": "Øst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-119.xhtml",
+        "label": "Det almindelige brød"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-120.xhtml",
+        "label": "Volkheimer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-121.xhtml",
+        "label": "Efterår"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-122.xhtml",
+        "label": "Solsikker"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-123.xhtml",
+        "label": "Sten"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-124.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-125.xhtml",
+        "label": "På jagt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-126.xhtml",
+        "label": "Meddelelser"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-127.xhtml",
+        "label": "Loudenvielle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-128.xhtml",
+        "label": "Gråt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-129.xhtml",
+        "label": "Feber"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-130.xhtml",
+        "label": "Den tredje sten"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-131.xhtml",
+        "label": "Broen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-132.xhtml",
+        "label": "Rue des Patriarches"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-133.xhtml",
+        "label": "Den hvide by"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-134.xhtml",
+        "label": "En verdensomsejling under havet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-135.xhtml",
+        "label": "Telegram"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-136.xhtml",
+        "label": "Otte - 9. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-137.xhtml",
+        "label": "Fort National"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-138.xhtml",
+        "label": "På loftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-139.xhtml",
+        "label": "Hovederne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-140.xhtml",
+        "label": "Delirium"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-141.xhtml",
+        "label": "Vand"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-142.xhtml",
+        "label": "Bjælkerne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-143.xhtml",
+        "label": "Senderen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-144.xhtml",
+        "label": "En stemme"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-145.xhtml",
+        "label": "Ni - Maj 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-146.xhtml",
+        "label": "Ved verdens kant"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-147.xhtml",
+        "label": "Tal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-148.xhtml",
+        "label": "Maj"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-149.xhtml",
+        "label": "På jagt (igen)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-151.xhtml",
+        "label": "Clair de Lune"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-152.xhtml",
+        "label": "Antenne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-153.xhtml",
+        "label": "Store Claude"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-154.xhtml",
+        "label": "Boulangerie"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-155.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-156.xhtml",
+        "label": "Agorafobi"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-157.xhtml",
+        "label": "Ingenting"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-158.xhtml",
+        "label": "Fyrre minutter"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-159.xhtml",
+        "label": "Pigen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-160.xhtml",
+        "label": "Lille hus"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-161.xhtml",
+        "label": "Tal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-162.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-163.xhtml",
+        "label": "Etienne LeBlancs anholdelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-164.xhtml",
+        "label": "7. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-165.xhtml",
+        "label": "Flyveblade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-166.xhtml",
+        "label": "Ti - 12. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-167.xhtml",
+        "label": "Begravet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-168.xhtml",
+        "label": "Fort National"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-169.xhtml",
+        "label": "Kaptajn Nemos sidste ord"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-170.xhtml",
+        "label": "Gæst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-171.xhtml",
+        "label": "Sidste sætning"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-172.xhtml",
+        "label": "Musik 1"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-173.xhtml",
+        "label": "Musik 2"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-174.xhtml",
+        "label": "Musik 3"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-175.xhtml",
+        "label": "Ud"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-176.xhtml",
+        "label": "Klædeskab"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-177.xhtml",
+        "label": "Kammerater"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-178.xhtml",
+        "label": "Samtidige øjeblikke"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-179.xhtml",
+        "label": "Er du der?"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-180.xhtml",
+        "label": "Den anden dåse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-181.xhtml",
+        "label": "Amerikas fugle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-182.xhtml",
+        "label": "Våbenhvile"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-183.xhtml",
+        "label": "Chokolade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-184.xhtml",
+        "label": "Lys"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-185.xhtml",
+        "label": "Elleve - 1945"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-186.xhtml",
+        "label": "Berlin"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-187.xhtml",
+        "label": "Paris"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-188.xhtml",
+        "label": "Tolv - 1974"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-189.xhtml",
+        "label": "Volkheimer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-190.xhtml",
+        "label": "Jutta"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-191.xhtml",
+        "label": "Taske"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-192.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-193.xhtml",
+        "label": "Laboratorium"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-194.xhtml",
+        "label": "Gæst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-195.xhtml",
+        "label": "Papirfly"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-196.xhtml",
+        "label": "Nøglen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-197.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-198.xhtml",
+        "label": "Frederick"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-199.xhtml",
+        "label": "Tretten - 2014"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-201.xhtml",
+        "label": "Tak"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-202.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog.xhtml",
+        "label": "Altdetlysviikkeser Ebog"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-1.xhtml",
+        "label": "Altdetlysviikkeser Ebog 1"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-2.xhtml",
+        "label": "Nul - 7. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-3.xhtml",
+        "label": "Flyveblade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-4.xhtml",
+        "label": "Bombefly"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-5.xhtml",
+        "label": "Pigen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-6.xhtml",
+        "label": "Drengen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-7.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-8.xhtml",
+        "label": "Rue Vauborel 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-9.xhtml",
+        "label": "Kælder"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-10.xhtml",
+        "label": "Smid bomberne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-11.xhtml",
+        "label": "Et - 1934"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-12.xhtml",
+        "label": "Muséum National d’Histoire Naturelle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-13.xhtml",
+        "label": "Zollverein"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-14.xhtml",
+        "label": "Nøglerummet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-15.xhtml",
+        "label": "Radio"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-16.xhtml",
+        "label": "Før os hjem"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-17.xhtml",
+        "label": "Noget nyt er på vej"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-18.xhtml",
+        "label": "Lys"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-19.xhtml",
+        "label": "Vores flag vajer foran os"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-20.xhtml",
+        "label": "Jorden rundt på firs dage"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-21.xhtml",
+        "label": "Professoren"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-22.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-23.xhtml",
+        "label": "Åbn dine øjne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-24.xhtml",
+        "label": "Dagdrømme"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-25.xhtml",
+        "label": "Mekanikkens principper"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-26.xhtml",
+        "label": "Rygter"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-27.xhtml",
+        "label": "Større, hurtigere, mere"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-28.xhtml",
+        "label": "Uhyrerne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-30.xhtml",
+        "label": "Godaften. Eller Heil Hitler hvis De synes."
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-31.xhtml",
+        "label": "Ciao, blinde pige"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-32.xhtml",
+        "label": "Sokker"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-33.xhtml",
+        "label": "Flugt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-34.xhtml",
+        "label": "Herr Siedler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-35.xhtml",
+        "label": "Exodus"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-36.xhtml",
+        "label": "To - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-37.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-38.xhtml",
+        "label": "Rue Vauborel nummer 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-39.xhtml",
+        "label": "Biernes Hotel"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-40.xhtml",
+        "label": "Fem trapper ned"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-41.xhtml",
+        "label": "Fanget"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-42.xhtml",
+        "label": "Tre - Juni 1940"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-43.xhtml",
+        "label": "Château"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-44.xhtml",
+        "label": "Optagelsesprøve"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-45.xhtml",
+        "label": "Bretagne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-46.xhtml",
+        "label": "Madame Manec"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-47.xhtml",
+        "label": "Du er blevet udvalgt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-48.xhtml",
+        "label": "Occupation"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-49.xhtml",
+        "label": "Du skal ikke lyve"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-50.xhtml",
+        "label": "Etienne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-51.xhtml",
+        "label": "Jungmänner"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-52.xhtml",
+        "label": "Wien"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-53.xhtml",
+        "label": "Les boches"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-54.xhtml",
+        "label": "Hauptmann"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-55.xhtml",
+        "label": "Den Flyvende Sofa"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-56.xhtml",
+        "label": "Summen af vinkler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-57.xhtml",
+        "label": "Professoren"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-58.xhtml",
+        "label": "Parfumehandler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-59.xhtml",
+        "label": "Strudsenes tid"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-60.xhtml",
+        "label": "Den svageste"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-61.xhtml",
+        "label": "Beslaglæggelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-62.xhtml",
+        "label": "Museum"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-63.xhtml",
+        "label": "Klædeskabet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-64.xhtml",
+        "label": "Spurveflokke"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-66.xhtml",
+        "label": "Bad"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-67.xhtml",
+        "label": "Den svageste (2)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-68.xhtml",
+        "label": "Låsesmedens anholdelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-69.xhtml",
+        "label": "Fire - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-70.xhtml",
+        "label": "Fæstningen La Cité"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-71.xhtml",
+        "label": "Atelier de Réparation"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-72.xhtml",
+        "label": "To dåser"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-73.xhtml",
+        "label": "Rue Vauborel 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-74.xhtml",
+        "label": "Hvad de har"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-75.xhtml",
+        "label": "Snubletråd"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-76.xhtml",
+        "label": "Fem - Januar 1941"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-77.xhtml",
+        "label": "Vinterferie"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-78.xhtml",
+        "label": "Han kommer ikke tilbage"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-79.xhtml",
+        "label": "Fange"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-80.xhtml",
+        "label": "Plage du Môle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-81.xhtml",
+        "label": "Stensliberen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-83.xhtml",
+        "label": "Entropi"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-84.xhtml",
+        "label": "Runderne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-85.xhtml",
+        "label": "Nadel im Heuhaufen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-86.xhtml",
+        "label": "Et forslag"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-87.xhtml",
+        "label": "Du har andre venner"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-88.xhtml",
+        "label": "De gamle damers modstandsklub"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-89.xhtml",
+        "label": "Diagnose"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-90.xhtml",
+        "label": "Den svageste (3)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-92.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-93.xhtml",
+        "label": "Beruset"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-94.xhtml",
+        "label": "Kniven og konkylien"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-95.xhtml",
+        "label": "Leve før du dør"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-96.xhtml",
+        "label": "Ingen udvej"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-97.xhtml",
+        "label": "Hubert Bazins forsvinden"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-98.xhtml",
+        "label": "Alt er forgiftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-99.xhtml",
+        "label": "Gæster"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-101.xhtml",
+        "label": "Frøen koger"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-102.xhtml",
+        "label": "Ordrer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-103.xhtml",
+        "label": "Lungebetændelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-105.xhtml",
+        "label": "Behandling"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-106.xhtml",
+        "label": "Himlen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-107.xhtml",
+        "label": "Frederick"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-108.xhtml",
+        "label": "Tilbagefald"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-109.xhtml",
+        "label": "Seks - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-110.xhtml",
+        "label": "Nogen i huset"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-111.xhtml",
+        "label": "Walther Bernds død"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-112.xhtml",
+        "label": "Værelse på femte sal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-113.xhtml",
+        "label": "Radioen laves"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-114.xhtml",
+        "label": "På loftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-115.xhtml",
+        "label": "Syv - August 1942"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-116.xhtml",
+        "label": "Fanger"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-117.xhtml",
+        "label": "Klædeskabet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-118.xhtml",
+        "label": "Øst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-119.xhtml",
+        "label": "Det almindelige brød"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-120.xhtml",
+        "label": "Volkheimer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-121.xhtml",
+        "label": "Efterår"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-122.xhtml",
+        "label": "Solsikker"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-123.xhtml",
+        "label": "Sten"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-124.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-125.xhtml",
+        "label": "På jagt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-126.xhtml",
+        "label": "Meddelelser"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-127.xhtml",
+        "label": "Loudenvielle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-128.xhtml",
+        "label": "Gråt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-129.xhtml",
+        "label": "Feber"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-130.xhtml",
+        "label": "Den tredje sten"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-131.xhtml",
+        "label": "Broen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-132.xhtml",
+        "label": "Rue des Patriarches"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-133.xhtml",
+        "label": "Den hvide by"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-134.xhtml",
+        "label": "En verdensomsejling under havet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-135.xhtml",
+        "label": "Telegram"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-136.xhtml",
+        "label": "Otte - 9. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-137.xhtml",
+        "label": "Fort National"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-138.xhtml",
+        "label": "På loftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-139.xhtml",
+        "label": "Hovederne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-140.xhtml",
+        "label": "Delirium"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-141.xhtml",
+        "label": "Vand"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-142.xhtml",
+        "label": "Bjælkerne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-143.xhtml",
+        "label": "Senderen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-144.xhtml",
+        "label": "En stemme"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-145.xhtml",
+        "label": "Ni - Maj 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-146.xhtml",
+        "label": "Ved verdens kant"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-147.xhtml",
+        "label": "Tal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-148.xhtml",
+        "label": "Maj"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-149.xhtml",
+        "label": "På jagt (igen)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-151.xhtml",
+        "label": "Clair de Lune"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-152.xhtml",
+        "label": "Antenne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-153.xhtml",
+        "label": "Store Claude"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-154.xhtml",
+        "label": "Boulangerie"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-155.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-156.xhtml",
+        "label": "Agorafobi"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-157.xhtml",
+        "label": "Ingenting"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-158.xhtml",
+        "label": "Fyrre minutter"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-159.xhtml",
+        "label": "Pigen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-160.xhtml",
+        "label": "Lille hus"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-161.xhtml",
+        "label": "Tal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-162.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-163.xhtml",
+        "label": "Etienne LeBlancs anholdelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-164.xhtml",
+        "label": "7. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-165.xhtml",
+        "label": "Flyveblade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-166.xhtml",
+        "label": "Ti - 12. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-167.xhtml",
+        "label": "Begravet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-168.xhtml",
+        "label": "Fort National"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-169.xhtml",
+        "label": "Kaptajn Nemos sidste ord"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-170.xhtml",
+        "label": "Gæst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-171.xhtml",
+        "label": "Sidste sætning"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-172.xhtml",
+        "label": "Musik 1"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-173.xhtml",
+        "label": "Musik 2"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-174.xhtml",
+        "label": "Musik 3"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-175.xhtml",
+        "label": "Ud"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-176.xhtml",
+        "label": "Klædeskab"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-177.xhtml",
+        "label": "Kammerater"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-178.xhtml",
+        "label": "Samtidige øjeblikke"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-179.xhtml",
+        "label": "Er du der?"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-180.xhtml",
+        "label": "Den anden dåse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-181.xhtml",
+        "label": "Amerikas fugle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-182.xhtml",
+        "label": "Våbenhvile"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-183.xhtml",
+        "label": "Chokolade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-184.xhtml",
+        "label": "Lys"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-185.xhtml",
+        "label": "Elleve - 1945"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-186.xhtml",
+        "label": "Berlin"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-187.xhtml",
+        "label": "Paris"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-188.xhtml",
+        "label": "Tolv - 1974"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-189.xhtml",
+        "label": "Volkheimer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-190.xhtml",
+        "label": "Jutta"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-191.xhtml",
+        "label": "Taske"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-192.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-193.xhtml",
+        "label": "Laboratorium"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-194.xhtml",
+        "label": "Gæst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-195.xhtml",
+        "label": "Papirfly"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-196.xhtml",
+        "label": "Nøglen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-197.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-198.xhtml",
+        "label": "Frederick"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-199.xhtml",
+        "label": "Tretten - 2014"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-201.xhtml",
+        "label": "Tak"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-202.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog.xhtml",
+        "label": "Altdetlysviikkeser Ebog"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-1.xhtml",
+        "label": "Altdetlysviikkeser Ebog 1"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-2.xhtml",
+        "label": "Nul - 7. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-3.xhtml",
+        "label": "Flyveblade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-4.xhtml",
+        "label": "Bombefly"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-5.xhtml",
+        "label": "Pigen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-6.xhtml",
+        "label": "Drengen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-7.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-8.xhtml",
+        "label": "Rue Vauborel 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-9.xhtml",
+        "label": "Kælder"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-10.xhtml",
+        "label": "Smid bomberne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-11.xhtml",
+        "label": "Et - 1934"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-12.xhtml",
+        "label": "Muséum National d’Histoire Naturelle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-13.xhtml",
+        "label": "Zollverein"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-14.xhtml",
+        "label": "Nøglerummet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-15.xhtml",
+        "label": "Radio"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-16.xhtml",
+        "label": "Før os hjem"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-17.xhtml",
+        "label": "Noget nyt er på vej"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-18.xhtml",
+        "label": "Lys"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-19.xhtml",
+        "label": "Vores flag vajer foran os"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-20.xhtml",
+        "label": "Jorden rundt på firs dage"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-21.xhtml",
+        "label": "Professoren"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-22.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-23.xhtml",
+        "label": "Åbn dine øjne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-24.xhtml",
+        "label": "Dagdrømme"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-25.xhtml",
+        "label": "Mekanikkens principper"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-26.xhtml",
+        "label": "Rygter"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-27.xhtml",
+        "label": "Større, hurtigere, mere"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-28.xhtml",
+        "label": "Uhyrerne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-30.xhtml",
+        "label": "Godaften. Eller Heil Hitler hvis De synes."
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-31.xhtml",
+        "label": "Ciao, blinde pige"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-32.xhtml",
+        "label": "Sokker"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-33.xhtml",
+        "label": "Flugt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-34.xhtml",
+        "label": "Herr Siedler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-35.xhtml",
+        "label": "Exodus"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-36.xhtml",
+        "label": "To - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-37.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-38.xhtml",
+        "label": "Rue Vauborel nummer 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-39.xhtml",
+        "label": "Biernes Hotel"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-40.xhtml",
+        "label": "Fem trapper ned"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-41.xhtml",
+        "label": "Fanget"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-42.xhtml",
+        "label": "Tre - Juni 1940"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-43.xhtml",
+        "label": "Château"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-44.xhtml",
+        "label": "Optagelsesprøve"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-45.xhtml",
+        "label": "Bretagne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-46.xhtml",
+        "label": "Madame Manec"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-47.xhtml",
+        "label": "Du er blevet udvalgt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-48.xhtml",
+        "label": "Occupation"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-49.xhtml",
+        "label": "Du skal ikke lyve"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-50.xhtml",
+        "label": "Etienne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-51.xhtml",
+        "label": "Jungmänner"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-52.xhtml",
+        "label": "Wien"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-53.xhtml",
+        "label": "Les boches"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-54.xhtml",
+        "label": "Hauptmann"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-55.xhtml",
+        "label": "Den Flyvende Sofa"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-56.xhtml",
+        "label": "Summen af vinkler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-57.xhtml",
+        "label": "Professoren"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-58.xhtml",
+        "label": "Parfumehandler"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-59.xhtml",
+        "label": "Strudsenes tid"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-60.xhtml",
+        "label": "Den svageste"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-61.xhtml",
+        "label": "Beslaglæggelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-62.xhtml",
+        "label": "Museum"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-63.xhtml",
+        "label": "Klædeskabet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-64.xhtml",
+        "label": "Spurveflokke"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-66.xhtml",
+        "label": "Bad"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-67.xhtml",
+        "label": "Den svageste (2)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-68.xhtml",
+        "label": "Låsesmedens anholdelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-69.xhtml",
+        "label": "Fire - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-70.xhtml",
+        "label": "Fæstningen La Cité"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-71.xhtml",
+        "label": "Atelier de Réparation"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-72.xhtml",
+        "label": "To dåser"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-73.xhtml",
+        "label": "Rue Vauborel 4"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-74.xhtml",
+        "label": "Hvad de har"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-75.xhtml",
+        "label": "Snubletråd"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-76.xhtml",
+        "label": "Fem - Januar 1941"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-77.xhtml",
+        "label": "Vinterferie"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-78.xhtml",
+        "label": "Han kommer ikke tilbage"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-79.xhtml",
+        "label": "Fange"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-80.xhtml",
+        "label": "Plage du Môle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-81.xhtml",
+        "label": "Stensliberen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-83.xhtml",
+        "label": "Entropi"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-84.xhtml",
+        "label": "Runderne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-85.xhtml",
+        "label": "Nadel im Heuhaufen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-86.xhtml",
+        "label": "Et forslag"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-87.xhtml",
+        "label": "Du har andre venner"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-88.xhtml",
+        "label": "De gamle damers modstandsklub"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-89.xhtml",
+        "label": "Diagnose"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-90.xhtml",
+        "label": "Den svageste (3)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-92.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-93.xhtml",
+        "label": "Beruset"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-94.xhtml",
+        "label": "Kniven og konkylien"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-95.xhtml",
+        "label": "Leve før du dør"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-96.xhtml",
+        "label": "Ingen udvej"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-97.xhtml",
+        "label": "Hubert Bazins forsvinden"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-98.xhtml",
+        "label": "Alt er forgiftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-99.xhtml",
+        "label": "Gæster"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-101.xhtml",
+        "label": "Frøen koger"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-102.xhtml",
+        "label": "Ordrer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-103.xhtml",
+        "label": "Lungebetændelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-105.xhtml",
+        "label": "Behandling"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-106.xhtml",
+        "label": "Himlen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-107.xhtml",
+        "label": "Frederick"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-108.xhtml",
+        "label": "Tilbagefald"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-109.xhtml",
+        "label": "Seks - 8. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-110.xhtml",
+        "label": "Nogen i huset"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-111.xhtml",
+        "label": "Walther Bernds død"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-112.xhtml",
+        "label": "Værelse på femte sal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-113.xhtml",
+        "label": "Radioen laves"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-114.xhtml",
+        "label": "På loftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-115.xhtml",
+        "label": "Syv - August 1942"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-116.xhtml",
+        "label": "Fanger"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-117.xhtml",
+        "label": "Klædeskabet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-118.xhtml",
+        "label": "Øst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-119.xhtml",
+        "label": "Det almindelige brød"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-120.xhtml",
+        "label": "Volkheimer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-121.xhtml",
+        "label": "Efterår"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-122.xhtml",
+        "label": "Solsikker"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-123.xhtml",
+        "label": "Sten"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-124.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-125.xhtml",
+        "label": "På jagt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-126.xhtml",
+        "label": "Meddelelser"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-127.xhtml",
+        "label": "Loudenvielle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-128.xhtml",
+        "label": "Gråt"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-129.xhtml",
+        "label": "Feber"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-130.xhtml",
+        "label": "Den tredje sten"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-131.xhtml",
+        "label": "Broen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-132.xhtml",
+        "label": "Rue des Patriarches"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-133.xhtml",
+        "label": "Den hvide by"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-134.xhtml",
+        "label": "En verdensomsejling under havet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-135.xhtml",
+        "label": "Telegram"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-136.xhtml",
+        "label": "Otte - 9. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-137.xhtml",
+        "label": "Fort National"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-138.xhtml",
+        "label": "På loftet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-139.xhtml",
+        "label": "Hovederne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-140.xhtml",
+        "label": "Delirium"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-141.xhtml",
+        "label": "Vand"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-142.xhtml",
+        "label": "Bjælkerne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-143.xhtml",
+        "label": "Senderen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-144.xhtml",
+        "label": "En stemme"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-145.xhtml",
+        "label": "Ni - Maj 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-146.xhtml",
+        "label": "Ved verdens kant"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-147.xhtml",
+        "label": "Tal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-148.xhtml",
+        "label": "Maj"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-149.xhtml",
+        "label": "På jagt (igen)"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-151.xhtml",
+        "label": "Clair de Lune"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-152.xhtml",
+        "label": "Antenne"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-153.xhtml",
+        "label": "Store Claude"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-154.xhtml",
+        "label": "Boulangerie"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-155.xhtml",
+        "label": "Grotte"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-156.xhtml",
+        "label": "Agorafobi"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-157.xhtml",
+        "label": "Ingenting"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-158.xhtml",
+        "label": "Fyrre minutter"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-159.xhtml",
+        "label": "Pigen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-160.xhtml",
+        "label": "Lille hus"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-161.xhtml",
+        "label": "Tal"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-162.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-163.xhtml",
+        "label": "Etienne LeBlancs anholdelse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-164.xhtml",
+        "label": "7. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-165.xhtml",
+        "label": "Flyveblade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-166.xhtml",
+        "label": "Ti - 12. august 1944"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-167.xhtml",
+        "label": "Begravet"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-168.xhtml",
+        "label": "Fort National"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-169.xhtml",
+        "label": "Kaptajn Nemos sidste ord"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-170.xhtml",
+        "label": "Gæst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-171.xhtml",
+        "label": "Sidste sætning"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-172.xhtml",
+        "label": "Musik 1"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-173.xhtml",
+        "label": "Musik 2"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-174.xhtml",
+        "label": "Musik 3"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-175.xhtml",
+        "label": "Ud"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-176.xhtml",
+        "label": "Klædeskab"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-177.xhtml",
+        "label": "Kammerater"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-178.xhtml",
+        "label": "Samtidige øjeblikke"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-179.xhtml",
+        "label": "Er du der?"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-180.xhtml",
+        "label": "Den anden dåse"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-181.xhtml",
+        "label": "Amerikas fugle"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-182.xhtml",
+        "label": "Våbenhvile"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-183.xhtml",
+        "label": "Chokolade"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-184.xhtml",
+        "label": "Lys"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-185.xhtml",
+        "label": "Elleve - 1945"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-186.xhtml",
+        "label": "Berlin"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-187.xhtml",
+        "label": "Paris"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-188.xhtml",
+        "label": "Tolv - 1974"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-189.xhtml",
+        "label": "Volkheimer"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-190.xhtml",
+        "label": "Jutta"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-191.xhtml",
+        "label": "Taske"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-192.xhtml",
+        "label": "Saint-Malo"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-193.xhtml",
+        "label": "Laboratorium"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-194.xhtml",
+        "label": "Gæst"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-195.xhtml",
+        "label": "Papirfly"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-196.xhtml",
+        "label": "Nøglen"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-197.xhtml",
+        "label": "Flammernes Hav"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-198.xhtml",
+        "label": "Frederick"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-199.xhtml",
+        "label": "Tretten - 2014"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-201.xhtml",
+        "label": "Tak"
+      },
+      {
+        "href": "altdetlysviikkeser_ebog-202.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 35,
+      "reasons": ["many-toc-hrefs-not-in-spine"],
+      "metrics": {
+        "spineLen": 16,
+        "tocLen": 196,
+        "mapped": 16,
+        "mappedUnique": 16,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0.918,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.893,
+        "titleRepeatRatio": 0.015
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 35,
+      "reasons": ["many-toc-hrefs-not-in-spine"],
+      "metrics": {
+        "spineLen": 16,
+        "tocLen": 196,
+        "mapped": 16,
+        "mappedUnique": 16,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0.918,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.893,
+        "titleRepeatRatio": 0.015
+      }
+    },
+    "collapse": false
+  }
+}

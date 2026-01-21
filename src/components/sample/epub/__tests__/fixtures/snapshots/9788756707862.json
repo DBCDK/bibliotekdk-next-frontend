@@ -1,0 +1,170 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.248Z",
+  "fileName": "9788756707862.zip",
+  "parser": "manual-zip",
+  "metadata": {
+    "title": null,
+    "creator": null,
+    "language": null
+  },
+  "counts": {
+    "spineLen": 7,
+    "tocLen": 0,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "OPS/xhtml/cover.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 1,
+      "href": "OPS/xhtml/title.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 2,
+      "href": "OPS/xhtml/forfatterens.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 3,
+      "href": "OPS/xhtml/parttitleI.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 4,
+      "href": "OPS/xhtml/chapter01.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 5,
+      "href": "OPS/xhtml/chapter02.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 6,
+      "href": "OPS/xhtml/chapter03.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    }
+  ],
+  "tocFlat": [],
+  "pipeline": {
+    "tocRaw": [],
+    "tocDeduped": [],
+    "tocWithFront": [
+      {
+        "href": "OPS/xhtml/cover.html",
+        "label": "Forside"
+      },
+      {
+        "href": "OPS/xhtml/title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "OPS/xhtml/forfatterens.html",
+        "label": "Forfatterens"
+      },
+      {
+        "href": "OPS/xhtml/parttitleI.html",
+        "label": "ParttitleI"
+      },
+      {
+        "href": "OPS/xhtml/chapter01.html",
+        "label": "Chapter01"
+      },
+      {
+        "href": "OPS/xhtml/chapter02.html",
+        "label": "Chapter02"
+      },
+      {
+        "href": "OPS/xhtml/chapter03.html",
+        "label": "Chapter03"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "OPS/xhtml/cover.html",
+        "label": "Forside"
+      },
+      {
+        "href": "OPS/xhtml/title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "OPS/xhtml/forfatterens.html",
+        "label": "Forfatterens"
+      },
+      {
+        "href": "OPS/xhtml/parttitleI.html",
+        "label": "ParttitleI"
+      },
+      {
+        "href": "OPS/xhtml/chapter01.html",
+        "label": "Chapter01"
+      },
+      {
+        "href": "OPS/xhtml/chapter02.html",
+        "label": "Chapter02"
+      },
+      {
+        "href": "OPS/xhtml/chapter03.html",
+        "label": "Chapter03"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 7,
+        "tocLen": 7,
+        "mapped": 7,
+        "mappedUnique": 7,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.714
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 7,
+        "tocLen": 7,
+        "mapped": 7,
+        "mappedUnique": 7,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.714
+      }
+    },
+    "collapse": false
+  }
+}

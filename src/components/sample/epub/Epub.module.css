@@ -24,8 +24,8 @@
   --epub-p-margin: 0 0 1em 0;
 
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   background: var(--epub-container-bg);
   color: var(--epub-container-fg);
   overflow: hidden;
@@ -34,9 +34,17 @@
 }
 
 .wrapper {
-  width: 90%;
-  height: 90%;
   margin: auto;
+  align-items: center;
+}
+
+.fullscreen {
+  margin: auto;
+}
+
+.fullscreen,
+.fullscreen > div {
+  overflow: hidden !important;
 }
 
 .wrapper :global(.react-reader) {
@@ -55,6 +63,15 @@
 .wrapper,
 .wrapper > div {
   overflow: visible !important;
+}
+
+.innerWrapper {
+  flex: 0 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  margin: auto;
 }
 
 .wrapper > div:first-of-type > div:last-of-type {
@@ -165,7 +182,4 @@
     left: unset !important;
     right: -40px !important;
   }
-}
-
-@media screen and (min-width: 576px) {
 }

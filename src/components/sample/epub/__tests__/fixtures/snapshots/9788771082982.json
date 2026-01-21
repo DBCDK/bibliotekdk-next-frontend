@@ -1,0 +1,155 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-19T12:47:15.262Z",
+  "fileName": "9788771082982.zip",
+  "parser": "manual-zip",
+  "metadata": {
+    "title": null,
+    "creator": null,
+    "language": null
+  },
+  "counts": {
+    "spineLen": 6,
+    "tocLen": 0,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "OPS/xhtml/cover.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 1,
+      "href": "OPS/xhtml/title.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 2,
+      "href": "OPS/xhtml/dedikation.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 3,
+      "href": "OPS/xhtml/chapter01.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 4,
+      "href": "OPS/xhtml/chapter02.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    },
+    {
+      "index": 5,
+      "href": "OPS/xhtml/chapter03.html",
+      "idref": null,
+      "properties": null,
+      "linear": null
+    }
+  ],
+  "tocFlat": [],
+  "pipeline": {
+    "tocRaw": [],
+    "tocDeduped": [],
+    "tocWithFront": [
+      {
+        "href": "OPS/xhtml/cover.html",
+        "label": "Forside"
+      },
+      {
+        "href": "OPS/xhtml/title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "OPS/xhtml/dedikation.html",
+        "label": "Dedikation"
+      },
+      {
+        "href": "OPS/xhtml/chapter01.html",
+        "label": "Chapter01"
+      },
+      {
+        "href": "OPS/xhtml/chapter02.html",
+        "label": "Chapter02"
+      },
+      {
+        "href": "OPS/xhtml/chapter03.html",
+        "label": "Chapter03"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "OPS/xhtml/cover.html",
+        "label": "Forside"
+      },
+      {
+        "href": "OPS/xhtml/title.html",
+        "label": "Titelblad"
+      },
+      {
+        "href": "OPS/xhtml/dedikation.html",
+        "label": "Dedikation"
+      },
+      {
+        "href": "OPS/xhtml/chapter01.html",
+        "label": "Chapter01"
+      },
+      {
+        "href": "OPS/xhtml/chapter02.html",
+        "label": "Chapter02"
+      },
+      {
+        "href": "OPS/xhtml/chapter03.html",
+        "label": "Chapter03"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 6,
+        "tocLen": 6,
+        "mapped": 6,
+        "mappedUnique": 6,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.667
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 6,
+        "tocLen": 6,
+        "mapped": 6,
+        "mappedUnique": 6,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 0.667
+      }
+    },
+    "collapse": false
+  }
+}
