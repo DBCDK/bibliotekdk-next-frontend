@@ -29,10 +29,10 @@ export default function OrderHistoryPage() {
   const { hasCulrUniqueId } = useAuthentication();
   const breakpoint = useBreakpoint();
   const modal = useModal();
-//  const isMobile = breakpoint === "xs" || breakpoint === "sm";
-const isMobile = ["xs", "sm", "md"].includes(breakpoint);
+  //  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const isMobile = ["xs", "sm", "md"].includes(breakpoint);
 
-const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHistoryData, setOrderHistoryData] = useState([]);
   //fetch paginated orderhistorydata
@@ -63,13 +63,13 @@ const [totalPages, setTotalPages] = useState(0);
       );
       setTotalPages(pages);
       if (fetchedData) {
-        //on mobile, merge the previous data with the new fetched data. On desktop show only one page at a time
+        // on mobile, merge the previous data with the new fetched data. On desktop show only one page at a time
         setOrderHistoryData((prevData) =>
           isMobile ? [...prevData, ...fetchedData] : fetchedData
         );
       }
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, isMobile]);
 
   useEffect(() => {
     if (!modal.isVisible) {
@@ -155,8 +155,11 @@ const [totalPages, setTotalPages] = useState(0);
               {Translate({ context: "profile", label: "emptyOrderList" })}
             </Text>
           ) : (
-            orderHistoryData?.map((order) => {
-              return <TableItem order={order} key={order?.creationDate} />;
+            orderHistoryData?.map((order, index) => {
+              const key =
+                order?.orderId ||
+                `${order?.creationDate}-${order?.work?.workId || index}`;
+              return <TableItem order={order} key={key} />;
             })
           )}
         </>
@@ -181,9 +184,12 @@ const [totalPages, setTotalPages] = useState(0);
             </Text>
           ) : (
             <tbody>
-              {orderHistoryData?.map((order) => (
-                <TableItem order={order} key={order?.creationDate} />
-              ))}
+              {orderHistoryData?.map((order, index) => {
+                const key =
+                  order?.orderId ||
+                  `${order?.creationDate}-${order?.work?.workId || index}`;
+                return <TableItem order={order} key={key} />;
+              })}
             </tbody>
           )}
         </table>
@@ -205,7 +211,7 @@ const [totalPages, setTotalPages] = useState(0);
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function TableItem({ order, key }) {
+function TableItem({ order }) {
   const breakpoint = useBreakpoint();
 
   if (!order) {
@@ -225,7 +231,7 @@ function TableItem({ order, key }) {
 
   if (isMobile) {
     return (
-      <div className={styles.tableItem} key={key}>
+      <div className={styles.tableItem}>
         <div>
           <Text type="text1">
             {Translate({
@@ -258,7 +264,7 @@ function TableItem({ order, key }) {
     );
   }
   return (
-    <tr className={styles.tableItem} key={key}>
+    <tr className={styles.tableItem}>
       <td className={styles.date}>
         {!isMobile && (
           <>
