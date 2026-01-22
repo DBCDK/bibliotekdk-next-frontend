@@ -73,7 +73,7 @@
 .sample {
   min-width: var(--pt7);
   height: var(--pt7);
-  margin-left: var(--pt2);
+  margin-left: 2px;
 }
 
 .info {

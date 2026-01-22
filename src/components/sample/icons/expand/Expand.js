@@ -1,5 +1,10 @@
-import { useId } from "react";
+import { useState } from "react";
 import styles from "./Expand.module.css";
+import Icon from "@/components/base/icon";
+import Text from "@/components/base/text";
+import Link from "@/components/base/link";
+import Translate from "@/components/base/translate";
+import animations from "@/components/base/animation/animations.module.css";
 
 /**
  * Maximize/Minimize toggle-ikon til modal (docket højre <-> fuldskærm).
@@ -9,58 +14,104 @@ import styles from "./Expand.module.css";
  */
 export default function ExpandIcon({
   defaultChecked = false,
+  checked,
   disabled = false,
   onChange,
+  onClick,
+  onKeyDown,
   className = "",
+  ...props
 }) {
-  const id = useId();
+  const isControlled = typeof checked === "boolean";
+  const [internalChecked, setInternalChecked] = useState(defaultChecked);
+  const isChecked = isControlled ? checked : internalChecked;
 
-  function onKeyDown(e) {
-    // Gør Enter/Space til klik på label (toggler checkbox via htmlFor)
+  const ariaLabel =
+    props["aria-label"] ??
+    Translate({
+      context: "general",
+      label: isChecked ? "minimize" : "expand",
+    });
+
+  const ariaPressed = props["aria-pressed"] ?? isChecked;
+
+  function handleToggle(e) {
+    if (disabled) {
+      return;
+    }
+
+    const nextChecked = !isChecked;
+
+    if (!isControlled) {
+      setInternalChecked(nextChecked);
+    }
+
+    onChange && onChange(nextChecked);
+    if (onClick && onClick !== onChange) {
+      onClick(e);
+    }
+  }
+
+  function handleKeyDown(e) {
+    onKeyDown && onKeyDown(e);
+
+    if (e.defaultPrevented) {
+      return;
+    }
+
     if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
       e.preventDefault();
-      e.currentTarget.click();
+      handleToggle(e);
     }
   }
 
   return (
-    <span className={`${styles.wrap} ${className}`}>
-      <input
-        id={id}
-        type="checkbox"
-        className={`${styles.input} ${styles.visuallyHidden}`}
-        defaultChecked={defaultChecked}
+    <span className={`${styles.container} ${className}`}>
+      <Link
+        tag="button"
+        type="button"
+        border={false}
         disabled={disabled}
-        aria-label="Skift mellem højre-dock og fuldskærm"
-        onChange={onChange}
-      />
-
-      <label
-        htmlFor={id}
-        className={styles.button}
-        tabIndex={disabled ? -1 : 0}
-        role="button"
-        aria-disabled={disabled || undefined}
-        onKeyDown={disabled ? undefined : onKeyDown}
+        className={`${styles.button} ${animations["on-hover"]} ${
+          animations["on-focus"]
+        } ${isChecked ? styles.checked : ""}`}
+        onClick={handleToggle}
+        onKeyDown={handleKeyDown}
+        aria-label={ariaLabel}
+        aria-pressed={ariaPressed}
+        {...props}
       >
-        <span className={styles.icon} aria-hidden="true">
-          {/* Minimize (højre-docket sidebar) */}
-          <svg className={styles.mini} viewBox="0 0 20 20">
-            {/* skærmramme */}
-            <rect x="3" y="4" width="14" height="12" rx="2" fill="none" />
-            {/* højre sidebar */}
-            <rect x="11" y="6" width="4" height="8" rx="1" />
-          </svg>
-
-          {/* Maximize (fullscreen corners) */}
-          <svg className={styles.max} viewBox="0 0 20 20">
-            <path d="M6 4h-2v2" />
-            <path d="M14 4h2v2" />
-            <path d="M6 16h-2v-2" />
-            <path d="M14 16h2v-2" />
-          </svg>
+        <span className={styles.wrap} aria-hidden="true">
+          <span className={styles.iconWrap}>
+            <Icon
+              className={`${styles.icon} ${styles.minimize} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
+              size={{ w: 2, h: "auto" }}
+              src={"minimize.svg"}
+            />
+            <Icon
+              className={`${styles.icon} ${styles.maximize} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
+              size={{ w: 2, h: "auto" }}
+              src={"maximize.svg"}
+            />
+          </span>
+          <span className={styles.labelWrap}>
+            <Text
+              tag="span"
+              type="text3"
+              className={`${styles.label} ${styles.minimize} ${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+            >
+              {Translate({ context: "general", label: "minimize" })}
+            </Text>
+            <Text
+              tag="span"
+              type="text3"
+              className={`${styles.label} ${styles.maximize} ${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+            >
+              {Translate({ context: "general", label: "expand" })}
+            </Text>
+          </span>
         </span>
-      </label>
+      </Link>
     </span>
   );
 }

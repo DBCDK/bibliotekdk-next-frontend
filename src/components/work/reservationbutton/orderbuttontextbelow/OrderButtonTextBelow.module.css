@@ -3,7 +3,7 @@
 }
 
 .text {
-  width: calc(100% - (2 * var(--pt7) + var(--pt4)));
+  width: 100%;
 }
 
 .info p:first-letter {

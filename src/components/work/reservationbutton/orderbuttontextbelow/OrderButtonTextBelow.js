@@ -12,6 +12,7 @@ import Skeleton from "@/components/base/skeleton";
 import { AccessEnum } from "@/lib/enums";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { usePeriodica } from "@/components/hooks/order";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
@@ -25,13 +26,17 @@ function OrderButtonTextBelow({
   hasPhysicalCopy,
   hasDigitalCopy,
   isPeriodica,
+  isAuthenticated,
 }) {
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
     Boolean(isPeriodica),
     hasDigitalCopy,
     hasPhysicalCopy,
-    Boolean(access?.[0]?.__typename === AccessEnum.PUBLIZON),
+    Boolean(access?.[0]?.__typename === AccessEnum.PUBLIZON) && isAuthenticated,
+    Boolean(
+      access?.[0]?.__typename === AccessEnum.PUBLIZON && !isAuthenticated
+    ),
   ];
 
   const translationForButtonText = [
@@ -49,6 +54,7 @@ function OrderButtonTextBelow({
     () => Translate({ ...context, label: "addToCart-line2" }),
     () => Translate({ ...context, label: "addToCart-line1" }),
     () => Translate({ ...context, label: "addToCart-line3" }),
+    () => Translate({ ...context, label: "addToCart-line3-not-logged-in" }),
   ];
 
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
@@ -80,6 +86,8 @@ export default function Wrap({ selectedPids, skeleton }) {
     pids: selectedPids,
   });
 
+  const { isAuthenticated } = useAuthentication();
+
   const { isPeriodica, isLoading: isLoadingPeriodica } = usePeriodica({
     pids: selectedPids,
   });
@@ -108,6 +116,7 @@ export default function Wrap({ selectedPids, skeleton }) {
       hasPhysicalCopy={hasPhysicalCopy}
       hasDigitalCopy={hasDigitalCopy}
       isPeriodica={isPeriodica}
+      isAuthenticated={isAuthenticated}
     />
   );
 }

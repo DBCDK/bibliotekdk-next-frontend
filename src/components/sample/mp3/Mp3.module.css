@@ -13,27 +13,47 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 var(--pt2);
 }
 
 .cover {
-  margin: auto;
+  max-width: 100%;
+  max-height: 50vh;
 }
 
 .cover img {
-  width: 350px;
   display: block;
   margin: auto;
 }
 
 .info {
   max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .info div {
+  text-align: center;
   margin-top: var(--pt2);
 }
 
 .player {
   margin-top: var(--pt4);
   width: 80%;
+}
+
+@media (min-width: 600px) {
+  .cover {
+    max-width: 350px;
+    max-height: unset;
+  }
+
+  .info {
+    display: unset;
+  }
+
+  .info div {
+    text-align: unset;
+  }
 }

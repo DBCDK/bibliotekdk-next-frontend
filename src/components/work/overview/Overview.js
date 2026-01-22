@@ -170,7 +170,7 @@ export function Overview({
                   type={type}
                 />
               </Col>
-              <Col xs={12} sm={9} className={styles.basket}>
+              <Col xs={12} sm={8} className={styles.basket}>
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
@@ -190,12 +190,12 @@ export function Overview({
                   className={styles.svgscale}
                   editions={work?.manifestations?.mostRelevant}
                 />
-              </Col>
 
-              <OrderButtonTextBelow
-                selectedPids={selectedPids}
-                skeleton={skeleton}
-              />
+                <OrderButtonTextBelow
+                  selectedPids={selectedPids}
+                  skeleton={skeleton}
+                />
+              </Col>
               <AlternativeOptions workId={workId} selectedPids={selectedPids} />
               {!isPeriodicaArticle && (
                 <Col xs={12} className={styles.info}>
