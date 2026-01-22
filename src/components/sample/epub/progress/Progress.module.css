@@ -35,6 +35,10 @@
   flex: 1 1 0;
 }
 
+.compact .labelBtn {
+  border-right: none;
+}
+
 .labelBtn:last-child {
   border-right: none;
 }

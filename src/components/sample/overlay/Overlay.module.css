@@ -24,14 +24,7 @@
 
 .body {
   position: relative;
-}
-
-/* remove expand icon when overlay is already full-width */
-@media (min-width: 700px) {
-  .expand {
-    margin-right: var(--pt2);
-    display: unset;
-  }
+  padding: 0;
 }
 
 @media (min-width: 576px) {
@@ -50,6 +43,24 @@
   }
 
   .offcanvas.mp3 {
-    --bs-offcanvas-width: 500px;
+    --bs-offcanvas-width: 600px;
+  }
+
+  .body {
+    padding: var(--pt2);
+  }
+}
+
+/* remove expand icon when overlay is already full-width */
+@media (min-width: 700px) {
+  .expand {
+    margin-right: var(--pt2);
+    display: unset;
+  }
+
+  .title {
+    flex: 1 1 0;
+    margin-right: var(--pt2);
+    text-align: center;
   }
 }

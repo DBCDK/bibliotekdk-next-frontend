@@ -43,17 +43,18 @@ export default function Overlay({
       className={`${styles.offcanvas} ${typeClass} ${maximized} ${className}`}
     >
       <Offcanvas.Header className={styles.header}>
-        <Expand
-          className={styles.expand}
-          disabled={isMp3}
-          checked={isFullscreen}
-          onChange={handleToggle}
-          onClick={handleToggle}
-          aria-pressed={isFullscreen}
-          aria-label={isFullscreen ? "Minimér" : "Maksimér"}
-        />
+        {!isMp3 && (
+          <Expand
+            className={styles.expand}
+            checked={isFullscreen}
+            onChange={handleToggle}
+            onClick={handleToggle}
+            aria-pressed={isFullscreen}
+            aria-label={isFullscreen ? "Minimér" : "Maksimér"}
+          />
+        )}
         <Offcanvas.Title className={styles.title}>
-          <Text type="1" lines={1} clamp>
+          <Text type="title6" lines={1} clamp>
             {`${prefix} ${title}`}
           </Text>
         </Offcanvas.Title>

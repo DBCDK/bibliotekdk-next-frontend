@@ -15,6 +15,7 @@ import { useManifestationAccess } from "@/components/hooks/useManifestationAcces
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
 import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
+import Icon from "@/components/base/icon";
 
 function TextAboveButton({ access, isAuthenticated }) {
   const a0 = access?.[0];
@@ -280,6 +281,9 @@ export const ReservationButton = ({
           context: "overview",
           label: "publizon-local-library-btn",
         }),
+        icon: (
+          <Icon size={3} className={styles.icon} src="external_small.svg" />
+        ),
         preferSecondary: false,
       };
     }
@@ -301,7 +305,7 @@ export const ReservationButton = ({
     };
   };
 
-  const { props, text, preferSecondary } = getProps();
+  const { props, text, icon, preferSecondary } = getProps();
 
   return (
     <>
@@ -314,6 +318,7 @@ export const ReservationButton = ({
           {...props}
         >
           {overrideButtonText ?? text}
+          {icon ?? null}
         </Button>
       </div>
     </>

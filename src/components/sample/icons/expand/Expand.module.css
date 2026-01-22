@@ -1,18 +1,5 @@
-/* Skjult input til toggling (a11y) */
-.visuallyHidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.wrap {
-  display: inline-block;
+.container {
+  display: inline-flex;
   vertical-align: middle;
 }
 
@@ -22,47 +9,40 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--pt5);
-  height: var(--pt5);
-  border-radius: 9999px;
+  width: auto;
+  height: auto;
   background: transparent;
-  color: var(--mine-shaft);
+  border: 0;
+  color: var(--blue);
   cursor: pointer;
   user-select: none;
   line-height: 1;
-  transition: background-color 150ms ease, box-shadow 150ms ease,
-    transform 80ms ease, color 150ms ease, border-color 150ms ease;
+  padding: 0;
 }
 
-.button:hover {
-  background: var(--iron);
-  color: var(--white); /* ikonfarve følger currentColor */
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-/* Fokus (både via input og label) */
-.input:focus-visible + .button,
 .button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--blue);
 }
 
-/* Disabled via input */
-.input:disabled + .button {
+/* Disabled */
+.button:disabled {
   opacity: 0.45;
   cursor: default;
   pointer-events: none;
   box-shadow: none;
 }
 
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pt1);
+}
+
 /* Ikon-container (fast størrelse) */
 .iconWrap {
   position: relative;
-  width: var(--pt3);
-  height: var(--pt3);
+  width: var(--pt2);
+  height: var(--pt2);
 }
 
 /* Grundopsætning for begge ikoner */
@@ -76,30 +56,58 @@
   transform-origin: 50% 50%;
 }
 
+.labelWrap {
+  display: inline-flex;
+  align-items: center;
+  min-width: 7ch;
+}
+
+.label {
+  display: none;
+  align-items: center;
+  white-space: nowrap;
+  color: var(--mine-shaft);
+}
+
+.button:focus-visible .label,
+.button:hover .label {
+  color: var(--blue);
+}
+
 /* -------- STATE: "ikon viser næste handling" -------- */
 /* Unchecked = docket højre -> vis MAXIMIZE (næste handling) */
-.input + .button .minimize {
+.minimize {
   opacity: 0;
   transform: scale(0.9);
 }
-.input + .button .maximize {
+.maximize {
   opacity: 1;
   transform: scale(1);
+}
+.label.maximize {
+  display: inline-flex;
 }
 
 /* Checked = fuldskærm -> vis MINIMIZE (næste handling) */
-.input:checked + .button .minimize {
+.checked .minimize {
   opacity: 1;
   transform: scale(1);
 }
-.input:checked + .button .maximize {
+.checked .maximize {
   opacity: 0;
   transform: scale(0.9);
+}
+.checked .label.minimize {
+  display: inline-flex;
+}
+.checked .label.maximize {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .button,
-  .icon {
+  .icon,
+  .label {
     transition: none !important;
   }
 }

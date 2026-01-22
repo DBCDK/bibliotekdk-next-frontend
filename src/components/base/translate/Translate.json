@@ -953,6 +953,10 @@
         "da": "Udvid",
         "en": "Expand"
       },
+      "minimize": {
+        "da": "Minimer",
+        "en": "Minimize"
+      },
       "collapse": {
         "da": "Luk",
         "en": "Collapse"
@@ -1838,8 +1842,8 @@
     },
     "overview": {
       "publizon-local-library-btn": {
-        "da": "Lån via dit lokale bibliotek",
-        "en": "Loan via your local library"
+        "da": "Gå til bogen",
+        "en": "Go to the book"
       },
       "check_branch_holding": {
         "da": "Se om den er hjemme på dit bibliotek",
@@ -1882,12 +1886,12 @@
         "en": "You will be forwarded to digital materials"
       },
       "addToCart-line3": {
-        "da": "Digitale materialer bliver du sendt videre til",
-        "en": "You will be forwarded to digital materials"
+        "da": "Lånes online på på dit lokale bibliotek",
+        "en": "Loaned online at your local library"
       },
       "addToCart-line3-not-logged-in": {
-        "da": "Kræver login. Digitale materialer bliver du sendt videre til",
-        "en": "You will be forwarded to digital materials"
+        "da": "Lånes online på på dit lokale bibliotek (Kræver login)",
+        "en": "Loaned online at your local library (Requires login)"
       },
       "goto": {
         "da": "Gå til",
