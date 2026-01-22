@@ -1886,11 +1886,11 @@
         "en": "You will be forwarded to digital materials"
       },
       "addToCart-line3": {
-        "da": "Lånes online på på dit lokale bibliotek",
+        "da": "Lånes online på dit lokale bibliotek",
         "en": "Loaned online at your local library"
       },
       "addToCart-line3-not-logged-in": {
-        "da": "Lånes online på på dit lokale bibliotek (Kræver login)",
+        "da": "Lånes online på dit lokale bibliotek (Kræver login)",
         "en": "Loaned online at your local library (Requires login)"
       },
       "goto": {
