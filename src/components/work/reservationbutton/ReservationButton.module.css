@@ -12,9 +12,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
 .icon {
-  padding: 2px;
+  padding-bottom: 1px;
   margin-left: var(--pt1);
+  color: var(--white);
 }

@@ -17,6 +17,8 @@ import { overviewWork } from "@/lib/api/work.fragments";
 import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
 import Icon from "@/components/base/icon";
 
+import ExternalSvg from "@/public/icons/external_small_cc.svg";
+
 function TextAboveButton({ access, isAuthenticated }) {
   const a0 = access?.[0];
 
@@ -275,15 +277,14 @@ export const ReservationButton = ({
     }
 
     if (publizonAccess) {
+      console.log("buttonType", buttonType);
       return {
         props: accessibleOnlineWithLoginProps,
         text: Translate({
           context: "overview",
           label: "publizon-local-library-btn",
         }),
-        icon: (
-          <Icon size={3} className={styles.icon} src="external_small.svg" />
-        ),
+        icon: <ExternalSvg size={3} className={styles.icon} />,
         preferSecondary: false,
       };
     }
