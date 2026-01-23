@@ -35,6 +35,18 @@ function useInitMaterialType(
   router
 ) {
   useEffect(() => {
+    console.log("uniqueMaterialTypes", JSON.stringify(uniqueMaterialTypes));
+    console.log("type", type);
+    console.log("workId", workId);
+  
+    console.log(
+      "inUniqueMaterialTypes(type)",
+      inUniqueMaterialTypes(type)
+    );
+    console.log(
+      "uniqueMaterialTypes[0] specificDisplay",
+      uniqueMaterialTypes?.[0]?.map((m) => m.specificDisplay)
+    );
     if (
       uniqueMaterialTypes &&
       uniqueMaterialTypes?.[0] !== type &&
@@ -44,7 +56,7 @@ function useInitMaterialType(
         type: uniqueMaterialTypes?.[0],
       });
     }
-  }, [workId, router.query]);
+  }, [workId]);
 }
 
 /**
