@@ -9,7 +9,7 @@ import Link from "@/components/base/link";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
 import { orderHistory } from "@/lib/api/order.fragments";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as userFragments from "@/lib/api/user.fragments";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { getWorkUrlForProfile } from "@/components/profile/utils";
@@ -32,6 +32,7 @@ export default function OrderHistoryPage() {
   //  const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isMobile = ["xs", "sm", "md"].includes(breakpoint);
 
+  const tableTopRef = useRef(null);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHistoryData, setOrderHistoryData] = useState([]);
@@ -48,11 +49,15 @@ export default function OrderHistoryPage() {
   );
   const persistUserData = !!userData?.user?.persistUserData;
 
-  const onPageChange = async (newPage) => {
+  const onPageChange = async (newPage, scrollToTop = true) => {
     if (newPage > totalPages) {
       newPage = totalPages;
     }
     setCurrentPage(newPage);
+
+    if (scrollToTop && !isMobile) {
+      tableTopRef?.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -136,6 +141,7 @@ export default function OrderHistoryPage() {
         </>
       )}
 
+      <div ref={tableTopRef} />
       {isMobile ? (
         <>
           <div className={styles.headerRow}>
