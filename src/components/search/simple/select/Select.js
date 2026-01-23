@@ -99,7 +99,6 @@ export const Mobile = memo(function Mobile({
           </Tag>
         ))}
       </div>
-      {isTablet && <FilterButton className={styles.filterButton} />}
     </div>
   );
 });
