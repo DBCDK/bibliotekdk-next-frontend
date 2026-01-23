@@ -31,22 +31,9 @@ function useInitMaterialType(
   inUniqueMaterialTypes,
   type,
   onTypeChange,
-  workId,
-  router
+  workId
 ) {
   useEffect(() => {
-    console.log("uniqueMaterialTypes", JSON.stringify(uniqueMaterialTypes));
-    console.log("type", type);
-    console.log("workId", workId);
-  
-    console.log(
-      "inUniqueMaterialTypes(type)",
-      inUniqueMaterialTypes(type)
-    );
-    console.log(
-      "uniqueMaterialTypes[0] specificDisplay",
-      uniqueMaterialTypes?.[0]?.map((m) => m.specificDisplay)
-    );
     if (
       uniqueMaterialTypes &&
       uniqueMaterialTypes?.[0] !== type &&
