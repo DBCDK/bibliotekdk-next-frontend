@@ -15,8 +15,6 @@ import { useManifestationAccess } from "@/components/hooks/useManifestationAcces
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
 import { useManifestationData, useOrderFlow } from "@/components/hooks/order";
-import Icon from "@/components/base/icon";
-
 import ExternalSvg from "@/public/icons/external_small_cc.svg";
 
 function TextAboveButton({ access, isAuthenticated }) {
