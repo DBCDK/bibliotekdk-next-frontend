@@ -29,7 +29,6 @@ export default function OrderHistoryPage() {
   const { hasCulrUniqueId } = useAuthentication();
   const breakpoint = useBreakpoint();
   const modal = useModal();
-  //  const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isMobile = ["xs", "sm", "md"].includes(breakpoint);
 
   const tableTopRef = useRef(null);

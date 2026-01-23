@@ -65,7 +65,6 @@ export default function Pagination({
   const breakpoint = useBreakpoint();
   const isMobile = ["xs", "sm", "md"].includes(breakpoint);
 
-  //const isMobile = useBreakpoint() === "xs";
   const mobileView = !forceDesktopView && (forceMobileView || isMobile);
 
   const {

@@ -8,8 +8,6 @@ import Text from "@/components/base/text";
 import Tag from "@/components/base/forms/tag";
 import Translate from "@/components/base/translate";
 import { cyKey } from "@/utils/trim";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
-import FilterButton from "../../filterButton";
 
 import styles from "./Select.module.css";
 
@@ -81,9 +79,6 @@ export const Mobile = memo(function Mobile({
   selected,
   className = "",
 }) {
-  const breakpoint = useBreakpoint();
-  const isTablet = breakpoint === "md";
-
   return (
     <div className={`${styles.materials} ${className}`}>
       <div>

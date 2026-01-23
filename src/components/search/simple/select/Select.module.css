@@ -97,18 +97,6 @@
   margin: 0;
 }
 
-.filterButton {
-  max-width: 124px;
-  background-color: var(--white);
-  margin: 0;
-}
-
-@media screen and (max-width: 768px) and (min-width: 991px) {
-  .filterButton {
-    display: none;
-  }
-}
-
 .selectedItem {
   background-color: var(--blue);
   color: var(--white);
