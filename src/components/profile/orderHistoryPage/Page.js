@@ -9,7 +9,7 @@ import Link from "@/components/base/link";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
 import { orderHistory } from "@/lib/api/order.fragments";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as userFragments from "@/lib/api/user.fragments";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { getWorkUrlForProfile } from "@/components/profile/utils";
@@ -29,7 +29,9 @@ export default function OrderHistoryPage() {
   const { hasCulrUniqueId } = useAuthentication();
   const breakpoint = useBreakpoint();
   const modal = useModal();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const isMobile = ["xs", "sm", "md"].includes(breakpoint);
+
+  const tableTopRef = useRef(null);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHistoryData, setOrderHistoryData] = useState([]);
@@ -46,11 +48,15 @@ export default function OrderHistoryPage() {
   );
   const persistUserData = !!userData?.user?.persistUserData;
 
-  const onPageChange = async (newPage) => {
+  const onPageChange = async (newPage, scrollToTop = true) => {
     if (newPage > totalPages) {
       newPage = totalPages;
     }
     setCurrentPage(newPage);
+
+    if (scrollToTop && !isMobile) {
+      tableTopRef?.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -61,13 +67,13 @@ export default function OrderHistoryPage() {
       );
       setTotalPages(pages);
       if (fetchedData) {
-        //on mobile, merge the previous data with the new fetched data. On desktop show only one page at a time
+        // on mobile, merge the previous data with the new fetched data. On desktop show only one page at a time
         setOrderHistoryData((prevData) =>
           isMobile ? [...prevData, ...fetchedData] : fetchedData
         );
       }
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, isMobile]);
 
   useEffect(() => {
     if (!modal.isVisible) {
@@ -134,6 +140,7 @@ export default function OrderHistoryPage() {
         </>
       )}
 
+      <div ref={tableTopRef} />
       {isMobile ? (
         <>
           <div className={styles.headerRow}>
@@ -153,8 +160,11 @@ export default function OrderHistoryPage() {
               {Translate({ context: "profile", label: "emptyOrderList" })}
             </Text>
           ) : (
-            orderHistoryData?.map((order) => {
-              return <TableItem order={order} key={order?.creationDate} />;
+            orderHistoryData?.map((order, index) => {
+              const key =
+                order?.orderId ||
+                `${order?.creationDate}-${order?.work?.workId || index}`;
+              return <TableItem order={order} key={key} />;
             })
           )}
         </>
@@ -179,9 +189,12 @@ export default function OrderHistoryPage() {
             </Text>
           ) : (
             <tbody>
-              {orderHistoryData?.map((order) => (
-                <TableItem order={order} key={order?.creationDate} />
-              ))}
+              {orderHistoryData?.map((order, index) => {
+                const key =
+                  order?.orderId ||
+                  `${order?.creationDate}-${order?.work?.workId || index}`;
+                return <TableItem order={order} key={key} />;
+              })}
             </tbody>
           )}
         </table>
@@ -203,7 +216,7 @@ export default function OrderHistoryPage() {
  * @param {Object} props
  * @returns {React.JSX.Element}
  */
-function TableItem({ order, key }) {
+function TableItem({ order }) {
   const breakpoint = useBreakpoint();
 
   if (!order) {
@@ -223,7 +236,7 @@ function TableItem({ order, key }) {
 
   if (isMobile) {
     return (
-      <div className={styles.tableItem} key={key}>
+      <div className={styles.tableItem}>
         <div>
           <Text type="text1">
             {Translate({
@@ -256,7 +269,7 @@ function TableItem({ order, key }) {
     );
   }
   return (
-    <tr className={styles.tableItem} key={key}>
+    <tr className={styles.tableItem}>
       <td className={styles.date}>
         {!isMobile && (
           <>

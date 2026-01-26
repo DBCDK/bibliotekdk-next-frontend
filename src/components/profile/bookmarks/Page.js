@@ -117,7 +117,7 @@ const BookmarkPage = () => {
   const [activeStickyButton, setActiveStickyButton] = useState(null);
   const breakpoint = useBreakpoint();
   const [sortByValue, setSortByValue] = useState(null);
-  const isMobile = breakpoint === "sm" || breakpoint === "xs";
+  const isMobile = ["xs", "sm", "md"].includes(breakpoint);
   const [checkboxList, setCheckboxList] = useState([]);
   const scrollToElement = useRef(null);
   const [successfullyCreatedIds, setSuccessfullyCreatedIds] = useState([]);
@@ -307,13 +307,11 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark?.manifestations?.[0]);
   };
-  const onPageChange = async (newPage) => {
-    const isSmallScreen = breakpoint === "xs";
-
+  const onPageChange = async (newPage, scroll = true) => {
     if (newPage > totalPages) {
       newPage = totalPages;
     }
-    if (!isSmallScreen) {
+    if (!isMobile && scroll) {
       scrollToTop();
     }
     setCurrentPage(newPage);
