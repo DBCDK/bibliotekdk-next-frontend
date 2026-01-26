@@ -31,8 +31,7 @@ function useInitMaterialType(
   inUniqueMaterialTypes,
   type,
   onTypeChange,
-  workId,
-  router
+  workId
 ) {
   useEffect(() => {
     if (
@@ -44,7 +43,7 @@ function useInitMaterialType(
         type: uniqueMaterialTypes?.[0],
       });
     }
-  }, [workId, router.query]);
+  }, [workId]);
 }
 
 /**
@@ -76,8 +75,7 @@ export function Overview({
     inUniqueMaterialTypes,
     type,
     onTypeChange,
-    workId,
-    router
+    workId
   );
 
   // If no type has been selected, use default
