@@ -43,7 +43,7 @@ const useBookmarksCore = ({ hasCulrUniqueId, isMock = false } = {}) => {
   const [sortBy, setSortBy] = useState("createdAt");
   const [currentPage, setCurrentPage] = useState(1);
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const isMobile = ["xs", "sm", "md"].includes(breakpoint);
 
   let {
     data: localBookmarks,
