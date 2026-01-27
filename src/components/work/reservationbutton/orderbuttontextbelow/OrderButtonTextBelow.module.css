@@ -8,6 +8,10 @@
   width: 100%;
 }
 
+.text {
+  width: 100%;
+}
+
 .info p:first-letter {
   text-transform: uppercase;
 }

@@ -77,6 +77,12 @@
   margin-left: 2px;
 }
 
+.sample {
+  min-width: var(--pt7);
+  height: var(--pt7);
+  margin-left: 2px;
+}
+
 .info {
   padding-top: var(--pt1);
 }
