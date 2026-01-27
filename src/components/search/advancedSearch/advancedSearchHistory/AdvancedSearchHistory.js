@@ -244,6 +244,7 @@ export function HistoryHeaderActions({
   setShowCombinedSearch,
   setAllChecked,
   checked,
+  selectedCount,
   className,
 }) {
   const breakpoint = useBreakpoint();
@@ -297,6 +298,15 @@ export function HistoryHeaderActions({
 
   return (
     <div className={cx(styles.actionheader)}>
+      {selectedCount > 0 && (
+        <Text
+          type="text3"
+          className={styles.selectedCount}
+        >{`${selectedCount} ${Translate({
+          context: "form",
+          label: "icon-label-selected",
+        })}`}</Text>
+      )}
       <Button
         type="secondary"
         size="small"
@@ -533,10 +543,6 @@ export function AdvancedSearchHistory() {
   useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
-      // If page is auto-adjusted on desktop, clear selection to keep behavior consistent
-      if (!isMobile) {
-        setCheckboxSet(new Set());
-      }
     }
   }, [currentPage, totalPages, isMobile]);
 
@@ -554,10 +560,6 @@ export function AdvancedSearchHistory() {
   const onPageChange = (newPage) => {
     const clamped = Math.min(Math.max(1, newPage), totalPages);
     setCurrentPage(clamped);
-    // Desktop pages: keep selection per page (matches saved searches behavior).
-    if (!isMobile) {
-      setCheckboxSet(new Set());
-    }
   };
 
   /**
@@ -585,13 +587,13 @@ export function AdvancedSearchHistory() {
    * Delete selected entries in search history
    */
   const onDeleteSelected = () => {
-    if (!pagedStoredValue?.length || checkboxSet.size === 0) {
+    if (!storedValue?.length || checkboxSet.size === 0) {
       return;
     }
-    pagedStoredValue.forEach((item) => {
-      if (checkboxSet.has(item.key)) {
-        deleteValue(item);
-      }
+    const keysToDelete = Array.from(checkboxSet);
+    keysToDelete.forEach((key) => {
+      const item = storedValue.find((v) => v.key === key);
+      item && deleteValue(item);
     });
     setCheckboxSet(new Set());
   };
@@ -639,9 +641,9 @@ export function AdvancedSearchHistory() {
   };
 
   const checkedObjects = useMemo(() => {
-    if (!pagedStoredValue?.length || checkboxSet.size === 0) return [];
-    return pagedStoredValue.filter((obj) => checkboxSet.has(obj.key));
-  }, [pagedStoredValue, checkboxSet]);
+    if (!storedValue?.length || checkboxSet.size === 0) return [];
+    return storedValue.filter((obj) => checkboxSet.has(obj.key));
+  }, [storedValue, checkboxSet]);
 
   return (
     <div className={styles.container}>
@@ -661,7 +663,8 @@ export function AdvancedSearchHistory() {
               pagedStoredValue.every((i) => checkboxSet.has(i.key))
             }
             partiallyChecked={checkboxSet.size > 0}
-            disabled={pagedStoredValue?.length === 0}
+            disabled={storedValue?.length === 0}
+            selectedCount={checkboxSet.size}
             checkedObjects={checkedObjects}
             showCombinedSearch={showCombinedSearch}
             setShowCombinedSearch={setShowCombinedSearch}
@@ -676,7 +679,7 @@ export function AdvancedSearchHistory() {
               pagedStoredValue?.length > 0 &&
               pagedStoredValue.every((i) => checkboxSet.has(i.key))
             }
-            disabled={pagedStoredValue?.length === 0}
+            disabled={storedValue?.length === 0}
             isAuthenticated={isAuthenticated}
           />
         )}

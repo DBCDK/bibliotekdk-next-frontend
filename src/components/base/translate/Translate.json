@@ -1897,6 +1897,10 @@
         "da": "Gå til",
         "en": "Get"
       },
+      "nota-access-restriction": {
+        "da": "Du bliver sendt til nota.dk - adgang kræver dokumenteret læsehandicap",
+        "en": "You will be sent to nota.dk - access requires documented reading disability"
+      },
       "onlineAccessAt": {
         "da": "Du bliver sendt til",
         "en": "You will be sent to"
@@ -5944,6 +5948,10 @@
       "digitalOrderRegistered": {
         "da": "Digital kopi bestilt",
         "en": "Digital copy ordered"
+      },
+      "titleNotFound": {
+        "da": "titel ikke fundet",
+        "en": "title not found"
       },
       "date": {
         "da": "Dato",

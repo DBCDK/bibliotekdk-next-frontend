@@ -21,7 +21,6 @@ import {
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import Title from "@/components/base/title/Title";
-import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
@@ -32,8 +31,7 @@ function useInitMaterialType(
   inUniqueMaterialTypes,
   type,
   onTypeChange,
-  workId,
-  router
+  workId
 ) {
   useEffect(() => {
     if (
@@ -45,7 +43,7 @@ function useInitMaterialType(
         type: uniqueMaterialTypes?.[0],
       });
     }
-  }, [workId, router.query]);
+  }, [workId]);
 }
 
 /**
@@ -65,7 +63,6 @@ export function Overview({
   skeleton = false,
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
-  const router = useRouter();
 
   const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
     useMemo(() => {
@@ -77,8 +74,7 @@ export function Overview({
     inUniqueMaterialTypes,
     type,
     onTypeChange,
-    workId,
-    router
+    workId
   );
 
   // If no type has been selected, use default

@@ -9,12 +9,11 @@ import ThumbnailParade from "@/components/series/seriesHeading/titleBox/thumbnai
 
 import { getUniqueCreatorsDisplay } from "@/components/series/utils";
 import { getUniverseUrl } from "@/lib/utils";
-import { getUrlByType } from "@/components/search/advancedSearch/utils";
 
 export function LinkToCreator({ creator, isLoading }) {
   // @TODO .. do we need some refactoring ?? - this inputfield is
   // used manywhere :)
-  const href = getUrlByType({ type: "creator", value: creator });
+  const href = creator ? `/ophav/${encodeURIComponent(creator)}` : "#";
 
   return (
     <Link

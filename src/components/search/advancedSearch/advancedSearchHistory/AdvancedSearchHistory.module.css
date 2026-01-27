@@ -154,6 +154,10 @@
   margin-bottom: var(--pt1);
 }
 
+.actionheader .selectedCount {
+  margin-right: auto;
+}
+
 .actionheader button {
   width: inherit;
   padding: var(--pt05) var(--pt2) !important;
