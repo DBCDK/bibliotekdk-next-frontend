@@ -22,10 +22,10 @@ import Logo from "@/components/base/logo/Logo";
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
 import { openLoginModal } from "../_modal/pages/login/utils";
-import { signOut } from "@dbcdk/login-nextjs/client";
 import useAuthentication from "../hooks/user/useAuthentication";
 import Button from "../base/button";
 import { focusInput } from "../search/simple/suggester";
+import useLogout from "@/components/hooks/useLogout";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -63,6 +63,7 @@ export function Header({
   hideShadow,
 }) {
   const context = { context: "header" };
+  const { logout } = useLogout();
 
   const getLoginLabel = () => {
     if (user.isAuthenticated && user.isLoading) {
@@ -93,7 +94,7 @@ export function Header({
         }
         if (user.isAuthenticated) {
           const redirectUrl = window?.location?.origin;
-          signOut(redirectUrl);
+          logout(redirectUrl);
         } else {
           openLoginModal({ modal });
         }

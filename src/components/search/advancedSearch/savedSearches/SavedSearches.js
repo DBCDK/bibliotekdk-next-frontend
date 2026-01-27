@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 
 import styles from "./SavedSearches.module.css";
 import Text from "@/components/base/text";
@@ -174,7 +174,7 @@ export default function SavedSearches() {
     setCurrentPage,
     isLoading,
   } = useSavedSearches();
-  const [checkboxList, setCheckboxList] = useState([]);
+  const [selectedMap, setSelectedMap] = useState(() => new Map());
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
   const breakpoint = useBreakpoint();
@@ -194,29 +194,39 @@ export default function SavedSearches() {
    * Set or unset ALL checkboxes in saved search table
    */
   const setAllChecked = () => {
-    if (savedSearches?.length === checkboxList.length) {
-      setCheckboxList([]);
-    } else {
-      setCheckboxList(savedSearches.map((stored) => stored.id));
+    if (!savedSearches?.length) {
+      return;
     }
+    const visibleIds = savedSearches.map((s) => s.id).filter(Boolean);
+    setSelectedMap((prev) => {
+      const next = new Map(prev);
+      const allVisibleChecked = visibleIds.every((id) => next.has(id));
+      if (allVisibleChecked) {
+        visibleIds.forEach((id) => next.delete(id));
+      } else {
+        visibleIds.forEach((id) => {
+          const obj = savedSearches.find((s) => s.id === id);
+          if (obj) next.set(id, obj);
+        });
+      }
+      return next;
+    });
   };
 
   /**
    * Delete selected entries in saved search table
    */
   const onDeleteSelected = async () => {
-    //filter for checked items and map for ids to delete
-    const idsToDelete = savedSearches
-      ?.filter((item) => checkboxList.includes(item.id) && item.id)
-      .map((item) => item.id);
+    const idsToDelete = Array.from(selectedMap.keys()).filter(Boolean);
+    if (idsToDelete.length === 0) return;
     await deleteSearches({ idsToDelete });
-    //uncheck deleted items
-    setCheckboxList(checkboxList.filter((id) => !idsToDelete.includes(id)));
+    setSelectedMap(new Map());
   };
 
-  const checkedObjects = savedSearches?.filter((obj) =>
-    checkboxList.includes(obj.id)
-  );
+  const checkedObjects = useMemo(() => {
+    if (selectedMap.size === 0) return [];
+    return Array.from(selectedMap.values());
+  }, [selectedMap]);
 
   /**
    * Add/remove item in list when selected/deselected
@@ -227,20 +237,16 @@ export default function SavedSearches() {
    *  selected or not
    */
   const onSelect = (item, selected = false) => {
-    const newCheckList = [...checkboxList];
-    // if item is already in checkboxlist -> remove
-    const checkindex = checkboxList.findIndex((check) => check === item.id);
-    if (checkindex !== -1) {
-      // item found in list - if deselected remove it
-      if (!selected) {
-        newCheckList.splice(checkindex, 1);
+    if (!item?.id) return;
+    setSelectedMap((prev) => {
+      const next = new Map(prev);
+      if (selected) {
+        next.set(item.id, item);
+      } else {
+        next.delete(item.id);
       }
-    }
-    // if not -> add it to list .. if selected
-    else if (selected) {
-      newCheckList.push(item.id);
-    }
-    setCheckboxList(newCheckList);
+      return next;
+    });
   };
 
   const onPageChange = async (newPage) => {
@@ -269,14 +275,15 @@ export default function SavedSearches() {
             checkedObjects={checkedObjects}
             deleteSelected={onDeleteSelected}
             checked={
-              savedSearches?.length === checkboxList?.length &&
-              checkboxList?.length > 0
+              savedSearches?.length > 0 &&
+              savedSearches.every((i) => selectedMap.has(i.id))
             }
-            partiallyChecked={checkboxList?.length > 0}
+            partiallyChecked={selectedMap.size > 0}
             disabled={!isAuthenticated || savedSearches?.length === 0}
             setAllChecked={setAllChecked}
             setShowCombinedSearch={setShowCombinedSearch}
             className={styles.historyHeaderActions}
+            selectedCount={selectedMap.size}
           />
         )}
       </>
@@ -295,8 +302,8 @@ export default function SavedSearches() {
               onClick={setAllChecked}
               id="selectall"
               checked={
-                savedSearches?.length === checkboxList?.length &&
-                checkboxList?.length > 0
+                savedSearches?.length > 0 &&
+                savedSearches.every((i) => selectedMap.has(i.id))
               }
               disabled={!isAuthenticated || savedSearches?.length === 0}
               dataCy="saved-searches-selectall-checkbox"
@@ -354,11 +361,7 @@ export default function SavedSearches() {
                         index={index}
                         onSelect={onSelect}
                         item={item}
-                        checked={
-                          checkboxList.findIndex(
-                            (check) => check === item.id
-                          ) !== -1
-                        }
+                        checked={selectedMap.has(item.id)}
                       />
                     )}
                     key={item.id}

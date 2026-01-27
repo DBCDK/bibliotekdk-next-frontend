@@ -4,6 +4,7 @@ import styles from "./CreatorBox.module.css";
 import Text from "@/components/base/text";
 import Cover from "@/components/base/cover/Cover";
 import { useRouter } from "next/router";
+import useDataCollect from "@/lib/useDataCollect";
 
 function formatOccupation(items) {
   const max = 3;
@@ -40,6 +41,7 @@ export default function CreatorBox({
   isLoading = false,
 }) {
   const router = useRouter();
+  const collect = useDataCollect();
 
   if (!creatorHit) {
     return null;
@@ -84,6 +86,9 @@ export default function CreatorBox({
             }
             size="fill"
             onClick={() => {
+              collect.collectCreatorTeaserClick({
+                name: creatorHit.display,
+              });
               router.push(`/ophav/${encodeURIComponent(creatorHit.display)}`);
             }}
           />
@@ -151,6 +156,11 @@ export default function CreatorBox({
           creatorHit?.display
             ? `/ophav/${encodeURIComponent(creatorHit.display)}`
             : "#"
+        }
+        onClick={() =>
+          collect.collectCreatorTeaserClick({
+            name: creatorHit?.display,
+          })
         }
         border={{ bottom: { keepVisible: true } }}
         className={styles.linkRow}
