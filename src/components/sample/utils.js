@@ -1,5 +1,6 @@
 export const SPECIFIC_FALLBACKS = {
   bog: ["e-bog"],
+  billedbog: ["e-bog"],
   punktskrift: ["lydbog (online)"],
 };
 

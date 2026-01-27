@@ -282,7 +282,7 @@ export const ReservationButton = ({
           context: "overview",
           label: "publizon-local-library-btn",
         }),
-        icon: <ExternalSvg size={3} className={styles.icon} />,
+        icon: <ExternalSvg className={styles.icon} />,
         preferSecondary: false,
       };
     }

@@ -68,6 +68,7 @@
   padding-top: var(--pt3);
   display: flex;
   flex-wrap: wrap;
+  max-width: 450px;
 }
 
 .sample {

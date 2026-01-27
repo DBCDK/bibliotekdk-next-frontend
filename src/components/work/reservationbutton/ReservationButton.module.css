@@ -16,7 +16,9 @@
 }
 
 .icon {
-  padding-bottom: 1px;
   margin-left: var(--pt1);
+  margin-bottom: 2px;
   color: var(--white);
+  width: 20px;
+  height: 20px;
 }

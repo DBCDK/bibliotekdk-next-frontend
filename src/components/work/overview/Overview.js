@@ -170,7 +170,7 @@ export function Overview({
                   type={type}
                 />
               </Col>
-              <Col xs={12} sm={8} className={styles.basket}>
+              <Col xs={12} className={styles.basket}>
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
