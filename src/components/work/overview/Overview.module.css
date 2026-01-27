@@ -68,6 +68,13 @@
   padding-top: var(--pt3);
   display: flex;
   flex-wrap: wrap;
+  max-width: 450px;
+}
+
+.sample {
+  min-width: var(--pt7);
+  height: var(--pt7);
+  margin-left: 2px;
 }
 
 .sample {

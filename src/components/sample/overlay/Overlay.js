@@ -38,6 +38,7 @@ export default function Overlay({
       show={show}
       scroll={false}
       backdrop={true}
+      restoreFocus={false}
       placement="end"
       onHide={onHide}
       className={`${styles.offcanvas} ${typeClass} ${maximized} ${className}`}
