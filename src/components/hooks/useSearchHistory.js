@@ -490,6 +490,7 @@ export const useSavedSearches = () => {
   };
 
   return {
+    savedSearchesData: data?.user?.savedSearches,
     savedSearches,
     saveSearch,
     deleteSearches,
