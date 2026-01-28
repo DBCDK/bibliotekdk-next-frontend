@@ -18,9 +18,54 @@ export const getTemplateProps = {
   [AccessEnum.INTER_LIBRARY_LOAN](props) {
     return templateProps?.propsForPhysicalOrderLink?.(props);
   },
+  [AccessEnum.PUBLIZON](props) {
+    return templateProps?.propsForLocalLibrary?.(props);
+  },
 };
 
 const templateProps = {
+  propsForLocalLibrary(props) {
+    const isLoggedIn = props?.isAuthenticated;
+    const hasValidUrl = props?.agencyUrl;
+    const type = props?.materialTypesArray?.[0];
+
+    const selector = props?.agencyUrl?.includes("?") ? "&" : "?";
+    const urlSuffix = type ? `${selector}type=${type}` : "";
+
+    const url = props.agencyUrl + urlSuffix;
+
+    const pid = props?.pids?.[0];
+    const redirectPath = "/api/redirect";
+
+    const onClick = async (e) => {
+      e?.preventDefault?.();
+
+      if (isLoggedIn && !hasValidUrl) {
+        props?.onErrorPrompt?.();
+        return;
+      }
+
+      await props?.onSetIntent?.(pid);
+
+      props?.onLoginPrompt?.(redirectPath);
+    };
+
+    const linkProps =
+      isLoggedIn && hasValidUrl ? { href: url, target: "_blank" } : { onClick };
+
+    return {
+      linkProps,
+      linkText: Translate({
+        context: "options",
+        label: "local-link-title",
+        vars: [formatMaterialTypesToPresentation(props?.materialTypesArray)],
+      }),
+      descriptionText: Translate({
+        context: "options",
+        label: "local-link-description",
+      }),
+    };
+  },
   propsForOnline(props) {
     return {
       linkProps: { href: props?.url, target: "_blank" },

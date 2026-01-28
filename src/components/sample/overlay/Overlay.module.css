@@ -1,0 +1,66 @@
+.offcanvas {
+  transition: width 300ms ease, transform 0.3s ease-in-out;
+  border-left: none !important;
+}
+
+.offcanvas.mp3,
+.offcanvas.epub {
+  --bs-offcanvas-width: 100%;
+}
+
+.offcanvas.mp3.maximize,
+.offcanvas.epub.maximize {
+  --bs-offcanvas-width: 100%;
+}
+
+.title {
+  flex: 1 1 0;
+  margin-right: var(--pt2);
+}
+
+.expand {
+  display: none;
+}
+
+.body {
+  position: relative;
+  padding: 0;
+}
+
+@media (min-width: 576px) {
+  .offcanvas {
+    transition: width 300ms ease, transform 0.3s ease-in-out;
+    box-shadow: -2px 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .offcanvas.epub.maximize,
+  .offcanvas.mp3.maximize {
+    --bs-offcanvas-width: 100%;
+  }
+
+  .offcanvas.epub {
+    --bs-offcanvas-width: 700px;
+  }
+
+  .offcanvas.mp3 {
+    --bs-offcanvas-width: 600px;
+  }
+
+  .body {
+    padding: var(--pt2);
+  }
+}
+
+/* remove expand icon when overlay is already full-width */
+@media (min-width: 700px) {
+  .expand {
+    margin-right: var(--pt2);
+    display: unset;
+  }
+
+  .title {
+    flex: 1 1 0;
+    margin-right: var(--pt2);
+    text-align: center;
+  }
+}

@@ -35,6 +35,15 @@
   width: unset;
 }
 
+.reservationwrapper button svg {
+  color: var(--blue);
+}
+
+.reservationwrapper button:hover svg,
+.reservationwrapper button:focus svg {
+  color: var(--mine-shaft);
+}
+
 .container {
   column-count: 1;
   -webkit-column-count: 1;

@@ -1,0 +1,223 @@
+{
+  "version": 3,
+  "generatedAt": "2026-01-20T14:37:27.635Z",
+  "fileName": "9788702187328.zip",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "Samlede noveller (prøve)",
+    "creator": "Tove Ditlevsen",
+    "language": "da"
+  },
+  "counts": {
+    "spineLen": 4,
+    "tocLen": 7,
+    "duplicateSpineIndexCount": 1
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "title.xhtml",
+      "idref": "title",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "chapter001.xhtml",
+      "idref": "chapter001",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "colophon.xhtml",
+      "idref": "colophon",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "cover.xhtml",
+      "hrefNoFrag": "cover.xhtml",
+      "label": "\n                Forside\n            ",
+      "spineIndex": 0,
+      "spineHit": "cover.xhtml"
+    },
+    {
+      "href": "title.xhtml",
+      "hrefNoFrag": "title.xhtml",
+      "label": "\n                Titelblad\n            ",
+      "spineIndex": 1,
+      "spineHit": "title.xhtml"
+    },
+    {
+      "href": "chapter001.xhtml",
+      "hrefNoFrag": "chapter001.xhtml",
+      "label": "\n                Den fulde frihed\n            ",
+      "spineIndex": 2,
+      "spineHit": "chapter001.xhtml"
+    },
+    {
+      "href": "chapter001.xhtml#chapter001-001",
+      "hrefNoFrag": "chapter001.xhtml",
+      "label": "\n                    Barnet og manden\n                ",
+      "spineIndex": 2,
+      "spineHit": "chapter001.xhtml"
+    },
+    {
+      "href": "chapter001.xhtml#chapter001-002",
+      "hrefNoFrag": "chapter001.xhtml",
+      "label": "\n                    Den skyldige\n                ",
+      "spineIndex": 2,
+      "spineHit": "chapter001.xhtml"
+    },
+    {
+      "href": "chapter001.xhtml#chapter001-003",
+      "hrefNoFrag": "chapter001.xhtml",
+      "label": "\n                    Den fulde frihed\n                ",
+      "spineIndex": 2,
+      "spineHit": "chapter001.xhtml"
+    },
+    {
+      "href": "colophon.xhtml",
+      "hrefNoFrag": "colophon.xhtml",
+      "label": "\n                Kolofon\n            ",
+      "spineIndex": 3,
+      "spineHit": "colophon.xhtml"
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "cover.xhtml",
+        "label": "\n                Forside\n            "
+      },
+      {
+        "href": "title.xhtml",
+        "label": "\n                Titelblad\n            "
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "\n                Den fulde frihed\n            "
+      },
+      {
+        "href": "chapter001.xhtml#chapter001-001",
+        "label": "\n                    Barnet og manden\n                "
+      },
+      {
+        "href": "chapter001.xhtml#chapter001-002",
+        "label": "\n                    Den skyldige\n                "
+      },
+      {
+        "href": "chapter001.xhtml#chapter001-003",
+        "label": "\n                    Den fulde frihed\n                "
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "\n                Kolofon\n            "
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "title.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Den fulde frihed"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "title.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Den fulde frihed"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "title.xhtml",
+        "label": "Titelblad"
+      },
+      {
+        "href": "chapter001.xhtml",
+        "label": "Den fulde frihed"
+      },
+      {
+        "href": "colophon.xhtml",
+        "label": "Kolofon"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 4,
+        "tocLen": 4,
+        "mapped": 4,
+        "mappedUnique": 4,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1,
+        "titleRepeatRatio": 0
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 4,
+        "tocLen": 4,
+        "mapped": 4,
+        "mappedUnique": 4,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1,
+        "titleRepeatRatio": 0
+      }
+    },
+    "collapse": false
+  }
+}

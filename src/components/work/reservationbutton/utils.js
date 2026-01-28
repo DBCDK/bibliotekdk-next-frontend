@@ -49,6 +49,26 @@ export function workTypeTranslator(workTypes) {
       });
 }
 
+export async function setLoginIntent({ pid, provider }) {
+  if (!pid) return;
+
+  try {
+    await fetch("/api/login/intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pid,
+        provider,
+      }),
+      credentials: "include",
+      keepalive: true,
+    });
+  } catch {
+    // Ignorér fejl: worst case virker redirect ikke efter login,
+    // og brugeren kan prøve igen.
+  }
+}
+
 /**
  * Open login modal if user is not authenticated and material is neither ebescost or ebookcentral and material requires login
  * otherwise open redirect url in new tab
@@ -57,18 +77,80 @@ export function workTypeTranslator(workTypes) {
  * @param {Object} isAuthenticated
  * @returns
  */
-export function handleGoToLogin(modal, access, isAuthenticated) {
-  // if this is an infomedia article it should open in same window
-  const urlTarget = access[0]?.id ? "_self" : "_blank";
-  // check if we should open login modal on click
-  const goToLogin =
-    !isAuthenticated &&
-    access[0]?.loginRequired &&
-    isEbookCentralOrEbscohost(access?.[0]?.url);
+export async function handleGoToLogin(
+  modal,
+  access,
+  isAuthenticated,
+  isFolkUser,
+  type
+) {
+  const a0 = access?.[0];
+  if (!a0) return;
 
-  return goToLogin
-    ? openLoginModal({ modal }) //TODO should we give url as param to redirect to ebookcentral or ebscohost?
-    : goToRedirectUrl(access[0]?.url, urlTarget);
+  // Publizon always requires login
+  const isPublizon = a0.__typename === "Publizon";
+
+  // Infomedia articles (have an id) should open in the same window/tab
+  const urlTarget = a0.id ? "_self" : "_blank";
+
+  // Add a CMS type query param for agencyUrl (only when relevant)
+  const agencyUrl = a0.agencyUrl;
+  const selector = agencyUrl?.includes("?") ? "&" : "?";
+  const urlSuffix = type ? `${selector}type=${type}` : "";
+
+  // Use agencyUrl for Publizon (with optional suffix), otherwise use the direct url
+  let url = a0.url;
+
+  if (isPublizon) {
+    // Publizon uses agencyUrl; if it's missing we can't redirect (unless we show login)
+    if (!agencyUrl) url = undefined;
+    else url = `${agencyUrl}${urlSuffix}`;
+  }
+
+  // Avoid pushing/opening an undefined URL
+  if (isPublizon && isAuthenticated && !url) {
+    const titleLabel = isFolkUser
+      ? "hasfolk-missing-url-title"
+      : "nofolk-missing-url-title";
+
+    const textLabel = isFolkUser
+      ? "hasfolk-missing-url-text"
+      : "nofolk-missing-url-text";
+
+    modal.push("statusMessage", {
+      title: Translate({
+        context: "publizon",
+        label: titleLabel,
+        renderAsHtml: true,
+      }),
+      text: Translate({
+        context: "publizon",
+        label: textLabel,
+        renderAsHtml: true,
+      }),
+    });
+
+    return;
+  }
+
+  // Decide whether we should show the login modal instead of redirecting
+  const goToLogin =
+    (isPublizon && !isAuthenticated) ||
+    (!isAuthenticated && a0.loginRequired && isEbookCentralOrEbscohost(url));
+
+  if (goToLogin) {
+    if (isPublizon) {
+      // Set redirect path for Publizon to internal redirect handler
+      const pid = access?.[0]?.pids?.[0];
+      const provider = "ReservationButton_Publizon";
+      await setLoginIntent({ pid, provider });
+    }
+
+    return openLoginModal({ modal, redirectPath: "/api/redirect" });
+  }
+
+  // Directly redirect
+  return goToRedirectUrl(url, urlTarget);
 }
 
 /**
@@ -210,12 +292,12 @@ export const constructButtonText = (
 };
 
 /**
- * sorts a list of access so eReolen comes first in the list.
+ * sorts a list of access so publizon comes first in the list.
  * @param {*} access list of access objects [{origin}]
  * @returns
  */
-export const sortEreolFirst = (access) => {
+export const sortPublizonFirst = (access) => {
   return access?.sort((a, b) =>
-    a?.origin === "eReolen" ? -1 : b?.origin === "eReolen" ? 1 : 0
+    a?.__typename === "Publizon" ? -1 : b?.__typename === "Publizon" ? 1 : 0
   );
 };

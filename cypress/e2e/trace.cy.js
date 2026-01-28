@@ -119,7 +119,7 @@ describe("Trace", () => {
       cy.get('[data-cy="advanced-search-inputfield-0"]').type("hest");
       cy.get('ul[role="listbox"] > li').first().click();
       //search
-      cy.get('[data-cy="button-søg-avanceret"]').click();
+      cy.get('[data-cy="button-søg"]').click();
 
       // Check that tid is set as URL param
       cy.url()
@@ -142,7 +142,7 @@ describe("Trace", () => {
       cy.get('[data-cy="advanced-search-inputfield-0"]').type("hest");
       cy.get('ul[role="listbox"] > li').first().click();
       //search
-      cy.get('[data-cy="button-søg-avanceret"]').click();
+      cy.get('[data-cy="button-søg"]').click();
 
       // Click on first result
       cy.get(':nth-child(1) > [data-cy="result-row"]').click();

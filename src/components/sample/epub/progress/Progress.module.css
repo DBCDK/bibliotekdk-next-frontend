@@ -1,0 +1,229 @@
+/* components/sample/epub/progress/Progress.module.css */
+
+.progress {
+  width: 90%;
+  margin: auto;
+  margin-top: var(--pt5);
+  --compact-active-flex: 9;
+  --compact-other-flex: 1;
+}
+
+.labels {
+  display: flex;
+  width: 100%;
+  margin: 8px auto 4px;
+  gap: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.96),
+    rgba(255, 255, 255, 0.8)
+  );
+  z-index: 5;
+  overflow-x: hidden;
+}
+
+.labelBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 6px;
+  background: transparent;
+
+  min-width: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background-color 120ms ease, color 120ms ease;
+  flex: 1 1 0;
+}
+
+.compact .labelBtn {
+  border-right: none;
+}
+
+.labelBtn:last-child {
+  border-right: none;
+}
+
+.labelText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
+  cursor: pointer;
+}
+
+.compactLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.compact .compactLabel {
+  padding: 6px 8px;
+  min-height: 24px;
+  min-width: 24px;
+}
+
+.compactDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.45;
+  transition: transform 120ms ease, background-color 120ms ease,
+    opacity 120ms ease;
+}
+
+.compactDotOnly {
+  text-decoration: none !important;
+  background-image: none !important;
+  background-size: 0 0 !important;
+  --underline-hover-background-image: none;
+}
+
+.compactDotOnly:hover,
+.compactDotOnly:focus-visible {
+  text-decoration: none !important;
+  background-image: none !important;
+  background-size: 0 0 !important;
+}
+
+.compactDotOnly:hover .compactDot,
+.compactDotOnly:focus-visible .compactDot {
+  background: var(--blue);
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+.compactTitle {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.active .labelText {
+  color: var(--blue);
+}
+
+.compact .labelBtn {
+  flex: var(--compact-other-flex) 1 0;
+  transition: flex-grow 200ms ease, flex-basis 200ms ease;
+}
+
+.compact .labelBtn.active {
+  flex: var(--compact-active-flex) 1 0;
+}
+
+.expanded {
+  --compact-active-flex: 12;
+}
+
+/* ===== Progressbar (segmented) ===== */
+.progressTrack {
+  position: relative;
+  width: 100%;
+  margin: 8px auto;
+  height: 8px;
+  background: var(--concrete);
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.progressSegments {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 0 2px;
+  align-items: center;
+}
+
+.progressSegments:first-child {
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+}
+
+.progressSegment {
+  position: relative;
+  flex: 1 1 0;
+  height: 100%;
+  background: var(--concrete);
+}
+
+.progressSegmentStart {
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+  overflow: hidden;
+}
+
+.progressSegmentEnd {
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background-color: var(--blue);
+  transition: width 0.22s ease;
+  will-change: width;
+}
+
+@media (min-width: 992px) {
+  .expanded .labels,
+  .expanded .progressTrack {
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 756px) {
+  .labels {
+    width: 100%;
+    margin: 8px auto 4px;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    justify-content: center;
+  }
+
+  .labels .labelBtn {
+    display: none;
+  }
+
+  .labels .labelBtn.active {
+    display: flex;
+    width: 100% !important;
+    margin-right: 0;
+    border-right: none;
+  }
+
+  .labels .labelBtn.active .labelText {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .compactLabel {
+    justify-content: flex-start;
+  }
+
+  .compactDot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .progress {
+    --compact-active-flex: 14;
+  }
+
+  .progressTrack {
+    width: 100%;
+    height: 6px;
+  }
+}

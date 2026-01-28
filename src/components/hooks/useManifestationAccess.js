@@ -15,6 +15,9 @@ import useRights from "@/components/hooks/user/useRights";
 function sortAccessArray(accessArr) {
   accessArr = accessArr.map((access) => {
     let priority = 0;
+    if (access.__typename === AccessEnum.PUBLIZON) {
+      priority += 6000;
+    }
     if (access.__typename === AccessEnum.ACCESS_URL) {
       priority += 5000;
     }
@@ -156,6 +159,7 @@ export function useManifestationAccess({ pids, filter }) {
         return filter.includes(entry.__typename);
       }
     );
+
     // sort & filter - we only want access of type RESOURCE AND we do not want broken links
     let access = sortAccessArray(flattenedAccess)?.filter((singleAccess) => {
       return (
@@ -175,8 +179,9 @@ export function useManifestationAccess({ pids, filter }) {
       );
     }
 
-    // we do not want to show publizon access entries
-    access = access?.filter((acc) => acc.__typename !== AccessEnum.PUBLIZON);
+    // we do not want to show ereolen access entries anymore
+    // ereolen is closed and replaced by publizon access on th elocal libraries
+    access = access?.filter((acc) => acc.__typename !== AccessEnum.EREOL);
 
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
@@ -192,14 +197,19 @@ export function useManifestationAccess({ pids, filter }) {
       );
     }
 
-    let workTypesMap = {};
+    let materialTypesMap = {};
     data?.manifestations?.forEach((m) =>
-      m?.workTypes?.forEach((workType) => (workTypesMap[workType] = true))
+      m?.materialTypes?.forEach(({ materialTypeSpecific = {} } = {}) => {
+        if (!materialTypesMap[m?.pid]) {
+          materialTypesMap[m?.pid] = materialTypeSpecific?.display;
+        }
+      })
     );
 
     return {
       access,
       accessMap,
+      materialTypesMap,
     };
   }, [data, isAuthenticated]);
 

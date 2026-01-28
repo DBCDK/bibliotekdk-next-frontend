@@ -1,7 +1,7 @@
 import {
   context,
   getBaseUrl,
-  sortEreolFirst,
+  sortPublizonFirst,
 } from "@/components/work/reservationbutton/utils";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
@@ -12,6 +12,7 @@ import Skeleton from "@/components/base/skeleton";
 import { AccessEnum } from "@/lib/enums";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { usePeriodica } from "@/components/hooks/order";
+import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
@@ -22,10 +23,10 @@ import { usePeriodica } from "@/components/hooks/order";
  */
 function OrderButtonTextBelow({
   access,
-  skeleton,
   hasPhysicalCopy,
   hasDigitalCopy,
   isPeriodica,
+  isAuthenticated,
 }) {
   const isNota =
     access?.[0]?.url?.includes("nota.dk") ||
@@ -36,6 +37,10 @@ function OrderButtonTextBelow({
     Boolean(isPeriodica),
     hasDigitalCopy,
     hasPhysicalCopy,
+    Boolean(access?.[0]?.__typename === AccessEnum.PUBLIZON) && isAuthenticated,
+    Boolean(
+      access?.[0]?.__typename === AccessEnum.PUBLIZON && !isAuthenticated
+    ),
   ];
 
   const translationForButtonText = [
@@ -56,6 +61,8 @@ function OrderButtonTextBelow({
       }),
     () => Translate({ ...context, label: "addToCart-line2" }),
     () => Translate({ ...context, label: "addToCart-line1" }),
+    () => Translate({ ...context, label: "addToCart-line3" }),
+    () => Translate({ ...context, label: "addToCart-line3-not-logged-in" }),
   ];
 
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
@@ -63,12 +70,11 @@ function OrderButtonTextBelow({
     index > -1 &&
     access?.[0]?.id !== null &&
     translationForButtonText?.[index] !== null && (
-      <Col xs={12} className={styles.info}>
+      <Col xs={12} sm={9} className={styles.info}>
         <Text
           dataCy={"reservation-button-txt"}
+          className={styles.text}
           type="text3"
-          skeleton={skeleton}
-          lines={2}
         >
           {translationForButtonText?.[index]?.()}
         </Text>
@@ -87,12 +93,18 @@ export default function Wrap({ selectedPids, skeleton }) {
     pids: selectedPids,
   });
 
+  const { isAuthenticated } = useAuthentication();
+
   const { isPeriodica, isLoading: isLoadingPeriodica } = usePeriodica({
     pids: selectedPids,
   });
 
   if (isLoadingAccess || isLoadingPeriodica) {
-    return <Skeleton lines={1} className={styles.skeletonstyle} />;
+    return (
+      <Col xs={12} sm={9}>
+        <Skeleton lines={1} className={styles.skeletonstyle} />
+      </Col>
+    );
   }
 
   if (
@@ -102,7 +114,7 @@ export default function Wrap({ selectedPids, skeleton }) {
     return null;
   }
 
-  const sortedAccess = sortEreolFirst(access);
+  const sortedAccess = sortPublizonFirst(access);
 
   return (
     <OrderButtonTextBelow
@@ -111,6 +123,7 @@ export default function Wrap({ selectedPids, skeleton }) {
       hasPhysicalCopy={hasPhysicalCopy}
       hasDigitalCopy={hasDigitalCopy}
       isPeriodica={isPeriodica}
+      isAuthenticated={isAuthenticated}
     />
   );
 }

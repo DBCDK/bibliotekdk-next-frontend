@@ -185,7 +185,7 @@
 
 .bookmarkActionButton {
   margin-right: var(--pt3);
-  width: 100px;
+  width: 150px;
 }
 
 .bookmarkMaterial {
@@ -197,8 +197,16 @@
 }
 
 .bookmarkOrderButtonContainer {
-  width: 100px;
+  min-width: 100px;
   margin-right: var(--pt3);
+}
+
+.bookmarkOrderButtonContainer button {
+  padding: var(--pt1) var(--pt2) !important;
+}
+
+.bookmarkOrderButtonContainer svg {
+  color: var(--white);
 }
 
 .bookmarkOrderButtonContainer button[aria-disabled="false"] {

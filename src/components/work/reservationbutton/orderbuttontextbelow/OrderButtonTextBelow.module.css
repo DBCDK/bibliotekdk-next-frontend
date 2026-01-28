@@ -1,5 +1,15 @@
 .info {
   padding-top: var(--pt1);
+  /* 100% - 2x button width + 16px space + 2px space */
+  width: calc(100% - (2 * var(--pt7) + var(--pt2)) - 2px);
+}
+
+.text {
+  width: 100%;
+}
+
+.text {
+  width: 100%;
 }
 
 .info p:first-letter {
@@ -8,6 +18,7 @@
 
 .skeletonstyle {
   margin-top: var(--pt2);
+  width: calc(100% - (2 * var(--pt7) + var(--pt4)));
   position: relative;
   height: var(--pt2);
 }

@@ -24,6 +24,7 @@ import Title from "@/components/base/title/Title";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
+import SampleButton from "@/components/sample";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -86,6 +87,7 @@ export function Overview({
     () => manifestations?.map((manifestation) => manifestation?.pid),
     [manifestations]
   );
+
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
   const checkForPeriodicaArticle = (pids) => {
@@ -164,11 +166,18 @@ export function Overview({
                   type={type}
                 />
               </Col>
-              <Col xs={12} sm={9} xl={7} className={styles.basket}>
+              <Col xs={12} className={styles.basket}>
                 <ReservationButtonWrapper
                   workId={workId}
                   selectedPids={selectedPids}
                 />
+
+                <SampleButton
+                  workId={workId}
+                  type={type?.[0]}
+                  className={styles.sample}
+                />
+
                 <BookmarkDropdown
                   materialId={workId}
                   workId={workId}
@@ -177,12 +186,12 @@ export function Overview({
                   className={styles.svgscale}
                   editions={work?.manifestations?.mostRelevant}
                 />
-              </Col>
 
-              <OrderButtonTextBelow
-                selectedPids={selectedPids}
-                skeleton={skeleton}
-              />
+                <OrderButtonTextBelow
+                  selectedPids={selectedPids}
+                  skeleton={skeleton}
+                />
+              </Col>
               <AlternativeOptions workId={workId} selectedPids={selectedPids} />
               {!isPeriodicaArticle && (
                 <Col xs={12} className={styles.info}>

@@ -1,0 +1,189 @@
+/* keep the existing variable block + wrapper/reader styles */
+.wrapper {
+  --epub-container-bg: var(--white);
+  --epub-container-fg: var(--mine-shaft);
+  --epub-reader-bg: var(--white);
+  --epub-title-bg: var(--white);
+  --epub-title-fg: var(--mine-shaft);
+  --epub-title-border: 1px solid rgba(0, 0, 0, 0.06);
+  --epub-arrow-fg: var(--mine-shaft);
+  --epub-arrow-hover-bg: var(--blue);
+  --epub-toc-bg: var(--white);
+  --epub-toc-fg: var(--mine-shaft);
+  --epub-toc-button-fg: var(--mine-shaft);
+  --epub-toc-button-bg: transparent;
+  --epub-toc-button-expanded-bg: var(--white);
+  --epub-toc-button-bar-bg: var(--mine-shaft);
+  --epub-page-bg: var(--white);
+  --epub-page-fg: var(--mine-shaft);
+  --epub-link-fg: var(--blue);
+  --epub-link-decoration: underline;
+  --epub-page-font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  --epub-page-line-height: 1.55;
+  --epub-p-margin: 0 0 1em 0;
+
+  position: relative;
+  width: 100%;
+  height: 90%;
+  background: var(--epub-container-bg);
+  color: var(--epub-container-fg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  margin: auto;
+  align-items: center;
+}
+
+.fullscreen {
+  margin: auto;
+}
+
+.fullscreen,
+.fullscreen > div {
+  overflow: hidden !important;
+}
+
+.wrapper :global(.react-reader) {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* remove reader toggle button */
+.wrapper > div > div button:first-of-type {
+  display: none;
+}
+.wrapper > div > div > div > div {
+  inset: 0 0 0 !important;
+}
+
+.wrapper,
+.wrapper > div {
+  overflow: visible !important;
+}
+
+.innerWrapper {
+  flex: 0 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  margin: auto;
+}
+
+.wrapper > div:first-of-type > div:last-of-type {
+  display: none;
+}
+
+/* ReactReader Arrow left */
+.wrapper > div > div button {
+  display: none;
+}
+
+/* ReactReader Arrow right */
+.wrapper > div > div button:last-of-type {
+  display: none;
+}
+
+.wrapper body {
+  display: flex;
+  justify-content: flex-end;
+}
+.wrapper img {
+  display: none;
+}
+
+/* Custom arrows */
+
+.wrapper {
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--pt5);
+  height: var(--pt5);
+  border-radius: 50%;
+  border: none;
+  background-color: var(--white);
+  color: var(--blue);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--pt3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.arrow path {
+  fill: var(--blue);
+}
+
+.arrow:hover,
+.arrow:focus-visible {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: var(--pt05);
+}
+
+.arrow:hover path,
+.arrow:focus-visible path {
+  fill: var(--white);
+}
+
+.arrowLeft,
+.arrowRight {
+  display: none;
+}
+
+.arrowRight svg {
+  transform: rotate(180deg);
+}
+
+.arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media screen and (min-width: 576px) {
+  .wrapper {
+    width: 90%;
+  }
+
+  .arrowLeft,
+  .arrowRight {
+    display: unset;
+  }
+
+  .arrowLeft {
+    left: calc(var(--pt4) * -1);
+  }
+
+  .arrowRight {
+    right: calc(var(--pt4) * -1);
+  }
+
+  /* Arrow left */
+  .wrapper > div > div button {
+    display: unset;
+    left: -40px !important;
+    opacity: 0.5;
+  }
+
+  /* Arrow right */
+  .wrapper > div > div button:last-of-type {
+    display: unset;
+    left: unset !important;
+    right: -40px !important;
+  }
+}

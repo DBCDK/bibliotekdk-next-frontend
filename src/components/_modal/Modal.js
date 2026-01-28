@@ -258,6 +258,7 @@ function Container({ children, className = {}, mock = {} }) {
     const index = modal.stack.findIndex(
       (entry) => entry.uid === currentPageUid
     );
+
     modal._doSelect(index);
   }, [currentPageUid]);
 
@@ -314,35 +315,36 @@ function Container({ children, className = {}, mock = {} }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal_container">
-          {modal.stack.map((obj, index) => {
-            // Find component by id in container children
-            const page = children.find((child) => {
-              if (child.props.id === obj.id) {
-                return child;
+          {isVisible &&
+            modal.stack.map((obj, index) => {
+              // Find component by id in container children
+              const page = children.find((child) => {
+                if (child.props.id === obj.id) {
+                  return child;
+                }
+              });
+
+              // No matching page was found
+              if (!page) {
+                return null;
               }
-            });
 
-            // No matching page was found
-            if (!page) {
-              return null;
-            }
+              // Enrich page components with props
+              return React.cloneElement(page, {
+                modal: { ...modal, ...mock },
 
-            // Enrich page components with props
-            return React.cloneElement(page, {
-              modal: { ...modal, ...mock },
-
-              // stack index
-              index,
-              context: obj.context,
-              active: obj.active,
-              className: className.page || "",
-              key: `modal-page-${index}-${obj.id}`,
-              dataCy: `modal-page-${index}`,
-              mock: page.props.mock || {},
-              props: page.props,
-              dialogStatus: dialogStatus,
-            });
-          })}
+                // stack index
+                index,
+                context: obj.context,
+                active: obj.active,
+                className: className.page || "",
+                key: `modal-page-${index}-${obj.id}`,
+                dataCy: `modal-page-${index}`,
+                mock: page.props.mock || {},
+                props: page.props,
+                dialogStatus: dialogStatus,
+              });
+            })}
         </div>
       </dialog>
     </>

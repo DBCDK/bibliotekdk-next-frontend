@@ -7,3 +7,18 @@
   width: 100%;
   flex: 1;
 }
+
+.wrapper > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.icon {
+  margin-left: var(--pt1);
+  margin-bottom: 2px;
+  color: var(--white);
+  width: 20px;
+  height: 20px;
+}

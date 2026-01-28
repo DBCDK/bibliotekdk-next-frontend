@@ -51,6 +51,7 @@ export function openLoginModal({
     context: "header",
     label: "login",
   }),
+  redirectPath = null,
   originUrl = undefined,
   pids = undefined,
   selectedAccesses = undefined,
@@ -59,14 +60,15 @@ export function openLoginModal({
   callbackUID = undefined,
 }) {
   modal.push("login", {
-    title: title,
-    mode: mode,
+    title,
+    mode,
     originUrl,
-    pids: pids,
-    selectedAccesses: selectedAccesses,
-    workId: workId,
-    singleManifestation: singleManifestation,
-    callbackUID: callbackUID,
+    pids,
+    selectedAccesses,
+    workId,
+    redirectPath,
+    singleManifestation,
+    callbackUID,
   });
 }
 
@@ -79,30 +81,46 @@ function getOperator(string) {
   return string.includes("?") ? "&" : "?";
 }
 
+// Whitelist of allowed internal redirect endpoints
+const REDIRECT_PATH_WHITELIST = new Set(["/api/redirect"]);
+
+const getWhitelistedRedirectPath = (path) => {
+  return REDIRECT_PATH_WHITELIST.has(path) ? path : "/api/redirect";
+};
+
+function getAbsoluteInternalUrl(path) {
+  const safePath = getWhitelistedRedirectPath(path);
+  return `${window.location.origin}${safePath}`;
+}
+
 /**
  * Get a callback url to return to after sign in.
  *
- * OBS: this code is also responsible for setting **pickup branch** after login.
+ * Modes:
+ *  1) Default: return to current page (window.location.href) [minus modal param]
+ *  2) Redirect handler: return to an internal redirect endpoint (whitelisted) as ABSOLUTE url
  *
- * Remove modals except for the third one.
- *     scenarios:
- *     a. user logins from a page eg. infomedia
- *     b. user logins from a modal eg. pickup
- *       remove modal from callbackurl - if any
- *       if user is coming from order button, we have callbackUID from oder modal in store and attach it to url to open order modal after login
- *
- * @param modal
- * @param pickupBranch
+ * @param {string|null} pickupBranch
+ * @param {string|null} callbackUID
+ * @param {Object} opts
+ * @param {string|null} opts.redirectPath - if set, callback becomes absolute redirect handler URL
  * @returns {string}
  */
-export function getCallbackUrl(pickupBranch, callbackUID) {
-  let callback = window.location.href;
-  // remove modal from callback - if any
-  const regex = /[&|?]modal=[0-9]*/;
-  callback = callback.replace(regex, "");
+export function getCallbackUrl(pickupBranch, callbackUID, opts = {}) {
+  const { redirectPath = null } = opts;
+
+  let callback;
+  if (redirectPath) {
+    // absolute callback url
+    callback = getAbsoluteInternalUrl(redirectPath);
+  } else {
+    // Default: current page, but remove modal param if any
+    callback = window.location.href;
+    const regex = /[&|?]modal=[0-9]*/;
+    callback = callback.replace(regex, "");
+  }
 
   // append modal if any callbackUID is given
-  // In case we want to open a specific modal after login, we append the modal UID to the url
   if (callbackUID) {
     const operator = getOperator(callback);
     callback += operator + `modal=${callbackUID}`;

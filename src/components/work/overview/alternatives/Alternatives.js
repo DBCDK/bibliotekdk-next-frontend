@@ -15,7 +15,7 @@ function AlternativeOptions({ modal = null, context = {} }) {
   }
 
   return (
-    <Col xs={12} className={styles.info}>
+    <Col xs={12} sm={9} className={styles.info}>
       <Link
         border={{ bottom: { keepVisible: true } }}
         onClick={() =>
@@ -51,7 +51,9 @@ export default function Wrap({ workId, selectedPids }) {
 
   if (accessIsLoading) {
     return (
-      <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
+      <Col xs={12} sm={9}>
+        <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
+      </Col>
     );
   }
 

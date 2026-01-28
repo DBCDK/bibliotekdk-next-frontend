@@ -1,0 +1,113 @@
+.container {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+/* Rund ghost-knap (låst styling) */
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  background: transparent;
+  border: 0;
+  color: var(--blue);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+  padding: 0;
+}
+
+.button:focus-visible {
+  outline: none;
+}
+
+/* Disabled */
+.button:disabled {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pt1);
+}
+
+/* Ikon-container (fast størrelse) */
+.iconWrap {
+  position: relative;
+  width: var(--pt2);
+  height: var(--pt2);
+}
+
+/* Grundopsætning for begge ikoner */
+.icon {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms ease, opacity 150ms ease;
+  transform-origin: 50% 50%;
+}
+
+.labelWrap {
+  display: inline-flex;
+  align-items: center;
+  min-width: 7ch;
+}
+
+.label {
+  display: none;
+  align-items: center;
+  white-space: nowrap;
+  color: var(--mine-shaft);
+}
+
+.button:focus-visible .label,
+.button:hover .label {
+  color: var(--blue);
+}
+
+/* -------- STATE: "ikon viser næste handling" -------- */
+/* Unchecked = docket højre -> vis MAXIMIZE (næste handling) */
+.minimize {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.maximize {
+  opacity: 1;
+  transform: scale(1);
+}
+.label.maximize {
+  display: inline-flex;
+}
+
+/* Checked = fuldskærm -> vis MINIMIZE (næste handling) */
+.checked .minimize {
+  opacity: 1;
+  transform: scale(1);
+}
+.checked .maximize {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.checked .label.minimize {
+  display: inline-flex;
+}
+.checked .label.maximize {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .icon,
+  .label {
+    transition: none !important;
+  }
+}
