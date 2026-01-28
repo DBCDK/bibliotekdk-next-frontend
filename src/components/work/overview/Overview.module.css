@@ -71,6 +71,10 @@
   max-width: 450px;
 }
 
+.reservationButton {
+  min-width: 100px;
+}
+
 .sample {
   min-width: var(--pt7);
   height: var(--pt7);
@@ -118,5 +122,9 @@
 
   .breadcrumbs {
     padding-bottom: var(--pt4);
+  }
+
+  .reservationButton {
+    min-width: 200px;
   }
 }

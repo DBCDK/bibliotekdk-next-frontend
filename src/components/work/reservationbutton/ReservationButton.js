@@ -146,6 +146,7 @@ function ReservationButtonWrapper({
         hasPhysicalCopy,
         hasDigitalCopy,
         bookmarkKey,
+        className,
       }}
     />
   );
@@ -183,6 +184,7 @@ export const ReservationButton = ({
   hasPhysicalCopy,
   exactEdition = false,
   bookmarkKey,
+  className = "",
 }) => {
   access = sortPublizonFirst(access);
 
@@ -314,6 +316,7 @@ export const ReservationButton = ({
         <Button
           type={preferSecondary ? "secondary" : buttonType}
           size={size}
+          className={className}
           {...props}
         >
           {overrideButtonText ?? text}
