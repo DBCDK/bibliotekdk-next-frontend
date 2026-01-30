@@ -26,6 +26,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import Skeleton from "@/components/base/skeleton/Skeleton";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
@@ -165,6 +166,34 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   );
 }
 
+function SavedSearchRowSkeleton() {
+  return (
+    <div className={styles.desktopSkeletonRow} aria-hidden="true">
+      <Skeleton className={styles.desktopSkeletonCheckbox} />
+      <Skeleton className={styles.desktopSkeletonDate} />
+      <Skeleton className={styles.desktopSkeletonText} />
+      <Skeleton className={styles.desktopSkeletonResults} />
+      <Skeleton className={styles.desktopSkeletonIcon} />
+      <Skeleton className={styles.desktopSkeletonIcon} />
+    </div>
+  );
+}
+
+function MobileSavedSearchRowSkeleton() {
+  return (
+    <div className={styles.savedItemRow} aria-hidden="true">
+      <Skeleton className={styles.mobileSkeletonCheckbox} />
+      <div className={styles.mobilePreview}>
+        <Skeleton className={styles.mobileSkeletonText} />
+        <Skeleton className={styles.mobileSkeletonTextShort} />
+      </div>
+      <div className={styles.accordionIcon}>
+        <Skeleton className={styles.mobileSkeletonIcon} />
+      </div>
+    </div>
+  );
+}
+
 export default function SavedSearches() {
   const {
     deleteSearches,
@@ -190,6 +219,12 @@ export default function SavedSearches() {
   useEffect(() => {
     if (!isAuthenticated) {
       setDisplayedSearches([]);
+      return;
+    }
+
+    // Desktop UX: keep current rows visible while loading next page to avoid
+    // layout collapse/flicker. We'll update once the new data arrives.
+    if (!isMobile && isLoading && (displayedSearches?.length || 0) > 0) {
       return;
     }
 
@@ -284,6 +319,21 @@ export default function SavedSearches() {
     setCurrentPage(newPage);
   };
 
+  const showDesktopSkeleton =
+    isAuthenticated && !isMobile && isLoading && (displayedSearches?.length || 0) === 0;
+ 
+    const showMobileSkeleton =
+    isAuthenticated && isMobile && isLoading && (displayedSearches?.length || 0) === 0;
+ 
+    const showMobileAppendSkeleton =
+     isMobile && isLoading 
+
+  const canShowEmptyState =
+    isAuthenticated &&
+    !isLoading &&
+    !!savedSearchesData &&
+    (displayedSearches?.length || 0) === 0;
+
   return (
     <div className={styles.container}>
       <div ref={scrollToElement} />
@@ -371,7 +421,19 @@ export default function SavedSearches() {
             </Button>
           </div>
         )}
-        {displayedSearches?.length > 0 && isAuthenticated ? (
+        {showDesktopSkeleton ? (
+          <div className={styles.desktopSkeletonContainer}>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <SavedSearchRowSkeleton key={`saved-search-skeleton-${i}`} />
+            ))}
+          </div>
+        ) : showMobileSkeleton ? (
+          <div className={styles.mobileSkeletonContainer}>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <MobileSavedSearchRowSkeleton key={`saved-search-skeleton-${i}`} />
+            ))}
+          </div>
+        ) : displayedSearches?.length > 0 && isAuthenticated ? (
           <>
             <Accordion dataCy="saved-searches-accordion" isLoading={isLoading}>
               {displayedSearches?.map((item, index) => {
@@ -460,6 +522,16 @@ export default function SavedSearches() {
               })}
             </Accordion>
 
+            {showMobileAppendSkeleton && (
+              <div className={styles.mobileSkeletonAppendContainer}>
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <MobileSavedSearchRowSkeleton
+                    key={`saved-search-append-skeleton-${i}`}
+                  />
+                ))}
+              </div>
+            )}
+
             {totalPages > 1 && (
               <Pagination
                 className={styles.pagination}
@@ -470,7 +542,7 @@ export default function SavedSearches() {
             )}
           </>
         ) : (
-          isAuthenticated && (
+          canShowEmptyState && (
             <div className={styles.emptyListMessage}>
               {
                 <Text type="text2">
