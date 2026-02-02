@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import styles from "./SavedSearches.module.css";
 import Text from "@/components/base/text";
@@ -31,7 +31,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
   const { deleteSearches } = useSavedSearches();
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs";
+  const isMobile = ["xs", "sm", "md"].includes(breakpoint);
 
   if (isMobile) {
     return (
@@ -169,6 +169,7 @@ export default function SavedSearches() {
   const {
     deleteSearches,
     savedSearches,
+    savedSearchesData,
     currentPage,
     totalPages,
     setCurrentPage,
@@ -178,10 +179,30 @@ export default function SavedSearches() {
   const modal = useModal();
   const { isAuthenticated } = useAuthentication();
   const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === "xs";
+  const isMobile = ["xs", "sm", "md"].includes(breakpoint);
   const scrollToElement = useRef(null);
 
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
+  const [displayedSearches, setDisplayedSearches] = useState([]);
+
+  // - Mobile: append pages ("show more")
+  // - Desktop: replace (show only one page at a time)
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setDisplayedSearches([]);
+      return;
+    }
+
+    const pageResults = savedSearches || [];
+
+    if (isMobile) {
+      setDisplayedSearches((prev) =>
+        currentPage === 1 ? pageResults : [...(prev || []), ...pageResults]
+      );
+    } else {
+      setDisplayedSearches(pageResults);
+    }
+  }, [savedSearchesData, isLoading, currentPage, isMobile, isAuthenticated]);
 
   /**
    * scrolls to the top of the page
@@ -194,10 +215,10 @@ export default function SavedSearches() {
    * Set or unset ALL checkboxes in saved search table
    */
   const setAllChecked = () => {
-    if (!savedSearches?.length) {
+    if (!displayedSearches?.length) {
       return;
     }
-    const visibleIds = savedSearches.map((s) => s.id).filter(Boolean);
+    const visibleIds = displayedSearches.map((s) => s.id).filter(Boolean);
     setSelectedMap((prev) => {
       const next = new Map(prev);
       const allVisibleChecked = visibleIds.every((id) => next.has(id));
@@ -205,7 +226,7 @@ export default function SavedSearches() {
         visibleIds.forEach((id) => next.delete(id));
       } else {
         visibleIds.forEach((id) => {
-          const obj = savedSearches.find((s) => s.id === id);
+          const obj = displayedSearches.find((s) => s.id === id);
           if (obj) next.set(id, obj);
         });
       }
@@ -221,6 +242,12 @@ export default function SavedSearches() {
     if (idsToDelete.length === 0) return;
     await deleteSearches({ idsToDelete });
     setSelectedMap(new Map());
+    // Optimistically remove deleted items from already loaded pages on mobile.
+    setDisplayedSearches((prev) =>
+      (Array.isArray(prev) ? prev : []).filter(
+        (s) => !idsToDelete.includes(s?.id)
+      )
+    );
   };
 
   const checkedObjects = useMemo(() => {
@@ -275,11 +302,11 @@ export default function SavedSearches() {
             checkedObjects={checkedObjects}
             deleteSelected={onDeleteSelected}
             checked={
-              savedSearches?.length > 0 &&
-              savedSearches.every((i) => selectedMap.has(i.id))
+              displayedSearches?.length > 0 &&
+              displayedSearches.every((i) => selectedMap.has(i.id))
             }
             partiallyChecked={selectedMap.size > 0}
-            disabled={!isAuthenticated || savedSearches?.length === 0}
+            disabled={!isAuthenticated || displayedSearches?.length === 0}
             setAllChecked={setAllChecked}
             setShowCombinedSearch={setShowCombinedSearch}
             className={styles.historyHeaderActions}
@@ -292,7 +319,7 @@ export default function SavedSearches() {
         <div
           className={cx(styles.tableHeader, {
             [styles.tableHeaderBorder]:
-              !isAuthenticated || savedSearches?.length === 0,
+              !isAuthenticated || displayedSearches?.length === 0,
           })}
         >
           <div className={styles.checkbox}>
@@ -302,10 +329,10 @@ export default function SavedSearches() {
               onClick={setAllChecked}
               id="selectall"
               checked={
-                savedSearches?.length > 0 &&
-                savedSearches.every((i) => selectedMap.has(i.id))
+                displayedSearches?.length > 0 &&
+                displayedSearches.every((i) => selectedMap.has(i.id))
               }
-              disabled={!isAuthenticated || savedSearches?.length === 0}
+              disabled={!isAuthenticated || displayedSearches?.length === 0}
               dataCy="saved-searches-selectall-checkbox"
             />
           </div>
@@ -346,10 +373,10 @@ export default function SavedSearches() {
             </Button>
           </div>
         )}
-        {savedSearches?.length > 0 && isAuthenticated ? (
+        {displayedSearches?.length > 0 && isAuthenticated ? (
           <>
             <Accordion dataCy="saved-searches-accordion" isLoading={isLoading}>
-              {savedSearches?.map((item, index) => {
+              {displayedSearches?.map((item, index) => {
                 const formatedDate = unixToFormatedDate(item.unixtimestamp);
                 return (
                   <Item
