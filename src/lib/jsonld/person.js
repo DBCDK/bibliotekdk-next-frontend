@@ -23,7 +23,7 @@ export function usePersonJSONLD({ creatorId }) {
     const creator = data?.creatorByDisplay;
 
     const creatorUrl = `https://bibliotek.dk/ophav/${encodeURIComponent(
-      creatorId,
+      creatorId
     )}`;
 
     const personId = creatorUrl ? `${creatorUrl}#person` : undefined;

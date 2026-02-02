@@ -74,7 +74,7 @@ CreatorPage.getInitialProps = async (ctx) => {
     [creatorOverview],
     ctx,
     { display: ctx.query.creatorId },
-    true,
+    true
   );
   const queries = Object.values(init.initialData);
   // Check if creator exists
