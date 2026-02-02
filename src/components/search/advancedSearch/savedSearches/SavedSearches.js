@@ -244,7 +244,9 @@ export default function SavedSearches() {
     setSelectedMap(new Map());
     // Optimistically remove deleted items from already loaded pages on mobile.
     setDisplayedSearches((prev) =>
-      (Array.isArray(prev) ? prev : []).filter((s) => !idsToDelete.includes(s?.id))
+      (Array.isArray(prev) ? prev : []).filter(
+        (s) => !idsToDelete.includes(s?.id)
+      )
     );
   };
 
