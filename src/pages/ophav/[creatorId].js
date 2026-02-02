@@ -10,12 +10,14 @@ import { useCreatorOverview } from "@/components/creator/Overview";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { creatorOverview } from "@/lib/api/creator.fragments";
 import Custom404 from "@/pages/404";
+import { usePersonJSONLD } from "@/lib/jsonld/person";
 
 export default function CreatorPage() {
   const router = useRouter();
   const { creatorId } = router.query;
   const { canonical, alternate } = useCanonicalUrl();
   const { data, isLoading } = useCreatorOverview(creatorId);
+  const jsonLd = usePersonJSONLD({ creatorId });
 
   // Return 404 page if no works are found for the creator
   if (!isLoading && !data?.generated?.dataSummary?.text) {
@@ -28,6 +30,7 @@ export default function CreatorPage() {
     data?.generated?.dataSummary?.text ||
     "Se værker og udgivelser relateret til denne person.";
   const imageUrl = data?.image?.url;
+
   return (
     <>
       <Head>
@@ -47,6 +50,12 @@ export default function CreatorPage() {
         {alternate.map(({ locale, url }) => (
           <link key={locale} rel="alternate" hreflang={locale} href={url} />
         ))}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
       </Head>
 
       <Header router={router} />
@@ -65,7 +74,7 @@ CreatorPage.getInitialProps = async (ctx) => {
     [creatorOverview],
     ctx,
     { display: ctx.query.creatorId },
-    true
+    true,
   );
   const queries = Object.values(init.initialData);
   // Check if creator exists

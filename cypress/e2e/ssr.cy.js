@@ -289,7 +289,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe.only(`find`, () => {
+  describe(`find`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/find/simpel?q.all=ost").then((res) => {
         expect(res.title).to.equal(
@@ -427,6 +427,26 @@ describe("Server Side Rendering", () => {
         expect(res.jsonld.publisher.logo.url).to.equal(
           "https://bibliotek.dk/img/logo.png"
         );
+      });
+    });
+  });
+
+  describe(`ophav`, () => {
+    it(`has json-ld for person`, () => {
+      const creatorId = "H.C. Andersen (f. 1805)";
+      const expectedUrl =
+        "https://bibliotek.dk/ophav/H.C.%20Andersen%20(f.%201805)";
+
+      getPageHead(`/ophav/${encodeURIComponent(creatorId)}`).then((res) => {
+        expect(res.jsonld["@context"]).to.equal("https://schema.org");
+        expect(res.jsonld["@type"]).to.equal("WebPage");
+        expect(res.jsonld["@id"]).to.equal(expectedUrl);
+        expect(res.jsonld.url).to.equal(expectedUrl);
+        expect(res.jsonld.name).to.equal(creatorId);
+
+        expect(res.jsonld.mainEntity["@type"]).to.equal("Person");
+        expect(res.jsonld.mainEntity["@id"]).to.equal(`${expectedUrl}#person`);
+        expect(res.jsonld.mainEntity.name).to.equal(creatorId);
       });
     });
   });
