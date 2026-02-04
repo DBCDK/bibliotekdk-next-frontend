@@ -48,7 +48,7 @@ import App from "next/app";
 import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
 
-import ErrorPage from "./500";
+import ErrorPage from "./fejl";
 import { BookmarkSyncProvider } from "@/components/hooks/useBookmarks";
 import useIsOnline from "@/components/hooks/useIsOnline";
 import { UseManyProvider } from "@/components/hooks/useMany";
@@ -112,12 +112,20 @@ let pageProps;
 export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // sync pageProps
   pageProps = { ...pageProps, ..._pageProps };
+  // Avoid stale flags carrying over between navigations
+  pageProps.serviceUnavailable = !!_pageProps?.serviceUnavailable;
 
   const isOnline = useIsOnline();
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
   // let Translate component handle whatever could be wrong with the result
   setTranslations(pageProps.translations);
+
+  // If critical SSR dependencies are down (e.g. login/token service),
+  // render a friendly fallback instead of letting the whole app crash.
+  if (pageProps?.serviceUnavailable) {
+    return <ErrorPage statusCode={503} />;
+  }
 
   // swr global confuguration options
   const swrConfigValue = {
@@ -291,23 +299,44 @@ MyApp.getInitialProps = async (ctx) => {
   if (typeof window !== "undefined") {
     return { pageProps: {} };
   }
-  // Get session ensures that an access token is available encoded as JWT cookie
-  const session = await getServerSession(ctx?.ctx?.req, ctx?.ctx?.res);
+  const req = ctx?.ctx?.req;
+  const res = ctx?.ctx?.res;
+
+  let session = null;
+  let serviceUnavailable = false;
+
+  // Get session ensures that an access token is available encoded as JWT cookie.
+  // If the login/token service is down, treat the entire request as 503.
+  try {
+    session = await getServerSession(req, res);
+  } catch (e) {
+    serviceUnavailable = true;
+    if (res) res.statusCode = 503;
+  }
 
   // We store the JWT cookie with the access token. This is injected as cookie
   // when GraphQL proxy is called during SSR
-  ctx.ctx.req.customCookieHeader = buildCookieHeader(
-    ctx?.ctx?.req,
-    ctx?.ctx?.res
-  );
+  try {
+    if (req) req.customCookieHeader = buildCookieHeader(req, res);
+  } catch (e) {
+    // If cookie building fails, we can still render the fallback/error UI.
+  }
 
   const appProps = await App.getInitialProps(ctx);
+
+  let translations = false;
+  try {
+    translations = await fetchTranslations();
+  } catch (e) {
+    // Keep translations false; Translate() can handle missing data.
+  }
 
   return {
     pageProps: {
       ...appProps?.pageProps,
-      translations: await fetchTranslations(),
+      translations,
       session,
+      serviceUnavailable,
     },
   };
 };

@@ -5,15 +5,20 @@
  */
 
 import { log } from "dbc-node-logger";
-import Custom500 from "@/pages/500";
+import ErrorPage from "@/pages/fejl";
+import { Custom as Custom404Inner } from "@/pages/404";
 
 /**
  * Handle 500 errorcode - return page not found
  * @returns {React.JSX.Element}
  */
 
-function Error() {
-  return <Custom500 />;
+function Error({ statusCode }) {
+  if (statusCode === 404) {
+    // Prefer the dedicated 404 page UI
+    return <Custom404Inner />;
+  }
+  return <ErrorPage statusCode={statusCode} />;
 }
 
 /**
@@ -31,8 +36,8 @@ Error.getInitialProps = ({ req, res, err }) => {
     // log for kibana
     log.error("SERVER SIDE ERROR", {
       error: String(err),
-      stacktrace: err.stack,
-      url: req.url,
+      stacktrace: err?.stack,
+      url: req?.url,
     });
 
     // increase error count for howru function

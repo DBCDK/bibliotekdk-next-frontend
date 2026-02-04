@@ -661,6 +661,14 @@
         "da": "Vi kunne ikke finde siden du leder efter. Prøv at lede efter noget andet",
         "en": "We could not find the page you are looking for - try something else"
       },
+      "general_error_title": {
+        "da": "Vi oplever problemer",
+        "en": "We’re having trouble"
+      },
+      "general_error_description": {
+        "da": "Der opstod en fejl. Vi arbejder på at løse problemet. Prøv igen om lidt, eller gå tilbage.",
+        "en": "Something went wrong. We’re working on it. Please try again shortly, or go back."
+      },
       "500_internal_server_error_title": {
         "da": "Serveren svarede ikke",
         "en": "Server is not responding"
