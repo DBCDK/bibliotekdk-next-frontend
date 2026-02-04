@@ -29,7 +29,9 @@ export default function ErrorPage({ statusCode }) {
             context: "errorpages",
             label: "general_error_description",
           })}{" "}
-          <Link href="/">{Translate({ context: "general", label: "back" })}.</Link>
+          <Link href="/">
+            {Translate({ context: "general", label: "back" })}.
+          </Link>
         </Text>
 
         {statusCode ? (
@@ -41,4 +43,3 @@ export default function ErrorPage({ statusCode }) {
     </>
   );
 }
-
