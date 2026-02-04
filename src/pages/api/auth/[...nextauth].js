@@ -22,7 +22,9 @@ function wantsHtml(req) {
 
 function isAuthFlowRequest(req) {
   const url = req?.url || "";
-  return url.startsWith("/api/auth/signin") || url.startsWith("/api/auth/callback");
+  return (
+    url.startsWith("/api/auth/signin") || url.startsWith("/api/auth/callback")
+  );
 }
 
 async function assertOauthServiceUp() {
