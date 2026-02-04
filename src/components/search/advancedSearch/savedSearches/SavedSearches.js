@@ -26,6 +26,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import Skeleton from "@/components/base/skeleton/Skeleton";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
@@ -165,6 +166,26 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   );
 }
 
+function SavedSearchesSkeleton({ rows = 6 }) {
+  return (
+    <div className={styles.skeletonContainer} aria-hidden="true">
+      {Array.from({ length: rows }).map((_, idx) => (
+        <div className={styles.skeletonRow} key={`saved-skel-${idx}`}>
+          <Skeleton className={styles.skeletonCheckbox} />
+          <Skeleton className={styles.skeletonDate} />
+          <div className={styles.skeletonPreview}>
+            <Skeleton className={styles.skeletonText} />
+            <Skeleton className={styles.skeletonSmallText} />
+          </div>
+          <Skeleton className={styles.skeletonResults} />
+          <Skeleton className={styles.skeletonIconPrimary} />
+          <Skeleton className={styles.skeletonIconSecondary} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function SavedSearches() {
   const {
     deleteSearches,
@@ -185,24 +206,53 @@ export default function SavedSearches() {
   const [showCombinedSearch, setShowCombinedSearch] = useState(false);
   const [displayedSearches, setDisplayedSearches] = useState([]);
 
-  // - Mobile: append pages ("show more")
-  // - Desktop: replace (show only one page at a time)
   useEffect(() => {
     if (!isAuthenticated) {
       setDisplayedSearches([]);
       return;
     }
 
-    const pageResults = savedSearches || [];
-
-    if (isMobile) {
-      setDisplayedSearches((prev) =>
-        currentPage === 1 ? pageResults : [...(prev || []), ...pageResults]
-      );
-    } else {
-      setDisplayedSearches(pageResults);
+    // While paging/loading (data is undefined), keep the previously rendered list
+    // to avoid layout shift.
+    if (!savedSearchesData) {
+      return;
     }
-  }, [savedSearchesData, isLoading, currentPage, isMobile, isAuthenticated]);
+
+    const pageResults = Array.isArray(savedSearches) ? savedSearches : [];
+
+
+  // - Mobile: append pages ("show more")
+  // - Desktop: replace (show only one page at a time)
+    setDisplayedSearches((prev) => {
+      if (isMobile) {
+        if (currentPage === 1) {
+          const prevArr = Array.isArray(prev) ? prev : [];
+          const sameOrderAndIds =
+            prevArr.length === pageResults.length &&
+            prevArr.every((s, i) => s?.id === pageResults[i]?.id);
+          return sameOrderAndIds ? prevArr : pageResults;
+        }
+
+        const prevArr = Array.isArray(prev) ? prev : [];
+        const seen = new Set(prevArr.map((s) => s?.id).filter(Boolean));
+        const merged = [...prevArr];
+        let changed = false;
+        for (const s of pageResults) {
+          if (s?.id && !seen.has(s.id)) {
+            seen.add(s.id);
+            merged.push(s);
+            changed = true;
+          }
+        }
+        return changed ? merged : prevArr;
+      }
+      const prevArr = Array.isArray(prev) ? prev : [];
+      const sameOrderAndIds =
+        prevArr.length === pageResults.length &&
+        prevArr.every((s, i) => s?.id === pageResults[i]?.id);
+      return sameOrderAndIds ? prevArr : pageResults;
+    });
+  }, [isAuthenticated, isMobile, currentPage, savedSearchesData, savedSearches]);
 
   /**
    * scrolls to the top of the page
@@ -285,6 +335,14 @@ export default function SavedSearches() {
     }
     setCurrentPage(newPage);
   };
+
+  // Show skeleton when we are loading and have no list yet (initial/empty state).
+  const showLoadingSkeleton =
+    isAuthenticated && isLoading && displayedSearches?.length === 0;
+
+  // On desktop paging: keep height stable by showing a skeleton instead of swapping list content.
+  const showDesktopPagingSkeleton =
+    isAuthenticated && !isMobile && isLoading && displayedSearches?.length > 0;
 
   return (
     <div className={styles.container}>
@@ -375,104 +433,104 @@ export default function SavedSearches() {
         )}
         {displayedSearches?.length > 0 && isAuthenticated ? (
           <>
-            <Accordion dataCy="saved-searches-accordion" isLoading={isLoading}>
-              {displayedSearches?.map((item, index) => {
-                const formatedDate = unixToFormatedDate(item.unixtimestamp);
-                return (
-                  <Item
-                    dataCy={`accordion-item-${index}`}
-                    className={styles.accordioItem}
-                    CustomHeaderComponent={(props) => (
-                      <SavedItemRow
-                        {...props}
-                        index={index}
-                        onSelect={onSelect}
-                        item={item}
-                        checked={selectedMap.has(item.id)}
-                      />
-                    )}
-                    key={item.id}
-                    eventKey={item.id}
-                  >
-                    <div
-                      className={styles.accordionContentContainer}
-                      data-cy={`accordion-expanded-content-${index + 1}`}
+            {showDesktopPagingSkeleton ? (
+              <SavedSearchesSkeleton rows={6} />
+            ) : (
+              <Accordion dataCy="saved-searches-accordion">
+                {displayedSearches?.map((item, index) => {
+                  const formatedDate = unixToFormatedDate(item.unixtimestamp);
+                  return (
+                    <Item
+                      dataCy={`accordion-item-${index}`}
+                      className={styles.accordioItem}
+                      CustomHeaderComponent={(props) => (
+                        <SavedItemRow
+                          {...props}
+                          index={index}
+                          onSelect={onSelect}
+                          item={item}
+                          checked={selectedMap.has(item.id)}
+                        />
+                      )}
+                      key={item.id}
+                    eventKey={String(item.id)}
                     >
-                      <div className={styles.accordionContent}>
-                        <div />
-                        <div />
-                        <div>
-                          <SearchQueryDisplay item={item} />
+                      <div
+                        className={styles.accordionContentContainer}
+                        data-cy={`accordion-expanded-content-${index + 1}`}
+                      >
+                        <div className={styles.accordionContent}>
+                          <div />
+                          <div />
+                          <div>
+                            <SearchQueryDisplay item={item} />
+                          </div>
+                          <Text type="text2" tag="span">
+                            <Link
+                              onClick={() => {
+                                //show edit name modal
+                                modal.push("saveSearch", {
+                                  item: item,
+                                  fromEditSearch: true,
+                                });
+                              }}
+                              border={{
+                                top: false,
+                                bottom: {
+                                  keepVisible: true,
+                                },
+                              }}
+                            >
+                              {Translate({
+                                context: "search",
+                                label: "editName",
+                              })}
+                            </Link>
+                          </Text>
+                          <div />
+                          <div />
                         </div>
-                        <Text type="text2" tag="span">
-                          <Link
-                            onClick={() => {
-                              //show edit name modal
-                              modal.push("saveSearch", {
-                                item: item,
-                                fromEditSearch: true,
-                              });
-                            }}
-                            border={{
-                              top: false,
-                              bottom: {
-                                keepVisible: true,
-                              },
-                            }}
-                          >
-                            {Translate({
-                              context: "search",
-                              label: "editName",
-                            })}
-                          </Link>
-                        </Text>
-                        <div />
-                        <div />
-                      </div>
-                      {isMobile && (
-                        <div className={styles.mobileContent}>
-                          <Text type="text2">{formatedDate}</Text>
+                        {isMobile && (
+                          <div className={styles.mobileContent}>
+                            <Text type="text2">{formatedDate}</Text>
 
-                          <Icon
-                            className={styles.removeItemIcon}
-                            size={3}
-                            src={`trash_blue.svg`}
-                            tabIndex={0}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (item?.id) {
-                                deleteSearches({ idsToDelete: [item.id] });
-                              }
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter" || e.key === " ") {
-                                e.preventDefault();
+                            <Icon
+                              className={styles.removeItemIcon}
+                              size={3}
+                              src={`trash_blue.svg`}
+                              tabIndex={0}
+                              onClick={(e) => {
                                 e.stopPropagation();
                                 if (item?.id) {
                                   deleteSearches({ idsToDelete: [item.id] });
                                 }
-                              }
-                            }}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </Item>
-                );
-              })}
-            </Accordion>
-
-            {totalPages > 1 && (
-              <Pagination
-                className={styles.pagination}
-                numPages={totalPages}
-                currentPage={currentPage}
-                onChange={onPageChange}
-              />
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  if (item?.id) {
+                                    deleteSearches({ idsToDelete: [item.id] });
+                                  }
+                                }
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </Item>
+                  );
+                })}
+              </Accordion>
             )}
+
+            {isMobile && isLoading && <SavedSearchesSkeleton rows={4} />}
           </>
         ) : (
-          isAuthenticated && (
+          isAuthenticated &&
+          (showLoadingSkeleton ? (
+            <SavedSearchesSkeleton rows={isMobile ? 4 : 6} />
+          ) : (
             <div className={styles.emptyListMessage}>
               {
                 <Text type="text2">
@@ -507,7 +565,16 @@ export default function SavedSearches() {
                 </Text>
               }
             </div>
-          )
+          ))
+        )}
+
+        {isAuthenticated && totalPages > 1 && (
+          <Pagination
+            className={styles.pagination}
+            numPages={totalPages}
+            currentPage={currentPage}
+            onChange={onPageChange}
+          />
         )}
       </div>
     </div>
