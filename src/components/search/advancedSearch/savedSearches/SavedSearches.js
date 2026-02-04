@@ -212,17 +212,15 @@ export default function SavedSearches() {
       return;
     }
 
-    // While paging/loading (data is undefined), keep the previously rendered list
-    // to avoid layout shift.
+    // While paging/loading (data is undefined), keep the previously rendered list to avoid layout shift.
     if (!savedSearchesData) {
       return;
     }
 
     const pageResults = Array.isArray(savedSearches) ? savedSearches : [];
 
-
-  // - Mobile: append pages ("show more")
-  // - Desktop: replace (show only one page at a time)
+    // - Mobile: append pages ("show more")
+    // - Desktop: replace (show only one page at a time)
     setDisplayedSearches((prev) => {
       if (isMobile) {
         if (currentPage === 1) {
@@ -252,7 +250,13 @@ export default function SavedSearches() {
         prevArr.every((s, i) => s?.id === pageResults[i]?.id);
       return sameOrderAndIds ? prevArr : pageResults;
     });
-  }, [isAuthenticated, isMobile, currentPage, savedSearchesData, savedSearches]);
+  }, [
+    isAuthenticated,
+    isMobile,
+    currentPage,
+    savedSearchesData,
+    savedSearches,
+  ]);
 
   /**
    * scrolls to the top of the page
@@ -453,7 +457,7 @@ export default function SavedSearches() {
                         />
                       )}
                       key={item.id}
-                    eventKey={String(item.id)}
+                      eventKey={String(item.id)}
                     >
                       <div
                         className={styles.accordionContentContainer}
