@@ -15,6 +15,37 @@ if (!clientId || !clientSecret) {
   log.error("ClientId or/and clientSecret was not set. Login is not possible");
 }
 
+function wantsHtml(req) {
+  const accept = req?.headers?.accept || "";
+  return accept.includes("text/html");
+}
+
+function isAuthFlowRequest(req) {
+  const url = req?.url || "";
+  return url.startsWith("/api/auth/signin") || url.startsWith("/api/auth/callback");
+}
+
+async function assertOauthServiceUp() {
+  // Preflight the OAuth host. If it's down (503) we can avoid redirecting users
+  // into a dead login flow and instead show our general error page.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 1500);
+  try {
+    const res = await fetch("https://login.bib.dk", {
+      method: "GET",
+      signal: controller.signal,
+      cache: "no-store",
+    });
+    if (res.status === 503 || res.status >= 500) {
+      const e = new Error(`OAuth service unhealthy (status ${res.status})`);
+      e.statusCode = 503;
+      throw e;
+    }
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export const options = {
   cookies: {
     sessionToken: {
@@ -42,10 +73,10 @@ export const options = {
   pages: {
     // Error code passed in query string as ?error=
     // https://next-auth.js.org/configuration/pages#sign-in-page
-    signIn: "/login/fejl",
+    signIn: "/fejl",
     // Error code passed in query string as ?error=
     // https://next-auth.js.org/configuration/pages#error-page
-    error: "/login/fejl",
+    error: "/fejl",
   },
   providers: [
     adgangsplatformen({
@@ -105,15 +136,45 @@ export const options = {
 };
 
 export default async function Handler(req, res) {
-  if (req.url === "/api/auth/signout") {
-    let url = req.body.callbackUrl;
+  try {
+    // If the upstream OAuth server is down, redirect early for auth flow routes.
+    if (isAuthFlowRequest(req)) {
+      await assertOauthServiceUp();
+    }
 
-    const jwt = await decodeCookie(req.cookies["next-auth.session-token"]);
-    const accessToken = jwt?.accessToken;
+    if (req.url === "/api/auth/signout") {
+      let url = req.body.callbackUrl;
 
-    url = url?.replace("access_token=undefined", `access_token=${accessToken}`);
-    req.body.callbackUrl = url;
+      const jwt = await decodeCookie(req.cookies["next-auth.session-token"]);
+      const accessToken = jwt?.accessToken;
+
+      url = url?.replace(
+        "access_token=undefined",
+        `access_token=${accessToken}`
+      );
+      req.body.callbackUrl = url;
+    }
+
+    return NextAuth(req, res, options);
+  } catch (err) {
+    const statusCode = err?.statusCode || 503;
+
+    log.error("NextAuth handler error (likely upstream outage)", {
+      statusCode,
+      error: String(err),
+      stacktrace: err?.stack,
+      url: req?.url,
+    });
+
+    // If this is a browser navigation, send the user to the general error page.
+    if (wantsHtml(req)) {
+      const method = (req?.method || "GET").toUpperCase();
+      const redirectStatus = method === "GET" ? 302 : 307;
+      res.redirect(redirectStatus, "/fejl");
+      return;
+    }
+
+    // Otherwise, return a predictable API response
+    res.status(statusCode).json({ error: "service_unavailable" });
   }
-
-  return NextAuth(req, res, options);
 }
