@@ -13,7 +13,7 @@ import { Custom as Custom404Inner } from "@/pages/404";
  * @returns {React.JSX.Element}
  */
 
-function Error({ statusCode }) {
+function AppErrorPage({ statusCode }) {
   if (statusCode === 404) {
     // Prefer the dedicated 404 page UI
     return <Custom404Inner />;
@@ -28,7 +28,7 @@ function Error({ statusCode }) {
  * @param err
  * @returns {{statusCode: (*|number)}}
  */
-Error.getInitialProps = ({ req, res, err }) => {
+AppErrorPage.getInitialProps = ({ req, res, err }) => {
   let incErrors = null;
   if (typeof window === "undefined") {
     incErrors = require("../utils/errorCount").incErrorCount;
@@ -48,4 +48,4 @@ Error.getInitialProps = ({ req, res, err }) => {
   return { statusCode };
 };
 
-export default Error;
+export default AppErrorPage;
