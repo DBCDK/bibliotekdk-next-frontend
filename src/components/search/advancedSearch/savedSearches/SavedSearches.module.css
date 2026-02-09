@@ -124,6 +124,80 @@
   margin-right: 0;
 }
 
+
+.skeletonContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeletonRow {
+  display: grid;
+  grid-template-columns: var(--pt4) 1fr var(--pt4);
+  column-gap: var(--pt1);
+  padding: var(--pt1_5) var(--pt2);
+  align-items: flex-start;
+  border-bottom: 1px solid var(--iron);
+}
+
+.skeletonPreview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt1);
+}
+
+/* Override Skeleton's default absolute overlay behavior */
+.skeletonCheckbox,
+.skeletonDate,
+.skeletonText,
+.skeletonSmallText,
+.skeletonResults,
+.skeletonIconPrimary,
+.skeletonIconSecondary {
+  position: unset;
+  margin: 0;
+}
+
+.skeletonCheckbox {
+  width: var(--pt4);
+  height: var(--pt4);
+  margin-top: 5px;
+  grid-column: 1;
+}
+
+.skeletonDate {
+  display: none;
+}
+
+.skeletonText {
+  width: 100%;
+  height: var(--pt3);
+}
+
+.skeletonSmallText {
+  width: 60%;
+  height: var(--pt3);
+}
+
+.skeletonResults {
+  display: none;
+}
+
+.skeletonIconPrimary,
+.skeletonIconSecondary {
+  width: var(--pt4);
+  height: var(--pt4);
+  justify-self: flex-end;
+  margin-top: 3px;
+}
+
+.skeletonIconPrimary {
+  grid-column: 3;
+}
+
+.skeletonIconSecondary {
+  display: none;
+}
+
 /* ===== Media Queries ===== */
 
 /* ≥ 576px (sm) */
@@ -180,5 +254,39 @@
   .emptyListMessage,
   .notLoggedIn {
     padding: var(--pt5) var(--pt2) var(--pt2) var(--pt6);
+  }
+
+  .skeletonRow {
+    grid-template-columns: var(--pt2) var(--pt16) 14fr var(--pt6) 1.5fr 2fr;
+    column-gap: var(--pt2);
+    align-items: center;
+  }
+
+  .skeletonCheckbox {
+    margin-top: 0;
+    grid-column: auto;
+  }
+
+  .skeletonDate {
+    display: block;
+    width: 70%;
+    height: var(--pt3);
+  }
+
+  .skeletonSmallText {
+    display: none;
+  }
+
+  .skeletonResults {
+    display: block;
+    width: 60%;
+    height: var(--pt3);
+  }
+
+  .skeletonIconPrimary,
+  .skeletonIconSecondary {
+    margin-top: 0;
+    justify-self: end;
+    display: block;
   }
 }
