@@ -29,13 +29,16 @@ export default function Wrap({ workId }) {
   const allMostRelevantAreForChildren =
     mostRelevant.length > 0 &&
     mostRelevant.every((manifestation) => {
-      const childrenOrAdultsArray = manifestation?.audience?.childrenOrAdults ?? [];
+      const childrenOrAdultsArray =
+        manifestation?.audience?.childrenOrAdults ?? [];
       return (
-        childrenOrAdultsArray.length > 0 && childrenOrAdultsArray.every((e) => e?.code === "FOR_CHILDREN")
+        childrenOrAdultsArray.length > 0 &&
+        childrenOrAdultsArray.every((e) => e?.code === "FOR_CHILDREN")
       );
     });
 
-  const forChildrenText = getLanguage() === "EN_GB" ? "for children" : "for børn";
+  const forChildrenText =
+    getLanguage() === "EN_GB" ? "for children" : "for børn";
   const childrenOrAdults = allMostRelevantAreForChildren
     ? forChildrenText
     : undefined;
