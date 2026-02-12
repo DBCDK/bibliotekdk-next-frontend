@@ -24,12 +24,24 @@ export default function Wrap({ workId }) {
         ]
       : [];
 
-  const childrenOrAdults = work?.manifestations?.mostRelevant
-    ?.flatMap((manifestation) => manifestation?.audience?.childrenOrAdults)
-    .filter((childOrAdult) => childOrAdult.code === "FOR_CHILDREN")
-    .map((childOrAdult) => {
-      return getLanguage() === "EN_GB" ? "for children" : childOrAdult?.display;
-    })?.[0];
+  const mostRelevant = work?.manifestations?.mostRelevant ?? [];
+  // Only add "for children" when ALL mostRelevant manifestations are exclusively FOR_CHILDREN (Some manifistations contains both FOR_CHILDREN and FOR_ADULTS.)
+  const allMostRelevantAreForChildren =
+    mostRelevant.length > 0 &&
+    mostRelevant.every((manifestation) => {
+      const childrenOrAdultsArray =
+        manifestation?.audience?.childrenOrAdults ?? [];
+      return (
+        childrenOrAdultsArray.length > 0 &&
+        childrenOrAdultsArray.every((e) => e?.code === "FOR_CHILDREN")
+      );
+    });
+
+  const forChildrenText =
+    getLanguage() === "EN_GB" ? "for children" : "for børn";
+  const childrenOrAdults = allMostRelevantAreForChildren
+    ? forChildrenText
+    : undefined;
 
   const fictionNonfiction =
     work?.fictionNonfiction?.code !== "NOT_SPECIFIED" &&
