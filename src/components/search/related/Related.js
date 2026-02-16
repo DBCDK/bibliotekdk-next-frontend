@@ -112,6 +112,9 @@ export default function Wrap() {
     query && subjects({ q: [query], limit: 7 })
   );
 
+  const relatedSubjects =
+    data?.recommendations?.subjects?.map?.(({ subject }) => subject) || [];
+
   // dummy data will be returned on isLoading - skeleton view
   const dummy = [
     "heste",
@@ -128,7 +131,7 @@ export default function Wrap() {
 
   return (
     <Related
-      data={data?.relatedSubjects || (isLoading && dummy) || []}
+      data={relatedSubjects || (isLoading && dummy) || []}
       isLoading={isLoading}
     />
   );

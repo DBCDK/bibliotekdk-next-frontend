@@ -51,6 +51,15 @@ Connected.story = {
   parameters: {
     graphql: {
       resolvers: {
+        Query: {
+          recommendations: () => ({}),
+        },
+        Recommendations: {
+          subjects: () => [
+            { traceId: "1234", subject: "hest" },
+            { traceId: "4321", subject: "fisk" },
+          ],
+        },
         SearchResponse: {
           hitcount: () => "998",
         },

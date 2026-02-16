@@ -11,7 +11,7 @@ RUN npm version
 
 # install dependencies
 RUN npm set progress=false && npm config set depth 0 && \
-    npm install
+    npm ci
 
 # Run lint and tests (f is formatted)
 RUN npm run prettier:check:f

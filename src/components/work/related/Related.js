@@ -102,10 +102,14 @@ export default function Wrap({ workId }) {
       return sub?.language?.isoCode === "dan";
     })
     ?.map((s) => s.display);
+
   // get related subjects
   const { data, isLoading } = useData(
     keywords?.length && subjects({ q: keywords })
   );
+
+  const relatedSubjects =
+    data?.recommendations?.subjects?.map?.(({ subject }) => subject) || [];
 
   const worktype = workData?.work?.workTypes?.[0];
 
@@ -118,7 +122,7 @@ export default function Wrap({ workId }) {
   }
 
   // Remove section if work contains no keywords
-  if ((!data || data?.relatedSubjects?.length === 0) && !isLoading) {
+  if ((!data || relatedSubjects?.length === 0) && !isLoading) {
     return null;
   }
 
@@ -138,7 +142,7 @@ export default function Wrap({ workId }) {
 
   return (
     <Related
-      data={data?.relatedSubjects || (isLoading && dummy) || []}
+      data={relatedSubjects || (isLoading && dummy) || []}
       isLoading={workIsLoading || isLoading}
     />
   );

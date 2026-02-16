@@ -11,9 +11,13 @@ export function subjects({ q, limit = 10 }) {
   return {
     apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
     // delay: 1000, // for debugging
-    query: `query ($q: [String!]!, $limit: Int) {
-        relatedSubjects(q: $q, limit: $limit)
-        monitor(name: "bibdknext_related_subjects")
+    query: `query RelatedSubjects($q: [String!]!, $limit: Int) {
+        recommendations {
+          subjects(q: $q, limit: $limit) {
+            subject
+            traceId
+          }
+        }
       }`,
     variables: {
       q,
