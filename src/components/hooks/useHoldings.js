@@ -162,8 +162,13 @@ export function useHoldingsForAgency({ agencyId, pids }) {
   const ownedByAgency =
     branchesByAvailability?.[0]?.holdings?.ownedByAgency || 0;
 
+  // When the agency does not own the material
+  // We fall back to the material being reservable
+  // Then it may be reserved via digital article service or ILL
+  const isReservable = !ownedByAgency || !!reservablePids?.length;
+
   return {
-    isReservable: !!reservablePids?.length,
+    isReservable,
     reservableManifestations: reservablePids,
     agencyHoldingsLamp,
     branches,
