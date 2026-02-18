@@ -355,15 +355,6 @@ const fields = () => [
         .map((note) => note.display[0])
         .join(", "),
   },
-
-  /*{
-    dataField: "manifestationParts",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "manifestationParts",
-    }),
-    valueParser: RenderManifestationParts,
-  },*/
 ];
 
 /**
