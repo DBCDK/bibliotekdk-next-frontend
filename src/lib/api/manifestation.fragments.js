@@ -578,10 +578,5 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     shelfmark
     postfix
   }
-  manifestationParts {
-     parts {
-        title
-     }
-  }  
 }
 ${tvSeriesFragment}`;
