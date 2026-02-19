@@ -82,7 +82,7 @@
     "eslint-plugin-mocha": "^10.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-storybook": "^0.6.12",
-    "fast-xml-parser": "^5.3.3",
+    "fast-xml-parser": "^5.3.6",
     "graphql": "^15.8.0",
     "jest": "^26.6.0",
     "jszip": "^3.10.1",
