@@ -86,8 +86,6 @@ function useMultiReferences({ materials, modal }) {
     });
   }, [materials]);
 
-  console.log("workBookmarks", workBookmarks);
-
   // Then we populate the work-level bookmarks with their relevant manifestations
   const { data: populatedBookmarks, isLoading } =
     usePopulateBookmarks(workBookmarks);
