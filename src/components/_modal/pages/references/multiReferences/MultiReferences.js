@@ -26,7 +26,7 @@ const SingleReference = ({ bookmarkInList }) => {
   const { data: materials, isLoading } = usePopulateBookmarks(bookmarkInList);
   const material = materials[0];
   const materialType = getMaterialTypeForPresentation(
-    material?.manifestations?.[0]?.materialTypes,
+    material?.manifestations?.[0]?.materialTypes
   );
 
   if (isLoading) return null;
@@ -70,7 +70,7 @@ function useMultiReferences({ materials, modal }) {
   // First we need to find the work-level bookmarks
   const workBookmarks = useMemo(() => {
     const raw = materials.filter((material) =>
-      material.materialId.startsWith("work-of"),
+      material.materialId.startsWith("work-of")
     );
 
     // De-dupe to avoid inflated counts/URLs if upstream sends duplicates.
@@ -125,9 +125,9 @@ function useMultiReferences({ materials, modal }) {
   const missingActionMaterials = useMemo(
     () =>
       workBookmarksWithSelectionState.filter(
-        (mat) => !mat.chosenPid && !mat.toFilter,
+        (mat) => !mat.chosenPid && !mat.toFilter
       ),
-    [workBookmarksWithSelectionState],
+    [workBookmarksWithSelectionState]
   );
 
   // We only show the auto checkbox if there are more than 20 work-level bookmarks that require user action
@@ -137,12 +137,12 @@ function useMultiReferences({ materials, modal }) {
   // Manifestation-level inputs already have concrete pids.
   const manifestationReferenceCount = useMemo(
     () => materials.filter((m) => !m.materialId.startsWith("work-of")).length,
-    [materials],
+    [materials]
   );
   // Work-level inputs are included unless the user removed them.
   const workReferenceCount = useMemo(
     () => workBookmarksWithSelectionState.filter((b) => !b.toFilter).length,
-    [workBookmarksWithSelectionState],
+    [workBookmarksWithSelectionState]
   );
   // Total count shown in the modal title.
   const referenceCount = manifestationReferenceCount + workReferenceCount;
@@ -175,7 +175,7 @@ function useMultiReferences({ materials, modal }) {
   // Items still missing an auto-selected pid.
   const withNewestPidsSelected = useMemo(
     () => missingActionMaterials.filter((mat) => !mat.newestPid),
-    [missingActionMaterials],
+    [missingActionMaterials]
   );
 
   // Export links are disabled until all included work-bookmarks have a pid.
@@ -206,15 +206,19 @@ function useMultiReferences({ materials, modal }) {
   // Persist user-picked edition pid for a work-bookmark.
   const onEditionPick = (pid, materialKey) => {
     modal.prev();
-    setSelectionByKey((prev) => ({
-      ...prev,
-      [materialKey]: {
-        ...prev[materialKey],
-        chosenPid: pid,
-        newestPid: undefined,
-        toFilter: false,
-      },
-    }));
+    setSelectionByKey((prev) => {
+      const prevSelection = prev[materialKey] || {};
+      const nextSelection = { ...prevSelection };
+      delete nextSelection.newestPid;
+      return {
+        ...prev,
+        [materialKey]: {
+          ...nextSelection,
+          chosenPid: pid,
+          toFilter: false,
+        },
+      };
+    });
   };
 
   // Open edition picker for a work-bookmark.
@@ -261,8 +265,9 @@ function useMultiReferences({ materials, modal }) {
       setSelectionByKey((prev) => {
         const next = { ...prev };
         Object.keys(next).forEach((key) => {
-          if (!("newestPid" in (next[key] || {}))) return;
-          const { newestPid: _newestPid, ...rest } = next[key] || {};
+          if (next[key]?.newestPid === undefined) return;
+          const rest = { ...(next[key] || {}) };
+          delete rest.newestPid;
           if (Object.keys(rest).length === 0) {
             delete next[key];
           } else {
