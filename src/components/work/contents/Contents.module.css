@@ -1,0 +1,162 @@
+.tableOfContentsEntries {
+  /* These may be overridden by other components if needed */
+  --base-padding: var(--pt2);
+  --show-more-margin-left: var(--pt2);
+  --odd-background: var(--concrete);
+  --even-background: none;
+  --odd-background-child: none;
+  --even-background-child: var(--concrete);
+  --bottom-border: 1px solid var(--iron);
+
+  margin-bottom: var(--pt2);
+}
+
+.nonExpandableItem {
+  border-top: 1px solid var(--iron);
+}
+
+.headerWrapper {
+  padding-right: var(--pt05);
+}
+
+.columnNoPaddingMobile {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.entriesList {
+  padding: 0;
+  container-type: inline-size;
+  container-name: entriesList;
+  border-bottom: var(--bottom-border);
+}
+
+.entryItem {
+  padding: var(--pt1) var(--pt2);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.mainContent {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+}
+
+.creators p {
+  display: block !important;
+  margin-top: 0;
+}
+
+.contributors {
+  color: var(--gray);
+  padding-left: var(--pt1);
+  font-weight: 400 !important;
+}
+
+.playingTime {
+  margin-left: var(--pt2);
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.playingTime p {
+  margin: 0;
+}
+/* Alternating background classes */
+.parentEntry.darkBackground {
+  background: var(--odd-background);
+}
+
+.parentEntry.lightBackground {
+  background: var(--even-background);
+}
+
+.childEntry.darkBackground {
+  background: var(--odd-background-child);
+}
+
+.childEntry.lightBackground {
+  background: var(--even-background-child);
+}
+
+/* Desktop styling applied to all screen sizes */
+.entryItem p {
+  display: inline;
+}
+
+.showMoreLink {
+  margin-left: var(--show-more-margin-left);
+  margin-top: var(--pt1);
+}
+.showMoreLinkRaw {
+  margin-top: calc(var(--pt05) * 3);
+}
+
+/* Mobile styles - creators on new line (default) */
+.mainContent {
+  flex-direction: column;
+}
+
+.titleWrapper {
+  flex: 1;
+}
+
+.titleWrapperFullWidth {
+  flex: 1;
+}
+
+.creators {
+  flex: none;
+  margin-left: 0;
+  margin-top: var(--pt05);
+}
+
+/* Desktop styles - side-by-side layout */
+@container entriesList (min-width: 650px) {
+  .mainContent {
+    flex-direction: row;
+    max-width: 500px;
+  }
+
+  .titleWrapper {
+    flex: 1;
+    position: relative;
+  }
+
+  .titleWrapperFullWidth {
+    flex: 1;
+  }
+
+  .creators {
+    flex: 1;
+    margin-left: var(--pt2);
+    margin-top: 0;
+  }
+}
+
+@container entriesList (min-width: 750px) {
+  .mainContent {
+    max-width: 600px;
+  }
+}
+@container entriesList (min-width: 850px) {
+  .mainContent {
+    max-width: 700px;
+  }
+}
+
+@media (min-width: 768px) {
+  .columnNoPaddingMobile {
+    padding-right: var(--pt2);
+  }
+}
+
+@media (min-width: 992px) {
+  .columnNoPaddingMobile .tableOfContentsEntries {
+    margin-left: var(--pt2);
+  }
+}

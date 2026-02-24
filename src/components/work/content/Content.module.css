@@ -1,8 +1,0 @@
-.content p {
-  background-color: transparent;
-}
-
-.skeleton p {
-  /* Remove above concrete bg-color from p in skeleton mode */
-  background-color: transparent;
-}

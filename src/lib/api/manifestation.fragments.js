@@ -185,40 +185,6 @@ export function reservationButtonManifestations({ pid }) {
   };
 }
 
-export function manifestationParts({ pid }) {
-  if (!pid) {
-    return null;
-  }
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query manifestationParts($pid: String!) {
-      manifestation(pid: $pid) {
-        manifestationParts {
-          parts {
-            title
-            classifications {
-              display
-            }
-            creators {
-              ...creatorsFragment
-            }
-            contributorsFromDescription
-            creatorsFromDescription            
-            subjects {
-              display
-            }
-            playingTime
-          }
-        }
-      }
-    }
-    ${creatorsFragment}`,
-    variables: { pid },
-    slowThreshold: 3000,
-  };
-}
-
 export function manifestationsForAccessFactory({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -500,10 +466,5 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     shelfmark
     postfix
   }
-  manifestationParts {
-     parts {
-        title
-     }
-  }  
 }
 ${tvSeriesFragment}`;

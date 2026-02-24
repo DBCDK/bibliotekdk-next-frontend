@@ -4,17 +4,16 @@ import Overview from "../overview";
 import Details from "../details";
 import Description from "../description";
 import RelatedWorks from "../relatedworks";
-import Content from "../content";
 import Keywords from "../keywords";
 import Related from "../related";
 import Reviews from "../reviews";
+import { ContentsSection } from "../contents";
 import BibliographicData from "../bibliographicdata";
 import Series from "../series";
 import Header from "@/components/header/Header";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
-import Parts from "../parts";
 
 import Anchor from "@/components/base/anchor";
 import min from "lodash/min";
@@ -82,7 +81,6 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             type={type}
             anchor-label={Translate({ context: "workmenu", label: "loan" })}
           />
-
           <Anchor.Menu />
           <Details
             workId={workId}
@@ -94,20 +92,12 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             type={type}
             anchor-label={Translate({ context: "description", label: "title" })}
           />
-          <Parts
-            workId={workId}
-            type={type}
-            anchor-label={Translate({
-              context: "bibliographic-data",
-              label: "manifestationParts",
-            })}
-          />
           <RelatedWorks
             workId={workId}
             type={type}
             anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}
           />
-          <Content
+          <ContentsSection
             workId={workId}
             type={type}
             anchor-label={Translate({ context: "content", label: "title" })}

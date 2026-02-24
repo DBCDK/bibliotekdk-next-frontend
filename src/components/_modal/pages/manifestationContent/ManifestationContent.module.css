@@ -2,9 +2,6 @@
   padding: var(--pt3) var(--pt6);
 }
 
-.contentlist {
-}
-
 .contentlist li:nth-child(odd) {
   background: none;
 }
@@ -17,8 +14,24 @@
   padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
 }
 
+.tableOfContentsEntries {
+  --base-padding: var(--pt2) !important;
+  --odd-background: none !important;
+  --even-background: var(--concrete) !important;
+}
+
+.tableOfContentsEntriesRaw {
+  padding: var(--pt2) var(--pt2);
+}
+
 @media (min-width: 576px) {
+  .tableOfContentsEntries {
+    --base-padding: var(--pt6) !important;
+  }
   .contentlist li {
     padding: var(--pt1) var(--pt6) var(--pt1) var(--pt6);
+  }
+  .tableOfContentsEntriesRaw {
+    padding: var(--pt2) var(--pt6);
   }
 }

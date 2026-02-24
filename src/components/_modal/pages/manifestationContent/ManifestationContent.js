@@ -7,13 +7,16 @@
  */
 import Top from "@/components/_modal/pages/base/top";
 import Edition from "@/components/_modal/pages/edition/Edition";
-import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 import styles from "./ManifestationContent.module.css";
 import Translate from "@/components/base/translate";
+import {
+  TableOfContentsEntries,
+  useTablesOfContents,
+} from "@/components/work/contents/Contents";
 
 export default function ManifestationContent(props) {
-  const { pid, showOrderTxt, parts } = props.context;
-
+  const { workId, type, pid, showOrderTxt } = props.context;
+  const tableOfContents = useTablesOfContents({ workId, type, pid });
   return (
     <div>
       <Top
@@ -24,15 +27,14 @@ export default function ManifestationContent(props) {
         })}
       />
       <Edition showOrderTxt={showOrderTxt} pids={[pid]} />
-
-      <ManifestationParts
-        pid={pid}
-        showMoreButton={false}
-        titlesOnly={false}
-        parts={parts}
-        className={styles.contentlist}
-        breakOnCreator={true}
-      />
+      <div
+        className={tableOfContents.raw ? styles.tableOfContentsEntriesRaw : ""}
+      >
+        <TableOfContentsEntries
+          {...tableOfContents}
+          className={styles.tableOfContentsEntries}
+        />
+      </div>
     </div>
   );
 }
