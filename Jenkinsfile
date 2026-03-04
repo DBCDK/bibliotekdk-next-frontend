@@ -4,7 +4,7 @@ def app
 
 pipeline {
     agent {
-        label 'devel11'
+        label 'devel13'
     }
     triggers {
         githubPush()
