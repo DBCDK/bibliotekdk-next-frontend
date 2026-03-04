@@ -23,7 +23,7 @@ export default async function fetchTranslations() {
   let ok = true;
   // @TODO errorhandling
   try {
-    const response = await fetch(config.backend.url + "/get_translations", {
+    const response = await fetch(config.backend.url + "/api/translation/get_translations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,6 +37,8 @@ export default async function fetchTranslations() {
       console.log(error, "FETCH ERROR");
       ok = false;
     });
+    console.log(result, "result");
+
 
     return { ok, result };
   } catch (e) {
