@@ -1,0 +1,129 @@
+{
+  "version": 3,
+  "generatedAt": "2026-03-04T13:52:44.060Z",
+  "fileName": "9788776275884.epub",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "klara-og-gry-pa-flugt",
+    "creator": null,
+    "language": "da-DK"
+  },
+  "counts": {
+    "spineLen": 4,
+    "tocLen": 1,
+    "duplicateSpineIndexCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "klara-og-gry-pa-flugt-1.xhtml",
+      "idref": "klara-og-gry-pa-flugt-1",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "klara-og-gry-pa-flugt-2.xhtml",
+      "idref": "klara-og-gry-pa-flugt-2",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "klara-og-gry-pa-flugt-3.xhtml",
+      "idref": "klara-og-gry-pa-flugt-3",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "klara-og-gry-pa-flugt-4.xhtml",
+      "idref": "klara-og-gry-pa-flugt-4",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "klara-og-gry-pa-flugt-1.xhtml",
+      "hrefNoFrag": "klara-og-gry-pa-flugt-1.xhtml",
+      "label": "Cover",
+      "spineIndex": 0,
+      "spineHit": "klara-og-gry-pa-flugt-1.xhtml"
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "klara-og-gry-pa-flugt-1.xhtml",
+        "label": "Cover"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "klara-og-gry-pa-flugt-1.xhtml",
+        "label": "Cover"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "klara-og-gry-pa-flugt-1.xhtml",
+        "label": "Cover"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "klara-og-gry-pa-flugt-1.xhtml",
+        "label": "Cover"
+      },
+      {
+        "href": "klara-og-gry-pa-flugt-2.xhtml",
+        "label": "Indhold"
+      }
+    ],
+    "score": {
+      "mode": "fallback",
+      "score": 60,
+      "reasons": [
+        "small-toc"
+      ],
+      "metrics": {
+        "spineLen": 4,
+        "tocLen": 1,
+        "mapped": 1,
+        "mappedUnique": 1,
+        "tocSpineRatio": 0.25,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1,
+        "titleRepeatRatio": 0
+      }
+    },
+    "collapse": true
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "fallback",
+      "score": 60,
+      "reasons": [
+        "small-toc"
+      ],
+      "metrics": {
+        "spineLen": 4,
+        "tocLen": 1,
+        "mapped": 1,
+        "mappedUnique": 1,
+        "tocSpineRatio": 0.25,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1,
+        "titleRepeatRatio": 0
+      }
+    },
+    "collapse": true
+  }
+}

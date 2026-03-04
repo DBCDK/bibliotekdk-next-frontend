@@ -20,14 +20,95 @@ import { deriveBookEdgesFromLoc } from "./epubNavUtils";
 
 const FULLSCREEN_MIN_SPREAD_WIDTH = 800;
 
-function applySpreadForWidth(rendition, fullscreen) {
+function parseBoolLike(v) {
+  const s = String(v ?? "")
+    .trim()
+    .toLowerCase();
+  return s === "true" || s === "1" || s === "yes";
+}
+
+function detectFixedLayoutBook(book) {
+  const md = book?.packaging?.metadata || book?.package?.metadata || {};
+  const layout = String(md?.layout || "").trim().toLowerCase();
+  if (layout === "pre-paginated") return true;
+
+  const fixedLayoutOpt = book?.displayOptions?.fixedLayout;
+  if (parseBoolLike(fixedLayoutOpt)) return true;
+
+  const spineItems = book?.spine?.spineItems || [];
+  return spineItems.some((it) =>
+    /\bpage-spread-(left|right|center)\b/i.test(it?.properties || "")
+  );
+}
+
+function ensureFixedSpreadProperties(book, log) {
+  const items = book?.spine?.spineItems || [];
+  if (!items.length) return { patched: false, count: 0, reason: "no-spine" };
+
+  const hasAnyDeclared = items.some((it) =>
+    /\bpage-spread-(left|right|center)\b/i.test(it?.properties || "")
+  );
+  if (hasAnyDeclared)
+    return { patched: false, count: 0, reason: "already-declared" };
+
+  let count = 0;
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i];
+    const existing = String(it?.properties || "").trim();
+
+    // Common fixed-layout convention:
+    // cover (index 0) stands alone as right page, then alternating left/right.
+    const spread = i === 0 ? "page-spread-right" : i % 2 === 1 ? "page-spread-left" : "page-spread-right";
+
+    const next = existing ? `${existing} ${spread}` : spread;
+    if (it && it.properties !== next) {
+      it.properties = next;
+      count++;
+    }
+  }
+
+  if (typeof log === "function") {
+    const preview = items.slice(0, 6).map((it, idx) => ({
+      idx,
+      href: it?.href || null,
+      properties: it?.properties || "",
+    }));
+    log("fixed spread props synthesized", { count, preview });
+  }
+
+  return { patched: count > 0, count, reason: "synthesized" };
+}
+
+function getSpreadPolicy({ fullscreen, isFixedLayout }) {
+  if (isFixedLayout) {
+    if (fullscreen) {
+      return {
+        spread: "auto",
+        minSpreadWidth: FULLSCREEN_MIN_SPREAD_WIDTH,
+        reason: "fixed-layout-fullscreen",
+      };
+    }
+    return {
+      spread: "none",
+      minSpreadWidth: Number.POSITIVE_INFINITY,
+      reason: "fixed-layout-nonfullscreen",
+    };
+  }
+
+  return {
+    spread: fullscreen ? "auto" : "none",
+    minSpreadWidth: FULLSCREEN_MIN_SPREAD_WIDTH,
+    reason: fullscreen ? "fullscreen" : "default",
+  };
+}
+
+function applySpreadForWidth(rendition, opts) {
   if (!rendition) return;
+  const policy = getSpreadPolicy(opts || {});
   try {
-    rendition.spread?.(
-      fullscreen ? "auto" : "none",
-      FULLSCREEN_MIN_SPREAD_WIDTH
-    );
+    rendition.spread?.(policy.spread, policy.minSpreadWidth);
   } catch {}
+  return policy;
 }
 
 function clearViewerEl(el) {
@@ -44,47 +125,63 @@ function isZipArrayBuffer(ab) {
   }
 }
 
-function injectStyle(doc) {
+function injectStyle(doc, { isFixedLayout = false } = {}) {
   if (!doc) return;
   if (doc.getElementById("dbc-epub-style")) return;
 
   const style = doc.createElement("style");
   style.id = "dbc-epub-style";
-  style.textContent = `
-    html, body { height: 100% !important; margin:0 !important; padding:0 !important; }
-    body {
-      background: var(--epub-page-bg);
-      color: var(--epub-page-fg);
-      font-family: var(--epub-page-font, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif);
-      line-height: var(--epub-page-line-height, 1.55);
-      box-sizing: border-box;
-    }
-    img { max-width: 100% !important; height: auto !important; }
-    header, footer, .watermark, .ad { display: none !important; }
-    a, a * { pointer-events: auto !important; cursor: pointer !important; }
-    a { color: var(--epub-link-fg) !important; text-decoration: var(--epub-link-decoration, underline) !important; }
+  if (isFixedLayout) {
+    // Fixed-layout pages rely on author CSS (absolute positioning / clipping).
+    style.textContent = `
+      html { margin:0 !important; padding:0 !important; overflow:hidden !important; }
+      body {
+        margin-top: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        box-sizing: border-box;
+      }
+      a, a * { pointer-events: auto !important; cursor: pointer !important; }
+    `;
+  } else {
+    style.textContent = `
+      html, body { height: 100% !important; margin:0 !important; padding:0 !important; }
+      body {
+        background: var(--epub-page-bg);
+        color: var(--epub-page-fg);
+        font-family: var(--epub-page-font, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif);
+        line-height: var(--epub-page-line-height, 1.55);
+        box-sizing: border-box;
+      }
+      img { max-width: 100% !important; height: auto !important; }
+      header, footer, .watermark, .ad { display: none !important; }
+      a, a * { pointer-events: auto !important; cursor: pointer !important; }
+      a { color: var(--epub-link-fg) !important; text-decoration: var(--epub-link-decoration, underline) !important; }
 
-    /* Cover centering */
-    section.cover, section[epub\\:type~="cover"], [epub\\:type~="cover"] {
-      height: 100% !important;
-      display: grid !important;
-      place-items: center !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow: hidden !important;
-    }
-    section.cover svg, section[epub\\:type~="cover"] svg {
-      max-width: 100% !important;
-      max-height: 100% !important;
-      width: auto !important;
-      height: auto !important;
-    }
-    section.cover img, section[epub\\:type~="cover"] img {
-      max-width: 100% !important;
-      max-height: 100% !important;
-      object-fit: contain !important;
-    }
-  `;
+      /* Cover centering */
+      section.cover, section[epub\\:type~="cover"], [epub\\:type~="cover"] {
+        height: 100% !important;
+        display: grid !important;
+        place-items: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+      }
+      section.cover svg, section[epub\\:type~="cover"] svg {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+      }
+      section.cover img, section[epub\\:type~="cover"] img {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+      }
+    `;
+  }
   doc.head?.appendChild(style);
 }
 
@@ -206,6 +303,7 @@ export function useEpubReader({
   const failedKeyRef = useRef(null);
   const swipeEnabledRef = useRef(swipeable);
   const swipeHandlersRef = useRef({ prev: null, next: null });
+  const isFixedLayoutRef = useRef(false);
 
   // resize guard
   const lastRectRef = useRef({ w: 0, h: 0 });
@@ -296,35 +394,63 @@ export function useEpubReader({
 
     if (typeof currentSpineIdx !== "number") return;
 
+    const visibleEndSpineIdx =
+      typeof loc?.end?.index === "number"
+        ? loc.end.index
+        : typeof loc?.end?.href === "string"
+        ? spineIndexOfDebug(book, loc.end.href).idx
+        : currentSpineIdx;
+
+    const isFixedSpreadFullscreen = isFixedLayoutRef.current && isFullscreen;
+    const effectiveSpineIdxForProgress =
+      isFixedSpreadFullscreen && typeof visibleEndSpineIdx === "number"
+        ? Math.max(currentSpineIdx, visibleEndSpineIdx)
+        : currentSpineIdx;
+
     const edges = deriveBookEdgesFromLoc(
       { ...loc, start: { ...(loc?.start || {}), index: currentSpineIdx } },
       spineLenRef.current || 0
     );
-    setAtBookStart(!!edges.derivedAtStart);
-    setAtBookEnd(!!edges.derivedAtEnd);
+    const atStart = !!edges.derivedAtStart;
+    const atEnd = isFixedSpreadFullscreen
+      ? typeof visibleEndSpineIdx === "number"
+        ? visibleEndSpineIdx >= edges.lastSpineIdx
+        : !!edges.derivedAtEnd
+      : !!edges.derivedAtEnd;
 
-    const seg = segmentFromSpine(currentSpineIdx);
+    setAtBookStart(atStart);
+    setAtBookEnd(atEnd);
+
+    const seg = segmentFromSpine(effectiveSpineIdxForProgress);
     setSegIndex((prev) => (seg !== prev ? seg : prev));
 
     const fileIntra = calcFileIntra(loc);
+    const progressIntra = atEnd ? 1 : fileIntra;
     const { start, count } = segmentBounds(seg);
 
-    const offset = Math.max(0, Math.min(count - 1, currentSpineIdx - start));
-    const segIntra = Math.max(0, Math.min(1, (offset + fileIntra) / count));
+    const offset = Math.max(
+      0,
+      Math.min(count - 1, effectiveSpineIdxForProgress - start)
+    );
+    const segIntra = Math.max(0, Math.min(1, (offset + progressIntra) / count));
     setChapterIntra(segIntra);
 
     if (debugEnabled) {
       log("relocated", {
         seg,
         currentSpineIdx,
+        visibleEndSpineIdx,
+        effectiveSpineIdxForProgress,
+        isFixedSpreadFullscreen,
         fileIntra,
+        progressIntra,
         segStart: start,
         segCount: count,
         segIntra,
         href: loc?.start?.href,
         cfi: loc?.start?.cfi,
-        derivedAtStart: edges.derivedAtStart,
-        derivedAtEnd: edges.derivedAtEnd,
+        derivedAtStart: atStart,
+        derivedAtEnd: atEnd,
         locAtStart: !!loc?.atStart,
         locAtEnd: !!loc?.atEnd,
       });
@@ -353,6 +479,7 @@ export function useEpubReader({
 
     lastCfiRef.current = null;
     lastHrefRef.current = null;
+    isFixedLayoutRef.current = false;
 
     let cancelled = false;
 
@@ -389,6 +516,32 @@ export function useEpubReader({
       } catch {}
 
       spineLenRef.current = book?.spine?.spineItems?.length || 0;
+      isFixedLayoutRef.current = detectFixedLayoutBook(book);
+      const spreadPatch = isFixedLayoutRef.current
+        ? ensureFixedSpreadProperties(book, debugEnabled ? log : null)
+        : { patched: false, count: 0, reason: "not-fixed-layout" };
+
+      if (debugEnabled) {
+        const md = book?.packaging?.metadata || book?.package?.metadata || {};
+        const firstSpine = (book?.spine?.spineItems || []).slice(0, 3).map(
+          (it) => ({
+            href: it?.href,
+            properties: it?.properties || "",
+            linear: it?.linear || "",
+          })
+        );
+        log("book metadata", {
+          layout: md?.layout || null,
+          spread: md?.spread || null,
+          orientation: md?.orientation || null,
+          flow: md?.flow || null,
+          displayOptionsFixedLayout: book?.displayOptions?.fixedLayout ?? null,
+          isFixedLayout: isFixedLayoutRef.current,
+          spreadPatch,
+          spineLen: spineLenRef.current,
+          firstSpine,
+        });
+      }
 
       if (cancelled || genRef.current !== gen) return;
 
@@ -396,15 +549,24 @@ export function useEpubReader({
         width: "100%",
         height: "100%",
         flow: "paginated",
+        layout: isFixedLayoutRef.current ? "pre-paginated" : undefined,
         spread: "none",
         minSpreadWidth: Number.POSITIVE_INFINITY,
+        gap: isFixedLayoutRef.current ? 0 : undefined,
       });
       renditionRef.current = rendition;
 
       try {
         rendition.hooks?.content?.register?.((contents) => {
           const doc = contents?.document;
-          injectStyle(doc);
+          const isFixedLayout = isFixedLayoutRef.current;
+          injectStyle(doc, { isFixedLayout });
+          if (debugEnabled) {
+            log("content hook", {
+              href: contents?.section?.href || null,
+              isFixedLayout,
+            });
+          }
           registerSwipeHandlers(doc, swipeEnabledRef, swipeHandlersRef);
         });
       } catch {}
@@ -531,7 +693,22 @@ export function useEpubReader({
 
       try {
         const rect = host.getBoundingClientRect();
-        applySpreadForWidth(r2, isFullscreen);
+        const policy = applySpreadForWidth(r2, {
+          fullscreen: isFullscreen,
+          isFixedLayout: isFixedLayoutRef.current,
+        });
+        if (debugEnabled)
+          log("spread policy (fullscreen toggle)", {
+            isFullscreen,
+            isFixedLayout: isFixedLayoutRef.current,
+            appliedSpread: policy?.spread || null,
+            minSpreadWidth: policy?.minSpreadWidth ?? null,
+            reason: policy?.reason || null,
+            viewport: {
+              width: Math.floor(rect.width),
+              height: Math.floor(rect.height),
+            },
+          });
         r2.resize?.(Math.floor(rect.width), Math.floor(rect.height));
       } catch {}
 
@@ -586,7 +763,19 @@ export function useEpubReader({
       lastRectRef.current = { w, h };
 
       try {
-        applySpreadForWidth(r, isFullscreen);
+        const policy = applySpreadForWidth(r, {
+          fullscreen: isFullscreen,
+          isFixedLayout: isFixedLayoutRef.current,
+        });
+        if (debugEnabled)
+          log("spread policy (resize)", {
+            isFullscreen,
+            isFixedLayout: isFixedLayoutRef.current,
+            appliedSpread: policy?.spread || null,
+            minSpreadWidth: policy?.minSpreadWidth ?? null,
+            reason: policy?.reason || null,
+            viewport: { width: w, height: h },
+          });
         r.resize?.(w, h);
       } catch {}
       try {
@@ -651,6 +840,107 @@ export function useEpubReader({
     return null;
   }, []);
 
+  const displaySpineIndex = useCallback(async (idx) => {
+    const r = renditionRef.current;
+    const book = bookRef.current;
+    if (!r || !book || typeof idx !== "number") return false;
+
+    const items = book?.spine?.spineItems || [];
+    if (idx < 0 || idx >= items.length) return false;
+    const href = items[idx]?.href;
+    if (!href) return false;
+
+    try {
+      await r.display(href);
+      return true;
+    } catch {
+      return false;
+    }
+  }, []);
+
+  const getFixedSpreadAnchorIndex = useCallback((idx) => {
+    const book = bookRef.current;
+    const items = book?.spine?.spineItems || [];
+    if (!items.length || typeof idx !== "number") return null;
+
+    if (idx <= 0) return 0; // cover stays single
+
+    const prop = (i) => String(items?.[i]?.properties || "");
+    const isLeft = (i) => /\bpage-spread-left\b/i.test(prop(i));
+    const isRight = (i) => /\bpage-spread-right\b/i.test(prop(i));
+
+    if (isLeft(idx)) return idx;
+    if (isRight(idx) && isLeft(idx - 1)) return idx - 1;
+
+    // Fallback for fixed-layout books without reliable page-spread props
+    return idx % 2 === 1 ? idx : Math.max(1, idx - 1);
+  }, []);
+
+  const navigateFixedSpread = useCallback(
+    async (dir) => {
+      const r = renditionRef.current;
+      const book = bookRef.current;
+      if (!r || !book) return false;
+
+      const loc = safeLoc(r);
+      const curIdx = getSpineIdxFromLoc(loc);
+      if (typeof curIdx !== "number") return false;
+
+      const anchor = getFixedSpreadAnchorIndex(curIdx);
+      if (typeof anchor !== "number") return false;
+
+      const lastIdx = Math.max(0, (book?.spine?.spineItems?.length || 1) - 1);
+
+      let target = anchor;
+      if (dir > 0) {
+        target = anchor === 0 ? 1 : anchor + 2;
+        if (target > lastIdx) {
+          if (debugEnabled) {
+            log("fixed spread nav boundary (end)", {
+              curIdx,
+              anchor,
+              target,
+              lastIdx,
+            });
+          }
+          return true;
+        }
+      } else {
+        target = anchor <= 1 ? 0 : anchor - 2;
+        if (target < 0) {
+          if (debugEnabled) {
+            log("fixed spread nav boundary (start)", {
+              curIdx,
+              anchor,
+              target,
+            });
+          }
+          return true;
+        }
+      }
+
+      const ok = await displaySpineIndex(target);
+      if (debugEnabled) {
+        log("fixed spread nav", {
+          dir,
+          curIdx,
+          anchor,
+          target,
+          ok,
+          isFullscreen,
+        });
+      }
+      return ok;
+    },
+    [
+      debugEnabled,
+      displaySpineIndex,
+      getFixedSpreadAnchorIndex,
+      getSpineIdxFromLoc,
+      isFullscreen,
+    ]
+  );
+
   const forceDisplaySpine = useCallback(async (delta) => {
     const r = renditionRef.current;
     const book = bookRef.current;
@@ -686,6 +976,12 @@ export function useEpubReader({
     const r = renditionRef.current;
     if (!r) return;
 
+    // In fixed-layout fullscreen, navigate spread-by-spread (cover, then pairs).
+    if (isFixedLayoutRef.current && isFullscreen) {
+      const ok = await navigateFixedSpread(-1);
+      if (ok) return;
+    }
+
     const before = safeLoc(r);
     const beforeIdx = getSpineIdxFromLoc(before);
     const beforeIntra = calcFileIntra(before);
@@ -717,11 +1013,23 @@ export function useEpubReader({
         });
       await forceDisplaySpine(-1);
     }
-  }, [debugEnabled, forceDisplaySpine, getSpineIdxFromLoc]);
+  }, [
+    debugEnabled,
+    forceDisplaySpine,
+    getSpineIdxFromLoc,
+    isFullscreen,
+    navigateFixedSpread,
+  ]);
 
   const handleNext = useCallback(async () => {
     const r = renditionRef.current;
     if (!r) return;
+
+    // In fixed-layout fullscreen, navigate spread-by-spread (cover, then pairs).
+    if (isFixedLayoutRef.current && isFullscreen) {
+      const ok = await navigateFixedSpread(+1);
+      if (ok) return;
+    }
 
     const before = safeLoc(r);
     const beforeIdx = getSpineIdxFromLoc(before);
@@ -757,7 +1065,13 @@ export function useEpubReader({
         });
       await forceDisplaySpine(+1);
     }
-  }, [debugEnabled, forceDisplaySpine, getSpineIdxFromLoc]);
+  }, [
+    debugEnabled,
+    forceDisplaySpine,
+    getSpineIdxFromLoc,
+    isFullscreen,
+    navigateFixedSpread,
+  ]);
 
   useEffect(() => {
     swipeHandlersRef.current = { prev: handlePrev, next: handleNext };

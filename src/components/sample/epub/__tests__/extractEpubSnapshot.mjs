@@ -28,12 +28,12 @@ async function ensureDir(dir) {
   await fs.mkdir(dir, { recursive: true });
 }
 
-async function listZipFiles(dir) {
+async function listEpubFiles(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
   return entries
     .filter((e) => e.isFile())
     .map((e) => e.name)
-    .filter((n) => /\.zip$/i.test(n))
+    .filter((n) => /\.(zip|epub)$/i.test(n))
     .sort()
     .map((n) => path.join(dir, n));
 }
@@ -61,9 +61,9 @@ async function main() {
 
   await ensureDir(snapDir);
 
-  const zipFiles = await listZipFiles(epubsDir);
+  const epubFiles = await listEpubFiles(epubsDir);
 
-  console.log(`Found ${zipFiles.length} EPUB(s).`);
+  console.log(`Found ${epubFiles.length} EPUB(s).`);
   console.log(`EPUB dir: ${epubsDir}`);
   console.log(`Snap dir: ${snapDir}`);
   console.log(`Mode    : ${overwrite ? "overwrite" : "skip-existing"}`);
@@ -74,7 +74,7 @@ async function main() {
   let fail = 0;
   const failures = [];
 
-  for (const filePath of zipFiles) {
+  for (const filePath of epubFiles) {
     const id = baseNameNoExt(filePath);
     const outFile = path.join(snapDir, `${id}.json`);
 
