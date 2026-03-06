@@ -116,6 +116,65 @@ function clearViewerEl(el) {
   while (el.firstChild) el.removeChild(el.firstChild);
 }
 
+function parsePxValue(raw) {
+  if (raw == null) return null;
+  const n = Number.parseFloat(String(raw));
+  return Number.isFinite(n) ? n : null;
+}
+
+function parseScaleFromTransform(raw) {
+  const s = String(raw || "");
+  const mScale = s.match(/scale\(\s*([0-9.]+)\s*\)/i);
+  if (mScale) {
+    const n = Number.parseFloat(mScale[1]);
+    return Number.isFinite(n) ? n : null;
+  }
+  const mMatrix = s.match(/matrix\(\s*([0-9.+-eE]+)\s*,/i);
+  if (mMatrix) {
+    const n = Number.parseFloat(mMatrix[1]);
+    return Number.isFinite(n) ? n : null;
+  }
+  return null;
+}
+
+function centerFixedBodyInSinglePage(contents, log) {
+  const doc = contents?.document;
+  const win = contents?.window;
+  const body = doc?.body;
+  if (!doc || !win || !body) return;
+
+  const frameW = Math.floor(win.innerWidth || doc.documentElement?.clientWidth || 0);
+  const bodyW =
+    parsePxValue(body.style.width) ||
+    parsePxValue(win.getComputedStyle(body).width) ||
+    null;
+  const scale =
+    parseScaleFromTransform(body.style.transform) ||
+    parseScaleFromTransform(win.getComputedStyle(body).transform) ||
+    1;
+  if (!frameW || !bodyW) return;
+
+  const visualW = bodyW * (scale || 1);
+  const marginLeft = Math.max(0, Math.floor((frameW - visualW) / 2));
+
+  try {
+    body.style.setProperty("margin-left", `${marginLeft}px`, "important");
+    body.style.setProperty("margin-right", "0px", "important");
+  } catch {}
+
+  if (typeof log === "function") {
+    log("single-page centering", {
+      href: contents?.section?.href || null,
+      frameW,
+      bodyW,
+      scale,
+      styleTransform: body.style.transform || "",
+      computedTransform: win.getComputedStyle(body).transform || "",
+      marginLeft,
+    });
+  }
+}
+
 function isZipArrayBuffer(ab) {
   try {
     const u8 = new Uint8Array(ab);
@@ -125,7 +184,10 @@ function isZipArrayBuffer(ab) {
   }
 }
 
-function injectStyle(doc, { isFixedLayout = false } = {}) {
+function injectStyle(
+  doc,
+  { isFixedLayout = false, isFullscreen = false } = {}
+) {
   if (!doc) return;
   if (doc.getElementById("dbc-epub-style")) return;
 
@@ -308,6 +370,7 @@ export function useEpubReader({
   const swipeEnabledRef = useRef(swipeable);
   const swipeHandlersRef = useRef({ prev: null, next: null });
   const isFixedLayoutRef = useRef(false);
+  const isFullscreenRef = useRef(!!isFullscreen);
 
   // resize guard
   const lastRectRef = useRef({ w: 0, h: 0 });
@@ -317,6 +380,10 @@ export function useEpubReader({
   useEffect(() => {
     swipeEnabledRef.current = swipeable;
   }, [swipeable]);
+
+  useEffect(() => {
+    isFullscreenRef.current = !!isFullscreen;
+  }, [isFullscreen]);
 
   const destroyEpub = useCallback(() => {
     try {
@@ -564,11 +631,19 @@ export function useEpubReader({
         rendition.hooks?.content?.register?.((contents) => {
           const doc = contents?.document;
           const isFixedLayout = isFixedLayoutRef.current;
-          injectStyle(doc, { isFixedLayout });
+          const fullscreenNow = isFullscreenRef.current;
+          injectStyle(doc, { isFixedLayout, isFullscreen: fullscreenNow });
+          if (isFixedLayout && !fullscreenNow) {
+            centerFixedBodyInSinglePage(
+              contents,
+              debugEnabled ? log : null
+            );
+          }
           if (debugEnabled) {
             log("content hook", {
               href: contents?.section?.href || null,
               isFixedLayout,
+              isFullscreen: fullscreenNow,
             });
           }
           registerSwipeHandlers(doc, swipeEnabledRef, swipeHandlersRef);
@@ -577,6 +652,18 @@ export function useEpubReader({
 
       const relocatedHandler = (loc) => onRelocatedRef.current?.(loc);
       rendition.on("relocated", relocatedHandler);
+      rendition.on("rendered", (_section, view) => {
+        const isFixedLayout = isFixedLayoutRef.current;
+        if (!isFixedLayout) return;
+        const fullscreenNow = isFullscreenRef.current;
+        const contents = view?.contents;
+        const doc = contents?.document;
+        if (!contents || !doc) return;
+
+        if (!fullscreenNow) {
+          centerFixedBodyInSinglePage(contents, debugEnabled ? log : null);
+        }
+      });
 
       // ---- TOC build ----
       let flat = buildFlatTocFromNav(book);
