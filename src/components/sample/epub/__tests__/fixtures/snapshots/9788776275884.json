@@ -1,17 +1,25 @@
 {
   "version": 3,
-  "generatedAt": "2026-03-04T13:52:44.060Z",
+  "generatedAt": "2026-03-05T12:34:04.020Z",
   "fileName": "9788776275884.epub",
   "parser": "epubjs",
   "metadata": {
     "title": "klara-og-gry-pa-flugt",
     "creator": null,
-    "language": "da-DK"
+    "language": "da-DK",
+    "layout": "pre-paginated",
+    "spread": "both",
+    "orientation": "landscape",
+    "flow": null
   },
   "counts": {
     "spineLen": 4,
     "tocLen": 1,
     "duplicateSpineIndexCount": 0
+  },
+  "fixedLayout": {
+    "isPrePaginated": true,
+    "declaredPageSpreadCount": 0
   },
   "spine": [
     {

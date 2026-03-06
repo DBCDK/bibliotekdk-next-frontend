@@ -134,7 +134,11 @@ function injectStyle(doc, { isFixedLayout = false } = {}) {
   if (isFixedLayout) {
     // Fixed-layout pages rely on author CSS (absolute positioning / clipping).
     style.textContent = `
-      html { margin:0 !important; padding:0 !important; overflow:hidden !important; }
+      html {
+        margin:0 !important;
+        padding:0 !important;
+        overflow:hidden !important;
+      }
       body {
         margin-top: 0 !important;
         margin-right: 0 !important;

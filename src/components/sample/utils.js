@@ -1,6 +1,6 @@
 export const SPECIFIC_FALLBACKS = {
   bog: ["e-bog"],
-  billedbog: ["e-bog"],
+  billedbog: ["e-bog", "billedbog (online)"],
   punktskrift: ["lydbog (online)"],
 };
 
@@ -19,8 +19,8 @@ export function selectPublizonSample(manifestations = [], selectedDisplay) {
   const display = String(selectedDisplay);
   const selected = manifestations.filter((m) =>
     m?.materialTypes?.some(
-      (mt) => mt?.materialTypeSpecific?.display === display
-    )
+      (mt) => mt?.materialTypeSpecific?.display === display,
+    ),
   );
 
   const mappedDisplays = SPECIFIC_FALLBACKS[display] || [];
@@ -28,8 +28,8 @@ export function selectPublizonSample(manifestations = [], selectedDisplay) {
     mappedDisplays.length > 0
       ? manifestations.filter((m) =>
           m?.materialTypes?.some((mt) =>
-            mappedDisplays.includes(mt?.materialTypeSpecific?.display)
-          )
+            mappedDisplays.includes(mt?.materialTypeSpecific?.display),
+          ),
         )
       : [];
 
@@ -39,15 +39,15 @@ export function selectPublizonSample(manifestations = [], selectedDisplay) {
       if (mt?.materialTypeGeneral?.code) {
         generalCodes.add(mt.materialTypeGeneral.code);
       }
-    })
+    }),
   );
 
   const sameGeneral =
     generalCodes.size > 0
       ? manifestations.filter((m) =>
           m?.materialTypes?.some((mt) =>
-            generalCodes.has(mt?.materialTypeGeneral?.code)
-          )
+            generalCodes.has(mt?.materialTypeGeneral?.code),
+          ),
         )
       : [];
 

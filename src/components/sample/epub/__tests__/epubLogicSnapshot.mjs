@@ -245,14 +245,31 @@ function safePickMetadata(book) {
       md?.creator || md?.["dc:creator"] || md?.["creator"] || null;
     const language =
       md?.language || md?.["dc:language"] || md?.["language"] || null;
+    const layout = md?.layout || md?.["rendition:layout"] || null;
+    const spread = md?.spread || md?.["rendition:spread"] || null;
+    const orientation =
+      md?.orientation || md?.["rendition:orientation"] || null;
+    const flow = md?.flow || md?.["rendition:flow"] || null;
 
     return {
       title: title || null,
       creator: creator || null,
       language: language || null,
+      layout: layout || null,
+      spread: spread || null,
+      orientation: orientation || null,
+      flow: flow || null,
     };
   } catch {
-    return { title: null, creator: null, language: null };
+    return {
+      title: null,
+      creator: null,
+      language: null,
+      layout: null,
+      spread: null,
+      orientation: null,
+      flow: null,
+    };
   }
 }
 
@@ -521,6 +538,15 @@ function flattenNcxToToc(doc) {
   return out;
 }
 
+function getMetaPropertyFromMetadataEl(mdEl, propName) {
+  if (!mdEl || !propName) return null;
+  const metas = Array.from(mdEl.getElementsByTagName("meta"));
+  const hit = metas.find(
+    (m) => String(getAttr(m, "property") || "").trim() === propName
+  );
+  return firstText(hit) || null;
+}
+
 async function manualZipExtractSnapshot(ab, { debug }) {
   let JSZip;
   try {
@@ -568,6 +594,13 @@ async function manualZipExtractSnapshot(ab, { debug }) {
     firstText(mdEl?.getElementsByTagName("dc:language")?.[0]) ||
     firstText(mdEl?.getElementsByTagName("language")?.[0]) ||
     null;
+  const layout = getMetaPropertyFromMetadataEl(mdEl, "rendition:layout");
+  const spread = getMetaPropertyFromMetadataEl(mdEl, "rendition:spread");
+  const orientation = getMetaPropertyFromMetadataEl(
+    mdEl,
+    "rendition:orientation"
+  );
+  const flow = getMetaPropertyFromMetadataEl(mdEl, "rendition:flow");
 
   // manifest map id -> href + props + media-type
   const manifestEl = opfDoc.getElementsByTagName("manifest")?.[0] || null;
@@ -688,6 +721,10 @@ async function manualZipExtractSnapshot(ab, { debug }) {
       title: title || null,
       creator: creator || null,
       language: language || null,
+      layout: layout || null,
+      spread: spread || null,
+      orientation: orientation || null,
+      flow: flow || null,
     },
     duplicateSpineIndexCount,
   };
@@ -717,7 +754,15 @@ export async function buildEpubLogicSnapshot(
   let spine = [];
   let tocFlat = [];
   let duplicateSpineIndexCount = 0;
-  let meta = { title: null, creator: null, language: null };
+  let meta = {
+    title: null,
+    creator: null,
+    language: null,
+    layout: null,
+    spread: null,
+    orientation: null,
+    flow: null,
+  };
   let usedManual = false;
 
   // Pipeline artifacts (raw -> dedupe -> prepend -> score -> maybe collapse)
@@ -843,6 +888,18 @@ export async function buildEpubLogicSnapshot(
         spineLen: spine.length,
         tocLen: tocFlat.length,
         duplicateSpineIndexCount,
+      },
+      fixedLayout: {
+        isPrePaginated:
+          String(meta?.layout || "")
+            .trim()
+            .toLowerCase() === "pre-paginated",
+        declaredPageSpreadCount: (spine || []).filter((it) => {
+          const props = Array.isArray(it?.properties)
+            ? it.properties
+            : String(it?.properties || "").split(/\s+/).filter(Boolean);
+          return props.some((p) => /page-spread-(left|right|center)/i.test(p));
+        }).length,
       },
       spine,
       tocFlat,
