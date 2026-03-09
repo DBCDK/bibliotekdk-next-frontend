@@ -92,9 +92,7 @@
     "score": {
       "mode": "fallback",
       "score": 60,
-      "reasons": [
-        "small-toc"
-      ],
+      "reasons": ["small-toc"],
       "metrics": {
         "spineLen": 4,
         "tocLen": 1,
@@ -115,9 +113,7 @@
     "structure": {
       "mode": "fallback",
       "score": 60,
-      "reasons": [
-        "small-toc"
-      ],
+      "reasons": ["small-toc"],
       "metrics": {
         "spineLen": 4,
         "tocLen": 1,

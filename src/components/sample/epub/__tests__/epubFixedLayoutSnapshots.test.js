@@ -49,4 +49,3 @@ describe("fixed-layout snapshot regressions", () => {
     expect(snap?.heuristics?.collapse).toBe(true);
   });
 });
-

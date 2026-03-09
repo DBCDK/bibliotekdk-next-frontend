@@ -897,7 +897,9 @@ export async function buildEpubLogicSnapshot(
         declaredPageSpreadCount: (spine || []).filter((it) => {
           const props = Array.isArray(it?.properties)
             ? it.properties
-            : String(it?.properties || "").split(/\s+/).filter(Boolean);
+            : String(it?.properties || "")
+                .split(/\s+/)
+                .filter(Boolean);
           return props.some((p) => /page-spread-(left|right|center)/i.test(p));
         }).length,
       },

@@ -29,7 +29,9 @@ function parseBoolLike(v) {
 
 function detectFixedLayoutBook(book) {
   const md = book?.packaging?.metadata || book?.package?.metadata || {};
-  const layout = String(md?.layout || "").trim().toLowerCase();
+  const layout = String(md?.layout || "")
+    .trim()
+    .toLowerCase();
   if (layout === "pre-paginated") return true;
 
   const fixedLayoutOpt = book?.displayOptions?.fixedLayout;
@@ -58,7 +60,12 @@ function ensureFixedSpreadProperties(book, log) {
 
     // Common fixed-layout convention:
     // cover (index 0) stands alone as right page, then alternating left/right.
-    const spread = i === 0 ? "page-spread-right" : i % 2 === 1 ? "page-spread-left" : "page-spread-right";
+    const spread =
+      i === 0
+        ? "page-spread-right"
+        : i % 2 === 1
+        ? "page-spread-left"
+        : "page-spread-right";
 
     const next = existing ? `${existing} ${spread}` : spread;
     if (it && it.properties !== next) {
@@ -143,7 +150,9 @@ function centerFixedBodyInSinglePage(contents, log) {
   const body = doc?.body;
   if (!doc || !win || !body) return;
 
-  const frameW = Math.floor(win.innerWidth || doc.documentElement?.clientWidth || 0);
+  const frameW = Math.floor(
+    win.innerWidth || doc.documentElement?.clientWidth || 0
+  );
   const bodyW =
     parsePxValue(body.style.width) ||
     parsePxValue(win.getComputedStyle(body).width) ||
@@ -184,10 +193,7 @@ function isZipArrayBuffer(ab) {
   }
 }
 
-function injectStyle(
-  doc,
-  { isFixedLayout = false, isFullscreen = false } = {}
-) {
+function injectStyle(doc, { isFixedLayout = false } = {}) {
   if (!doc) return;
   if (doc.getElementById("dbc-epub-style")) return;
 
@@ -594,13 +600,13 @@ export function useEpubReader({
 
       if (debugEnabled) {
         const md = book?.packaging?.metadata || book?.package?.metadata || {};
-        const firstSpine = (book?.spine?.spineItems || []).slice(0, 3).map(
-          (it) => ({
+        const firstSpine = (book?.spine?.spineItems || [])
+          .slice(0, 3)
+          .map((it) => ({
             href: it?.href,
             properties: it?.properties || "",
             linear: it?.linear || "",
-          })
-        );
+          }));
         log("book metadata", {
           layout: md?.layout || null,
           spread: md?.spread || null,
@@ -634,10 +640,7 @@ export function useEpubReader({
           const fullscreenNow = isFullscreenRef.current;
           injectStyle(doc, { isFixedLayout, isFullscreen: fullscreenNow });
           if (isFixedLayout && !fullscreenNow) {
-            centerFixedBodyInSinglePage(
-              contents,
-              debugEnabled ? log : null
-            );
+            centerFixedBodyInSinglePage(contents, debugEnabled ? log : null);
           }
           if (debugEnabled) {
             log("content hook", {
