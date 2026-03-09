@@ -135,7 +135,7 @@ export default function LibrariesTable({ data, user }) {
 
   const { loggedInAgencyId } = useAuthentication();
 
-  const municipalityAgencyId = user?.municipalityAgencyId;
+  const municipalityAgencyId = user?.loanerInfo?.municipalityAgencyId;
 
   if (isMobile) {
     return (
