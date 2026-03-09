@@ -153,6 +153,28 @@ function centerFixedBodyInSinglePage(contents, log) {
   const frameW = Math.floor(
     win.innerWidth || doc.documentElement?.clientWidth || 0
   );
+  const hasTouchPoints =
+    typeof win.navigator !== "undefined" &&
+    Number(win.navigator.maxTouchPoints) > 0;
+  const coarsePointer =
+    typeof win.matchMedia === "function" &&
+    win.matchMedia("(pointer: coarse)").matches;
+  const isMobileLike = (hasTouchPoints || coarsePointer) && frameW < 576;
+  const desiredMobileGutter = isMobileLike ? 16 : 0;
+
+  const frameEl = win.frameElement;
+  if (frameEl?.style) {
+    try {
+      frameEl.style.boxSizing = "border-box";
+      frameEl.style.paddingLeft = desiredMobileGutter
+        ? `${desiredMobileGutter}px`
+        : "0px";
+      frameEl.style.paddingRight = desiredMobileGutter
+        ? `${desiredMobileGutter}px`
+        : "0px";
+    } catch {}
+  }
+
   const bodyW =
     parsePxValue(body.style.width) ||
     parsePxValue(win.getComputedStyle(body).width) ||
@@ -164,7 +186,8 @@ function centerFixedBodyInSinglePage(contents, log) {
   if (!frameW || !bodyW) return;
 
   const visualW = bodyW * (scale || 1);
-  const marginLeft = Math.max(0, Math.floor((frameW - visualW) / 2));
+  const usableFrameW = Math.max(0, frameW - desiredMobileGutter * 2);
+  const marginLeft = Math.max(0, Math.floor((usableFrameW - visualW) / 2));
 
   try {
     body.style.setProperty("margin-left", `${marginLeft}px`, "important");
@@ -179,6 +202,7 @@ function centerFixedBodyInSinglePage(contents, log) {
       scale,
       styleTransform: body.style.transform || "",
       computedTransform: win.getComputedStyle(body).transform || "",
+      desiredMobileGutter,
       marginLeft,
     });
   }
@@ -206,6 +230,7 @@ function injectStyle(doc, { isFixedLayout = false } = {}) {
         margin:0 !important;
         padding:0 !important;
         overflow:hidden !important;
+        touch-action: pan-y pinch-zoom !important;
       }
       body {
         margin-top: 0 !important;
@@ -214,6 +239,7 @@ function injectStyle(doc, { isFixedLayout = false } = {}) {
         padding: 0 !important;
         overflow: hidden !important;
         box-sizing: border-box;
+        touch-action: pan-y pinch-zoom !important;
       }
       a, a * { pointer-events: auto !important; cursor: pointer !important; }
     `;
@@ -226,6 +252,7 @@ function injectStyle(doc, { isFixedLayout = false } = {}) {
         font-family: var(--epub-page-font, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif);
         line-height: var(--epub-page-line-height, 1.55);
         box-sizing: border-box;
+        touch-action: pan-y pinch-zoom !important;
       }
       img { max-width: 100% !important; height: auto !important; }
       header, footer, .watermark, .ad { display: none !important; }
@@ -261,47 +288,160 @@ function registerSwipeHandlers(doc, swipeEnabledRef, handlersRef) {
   if (!doc) return;
 
   let start = null;
+  let pointerId = null;
+  const boundFlag = "__dbcSwipeBound";
 
   const isInteractive = (el) =>
     !!el?.closest?.("a,button,input,select,textarea,label");
 
-  const onStart = (e) => {
+  if (doc[boundFlag]) return;
+  doc[boundFlag] = true;
+
+  const reset = () => {
+    start = null;
+    pointerId = null;
+  };
+
+  const begin = (x, y) => {
+    start = {
+      x,
+      y,
+      lastX: x,
+      lastY: y,
+      time: Date.now(),
+      blocked: false,
+      cancelledVertical: false,
+    };
+  };
+
+  const onTouchStart = (e) => {
     if (!swipeEnabledRef.current) return;
     if (isInteractive(e.target)) return;
     const t = e.touches?.[0];
     if (!t) return;
-    start = { x: t.clientX, y: t.clientY, time: Date.now() };
+    begin(t.clientX, t.clientY);
   };
 
-  const onEnd = (e) => {
+  const onTouchMove = (e) => {
     if (!swipeEnabledRef.current || !start) return;
-    const t = e.changedTouches?.[0];
+    const t = e.touches?.[0];
     if (!t) return;
 
     const dx = t.clientX - start.x;
     const dy = t.clientY - start.y;
+    start.lastX = t.clientX;
+    start.lastY = t.clientY;
+
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+
+    if (!start.blocked && absX > 10 && absX > absY * 1.1) {
+      start.blocked = true;
+      try {
+        e.preventDefault();
+      } catch {}
+    }
+    if (absY > 18 && absY > absX * 1.2) {
+      start.cancelledVertical = true;
+    }
+  };
+
+  const finish = (x, y) => {
+    if (!swipeEnabledRef.current || !start) return;
+
+    const dx = x - start.x;
+    const dy = y - start.y;
     const startedAt = start.time;
-    start = null;
+    const cancelledVertical = !!start.cancelledVertical;
+    reset();
 
     const absX = Math.abs(dx);
     const absY = Math.abs(dy);
     const elapsed = Date.now() - startedAt;
 
-    if (absX < 40 || absX < absY * 1.2) return;
-    if (elapsed > 700) return;
+    if (cancelledVertical) return;
+    if (absX < 28 || absX < absY * 1.05) return;
+    if (elapsed > 900) return;
 
     const { next, prev } = handlersRef.current || {};
     if (dx < 0) next?.();
     else prev?.();
   };
 
-  const onCancel = () => {
-    start = null;
+  const onTouchEnd = (e) => {
+    if (!start) return;
+    const t = e.changedTouches?.[0];
+    finish(t?.clientX ?? start.lastX, t?.clientY ?? start.lastY);
   };
 
-  doc.addEventListener("touchstart", onStart, { passive: true });
-  doc.addEventListener("touchend", onEnd, { passive: true });
+  const onPointerDown = (e) => {
+    if (!swipeEnabledRef.current) return;
+    if (isInteractive(e.target)) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    if (e.isPrimary === false) return;
+    pointerId = e.pointerId;
+    begin(e.clientX, e.clientY);
+  };
+
+  const onPointerMove = (e) => {
+    if (!start || pointerId !== e.pointerId) return;
+    if (e.pointerType === "mouse" && e.buttons === 0) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    start.lastX = e.clientX;
+    start.lastY = e.clientY;
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+    if (absY > 18 && absY > absX * 1.2) {
+      start.cancelledVertical = true;
+    }
+  };
+
+  const onPointerUp = (e) => {
+    if (pointerId !== e.pointerId || !start) return;
+    finish(e.clientX, e.clientY);
+  };
+
+  const onMouseDown = (e) => {
+    if (!swipeEnabledRef.current) return;
+    if (isInteractive(e.target)) return;
+    if (e.button !== 0) return;
+    begin(e.clientX, e.clientY);
+  };
+
+  const onMouseMove = (e) => {
+    if (!start) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    start.lastX = e.clientX;
+    start.lastY = e.clientY;
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+    if (absY > 18 && absY > absX * 1.2) {
+      start.cancelledVertical = true;
+    }
+  };
+
+  const onMouseUp = (e) => {
+    if (!start) return;
+    finish(e.clientX, e.clientY);
+  };
+
+  const onCancel = () => {
+    reset();
+  };
+
+  doc.addEventListener("touchstart", onTouchStart, { passive: true });
+  doc.addEventListener("touchmove", onTouchMove, { passive: false });
+  doc.addEventListener("touchend", onTouchEnd, { passive: true });
   doc.addEventListener("touchcancel", onCancel, { passive: true });
+  doc.addEventListener("pointerdown", onPointerDown, { passive: true });
+  doc.addEventListener("pointermove", onPointerMove, { passive: true });
+  doc.addEventListener("pointerup", onPointerUp, { passive: true });
+  doc.addEventListener("pointercancel", onCancel, { passive: true });
+  doc.addEventListener("mousedown", onMouseDown, { passive: true });
+  doc.addEventListener("mousemove", onMouseMove, { passive: true });
+  doc.addEventListener("mouseup", onMouseUp, { passive: true });
 }
 
 function waitForLayout(el, timeoutMs = 1400) {
