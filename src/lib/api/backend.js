@@ -13,6 +13,7 @@ import Translate from "@/components/base/translate/Translate.json";
  * get translations from backend
  */
 export default async function fetchTranslations() {
+  return;
   if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate === "true") {
     return;
   }

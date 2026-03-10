@@ -4,6 +4,8 @@
   "description": "The frontend for bibliotek.dk",
   "main": "index.js",
   "scripts": {
+    "translations:unused": "node scripts/unused-translations.js",
+    "translations:prune": "node scripts/unused-translations.js --prune",
     "dev:next": "NODE_OPTIONS='--require ./logger' next -p ${PORT:-3000}",
     "build:next": "next build",
     "build:next:no:lint": "next build --no-lint",
