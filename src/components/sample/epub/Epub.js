@@ -25,6 +25,18 @@ export default function Epub({ src, data, isFullscreen = false }) {
   // Device / env
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const swipeEnabled = isTouchDevice || isMobile;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hasTouchPoints =
+      typeof navigator !== "undefined" && Number(navigator.maxTouchPoints) > 0;
+    const coarsePointer =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(pointer: coarse)").matches;
+    setIsTouchDevice(hasTouchPoints || coarsePointer);
+  }, []);
 
   const debugEnabled =
     process.env.NEXT_PUBLIC_EPUB_DEBUG === "1" ||
@@ -79,7 +91,7 @@ export default function Epub({ src, data, isFullscreen = false }) {
     containerRef,
     viewerRef,
     debugEnabled,
-    swipeable: isMobile,
+    swipeable: swipeEnabled,
     bookId,
     title: data?.title,
   });

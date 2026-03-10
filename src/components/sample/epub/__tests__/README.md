@@ -110,7 +110,7 @@ src/components/sample/epub/__tests__/fixtures/epubs/
 
 Rules:
 
-- Files must be **`.zip`**
+- Files can be **`.epub`** or **`.zip`**
 - You can freely add new EPUBs
 - Existing EPUBs must never be modified (snapshots rely on exact bytes)
 
