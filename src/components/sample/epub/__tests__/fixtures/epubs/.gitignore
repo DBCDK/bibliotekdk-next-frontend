@@ -1,5 +1,6 @@
 # Ignore all epub zip fixtures (large / licensed files)
 *.zip
+*.epub
 
 # But keep this .gitignore file
 !.gitignore
