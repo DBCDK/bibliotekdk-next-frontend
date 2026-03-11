@@ -8,7 +8,7 @@ services:
       - ENABLE_STORYBOOK=1
       - STORYBOOK_PORT=4000
       - PORT=3000
-      - NEXT_BACKEND_API_URL=http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk
+      - NEXT_BACKEND_API_URL=http://bibliotekdk-cms-staging.febib-staging.svc.cloud.dbc.dk
       - NEXTAUTH_SECRET=some-jwt-secret
       - ELBA_DRY_RUN=true
       - NEXTAUTH_URL=http://localhost:3000
