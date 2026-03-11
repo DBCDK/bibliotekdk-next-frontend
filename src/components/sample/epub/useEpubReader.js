@@ -14,6 +14,7 @@ import {
   dedupeTocBySpineHref,
   computeEpubStructureScore,
   collapseToSingleSectionPreserveFrontmatter,
+  hasRedundantLeadingCover,
 } from "./epubLogic";
 
 import { deriveBookEdgesFromLoc } from "./epubNavUtils";
@@ -116,6 +117,23 @@ function applySpreadForWidth(rendition, opts) {
     rendition.spread?.(policy.spread, policy.minSpreadWidth);
   } catch {}
   return policy;
+}
+
+function getFixedSpreadAnchorIndexForBook(book, idx) {
+  const items = book?.spine?.spineItems || [];
+  if (!items.length || typeof idx !== "number") return null;
+
+  if (idx <= 0) return 0; // cover stays single
+
+  const prop = (i) => String(items?.[i]?.properties || "");
+  const isLeft = (i) => /\bpage-spread-left\b/i.test(prop(i));
+  const isRight = (i) => /\bpage-spread-right\b/i.test(prop(i));
+
+  if (isLeft(idx)) return idx;
+  if (isRight(idx) && isLeft(idx - 1)) return idx - 1;
+
+  // Fallback for fixed-layout books without reliable page-spread props
+  return idx % 2 === 1 ? idx : Math.max(1, idx - 1);
 }
 
 function clearViewerEl(el) {
@@ -510,6 +528,8 @@ export function useEpubReader({
 
   const lastCfiRef = useRef(null);
   const lastHrefRef = useRef(null);
+  const firstVisibleSpineIdxRef = useRef(0);
+  const hiddenCoverHrefRef = useRef(null);
 
   const genRef = useRef(0);
   const failedKeyRef = useRef(null);
@@ -628,20 +648,27 @@ export function useEpubReader({
       { ...loc, start: { ...(loc?.start || {}), index: currentSpineIdx } },
       spineLenRef.current || 0
     );
-    const atStart = !!edges.derivedAtStart;
+    const fileIntra = calcFileIntra(loc);
+    const firstVisibleSpineIdx = firstVisibleSpineIdxRef.current || 0;
+    const atVisibleStart =
+      (typeof currentSpineIdx === "number" &&
+        currentSpineIdx <= firstVisibleSpineIdx &&
+        fileIntra <= 0.02) ||
+      (!!loc?.atStart &&
+        (typeof currentSpineIdx !== "number" ||
+          currentSpineIdx <= firstVisibleSpineIdx));
     const atEnd = isFixedSpreadFullscreen
       ? typeof visibleEndSpineIdx === "number"
         ? visibleEndSpineIdx >= edges.lastSpineIdx
         : !!edges.derivedAtEnd
       : !!edges.derivedAtEnd;
 
-    setAtBookStart(atStart);
+    setAtBookStart(atVisibleStart || !!edges.derivedAtStart);
     setAtBookEnd(atEnd);
 
     const seg = segmentFromSpine(effectiveSpineIdxForProgress);
     setSegIndex((prev) => (seg !== prev ? seg : prev));
 
-    const fileIntra = calcFileIntra(loc);
     const progressIntra = atEnd ? 1 : fileIntra;
     const { start, count } = segmentBounds(seg);
 
@@ -666,7 +693,8 @@ export function useEpubReader({
         segIntra,
         href: loc?.start?.href,
         cfi: loc?.start?.cfi,
-        derivedAtStart: atStart,
+        derivedAtStart: !!edges.derivedAtStart,
+        atVisibleStart,
         derivedAtEnd: atEnd,
         locAtStart: !!loc?.atStart,
         locAtEnd: !!loc?.atEnd,
@@ -697,6 +725,8 @@ export function useEpubReader({
     lastCfiRef.current = null;
     lastHrefRef.current = null;
     isFixedLayoutRef.current = false;
+    firstVisibleSpineIdxRef.current = 0;
+    hiddenCoverHrefRef.current = null;
 
     let cancelled = false;
 
@@ -734,6 +764,11 @@ export function useEpubReader({
 
       spineLenRef.current = book?.spine?.spineItems?.length || 0;
       isFixedLayoutRef.current = detectFixedLayoutBook(book);
+      const redundantLeadingCover = await hasRedundantLeadingCover(book);
+      firstVisibleSpineIdxRef.current = redundantLeadingCover ? 1 : 0;
+      hiddenCoverHrefRef.current = redundantLeadingCover
+        ? book?.spine?.spineItems?.[0]?.href || null
+        : null;
       const spreadPatch = isFixedLayoutRef.current
         ? ensureFixedSpreadProperties(book, debugEnabled ? log : null)
         : { patched: false, count: 0, reason: "not-fixed-layout" };
@@ -754,6 +789,9 @@ export function useEpubReader({
           flow: md?.flow || null,
           displayOptionsFixedLayout: book?.displayOptions?.fixedLayout ?? null,
           isFixedLayout: isFixedLayoutRef.current,
+          redundantLeadingCover,
+          firstVisibleSpineIdx: firstVisibleSpineIdxRef.current,
+          hiddenCoverHref: hiddenCoverHrefRef.current,
           spreadPatch,
           spineLen: spineLenRef.current,
           firstSpine,
@@ -832,31 +870,53 @@ export function useEpubReader({
       const deduped = dedupeTocBySpineHref(book, filtered);
 
       // add missing spine items before first toc (cover/title/etc.)
-      let withFrontmatter = prependMissingSpineSections(book, deduped);
+      const withFrontmatter = prependMissingSpineSections(book, deduped);
 
       // Decide structure mode (chapter vs fallback)
       const struct = computeEpubStructureScore(book, withFrontmatter);
       if (debugEnabled) log("STRUCT", struct);
 
+      let finalToc = withFrontmatter;
       if (struct.mode === "fallback") {
         log("TOC looks messy → collapsing (preserve frontmatter) + Indhold");
-        withFrontmatter = collapseToSingleSectionPreserveFrontmatter(
+        finalToc = collapseToSingleSectionPreserveFrontmatter(
           book,
           withFrontmatter
         );
       }
 
-      rebuildTocSpineIndex(book, withFrontmatter);
-      setTocFlat(withFrontmatter);
+      if (hiddenCoverHrefRef.current) {
+        const hiddenKey = stripHashQuery(hiddenCoverHrefRef.current);
+        finalToc = finalToc.filter(
+          (entry) => stripHashQuery(entry?.href || "") !== hiddenKey
+        );
+
+        const visibleHref =
+          book?.spine?.spineItems?.[firstVisibleSpineIdxRef.current]?.href ||
+          null;
+        const visibleKey = stripHashQuery(visibleHref || "");
+        if (visibleKey) {
+          let relabeled = false;
+          finalToc = finalToc.map((entry) => {
+            if (relabeled) return entry;
+            if (stripHashQuery(entry?.href || "") !== visibleKey) return entry;
+            relabeled = true;
+            return { ...entry, label: "Forside" };
+          });
+        }
+      }
+
+      rebuildTocSpineIndex(book, finalToc);
+      setTocFlat(finalToc);
 
       const spineLen = book?.spine?.spineItems?.length || 0;
-      setProgressEnabled(!(spineLen > 1 && withFrontmatter.length <= 1));
+      setProgressEnabled(!(spineLen > 1 && finalToc.length <= 1));
 
-      // Start at first spine item (cover) when possible
+      // Start at first visible spine item, optionally skipping a redundant cover.
       let startTarget = null;
       try {
         const items = book?.spine?.spineItems || [];
-        startTarget = items?.[0]?.href || null;
+        startTarget = items?.[firstVisibleSpineIdxRef.current]?.href || null;
       } catch {}
       await rendition.display(startTarget || undefined);
 
@@ -900,6 +960,7 @@ export function useEpubReader({
 
     (async () => {
       const r = renditionRef.current;
+      const book = bookRef.current;
       if (!r) return;
 
       let loc = null;
@@ -916,7 +977,30 @@ export function useEpubReader({
         lastHrefRef.current ||
         null;
 
-      if (debugEnabled) log("fullscreen toggle", { isFullscreen, target });
+      let displayTarget = target;
+      if (isFixedLayoutRef.current && isFullscreen && book) {
+        const currentIdx =
+          typeof loc?.start?.index === "number"
+            ? loc.start.index
+            : typeof loc?.start?.href === "string"
+            ? spineIndexOfDebug(book, loc.start.href).idx
+            : null;
+
+        const anchorIdx = getFixedSpreadAnchorIndexForBook(book, currentIdx);
+        const anchorHref =
+          typeof anchorIdx === "number"
+            ? book?.spine?.spineItems?.[anchorIdx]?.href || null
+            : null;
+
+        if (anchorHref) displayTarget = anchorHref;
+      }
+
+      if (debugEnabled)
+        log("fullscreen toggle", {
+          isFullscreen,
+          target,
+          displayTarget,
+        });
 
       await waitForLayout(host, 1600);
       await new Promise((resolve) => setTimeout(resolve, 350));
@@ -953,9 +1037,9 @@ export function useEpubReader({
         r2.reformat?.();
       } catch {}
 
-      if (target) {
+      if (displayTarget) {
         try {
-          await r2.display(target);
+          await r2.display(displayTarget);
         } catch (e) {
           if (debugEnabled) log("display(target) failed on toggle", e);
         }
@@ -1093,21 +1177,7 @@ export function useEpubReader({
   }, []);
 
   const getFixedSpreadAnchorIndex = useCallback((idx) => {
-    const book = bookRef.current;
-    const items = book?.spine?.spineItems || [];
-    if (!items.length || typeof idx !== "number") return null;
-
-    if (idx <= 0) return 0; // cover stays single
-
-    const prop = (i) => String(items?.[i]?.properties || "");
-    const isLeft = (i) => /\bpage-spread-left\b/i.test(prop(i));
-    const isRight = (i) => /\bpage-spread-right\b/i.test(prop(i));
-
-    if (isLeft(idx)) return idx;
-    if (isRight(idx) && isLeft(idx - 1)) return idx - 1;
-
-    // Fallback for fixed-layout books without reliable page-spread props
-    return idx % 2 === 1 ? idx : Math.max(1, idx - 1);
+    return getFixedSpreadAnchorIndexForBook(bookRef.current, idx);
   }, []);
 
   const navigateFixedSpread = useCallback(
@@ -1189,7 +1259,14 @@ export function useEpubReader({
 
     const items = book?.spine?.spineItems || [];
     const nextIdx = cur + delta;
-    if (nextIdx < 0 || nextIdx >= items.length) return false;
+    const firstVisibleSpineIdx = firstVisibleSpineIdxRef.current || 0;
+    if (
+      nextIdx < firstVisibleSpineIdx ||
+      nextIdx < 0 ||
+      nextIdx >= items.length
+    ) {
+      return false;
+    }
 
     const nextHref = items?.[nextIdx]?.href;
     if (!nextHref) return false;
@@ -1219,6 +1296,17 @@ export function useEpubReader({
     const before = safeLoc(r);
     const beforeIdx = getSpineIdxFromLoc(before);
     const beforeIntra = calcFileIntra(before);
+    const firstVisibleSpineIdx = firstVisibleSpineIdxRef.current || 0;
+    const epsStart = 0.02;
+    const atFileStart = !!before?.atStart || (beforeIntra ?? 0) <= epsStart;
+
+    if (
+      typeof beforeIdx === "number" &&
+      beforeIdx <= firstVisibleSpineIdx &&
+      atFileStart
+    ) {
+      return;
+    }
 
     try {
       await r.prev?.();
@@ -1226,11 +1314,16 @@ export function useEpubReader({
 
     const after = safeLoc(r);
     const afterIdx = getSpineIdxFromLoc(after);
+    if (
+      typeof afterIdx === "number" &&
+      afterIdx < firstVisibleSpineIdx &&
+      firstVisibleSpineIdx > 0
+    ) {
+      await displaySpineIndex(firstVisibleSpineIdx);
+      return;
+    }
 
     // If we didn't change spine, and we're at file-start, force to previous spine item.
-    const epsStart = 0.02;
-    const atFileStart = !!before?.atStart || (beforeIntra ?? 0) <= epsStart;
-
     if (
       typeof beforeIdx === "number" &&
       typeof afterIdx === "number" &&
@@ -1248,6 +1341,7 @@ export function useEpubReader({
       await forceDisplaySpine(-1);
     }
   }, [
+    displaySpineIndex,
     debugEnabled,
     forceDisplaySpine,
     getSpineIdxFromLoc,
