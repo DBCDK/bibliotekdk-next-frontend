@@ -13,7 +13,8 @@ import Translate from "@/components/base/translate/Translate.json";
  * get translations from backend
  */
 export default async function fetchTranslations() {
-  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate === "true") {
+  const disabled = nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate;
+  if (disabled === "true" || disabled === "1") {
     return;
   }
 
