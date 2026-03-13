@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Icon from "@/components/base/icon/Icon";
-import { getLanguage } from "@/components/base/translate/Translate";
+import { getLocale } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
@@ -24,31 +24,32 @@ export function Notifications({ notificationObject }) {
   const notificationArray = notificationsFilter(notificationObject);
 
   const [showNotification, setShowNotification] = useState(true);
-  const toggleNotification = (index) => {
-    setSessionStorageItem("showme_" + index, "no");
+  const toggleNotification = (documentId) => {
+    setSessionStorageItem("showme_" + documentId, "no");
     setShowNotification(!showNotification);
   };
 
-  return notificationArray.map((notification, index) => (
+  return notificationArray.map((notification) => (
     <div
-      key={`${notification.fieldNotificationText}_${index}`}
+      key={notification.documentId}
       className={cx(
         {
-          [styles.warning]: notification.fieldNotificationType === "warning",
-          [styles.error]: notification.fieldNotificationType === "error",
-          [styles.info]: notification.fieldNotificationType === "info",
-          [styles.success]: notification.fieldNotificationType === "success",
+          [styles.warning]: notification.type === "warning",
+          [styles.error]: notification.type === "error",
+          [styles.info]: notification.type === "info",
+          [styles.success]: notification.type === "success",
         },
         styles.notification,
         {
-          [styles.hidden]: getSessionStorageItem("showme_" + index) === "no",
+          [styles.hidden]:
+            getSessionStorageItem("showme_" + notification.documentId) === "no",
         }
       )}
     >
       <Container fluid>
         <Row>
           <Col>
-            <BodyParser body={notification.fieldNotificationText.value} />
+            <BodyParser body={notification.text} />
           </Col>
           <Col xs={1}>
             <Icon
@@ -59,10 +60,10 @@ export function Notifications({ notificationObject }) {
                 animations["on-focus"],
                 animations["f-outline"],
               ].join(" ")}
-              onClick={() => toggleNotification(index)}
+              onClick={() => toggleNotification(notification.documentId)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.keyCode === 13) {
-                  toggleNotification(index);
+                  toggleNotification(notification.documentId);
                 }
               }}
               alt={Translate({ context: "general", label: "close" })}
@@ -76,13 +77,10 @@ export function Notifications({ notificationObject }) {
 }
 
 function notificationsFilter(data) {
-  const notificationfetch =
-    data &&
-    data.nodeQuery &&
-    data.nodeQuery.entities &&
-    data.nodeQuery.entities.filter((notification) => notification);
+  const notifications =
+    data?.bibliotekdkCms?.notifications?.filter((n) => n) || [];
 
-  return notificationfetch ? notificationfetch : [];
+  return notifications;
 }
 
 /**
@@ -90,8 +88,7 @@ function notificationsFilter(data) {
  * @returns {React.JSX.Element}
  */
 export default function Wrap() {
-  const langcode = { language: getLanguage() };
-  const { data } = useData(notificationsQuery(langcode));
+  const { data } = useData(notificationsQuery({ locale: getLocale() }));
 
   return <Notifications notificationObject={data} />;
 }

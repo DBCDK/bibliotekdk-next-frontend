@@ -54,6 +54,16 @@ export function getLangcode(language) {
 }
 
 /**
+ * Returns the plain locale code for Strapi CMS queries.
+ * Strapi uses standard locale codes: "da" for Danish, "en" for English.
+ *
+ * @returns {"da" | "en"}
+ */
+export function getLocale() {
+  return lang;
+}
+
+/**
  * Check if translations are OK
  * @param transProps
  *  translations from backend {ok:true/false, translations:obj/null}

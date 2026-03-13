@@ -1,29 +1,21 @@
-// @TODO export below in a function
 import { ApiEnums } from "@/lib/api/api";
 
-export function notificationsQuery({ language }) {
+export function notificationsQuery({ locale }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query NotificationsFragmentsNotificationQuery($language: LanguageId!) {
-      nodeQuery(filter: {conditions: {field: "type", value: "notification", operator: EQUAL}}) {
-        count
-        entities(language:$language) {
-          ... on NodeNotification {
-            nid
-            langcode {
-              value
-            }
-            fieldNotificationText{
-              value
-            }
-            fieldNotificationType
-            }
-          }  
+    query NotificationsFragmentsNotificationQuery($locale: BibliotekdkCmsI18NLocaleCode) {
+      bibliotekdkCms {
+        notifications(status: PUBLISHED, locale: $locale) {
+          documentId
+          title
+          text
+          type
+          locale
         }
-       monitor(name: "notifications")
+      }
     }`,
-    variables: { language },
+    variables: { locale },
     slowThreshold: 3000,
   };
 }

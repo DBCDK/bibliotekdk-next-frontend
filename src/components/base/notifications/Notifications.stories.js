@@ -11,16 +11,14 @@ export default exportedObject;
 // a single notification in an array
 function notification() {
   return {
-    nodeQuery: {
-      count: 1,
-      entities: [
+    bibliotekdkCms: {
+      notifications: [
         {
-          nid: 13,
-          langcode: {
-            value: "en",
-          },
-          fieldNotificationText: "dether er en warning",
-          fieldNotificationType: "warning",
+          documentId: "abc123",
+          title: "Test notification",
+          text: "dette er en warning",
+          type: "warning",
+          locale: "da",
         },
       ],
     },
