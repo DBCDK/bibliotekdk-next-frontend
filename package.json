@@ -4,8 +4,11 @@
   "description": "The frontend for bibliotek.dk",
   "main": "index.js",
   "scripts": {
-    "translations:unused": "node scripts/unused-translations.js",
-    "translations:prune": "node scripts/unused-translations.js --prune",
+    "translations:unused": "node scripts/unused-translations-ast.js",
+    "translations:prune": "node scripts/unused-translations-ast.js --prune",
+    "translations:fetch": "node scripts/fetch-translations.js",
+    "translations:unused:legacy": "node scripts/unused-translations.js",
+    "translations:prune:legacy": "node scripts/unused-translations.js --prune",
     "dev:next": "NODE_OPTIONS='--require ./logger' next -p ${PORT:-3000}",
     "build:next": "next build",
     "build:next:no:lint": "next build --no-lint",
@@ -65,6 +68,8 @@
   "author": "Frontend @ DBC",
   "license": "GNU",
   "devDependencies": {
+    "@babel/parser": "^7.29.0",
+    "@babel/traverse": "^7.29.0",
     "@graphql-tools/mock": "^8.6.1",
     "@graphql-tools/schema": "^8.3.3",
     "@storybook/addon-a11y": "^7.0.25",

@@ -13,8 +13,8 @@ import Translate from "@/components/base/translate/Translate.json";
  * get translations from backend
  */
 export default async function fetchTranslations() {
-  const disabled = nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate;
-  if (disabled === "true" || disabled === "1") {
+  return;
+  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate === "true") {
     return;
   }
 
@@ -24,17 +24,14 @@ export default async function fetchTranslations() {
   let ok = true;
   // @TODO errorhandling
   try {
-    const response = await fetch(
-      config.backend.url + "/api/translation/get_translations",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const response = await fetch(config.backend.url + "/get_translations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-        body: JSON.stringify(params),
-      }
-    );
+      body: JSON.stringify(params),
+    });
 
     const result = await response.json().catch((error) => {
       // @TODO log

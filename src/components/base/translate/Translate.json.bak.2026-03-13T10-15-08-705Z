@@ -5,12 +5,24 @@
         "en": "From Bibliotek.dk to you",
         "da": "Det sker på bibliotekerne"
       },
+      "section2": {
+        "en": "Label: mangler oversættelse",
+        "da": "Om Bibliotek.dk"
+      },
       "section3": {
         "en": "Label: mangler oversættelse",
         "da": "Aktuelt på Bibliotek.dk"
+      },
+      "inspirationSliderTitle": {
+        "da": "Nyeste skønlitteratur",
+        "en": "Label: mangler oversættelse"
       }
     },
     "creator": {
+      "publications": {
+        "da": "Udgivelser",
+        "en": "Publications"
+      },
       "publications-explanation": {
         "en": "Works are grouped by the earliest registered edition, but the work may have been created earlier.",
         "da": "Værkerne er grupperet efter ældste registrerede udgave, men værket kan være skabt tidligere."
@@ -23,9 +35,17 @@
         "da": "værker",
         "en": "works"
       },
+      "from": {
+        "da": "fra",
+        "en": "from"
+      },
       "to": {
         "da": "til",
         "en": "to"
+      },
+      "no-results": {
+        "da": "Ingen publikationer fundet med de valgte filtre",
+        "en": "No publications found with the selected filters"
       },
       "keywords": {
         "da": "Emneord",
@@ -511,9 +531,81 @@
       }
     },
     "complex-search-facets": {
+      "label-instrument": {
+        "da": "Instrument",
+        "en": "Instrument"
+      },
+      "label-choirtype": {
+        "da": "Kortype",
+        "en": "Choirtype"
+      },
+      "label-chambermusictype": {
+        "da": "Kammermusik",
+        "en": "Chambermusic"
+      },
+      "label-publicationyear": {
+        "da": "Udgivelsesår",
+        "en": "Publicationyear"
+      },
       "fagbib_introtext": {
         "da": "Fagbibliografierne er en række samlinger fra Det kgl. Bibliotek.",
         "en": "Subject Bibliographies is a collection from royal library."
+      },
+      "label-source": {
+        "da": "Fagbibliografier",
+        "en": "Subject Bibliographies"
+      },
+      "label-lix": {
+        "da": "Lix-tal",
+        "en": "Lix-number"
+      },
+      "label-let": {
+        "da": "Let-tal",
+        "en": "Let-number"
+      },
+      "label-specificmaterialtype": {
+        "da": "Format",
+        "en": "Format"
+      },
+      "label-creator": {
+        "da": "Forfatter / ophav",
+        "en": "Creator"
+      },
+      "label-contributor": {
+        "da": "Oplæser / oversætter / bidrag",
+        "en": "Contributor"
+      },
+      "label-subject": {
+        "da": "Emne",
+        "en": "Subject"
+      },
+      "label-mainlanguage": {
+        "da": "Sprog",
+        "en": "Language"
+      },
+      "label-generalaudience": {
+        "da": "Målgruppe",
+        "en": "Audience"
+      },
+      "label-fictionalcharacter": {
+        "da": "Fiktiv hovedperson",
+        "en": "Fictive person"
+      },
+      "label-genreandform": {
+        "da": "Genre og form",
+        "en": "Genre og form"
+      },
+      "label-ages": {
+        "da": "Aldersgruppe",
+        "en": "Ages"
+      },
+      "label-primarytarget": {
+        "da": "Fagligt niveau",
+        "en": "Level"
+      },
+      "label-hostpublicationtype": {
+        "da": "Artikeltype",
+        "en": "Article type"
       }
     },
     "logo": {
@@ -523,6 +615,14 @@
       }
     },
     "feedback": {
+      "feed_back_text": {
+        "da": "Hjælp os med at gøre beta.bibliotek.dk bedre",
+        "en": "Help us improve beta.bibliotek.dk"
+      },
+      "feed_back_link_text": {
+        "da": "Svar på 3 spørgsmål",
+        "en": "Answer 3 questions"
+      },
       "search_feed_back_text": {
         "da": "Hvordan er søgeresultaterne på denne side?",
         "en": "How is the search result on this page?"
@@ -981,6 +1081,10 @@
         "en": "All articles",
         "da": "Mere inspiration og vejledning"
       },
+      "alternative-url-btn": {
+        "en": "All articles",
+        "da": "Mere inspiration og vejledning"
+      },
       "read-more-btn": {
         "da": "Læs mere",
         "en": "Read more"
@@ -1009,6 +1113,10 @@
         "en": "Most public libraries provide access to articles from Infomedia",
         "da": "De fleste folkebiblioteker giver adgang til artikler fra Infomedia, så prøv evt. at logge ind med dit folkebibliotek.\r\nBibliotekerne har ikke nødvendigvis adgang til samtlige digitale tjenester. Derfor afhænger dine muligheder i Bibliotek.dk af, hvilke biblioteker du er registreret på. "
       },
+      "accessOpportunity2": {
+        "en": "LABEL: mangler oversættelse",
+        "da": "Are you a user at another library? Log in to see if you have got a subscription. "
+      },
       "accessOpportunity3": {
         "en": "Bibliotek.dk is a site that unites all Danish libraries in one place. Therefore, your options in bibliotek.dk depend on which libraries you are registered at.",
         "da": " "
@@ -1031,6 +1139,10 @@
         "da": "Afdelinger",
         "en": "Branches"
       },
+      "find_library": {
+        "da": "Find et bibliotek",
+        "en": "Find library"
+      },
       "about": {
         "en": "About bibliotek.dk",
         "da": "Om Bibliotek.dk"
@@ -1038,6 +1150,10 @@
       "help": {
         "da": "Hjælp og vejledning",
         "en": "Help and guides"
+      },
+      "press": {
+        "da": "Presse og grafik",
+        "en": "Press and graphics"
       },
       "privacy": {
         "da": "Privatlivspolitik",
@@ -1517,6 +1633,10 @@
         "da": "Der er ikke valgt en specifik udgave for materialet",
         "en": "You have not chosen a specific edition for the material"
       },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
+      },
       "periodicaMessage": {
         "da": "Tidsskrifter har et dataformat, der ikke kan hentes som referencer. \nDvs. disse bliver ikke downloadet/eksporteret:",
         "en": "Journals has a dataformat which can't be exported as references. \nThese materials won't be exported"
@@ -1574,6 +1694,32 @@
       "fallback": {
         "da": "materialet",
         "en": "the material"
+      }
+    },
+    "workTypeSingularForm": {
+      "literature": {
+        "da": "bog",
+        "en": "book"
+      },
+      "movie": {
+        "da": "film",
+        "en": "movie"
+      },
+      "article": {
+        "da": "artikel",
+        "en": "article"
+      },
+      "music": {
+        "da": "musik",
+        "en": "music"
+      },
+      "game": {
+        "da": "spil",
+        "en": "game"
+      },
+      "sheetmusic": {
+        "da": "node",
+        "en": "sheet music"
       }
     },
     "holdings": {
@@ -2063,6 +2209,14 @@
       }
     },
     "series": {
+      "label": {
+        "da": "I samme serie",
+        "en": "Series"
+      },
+      "part": {
+        "da": "%s. del - %s",
+        "en": "Part %s - %s "
+      },
       "go_to_series": {
         "da": "Gå til serien",
         "en": "Go to series"
@@ -2093,6 +2247,10 @@
         "da": "Serien har ikke en fast rækkefølge",
         "en": "The serie does not have a fixed order"
       },
+      "parts_in_series": {
+        "da": "Serien består af %s dele",
+        "en": "Series consists of %s parts"
+      },
       "series_members_heading": {
         "da": "%s i serien",
         "en": "Series consists of %s parts"
@@ -2100,6 +2258,10 @@
       "other_works_by_the_author": {
         "da": "Andre %s af",
         "en": "Other %s in the"
+      },
+      "number_in_series": {
+        "da": "Del %s",
+        "en": "Part %s"
       },
       "begin_with_this": {
         "da": "Begynd med denne",
@@ -2115,6 +2277,10 @@
         "da": "Mere fra %s",
         "en": "More from %s"
       },
+      "part": {
+        "da": "%s. del - %s",
+        "en": "Part %s - %s "
+      },
       "go_to_universe": {
         "da": "Gå til %s",
         "en": "Go to %s"
@@ -2128,6 +2294,10 @@
       "universes": {
         "da": "Universer",
         "en": "Universes"
+      },
+      "parts_in_universe": {
+        "da": "Universet indeholder %s serier og værker",
+        "en": "The universe has %s series and works"
       },
       "series": {
         "da": " (serie)",
@@ -2159,6 +2329,10 @@
       }
     },
     "similararticles": {
+      "title": {
+        "da": "Artikler fra %s med samme emner",
+        "en": "Articles from %s with same topics"
+      },
       "unspecificTitle": {
         "da": "Artikler med samme emner",
         "en": "Articles with same topics"
@@ -2169,6 +2343,14 @@
       }
     },
     "bookmark": {
+      "defaultTitle": {
+        "da": "Bogmærk",
+        "en": "Bookmark"
+      },
+      "title": {
+        "da": "Bogmærk %s",
+        "en": "Bookmark %s"
+      },
       "page-title": {
         "da": "Huskeliste",
         "en": "Bookmarks"
@@ -3279,9 +3461,47 @@
         "en": "Search",
         "da": "Søg i bøger, film, musik og mere"
       },
+      "book": {
+        "da": "Bog",
+        "en": "Book"
+      },
+      "creator": {
+        "da": "Forfatter",
+        "en": "Author"
+      },
+      "subject": {
+        "da": "Emne",
+        "en": "Subject"
+      },
+      "history": {
+        "da": "Historik",
+        "en": "History"
+      },
+      "historyTitle": {
+        "da": "Søgehistorik",
+        "en": "Search history"
+      },
+      "historyClear": {
+        "da": "Ryd",
+        "en": "Clear"
+      },
       "suggestions": {
         "da": "Søgeforslag",
         "en": "Search suggestions"
+      }
+    },
+    "quickfilters": {
+      "label-physical-online": {
+        "da": "Online og fysisk",
+        "en": "Online and physical"
+      },
+      "label-fiction-nonfiction": {
+        "da": "Fiktion og non-fiktion",
+        "en": "Fiction and non-fiction"
+      },
+      "label-children-adults": {
+        "da": "Til børn og voksne",
+        "en": "Children and adults"
       }
     },
     "facets": {
@@ -3667,13 +3887,25 @@
         "da": "Menu",
         "en": "Menu"
       },
+      "title-basket": {
+        "da": "Kurv",
+        "en": "Basket"
+      },
       "title-filter": {
         "en": "Filter and sort",
         "da": "Filtre"
       },
+      "title-order": {
+        "en": "Order",
+        "da": "Bestil"
+      },
       "title-options": {
         "da": "Alle bestillingsmuligheder",
         "en": "All order options"
+      },
+      "title-search": {
+        "da": "Flere søgemuligheder",
+        "en": "Title"
       },
       "title-agencylocalizations": {
         "da": "Se hvor materialet er på hylden",
@@ -3688,6 +3920,14 @@
       "order-physical-copy-description": {
         "da": "Afhentes på dit lokale bibliotek",
         "en": "Pickup at your local library"
+      },
+      "order-combined-copy": {
+        "da": "Bestil eksemplar",
+        "en": "Order copy"
+      },
+      "order-combined-copy-description": {
+        "en": "LABEL: mangler oversættelse",
+        "da": "Materialet sendes til din e-mailadresse eller afhentes på dit bibliotek"
       },
       "digital-copy-link-title": {
         "da": "Bestil digital kopi",
@@ -3724,6 +3964,14 @@
       "infomedia-link-description": {
         "da": "Leveres af %s",
         "en": "Provided by %s"
+      },
+      "online-webarchive-title": {
+        "da": "Læs artikel som pdf",
+        "en": "Get the article in pdf format"
+      },
+      "online-webarchive-description": {
+        "da": "Læs artikel som pdf",
+        "en": "Opens in new tab. Provided by DBC web archive"
       }
     },
     "navigation": {
@@ -3861,6 +4109,14 @@
       }
     },
     "language": {
+      "en-da": {
+        "en": "DA",
+        "da": "EN"
+      },
+      "eng-dan": {
+        "da": "Eng",
+        "en": "Dan"
+      },
       "english-danish": {
         "da": "English",
         "en": "Dansk"
@@ -3870,6 +4126,34 @@
       "loan": {
         "da": "Lån",
         "en": "Loan"
+      },
+      "details": {
+        "da": "Detaljer",
+        "en": "Details"
+      },
+      "description": {
+        "da": "Beskrivelse",
+        "en": "Description"
+      },
+      "content": {
+        "da": "Indhold",
+        "en": "Content"
+      },
+      "series": {
+        "da": "Serie",
+        "en": "Series"
+      },
+      "universes": {
+        "da": "Universer",
+        "en": "Universes"
+      },
+      "reminds-of": {
+        "da": "Minder om",
+        "en": "More like this"
+      },
+      "keywords": {
+        "da": "Emneord",
+        "en": "Keywords"
       },
       "reviews": {
         "da": "Anmeldelser",
@@ -4237,13 +4521,57 @@
       }
     },
     "login": {
+      "login-search-title": {
+        "da": "Vælg bibliotek",
+        "en": "Select library"
+      },
+      "orderPhysical-title": {
+        "da": "Bestil til %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
+      "subscription-title": {
+        "da": "Dit bibliotek har abonnement",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "digitalCopy-title": {
+        "da": "Dit bibliotek abonnerer på Digital Artikelservice",
+        "en": "Digital Copy"
+      },
+      "digitalCopy-description": {
+        "da": "Du vil få artiklen tilsendt som digital kopi på mail",
+        "en": "LABEL: mangler oversættelse"
+      },
       "plainLogin-title": {
         "da": "Log ind",
         "en": "Sign in"
       },
+      "orderPhysical-description": {
+        "da": "For at gennemføre bestillingen skal du logge ind ved %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
+      "subscription-description": {
+        "da": "For at få adgang skal du logge ind ved %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
       "plainLogin-description": {
         "da": "Du skal bruge dine låneroplysninger fra %s",
         "en": "Sign in with your borrower data from %s"
+      },
+      "infomedia-description": {
+        "da": "Log ind på %s for at læse artklen",
+        "en": "Sign in at %s to read the article"
+      },
+      "infomedia-title": {
+        "da": "Læs artiklen fra infomedia",
+        "en": "Read article from infomedia"
+      },
+      "demand_driven_acquisition-title": {
+        "da": "Læs bogen på %s",
+        "en": "Read the book at &s"
+      },
+      "demand_driven_acquisition-description": {
+        "da": "Log ind på %s for at læse bogen",
+        "en": "Login at &s to read the book"
       },
       "login-to-order": {
         "da": "Log ind for at bestille",
@@ -4560,6 +4888,14 @@
       "textError": {
         "da": "Noget gik galt da vi forsøgte at tilknytte dit uddannelsesbibliotek sammen med en bibliotek.dk profil. Prøv igen eller kontakt kundeservice.dbc.dk",
         "en": "LABEL: Mangler oversættelse!"
+      },
+      "titleErrorCPRMismatch": {
+        "da": "Uoverensstemmelse mellem CPR og MitID",
+        "en": "LABEL: Mangler oversættelse!"
+      },
+      "textErrorCPRMismatch": {
+        "da": "Vi kunne ikke tilknytte dit uddannelsesbibliotek sammen med din bibliotek.dk profil, da CPR nummeret fra din bibliotek.dk profil ikke stemmer overens med det fra dit mitid. Prøv igen eller kontakt kundeservice.dbc.dk",
+        "en": "LABEL: Mangler oversættelse!"
       }
     },
     "removeLibrary": {
@@ -4634,6 +4970,10 @@
       "all-articles-title": {
         "da": "Alle artikler | Bibliotek.dk",
         "en": "All articles | Bibliotek.dk"
+      },
+      "article-title": {
+        "da": "%s | Bibliotek.dk",
+        "en": "%s | Bibliotek.dk"
       },
       "help-title": {
         "da": "Hjælp og vejledning | Bibliotek.dk",
@@ -5255,6 +5595,30 @@
       }
     },
     "units": {
+      "second": {
+        "da": "sekund",
+        "en": "second"
+      },
+      "seconds": {
+        "da": "sekunder",
+        "en": "seconds"
+      },
+      "minute": {
+        "da": "minut",
+        "en": "minute"
+      },
+      "minutes": {
+        "da": "minutter",
+        "en": "minutes"
+      },
+      "hour": {
+        "da": "time",
+        "en": "hour"
+      },
+      "hours": {
+        "da": "timer",
+        "en": "hours"
+      },
       "day": {
         "da": "dag",
         "en": "day"
@@ -5262,6 +5626,30 @@
       "days": {
         "da": "dage",
         "en": "days"
+      },
+      "month": {
+        "da": "måned",
+        "en": "month"
+      },
+      "months": {
+        "da": "måneder",
+        "en": "months"
+      },
+      "year": {
+        "da": "år",
+        "en": "year"
+      },
+      "years": {
+        "da": "år",
+        "en": "years"
+      },
+      "shortenedMonths": {
+        "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
+        "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
+      },
+      "monthsInFourCharacters": {
+        "da": "jan., feb., mar., apr., maj, juni, juli, aug., sep., okt., nov., dec.",
+        "en": "Jan., Feb., Mar., Apr., May, June, July, Aug., Sep., Oct., Nov., Dec."
       }
     },
     "profile": {
