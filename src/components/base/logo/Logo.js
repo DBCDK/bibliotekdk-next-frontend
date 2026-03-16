@@ -6,6 +6,11 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import cx from "classnames";
 import useTestUser from "@/components/hooks/useTestUser";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
+
+const LOGO_VARIANTS = {
+  default: LogoWithText,
+};
 
 /**
  * Mark when test user mode is active
@@ -37,6 +42,9 @@ function TestUserActive() {
  * @returns {React.JSX.Element}
  */
 export default function Logo({ href = "/", type = "BLUE", ...props }) {
+  const { branding } = useSiteConfig();
+  const LogoVariant = LOGO_VARIANTS[branding?.logo?.variant] || LogoWithText;
+
   if (props.skeleton) {
     return <Logo {...props} />;
   }
@@ -50,7 +58,7 @@ export default function Logo({ href = "/", type = "BLUE", ...props }) {
       })}
     >
       <div className={styles.display_flex}>
-        <LogoWithText
+        <LogoVariant
           style={{ color: type === "BLUE" ? "var(--blue)" : "var(--white)" }}
           className={cx({
             [styles.defaultLogo_Blue]: type === "BLUE",

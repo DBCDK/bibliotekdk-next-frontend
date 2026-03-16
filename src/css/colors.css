@@ -70,3 +70,23 @@
   --underline-middle-color: var(--transparent);
   --underline-middle-hover-color: var(--transparent);
 }
+
+:root[data-site="bibliotek"] {
+  --blue: #3333ff;
+  --info: #3333ff;
+  --underline-font-hover-color: var(--blue);
+  --underline-top-color: var(--blue);
+  --underline-top-hover-color: var(--blue);
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+}
+
+:root[data-site="studie"] {
+  --blue: #0f766e;
+  --info: #0f766e;
+  --underline-font-hover-color: var(--blue);
+  --underline-top-color: var(--blue);
+  --underline-top-hover-color: var(--blue);
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+}

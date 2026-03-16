@@ -199,6 +199,7 @@ module.exports = {
     },
     app: {
       url: process.env.NEXTAUTH_URL,
+      site: process.env.NEXT_PUBLIC_SITE,
     },
   },
 };
