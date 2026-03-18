@@ -6,19 +6,25 @@ import useSiteConfig from "@/components/hooks/useSiteConfig";
 import Translate from "@/components/base/translate";
 
 export default function Head() {
-  const context = { context: "metadata" };
-  const pageTitle = Translate({ ...context, label: "frontpage-title" });
+    const context = { context: "metadata" };
+  const { site, buildMetadata } = useSiteConfig();
+
+
+
+  const pageTitle = Translate({ ...context, label: "frontpage-title", vars: ["bibliotek.dk"] });
   const pageDescription = Translate({
     ...context,
     label: "frontpage-description",
   });
 
   const { canonical, alternate } = useCanonicalUrl();
-  const { buildMetadata } = useSiteConfig();
+
   const metadata = buildMetadata({
     title: pageTitle,
     description: pageDescription,
   });
+
+  console.log("### metadata", metadata);
 
   return (
     <NextHead>
@@ -29,7 +35,7 @@ export default function Head() {
         content={metadata.description}
       ></meta>
       <meta key="og:url" property="og:url" content={canonical.url} />
-      <meta key="og:type" property="og:type" content="website" />
+      <meta key="og:type" property="og:type" content={metadata.openGraphType} />
       <meta key="og:title" property="og:title" content={metadata.title} />
       <meta
         key="og:site_name"
@@ -42,7 +48,7 @@ export default function Head() {
         content={metadata.description}
       />
       <meta key="og:image" property="og:image" content={metadata.image} />
-      <meta name="referrer" content="strict-origin-when-cross-origin" />
+      <meta name="referrer" content={metadata.referrer} />
 
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
       <link
@@ -56,7 +62,10 @@ export default function Head() {
         <link key={locale} rel="alternate" hreflang={locale} href={url} />
       ))}
 
-      <meta name="mobile-web-app-capable" content="yes"></meta>
+      <meta
+        name="mobile-web-app-capable"
+        content={metadata.mobileWebAppCapable}
+      ></meta>
       <meta name="theme-color" content={metadata.themeColor}></meta>
     </NextHead>
   );

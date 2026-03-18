@@ -5,6 +5,7 @@ import { useRef } from "react";
 import Header from "@/components/header/Header";
 import Translate from "@/components/base/translate";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
 import useFilters, {
   getQuery as getQueryFilters,
 } from "@/components/hooks/useFilters";
@@ -33,6 +34,7 @@ export default function FindPage() {
   const { canonical, alternate } = useCanonicalUrl({
     preserveParams: ["workTypes", ...typesQ.map((t) => `q.${t}`)],
   });
+  const { buildMetadata } = useSiteConfig();
 
   const hitcountResponse = useData(searchFragments.hitcount({ q, filters }));
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
@@ -56,6 +58,10 @@ export default function FindPage() {
     label: "find-description",
     vars: [`${hits}`, titleToUse],
   });
+  const metadata = buildMetadata({
+    title: pageTitle,
+    description: pageDescription,
+  });
 
   function scrollToRef(ref) {
     ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -74,19 +80,40 @@ export default function FindPage() {
   return (
     <>
       <Head>
-        <title key="title">{pageTitle}</title>
-        <meta key="description" name="description" content={pageDescription} />
+        <title key="title">{metadata.title}</title>
+        <meta
+          key="description"
+          name="description"
+          content={metadata.description}
+        />
         <meta key="og:url" property="og:url" content={canonical.url} />
-        <meta key="og:title" property="og:title" content={pageTitle} />
+        <meta
+          key="og:type"
+          property="og:type"
+          content={metadata.openGraphType}
+        />
+        <meta key="og:title" property="og:title" content={metadata.title} />
+        <meta
+          key="og:site_name"
+          property="og:site_name"
+          content={metadata.siteName}
+        />
         <meta
           key="og:description"
           property="og:description"
-          content={pageDescription}
+          content={metadata.description}
         />
+        <meta key="og:image" property="og:image" content={metadata.image} />
+        <meta name="referrer" content={metadata.referrer} />
         <link rel="preconnect" href="https://moreinfo.addi.dk" />
         {alternate.map(({ locale, url }) => (
           <link key={locale} rel="alternate" hreflang={locale} href={url} />
         ))}
+        <meta
+          name="mobile-web-app-capable"
+          content={metadata.mobileWebAppCapable}
+        ></meta>
+        <meta name="theme-color" content={metadata.themeColor}></meta>
       </Head>
 
       <Header router={router} />

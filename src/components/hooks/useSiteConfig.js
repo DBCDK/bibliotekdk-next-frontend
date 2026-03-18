@@ -2,10 +2,6 @@ import getConfig from "next/config";
 
 import { DEFAULT_SITE, SITE_CONFIGS } from "@/lib/site/config";
 
-const SITE_ALIASES = {
-  studiebib: "studie",
-};
-
 export default function useSiteConfig() {
   const site = getSite();
   const siteConfig = getSiteConfig(site);
@@ -13,7 +9,6 @@ export default function useSiteConfig() {
   return {
     site,
     ...siteConfig,
-    branding: siteConfig.branding,
     metadata: siteConfig.metadata,
     buildMetadata: (props) =>
       buildSiteMetadata({
@@ -29,9 +24,7 @@ export function normalizeSite(site) {
   }
 
   const normalizedSite = String(site).trim().toLowerCase();
-  const resolvedSite = SITE_ALIASES[normalizedSite] || normalizedSite;
-
-  return SITE_CONFIGS[resolvedSite] ? resolvedSite : DEFAULT_SITE;
+  return SITE_CONFIGS[normalizedSite] ? normalizedSite : DEFAULT_SITE;
 }
 
 export function getRuntimeSite() {
@@ -53,7 +46,7 @@ export function buildSiteMetadata({
   image,
 } = {}) {
   const metadata = siteConfig?.metadata || {};
-  const branding = siteConfig?.branding || {};
+  const appUrl = getConfig()?.publicRuntimeConfig?.app?.url || null;
   const titleTemplate = metadata.titleTemplate || "%s";
   const defaultTitle = metadata.defaultTitle || "";
   const resolvedTitle = title || defaultTitle;
@@ -70,10 +63,14 @@ export function buildSiteMetadata({
         : titleTemplate.replace("%s", resolvedTitle)
       : resolvedTitle,
     description: description || metadata.defaultDescription || "",
-    image: image || branding?.logo?.ogImage || "/img/bibdk-default-img.png",
-    faviconSvg: branding?.logo?.faviconSvg || "/favicon.svg",
-    faviconIco: branding?.logo?.faviconIco || "/favicon.ico",
+    image: image || siteConfig?.logo?.ogImage || "/img/bibdk-default-img.png",
+    faviconSvg: siteConfig?.logo?.faviconSvg || "/favicon.svg",
+    faviconIco: siteConfig?.logo?.faviconIco || "/favicon.ico",
     siteName: metadata.siteName || defaultTitle,
-    themeColor: branding?.colors?.themeColor || null,
+    themeColor: siteConfig?.themeColor || null,
+    canonicalBaseUrl: metadata.canonicalBaseUrl || appUrl,
+    openGraphType: metadata.openGraphType || "website",
+    referrer: metadata.referrer || "strict-origin-when-cross-origin",
+    mobileWebAppCapable: metadata.mobileWebAppCapable || "yes",
   };
 }

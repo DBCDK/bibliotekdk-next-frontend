@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 
 import styles from "./Page.module.css";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
 
 /**
  * The page showing help search results
@@ -26,6 +27,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  */
 export function Page({ result, isLoading, query }) {
   const context = { context: "metadata" };
+  const { buildMetadata } = useSiteConfig();
 
   const pageTitle = Translate({
     ...context,
@@ -39,26 +41,47 @@ export function Page({ result, isLoading, query }) {
   const { canonical, alternate } = useCanonicalUrl({
     preserveParams: ["q"],
   });
+  const metadata = buildMetadata({
+    title: pageTitle,
+    description: pageDescription,
+  });
 
   return (
     <React.Fragment>
       <Head>
-        <title key="title">{pageTitle}</title>
+        <title key="title">{metadata.title}</title>
         <meta
           key="description"
           name="description"
-          content={pageDescription}
+          content={metadata.description}
         ></meta>
         <meta key="og:url" property="og:url" content={canonical.url} />
-        <meta key="og:title" property="og:title" content={pageTitle} />
+        <meta
+          key="og:type"
+          property="og:type"
+          content={metadata.openGraphType}
+        />
+        <meta key="og:title" property="og:title" content={metadata.title} />
+        <meta
+          key="og:site_name"
+          property="og:site_name"
+          content={metadata.siteName}
+        />
         <meta
           key="og:description"
           property="og:description"
-          content={pageDescription}
+          content={metadata.description}
         />
+        <meta key="og:image" property="og:image" content={metadata.image} />
+        <meta name="referrer" content={metadata.referrer} />
         {alternate.map(({ locale, url }) => (
           <link key={locale} rel="alternate" hreflang={locale} href={url} />
         ))}
+        <meta
+          name="mobile-web-app-capable"
+          content={metadata.mobileWebAppCapable}
+        ></meta>
+        <meta name="theme-color" content={metadata.themeColor}></meta>
       </Head>
       <main>
         <Container className={styles.top} fluid>

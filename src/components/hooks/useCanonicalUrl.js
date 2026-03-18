@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import getConfig from "next/config";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -17,6 +18,8 @@ const APP_URL =
  */
 export default function useCanonicalUrl({ preserveParams = [] } = {}) {
   const router = useRouter();
+  const { metadata } = useSiteConfig();
+  const appUrl = metadata?.canonicalBaseUrl || APP_URL;
   const preserved = preserveParams
     .filter((param) => router.query[param])
     .map((param) => `${param}=${router.query[param]}`)
@@ -28,7 +31,7 @@ export default function useCanonicalUrl({ preserveParams = [] } = {}) {
     return {
       locale,
       url: [
-        APP_URL,
+        appUrl,
         locale === router.defaultLocale ? "" : `/${locale}`,
         pathname,
         preserved ? `?${preserved}` : "",
@@ -38,5 +41,5 @@ export default function useCanonicalUrl({ preserveParams = [] } = {}) {
   const canonical = createUrl(router.locale);
 
   const alternate = router.locales?.map((locale) => createUrl(locale)) || [];
-  return { canonical, alternate, root: APP_URL };
+  return { canonical, alternate, root: appUrl };
 }

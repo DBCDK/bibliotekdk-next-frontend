@@ -17,6 +17,7 @@ import { getJSONLD } from "@/lib/jsonld/article";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
 import { getLanguage } from "@/components/base/translate";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
 
 /**
  * The article page Header React component
@@ -27,6 +28,7 @@ import { getLanguage } from "@/components/base/translate";
  * @returns {React.JSX.Element}
  */
 export default function Header({ articleId }) {
+  const { buildMetadata } = useSiteConfig();
   const language = getLanguage();
   const data = useData(articleFragments.article({ articleId, language }));
 
@@ -35,34 +37,46 @@ export default function Header({ articleId }) {
   }
 
   const article = data.data.article;
+  const metadata = buildMetadata({
+    title: article.title,
+    description: article.fieldRubrik,
+    image: article.fieldImage?.url
+      ? `/_next/image?url=${article.fieldImage.url}&w=1920&q=75`
+      : undefined,
+  });
 
   return (
     <Head>
-      <title key="title">{article.title}</title>
+      <title key="title">{metadata.title}</title>
       <meta
         key="description"
         name="description"
-        content={article.fieldRubrik}
+        content={metadata.description}
       ></meta>
       <meta
         key="og:url"
         property="og:url"
         content={getCanonicalArticleUrl(article)}
       />
-      <meta key="og:type" property="og:type" content="website" />
-      <meta key="og:title" property="og:title" content={article.title} />
+      <meta key="og:type" property="og:type" content={metadata.openGraphType} />
+      <meta key="og:title" property="og:title" content={metadata.title} />
+      <meta
+        key="og:site_name"
+        property="og:site_name"
+        content={metadata.siteName}
+      />
       <meta
         key="og:description"
         property="og:description"
-        content={article.fieldRubrik}
+        content={metadata.description}
       />
-      {article.fieldImage && article.fieldImage.url && (
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`/_next/image?url=${article.fieldImage.url}&w=1920&q=75`}
-        />
-      )}
+      <meta key="og:image" property="og:image" content={metadata.image} />
+      <meta name="referrer" content={metadata.referrer} />
+      <meta
+        name="mobile-web-app-capable"
+        content={metadata.mobileWebAppCapable}
+      ></meta>
+      <meta name="theme-color" content={metadata.themeColor}></meta>
 
       <script
         type="application/ld+json"

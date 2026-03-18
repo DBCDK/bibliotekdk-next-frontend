@@ -1,28 +1,25 @@
-const sharedBranding = {
-  logo: {
-    variant: "default",
-    ogImage: "/img/bibdk-default-img.png",
-    faviconSvg: "/favicon.svg",
-    faviconIco: "/favicon.ico",
-  },
-  colors: {
-    primary: "#3333ff",
-    primaryContrast: "#ffffff",
-    themeColor: "#3333ff",
-  },
-};
-
 const sharedMetadata = {
   defaultDescription: "",
+  canonicalBaseUrl: null,
+  openGraphType: "website",
+  referrer: "strict-origin-when-cross-origin",
+  mobileWebAppCapable: "yes",
 };
 
-export const DEFAULT_SITE = "bibliotek";
+export const DEFAULT_SITE = "bibliotekdk";
 
 export const SITE_CONFIGS = {
-  bibliotek: {
-    id: "bibliotek",
+  bibliotekdk: {
+    id: "bibliotekdk",
     label: "bibliotek.dk",
-    branding: sharedBranding,
+    logo: {
+      variant: "bibliotekdk",
+      ogImage: "/img/bibdk-default-img.png",
+      faviconSvg: "/favicon/bibdk/favicon.svg",
+      faviconIco: "/favicon/bibdk/favicon.ico",
+    },
+    hero: null,
+    themeColor: "#3333ff",
     metadata: {
       ...sharedMetadata,
       siteName: "bibliotek.dk",
@@ -30,10 +27,19 @@ export const SITE_CONFIGS = {
       titleTemplate: "%s | bibliotek.dk",
     },
   },
-  studie: {
-    id: "studie",
+  studiebib: {
+    id: "studiebib",
     label: "studie.bibliotek.dk",
-    branding: sharedBranding,
+    logo: {
+      variant: "studiebib",
+      ogImage: "/img/bibdk-default-img.png",
+      faviconSvg: "/favicon/studiebib/favicon.svg",
+      faviconIco: "/favicon/studiebib/favicon.ico",
+    },
+    hero: {
+      path: "/img/Studiebib_hero.jpg",
+    },
+    themeColor: "#d81b60",
     metadata: {
       ...sharedMetadata,
       siteName: "studie.bibliotek.dk",

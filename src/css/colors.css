@@ -71,7 +71,7 @@
   --underline-middle-hover-color: var(--transparent);
 }
 
-:root[data-site="bibliotek"] {
+:root[data-site="bibliotekdk"] {
   --blue: #3333ff;
   --info: #3333ff;
   --underline-font-hover-color: var(--blue);
@@ -81,9 +81,16 @@
   --underline-bottom-hover-color: var(--blue);
 }
 
-:root[data-site="studie"] {
-  --blue: #0f766e;
-  --info: #0f766e;
+:root[data-site="studiebib"] {
+  /* primary */
+  --blue: #d81b60;
+
+  /* secondaries */
+  --light-pink: #FFF0F0;
+  --dark-blue: #1c3d73;
+  --dark-green: #00a6a8;
+
+  /* overrides */
   --underline-font-hover-color: var(--blue);
   --underline-top-color: var(--blue);
   --underline-top-hover-color: var(--blue);

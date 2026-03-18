@@ -17,6 +17,7 @@ import { getJSONLD } from "@/lib/jsonld/help";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
 import Translate from "@/components/base/translate";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
 
 /**
  * The article page Header React component
@@ -27,6 +28,7 @@ import Translate from "@/components/base/translate";
  * @returns {React.JSX.Element}
  */
 export default function Header({ helpTextId }) {
+  const { buildMetadata } = useSiteConfig();
   const { isLoading, data, error } = useData(
     helpTextId && helpText({ helpTextId: helpTextId })
   );
@@ -50,34 +52,46 @@ export default function Header({ helpTextId }) {
     ...context,
     label: "help-description",
   });
+  const metadata = buildMetadata({
+    title: pageTitle,
+    description: pageDescription,
+    image: helptext.fieldImage?.url
+      ? `/_next/image?url=${helptext.fieldImage?.url}&w=1920&q=75`
+      : undefined,
+  });
 
   return (
     <Head>
-      <title key="title">{pageTitle}</title>
+      <title key="title">{metadata.title}</title>
       <meta
         key="description"
         name="description"
-        content={pageDescription}
+        content={metadata.description}
       ></meta>
       <meta
         key="og:url"
         property="og:url"
         content={getCanonicalArticleUrl(helptext)}
       />
-      <meta key="og:type" property="og:type" content="website" />
-      <meta key="og:title" property="og:title" content={pageTitle} />
+      <meta key="og:type" property="og:type" content={metadata.openGraphType} />
+      <meta key="og:title" property="og:title" content={metadata.title} />
+      <meta
+        key="og:site_name"
+        property="og:site_name"
+        content={metadata.siteName}
+      />
       <meta
         key="og:description"
         property="og:description"
-        content={pageDescription}
+        content={metadata.description}
       />
-      {helptext.fieldImage?.url && (
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`/_next/image?url=${helptext.fieldImage?.url}&w=1920&q=75`}
-        />
-      )}
+      <meta key="og:image" property="og:image" content={metadata.image} />
+      <meta name="referrer" content={metadata.referrer} />
+      <meta
+        name="mobile-web-app-capable"
+        content={metadata.mobileWebAppCapable}
+      ></meta>
+      <meta name="theme-color" content={metadata.themeColor}></meta>
 
       <script
         type="application/ld+json"
