@@ -6,12 +6,14 @@ import useSiteConfig from "@/components/hooks/useSiteConfig";
 import Translate from "@/components/base/translate";
 
 export default function Head() {
-    const context = { context: "metadata" };
-  const { site, buildMetadata } = useSiteConfig();
+  const context = { context: "metadata" };
+  const { buildMetadata } = useSiteConfig();
 
-
-
-  const pageTitle = Translate({ ...context, label: "frontpage-title", vars: ["bibliotek.dk"] });
+  const pageTitle = Translate({
+    ...context,
+    label: "frontpage-title",
+    vars: ["bibliotek.dk"],
+  });
   const pageDescription = Translate({
     ...context,
     label: "frontpage-description",
@@ -23,8 +25,6 @@ export default function Head() {
     title: pageTitle,
     description: pageDescription,
   });
-
-  console.log("### metadata", metadata);
 
   return (
     <NextHead>

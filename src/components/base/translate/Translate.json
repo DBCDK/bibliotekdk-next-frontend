@@ -4940,7 +4940,7 @@
       "addLibraryNoBorchkText": {
         "da": "Desværre dit valgte bibliotek %s, kan ikke knyttes til denne profil. </br></br> Log ud for at kunne foretage bestilling til dette bibliotek",
         "en": "LABEL: Mangler oversættelse!"
-      }, 
+      },
       "addLibraryAlreadyCreatedTitle": {
         "da": "Du er allerede bruger på %s",
         "en": "LABEL: Mangler oversættelse!"
