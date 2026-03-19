@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Head from "next/head";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -9,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Result from "@/components/help/search/result";
 import Faq from "@/components/help/faq/promoted";
 import HelpTextMenu from "@/components/help/menu";
+import Head from "@/components/head";
 import Translate from "@/components/base/translate";
 
 import { useData } from "@/lib/api/api";
@@ -17,7 +17,6 @@ import { useRouter } from "next/router";
 
 import styles from "./Page.module.css";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
-import useSiteConfig from "@/components/hooks/useSiteConfig";
 
 /**
  * The page showing help search results
@@ -27,7 +26,6 @@ import useSiteConfig from "@/components/hooks/useSiteConfig";
  */
 export function Page({ result, isLoading, query }) {
   const context = { context: "metadata" };
-  const { buildMetadata } = useSiteConfig();
 
   const pageTitle = Translate({
     ...context,
@@ -41,48 +39,15 @@ export function Page({ result, isLoading, query }) {
   const { canonical, alternate } = useCanonicalUrl({
     preserveParams: ["q"],
   });
-  const metadata = buildMetadata({
-    title: pageTitle,
-    description: pageDescription,
-  });
 
   return (
     <React.Fragment>
-      <Head>
-        <title key="title">{metadata.title}</title>
-        <meta
-          key="description"
-          name="description"
-          content={metadata.description}
-        ></meta>
-        <meta key="og:url" property="og:url" content={canonical.url} />
-        <meta
-          key="og:type"
-          property="og:type"
-          content={metadata.openGraphType}
-        />
-        <meta key="og:title" property="og:title" content={metadata.title} />
-        <meta
-          key="og:site_name"
-          property="og:site_name"
-          content={metadata.siteName}
-        />
-        <meta
-          key="og:description"
-          property="og:description"
-          content={metadata.description}
-        />
-        <meta key="og:image" property="og:image" content={metadata.image} />
-        <meta name="referrer" content={metadata.referrer} />
-        {alternate.map(({ locale, url }) => (
-          <link key={locale} rel="alternate" hreflang={locale} href={url} />
-        ))}
-        <meta
-          name="mobile-web-app-capable"
-          content={metadata.mobileWebAppCapable}
-        ></meta>
-        <meta name="theme-color" content={metadata.themeColor}></meta>
-      </Head>
+      <Head
+        title={pageTitle}
+        description={pageDescription}
+        canonical={canonical.url}
+        alternate={alternate}
+      />
       <main>
         <Container className={styles.top} fluid>
           <Row>
