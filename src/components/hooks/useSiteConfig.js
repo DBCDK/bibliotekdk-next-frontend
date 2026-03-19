@@ -53,7 +53,9 @@ export function buildSiteMetadata({
   const useTitleTemplate = resolvedTitle && resolvedTitle !== defaultTitle;
   const titleAlreadyContainsSiteName =
     resolvedTitle && metadata.siteName
-      ? resolvedTitle.includes(metadata.siteName)
+      ? resolvedTitle
+          .toLocaleLowerCase()
+          .includes(metadata.siteName.toLocaleLowerCase())
       : false;
 
   return {
