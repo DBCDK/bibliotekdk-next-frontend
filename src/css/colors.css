@@ -70,3 +70,30 @@
   --underline-middle-color: var(--transparent);
   --underline-middle-hover-color: var(--transparent);
 }
+
+:root[data-site="bibliotekdk"] {
+  --blue: #3333ff;
+  --info: #3333ff;
+  --underline-font-hover-color: var(--blue);
+  --underline-top-color: var(--blue);
+  --underline-top-hover-color: var(--blue);
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+}
+
+:root[data-site="studiebib"] {
+  /* primary */
+  --blue: #d81b60;
+
+  /* secondaries */
+  --light-pink: #fff0f0;
+  --dark-blue: #1c3d73;
+  --dark-green: #00a6a8;
+
+  /* overrides */
+  --underline-font-hover-color: var(--blue);
+  --underline-top-color: var(--blue);
+  --underline-top-hover-color: var(--blue);
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+}

@@ -8,7 +8,7 @@
  * And we embed Open Graph as RDFa
  */
 import PropTypes from "prop-types";
-import Head from "next/head";
+import Head from "@/components/head";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
@@ -65,35 +65,14 @@ export function Header({ details }) {
   const canonicalWorkUrl = getCanonicalWorkUrl({ ...urlWork });
 
   return (
-    <Head>
-      <title key="title">{pageTitle}</title>
-      <meta
-        key="description"
-        name="description"
-        content={pageDescription}
-      ></meta>
-      <meta key="og:url" property="og:url" content={canonicalWorkUrl} />
-      <meta key="og:title" property="og:title" content={pageTitle} />
-      <meta
-        key="og:description"
-        property="og:description"
-        content={pageDescription}
-      />
-      {coverUrl && (
-        <meta key="og:image" property="og:image" content={coverUrl} />
-      )}
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonld),
-        }}
-      />
-      {alternate.map(({ locale, url }) => (
-        <link key={locale} rel="alternate" hreflang={locale} href={url} />
-      ))}
-      <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
-    </Head>
+    <Head
+      title={pageTitle}
+      description={pageDescription}
+      image={coverUrl}
+      canonical={canonicalWorkUrl}
+      alternate={alternate}
+      jsonLd={jsonld}
+    />
   );
 }
 

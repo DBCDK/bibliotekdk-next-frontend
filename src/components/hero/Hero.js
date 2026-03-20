@@ -11,6 +11,7 @@ import Image from "@/components/base/image";
 import { useData } from "@/lib/api/api";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 import Text from "@/components/base/text/Text";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
@@ -86,7 +87,18 @@ export function parseHero(data) {
 }
 
 export default function Wrap() {
-  const { data } = useData(frontpageHero());
-  const heroImage = parseHero(data);
+  const { hero } = useSiteConfig();
+  const useSiteHero = !!hero?.path;
+  const { data } = useData(!useSiteHero && frontpageHero());
+  const heroImage = useSiteHero
+    ? {
+        description: hero?.description,
+        image: {
+          alt: hero?.alt || "",
+          url: hero.path,
+        },
+      }
+    : parseHero(data);
+
   return <Hero image={heroImage} />;
 }

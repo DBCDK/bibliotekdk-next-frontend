@@ -1,8 +1,8 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 
 import Header from "@/components/header/Header";
+import Head from "@/components/head";
 import Translate from "@/components/base/translate";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import useFilters, {
@@ -73,21 +73,12 @@ export default function FindPage() {
 
   return (
     <>
-      <Head>
-        <title key="title">{pageTitle}</title>
-        <meta key="description" name="description" content={pageDescription} />
-        <meta key="og:url" property="og:url" content={canonical.url} />
-        <meta key="og:title" property="og:title" content={pageTitle} />
-        <meta
-          key="og:description"
-          property="og:description"
-          content={pageDescription}
-        />
-        <link rel="preconnect" href="https://moreinfo.addi.dk" />
-        {alternate.map(({ locale, url }) => (
-          <link key={locale} rel="alternate" hreflang={locale} href={url} />
-        ))}
-      </Head>
+      <Head
+        title={pageTitle}
+        description={pageDescription}
+        canonical={canonical.url}
+        alternate={alternate}
+      />
 
       <Header router={router} />
       <div ref={scrollRef} />
