@@ -9,7 +9,6 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Icon from "@/components/base/icon/Icon";
-import { getLocale } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
@@ -88,7 +87,7 @@ function notificationsFilter(data) {
  * @returns {React.JSX.Element}
  */
 export default function Wrap() {
-  const { data } = useData(notificationsQuery({ locale: getLocale() }));
+  const { data } = useData(notificationsQuery());
 
   return <Notifications notificationObject={data} />;
 }

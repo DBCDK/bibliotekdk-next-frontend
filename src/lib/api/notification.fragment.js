@@ -1,21 +1,19 @@
 import { ApiEnums } from "@/lib/api/api";
 
-export function notificationsQuery({ locale }) {
+export function notificationsQuery() {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query NotificationsFragmentsNotificationQuery($locale: BibliotekdkCmsI18NLocaleCode) {
+    query NotificationsFragmentsNotificationQuery {
       bibliotekdkCms {
-        notifications(status: PUBLISHED, locale: $locale) {
+        notifications(status: PUBLISHED) {
           documentId
           title
           text
           type
-          locale
         }
       }
     }`,
-    variables: { locale },
     slowThreshold: 3000,
   };
 }
