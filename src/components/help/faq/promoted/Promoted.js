@@ -13,7 +13,6 @@ import { sortData } from "../utils";
 import { useData } from "@/lib/api/api";
 import { promotedFaqs } from "@/lib/api/faq.fragments";
 
-import { getLanguage } from "@/components/base/translate/Translate";
 
 import styles from "./Promoted.module.css";
 
@@ -72,16 +71,13 @@ Promoted.propTypes = {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  const langcode = getLanguage();
-  // real data goes here ...
-  const { isLoading, data, error } = useData(promotedFaqs(langcode));
+  const { isLoading, data, error } = useData(promotedFaqs());
 
-  if ((!data || !data.faq || error) && !isLoading) {
-    // @TODO some error here .. message for user .. log ??
+  if ((!data || !data.bibliotekdkCms || error) && !isLoading) {
     return null;
   }
 
-  const realData = data?.faq?.entities;
+  const realData = data?.bibliotekdkCms?.faqs?.filter((faq) => faq.promoted);
 
   return <Promoted {...props} isLoading={isLoading} data={realData} />;
 }

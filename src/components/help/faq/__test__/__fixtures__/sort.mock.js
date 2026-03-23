@@ -1,66 +1,33 @@
 const data = {
-  faq: {
-    count: 4,
-    entities: [
+  bibliotekdkCms: {
+    faqs: [
       {
-        langcode: {
-          value: "en",
-        },
-        nid: 30,
+        documentId: "doc-30",
         title: "def",
-        promote: false,
-        body: {
-          value: "<p>This faq goes next ...</p>",
-        },
-        fieldTags: [
-          {
-            entity: {
-              entityLabel: "Bestillinger",
-            },
-          },
-        ],
+        promoted: false,
+        body: "<p>This faq goes next ...</p>",
+        category: { name: "Bestillinger" },
       },
       {
-        langcode: {
-          value: "en",
-        },
-        nid: 31,
+        documentId: "doc-31",
         title: "abc",
-        promote: true,
-        body: {
-          value: "<p>This faq goes first ...</p>",
-        },
-        fieldTags: [
-          {
-            entity: {
-              entityLabel: "Søgninger",
-            },
-          },
-        ],
+        promoted: true,
+        body: "<p>This faq goes first ...</p>",
+        category: { name: "Søgninger" },
       },
       {
-        langcode: {
-          value: "da",
-        },
-        nid: 32,
+        documentId: "doc-32",
         title: "jkl",
-        promote: false,
-        body: {
-          value: "<p>This faq goes last ...</p>",
-        },
-        fieldTags: [],
+        promoted: false,
+        body: "<p>This faq goes last ...</p>",
+        category: null,
       },
       {
-        langcode: {
-          value: "en",
-        },
-        nid: 38,
+        documentId: "doc-38",
         title: "ghi",
-        promote: false,
-        body: {
-          value: "<p>This faq goes third</p>",
-        },
-        fieldTags: [],
+        promoted: false,
+        body: "<p>This faq goes third</p>",
+        category: null,
       },
     ],
   },
