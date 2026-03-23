@@ -13,7 +13,6 @@ import { sortData } from "../utils";
 import { useData } from "@/lib/api/api";
 import { promotedFaqs } from "@/lib/api/faq.fragments";
 
-
 import styles from "./Promoted.module.css";
 
 /**
