@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Head from "next/head";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -9,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Result from "@/components/help/search/result";
 import Faq from "@/components/help/faq/promoted";
 import HelpTextMenu from "@/components/help/menu";
+import Head from "@/components/head";
 import Translate from "@/components/base/translate";
 
 import { useData } from "@/lib/api/api";
@@ -42,24 +42,12 @@ export function Page({ result, isLoading, query }) {
 
   return (
     <React.Fragment>
-      <Head>
-        <title key="title">{pageTitle}</title>
-        <meta
-          key="description"
-          name="description"
-          content={pageDescription}
-        ></meta>
-        <meta key="og:url" property="og:url" content={canonical.url} />
-        <meta key="og:title" property="og:title" content={pageTitle} />
-        <meta
-          key="og:description"
-          property="og:description"
-          content={pageDescription}
-        />
-        {alternate.map(({ locale, url }) => (
-          <link key={locale} rel="alternate" hreflang={locale} href={url} />
-        ))}
-      </Head>
+      <Head
+        title={pageTitle}
+        description={pageDescription}
+        canonical={canonical.url}
+        alternate={alternate}
+      />
       <main>
         <Container className={styles.top} fluid>
           <Row>

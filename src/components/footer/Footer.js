@@ -21,7 +21,7 @@ import { MATERIAL_PAGES } from "@/components/header";
  * @returns {React.JSX.Element}
  */
 const FooterLogo = () => {
-  return <Logo type="WHITE" />;
+  return <Logo colors={{ logo: "var(--white)", text: "var(--white)" }} />;
 };
 
 /**

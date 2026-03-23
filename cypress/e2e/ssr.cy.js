@@ -84,14 +84,14 @@ describe("Server Side Rendering", () => {
         "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=bog"
       ).then((res) => {
         expect(res.title).to.equal(
-          "Hest, hest, tiger, tiger af Mette E. Neerlin"
+          "Hest, hest, tiger, tiger af Mette E. Neerlin | bibliotek.dk"
         );
         expect(res.description).to.equal(descriptionExpectation);
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
         );
         expect(res["og:title"]).to.equal(
-          "Hest, hest, tiger, tiger af Mette E. Neerlin"
+          "Hest, hest, tiger, tiger af Mette E. Neerlin | bibliotek.dk"
         );
         expect(res["og:description"]).to.equal(descriptionExpectation);
         expect(res["og:image"]).to.exist;

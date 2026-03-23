@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Faq from "@/components/help/faq/published";
 import HelpTextMenu from "@/components/help/menu";
 import Breadcrumbs from "@/components/base/breadcrumbs";
+import Head from "@/components/head";
 import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
@@ -32,20 +31,7 @@ export default function Page() {
 
   return (
     <React.Fragment>
-      <Head>
-        <title key="title">{pageTitle}</title>
-        <meta
-          key="description"
-          name="description"
-          content={pageDescription}
-        ></meta>
-        <meta key="og:title" property="og:title" content={pageTitle} />
-        <meta
-          key="og:description"
-          property="og:description"
-          content={pageDescription}
-        />
-      </Head>
+      <Head title={pageTitle} description={pageDescription} />
       <main>
         <Container className={styles.top} fluid>
           <Row>

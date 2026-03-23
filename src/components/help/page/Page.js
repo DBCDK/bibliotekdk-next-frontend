@@ -1,10 +1,9 @@
-import Head from "next/head";
-
 import Container from "react-bootstrap/Container";
 
 import Faq from "@/components/help/faq/promoted";
 import Sections from "../sections";
 import Contact from "../contact";
+import Head from "@/components/head";
 import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
@@ -32,20 +31,7 @@ export default function Page() {
 
   return (
     <React.Fragment>
-      <Head>
-        <title key="title">{pageTitle}</title>
-        <meta
-          key="description"
-          name="description"
-          content={pageDescription}
-        ></meta>
-        <meta key="og:title" property="og:title" content={pageTitle} />
-        <meta
-          key="og:description"
-          property="og:description"
-          content={pageDescription}
-        />
-      </Head>
+      <Head title={pageTitle} description={pageDescription} />
       <main>
         <Container className={styles.top} fluid>
           <Faq className={styles.faq} />

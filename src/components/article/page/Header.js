@@ -8,7 +8,7 @@
  * And we embed Open Graph as RDFa
  */
 import PropTypes from "prop-types";
-import Head from "next/head";
+import Head from "@/components/head";
 
 import { useData } from "@/lib/api/api";
 import * as articleFragments from "@/lib/api/article.fragments";
@@ -35,46 +35,22 @@ export default function Header({ articleId }) {
   }
 
   const article = data.data.article;
-
   return (
-    <Head>
-      <title key="title">{article.title}</title>
-      <meta
-        key="description"
-        name="description"
-        content={article.fieldRubrik}
-      ></meta>
-      <meta
-        key="og:url"
-        property="og:url"
-        content={getCanonicalArticleUrl(article)}
-      />
-      <meta key="og:type" property="og:type" content="website" />
-      <meta key="og:title" property="og:title" content={article.title} />
-      <meta
-        key="og:description"
-        property="og:description"
-        content={article.fieldRubrik}
-      />
-      {article.fieldImage && article.fieldImage.url && (
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`/_next/image?url=${article.fieldImage.url}&w=1920&q=75`}
-        />
-      )}
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getJSONLD(article)),
-        }}
-      />
-      <link
-        rel="preconnect"
-        href="http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk"
-      ></link>
-    </Head>
+    <Head
+      title={article.title}
+      description={article.fieldRubrik}
+      image={
+        article.fieldImage?.url
+          ? `/_next/image?url=${article.fieldImage.url}&w=1920&q=75`
+          : undefined
+      }
+      canonical={getCanonicalArticleUrl(article)}
+      jsonLd={getJSONLD(article)}
+      preconnect={[
+        "https://moreinfo.addi.dk",
+        "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk",
+      ]}
+    />
   );
 }
 
