@@ -22,7 +22,7 @@ import Page from "@/components/article/page";
 import ArticleHeader from "@/components/article/page/Header";
 import Header from "@/components/header/Header";
 import React from "react";
-import { getLanguage } from "@/components/base/translate/Translate";
+import { getLocale } from "@/components/base/translate/Translate";
 
 /**
  * Renders the WorkPage component
@@ -66,6 +66,6 @@ const serverQueries = [article];
  */
 ArticlePage.getInitialProps = async (ctx) => {
   const articleId = ctx?.query?.articleId;
-  const language = getLanguage();
-  return await fetchAll(serverQueries, ctx, { articleId, language });
+  const locale = getLocale();
+  return await fetchAll(serverQueries, ctx, { articleId, locale });
 };

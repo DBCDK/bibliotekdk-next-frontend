@@ -37,7 +37,7 @@ const headers = [
       "style-src 'self' 'unsafe-inline' blob:; " +
       // ✅ ensure link-based stylesheets are allowed too
       "style-src-elem 'self' 'unsafe-inline' blob:; " +
-      "img-src 'self' blob: https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:* https://upload.wikimedia.org; " +
+      "img-src 'self' blob: https://moreinfo.addi.dk img.sct.eu1.usercentrics.eu data: *.dbc.dk http://localhost:* https://upload.wikimedia.org https://s3.dbccloud.dk; " +
       "connect-src 'self' https://consentcdn.cookiebot.eu https://consent.cookiebot.eu https://stats.dbc.dk *.dbc.dk https://samples.pubhub.dk https://samples.qa.pubhub.dk https://*.wedobooks.io http://localhost:* ws://localhost:*; " +
       // ✅ allow blob frames (some epubjs setups / srcdoc variations)
       "frame-src 'self' *.dbc.dk https://consentcdn.cookiebot.eu blob:; " +
@@ -94,6 +94,7 @@ module.exports = {
       "bibdk-backend-www-master.febib-staging.svc.cloud.dbc.dk",
       "bibdk-backend-www-master.frontend-staging.svc.cloud.dbc.dk",
       "upload.wikimedia.org",
+      "s3.dbccloud.dk",
     ],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 640, 1400],
   },
