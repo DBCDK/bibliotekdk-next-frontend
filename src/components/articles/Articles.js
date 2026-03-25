@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { useMemo } from "react";
-import get from "lodash/get";
 
 import { sortArticles } from "./utils";
 
@@ -10,8 +9,8 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import ArticlePreview from "@/components/article/preview";
 
-import { allArticles } from "@/lib/api/article.fragments";
-import { getLanguage } from "@/components/base/translate/Translate";
+import { allArticles, getArticles } from "@/lib/api/article.fragments";
+import { getLocale } from "@/components/base/translate/Translate";
 
 import styles from "./Articles.module.css";
 
@@ -44,11 +43,9 @@ Articles.propTypes = {
 };
 
 export default function Wrap(props) {
-  const langcode = { language: getLanguage() };
-  const { isLoading, data } = useData(allArticles(langcode));
-  const articles = get(data, "nodeQuery.entities", []).filter(
-    (article) => article && article.__typename === "NodeArticle"
-  );
+  const locale = getLocale();
+  const { isLoading, data } = useData(allArticles({ locale }));
+  const articles = getArticles(data);
 
   return <Articles {...props} articles={articles} skeleton={isLoading} />;
 }

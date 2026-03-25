@@ -4,103 +4,57 @@ exports[`Group data 1`] = `
 Object {
   "Andet": Array [
     Object {
-      "body": Object {
-        "value": "<p>This faq goes last in the group ...</p>",
-      },
-      "fieldTags": Array [],
-      "langcode": Object {
-        "value": "da",
-      },
-      "nid": 32,
-      "promote": false,
+      "body": "<p>This faq goes last in the group ...</p>",
+      "category": null,
+      "documentId": "doc-32a",
+      "promoted": false,
       "title": "def",
     },
     Object {
-      "body": Object {
-        "value": "<p>This faq goes first in the group ...</p>",
-      },
-      "fieldTags": Array [],
-      "langcode": Object {
-        "value": "da",
-      },
-      "nid": 32,
-      "promote": false,
+      "body": "<p>This faq goes first in the group ...</p>",
+      "category": null,
+      "documentId": "doc-32b",
+      "promoted": false,
       "title": "abc",
     },
   ],
   "Bestillinger": Array [
     Object {
-      "body": Object {
-        "value": "<p>This faq goes first in the group ...</p>",
+      "body": "<p>This faq goes first in the group ...</p>",
+      "category": Object {
+        "name": "Bestillinger",
       },
-      "fieldTags": Array [
-        Object {
-          "entity": Object {
-            "entityLabel": "Bestillinger",
-          },
-        },
-      ],
-      "langcode": Object {
-        "value": "en",
-      },
-      "nid": 30,
-      "promote": false,
+      "documentId": "doc-30",
+      "promoted": false,
       "title": "abc",
     },
   ],
   "Søgninger": Array [
     Object {
-      "body": Object {
-        "value": "<p>This faq goes last in the group ...</p>",
+      "body": "<p>This faq goes last in the group ...</p>",
+      "category": Object {
+        "name": "Søgninger",
       },
-      "fieldTags": Array [
-        Object {
-          "entity": Object {
-            "entityLabel": "Søgninger",
-          },
-        },
-      ],
-      "langcode": Object {
-        "value": "en",
-      },
-      "nid": 31,
-      "promote": true,
+      "documentId": "doc-31a",
+      "promoted": true,
       "title": "ghi",
     },
     Object {
-      "body": Object {
-        "value": "<p>This faq goes second in the group ...</p>",
+      "body": "<p>This faq goes second in the group ...</p>",
+      "category": Object {
+        "name": "Søgninger",
       },
-      "fieldTags": Array [
-        Object {
-          "entity": Object {
-            "entityLabel": "Søgninger",
-          },
-        },
-      ],
-      "langcode": Object {
-        "value": "en",
-      },
-      "nid": 31,
-      "promote": true,
+      "documentId": "doc-31b",
+      "promoted": true,
       "title": "def",
     },
     Object {
-      "body": Object {
-        "value": "<p>This faq goes first in the group...</p>",
+      "body": "<p>This faq goes first in the group...</p>",
+      "category": Object {
+        "name": "Søgninger",
       },
-      "fieldTags": Array [
-        Object {
-          "entity": Object {
-            "entityLabel": "Søgninger",
-          },
-        },
-      ],
-      "langcode": Object {
-        "value": "en",
-      },
-      "nid": 31,
-      "promote": true,
+      "documentId": "doc-31c",
+      "promoted": true,
       "title": "abc",
     },
   ],

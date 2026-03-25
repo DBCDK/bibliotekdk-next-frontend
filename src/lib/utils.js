@@ -391,8 +391,8 @@ export function getCanonicalWorkUrl({ title, creators, id }) {
  *
  * @returns {string} The canonical article URL
  */
-export function getArticlePath({ title, nid }) {
-  return `artikel/${encodeString(title)}/${nid}`;
+export function getArticlePath({ title, nid, documentId, articleId }) {
+  return `artikel/${encodeString(title)}/${documentId || articleId || nid}`; //TODO: remove nid when fully migrated to documentId
 }
 
 /**
