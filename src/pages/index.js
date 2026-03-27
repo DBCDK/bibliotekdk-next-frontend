@@ -1,27 +1,27 @@
 /**
  * @file
  * This is the index page of the application
- *
  */
 
 import Head from "next/head";
 
-import ArticleSection from "@/components/article/section";
+import { ArticleSection } from "@/components/article/section";
 import Hero from "@/components/hero";
-import { promotedArticles } from "@/lib/api/article.fragments";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import Header from "@/components/header/Header";
-import Translate from "@/components/base/translate";
 import React from "react";
-import { frontpageHero } from "@/lib/api/hero.fragments";
 import { InspirationSlider } from "@/components/inspiration";
+import { LinkCard } from "@/components/linkcard";
 
 import { useData } from "@/lib/api/api";
-import { parseHero } from "@/components/hero/Hero";
+import { parseCmsHero } from "@/components/hero/Hero";
+import { cmsFrontpage, getCmsFrontpage } from "@/lib/api/frontpage.fragments";
+import { normalizeArticle } from "@/lib/api/article.fragments";
 
 const Index = () => {
-  const { data } = useData(frontpageHero());
-  const ogImage = parseHero(data);
+  const { data } = useData(cmsFrontpage());
+  const frontpage = getCmsFrontpage(data);
+  const ogImage = parseCmsHero(data);
 
   return (
     <>
@@ -29,53 +29,76 @@ const Index = () => {
       <main>
         <Hero />
         <Head>
-          {ogImage && ogImage.image && ogImage.image.ogurl && (
+          {ogImage?.image?.ogurl && (
             <meta
               key="og:image"
               property="og:image"
-              content={`${ogImage?.image?.ogurl}`}
+              content={ogImage.image.ogurl}
             />
           )}
         </Head>
 
-        <ArticleSection
-          title={Translate({ context: "index", label: "section1" })}
-          matchTag="section 1"
-          template="triple"
-        />
+        {frontpage?.sections?.filter(Boolean).map((section) => {
+          if (
+            section.__typename ===
+            "BibliotekdkCmsComponentFrontpageSection"
+          ) {
+            return (
+              <ArticleSection
+                key={section.id}
+                title={section.title}
+                articles={section.articles?.map(normalizeArticle)}
+                template={section.template}
+              />
+            );
+          }
 
-        <ArticleSection
-          title={Translate({ context: "index", label: "section3" })}
-          matchTag="section 3"
-          template="double"
-        />
-        <ArticleSection title={false} matchTag="section 4" template="single" />
-        <InspirationSlider
-          title={Translate({
-            context: "inspiration",
-            label: "category-fiction-nyeste",
-          })}
-          backgroundColor="var(--parchment)"
-          filters={[{ category: "fiction", subCategories: ["nyeste"] }]}
-        />
-        <InspirationSlider
-          title={Translate({
-            context: "inspiration",
-            label: "category-nonfiction-nyeste",
-          })}
-          divider={{ content: false }}
-          filters={[{ category: "nonfiction", subCategories: ["nyeste"] }]}
-        />
+          if (
+            section.__typename ===
+            "BibliotekdkCmsComponentFrontpageInspirationSlider"
+          ) {
+            return (
+              <InspirationSlider
+                key={section.id}
+                title={section.title}
+                filters={[
+                  {
+                    category: section.category,
+                    subCategories: ["nyeste"],
+                  },
+                ]}
+                limit={section.limit || 30}
+                divider={{ content: !section.showDivider }}
+              />
+            );
+          }
+
+          if (
+            section.__typename ===
+            "BibliotekdkCmsComponentFrontpageLinkCard"
+          ) {
+            return (
+              <LinkCard
+                key={section.id}
+                title={section.title}
+                buttonText={section.buttonText}
+                url={section.url}
+                image={section.image}
+              />
+            );
+          }
+
+          return null;
+        })}
       </main>
     </>
   );
 };
 
 /**
- * These queries are run on the server.
- * I.e. the data fetched will be used for server side rendering
+ * These queries are run on the server for SSR.
  */
-const serverQueries = [promotedArticles, frontpageHero];
+const serverQueries = [cmsFrontpage];
 
 /**
  * We use getInitialProps to let Next.js
