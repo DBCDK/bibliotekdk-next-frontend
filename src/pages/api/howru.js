@@ -36,7 +36,7 @@ export default async function handler(req, res) {
               faust: "23154382",
               workIds: ["work-of:870970-basis:52557240"],
               seriesId:
-                "52484af11e5beceb6340880eb9e325fa216cee2fb68c8d4f0d76029a7e255fff",
+                "0b75d1ae84f09c571070addcf8a2bbc2a03e2c4d4250d22aaf223be965750e7a",
             }),
           },
           undefined,
