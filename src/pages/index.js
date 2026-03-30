@@ -40,8 +40,7 @@ const Index = () => {
 
         {frontpage?.sections?.filter(Boolean).map((section) => {
           if (
-            section.__typename ===
-            "BibliotekdkCmsComponentFrontpageSection"
+            section.__typename === "BibliotekdkCmsComponentFrontpageSection"
           ) {
             return (
               <ArticleSection
@@ -74,8 +73,7 @@ const Index = () => {
           }
 
           if (
-            section.__typename ===
-            "BibliotekdkCmsComponentFrontpageLinkCard"
+            section.__typename === "BibliotekdkCmsComponentFrontpageLinkCard"
           ) {
             return (
               <LinkCard
