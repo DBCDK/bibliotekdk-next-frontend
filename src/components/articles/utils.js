@@ -3,6 +3,13 @@ import get from "lodash/get";
 import { encodeString } from "@/lib/utils";
 //TODO: remove nid, alternativeUrl and fieldAlternativeArticleUrl when Drupal is fully removed
 
+function getAlternativeUrl(article) {
+  return (
+    get(article, "alternativeUrl", null) || //todo: do we need alternativeUrl in new CMS?
+    get(article, "fieldAlternativeArticleUrl.uri", null)
+  );
+}
+
 /**
  * function to sort array of articles (desc)
  *
@@ -14,7 +21,7 @@ import { encodeString } from "@/lib/utils";
 export function sortArticles(articles) {
   // remove articles with alternative url (entityUrl)
   articles = articles.filter((a) => {
-    return !get(a, "alternativeUrl", false);
+    return !getAlternativeUrl(a);
   });
   // latest articles first
   return orderBy(articles, ["entityCreated"], ["desc"]);
@@ -29,7 +36,7 @@ export function sortArticles(articles) {
  */
 export function articlePathAndTarget(article) {
   // Check for alternative url
-  let entityUrl = get(article, "alternativeUrl", false);
+  let entityUrl = getAlternativeUrl(article);
   // check if alternative url is for linking out of the page
   let isExternal = false;
   if (entityUrl) {
