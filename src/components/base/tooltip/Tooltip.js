@@ -8,6 +8,7 @@ import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import cx from "classnames";
+import QuestionmarkSvg from "@/public/icons/questionmark.svg";
 
 export default function Tooltip({
   placement = "bottom",
@@ -75,12 +76,13 @@ export default function Tooltip({
             children
           ) : (
             <Icon
-              src="questionmark.svg"
               alt="info"
               data-cy="tooltip-icon"
               size={iconSize}
               className={styles.tooltipCursor}
-            ></Icon>
+            >
+              <QuestionmarkSvg />
+            </Icon>
           )}
         </span>
       </OverlayTrigger>

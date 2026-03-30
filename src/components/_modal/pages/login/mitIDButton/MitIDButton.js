@@ -13,6 +13,7 @@ import { signIn } from "@dbcdk/login-nextjs/client";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 import useDataCollect from "@/lib/useDataCollect";
+import MitIdSvg from "@/public/icons/MitID.svg";
 
 /**
  * Shows MitID login button and opens MitID login
@@ -51,12 +52,9 @@ export default function MitIDButton({ callBackUUID, redirectPath }) {
           }
         }}
       >
-        <Icon
-          src="MitID.svg"
-          alt="mitID"
-          size={{ h: "2" }}
-          className={styles.mitIDIcon}
-        />
+        <Icon alt="mitID" size={{ h: "2" }} className={styles.mitIDIcon}>
+          <MitIdSvg />
+        </Icon>
       </Button>
       {/**dont show on mobile */}
       <Link

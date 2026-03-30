@@ -8,6 +8,7 @@ import IconButton from "@/components/base/iconButton/IconButton";
 
 import useVerification from "@/components/hooks/useVerification";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import ChevronSvg from "@/public/icons/chevron.svg";
 
 import styles from "./AddLibraryButton.module.css";
 
@@ -50,7 +51,7 @@ export default function AddLibraryButton({ className = "" }) {
 
   return (
     <IconButton
-      icon="chevron"
+      icon={<ChevronSvg />}
       className={`${styles.addLibraryBtn} ${className}`}
       textType="text2"
       onClick={() => handleOnClick()}

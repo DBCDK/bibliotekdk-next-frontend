@@ -23,10 +23,9 @@ import {
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
-import {
-  ArrowRightBlueSvg,
-  Ornament1Svg,
-} from "@/components/base/icon/svgIcons";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
+import CloseSvg from "@/public/icons/close.svg";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 const OrderColumn = ({ pickUpExpiryDate, holdQueuePosition }) => {
   const breakpoint = useBreakpoint();
@@ -302,7 +301,7 @@ const MaterialRowReservation = (props) => {
 
         <div className={sharedStyles.buttonContainer}>
           <IconButton
-            icon="close"
+            icon={<CloseSvg />}
             dataCy="order-button"
             onClick={() =>
               onClickDelete({

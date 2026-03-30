@@ -14,6 +14,8 @@ import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
+import ExpandSvg from "@/public/icons/expand.svg";
+import Trash2Svg from "@/public/icons/trash-2.svg";
 
 /**
  * Returns a textinput component and a dropdown to choose which advanced search index to search in
@@ -147,9 +149,10 @@ function FieldInput({ index, numberOfItems, fieldValue, onSearch }) {
           }}
           size={{ w: 3, h: "auto" }}
           alt=""
-          src={"trash-2.svg"}
           tabIndex={isLastItem ? "-1" : "0"}
-        />
+        >
+          <Trash2Svg />
+        </Icon>
       </div>
     </div>
   );
@@ -256,15 +259,12 @@ export default function TextInputs({ handleSearch }) {
         size="small"
         className={styles.addLine}
         onClick={addInputField}
-        icon="expand"
         dataCy={"advanced-search-add-input"}
       >
         <Text>{Translate({ context: "search", label: "addLine" })}</Text>
-        <Icon
-          className={styles.expandIcon}
-          size={{ w: 2, h: "auto" }}
-          src={"expand.svg"}
-        />
+        <Icon className={styles.expandIcon} size={{ w: 2, h: "auto" }}>
+          <ExpandSvg />
+        </Icon>
       </Button>
     </>
   );

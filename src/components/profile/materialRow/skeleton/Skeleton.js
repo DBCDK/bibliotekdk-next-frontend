@@ -6,7 +6,7 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
 import cx from "classnames";
-import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 const SkeletonMaterialRow = ({ version = "desktop" }) => {
   if (version === "desktop") {

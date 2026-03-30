@@ -4,7 +4,6 @@ import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import Badge from "@/components/base/badge";
-import { getSvgIconByName } from "@/components/base/icon/svgIcons";
 
 import styles from "./Action.module.css";
 
@@ -31,15 +30,13 @@ export default function Action({
   href = "/#",
   badge = null,
   title = "Go!",
-  icon = "star.svg",
+  icon = null,
   children = null,
   onClick = null,
   dataCy = null,
   isLoading = false,
   ...props
 }) {
-  const IconSvg = getSvgIconByName(icon);
-
   // Use html a or the Link component
   const Wrap = onClick ? "a" : Link;
 
@@ -59,8 +56,8 @@ export default function Action({
       {...props}
     >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
-      <Icon size={{ w: "auto", h: 3 }} src={icon} alt={title}>
-        {children || (IconSvg ? <IconSvg /> : null)}
+      <Icon size={{ w: "auto", h: 3 }} alt={title}>
+        {children || icon}
       </Icon>
       <div className={styles.wrap}>
         <Text type="text3" skeleton={isLoading} lines={1}>

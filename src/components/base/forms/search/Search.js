@@ -3,7 +3,8 @@ import { useEffect } from "react";
 
 import Input from "@/components/base/forms/input";
 import Icon from "@/components/base/icon";
-import { CloseSvg, SearchSvg } from "@/components/base/icon/svgIcons";
+import CloseSvg from "@/public/icons/close.svg";
+import SearchSvg from "@/public/icons/search.svg";
 
 import styles from "./Search.module.css";
 

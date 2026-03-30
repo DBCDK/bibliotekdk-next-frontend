@@ -5,7 +5,7 @@ import { cyKey } from "@/utils/trim";
 import styles from "./SimpleDropdown.module.css";
 import React from "react";
 import cx from "classnames";
-import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 export default function SimpleDropdown({
   placeholder = "...",

@@ -8,7 +8,7 @@ import Text from "@/components/base/text";
 import Tag from "@/components/base/forms/tag";
 import Translate from "@/components/base/translate";
 import { cyKey } from "@/utils/trim";
-import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 import styles from "./Select.module.css";
 

@@ -10,7 +10,8 @@ import Material from "../multi-order/Material/Material";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
 import { useRouter } from "next/router";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { CheckSvg, Ornament1Svg } from "@/components/base/icon/svgIcons";
+import CheckSvg from "@/public/icons/check.svg";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 const MultiOrderReceipt = ({ context }) => {
   const modal = useModal();

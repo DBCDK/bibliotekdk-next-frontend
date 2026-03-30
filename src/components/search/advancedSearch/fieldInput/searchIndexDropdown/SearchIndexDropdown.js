@@ -5,7 +5,7 @@ import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import cx from "classnames";
-import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 /**
  * Used in advanced search field input. Drop down to select a search index. (e.g. "isbn", "author","title" etc.)

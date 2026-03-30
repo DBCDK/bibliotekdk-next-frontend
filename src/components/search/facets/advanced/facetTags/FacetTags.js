@@ -6,6 +6,7 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link/Link";
 import useFilters from "@/components/hooks/useFilters";
 import { useRouter } from "next/router";
+import CloseWhiteSvg from "@/public/icons/close_white.svg";
 
 /**
  * For simple search facets. Imitate an advanced facet from search filters
@@ -79,10 +80,11 @@ export function FacetTags({ facets, onClear, onRemove, className = "" }) {
                       }
                     }}
                     tabIndex={0}
-                    src="close_white.svg"
                     size={2}
                     className={styles.tagicon}
-                  />
+                  >
+                    <CloseWhiteSvg />
+                  </Icon>
                 </span>
               </span>
             );

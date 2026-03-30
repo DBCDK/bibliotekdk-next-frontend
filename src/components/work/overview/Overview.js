@@ -25,7 +25,7 @@ import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
 import SampleButton from "@/components/sample";
-import { Ornament1Svg } from "@/components/base/icon/svgIcons";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 function useInitMaterialType(
   uniqueMaterialTypes,

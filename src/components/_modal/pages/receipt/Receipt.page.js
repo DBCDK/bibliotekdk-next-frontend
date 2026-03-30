@@ -22,7 +22,8 @@ import {
   setAlreadyOrdered,
 } from "@/components/_modal/pages/order/utils/order.utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
-import { CheckSvg, Ornament1Svg } from "@/components/base/icon/svgIcons";
+import CheckSvg from "@/public/icons/check.svg";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 /**
  * Order Button

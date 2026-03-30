@@ -25,7 +25,7 @@ import {
 import useUser from "@/components/hooks/useUser";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "@/components/base/button";
-import { Ornament1Svg } from "@/components/base/icon/svgIcons";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =

@@ -18,7 +18,7 @@ import { encodeString } from "@/lib/utils";
 
 import styles from "./Sections.module.css";
 import { getLanguage } from "@/components/base/translate/Translate";
-import { Ornament1Svg } from "@/components/base/icon/svgIcons";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 /**
  * The Sections page React component

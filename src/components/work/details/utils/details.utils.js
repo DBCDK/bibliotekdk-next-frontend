@@ -19,6 +19,8 @@ import React from "react";
 import translate from "@/components/base/translate";
 import { getTitlesAndType } from "../../overview/titlerenderer/TitleRenderer";
 import Icon from "@/components/base/icon/Icon";
+import AiSvg from "@/public/icons/ai.svg";
+import BanSvg from "@/public/icons/ban.svg";
 
 /**
  * Parse languages in given manifestation.
@@ -535,7 +537,9 @@ function RenderAI(entry) {
 
   return (
     <div className={styles.aiimage}>
-      <Icon src={"ai.svg"} size={{ w: 3, h: 3 }} />
+      <Icon size={{ w: 3, h: 3 }}>
+        <AiSvg />
+      </Icon>
       <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
         {flattened?.length > 0
           ? flattened?.map((display) => <div key={display}>{display}</div>)
@@ -549,7 +553,9 @@ function RenderRecalled() {
   return (
     <div>
       <div className={styles.pegiimage}>
-        <Icon src={"ban.svg"} size={{ w: 3, h: 3 }} />
+        <Icon size={{ w: 3, h: 3 }}>
+          <BanSvg />
+        </Icon>
         <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
           {translate({ context: "details", label: "recalled" })}
         </Text>

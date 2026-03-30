@@ -14,7 +14,7 @@ import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
 import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
-import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 /**
  * Other menu links

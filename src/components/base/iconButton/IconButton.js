@@ -5,7 +5,6 @@ import Icon from "@/components/base/icon";
 import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import cx from "classnames";
-import { getSvgIconByName } from "@/components/base/icon/svgIcons";
 
 /**
  * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
@@ -26,6 +25,7 @@ function IconButton({
   alt = "",
   children,
   icon,
+  disabledIcon = null,
   iconSize = 2,
   textType = "text3",
   keepUnderline,
@@ -33,8 +33,7 @@ function IconButton({
   disabled = false,
   ...props
 }) {
-  const iconSrc = !disabled ? `${icon}.svg` : `${icon}_grey.svg`;
-  const IconSvg = getSvgIconByName(iconSrc);
+  const iconNode = disabled && disabledIcon ? disabledIcon : icon;
 
   return (
     <button
@@ -66,9 +65,8 @@ function IconButton({
         size={{ w: iconSize, h: "auto" }}
         className={`${animations["h-elastic"]} ${animations["f-elastic"]}`}
         alt={alt}
-        src={iconSrc}
       >
-        {IconSvg ? <IconSvg /> : null}
+        {iconNode}
       </Icon>
     </button>
   );
@@ -81,7 +79,7 @@ IconButton.propTypes = {
   children: PropTypes.any,
   /** type prop for the <Text/> component */
   textType: PropTypes.string,
-  /** Has to match an svg file name inside public/icons folder*/
-  icon: PropTypes.string,
+  icon: PropTypes.node,
+  disabledIcon: PropTypes.node,
 };
 export default IconButton;

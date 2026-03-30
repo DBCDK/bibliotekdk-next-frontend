@@ -12,6 +12,7 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import { parseDate } from "@/lib/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import ChevronSvg from "@/public/icons/chevron.svg";
 
 /**
  * Shows user info.
@@ -76,7 +77,7 @@ export default function MyProfilePage() {
         </div>
         <div className={styles.buttonContainer}>
           <IconButton
-            icon="chevron"
+            icon={<ChevronSvg />}
             keepUnderline
             onClick={() => {
               modal.push("deleteProfile");

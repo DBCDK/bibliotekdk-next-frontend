@@ -5,7 +5,6 @@ import styles from "./Expand.module.css";
 export default function Expand({
   open,
   size = 3,
-  src = "expand.svg",
   bgColor = "var(--blue)",
   iconColor = "white",
 }) {
@@ -16,7 +15,6 @@ export default function Expand({
       dataCy="expand-icon"
       className={`${styles.expandicon} ${open ? styles.opened : styles.closed}`}
       alt="expand"
-      src={src}
     >
       {/* Lines to be animated */}
       <div>

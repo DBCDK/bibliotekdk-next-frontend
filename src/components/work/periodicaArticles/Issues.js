@@ -16,7 +16,7 @@ import { SimpleDropDown } from "@/components/search/advancedSearch/advancedSearc
 import Pagination from "@/components/search/pagination/Pagination";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
-import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 export function PaginationWrapper({ pagination, onPageChange, isLoading }) {
   const { page } = pagination;

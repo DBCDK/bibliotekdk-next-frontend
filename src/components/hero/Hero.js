@@ -12,7 +12,7 @@ import { useData } from "@/lib/api/api";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 import Text from "@/components/base/text/Text";
 import useSiteConfig from "@/components/hooks/useSiteConfig";
-import { Ornament1WhiteSvg } from "@/components/base/icon/svgIcons";
+import Ornament1WhiteSvg from "@/public/icons/ornament1white.svg";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize

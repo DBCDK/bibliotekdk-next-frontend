@@ -4,6 +4,7 @@ import cx from "classnames";
 import styles from "./MenuDropdown.module.css";
 import Icon from "../../icon";
 import Translate from "@/components/base/translate";
+import ArrowDownSvg from "@/public/icons/arrowDown.svg";
 
 /**
  * Menu dropdown. Use this menu for a menu with actions - not redirects
@@ -136,8 +137,9 @@ const MenuDropdown = ({
           })}
           size={{ w: 2, h: "auto" }}
           alt=""
-          src={"arrowDown.svg"}
-        />
+        >
+          <ArrowDownSvg />
+        </Icon>
       </Button>
 
       <ul
