@@ -8,6 +8,7 @@ import Text from "@/components/base/text";
 import Tag from "@/components/base/forms/tag";
 import Translate from "@/components/base/translate";
 import { cyKey } from "@/utils/trim";
+import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
 
 import styles from "./Select.module.css";
 
@@ -39,12 +40,9 @@ export const Desktop = memo(function Desktop({
       >
         <Text tag="span" type="text2">
           {labelFor(selected)}
-          <Icon
-            size={{ w: 1, h: 1 }}
-            src="arrowrightblue.svg"
-            className={styles.dropdownicon}
-            alt=""
-          />
+          <Icon size={{ w: 1, h: 1 }} className={styles.dropdownicon} alt="">
+            <ArrowRightBlueSvg />
+          </Icon>
         </Text>
       </Dropdown.Toggle>
 

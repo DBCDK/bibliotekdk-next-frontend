@@ -22,6 +22,7 @@ import {
   setAlreadyOrdered,
 } from "@/components/_modal/pages/order/utils/order.utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import { CheckSvg, Ornament1Svg } from "@/components/base/icon/svgIcons";
 
 /**
  * Order Button
@@ -123,18 +124,18 @@ export function Receipt({
           {!hasFailed && (
             <div className={styles.success}>
               <div className={styles.check}>
-                <Icon size={3} src="check.svg" />
+                <Icon size={3}>
+                  <CheckSvg />
+                </Icon>
               </div>
 
               <Title className={styles.title} type="title4" tag="h2">
                 {Translate({ context: "order", label: "order-success" })}
               </Title>
 
-              <Icon
-                className={styles.ornament}
-                size={{ w: 6, h: "auto" }}
-                src={"ornament1.svg"}
-              />
+              <Icon className={styles.ornament} size={{ w: 6, h: "auto" }}>
+                <Ornament1Svg />
+              </Icon>
 
               <Text type="text2" className={styles.message}>
                 {articleOrderData

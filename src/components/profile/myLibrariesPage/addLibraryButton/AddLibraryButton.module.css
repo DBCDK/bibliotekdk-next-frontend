@@ -1,0 +1,4 @@
+.addLibraryBtn path {
+  stroke: var(--blue);
+  fill: var(--blue);
+}

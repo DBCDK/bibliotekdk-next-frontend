@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 
 import Skeleton from "@/components/base/skeleton";
+import { getSvgIconByName } from "@/components/base/icon/svgIcons";
 
 import styles from "./Icon.module.css";
 
@@ -45,6 +46,7 @@ function Icon({
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const shapeStyle = bgColor ? styles.round : "";
+  const SvgIcon = !children ? getSvgIconByName(src) : null;
 
   const Tag = tag;
 
@@ -87,7 +89,8 @@ function Icon({
       tabIndex={tabIndex}
       data-cy={props["data-cy"] || dataCy || ""}
     >
-      {children || <img src={`/icons/${src}`} alt={alt} />}
+      {children ||
+        (SvgIcon ? <SvgIcon /> : <img src={`/icons/${src}`} alt={alt} />)}
     </Tag>
   );
 }

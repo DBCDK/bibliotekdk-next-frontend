@@ -16,6 +16,7 @@ import { SimpleDropDown } from "@/components/search/advancedSearch/advancedSearc
 import Pagination from "@/components/search/pagination/Pagination";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
+import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
 
 export function PaginationWrapper({ pagination, onPageChange, isLoading }) {
   const { page } = pagination;
@@ -228,12 +229,9 @@ export function Issues({
                 {translate({ context: "periodica", label: "search" })}
               </Text>
             </Link>
-            <Icon
-              size={{ w: 1, h: 1 }}
-              src="arrowrightblue.svg"
-              className={styles.arrowright}
-              alt=""
-            />
+            <Icon size={{ w: 1, h: 1 }} className={styles.arrowright} alt="">
+              <ArrowRightBlueSvg />
+            </Icon>
           </div>
         )}
       </div>

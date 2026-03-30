@@ -25,6 +25,7 @@ import {
 import useUser from "@/components/hooks/useUser";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "@/components/base/button";
+import { Ornament1Svg } from "@/components/base/icon/svgIcons";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
@@ -43,10 +44,11 @@ const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
         <Icon
           className={styles.ornament}
           size={{ w: 5, h: "auto" }}
-          src={"ornament1.svg"}
           alt=""
           dataCy={`${dataCyPrefix}-ornament`}
-        />
+        >
+          <Ornament1Svg />
+        </Icon>
         {isOverdue ? (
           <Text type="text2" dataCy={`${dataCyPrefix}-message`}>
             {Translate({
@@ -105,12 +107,9 @@ const DynamicColumnOrder = ({
           {dateString}
         </Text>
         <div className={styles.status}>
-          <Icon
-            className={styles.ornament}
-            size={{ w: 5, h: "auto" }}
-            src={"ornament1.svg"}
-            alt=""
-          />
+          <Icon className={styles.ornament} size={{ w: 5, h: "auto" }} alt="">
+            <Ornament1Svg />
+          </Icon>
           <Text type="text1" tag="p" className={styles.isReady}>
             {Translate({
               context: "profile",
@@ -132,12 +131,9 @@ const DynamicColumnOrder = ({
         {library}
       </Text>
       <div className={styles.status}>
-        <Icon
-          className={styles.ornament}
-          size={{ w: 5, h: "auto" }}
-          src={"ornament1.svg"}
-          alt=""
-        />
+        <Icon className={styles.ornament} size={{ w: 5, h: "auto" }} alt="">
+          <Ornament1Svg />
+        </Icon>
         <Text type="text2" tag="span">
           {inLineText}
         </Text>

@@ -18,6 +18,7 @@ import { encodeString } from "@/lib/utils";
 
 import styles from "./Sections.module.css";
 import { getLanguage } from "@/components/base/translate/Translate";
+import { Ornament1Svg } from "@/components/base/icon/svgIcons";
 
 /**
  * The Sections page React component
@@ -38,7 +39,11 @@ export function Sections({ className, data, skeleton }) {
     <div>
       <Section
         className={`${styles.sections} ${className}`}
-        title={<Icon size={{ w: 6, h: "auto" }} src={"ornament1.svg"} />}
+        title={
+          <Icon size={{ w: 6, h: "auto" }}>
+            <Ornament1Svg />
+          </Icon>
+        }
         divider={false}
       >
         <Row>

@@ -23,6 +23,10 @@ import {
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
+import {
+  ArrowRightBlueSvg,
+  Ornament1Svg,
+} from "@/components/base/icon/svgIcons";
 
 const OrderColumn = ({ pickUpExpiryDate, holdQueuePosition }) => {
   const breakpoint = useBreakpoint();
@@ -59,9 +63,10 @@ const OrderColumn = ({ pickUpExpiryDate, holdQueuePosition }) => {
         <Icon
           className={sharedStyles.ornament}
           size={{ w: 5, h: "auto" }}
-          src={"ornament1.svg"}
           alt=""
-        />
+        >
+          <Ornament1Svg />
+        </Icon>
         <Text
           type={isReadyToPickup || isMobileSize ? "text1" : "text2"}
           tag="p"
@@ -183,9 +188,10 @@ const MaterialRowReservation = (props) => {
             <Icon
               alt=""
               size={{ w: "auto", h: 2 }}
-              src="arrowrightblue.svg"
               className={sharedStyles.arrowright}
-            />
+            >
+              <ArrowRightBlueSvg />
+            </Icon>
           </div>
         </article>
       </>

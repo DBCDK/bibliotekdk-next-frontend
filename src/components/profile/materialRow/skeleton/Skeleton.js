@@ -6,6 +6,7 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
 import cx from "classnames";
+import { ArrowRightBlueSvg } from "@/components/base/icon/svgIcons";
 
 const SkeletonMaterialRow = ({ version = "desktop" }) => {
   if (version === "desktop") {
@@ -51,12 +52,9 @@ const SkeletonMaterialRow = ({ version = "desktop" }) => {
           </div>
         </div>
         <div className={styles.arrowright_container}>
-          <Icon
-            alt=""
-            size={{ w: "auto", h: 2 }}
-            src="arrowrightblue.svg"
-            className={styles.arrowright}
-          />
+          <Icon alt="" size={{ w: "auto", h: 2 }} className={styles.arrowright}>
+            <ArrowRightBlueSvg />
+          </Icon>
         </div>
       </article>
     );

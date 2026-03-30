@@ -5,6 +5,7 @@ import Icon from "@/components/base/icon";
 import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import cx from "classnames";
+import { getSvgIconByName } from "@/components/base/icon/svgIcons";
 
 /**
  * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
@@ -33,6 +34,7 @@ function IconButton({
   ...props
 }) {
   const iconSrc = !disabled ? `${icon}.svg` : `${icon}_grey.svg`;
+  const IconSvg = getSvgIconByName(iconSrc);
 
   return (
     <button
@@ -65,7 +67,9 @@ function IconButton({
         className={`${animations["h-elastic"]} ${animations["f-elastic"]}`}
         alt={alt}
         src={iconSrc}
-      />
+      >
+        {IconSvg ? <IconSvg /> : null}
+      </Icon>
     </button>
   );
 }

@@ -12,6 +12,7 @@ import { useData } from "@/lib/api/api";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 import Text from "@/components/base/text/Text";
 import useSiteConfig from "@/components/hooks/useSiteConfig";
+import { Ornament1WhiteSvg } from "@/components/base/icon/svgIcons";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
@@ -33,12 +34,9 @@ export function Hero({ image }) {
         <Col md={2} xs={1} />
         <div className={styles.bluebox}>
           <div className={styles.iconandtxt}>
-            <Icon
-              src={"ornament1white.svg"}
-              size={{ w: 8, h: "auto" }}
-              alt=""
-              className={styles.heroicon}
-            />
+            <Icon size={{ w: 8, h: "auto" }} alt="" className={styles.heroicon}>
+              <Ornament1WhiteSvg />
+            </Icon>
 
             <Title type="title2" className={styles.herotitle} tag="h1">
               {Translate({
