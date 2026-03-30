@@ -8,6 +8,15 @@ import Double from "./templates/double";
 import Triple from "./templates/triple";
 import { getLanguage } from "@/components/base/translate/Translate";
 
+// TODO (post-CMS migration): when Drupal is fully removed, clean up the following:
+// - `matchTag` prop and the tag-based filtering/sorting branch in parseArticles()
+//   (fieldArticleSection / fieldArticlePosition) — CMS delivers articles pre-ordered
+// - `getArticleData()` and the `Wrap` default export that fetches via promotedArticles()
+//   (Drupal nodeQuery) — index.js now passes articles directly from cmsFrontpage()
+// - `fieldArticleSection` / `fieldArticlePosition` references in normalizeArticle()
+//   in article.fragments.js
+// - The `promotedArticles` query in article.fragments.js itself
+
 /**
  * Get context by template name (template settings)
  *
@@ -45,23 +54,27 @@ function getContext(template) {
  * @returns {Array}
  */
 function parseArticles(articles, matchTag, numberOfArticles) {
-  // We are filtering and sorting, hence we make us of useMemo
   if (!articles) {
     // Create skeleton articles
     return Array(numberOfArticles).fill({});
-  } else {
-    return articles
-      .filter(
-        (article) =>
-          article &&
-          article.fieldArticleSection &&
-          article.fieldArticleSection === matchTag
-      )
-      .sort(function (a, b) {
-        return a.fieldArticlePosition - b.fieldArticlePosition;
-      })
-      .slice(0, numberOfArticles);
   }
+
+  // When no matchTag is given (CMS-driven), articles are already ordered
+  if (!matchTag) {
+    return articles.filter(Boolean).slice(0, numberOfArticles);
+  }
+
+  return articles
+    .filter(
+      (article) =>
+        article &&
+        article.fieldArticleSection &&
+        article.fieldArticleSection === matchTag
+    )
+    .sort(function (a, b) {
+      return a.fieldArticlePosition - b.fieldArticlePosition;
+    })
+    .slice(0, numberOfArticles);
 }
 
 /**

@@ -12,7 +12,6 @@ const ARTICLE_FIELDS = `
   subheadline
   body
   promoted
-  alternativeUrl
   categories {
     documentId
     name
@@ -61,8 +60,7 @@ export function normalizeArticle(article) {
   }
 
   const category = normalizeCategoryNames(article);
-  const alternativeUrl =
-    article?.alternativeUrl || article?.fieldAlternativeArticleUrl?.uri || null;
+  const alternativeUrl = article?.fieldAlternativeArticleUrl?.uri || null;
 
   return {
     ...article,

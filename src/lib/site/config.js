@@ -36,9 +36,7 @@ export const SITE_CONFIGS = {
       faviconSvg: "/favicon/studiebib/favicon.svg",
       faviconIco: "/favicon/studiebib/favicon.ico",
     },
-    hero: {
-      path: "/img/Studiebib_hero.jpg",
-    },
+    hero: null,
     themeColor: "#d81b60",
     metadata: {
       ...sharedMetadata,
