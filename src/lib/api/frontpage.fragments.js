@@ -5,24 +5,6 @@
 import { ApiEnums } from "@/lib/api/api";
 import { getLocale } from "@/components/base/translate/Translate";
 
-const ARTICLE_FIELDS = `
-  documentId
-  title
-  subheadline
-  body
-  categories {
-    documentId
-    name
-  }
-  image {
-    alternativeText
-    caption
-    url
-    width
-    height
-  }
-`;
-
 /**
  * Fetch the frontpage entry from the Strapi CMS for the current site.
  * Site is read from NEXT_PUBLIC_SITE, defaulting to "bibliotekDk".
@@ -34,7 +16,7 @@ export function cmsFrontpage({ locale = getLocale() } = {}) {
   const site = process.env.NEXT_PUBLIC_SITE || "bibliotekDk";
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query ($site: String!, $locale: BibliotekdkCmsI18NLocaleCode) {
+    query: `query CmsFrontpage($site: String!, $locale: BibliotekdkCmsI18NLocaleCode) {
       bibliotekdkCms {
         frontpages(
           status: PUBLISHED
@@ -59,7 +41,21 @@ export function cmsFrontpage({ locale = getLocale() } = {}) {
               title
               template
               articles {
-                ${ARTICLE_FIELDS}
+                documentId
+                title
+                subheadline
+                body
+                categories {
+                  documentId
+                  name
+                }
+                image {
+                  alternativeText
+                  caption
+                  url
+                  width
+                  height
+                }
               }
             }
             ... on BibliotekdkCmsComponentFrontpageInspirationSlider {

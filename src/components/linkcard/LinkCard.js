@@ -3,6 +3,7 @@
  * A simple promotional banner with image, title, button and URL.
  * Used as a frontpage section to link to external or internal pages
  * without the overhead of a full article.
+ * Can be added to frontpage via CMS
  */
 
 import PropTypes from "prop-types";
