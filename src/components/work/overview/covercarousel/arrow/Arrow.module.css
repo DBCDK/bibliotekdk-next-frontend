@@ -18,6 +18,13 @@
   border-radius: 50%;
 }
 
+/* button explicity to override display css hierarchy */
+button.arrow_functionality {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .arrow_functionality:is(:hover, :focus-visible) {
   background-color: var(--arrow__background_color_hover);
   fill: var(--arrow__fill_color_hover);

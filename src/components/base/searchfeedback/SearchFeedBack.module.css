@@ -40,6 +40,10 @@
   left: 12px;
 }
 
+.feedbackicon path {
+  fill: white;
+}
+
 .spanwrap {
   cursor: pointer;
   border-radius: 50%;
