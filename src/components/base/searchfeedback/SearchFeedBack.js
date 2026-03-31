@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import Button from "@/components/base/button/Button";
 import useDataCollect from "@/lib/useDataCollect";
 import Collapse from "react-bootstrap/Collapse";
+import ThumbsdownSvg from "@/public/icons/thumbsdown.svg";
+import ThumbsupSvg from "@/public/icons/thumbsup.svg";
 
 /**
  * Wrapper for feedback thumbs
@@ -139,11 +141,12 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
         >
           <Icon
             size={{ w: "auto", h: 3 }}
-            src="thumbsup.svg"
             alt="nice"
             className={styles.feedbackicon}
             data-cy="search-feedback-thumbsup"
-          />
+          >
+            <ThumbsupSvg />
+          </Icon>
         </span>
         <span
           className={styles.spanwrap}
@@ -158,11 +161,12 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
         >
           <Icon
             size={{ w: "auto", h: 3 }}
-            src="thumbsdown.svg"
             alt="nice"
             className={styles.feedbackicon}
             data-cy="search-feedback-thumbsdown"
-          />
+          >
+            <ThumbsdownSvg />
+          </Icon>
         </span>
       </span>
     </div>

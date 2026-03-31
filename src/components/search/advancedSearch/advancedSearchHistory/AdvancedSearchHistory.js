@@ -23,6 +23,8 @@ import { useSavedSearches } from "@/components/hooks/useSearchHistory";
 import { useModal } from "@/components/_modal";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import Pagination from "@/components/search/pagination/Pagination";
+import HeartSvg from "@/public/icons/heart.svg";
+import HeartFilledSvg from "@/public/icons/heart_filled.svg";
 
 //Component to render facets
 export function FormatedFilters({ facets, quickFilters = [], className }) {
@@ -210,11 +212,9 @@ function HistoryItem({ item, index, checked, onSelect, checkboxKey }) {
             }
           }}
         >
-          <Icon
-            className={styles.saveSearchIcon}
-            size={3}
-            src={`${isSaved ? "heart_filled" : "heart"}.svg`}
-          />
+          <Icon className={styles.saveSearchIcon} size={3}>
+            {isSaved ? <HeartFilledSvg /> : <HeartSvg />}
+          </Icon>
         </Text>
       )}
     </div>

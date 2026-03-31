@@ -27,6 +27,8 @@ import Button from "@/components/base/button";
 import { openLoginModal } from "@/components/_modal/pages/login/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import Skeleton from "@/components/base/skeleton/Skeleton";
+import Trash2Svg from "@/public/icons/trash-2.svg";
+import TrashBlueSvg from "@/public/icons/trash_blue.svg";
 
 function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
   const formatedDate = unixToFormatedDate(item.unixtimestamp);
@@ -88,7 +90,7 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
         </div>
 
         <div className={styles.accordionIcon}>
-          <ExpandIcon open={expanded} size={3} src="smallplus.svg" />
+          <ExpandIcon open={expanded} size={3} />
         </div>
       </div>
     );
@@ -141,7 +143,6 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
       <Icon
         className={styles.removeItemIcon}
         size={3}
-        src={`trash-2.svg`}
         tabIndex={0}
         onClick={(e) => {
           e.stopPropagation();
@@ -158,9 +159,11 @@ function SavedItemRow({ item, index, checked, onSelect, expanded, ...props }) {
             }
           }
         }}
-      />
+      >
+        <Trash2Svg />
+      </Icon>
       <div className={styles.accordionIcon}>
-        <ExpandIcon open={expanded} size={3} src="smallplus.svg" />
+        <ExpandIcon open={expanded} size={3} />
       </div>
     </div>
   );
@@ -501,7 +504,6 @@ export default function SavedSearches() {
                             <Icon
                               className={styles.removeItemIcon}
                               size={3}
-                              src={`trash_blue.svg`}
                               tabIndex={0}
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -518,7 +520,9 @@ export default function SavedSearches() {
                                   }
                                 }
                               }}
-                            />
+                            >
+                              <TrashBlueSvg />
+                            </Icon>
                           </div>
                         )}
                       </div>

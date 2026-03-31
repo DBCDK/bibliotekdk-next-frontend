@@ -11,6 +11,7 @@ import styles from "./WorkTypeMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
 import Tag from "@/components/base/forms/tag";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 /* helpers */
 const norm = (v) => (v == null ? "" : String(v).trim());
@@ -119,7 +120,7 @@ export default function WorkTypeMenu({ className = "", onClick = () => {} }) {
           <LinkTag
             key={type}
             className={styles.menuItem}
-            icon="arrowrightblue"
+            icon={<ArrowRightBlueSvg />}
             onClick={() => handleClick(type)}
             {...linkProps}
           >

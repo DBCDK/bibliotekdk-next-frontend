@@ -5,6 +5,7 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
+import ChevronSvg from "@/public/icons/chevron.svg";
 import Translate from "@/components/base/translate";
 import Cover from "@/components/base/cover/Cover";
 import { getInfomediaReviewUrl, getWorkUrl, encodeString } from "@/lib/utils";
@@ -277,12 +278,9 @@ function WorkReviewItem({ item, isLoading }) {
                     </Text>
                   </Link>
                 </span>
-                <Icon
-                  src="chevron.svg"
-                  size={{ w: 2, h: "auto" }}
-                  alt=""
-                  className={styles.icon}
-                />
+                <Icon size={{ w: 2, h: "auto" }} alt="" className={styles.icon}>
+                  <ChevronSvg />
+                </Icon>
               </div>
             )}
             {item.reviewsCount > 1 && (
@@ -305,12 +303,9 @@ function WorkReviewItem({ item, isLoading }) {
                     </Text>
                   </Link>
                 </span>
-                <Icon
-                  src="chevron.svg"
-                  size={{ w: 2, h: "auto" }}
-                  alt=""
-                  className={styles.icon}
-                />
+                <Icon size={{ w: 2, h: "auto" }} alt="" className={styles.icon}>
+                  <ChevronSvg />
+                </Icon>
               </div>
             )}
           </div>

@@ -5,6 +5,8 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
+import MaximizeSvg from "@/public/icons/maximize.svg";
+import MinimizeSvg from "@/public/icons/minimize.svg";
 
 /**
  * Maximize/Minimize toggle-ikon til modal (docket højre <-> fuldskærm).
@@ -86,13 +88,15 @@ export default function ExpandIcon({
             <Icon
               className={`${styles.icon} ${styles.minimize} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
               size={{ w: 2, h: "auto" }}
-              src={"minimize.svg"}
-            />
+            >
+              <MinimizeSvg />
+            </Icon>
             <Icon
               className={`${styles.icon} ${styles.maximize} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
               size={{ w: 2, h: "auto" }}
-              src={"maximize.svg"}
-            />
+            >
+              <MaximizeSvg />
+            </Icon>
           </span>
           <span className={styles.labelWrap}>
             <Text

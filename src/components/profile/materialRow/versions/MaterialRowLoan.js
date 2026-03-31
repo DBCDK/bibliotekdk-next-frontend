@@ -23,6 +23,8 @@ import {
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 // Set to when red text should be used for remaining loan days
 const DAYS_TO_COUNTDOWN_RED = 5;
@@ -84,9 +86,10 @@ export const LoanColumn = ({ dueDateString }) => {
         <Icon
           className={sharedStyles.ornament}
           size={{ w: 5, h: "auto" }}
-          src={"ornament1.svg"}
           alt=""
-        />
+        >
+          <Ornament1Svg />
+        </Icon>
         <Text
           type="text1"
           className={cx(sharedStyles.inlineBlock, {
@@ -221,9 +224,10 @@ const MaterialRowLoan = (props) => {
           <Icon
             alt=""
             size={{ w: "auto", h: 2 }}
-            src="arrowrightblue.svg"
             className={sharedStyles.arrowright}
-          />
+          >
+            <ArrowRightBlueSvg />
+          </Icon>
         </div>
       </article>
     );

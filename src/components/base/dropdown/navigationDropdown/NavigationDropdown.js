@@ -9,6 +9,8 @@ import { encodeString } from "@/lib/utils";
 import animations from "@/components/base/animation/animations.module.css";
 import Text from "@/components/base/text";
 import { getProfileUrl } from "@/components/profile/profilemenu/desktop/ProfileMenu";
+import ArrowUpSvg from "@/public/icons/arrowUp.svg";
+import CheckmarkBlueSvg from "@/public/icons/checkmark_blue.svg";
 
 /**
  * Navigation dropdown. Use this menu for a menu with redirects - not actions
@@ -170,7 +172,6 @@ function LinkDropdown({ context, menuItems }) {
         <span className={styles.chevron}>
           <Icon
             size={{ w: 2, h: 2 }}
-            src={"arrowUp.svg"}
             className={cx(
               styles.icon,
               animations["h-elastic"],
@@ -180,7 +181,9 @@ function LinkDropdown({ context, menuItems }) {
               }
             )}
             alt=""
-          />
+          >
+            <ArrowUpSvg />
+          </Icon>
         </span>
       </div>
 
@@ -215,11 +218,9 @@ function LinkDropdown({ context, menuItems }) {
 
                     {isSelectedLink(index) && (
                       <span className={styles.checkmark} role="presentation">
-                        <Icon
-                          size={{ w: "1_5", h: "1_5" }}
-                          src="checkmark_blue.svg"
-                          alt=""
-                        />
+                        <Icon size={{ w: "1_5", h: "1_5" }} alt="">
+                          <CheckmarkBlueSvg />
+                        </Icon>
                       </span>
                     )}
                   </a>

@@ -7,6 +7,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 import { useModal } from "@/components/_modal";
+import CloseSvg from "@/public/icons/close.svg";
 
 const agencyTypes = {
   SKOLEBIBLIOTEK: "schoolLibrary",
@@ -20,7 +21,7 @@ function RemoveLibraryButton({ agencyId, agencyName }) {
 
   return (
     <IconButton
-      icon="close"
+      icon={<CloseSvg />}
       onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
       alt={Translate({ context: "profile", label: "remove" })}
     >

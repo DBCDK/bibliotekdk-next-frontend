@@ -4,6 +4,7 @@ import { cyKey } from "@/utils/trim";
 
 import Skeleton from "@/components/base/skeleton";
 import Icon from "@/components/base/icon";
+import CheckmarkSvg from "@/public/icons/checkmark.svg";
 
 import styles from "./Tag.module.css";
 import Translate from "../../translate";
@@ -46,14 +47,15 @@ function Tag({
       <Icon
         size={{ w: 3, h: 3 }}
         bgColor="var(--blue)"
-        src={"checkmark.svg"}
         skeleton={skeleton}
         alt={Translate({
           ...context,
           label: selected ? "icon-label-selected" : "icon-label-not-selected",
         })}
         data-cy={`icon-${children}`}
-      />
+      >
+        <CheckmarkSvg />
+      </Icon>
     </Tag>
   );
 }

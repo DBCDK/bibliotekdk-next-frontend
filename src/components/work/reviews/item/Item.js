@@ -4,6 +4,7 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link/Link";
 import Icon from "@/components/base/icon";
+import ChevronSvg from "@/public/icons/chevron.svg";
 
 import { Rating } from "@/components/base/rating/Rating";
 
@@ -164,12 +165,9 @@ function Item({ data, work, isLoading }) {
 
               return (
                 <div className={styles.link} key={url}>
-                  <Icon
-                    src="chevron.svg"
-                    size={{ w: 2, h: "auto" }}
-                    skeleton={isLoading}
-                    alt=""
-                  />
+                  <Icon size={{ w: 2, h: "auto" }} skeleton={isLoading} alt="">
+                    <ChevronSvg />
+                  </Icon>
                   <span>
                     <Link
                       href={url}

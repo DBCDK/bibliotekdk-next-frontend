@@ -2,6 +2,8 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import Icon from "@/components/base/icon/Icon";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import ChevronRight from "@/public/icons/chevron_right.svg";
+import CloseSvg from "@/public/icons/close.svg";
+import ExclamationmarkSvg from "@/public/icons/exclamationmark.svg";
 // eslint-disable-next-line css-modules/no-unused-class
 import styles from "./MultiReferences.module.css";
 import Translate from "@/components/base/translate/Translate";
@@ -11,7 +13,7 @@ const ButtonRow = ({ onClick, onDeleteClick, hideDelete = false }) => (
   <div className={styles.buttonRowContainer}>
     {!hideDelete && (
       <IconButton
-        icon="close"
+        icon={<CloseSvg />}
         keepUnderline={true}
         className={styles.removeButton}
         onClick={onDeleteClick}
@@ -25,12 +27,13 @@ const ButtonRow = ({ onClick, onDeleteClick, hideDelete = false }) => (
 
     <div className={styles.buttonLink}>
       <Icon
-        src="exclamationmark.svg"
         alt="info"
         data-cy="tooltip-icon"
         size="2_5"
         className={styles.exclamationmark}
-      />
+      >
+        <ExclamationmarkSvg />
+      </Icon>
 
       <IconLink
         onClick={onClick}

@@ -64,7 +64,9 @@
 
 @media (min-width: 992px) {
   .flex_arrow {
-    display: initial;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .flex_row {

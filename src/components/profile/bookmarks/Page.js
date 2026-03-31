@@ -27,6 +27,7 @@ import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
 import { useAnalyzeMaterial } from "@/components/hooks/useAnalyzeMaterial";
 import { useOrderFlow } from "@/components/hooks/order";
 import { useModal } from "@/components/_modal";
+import CloseSvg from "@/public/icons/close.svg";
 
 const CONTEXT = "bookmark";
 const ORDER_TRESHHOLD = 25;
@@ -389,7 +390,7 @@ const BookmarkPage = () => {
 
       {activeStickyButton ? (
         <IconButton
-          icon="close"
+          icon={<CloseSvg />}
           textType="text1"
           className={styles.closeStickySituation}
           onClick={() => setActiveStickyButton(null)}
@@ -496,7 +497,7 @@ const BookmarkPage = () => {
           })}
         </Button>
         <IconButton
-          icon="close"
+          icon={<CloseSvg />}
           disabled={isNothingSelected}
           onClick={onDeleteSelected}
           dataCy="bookmarks-remove-from-list"

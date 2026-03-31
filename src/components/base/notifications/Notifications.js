@@ -12,6 +12,7 @@ import Icon from "@/components/base/icon/Icon";
 import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
+import CloseSvg from "@/public/icons/close.svg";
 
 /**
  * list of notifications
@@ -52,7 +53,6 @@ export function Notifications({ notificationObject }) {
           </Col>
           <Col xs={1}>
             <Icon
-              src={"close.svg"}
               size={{ w: "auto", h: "auto" }}
               className={[
                 styles.cancelicon,
@@ -67,7 +67,9 @@ export function Notifications({ notificationObject }) {
               }}
               alt={Translate({ context: "general", label: "close" })}
               tabIndex="0"
-            />
+            >
+              <CloseSvg />
+            </Icon>
           </Col>
         </Row>
       </Container>

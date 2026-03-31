@@ -29,6 +29,7 @@ import History from "@/components/search/history";
 
 import ArrowSvg from "@/public/icons/arrowleft.svg";
 import ClearSvg from "@/public/icons/close.svg";
+import HistorySvg from "@/public/icons/history.svg";
 
 import styles from "./Suggester.module.css";
 
@@ -127,11 +128,12 @@ export function renderSuggestion(data, query, skeleton) {
       {isHistory && (
         <Icon
           className={styles.icon}
-          src="history.svg"
           bgColor="transparent"
           skeleton={skeleton}
           alt=""
-        />
+        >
+          <HistorySvg />
+        </Icon>
       )}
       <div className={styles.text}>
         <Text
