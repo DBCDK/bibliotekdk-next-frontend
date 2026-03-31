@@ -1,5 +1,7 @@
 import IconButton from "./IconButton";
 import { StoryTitle, StoryDescription } from "@/storybook";
+import ChevronSvg from "@/public/icons/chevron.svg";
+import CloseSvg from "@/public/icons/close.svg";
 
 const exportedObject = {
   title: "base/IconButton",
@@ -18,7 +20,7 @@ export function Remove() {
         Any svg icon inside public/icons folder can be used with this component.
         Put icon name as prop
       </StoryDescription>
-      <IconButton icon="close">Fjern</IconButton>
+      <IconButton icon={<CloseSvg />}>Fjern</IconButton>
     </div>
   );
 }
@@ -35,7 +37,7 @@ export function AddLibrary() {
         Any svg icon inside public/icons folder can be used with this component.
         Put icon name as prop
       </StoryDescription>
-      <IconButton icon="chevron">Tilføj uddannelsesbibliotek</IconButton>
+      <IconButton icon={<ChevronSvg />}>Tilføj uddannelsesbibliotek</IconButton>
     </div>
   );
 }

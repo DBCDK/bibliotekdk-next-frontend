@@ -19,6 +19,7 @@ import {
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import { TextWithCheckMark } from "../MaterialRow";
 import styles from "../MaterialRow.module.css";
+import CloseSvg from "@/public/icons/close.svg";
 
 /**
  *
@@ -82,7 +83,7 @@ const BookmarkColumn = ({
         )}
       </div>
       <IconButton
-        icon="close"
+        icon={<CloseSvg />}
         onClick={onBookmarkDelete}
         className={cx({ [styles.bookmarkRemoveButton]: showFailedAtCreation })}
       >

@@ -25,6 +25,7 @@ import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
 import isEmpty from "lodash/isEmpty";
 import SampleButton from "@/components/sample";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -148,12 +149,9 @@ export function Overview({
                 <WorkGroupingsOverview workId={workId} />
               </Col>
               <Col xs={12} className={styles.ornament}>
-                <Icon
-                  size={{ w: 7, h: "auto" }}
-                  src={"ornament1.svg"}
-                  skeleton={skeleton}
-                  alt=""
-                />
+                <Icon size={{ w: 7, h: "auto" }} skeleton={skeleton} alt="">
+                  <Ornament1Svg />
+                </Icon>
               </Col>
               <Col xs={12}>
                 <CreatorsArray creators={work?.creators} />

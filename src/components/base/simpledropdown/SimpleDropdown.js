@@ -5,6 +5,7 @@ import { cyKey } from "@/utils/trim";
 import styles from "./SimpleDropdown.module.css";
 import React from "react";
 import cx from "classnames";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 export default function SimpleDropdown({
   placeholder = "...",
@@ -23,12 +24,9 @@ export default function SimpleDropdown({
       >
         <Text tag="span" type="text2">
           {selected || placeholder}
-          <Icon
-            size={{ w: 1, h: 1 }}
-            src="arrowrightblue.svg"
-            className={styles.dropdownicon}
-            alt=""
-          />
+          <Icon size={{ w: 1, h: 1 }} className={styles.dropdownicon} alt="">
+            <ArrowRightBlueSvg />
+          </Icon>
         </Text>
       </Dropdown.Toggle>
 

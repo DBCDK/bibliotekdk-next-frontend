@@ -6,6 +6,7 @@ import { FilterTypeEnum } from "@/lib/enums";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
 import Icon from "@/components/base/icon/Icon";
+import SettingsSvg from "@/public/icons/settings.svg";
 
 import styles from "./FilterButton.module.css";
 
@@ -31,7 +32,9 @@ export function FilterButton({ className, onClick, count, isLoading }) {
         }
       }}
     >
-      <Icon src="settings.svg" size={2} />
+      <Icon size={2}>
+        <SettingsSvg />
+      </Icon>
       {filtersLabel}
     </Button>
   );

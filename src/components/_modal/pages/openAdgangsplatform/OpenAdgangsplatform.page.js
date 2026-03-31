@@ -6,6 +6,7 @@ import styles from "./OpenAdgangsplatform.module.css";
 import Button from "@/components/base/button";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import Icon from "@/components/base/icon";
+import AdgangsplatformSvg from "@/public/icons/adgangsplatform.svg";
 import { getCallbackUrl } from "@/components/_modal/pages/login/utils";
 import { useLastLoginBranch } from "@/components/hooks/useLastLoginBranch";
 
@@ -69,11 +70,9 @@ export function OpenAdgangsplatform({ context, isLoading = false }) {
             context: "login",
             label: "go-to-library-login",
           })}
-          <Icon
-            src="adgangsplatform.svg"
-            alt="bibliotekslogin"
-            size={{ h: "4", w: "auto" }}
-          />
+          <Icon alt="bibliotekslogin" size={{ h: "4", w: "auto" }}>
+            <AdgangsplatformSvg />
+          </Icon>
         </Button>
       </div>
     </div>

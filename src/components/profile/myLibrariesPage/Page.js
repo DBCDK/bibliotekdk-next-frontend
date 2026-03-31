@@ -8,6 +8,8 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import { useState } from "react";
 import AddLibraryButton from "./addLibraryButton/AddLibraryButton";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import ArrowDownSvg from "@/public/icons/arrowDown.svg";
+import ArrowUpSvg from "@/public/icons/arrowUp.svg";
 
 /**
  * Shows the users libraries and makes it possible to add a new library
@@ -41,7 +43,7 @@ export default function MyLibrariesPage() {
           </Text>
         )}
         <IconButton
-          icon={showMore ? "arrowUp" : "arrowDown"}
+          icon={showMore ? <ArrowUpSvg /> : <ArrowDownSvg />}
           onClick={() => setShowMore(!showMore)}
           keepUnderline={true}
         >

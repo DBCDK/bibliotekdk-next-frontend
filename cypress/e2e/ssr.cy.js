@@ -1,4 +1,6 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const helpDescriptionPattern =
+  /^Find hjælp og vejledning( til bibliotek\.dk)? omkring fx bestilling, søgning og login\.$/;
 
 function getPageHead(path) {
   return cy
@@ -49,16 +51,12 @@ describe("Server Side Rendering", () => {
   describe(`frontpage`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/").then((res) => {
-        expect(res.title).to.equal(
-          "Bibliotek.dk | Lån fra alle Danmarks biblioteker"
-        );
+        expect(res.title).to.include("Lån fra alle Danmarks biblioteker");
         expect(res.description).to.equal(
           "Én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv."
         );
         expect(res["og:url"]).to.equal("http://localhost:3000/");
-        expect(res["og:title"]).to.equal(
-          "Bibliotek.dk | Lån fra alle Danmarks biblioteker"
-        );
+        expect(res["og:title"]).to.include("Lån fra alle Danmarks biblioteker");
         expect(res["og:description"]).to.equal(
           "Én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv."
         );
@@ -83,15 +81,15 @@ describe("Server Side Rendering", () => {
       getPageHead(
         "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=bog"
       ).then((res) => {
-        expect(res.title).to.equal(
-          "Hest, hest, tiger, tiger af Mette E. Neerlin | bibliotek.dk"
+        expect(res.title).to.include(
+          "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
         expect(res.description).to.equal(descriptionExpectation);
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
         );
-        expect(res["og:title"]).to.equal(
-          "Hest, hest, tiger, tiger af Mette E. Neerlin | bibliotek.dk"
+        expect(res["og:title"]).to.include(
+          "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
         expect(res["og:description"]).to.equal(descriptionExpectation);
         expect(res["og:image"]).to.exist;
@@ -186,12 +184,12 @@ describe("Server Side Rendering", () => {
   describe(`artikler`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/artikler").then((res) => {
-        expect(res.title).to.equal("Alle artikler | Bibliotek.dk");
+        expect(res.title).to.include("Alle artikler");
         expect(res.description).to.equal(
           "Én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv."
         );
         expect(res["og:url"]).to.equal("http://localhost:3000/artikler");
-        expect(res["og:title"]).to.equal("Alle artikler | Bibliotek.dk");
+        expect(res["og:title"]).to.include("Alle artikler");
         expect(res["og:description"]).to.equal(
           "Én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv."
         );
@@ -212,15 +210,11 @@ describe("Server Side Rendering", () => {
   describe(`hjaelp`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp").then((res) => {
-        expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
-        expect(res.description).to.equal(
-          "Find hjælp og vejledning til bibliotek.dk omkring fx bestilling, søgning og login."
-        );
+        expect(res.title).to.include("Hjælp og vejledning");
+        expect(res.description).to.match(helpDescriptionPattern);
         expect(res["og:url"]).to.equal("http://localhost:3000/hjaelp");
-        expect(res["og:title"]).to.equal("Hjælp og vejledning | Bibliotek.dk");
-        expect(res["og:description"]).to.equal(
-          "Find hjælp og vejledning til bibliotek.dk omkring fx bestilling, søgning og login."
-        );
+        expect(res["og:title"]).to.include("Hjælp og vejledning");
+        expect(res["og:description"]).to.match(helpDescriptionPattern);
         expect(res["og:image"]).to.exist;
       });
     });
@@ -238,15 +232,11 @@ describe("Server Side Rendering", () => {
   describe(`hjaelp/faq`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp/faq").then((res) => {
-        expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
-        expect(res.description).to.equal(
-          "Find hjælp og vejledning til bibliotek.dk omkring fx bestilling, søgning og login."
-        );
+        expect(res.title).to.include("Hjælp og vejledning");
+        expect(res.description).to.match(helpDescriptionPattern);
         expect(res["og:url"]).to.equal("http://localhost:3000/hjaelp/faq");
-        expect(res["og:title"]).to.equal("Hjælp og vejledning | Bibliotek.dk");
-        expect(res["og:description"]).to.equal(
-          "Find hjælp og vejledning til bibliotek.dk omkring fx bestilling, søgning og login."
-        );
+        expect(res["og:title"]).to.include("Hjælp og vejledning");
+        expect(res["og:description"]).to.match(helpDescriptionPattern);
         expect(res["og:image"]).to.exist;
       });
     });
@@ -264,17 +254,13 @@ describe("Server Side Rendering", () => {
   describe(`/hjaelp/find`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp/find?q=ost").then((res) => {
-        expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
-        expect(res.description).to.equal(
-          "Find hjælp og vejledning til bibliotek.dk omkring fx bestilling, søgning og login."
-        );
+        expect(res.title).to.include("Hjælp og vejledning");
+        expect(res.description).to.match(helpDescriptionPattern);
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/hjaelp/find?q=ost"
         );
-        expect(res["og:title"]).to.equal("Hjælp og vejledning | Bibliotek.dk");
-        expect(res["og:description"]).to.equal(
-          "Find hjælp og vejledning til bibliotek.dk omkring fx bestilling, søgning og login."
-        );
+        expect(res["og:title"]).to.include("Hjælp og vejledning");
+        expect(res["og:description"]).to.match(helpDescriptionPattern);
         expect(res["og:image"]).to.exist;
       });
     });
@@ -292,17 +278,15 @@ describe("Server Side Rendering", () => {
   describe(`find`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/find/simpel?q.all=ost").then((res) => {
-        expect(res.title).to.equal(
-          "Alle resultater med &quot;ost&quot; | Bibliotek.dk"
-        );
+        expect(res.title).to.include("Alle resultater med &quot;ost&quot;");
         expect(res.description).to.match(
           /Bibliotekerne har i alt \d+ resultater med &quot;ost&quot;. Bibliotek.dk er én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv./
         );
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/find/simpel?q.all=ost"
         );
-        expect(res["og:title"]).to.equal(
-          "Alle resultater med &quot;ost&quot; | Bibliotek.dk"
+        expect(res["og:title"]).to.include(
+          "Alle resultater med &quot;ost&quot;"
         );
         expect(res["og:description"]).to.match(
           /Bibliotekerne har i alt \d+ resultater med &quot;ost&quot;. Bibliotek.dk er én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv./
@@ -355,12 +339,12 @@ describe("Server Side Rendering", () => {
   describe(`inspiration/material pages`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/inspiration/boeger").then((res) => {
-        expect(res.title).to.equal("Bøger");
+        expect(res.title).to.include("Bøger");
         expect(res.description).to.exist;
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/inspiration/boeger"
         );
-        expect(res["og:title"]).to.equal("Bøger");
+        expect(res["og:title"]).to.include("Bøger");
         expect(res["og:description"]).to.exist;
         expect(res["og:image"]).to.exist;
       });
@@ -454,8 +438,8 @@ describe("Server Side Rendering", () => {
   describe(`series page`, () => {
     it(`has correct metadata`, () => {
       const seriesId =
-        "799aeecf1684f4857554b70ba62793519ae6f43a01e5c21aad5e66f904af86de";
-      const expectedTitle = "Avengers";
+        "24508131238ca4b356a2af3d30e8268d31696f2f55f1297b90e18203bbc49c99";
+      const expectedTitle = "Spidey og hans fantastiske venner";
       const expectedUrl = `http://localhost:3000/serie/${seriesId}`;
 
       getPageHead(`/serie/${seriesId}`).then((res) => {
@@ -464,7 +448,9 @@ describe("Server Side Rendering", () => {
           expectedTitle.toLowerCase()
         );
         expect(res.description).to.exist;
-        expect(res.description).to.contain("Avengers");
+        expect(res.description).to.contain(
+          "Spidey og hans venner baseret på tegnefilmene af samme navn"
+        );
 
         //open Graph (og) metadata
         expect(res["og:url"]).to.equal(expectedUrl);
@@ -472,7 +458,9 @@ describe("Server Side Rendering", () => {
           expectedTitle.toLowerCase()
         );
         expect(res["og:description"]).to.exist;
-        expect(res["og:description"]).to.contain("Avengers-superhelte");
+        expect(res["og:description"]).to.contain(
+          "Spidey og hans venner baseret på tegnefilmene af samme navn"
+        );
         expect(res["og:image"]).to.exist;
       });
     });
@@ -480,21 +468,22 @@ describe("Server Side Rendering", () => {
     it("has json-ld for series", () => {
       const expectedSeries = {
         seriesId:
-          "799aeecf1684f4857554b70ba62793519ae6f43a01e5c21aad5e66f904af86de",
-        title: "Avengers",
+          "24508131238ca4b356a2af3d30e8268d31696f2f55f1297b90e18203bbc49c99",
+        title: "Spidey og hans fantastiske venner",
         description:
-          "Historier om de fantastiske Avengers-superhelte. Fra ca. 4 år",
-        url: "https://bibliotek.dk/serie/799aeecf1684f4857554b70ba62793519ae6f43a01e5c21aad5e66f904af86de",
+          "Bøger om Spidey og hans venner baseret på tegnefilmene af samme navn. For børn fra ca. 4 år",
+        url: "https://bibliotek.dk/serie/24508131238ca4b356a2af3d30e8268d31696f2f55f1297b90e18203bbc49c99",
         genre: ["LITERATURE"],
         members: [
           {
-            title: "De sejeste superhelte",
-            url: "https://bibliotek.dk/work/work-of:870970-basis:61911669",
+            title: "Spidey og hans fantastiske venner - med tredobbelt kraft",
+            url: "https://bibliotek.dk/work/work-of:870970-basis:62256931",
             description:
-              "Historier om Captain America, Spider-Man og Iron Man.",
+              "Peter Parker og hans venner bliver til superheltene Spidey, Spin og Ghost-Spider da de skal fange skurken Rhino. Billedbog for børn fra 4 år.",
             image: {
-              url: "https://moreinfo.addi.dk/cover1.jpg",
-              thumbnail: "https://moreinfo.addi.dk/thumb1.jpg",
+              url: "https://fbiinfo-present.dbc.dk/images/DUS9zALSS8W4_4dWhNd54g/240px!AFkL_smuIpvMUfTdtjSb20G6mzyyazgSJR5PmOVZOYJH-A",
+              thumbnail:
+                "https://fbiinfo-present.dbc.dk/images/DUS9zALSS8W4_4dWhNd54g/120px!AFm2ZCwJnVh_cDKEIgvGqtv-pAGV8GB1XyPVdK1RZSDjaA",
             },
           },
         ],

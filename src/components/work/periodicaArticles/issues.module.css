@@ -32,6 +32,12 @@
   margin-left: var(--pt1);
   margin-top: var(--pt05);
 }
+
+.arrowright {
+  stroke: var(--blue);
+  fill: var(--blue);
+}
+
 @media (min-width: 992px) {
   .filters {
     margin-left: var(--pt1);

@@ -14,6 +14,7 @@ import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
 import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 /**
  * Other menu links
@@ -32,7 +33,9 @@ function MenuLink({ label, href = "#!", active = false }) {
       </Link>
       {active && (
         <span className={styles.helpiconlink}>
-          <Icon src="arrowrightblue.svg" size={1} />
+          <Icon size={1}>
+            <ArrowRightBlueSvg />
+          </Icon>
         </span>
       )}
     </div>
@@ -82,9 +85,10 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
             <span className={styles.helpicongroup}>
               <Icon
                 size={{ w: 1, h: 1 }}
-                src="arrowrightblue.svg"
                 className={expanded || activelink ? styles.helpiconrotate : ""}
-              />
+              >
+                <ArrowRightBlueSvg />
+              </Icon>
             </span>
             <Link>
               {Translate({ context: "helpmenu", label: `${group.name}` })}
@@ -161,7 +165,9 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
         </Link>
         {active && (
           <span className={styles.helpiconlink}>
-            <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+            <Icon size={{ w: 1, h: 1 }}>
+              <ArrowRightBlueSvg />
+            </Icon>
           </span>
         )}
       </div>

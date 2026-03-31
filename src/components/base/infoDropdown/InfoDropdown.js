@@ -12,6 +12,7 @@ import styles from "./InfoDropdown.module.css";
 import animations from "@/components/base/animation/animations.module.css";
 import cx from "classnames";
 import PropTypes from "prop-types";
+import ArrowDownSvg from "@/public/icons/arrowDown.svg";
 
 /**
  * InfoDropdown component that shows a button and a text that can be toggled by button click
@@ -54,12 +55,9 @@ export default function InfoDropdown(props) {
           >
             {buttonText}
           </Text>
-          <Icon
-            size={{ w: "2", h: "auto" }}
-            src="arrowDown.svg"
-            className={styles.chevron}
-            alt=""
-          />
+          <Icon size={{ w: "2", h: "auto" }} className={styles.chevron} alt="">
+            <ArrowDownSvg />
+          </Icon>
         </span>
       </Button>
     </>
