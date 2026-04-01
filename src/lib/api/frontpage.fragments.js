@@ -62,6 +62,7 @@ export function cmsFrontpage({ locale = getLocale() } = {}) {
               id
               title
               category
+              subcategories
               limit
               showDivider
             }

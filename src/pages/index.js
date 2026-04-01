@@ -63,7 +63,7 @@ const Index = () => {
                 filters={[
                   {
                     category: section.category,
-                    subCategories: ["nyeste"],
+                    subCategories: section.subcategories || ["nyeste"],
                   },
                 ]}
                 limit={section.limit || 30}
