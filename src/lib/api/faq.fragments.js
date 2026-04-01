@@ -5,7 +5,7 @@ const FAQ_FIELDS = `
   title
   body
   promoted
-  category {
+  categories {
     documentId
     name
   }

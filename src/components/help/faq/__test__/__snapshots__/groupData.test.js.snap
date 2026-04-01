@@ -5,14 +5,14 @@ Object {
   "Andet": Array [
     Object {
       "body": "<p>This faq goes last in the group ...</p>",
-      "category": null,
+      "categories": null,
       "documentId": "doc-32a",
       "promoted": false,
       "title": "def",
     },
     Object {
       "body": "<p>This faq goes first in the group ...</p>",
-      "category": null,
+      "categories": null,
       "documentId": "doc-32b",
       "promoted": false,
       "title": "abc",
@@ -21,9 +21,11 @@ Object {
   "Bestillinger": Array [
     Object {
       "body": "<p>This faq goes first in the group ...</p>",
-      "category": Object {
-        "name": "Bestillinger",
-      },
+      "categories": Array [
+        Object {
+          "name": "Bestillinger",
+        },
+      ],
       "documentId": "doc-30",
       "promoted": false,
       "title": "abc",
@@ -32,27 +34,33 @@ Object {
   "Søgninger": Array [
     Object {
       "body": "<p>This faq goes last in the group ...</p>",
-      "category": Object {
-        "name": "Søgninger",
-      },
+      "categories": Array [
+        Object {
+          "name": "Søgninger",
+        },
+      ],
       "documentId": "doc-31a",
       "promoted": true,
       "title": "ghi",
     },
     Object {
       "body": "<p>This faq goes second in the group ...</p>",
-      "category": Object {
-        "name": "Søgninger",
-      },
+      "categories": Array [
+        Object {
+          "name": "Søgninger",
+        },
+      ],
       "documentId": "doc-31b",
       "promoted": true,
       "title": "def",
     },
     Object {
       "body": "<p>This faq goes first in the group...</p>",
-      "category": Object {
-        "name": "Søgninger",
-      },
+      "categories": Array [
+        Object {
+          "name": "Søgninger",
+        },
+      ],
       "documentId": "doc-31c",
       "promoted": true,
       "title": "abc",
