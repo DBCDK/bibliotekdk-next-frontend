@@ -29,10 +29,7 @@ export function sortData(data) {
 export function groupData(data) {
   const fallback = Translate({ context: "help", label: "faq-group-other" });
 
-  const groups = groupBy(
-    data,
-    (e) => e?.categories?.[0]?.name || fallback
-  );
+  const groups = groupBy(data, (e) => e?.categories?.[0]?.name || fallback);
 
   return groups;
 }
@@ -47,10 +44,7 @@ export function groupData(data) {
 export function groupSortData(data) {
   const fallback = Translate({ context: "help", label: "faq-group-other" });
 
-  const groups = groupBy(
-    data,
-    (e) => e?.categories?.[0]?.name || fallback
-  );
+  const groups = groupBy(data, (e) => e?.categories?.[0]?.name || fallback);
 
   // Sort groups naturally by keyname
   const sortedKeys = Object.keys(groups).sort();

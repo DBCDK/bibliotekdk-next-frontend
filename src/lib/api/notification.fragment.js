@@ -1,12 +1,16 @@
 import { ApiEnums } from "@/lib/api/api";
 
 export function notificationsQuery() {
+  const site = process.env.NEXT_PUBLIC_SITE || "bibliotekDk"; //TODO: maybe store default in a constant and reuse it in other queries
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query NotificationsFragmentsNotificationQuery {
+    query NotificationsFragmentsNotificationQuery($site: String!) {
       bibliotekdkCms {
-        notifications(status: PUBLISHED) {
+        notifications(
+          status: PUBLISHED
+          filters: { sites: { name: { eq: $site } } }
+        ) {
           documentId
           title
           text
@@ -14,6 +18,7 @@ export function notificationsQuery() {
         }
       }
     }`,
+    variables: { site },
     slowThreshold: 3000,
   };
 }
