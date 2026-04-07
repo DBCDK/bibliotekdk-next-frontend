@@ -5,6 +5,7 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Button.module.css";
 import Icon from "@/components/base/icon";
+import PlaySvg from "@/public/icons/play.svg";
 
 export default function SampleButton({
   className = "",
@@ -22,7 +23,9 @@ export default function SampleButton({
       skeleton={isLoading}
       onClick={onClick}
     >
-      <Icon className={styles.icon} size={3} src={"play.svg"} />
+      <Icon className={styles.icon} size={3}>
+        <PlaySvg />
+      </Icon>
       <div className={`${styles.text}`}>
         <Text type="text3">
           {Translate({

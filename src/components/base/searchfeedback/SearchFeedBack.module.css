@@ -40,6 +40,10 @@
   left: 12px;
 }
 
+.feedbackicon path {
+  fill: white;
+}
+
 .spanwrap {
   cursor: pointer;
   border-radius: 50%;
@@ -50,7 +54,7 @@
 .spanwrap:hover,
 .spanwrap:focus-visible {
   animation: fadeIn 1s;
-  background-color: blue;
+  background-color: var(--blue);
 }
 
 .spanwrap:hover img,

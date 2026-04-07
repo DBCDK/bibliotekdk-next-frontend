@@ -20,7 +20,7 @@
 
   width: 100%;
 
-  background: blue;
+  background: var(--blue);
   height: 2px;
   transition: all 0.35s;
 }

@@ -3,6 +3,7 @@ import { IconLink } from "@/components/base/iconlink/IconLink";
 import Icon from "@/components/base/icon/Icon";
 import styles from "./ChoosePeriodicaCopyRow.module.css";
 import ChevronRight from "@/public/icons/chevron_right.svg";
+import ExclamationmarkSvg from "@/public/icons/exclamationmark.svg";
 import Translate from "@/components/base/translate";
 import { usePeriodicaForm } from "@/components/hooks/order";
 
@@ -50,12 +51,13 @@ export default function ChoosePeriodicaCopyRow({
       <div className={styles.choosePeriodicaCopyRow}>
         {!periodicaForm && (
           <Icon
-            src="exclamationmark.svg"
             alt="info"
             data-cy="tooltip-icon"
             size="2_5"
             className={styles.exclamationmark}
-          />
+          >
+            <ExclamationmarkSvg />
+          </Icon>
         )}
         <IconLink
           onClick={() => {

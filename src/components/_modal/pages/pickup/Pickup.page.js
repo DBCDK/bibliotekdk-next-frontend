@@ -17,6 +17,7 @@ import Link from "@/components/base/link";
 import Collapse from "react-bootstrap/Collapse";
 import Icon from "@/components/base/icon";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
+import ArrowDownSvg from "@/public/icons/arrowDown.svg";
 
 /**
  * Make pickup branches selectable with Radio buttons
@@ -78,10 +79,11 @@ export function Pickup(props) {
                     </Text>
                     <Icon
                       size={{ w: "2", h: "auto" }}
-                      src="arrowDown.svg"
                       className={styles.chevron}
                       alt=""
-                    />
+                    >
+                      <ArrowDownSvg />
+                    </Icon>
                   </Link>
 
                   <Collapse in={expandedAgency === idx}>

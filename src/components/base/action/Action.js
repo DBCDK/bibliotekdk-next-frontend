@@ -30,7 +30,7 @@ export default function Action({
   href = "/#",
   badge = null,
   title = "Go!",
-  icon = "star.svg",
+  icon = null,
   children = null,
   onClick = null,
   dataCy = null,
@@ -56,8 +56,8 @@ export default function Action({
       {...props}
     >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
-      <Icon size={{ w: "auto", h: 3 }} src={icon} alt={title}>
-        {children}
+      <Icon size={{ w: "auto", h: 3 }} alt={title}>
+        {children || icon}
       </Icon>
       <div className={styles.wrap}>
         <Text type="text3" skeleton={isLoading} lines={1}>

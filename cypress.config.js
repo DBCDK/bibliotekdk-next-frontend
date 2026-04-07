@@ -9,6 +9,7 @@ module.exports = {
     graphqlPath: "/190101/bibdk21/graphql",
     fbiApiPath: "/api/bibdk21/graphql",
     fbiApiSimpleSearchPath: "/api/SimpleSearch/graphql",
+    site: process.env.NEXT_PUBLIC_SITE || "bibliotekdk",
   },
   retries: {
     runMode: 3,
