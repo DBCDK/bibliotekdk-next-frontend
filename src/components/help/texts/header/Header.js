@@ -8,7 +8,7 @@
  * And we embed Open Graph as RDFa
  */
 import PropTypes from "prop-types";
-import Head from "next/head";
+import Head from "@/components/head";
 
 import { useData } from "@/lib/api/api";
 import { helpText } from "@/lib/api/helptexts.fragments.js";
@@ -50,46 +50,22 @@ export default function Header({ helpTextId }) {
     ...context,
     label: "help-description",
   });
-
   return (
-    <Head>
-      <title key="title">{pageTitle}</title>
-      <meta
-        key="description"
-        name="description"
-        content={pageDescription}
-      ></meta>
-      <meta
-        key="og:url"
-        property="og:url"
-        content={getCanonicalArticleUrl(helptext)}
-      />
-      <meta key="og:type" property="og:type" content="website" />
-      <meta key="og:title" property="og:title" content={pageTitle} />
-      <meta
-        key="og:description"
-        property="og:description"
-        content={pageDescription}
-      />
-      {helptext.fieldImage?.url && (
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`/_next/image?url=${helptext.fieldImage?.url}&w=1920&q=75`}
-        />
-      )}
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getJSONLD(helptext)),
-        }}
-      />
-      <link
-        rel="preconnect"
-        href="http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk"
-      ></link>
-    </Head>
+    <Head
+      title={pageTitle}
+      description={pageDescription}
+      image={
+        helptext.fieldImage?.url
+          ? `/_next/image?url=${helptext.fieldImage?.url}&w=1920&q=75`
+          : undefined
+      }
+      canonical={getCanonicalArticleUrl(helptext)}
+      jsonLd={getJSONLD(helptext)}
+      preconnect={[
+        "https://moreinfo.addi.dk",
+        "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk",
+      ]}
+    />
   );
 }
 

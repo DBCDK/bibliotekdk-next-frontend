@@ -5,6 +5,7 @@ import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 import { useAdvancedSearchContext } from "@/components/search/advancedSearch/advancedSearchContext";
 import cx from "classnames";
+import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
 /**
  * Used in advanced search field input. Drop down to select a search index. (e.g. "isbn", "author","title" etc.)
@@ -33,12 +34,9 @@ export default function IndexDropdown({ options = [], className, index }) {
             context: "search",
             label: `advanced-dropdown-${label}`,
           })}
-          <Icon
-            size={{ w: 1, h: 1 }}
-            src="arrowrightblue.svg"
-            className={styles.dropdownicon}
-            alt=""
-          />
+          <Icon size={{ w: 1, h: 1 }} className={styles.dropdownicon} alt="">
+            <ArrowRightBlueSvg />
+          </Icon>
         </Text>
       </Dropdown.Toggle>
 

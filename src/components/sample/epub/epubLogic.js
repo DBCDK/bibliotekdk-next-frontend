@@ -124,6 +124,63 @@ export function guessCoverHref(book) {
   return items[0]?.href || null;
 }
 
+function isLinearNo(value) {
+  if (value === false) return true;
+  return (
+    String(value || "")
+      .trim()
+      .toLowerCase() === "no"
+  );
+}
+
+function isCoverLikeSpineItem(item) {
+  return (
+    /\bcover\b/i.test(item?.properties || "") ||
+    /cover/i.test(item?.idref || "") ||
+    /cover/i.test(item?.href || "")
+  );
+}
+
+export async function hasRedundantLeadingCover(book) {
+  const items = book?.spine?.spineItems || [];
+  const first = items[0];
+  const second = items[1];
+  if (!first?.href || !second) return false;
+
+  const firstIsSkippableCover =
+    isLinearNo(first?.linear) && isCoverLikeSpineItem(first);
+  if (!firstIsSkippableCover) return false;
+
+  let markup = "";
+  try {
+    if (
+      typeof second.render === "function" &&
+      typeof book?.load === "function"
+    ) {
+      markup = await second.render(book.load.bind(book));
+    } else if (
+      typeof second.load === "function" &&
+      typeof book?.load === "function"
+    ) {
+      const root = await second.load(book.load.bind(book));
+      markup =
+        root?.ownerDocument?.documentElement?.outerHTML ||
+        root?.outerHTML ||
+        "";
+    }
+  } catch {
+    return false;
+  }
+
+  const html = String(markup || "");
+  if (!html) return false;
+
+  return (
+    /epub:type\s*=\s*["'][^"']*\bcover\b/i.test(html) ||
+    /role\s*=\s*["']doc-cover["']/i.test(html)
+  );
+}
+
 /**
  * Flatten navigation toc.
  */

@@ -10,6 +10,8 @@ import Material from "../multi-order/Material/Material";
 import { BackgroundColorEnum } from "@/components/base/materialcard/materialCard.utils";
 import { useRouter } from "next/router";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import CheckSvg from "@/public/icons/check.svg";
+import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 const MultiOrderReceipt = ({ context }) => {
   const modal = useModal();
@@ -31,7 +33,9 @@ const MultiOrderReceipt = ({ context }) => {
     <div className={cx(styles.receipt, { [styles.errorReceipt]: hasErrors })}>
       {!hasErrors && (
         <div className={styles.check}>
-          <Icon size={3} src="check.svg" />
+          <Icon size={3}>
+            <CheckSvg />
+          </Icon>
         </div>
       )}
 
@@ -41,11 +45,9 @@ const MultiOrderReceipt = ({ context }) => {
           : Translate({ context: "order", label: "order-success" })}
       </Title>
 
-      <Icon
-        className={styles.ornament}
-        size={{ w: 6, h: "auto" }}
-        src={"ornament1.svg"}
-      />
+      <Icon className={styles.ornament} size={{ w: 6, h: "auto" }}>
+        <Ornament1Svg />
+      </Icon>
 
       {hasSuccess && (
         <Text type="text2" className={styles.successMessage}>

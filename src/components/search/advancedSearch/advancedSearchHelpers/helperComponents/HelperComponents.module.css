@@ -81,5 +81,5 @@
   color: var(--white);
   border: 1px solid var(--blue);
   padding-inline: var(--pt075);
-  background-color: blue;
+  background-color: var(--blue);
 }

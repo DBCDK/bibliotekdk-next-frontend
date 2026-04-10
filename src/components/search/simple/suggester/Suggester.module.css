@@ -87,6 +87,7 @@
 .input_wrap .arrow path,
 .input_wrap .clear path {
   fill: var(--blue);
+  stroke: var(--blue);
 }
 
 .input_wrap .clear {

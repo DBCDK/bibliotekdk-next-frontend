@@ -18,7 +18,7 @@ import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
-import { getLanguage } from "@/components/base/translate/Translate";
+import { getLocale } from "@/components/base/translate/Translate";
 import { Rating } from "@/components/base/rating/Rating";
 import { ReviewHeadingLink } from "@/components/article/lectorreview/reviewheading/ReviewHeading";
 
@@ -348,11 +348,9 @@ export function ContentSkeleton(props) {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  const langcode = { language: getLanguage() };
-
-  let articleArgs = { ...props, ...langcode };
+  const locale = getLocale();
   const { data, isLoading, error } = useData(
-    articleFragments.article(articleArgs)
+    articleFragments.article({ ...props, locale })
   );
 
   if (error) {
@@ -363,10 +361,15 @@ export default function Wrap(props) {
     return <ContentSkeleton {...props} data={null} />;
   }
 
+  const article = articleFragments.getArticle(data);
+  if (!article) {
+    return null;
+  }
+
   const parsed = {
     article: {
-      ...data?.article,
-      entityCreated: timestampToShortDate(data?.article?.entityCreated),
+      ...article,
+      entityCreated: timestampToShortDate(article?.entityCreated),
     },
   };
 

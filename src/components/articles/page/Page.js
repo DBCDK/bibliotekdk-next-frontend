@@ -1,10 +1,9 @@
-import Head from "next/head";
-
 import { useRouter } from "next/router";
 
 import Section from "@/components/base/section";
 import Articles from "@/components/articles";
 import Header from "@/components/header/Header";
+import Head from "@/components/head";
 
 import Translate from "@/components/base/translate";
 
@@ -31,21 +30,7 @@ export default function Page() {
 
   return (
     <React.Fragment>
-      <Head>
-        <title key="title">{pageTitle}</title>
-        <meta
-          key="description"
-          name="description"
-          content={pageDescription}
-        ></meta>
-        <meta key="og:type" property="og:type" content="website" />
-        <meta key="og:title" property="og:title" content={pageTitle} />
-        <meta
-          key="og:description"
-          property="og:description"
-          content={pageDescription}
-        />
-      </Head>
+      <Head title={pageTitle} description={pageDescription} />
       <Header router={router} />
       <main>
         <Section

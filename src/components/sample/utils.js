@@ -1,7 +1,11 @@
 export const SPECIFIC_FALLBACKS = {
+  // maps to a type where Publizon samples can be found
   bog: ["e-bog"],
-  billedbog: ["e-bog"],
   punktskrift: ["lydbog (online)"],
+
+  // alternative types where Publizon samples can be found
+  billedbog: ["e-bog", "billedbog (online)"],
+  "billedbog (online)": ["e-bog"],
 };
 
 const hasPublizonSample = (m) =>

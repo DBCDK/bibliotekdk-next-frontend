@@ -1,0 +1,196 @@
+{
+  "version": 3,
+  "generatedAt": "2026-03-05T12:34:04.052Z",
+  "fileName": "9788776278939.epub",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "finn-og-de-onde-oste-sample",
+    "creator": null,
+    "language": "en-GB",
+    "layout": "pre-paginated",
+    "spread": "both",
+    "orientation": "landscape",
+    "flow": null
+  },
+  "counts": {
+    "spineLen": 13,
+    "tocLen": 1,
+    "duplicateSpineIndexCount": 0
+  },
+  "fixedLayout": {
+    "isPrePaginated": true,
+    "declaredPageSpreadCount": 13
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "finn-og-de-onde-oste-1.xhtml",
+      "idref": "finn-og-de-onde-oste-1",
+      "properties": ["page-spread-right"],
+      "linear": true
+    },
+    {
+      "index": 1,
+      "href": "finn-og-de-onde-oste-2.xhtml",
+      "idref": "finn-og-de-onde-oste-2",
+      "properties": ["page-spread-left"],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "finn-og-de-onde-oste-3.xhtml",
+      "idref": "finn-og-de-onde-oste-3",
+      "properties": ["page-spread-right"],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "finn-og-de-onde-oste-4.xhtml",
+      "idref": "finn-og-de-onde-oste-4",
+      "properties": ["page-spread-left"],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "finn-og-de-onde-oste-5.xhtml",
+      "idref": "finn-og-de-onde-oste-5",
+      "properties": ["page-spread-right"],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "finn-og-de-onde-oste-6.xhtml",
+      "idref": "finn-og-de-onde-oste-6",
+      "properties": ["page-spread-left"],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "finn-og-de-onde-oste-7.xhtml",
+      "idref": "finn-og-de-onde-oste-7",
+      "properties": ["page-spread-right"],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "finn-og-de-onde-oste-8.xhtml",
+      "idref": "finn-og-de-onde-oste-8",
+      "properties": ["page-spread-left"],
+      "linear": true
+    },
+    {
+      "index": 8,
+      "href": "finn-og-de-onde-oste-9.xhtml",
+      "idref": "finn-og-de-onde-oste-9",
+      "properties": ["page-spread-right"],
+      "linear": true
+    },
+    {
+      "index": 9,
+      "href": "finn-og-de-onde-oste-10.xhtml",
+      "idref": "finn-og-de-onde-oste-10",
+      "properties": ["page-spread-left"],
+      "linear": true
+    },
+    {
+      "index": 10,
+      "href": "finn-og-de-onde-oste-11.xhtml",
+      "idref": "finn-og-de-onde-oste-11",
+      "properties": ["page-spread-right"],
+      "linear": true
+    },
+    {
+      "index": 11,
+      "href": "finn-og-de-onde-oste-12.xhtml",
+      "idref": "finn-og-de-onde-oste-12",
+      "properties": ["page-spread-left"],
+      "linear": true
+    },
+    {
+      "index": 12,
+      "href": "finn-og-de-onde-oste-13.xhtml",
+      "idref": "finn-og-de-onde-oste-13",
+      "properties": ["page-spread-right"],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "finn-og-de-onde-oste-1.xhtml",
+      "hrefNoFrag": "finn-og-de-onde-oste-1.xhtml",
+      "label": "Cover",
+      "spineIndex": 0,
+      "spineHit": "finn-og-de-onde-oste-1.xhtml"
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "finn-og-de-onde-oste-1.xhtml",
+        "label": "Cover"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "finn-og-de-onde-oste-1.xhtml",
+        "label": "Cover"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "finn-og-de-onde-oste-1.xhtml",
+        "label": "Cover"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "finn-og-de-onde-oste-1.xhtml",
+        "label": "Cover"
+      },
+      {
+        "href": "finn-og-de-onde-oste-2.xhtml",
+        "label": "Indhold"
+      }
+    ],
+    "score": {
+      "mode": "fallback",
+      "score": 60,
+      "reasons": ["small-toc"],
+      "metrics": {
+        "spineLen": 13,
+        "tocLen": 1,
+        "mapped": 1,
+        "mappedUnique": 1,
+        "tocSpineRatio": 0.077,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1,
+        "titleRepeatRatio": 0
+      }
+    },
+    "collapse": true
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "fallback",
+      "score": 60,
+      "reasons": ["small-toc"],
+      "metrics": {
+        "spineLen": 13,
+        "tocLen": 1,
+        "mapped": 1,
+        "mappedUnique": 1,
+        "tocSpineRatio": 0.077,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0,
+        "uniqRatio": 1,
+        "titleRepeatRatio": 0
+      }
+    },
+    "collapse": true
+  }
+}

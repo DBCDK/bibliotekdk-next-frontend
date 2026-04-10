@@ -9,6 +9,8 @@ import Icon from "@/components/base/icon";
 
 import Tooltip from "@/components/base/tooltip/Tooltip";
 import { useEffect, useMemo, useState } from "react";
+import ExclamationmarkSvg from "@/public/icons/exclamationmark.svg";
+import SettingsSvg from "@/public/icons/settings.svg";
 
 const advancedSearchDropdownContext = "advanced_search_dropdown";
 
@@ -49,12 +51,13 @@ function DropdownUnit({
           >
             <Text type="text3">{indexTitle}</Text>
             <Icon
-              src="exclamationmark.svg"
               alt="info"
               data-cy="tooltip-icon"
               size="2_5"
               className={styles.tooltipCursor}
-            />
+            >
+              <ExclamationmarkSvg />
+            </Icon>
           </Tooltip>
         </div>
       ) : (
@@ -142,7 +145,9 @@ export default function DropdownInputs() {
                     label: "more_filters",
                   })}
                 </Link>
-                <Icon src="settings.svg" size={2} />
+                <Icon size={2}>
+                  <SettingsSvg />
+                </Icon>
               </Text>
             </div>
           )}

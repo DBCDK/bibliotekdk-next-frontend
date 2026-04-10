@@ -6,14 +6,13 @@
   gap: var(--pt1);
 }
 
-.defaultLogo_Blue {
-  color: var(--blue);
+.defaultLogo {
+  display: block;
+  height: 100%;
+  width: auto;
+  color: var(--logo-color, var(--blue));
 }
 
-.defaultLogo_White {
-  color: var(--white);
-}
-
-.defaultLogo_Blue *[data-text="true"] {
-  color: var(--mine-shaft);
+.defaultLogo *[data-text="true"] {
+  color: var(--logo-text-color, var(--mine-shaft));
 }

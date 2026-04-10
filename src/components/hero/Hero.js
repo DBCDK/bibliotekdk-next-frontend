@@ -9,8 +9,10 @@ import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
 import Image from "@/components/base/image";
 import { useData } from "@/lib/api/api";
-import { frontpageHero } from "@/lib/api/hero.fragments";
+import { cmsFrontpage, getCmsFrontpage } from "@/lib/api/frontpage.fragments";
 import Text from "@/components/base/text/Text";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
+import Ornament1WhiteSvg from "@/public/icons/ornament1white.svg";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
@@ -32,12 +34,9 @@ export function Hero({ image }) {
         <Col md={2} xs={1} />
         <div className={styles.bluebox}>
           <div className={styles.iconandtxt}>
-            <Icon
-              src={"ornament1white.svg"}
-              size={{ w: 8, h: "auto" }}
-              alt=""
-              className={styles.heroicon}
-            />
+            <Icon size={{ w: 8, h: "auto" }} alt="" className={styles.heroicon}>
+              <Ornament1WhiteSvg />
+            </Icon>
 
             <Title type="title2" className={styles.herotitle} tag="h1">
               {Translate({
@@ -85,8 +84,35 @@ export function parseHero(data) {
   );
 }
 
+export function parseCmsHero(data) {
+  const frontpage = getCmsFrontpage(data);
+  if (!frontpage?.hero?.image?.url) return null;
+  return {
+    description: frontpage.hero.description,
+    image: {
+      alt: frontpage.hero.alternativeText || "",
+      url: frontpage.hero.image.url,
+      width: frontpage.hero.image.width,
+      height: frontpage.hero.image.height,
+      ogurl: frontpage.hero.image.url,
+    },
+  };
+}
+
 export default function Wrap() {
-  const { data } = useData(frontpageHero());
-  const heroImage = parseHero(data);
+  const { hero } = useSiteConfig();
+  const useSiteHero = !!hero?.path;
+  const { data: cmsData } = useData(!useSiteHero && cmsFrontpage());
+
+  const heroImage = useSiteHero
+    ? {
+        description: hero?.description,
+        image: {
+          alt: hero?.alt || "",
+          url: hero.path,
+        },
+      }
+    : parseCmsHero(cmsData);
+
   return <Hero image={heroImage} />;
 }

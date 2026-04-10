@@ -14,6 +14,7 @@ import { IconLink } from "@/components/base/iconlink/IconLink";
 import animations from "@/components/base/animation/animations.module.css";
 import ExternalSvg from "@/public/icons/external_small.svg";
 import ArrowDownSvg from "@/public/icons/arrow_down_line.svg";
+import AwardSvg from "@/public/icons/award.svg";
 import Link from "@/components/base/link";
 import Tooltip from "@/components/base/tooltip";
 
@@ -87,7 +88,9 @@ export function Overview({
             )}
             {creatorData?.wikidata?.awards?.length > 0 && (
               <div className={styles.awards}>
-                <Icon size={{ w: 20, h: 20 }} src="award.svg" alt="" />
+                <Icon size={{ w: 20, h: 20 }} alt="">
+                  <AwardSvg />
+                </Icon>
                 <Text type="text3" tag="p" className={styles.award} lines={2}>
                   {Translate({
                     context: "creator",

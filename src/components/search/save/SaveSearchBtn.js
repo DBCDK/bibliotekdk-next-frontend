@@ -18,6 +18,8 @@ import { useFacets } from "../advancedSearch/useFacets";
 import { useQuickFilters } from "../advancedSearch/useQuickFilters";
 import { useCurrentSearchHistoryItem } from "@/components/hooks/useSearchHistory";
 import { useMemo } from "react";
+import HeartSvg from "@/public/icons/heart.svg";
+import HeartFilledSvg from "@/public/icons/heart_filled.svg";
 
 // =====================
 // UI (dumb/presentational)
@@ -32,7 +34,7 @@ export function SaveSearchBtnUI({ onClick, isSaved, className, ...props }) {
     <IconButton
       className={className}
       onClick={onClick}
-      icon={isSaved ? "heart_filled" : "heart"}
+      icon={isSaved ? <HeartFilledSvg /> : <HeartSvg />}
       keepUnderline
       {...props}
     >

@@ -3,5 +3,6 @@ export {
   months,
   lang,
   getLanguage,
+  getLocale,
   hasTranslation,
 } from "./Translate.js";

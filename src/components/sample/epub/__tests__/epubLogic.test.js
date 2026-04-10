@@ -14,6 +14,7 @@ import {
   collapseToSingleSectionPreserveFrontmatter,
   prependMissingSpineSections,
   dedupeTocBySpineHref,
+  hasRedundantLeadingCover,
   stripHashQuery,
 } from "../epubLogic";
 
@@ -205,4 +206,58 @@ describe("epubLogic – snapshot regression (UI pipeline)", () => {
       if (hasCover) expect(labels).toContain("Forside");
     }
   );
+});
+
+describe("epubLogic – redundant leading cover", () => {
+  test("detects a non-linear cover file followed by another inline cover", async () => {
+    const book = {
+      load: jest.fn(),
+      spine: {
+        spineItems: [
+          {
+            href: "cover.xhtml",
+            idref: "cover",
+            properties: "",
+            linear: false,
+          },
+          {
+            href: "book.xhtml",
+            render: jest
+              .fn()
+              .mockResolvedValue(
+                '<html><body><div epub:type="cover"></div><div epub:type="bodymatter"></div></body></html>'
+              ),
+          },
+        ],
+      },
+    };
+
+    await expect(hasRedundantLeadingCover(book)).resolves.toBe(true);
+  });
+
+  test("does not detect a redundant cover when the second document has no cover marker", async () => {
+    const book = {
+      load: jest.fn(),
+      spine: {
+        spineItems: [
+          {
+            href: "cover.xhtml",
+            idref: "cover",
+            properties: "",
+            linear: false,
+          },
+          {
+            href: "book.xhtml",
+            render: jest
+              .fn()
+              .mockResolvedValue(
+                '<html><body><div epub:type="bodymatter"></div></body></html>'
+              ),
+          },
+        ],
+      },
+    };
+
+    await expect(hasRedundantLeadingCover(book)).resolves.toBe(false);
+  });
 });

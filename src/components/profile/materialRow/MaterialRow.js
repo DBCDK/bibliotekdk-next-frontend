@@ -11,6 +11,7 @@ import MaterialRowDebt from "./versions/MaterialRowDebt";
 import MaterialRowBookmark from "./versions/MaterialRowBookmark";
 import MaterialRowReservation from "./versions/MaterialRowReservation";
 import cx from "classnames";
+import CheckmarkBlueSvg from "@/public/icons/checkmark_blue.svg";
 
 /* Use as section header to describe the content of the columns */
 export const MaterialHeaderRow = ({ column1, column2, column3, className }) => {
@@ -56,12 +57,9 @@ export const TextWithCheckMark = ({ text, textType = "text2", style }) => {
   return (
     <span className={cx(styles.renewedWrapper, style)}>
       <Text type={textType}>{label}</Text>
-      <Icon
-        size={{ w: 3, h: "auto" }}
-        src={"checkmark_blue.svg"}
-        alt=""
-        className={styles.renewedIcon}
-      />
+      <Icon size={{ w: 3, h: "auto" }} alt="" className={styles.renewedIcon}>
+        <CheckmarkBlueSvg />
+      </Icon>
     </span>
   );
 };

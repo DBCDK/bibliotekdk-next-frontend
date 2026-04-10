@@ -1,0 +1,318 @@
+{
+  "version": 3,
+  "generatedAt": "2026-03-11T10:41:30.696Z",
+  "fileName": "9788776271275.epub",
+  "parser": "epubjs",
+  "metadata": {
+    "title": "jaget-vildt",
+    "creator": null,
+    "language": "ar-SA",
+    "layout": null,
+    "spread": null,
+    "orientation": null,
+    "flow": null
+  },
+  "counts": {
+    "spineLen": 9,
+    "tocLen": 7,
+    "duplicateSpineIndexCount": 0
+  },
+  "fixedLayout": {
+    "isPrePaginated": false,
+    "declaredPageSpreadCount": 0
+  },
+  "spine": [
+    {
+      "index": 0,
+      "href": "cover.xhtml",
+      "idref": "cover",
+      "properties": [],
+      "linear": false
+    },
+    {
+      "index": 1,
+      "href": "jaget-vildt.xhtml",
+      "idref": "jaget-vildt",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 2,
+      "href": "jaget-vildt-1.xhtml",
+      "idref": "jaget-vildt-1",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 3,
+      "href": "jaget-vildt-2.xhtml",
+      "idref": "jaget-vildt-2",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 4,
+      "href": "jaget-vildt-3.xhtml",
+      "idref": "jaget-vildt-3",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 5,
+      "href": "jaget-vildt-4.xhtml",
+      "idref": "jaget-vildt-4",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 6,
+      "href": "jaget-vildt-5.xhtml",
+      "idref": "jaget-vildt-5",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 7,
+      "href": "jaget-vildt-6.xhtml",
+      "idref": "jaget-vildt-6",
+      "properties": [],
+      "linear": true
+    },
+    {
+      "index": 8,
+      "href": "jaget-vildt-7.xhtml",
+      "idref": "jaget-vildt-7",
+      "properties": [],
+      "linear": true
+    }
+  ],
+  "tocFlat": [
+    {
+      "href": "jaget-vildt-1.xhtml#_idParaDest-1",
+      "hrefNoFrag": "jaget-vildt-1.xhtml",
+      "label": "Prolog",
+      "spineIndex": 2,
+      "spineHit": "jaget-vildt-1.xhtml"
+    },
+    {
+      "href": "jaget-vildt-2.xhtml#_idParaDest-2",
+      "hrefNoFrag": "jaget-vildt-2.xhtml",
+      "label": "Kapitel 1",
+      "spineIndex": 3,
+      "spineHit": "jaget-vildt-2.xhtml"
+    },
+    {
+      "href": "jaget-vildt-3.xhtml#_idParaDest-3",
+      "hrefNoFrag": "jaget-vildt-3.xhtml",
+      "label": "Kapitel 2",
+      "spineIndex": 4,
+      "spineHit": "jaget-vildt-3.xhtml"
+    },
+    {
+      "href": "jaget-vildt-4.xhtml#_idParaDest-4",
+      "hrefNoFrag": "jaget-vildt-4.xhtml",
+      "label": "Kapitel 3",
+      "spineIndex": 5,
+      "spineHit": "jaget-vildt-4.xhtml"
+    },
+    {
+      "href": "jaget-vildt-5.xhtml#_idParaDest-5",
+      "hrefNoFrag": "jaget-vildt-5.xhtml",
+      "label": "Kapitel 4",
+      "spineIndex": 6,
+      "spineHit": "jaget-vildt-5.xhtml"
+    },
+    {
+      "href": "jaget-vildt-6.xhtml#_idParaDest-6",
+      "hrefNoFrag": "jaget-vildt-6.xhtml",
+      "label": "Kapitel 5",
+      "spineIndex": 7,
+      "spineHit": "jaget-vildt-6.xhtml"
+    },
+    {
+      "href": "jaget-vildt-7.xhtml#_idParaDest-7",
+      "hrefNoFrag": "jaget-vildt-7.xhtml",
+      "label": "Kapitel 6",
+      "spineIndex": 8,
+      "spineHit": "jaget-vildt-7.xhtml"
+    }
+  ],
+  "pipeline": {
+    "tocRaw": [
+      {
+        "href": "jaget-vildt-1.xhtml#_idParaDest-1",
+        "label": "Prolog"
+      },
+      {
+        "href": "jaget-vildt-2.xhtml#_idParaDest-2",
+        "label": "Kapitel 1"
+      },
+      {
+        "href": "jaget-vildt-3.xhtml#_idParaDest-3",
+        "label": "Kapitel 2"
+      },
+      {
+        "href": "jaget-vildt-4.xhtml#_idParaDest-4",
+        "label": "Kapitel 3"
+      },
+      {
+        "href": "jaget-vildt-5.xhtml#_idParaDest-5",
+        "label": "Kapitel 4"
+      },
+      {
+        "href": "jaget-vildt-6.xhtml#_idParaDest-6",
+        "label": "Kapitel 5"
+      },
+      {
+        "href": "jaget-vildt-7.xhtml#_idParaDest-7",
+        "label": "Kapitel 6"
+      }
+    ],
+    "tocDeduped": [
+      {
+        "href": "jaget-vildt-1.xhtml",
+        "label": "Prolog"
+      },
+      {
+        "href": "jaget-vildt-2.xhtml",
+        "label": "Kapitel 1"
+      },
+      {
+        "href": "jaget-vildt-3.xhtml",
+        "label": "Kapitel 2"
+      },
+      {
+        "href": "jaget-vildt-4.xhtml",
+        "label": "Kapitel 3"
+      },
+      {
+        "href": "jaget-vildt-5.xhtml",
+        "label": "Kapitel 4"
+      },
+      {
+        "href": "jaget-vildt-6.xhtml",
+        "label": "Kapitel 5"
+      },
+      {
+        "href": "jaget-vildt-7.xhtml",
+        "label": "Kapitel 6"
+      }
+    ],
+    "tocWithFront": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "jaget-vildt.xhtml",
+        "label": "Jaget Vildt"
+      },
+      {
+        "href": "jaget-vildt-1.xhtml",
+        "label": "Prolog"
+      },
+      {
+        "href": "jaget-vildt-2.xhtml",
+        "label": "Kapitel 1"
+      },
+      {
+        "href": "jaget-vildt-3.xhtml",
+        "label": "Kapitel 2"
+      },
+      {
+        "href": "jaget-vildt-4.xhtml",
+        "label": "Kapitel 3"
+      },
+      {
+        "href": "jaget-vildt-5.xhtml",
+        "label": "Kapitel 4"
+      },
+      {
+        "href": "jaget-vildt-6.xhtml",
+        "label": "Kapitel 5"
+      },
+      {
+        "href": "jaget-vildt-7.xhtml",
+        "label": "Kapitel 6"
+      }
+    ],
+    "tocFinal": [
+      {
+        "href": "cover.xhtml",
+        "label": "Forside"
+      },
+      {
+        "href": "jaget-vildt.xhtml",
+        "label": "Jaget Vildt"
+      },
+      {
+        "href": "jaget-vildt-1.xhtml",
+        "label": "Prolog"
+      },
+      {
+        "href": "jaget-vildt-2.xhtml",
+        "label": "Kapitel 1"
+      },
+      {
+        "href": "jaget-vildt-3.xhtml",
+        "label": "Kapitel 2"
+      },
+      {
+        "href": "jaget-vildt-4.xhtml",
+        "label": "Kapitel 3"
+      },
+      {
+        "href": "jaget-vildt-5.xhtml",
+        "label": "Kapitel 4"
+      },
+      {
+        "href": "jaget-vildt-6.xhtml",
+        "label": "Kapitel 5"
+      },
+      {
+        "href": "jaget-vildt-7.xhtml",
+        "label": "Kapitel 6"
+      }
+    ],
+    "score": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 9,
+        "tocLen": 9,
+        "mapped": 9,
+        "mappedUnique": 9,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0.667,
+        "uniqRatio": 0.444,
+        "titleRepeatRatio": 0.667
+      }
+    },
+    "collapse": false
+  },
+  "heuristics": {
+    "structure": {
+      "mode": "chapter",
+      "score": 20,
+      "reasons": ["toc-close-to-spine-size"],
+      "metrics": {
+        "spineLen": 9,
+        "tocLen": 9,
+        "mapped": 9,
+        "mappedUnique": 9,
+        "tocSpineRatio": 1,
+        "invalidHrefRatio": 0,
+        "dupSpineRatio": 0,
+        "weakLabelRatio": 0,
+        "chapterRatio": 0.667,
+        "uniqRatio": 0.444,
+        "titleRepeatRatio": 0.667
+      }
+    },
+    "collapse": false
+  }
+}

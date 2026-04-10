@@ -182,7 +182,7 @@ export default function AiMarkdown({
             className={styles.toggle}
             onClick={() => setExpanded(!expanded)}
           >
-            <Expand open={expanded} size={3} src="smallplus.svg" />
+            <Expand open={expanded} size={3} />
           </button>
         )}
       </div>

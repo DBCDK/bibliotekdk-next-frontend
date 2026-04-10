@@ -178,7 +178,6 @@ export function Item({
               <ExpandIcon
                 open={isCurrentEventKey}
                 size={iconSize}
-                src="smallplus.svg"
                 bgColor={bgColor}
                 iconColor={iconColor}
               />

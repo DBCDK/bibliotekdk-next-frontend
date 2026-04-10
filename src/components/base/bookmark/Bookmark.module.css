@@ -22,7 +22,7 @@
 }
 
 .bookmark:hover i svg path {
-  stroke: blue;
+  stroke: var(--blue);
 }
 
 .bookmark:focus-visible {
@@ -30,7 +30,7 @@
 }
 
 .bookmark:focus-visible i svg path {
-  stroke: blue;
+  stroke: var(--blue);
 }
 
 /*

@@ -24,6 +24,7 @@ import { useData } from "@/lib/api/api";
 import { editionManifestations } from "@/lib/api/manifestation.fragments";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useCheckInterLibraryLoan } from "@/components/hooks/useHoldings";
+import CloseSvg from "@/public/icons/close.svg";
 
 /**
  * Is missing article implementation
@@ -186,7 +187,7 @@ const Material = ({
               })}
         </Text>
 
-        <IconButton onClick={() => deleteOrder({ pids })} icon="close">
+        <IconButton onClick={() => deleteOrder({ pids })} icon={<CloseSvg />}>
           {Translate({
             context: "bookmark",
             label: "remove",

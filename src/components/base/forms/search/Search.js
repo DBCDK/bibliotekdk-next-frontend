@@ -3,6 +3,8 @@ import { useEffect } from "react";
 
 import Input from "@/components/base/forms/input";
 import Icon from "@/components/base/icon";
+import CloseSvg from "@/public/icons/close.svg";
+import SearchSvg from "@/public/icons/search.svg";
 
 import styles from "./Search.module.css";
 
@@ -38,6 +40,7 @@ function Search(props) {
     onChange("");
     document.getElementById("login_library_search").value = "";
   };
+  const IconSvg = clearMe ? CloseSvg : SearchSvg;
 
   return (
     <div className={`${styles.search} ${className}`}>
@@ -52,11 +55,12 @@ function Search(props) {
       <Icon
         className={styles.icon}
         size={{ w: 2, h: 2 }}
-        src={clearMe ? "close.svg" : "search.svg"}
         onClick={() => {
           clearMe && clearInput();
         }}
-      />
+      >
+        <IconSvg />
+      </Icon>
     </div>
   );
 }

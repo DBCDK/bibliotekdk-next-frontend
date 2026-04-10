@@ -1,11 +1,24 @@
-import LogoWithText from "./logo_text.svg";
 import PropTypes from "prop-types";
 import styles from "./Logo.module.css";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
-import cx from "classnames";
 import useTestUser from "@/components/hooks/useTestUser";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
+
+import LogoWithText from "./logo_text.svg";
+import BibdkLogoWithText from "./bibdk/logo_text.svg";
+import StudiebibLogoWithText from "./studiebib/logo_text.svg";
+
+const LOGO_VARIANTS = {
+  bibliotekdk: BibdkLogoWithText,
+  studiebib: StudiebibLogoWithText,
+};
+
+const DEFAULT_COLORS = {
+  logo: "var(--blue)",
+  text: "var(--mine-shaft)",
+};
 
 /**
  * Mark when test user mode is active
@@ -32,11 +45,18 @@ function TestUserActive() {
  * Component is a svg and some text.
  * @param href
  *  Where to go when clicked
- * @param type
- *  Color of text and svg logo
+ * @param colors
+ *  Colors for svg logo and text
  * @returns {React.JSX.Element}
  */
-export default function Logo({ href = "/", type = "BLUE", ...props }) {
+export default function Logo({ href = "/", colors, ...props }) {
+  const { logo } = useSiteConfig();
+  const LogoVariant = LOGO_VARIANTS[logo?.variant] || LogoWithText;
+  const resolvedColors = {
+    ...DEFAULT_COLORS,
+    ...colors,
+  };
+
   if (props.skeleton) {
     return <Logo {...props} />;
   }
@@ -50,12 +70,12 @@ export default function Logo({ href = "/", type = "BLUE", ...props }) {
       })}
     >
       <div className={styles.display_flex}>
-        <LogoWithText
-          style={{ color: type === "BLUE" ? "var(--blue)" : "var(--white)" }}
-          className={cx({
-            [styles.defaultLogo_Blue]: type === "BLUE",
-            [styles.defaultLogo_White]: type === "WHITE",
-          })}
+        <LogoVariant
+          style={{
+            "--logo-color": resolvedColors.logo,
+            "--logo-text-color": resolvedColors.text,
+          }}
+          className={styles.defaultLogo}
           alt={Translate({ context: "logo", label: "default_logo_text" })}
         />
       </div>
@@ -66,6 +86,9 @@ export default function Logo({ href = "/", type = "BLUE", ...props }) {
 
 // PropTypes for Button component
 Logo.propTypes = {
-  type: PropTypes.oneOf(["BLUE", "WHITE"]),
+  colors: PropTypes.shape({
+    logo: PropTypes.string,
+    text: PropTypes.string,
+  }),
   href: PropTypes.string,
 };
