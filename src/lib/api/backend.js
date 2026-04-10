@@ -14,7 +14,7 @@ import Translate from "@/components/base/translate/Translate.json";
  */
 export default async function fetchTranslations() {
   const disabled = nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate;
-  if (disabled === "true" || disabled === "1") {
+  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate === "true"){
     return;
   }
 
