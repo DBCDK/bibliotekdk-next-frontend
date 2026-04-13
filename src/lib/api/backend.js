@@ -11,8 +11,7 @@ const nextJsConfig = getConfig();
  * get translations from backend
  */
 export default async function fetchTranslations() {
-  const disableFlag =
-    nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate;
+  const disableFlag = nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate;
   console.log(
     "[fetchTranslations] disableDrupalTranslate =",
     disableFlag,
