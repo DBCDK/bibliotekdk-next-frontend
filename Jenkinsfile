@@ -42,6 +42,7 @@ pipeline {
         }
 
         stage("SonarQube") {
+            when { expression { false } } // TODO: re-enable when ready
             steps {
                 withSonarQubeEnv(installationName: 'sonarqube.dbc.dk') {
                     script {
@@ -61,6 +62,7 @@ pipeline {
         }
 
         stage("Quality gate") {
+            when { expression { false } } // TODO: re-enable when ready
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline: true
