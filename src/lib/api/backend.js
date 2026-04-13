@@ -7,8 +7,6 @@ import config from "@/config";
 import getConfig from "next/config";
 const nextJsConfig = getConfig();
 
-//import Translate from "@/components/base/translate/Translate.json";
-
 /**
  * get translations from backend
  */
