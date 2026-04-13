@@ -16,7 +16,10 @@ export default async function fetchTranslations() {
   const disabled = nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate;
   //remove later. test pipeline
 
-  console.log("\n\n\n\n\n\nserverRuntimeConfig?.disableDrupalTranslate;", disabled);
+  console.log(
+    "\n\n\n\n\n\nserverRuntimeConfig?.disableDrupalTranslate;",
+    disabled
+  );
   if (disabled === "true" || disabled === "1") {
     return;
   }
