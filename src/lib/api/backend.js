@@ -11,7 +11,7 @@ const nextJsConfig = getConfig();
  * get translations from backend
  */
 export default async function fetchTranslations() {
-  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate === "true") {
+  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate) {
     return;
   }
 
