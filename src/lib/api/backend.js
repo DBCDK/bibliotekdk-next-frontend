@@ -13,15 +13,12 @@ import Translate from "@/components/base/translate/Translate.json";
  * get translations from backend
  */
 export default async function fetchTranslations() {
-  const disabled = nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate;
-  //remove later. test pipeline
-  return;
-  if (disabled === "true" || disabled === "1") {
+  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate === "true") {
     return;
   }
 
   const cacheKey = config.backend.cacheKey;
-  const params = { translations: Translate, cachekey: cacheKey };
+  const params = { translations: {}, cachekey: cacheKey };
   // status flag
   let ok = true;
   // @TODO errorhandling
