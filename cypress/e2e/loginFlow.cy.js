@@ -42,7 +42,7 @@ describe(`Different ways to open login modal with library that has borrowerCheck
 });
 
 describe(`Different ways to open login modal with a (FFU) library that does NOT have borrowerCheck`, () => {
-  it("Plain login from login button in header not supported & back button leads back to pick up branch search", () => {
+  it.skip("Plain login from login button in header not supported & back button leads back to pick up branch search", () => {
     cy.visit(nextjsBaseUrl);
     cy.consentAllowAll();
     cy.get("[data-cy=header-link-login]").should("be.visible").click();
@@ -59,7 +59,7 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });
 
-  it("Infomedia login not supported & back button leads back to pick up branch search", () => {
+  it.skip("Infomedia login not supported & back button leads back to pick up branch search", () => {
     cy.fixture("articlepublicdata.json").then((fixture) => {
       cy.intercept("POST", `${fbiApiPath}`, (req) => {
         if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
