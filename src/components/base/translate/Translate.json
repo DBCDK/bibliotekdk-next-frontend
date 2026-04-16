@@ -62,8 +62,8 @@
     },
     "advanced_search_cql": {
       "cql_error_link_href": {
-        "da": "/hjaelp/soegning-baade-enkel-og-avanceret/179",
-        "en": "/hjaelp/soegning-baade-enkel-og-avanceret/179"
+        "da": "\/hjaelp\/soegning-baade-enkel-og-avanceret\/179",
+        "en": "\/hjaelp\/soegning-baade-enkel-og-avanceret\/179"
       },
       "cql_error_link_text": {
         "da": "Se hvordan cql-s\u00f8gninger fungerer",
@@ -86,12 +86,12 @@
         "en": "newest first"
       },
       "asc_sort.creator": {
-        "da": "forfatter/ophav a-\u00e5",
+        "da": "forfatter\/ophav a-\u00e5",
         "en": "creator a-z"
       },
       "desc_sort.creator": {
         "en": "creator z-a",
-        "da": "forfatter/ophav \u00e5-a"
+        "da": "forfatter\/ophav \u00e5-a"
       },
       "asc_sort.title": { "da": "titel a-\u00e5", "en": "title a-z" },
       "desc_sort.title": { "da": "titel \u00e5-a", "en": "title z-a" }
@@ -130,8 +130,8 @@
         "en": "asking a librarian"
       },
       "no_hits__help_link_url": {
-        "da": "https://www.sprgbib.dk/bv/ask",
-        "en": "https://www.sprgbib.dk/bv/ask"
+        "da": "https:\/\/www.sprgbib.dk\/bv\/ask",
+        "en": "https:\/\/www.sprgbib.dk\/bv\/ask"
       }
     },
     "advanced_search_dropdown": {
@@ -320,8 +320,8 @@
         "en": "Unexpected symbol found."
       },
       "UNEXPECTED_WITHIN_LITERAL": {
-        "da": "Forkert tidsintervals-format. Brug fx \u00222010 2015\u0022 eller \u00222010-01-01 2015-06-28\u0022.\u003Cbr/\u003EBem\u00e6rk at venstre side skal v\u00e6re mindre eller lig h\u00f8jre side.",
-        "en": "Incorrect format for time interval. Use for instance, \u00222010 2015\u0022 or \u00222010-01-01 2015-06-28\u0022.\u003Cbr/\u003ENote that the left-hand value must be less than or equal to the right-hand value"
+        "da": "Forkert tidsintervals-format. Brug fx \u00222010 2015\u0022 eller \u00222010-01-01 2015-06-28\u0022.\u003Cbr\/\u003EBem\u00e6rk at venstre side skal v\u00e6re mindre eller lig h\u00f8jre side.",
+        "en": "Incorrect format for time interval. Use for instance, \u00222010 2015\u0022 or \u00222010-01-01 2015-06-28\u0022.\u003Cbr\/\u003ENote that the left-hand value must be less than or equal to the right-hand value"
       },
       "EMPTY_QUERY": {
         "da": "Vi tror p\u00e5 dig!",
@@ -348,9 +348,9 @@
       "label-lix": { "da": "Lix-tal", "en": "Lix-number" },
       "label-let": { "da": "Let-tal", "en": "Let-number" },
       "label-specificmaterialtype": { "da": "Format", "en": "Format" },
-      "label-creator": { "da": "Forfatter / ophav", "en": "Creator" },
+      "label-creator": { "da": "Forfatter \/ ophav", "en": "Creator" },
       "label-contributor": {
-        "da": "Opl\u00e6ser / overs\u00e6tter / bidrag",
+        "da": "Opl\u00e6ser \/ overs\u00e6tter \/ bidrag",
         "en": "Contributor"
       },
       "label-subject": { "da": "Emne", "en": "Subject" },
@@ -559,8 +559,8 @@
       "back-to": { "da": "Tilbage til", "en": "Back to" },
       "notNow": { "da": "Ikke nu", "en": "Not now" },
       "kundeserviceBibdk": {
-        "en": "https://bibliotek.dk/hjaelp/kontakt-os/25",
-        "da": "https://bibliotek.dk/hjaelp/kontakt-os/25"
+        "en": "https:\/\/bibliotek.dk\/hjaelp\/kontakt-os\/25",
+        "da": "https:\/\/bibliotek.dk\/hjaelp\/kontakt-os\/25"
       },
       "link-for": { "da": "Link til", "en": "Link for" },
       "homepage": { "da": "hjemmeside", "en": "homepage" },
@@ -993,7 +993,7 @@
       },
       "remove": { "da": "Fjern", "en": "Remove" },
       "periodicaMessage": {
-        "da": "Tidsskrifter har et dataformat, der ikke kan hentes som referencer. \nDvs. disse bliver ikke downloadet/eksporteret:",
+        "da": "Tidsskrifter har et dataformat, der ikke kan hentes som referencer. \nDvs. disse bliver ikke downloadet\/eksporteret:",
         "en": "Journals has a dataformat which can\u0027t be exported as references. \nThese materials won\u0027t be exported"
       },
       "material-not-supported": {
@@ -1006,7 +1006,7 @@
       },
       "choose-automatically": {
         "en": "Choose latest edition automatically for export",
-        "da": "V\u00e6lg automatisk nyeste udgave ved download/eksport"
+        "da": "V\u00e6lg automatisk nyeste udgave ved download\/eksport"
       },
       "info-label": {
         "da": "Du kan tilf\u00f8je specifikke udgaver p\u00e5 en materialeside under \u201cInformationer og udgaver\u201d",
@@ -1110,11 +1110,11 @@
       },
       "message_expectedAgencyReturnDate": {
         "da": "Materialet er i \u00f8jeblikket ikke p\u00e5 hylden. Vi forventer at det vil v\u00e6re tilbage p\u00e5 \u00e9n af afdelingerne %s.",
-        "en": "The material is currently not on the shelf at these libraries. We expect it to be back at one of the libraries \u003Cbr/\u003E \u003Cb\u003E%s\u003C/b\u003E."
+        "en": "The material is currently not on the shelf at these libraries. We expect it to be back at one of the libraries \u003Cbr\/\u003E \u003Cb\u003E%s\u003C\/b\u003E."
       },
       "message_unlistedBranchItem": {
-        "da": "Materialet findes p\u00e5 \u003Cb\u003E%s\u003C/b\u003E, hvor der ikke er publikumsadgang, og skal derfor bestilles.",
-        "en": "The material is located at \u003Cb\u003E%s\u003C/b\u003E, which is not accessible to the public and must therefore be ordered."
+        "da": "Materialet findes p\u00e5 \u003Cb\u003E%s\u003C\/b\u003E, hvor der ikke er publikumsadgang, og skal derfor bestilles.",
+        "en": "The material is located at \u003Cb\u003E%s\u003C\/b\u003E, which is not accessible to the public and must therefore be ordered."
       },
       "lamp_alt_ON_SHELF": {
         "da": "Gr\u00f8nt lys viser at materialet findes p\u00e5 hylden her",
@@ -1297,7 +1297,7 @@
       },
       "audience_level": { "da": "Niveau", "en": "Level" },
       "contribution": { "en": "Contributions", "da": "Ophav" },
-      "genre/form": { "da": "Genre og form", "en": "Genre and form" },
+      "genre\/form": { "da": "Genre og form", "en": "Genre and form" },
       "in_series_and_universes": { "da": "Indg\u00e5r i", "en": "Found in" },
       "creators": { "da": "Ophav", "en": "Authors" },
       "audience": { "da": "M\u00e5lgruppe", "en": "Audience" },
@@ -1552,7 +1552,7 @@
       "litteratursiden": { "da": "Litteratursiden", "en": "Litteratursiden" },
       "abstract": { "da": "Kort om bogen", "en": "Abstract" },
       "audience": {
-        "da": "Anvendelse/m\u00e5lgruppe/niveau",
+        "da": "Anvendelse\/m\u00e5lgruppe\/niveau",
         "en": "Audience"
       },
       "description": { "da": "Beskrivelse", "en": "Description" },
@@ -1609,24 +1609,24 @@
         "en": "You are not registered with a public library"
       },
       "nofolk-missing-url-text": {
-        "da": "For at f\u00e5 adgang til e-materialer skal du v\u00e6re oprettet p\u00e5 folkebiblioteket i din bop\u00e6lskommune.\u003C/br\u003E\u003C/br\u003EOpret dig via dit lokale folkebiblioteks hjemmeside for at f\u00e5 adgang.",
-        "en": "To access digital materials, you must be registered with a public library in your municipality.\u003C/br\u003E\u003C/br\u003EPlease sign up via your local public library\u2019s website to gain access."
+        "da": "For at f\u00e5 adgang til e-materialer skal du v\u00e6re oprettet p\u00e5 folkebiblioteket i din bop\u00e6lskommune.\u003C\/br\u003E\u003C\/br\u003EOpret dig via dit lokale folkebiblioteks hjemmeside for at f\u00e5 adgang.",
+        "en": "To access digital materials, you must be registered with a public library in your municipality.\u003C\/br\u003E\u003C\/br\u003EPlease sign up via your local public library\u2019s website to gain access."
       },
       "hasfolk-missing-url-title": {
         "da": "Vi kunne ikke sende dig videre",
         "en": "We couldn\u2019t redirect you"
       },
       "hasfolk-missing-url-text": {
-        "da": "Der opstod en fejl, da vi fors\u00f8gte at sende dig videre til materialet p\u00e5 dit lokale folkebiblioteks hjemmeside.\u003C/br\u003E\u003C/br\u003EDu kan i stedet finde materialet direkte via dit lokale bibliotek for at f\u00e5 adgang.",
-        "en": "An error occurred while we were trying to redirect you to the material on your local public library\u2019s website.\u003C/br\u003E\u003C/br\u003EYou can instead find the material directly via your local library to gain access."
+        "da": "Der opstod en fejl, da vi fors\u00f8gte at sende dig videre til materialet p\u00e5 dit lokale folkebiblioteks hjemmeside.\u003C\/br\u003E\u003C\/br\u003EDu kan i stedet finde materialet direkte via dit lokale bibliotek for at f\u00e5 adgang.",
+        "en": "An error occurred while we were trying to redirect you to the material on your local public library\u2019s website.\u003C\/br\u003E\u003C\/br\u003EYou can instead find the material directly via your local library to gain access."
       },
       "not-logged-in-title": {
         "da": "Log ind mislykkedes",
         "en": "Sign-in failed"
       },
       "not-logged-in-text": {
-        "da": "Der opstod en fejl, da vi fors\u00f8gte at logge dig ind.\u003C/br\u003E\u003C/br\u003EPr\u00f8v igen, eller kontakt kundeservice p\u00e5 kundeservice@dbc.dk, hvis problemet forts\u00e6tter.",
-        "en": "An error occurred while we were trying to sign you in.\u003C/br\u003E\u003C/br\u003EPlease try again, or contact customer support at kundeservice@dbc.dk if the problem persists."
+        "da": "Der opstod en fejl, da vi fors\u00f8gte at logge dig ind.\u003C\/br\u003E\u003C\/br\u003EPr\u00f8v igen, eller kontakt kundeservice p\u00e5 kundeservice@dbc.dk, hvis problemet forts\u00e6tter.",
+        "en": "An error occurred while we were trying to sign you in.\u003C\/br\u003E\u003C\/br\u003EPlease try again, or contact customer support at kundeservice@dbc.dk if the problem persists."
       },
       "epub-error-title": {
         "da": "Fejl ved indl\u00e6sning af e-bog",
@@ -1859,14 +1859,14 @@
       },
       "advanced-dropdown-term.function": {
         "en": "function",
-        "da": "Forfatter/ophav"
+        "da": "Forfatter\/ophav"
       },
       "advanced-dropdown-term.creatorcontributor": {
-        "da": "Forfatter/ophav",
+        "da": "Forfatter\/ophav",
         "en": "Creator"
       },
       "advanced-dropdown-literature_term.creatorcontributor": {
-        "da": "Forfatter/ophav",
+        "da": "Forfatter\/ophav",
         "en": "Creator"
       },
       "advanced-dropdown-literature_term.publisher": {
@@ -1882,8 +1882,8 @@
         "da": "Udgivet i"
       },
       "advanced-dropdown-movie_term.creatorcontributor": {
-        "da": "Instrukt\u00f8r/ophav",
-        "en": "Director/creators"
+        "da": "Instrukt\u00f8r\/ophav",
+        "en": "Director\/creators"
       },
       "advanced-dropdown-movie_term.fictionalcharacter": {
         "da": "Fiktiv karakter",
@@ -2240,13 +2240,16 @@
       },
       "label-genreAndForm": { "da": "Genre", "en": "Genre" },
       "label-childrenOrAdults": {
-        "da": "For b\u00f8rn/voksne",
-        "en": "For children/adults"
+        "da": "For b\u00f8rn\/voksne",
+        "en": "For children\/adults"
       },
-      "label-accessTypes": { "da": "Fysisk/digital", "en": "Physical/digital" },
+      "label-accessTypes": {
+        "da": "Fysisk\/digital",
+        "en": "Physical\/digital"
+      },
       "label-fictionNonfiction": {
-        "da": "Sk\u00f8n-/faglitteratur",
-        "en": "Fiction/Non-fiction"
+        "da": "Sk\u00f8n-\/faglitteratur",
+        "en": "Fiction\/Non-fiction"
       },
       "label-subjects": { "da": "Emne", "en": "Subject" },
       "label-creators": { "da": "Forfatter", "en": "Author" },
@@ -2265,16 +2268,16 @@
       },
       "label-literature-genreAndForm": { "da": "Genre", "en": "Genre" },
       "label-literature-childrenOrAdults": {
-        "da": "For b\u00f8rn/voksne",
-        "en": "For children/adults"
+        "da": "For b\u00f8rn\/voksne",
+        "en": "For children\/adults"
       },
       "label-literature-accessTypes": {
-        "da": "Fysisk/digital",
-        "en": "Physical/digital"
+        "da": "Fysisk\/digital",
+        "en": "Physical\/digital"
       },
       "label-literature-fictionNonfiction": {
-        "da": "Sk\u00f8n-/faglitteratur",
-        "en": "Fiction/Non-fiction"
+        "da": "Sk\u00f8n-\/faglitteratur",
+        "en": "Fiction\/Non-fiction"
       },
       "label-literature-subjects": { "da": "Emne", "en": "Subject" },
       "label-literature-creators": { "da": "Forfatter", "en": "Author" },
@@ -2293,16 +2296,16 @@
       },
       "label-article-genreAndForm": { "da": "Genre", "en": "Genre" },
       "label-article-childrenOrAdults": {
-        "da": "For b\u00f8rn/voksne",
-        "en": "For children/adults"
+        "da": "For b\u00f8rn\/voksne",
+        "en": "For children\/adults"
       },
       "label-article-accessTypes": {
-        "da": "Fysisk/digital",
-        "en": "Physical/digital"
+        "da": "Fysisk\/digital",
+        "en": "Physical\/digital"
       },
       "label-article-fictionNonfiction": {
-        "da": "Sk\u00f8n-/faglitteratur",
-        "en": "Fiction/Non-fiction"
+        "da": "Sk\u00f8n-\/faglitteratur",
+        "en": "Fiction\/Non-fiction"
       },
       "label-article-subjects": { "da": "Emne", "en": "Subject" },
       "label-article-creators": { "da": "Forfatter", "en": "Author" },
@@ -2321,21 +2324,21 @@
       },
       "label-movie-genreAndForm": { "da": "Genre", "en": "Genre" },
       "label-movie-childrenOrAdults": {
-        "da": "For b\u00f8rn/voksne",
-        "en": "For children/adults"
+        "da": "For b\u00f8rn\/voksne",
+        "en": "For children\/adults"
       },
       "label-movie-accessTypes": {
-        "da": "Fysisk/digital",
-        "en": "Physical/digital"
+        "da": "Fysisk\/digital",
+        "en": "Physical\/digital"
       },
       "label-movie-fictionNonfiction": {
-        "da": "Spillefilm/dokumentar",
-        "en": "Feature film/documentary"
+        "da": "Spillefilm\/dokumentar",
+        "en": "Feature film\/documentary"
       },
       "label-movie-subjects": { "da": "Emne", "en": "Subject" },
       "label-movie-creators": {
-        "da": "Instrukt\u00f8r/medvirkende",
-        "en": "Director/contributor"
+        "da": "Instrukt\u00f8r\/medvirkende",
+        "en": "Director\/contributor"
       },
       "label-game-workTypes": {
         "da": "Materialekategori",
@@ -2352,16 +2355,16 @@
       },
       "label-game-genreAndForm": { "da": "Genre", "en": "Genre" },
       "label-game-childrenOrAdults": {
-        "da": "For b\u00f8rn/voksne",
-        "en": "For children/adults"
+        "da": "For b\u00f8rn\/voksne",
+        "en": "For children\/adults"
       },
       "label-game-accessTypes": {
-        "da": "Fysisk/digital",
-        "en": "Physical/digital"
+        "da": "Fysisk\/digital",
+        "en": "Physical\/digital"
       },
       "label-game-fictionNonfiction": {
-        "da": "Sk\u00f8n-/faglitteratur",
-        "en": "Fiction/Non-fiction"
+        "da": "Sk\u00f8n-\/faglitteratur",
+        "en": "Fiction\/Non-fiction"
       },
       "label-game-subjects": { "da": "Emne", "en": "Subject" },
       "label-game-creators": { "da": "Forfatter", "en": "Author" },
@@ -2380,21 +2383,21 @@
       },
       "label-music-genreAndForm": { "da": "Genre", "en": "Genre" },
       "label-music-childrenOrAdults": {
-        "da": "For b\u00f8rn/voksne",
-        "en": "For children/adults"
+        "da": "For b\u00f8rn\/voksne",
+        "en": "For children\/adults"
       },
       "label-music-accessTypes": {
-        "da": "Fysisk/digital",
-        "en": "Physical/digital"
+        "da": "Fysisk\/digital",
+        "en": "Physical\/digital"
       },
       "label-music-fictionNonfiction": {
-        "da": "Sk\u00f8n-/faglitteratur",
-        "en": "Fiction/Non-fiction"
+        "da": "Sk\u00f8n-\/faglitteratur",
+        "en": "Fiction\/Non-fiction"
       },
       "label-music-subjects": { "da": "Emne", "en": "Subject" },
       "label-music-creators": {
-        "da": "Kunstner/medvirkende",
-        "en": "Artist/performer"
+        "da": "Kunstner\/medvirkende",
+        "en": "Artist\/performer"
       },
       "label-sheetmusic-workTypes": {
         "da": "Materialekategori",
@@ -2411,16 +2414,16 @@
       },
       "label-sheetmusic-genreAndForm": { "da": "Genre", "en": "Genre" },
       "label-sheetmusic-childrenOrAdults": {
-        "da": "For b\u00f8rn/voksne",
-        "en": "For children/adults"
+        "da": "For b\u00f8rn\/voksne",
+        "en": "For children\/adults"
       },
       "label-sheetmusic-accessTypes": {
-        "da": "Fysisk/digital",
-        "en": "Physical/digital"
+        "da": "Fysisk\/digital",
+        "en": "Physical\/digital"
       },
       "label-sheetmusic-fictionNonfiction": {
-        "da": "Sk\u00f8n-/faglitteratur",
-        "en": "Fiction/Non-fiction"
+        "da": "Sk\u00f8n-\/faglitteratur",
+        "en": "Fiction\/Non-fiction"
       },
       "label-sheetmusic-subjects": { "da": "Emne", "en": "Subject" },
       "label-sheetmusic-creators": { "da": "Komponist", "en": "Composer" },
@@ -3056,16 +3059,16 @@
         "en": "You are not registered at %s"
       },
       "text-error-not-registered": {
-        "da": "For at bestille og l\u00e5ne materialer skal du v\u00e6re registreret p\u00e5 det bibliotek, hvor du vil hente materialet. \u003C/br\u003E\u003C/br\u003E \u003Cstrong\u003EHvordan registrerer du dig?\u003C/strong\u003E \u003C/br\u003E Du registrerer dig p\u00e5 et folkebibliotek via bibliotekets hjemmeside eller ved at henvende dig til personalet p\u00e5 biblioteket. Herefter knyttes biblioteket automatisk til din profil p\u00e5 bibliotek.dk. \u003C/br\u003E \u003C/br\u003E %s",
-        "en": "To order and loan materials you must be registered at the library, where you want to pickup the material. \u003C/br\u003E\u003C/br\u003E \u003Cstrong\u003EHow do you register?\u003C/strong\u003E \u003C/br\u003E You register at a public library via the libraries homepage or by addressing staff at the library. After registration your library will be automatically added to your profile at bibliotek.dk \u003C/br\u003E \u003C/br\u003E %s"
+        "da": "For at bestille og l\u00e5ne materialer skal du v\u00e6re registreret p\u00e5 det bibliotek, hvor du vil hente materialet. \u003C\/br\u003E\u003C\/br\u003E \u003Cstrong\u003EHvordan registrerer du dig?\u003C\/strong\u003E \u003C\/br\u003E Du registrerer dig p\u00e5 et folkebibliotek via bibliotekets hjemmeside eller ved at henvende dig til personalet p\u00e5 biblioteket. Herefter knyttes biblioteket automatisk til din profil p\u00e5 bibliotek.dk. \u003C\/br\u003E \u003C\/br\u003E %s",
+        "en": "To order and loan materials you must be registered at the library, where you want to pickup the material. \u003C\/br\u003E\u003C\/br\u003E \u003Cstrong\u003EHow do you register?\u003C\/strong\u003E \u003C\/br\u003E You register at a public library via the libraries homepage or by addressing staff at the library. After registration your library will be automatically added to your profile at bibliotek.dk \u003C\/br\u003E \u003C\/br\u003E %s"
       },
       "title-error-not-associated": {
         "da": "Du skal v\u00e6re l\u00e5ner hos %s for at bestille.",
         "en": "You must be regsitered at %s to order"
       },
       "text-error-not-associated": {
-        "da": "\u003Cstrong\u003EEr du registreret som l\u00e5ner hos %s?\u003C/strong\u003E \u003C/br\u003E S\u00e5 skal du f\u00f8rst tilf\u00f8je biblioteket til din profil, f\u00f8r du kan bestille. Det g\u00f8r du under %s. \u003C/br\u003E \u003C/br\u003E \u003Cstrong\u003EVil du gerne v\u00e6re l\u00e5ner hos %s?\u003C/strong\u003E \u003C/br\u003E S\u00e5 skal du registrere dig hos biblioteket. Find flere oplysniger om hvordan p\u00e5 deres %s.",
-        "en": "\u003Cstrong\u003EAre you registered as loaner at %s?\u003C/strong\u003E \u003C/br\u003E Then you must add the library to your profile before you can order. You do that here: %s. \u003C/br\u003E \u003C/br\u003E \u003Cstrong\u003EYou want to be a loaner at  %s?\u003C/strong\u003E \u003C/br\u003E Then you must register at the library. Find more information on their %s."
+        "da": "\u003Cstrong\u003EEr du registreret som l\u00e5ner hos %s?\u003C\/strong\u003E \u003C\/br\u003E S\u00e5 skal du f\u00f8rst tilf\u00f8je biblioteket til din profil, f\u00f8r du kan bestille. Det g\u00f8r du under %s. \u003C\/br\u003E \u003C\/br\u003E \u003Cstrong\u003EVil du gerne v\u00e6re l\u00e5ner hos %s?\u003C\/strong\u003E \u003C\/br\u003E S\u00e5 skal du registrere dig hos biblioteket. Find flere oplysniger om hvordan p\u00e5 deres %s.",
+        "en": "\u003Cstrong\u003EAre you registered as loaner at %s?\u003C\/strong\u003E \u003C\/br\u003E Then you must add the library to your profile before you can order. You do that here: %s. \u003C\/br\u003E \u003C\/br\u003E \u003Cstrong\u003EYou want to be a loaner at  %s?\u003C\/strong\u003E \u003C\/br\u003E Then you must register at the library. Find more information on their %s."
       },
       "system-error": {
         "da": "Der opstod en fejl i systemet i forbindelse med login. Pr\u00f8v igen om lidt.",
@@ -3146,8 +3149,8 @@
         "en": "Enter barcode"
       },
       "pincode-explain": {
-        "da": "Pinkode/brugerkode. Den du bruger p\u00e5 biblioteket",
-        "en": "Pincode/password. The one you use at your library"
+        "da": "Pinkode\/brugerkode. Den du bruger p\u00e5 biblioteket",
+        "en": "Pincode\/password. The one you use at your library"
       },
       "error-missing-input": {
         "da": "Udfyld venligst alle felter",
@@ -3166,7 +3169,7 @@
       },
       "text": {
         "en": "LABEL: Mangler overs\u00e6ttelse!",
-        "da": "Vil du logge ind med MitID for at f\u00e5 adgang til din profil? \u003Cbr /\u003E\u003Cbr /\u003E Forts\u00e6tter du uden MitID, kan du stadig bestille materialer, men der vil v\u00e6re begr\u00e6nset funktionalitet i forhold til huskeliste, l\u00e5n og reserveringer mv."
+        "da": "Vil du logge ind med MitID for at f\u00e5 adgang til din profil? \u003Cbr \/\u003E\u003Cbr \/\u003E Forts\u00e6tter du uden MitID, kan du stadig bestille materialer, men der vil v\u00e6re begr\u00e6nset funktionalitet i forhold til huskeliste, l\u00e5n og reserveringer mv."
       },
       "loginButton": {
         "da": "Log ind med MitID",
@@ -3230,7 +3233,7 @@
       },
       "benefitsText": {
         "en": "LABEL: Mangler overs\u00e6ttelse!",
-        "da": "Med en profil kan du: \u003Cbr /\u003E \u003Cul\u003E\u003Cli\u003Enemt bestille til alle dine biblioteker\u003C/li\u003E\u003Cli\u003Egemme materialer i huskelisten\u003C/li\u003E\u003Cli\u003Ese dine l\u00e5n og reserveringer p\u00e5 tv\u00e6rs af biblioteker\u003C/li\u003E\u003Cli\u003Ese din bestillingshistorik\u003C/li\u003E\u003C/ul\u003E Det kr\u00e6ver kun, at du verificerer dig med MitID. \u003C/br\u003E Hvis du senere fortryder, kan du nemt fjerne biblioteket fra din profil. \u003C/br\u003E\u003C/br\u003E\u003C/br\u003E Forts\u00e6tter du uden at tilknytte en profil, kan du stadig bestille materialer, men der vil v\u00e6re begr\u00e6nset funktionalitet i forhold til huskeliste, l\u00e5n og reserveringer mv."
+        "da": "Med en profil kan du: \u003Cbr \/\u003E \u003Cul\u003E\u003Cli\u003Enemt bestille til alle dine biblioteker\u003C\/li\u003E\u003Cli\u003Egemme materialer i huskelisten\u003C\/li\u003E\u003Cli\u003Ese dine l\u00e5n og reserveringer p\u00e5 tv\u00e6rs af biblioteker\u003C\/li\u003E\u003Cli\u003Ese din bestillingshistorik\u003C\/li\u003E\u003C\/ul\u003E Det kr\u00e6ver kun, at du verificerer dig med MitID. \u003C\/br\u003E Hvis du senere fortryder, kan du nemt fjerne biblioteket fra din profil. \u003C\/br\u003E\u003C\/br\u003E\u003C\/br\u003E Forts\u00e6tter du uden at tilknytte en profil, kan du stadig bestille materialer, men der vil v\u00e6re begr\u00e6nset funktionalitet i forhold til huskeliste, l\u00e5n og reserveringer mv."
       },
       "verificationButton": {
         "en": "LABEL: Mangler overs\u00e6ttelse!",
@@ -3290,7 +3293,7 @@
         "en": "LABEL: Mangler overs\u00e6ttelse!"
       },
       "addLibraryNoBorchkText": {
-        "da": "Desv\u00e6rre dit valgte bibliotek %s, kan ikke knyttes til denne profil. \u003C/br\u003E\u003C/br\u003E Log ud for at kunne foretage bestilling til dette bibliotek",
+        "da": "Desv\u00e6rre dit valgte bibliotek %s, kan ikke knyttes til denne profil. \u003C\/br\u003E\u003C\/br\u003E Log ud for at kunne foretage bestilling til dette bibliotek",
         "en": "LABEL: Mangler overs\u00e6ttelse!"
       },
       "addLibraryAlreadyCreatedTitle": {
@@ -3639,9 +3642,9 @@
       "category-music-rock": { "da": "Rock", "en": "Rock" },
       "category-music-jazz": { "da": "Jazz", "en": "Jazz" },
       "category-music-blues": { "da": "Blues", "en": "Blues" },
-      "category-music-singer/songwriter": {
-        "da": "Singer/songwriter",
-        "en": "Singer/songwriter"
+      "category-music-singer\/songwriter": {
+        "da": "Singer\/songwriter",
+        "en": "Singer\/songwriter"
       },
       "category-music-electronica": {
         "da": "Electronica",
@@ -3914,8 +3917,8 @@
       "delete": { "da": "Slet", "en": "Delete" },
       "deleteProfile": { "da": "Slet profil", "en": "Delete profile" },
       "deleteProfileText": {
-        "en": "This will delete following data on bibliotek.dk: Bookmarks, orderhistory, searchhistory og added university libraries\r\n\r\n\r\n\u003Cstrong\u003ENotice:\u003C/strong\u003E You will still be a loaner at libraries, where you are registered. Your loans, reservations og bills at libraries will not be deleted.\r\n\r\n\r\nContact your library directly, if you no longer wish to be a loaner.",
-        "da": "Dette vil slette f\u00f8lgende data p\u00e5 bibliotek.dk: Din huskeliste, bestillingshistorik, s\u00f8gehistorik og evt. tilf\u00f8jede uddannelsesbiblioteker.\r\n\r\n\r\n\u003Cstrong\u003EBem\u00e6rk:\u003C/strong\u003E Du vil stadig v\u00e6re registreret som l\u00e5ner p\u00e5 de biblioteker, hvor du er oprettet. Ligesom at dine l\u00e5n, reserveringer og mellemv\u00e6rende ved bibliotekerne heller ikke vil blive slettet.\r\n\r\n\r\nKontakt biblioteket direkte, hvis du ikke l\u00e6ngere \u00f8nsker at v\u00e6re l\u00e5ner der."
+        "en": "This will delete following data on bibliotek.dk: Bookmarks, orderhistory, searchhistory og added university libraries\r\n\r\n\r\n\u003Cstrong\u003ENotice:\u003C\/strong\u003E You will still be a loaner at libraries, where you are registered. Your loans, reservations og bills at libraries will not be deleted.\r\n\r\n\r\nContact your library directly, if you no longer wish to be a loaner.",
+        "da": "Dette vil slette f\u00f8lgende data p\u00e5 bibliotek.dk: Din huskeliste, bestillingshistorik, s\u00f8gehistorik og evt. tilf\u00f8jede uddannelsesbiblioteker.\r\n\r\n\r\n\u003Cstrong\u003EBem\u00e6rk:\u003C\/strong\u003E Du vil stadig v\u00e6re registreret som l\u00e5ner p\u00e5 de biblioteker, hvor du er oprettet. Ligesom at dine l\u00e5n, reserveringer og mellemv\u00e6rende ved bibliotekerne heller ikke vil blive slettet.\r\n\r\n\r\nKontakt biblioteket direkte, hvis du ikke l\u00e6ngere \u00f8nsker at v\u00e6re l\u00e5ner der."
       },
       "deleteProfileTitle": {
         "da": "Vil du slette din brugerprofil p\u00e5 bibliotek.dk?",
@@ -4093,8 +4096,8 @@
         "en": "Test listen"
       },
       "disclaimer-text": {
-        "da": "Indholdet kommer fra \u003Cstrong\u003E%s\u003C/strong\u003E-udgaven",
-        "en": "Content comes from \u003Cstrong\u003E%s\u003C/strong\u003E"
+        "da": "Indholdet kommer fra \u003Cstrong\u003E%s\u003C\/strong\u003E-udgaven",
+        "en": "Content comes from \u003Cstrong\u003E%s\u003C\/strong\u003E"
       }
     },
     "receipt": {
@@ -4182,8 +4185,8 @@
         "en": "Invalid pickup branch"
       },
       "ERROR_PID_NOT_RESERVABLE": {
-        "da": "Bestilling/reservering ikke mulig",
-        "en": "Order/reservation not possible"
+        "da": "Bestilling\/reservering ikke mulig",
+        "en": "Order\/reservation not possible"
       },
       "ERROR_NO_NAME_OR_EMAIL": {
         "en": "Name or email missing",
