@@ -24,8 +24,8 @@
         "en": "Publications"
       },
       "publications-explanation": {
-        "en": "Works are grouped by the oldest registered edition, but the work may have been created earlier.",
-        "da": "Et v\u00e6rk vises under \u00e5ret for den tidligste biblioteksregistrerede udgave. V\u00e6rket kan v\u00e6re \u00e6ldre."
+        "en": "Works are grouped by the earliest registered edition, but the work may have been created earlier.",
+        "da": "V\u00e6rkerne er grupperet efter \u00e6ldste registrerede udgave, men v\u00e6rket kan v\u00e6re skabt tidligere."
       },
       "work-singular": {
         "da": "v\u00e6rk",
@@ -57,7 +57,7 @@
       },
       "favorites-title": {
         "da": "Udvalgte anmeldelser",
-        "en": "Selected reviews"
+        "en": "Reviewers' favorites"
       },
       "creator-breadcrumb": {
         "da": "Ophav",
@@ -84,8 +84,8 @@
         "en": "Search for name"
       },
       "creator-forfatterweb": {
-        "da": "Se p\u00e5 forfatterweb.dk",
-        "en": "View on forfatterweb.dk"
+        "da": "Forfatterweb.dk",
+        "en": "Forfatterweb.dk"
       },
       "view-publications": {
         "da": "Alle v\u00e6rker",
@@ -128,8 +128,8 @@
         "en": "Sort by"
       },
       "best_match": {
-        "da": "Bedste match",
-        "en": "Best match"
+        "da": "bedste match",
+        "en": "best match"
       },
       "asc_sort.latestpublicationdate": {
         "da": "\u00e6ldste f\u00f8rst",
@@ -1129,7 +1129,7 @@
     "footer": {
       "hvad_er_bibliotek_dk": {
         "en": "What is bibliotek.dk?",
-        "da": "Bibliotek.dk er en samlet indgang til alle danske bibliotekers materialer og alt, hvad der udgives i Danmark. Du kan bestille materialer og hente og l\u00e5ne dem p\u00e5 dit eget bibliotek. \r\nBrug Bibliotek.dk til at finde alt, hvad der er udgivet i Danmark af b\u00f8ger, musik, tidsskrifter, artikler, e-b\u00f8ger, lydb\u00f8ger med mere. Bibliotek.dk er alts\u00e5 ikke et fysisk bibliotek. Det er en database og service, der viser materialer, der findes p\u00e5 danske offentlige biblioteker og som du kan bestille og f\u00e5 leveret til dit lokale bibliotek."
+        "da": "Bibliotek.dk er en samlet indgang til alle danske bibliotekers materialer og til hvad der udgives i Danmark. Du kan bestille materialer og s\u00e5 hente og l\u00e5ne p\u00e5 dit eget bibliotek. \r\n Du kan bruge Bibliotek.dk til at s\u00f8ge frem, hvad der er udgivet af b\u00f8ger, musik, tidsskrifter, artikler, e-b\u00f8ger, lydb\u00f8ger osv. Bibliotek.dk er alts\u00e5 ikke et fysisk bibliotek, men en database og service over hvad der findes p\u00e5 danske offentlige biblioteker, som du kan bestille og f\u00e5 leveret til dit lokale bibliotek."
       },
       "contact": {
         "en": "Contact us",
@@ -1842,8 +1842,8 @@
     },
     "overview": {
       "publizon-local-library-btn": {
-        "da": "G\u00e5 til bogen",
-        "en": "Go to the book"
+        "da": "L\u00e5n via dit lokale bibliotek",
+        "en": "Loan via your local library"
       },
       "check_branch_holding": {
         "en": "Check your library",
@@ -1886,11 +1886,11 @@
         "da": "Du f\u00e5r tilsendt en digital kopi"
       },
       "addToCart-line3": {
-        "da": "L\u00e5nes online p\u00e5 dit lokale bibliotek",
-        "en": "Loaned online at your local library"
+        "da": "Digitale materialer bliver du sendt videre til",
+        "en": "You will be forwarded to digital materials"
       },
       "addToCart-line3-not-logged-in": {
-        "da": "L\u00e5nes online p\u00e5 dit lokale bibliotek (Kr\u00e6ver login)",
+        "da": "L\u00e5nes online p\u00e5 p\u00e5 dit lokale bibliotek (Kr\u00e6ver login)",
         "en": "Loaned online at your local library (Requires login)"
       },
       "goto": {
@@ -1899,7 +1899,7 @@
       },
       "nota-access-restriction": {
         "da": "Du bliver sendt til nota.dk - adgang kr\u00e6ver dokumenteret l\u00e6sehandicap",
-        "en": "You will be sent to nota.dk - access requires documented reading disability"
+        "en": "You will be sent to nota.dk - Access requires documented reading disability"
       },
       "onlineAccessAt": {
         "da": "Du bliver sendt til",
@@ -2844,8 +2844,8 @@
         "da": "Instrukt\u00f8r"
       },
       "label-game-creator": {
-        "en": "Publisher",
-        "da": "Udgiver"
+        "da": "Udgiver",
+        "en": "Publisher"
       },
       "label-music-creator": {
         "da": "Kunstner",
@@ -2980,8 +2980,8 @@
         "en": "Advanced Search"
       },
       "advancedSearch_button": {
-        "en": "Search",
-        "da": "S\u00f8g"
+        "da": "S\u00f8g avanceret",
+        "en": "Search advanced"
       },
       "advanced": {
         "da": "Avanceret",
@@ -3324,8 +3324,8 @@
         "en": "New fields search"
       },
       "topbar-simple-search": {
-        "en": "Search",
-        "da": "S\u00f8g"
+        "da": "Simpel s\u00f8gning",
+        "en": "Simple search"
       },
       "topbar-advanced-search": {
         "da": "Avanceret s\u00f8gning",
@@ -5975,7 +5975,7 @@
       },
       "revokeConsentText": {
         "en": "Do you want to change your consent so that your orders are no longer saved in the history?\n\nInstead, only orders for the past 30 days will be displayed",
-        "da": "Vil du \u00e6ndre dit samtykke, s\u00e5 dine bestillinger ikke l\u00e6ngere bliver gemt i historikken?\r\n\r\nFremover vil der s\u00e5 kun blive vist bestillinger for de seneste 30 dage.\r\n\r\nOBS: bestillinger f\u00f8r de seneste 30 dage bliver f\u00f8rst slettet i nat."
+        "da": "Vil du \u00e6ndre dit samtykke, s\u00e5 dine bestillinger ikke l\u00e6ngere bliver gemt i historikken?\r\n\r\nFremfor vil der s\u00e5 kun blive vist bestillinger for de seneste 30 dage.\r\n\r\nOBS: bestillinger f\u00f8r de seneste 30 dage bliver f\u00f8rst slettet i nat."
       },
       "consentButton": {
         "da": "Giv tilladelse",
@@ -6040,12 +6040,12 @@
     },
     "sample": {
       "test-read-btn-lbl": {
-        "da": "Pr\u00f8v",
-        "en": "Sample"
+        "da": "Pr\u00f8vel\u00e6s",
+        "en": "Test read"
       },
       "test-listen-btn-lbl": {
-        "da": "Pr\u00f8v",
-        "en": "Sample"
+        "da": "Pr\u00f8velyt",
+        "en": "Test listen"
       },
       "overlay-test-read-title": {
         "da": "Pr\u00f8vel\u00e6s:",
