@@ -12,7 +12,6 @@ import { encodeString } from "@/lib/utils";
 
 import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
-import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
 import ArrowRightBlueSvg from "@/public/icons/arrowrightblue.svg";
 
@@ -56,9 +55,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
   return groups.map((group, index) => {
     const expanded = index === expandedGroup;
 
-    const activelink = menus[group.name].find(
-      ({ id }) => parseInt(helpTextId, "10") === id
-    );
+    const activelink = menus[group.name].find(({ id }) => id === helpTextId);
 
     return (
       <div
@@ -151,7 +148,7 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
  */
 function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   return menuItems[group.name].map((item, index) => {
-    const active = item.id === parseInt(helpTextId, "10");
+    const active = item.id === helpTextId;
 
     return (
       <div className={styles.helplink} key={`div-menulink-${index}`}>
@@ -182,20 +179,17 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
  * @returns {React.ReactElement|null}
  */
 export default function Wrap({ helpTextId, ...props }) {
-  const { isLoading, data } = useData(
-    publishedHelptexts({ language: getLanguage() })
-  );
+  const { isLoading, data } = useData(publishedHelptexts());
 
   if (isLoading) {
     return <Skeleton className={styles.helpskeleton} lines={8} />;
   }
 
-  if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
-    // @TODO some error here .. message for user .. log ??
+  if (!data || !data.bibliotekdkCms?.helpTexts || data.error) {
     return null;
   }
 
-  const allHelpTexts = data.nodeQuery.entities;
+  const allHelpTexts = data.bibliotekdkCms.helpTexts;
 
   return (
     <HelpTextMenu {...props} helpTexts={allHelpTexts} helpTextId={helpTextId} />
