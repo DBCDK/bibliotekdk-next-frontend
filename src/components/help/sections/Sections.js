@@ -17,7 +17,6 @@ import { helpTextParseMenu } from "../utils.js";
 import { encodeString } from "@/lib/utils";
 
 import styles from "./Sections.module.css";
-import { getLanguage } from "@/components/base/translate/Translate";
 import Ornament1Svg from "@/public/icons/ornament1.svg";
 
 /**
@@ -158,16 +157,13 @@ export function SectionsSkeleton(props) {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  // real data goes here ...
-  const langcode = { language: getLanguage() };
-  const { data } = useData(publishedHelptexts(langcode));
+  const { data } = useData(publishedHelptexts());
 
-  if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
-    // @TODO skeleton
+  if (!data || !data.bibliotekdkCms?.helpTexts || data.error) {
     return <SectionsSkeleton {...props} />;
   }
 
-  const allHelpTexts = data.nodeQuery.entities;
+  const allHelpTexts = data.bibliotekdkCms.helpTexts;
 
   return <Sections {...props} data={allHelpTexts} />;
 }

@@ -31,14 +31,13 @@ export default function Header({ helpTextId }) {
     helpTextId && helpText({ helpTextId: helpTextId })
   );
 
-  if (!data || !data.nodeById || isLoading || error) {
-    // @TODO some error here .. message for user .. log ??
+  if (!data || !data.bibliotekdkCms?.helpText || isLoading || error) {
     return null;
   }
 
   const context = { context: "metadata" };
 
-  const helptext = data.nodeById;
+  const helptext = data.bibliotekdkCms.helpText;
 
   const pageTitle = Translate({
     ...context,
@@ -55,8 +54,8 @@ export default function Header({ helpTextId }) {
       title={pageTitle}
       description={pageDescription}
       image={
-        helptext.fieldImage?.url
-          ? `/_next/image?url=${helptext.fieldImage?.url}&w=1920&q=75`
+        helptext.image?.url
+          ? `/_next/image?url=${helptext.image?.url}&w=1920&q=75`
           : undefined
       }
       canonical={getCanonicalArticleUrl(helptext)}

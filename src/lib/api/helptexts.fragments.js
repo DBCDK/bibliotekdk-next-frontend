@@ -1,79 +1,55 @@
-import { lang, getLanguage } from "@/components/base/translate";
+import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
-import { getLangcode } from "@/components/base/translate/Translate";
-/**
- * Helptexts - published
- */
-export function publishedHelptexts({ language }) {
-  const langcode = getLangcode(language);
-  if (!language) {
-    return null;
+import { getLocale } from "@/components/base/translate/Translate";
+
+const HELPTEXT_FIELDS = `
+  documentId
+  title
+  body
+  group
+  image {
+    url
+    alternativeText
+    width
+    height
   }
+`;
+
+/**
+ * All published help texts — used for the landing page sections and sidebar menu.
+ */
+export function publishedHelptexts({ locale = getLocale() } = {}) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query ($language: LanguageId! $langcode: [String]){
-      nodeQuery (limit:75 filter: {conditions: [
-        {field: "type", value: ["help_text"]},
-        {field: "status", value:"1"},
-        {field: "langcode", value: $langcode}
-      ] }) {
-        count
-        entities(language:$language) {
-        ... on NodeHelpText {
-            nid
-            title
-            body{
-              value
-              processed
-            }
-            fieldHelpTextGroup
-            fieldImage {
-              alt
-              title
-              url
-              width
-              height
-            }
-          }
+    query: `query PublishedHelptextsQuery($locale: BibliotekdkCmsI18NLocaleCode) {
+      bibliotekdkCms {
+        helpTexts(status: PUBLISHED, locale: $locale, pagination: { limit: 100 }) {
+          ${HELPTEXT_FIELDS}
         }
       }
-     monitor(name: "published_helptexts")
     }`,
-    variables: { language, langcode },
+    variables: { locale },
     slowThreshold: 3000,
   };
 }
 
+/**
+ * Single help text by documentId.
+ */
 export function helpText({ helpTextId }) {
-  const language = getLanguage();
-
+  const locale = getLocale();
   return {
     apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `query helptext ($helpTextId: String!, $language: LanguageId!) {
-      nodeById(id: $helpTextId, language: $language) {
-        ... on NodeHelpText {
-          nid
-          title
-          body {
-            value
-            processed
-          }
-          entityCreated
-          entityChanged
-          fieldHelpTextGroup
-          fieldImage {
-            alt
-            title
-            url
-            width
-            height
-          }
+    query: `query HelptextByIdQuery($documentId: ID!, $locale: BibliotekdkCmsI18NLocaleCode) {
+      bibliotekdkCms {
+        helpText(documentId: $documentId, status: PUBLISHED, locale: $locale) {
+          ${HELPTEXT_FIELDS}
+          createdAt
+          updatedAt
         }
       }
-      monitor(name: "helptext_by_id")
     }`,
-    variables: { helpTextId, language },
+    variables: { documentId: helpTextId, locale },
     slowThreshold: 3000,
   };
 }
@@ -81,7 +57,7 @@ export function helpText({ helpTextId }) {
 export function helpTextSearch({ q }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    delay: 100, // add small delay to avoid flicker when query is fast
+    delay: 100,
     query: `query ($q: String!, $language: LanguageCodeEnum) {
               help(q: $q, language: $language) {
                 result {
