@@ -267,7 +267,7 @@ function defaultMockResolver(parent, _args, context, info) {
   // We return a default value based on what the
   // return type is
   if (isList) {
-    if (["String", "CustomScalar"].includes(scalarName)) {
+    if (["String", "CustomScalar", "ID"].includes(scalarName)) {
       addFieldExample(
         `(args) => [${[1, 2]
           .map((id) => `"${"some-" + fieldName + " - " + id}"`)
@@ -327,7 +327,7 @@ function defaultMockResolver(parent, _args, context, info) {
     return { __typename: getNext(implementations) };
   }
 
-  if (["String", "CustomScalar"].includes(scalarName)) {
+  if (["String", "CustomScalar", "ID"].includes(scalarName)) {
     addFieldExample(`(args) => "hello world"`);
     return path;
   }
