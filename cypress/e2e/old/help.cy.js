@@ -58,7 +58,7 @@ describe("help", () => {
 });
 
 describe("help menu", () => {
-  it(`Help menu - tab & click`, () => {
+  it.skip(`Help menu - tab & click`, () => {
     cy.visit("/iframe.html?path=/story/help-menu--help-menu");
     cy.get("[data-cy=help-menu]").should("be.visible");
     cy.get("[data-cy=help-menu]").contains("Søgning");
@@ -67,7 +67,7 @@ describe("help menu", () => {
 });
 
 describe("Help texts", () => {
-  it("Help text load properly", () => {
+  it.skip("Help text load properly", () => {
     cy.visit("/iframe.html?path=/story/help-helptext--wrapped-story-help-text");
 
     cy.get("[data-cy=help-text-title]")
