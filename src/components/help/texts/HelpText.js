@@ -5,9 +5,9 @@ import Title from "@/components/base/title";
 import PropTypes from "prop-types";
 import styles from "./HelpText.module.css";
 import Breadcrumbs from "@/components/base/breadcrumbs/Breadcrumbs";
-import BodyParser from "@/components/base/bodyparser/BodyParser";
 import Skeleton from "@/components/base/skeleton";
 import Translate from "@/components/base/translate/Translate";
+import Markdown from "@/components/base/markdown/Markdown";
 
 /**
  * Entry function for a helptext
@@ -17,7 +17,7 @@ import Translate from "@/components/base/translate/Translate";
 export function HelpText({ helptext }) {
   if (helptext.title && helptext.body) {
     const helpText = Translate({ context: "help", label: "help-breadcrumb" });
-    const path = [helpText, helptext.fieldHelpTextGroup];
+    const path = [helpText, helptext.group];
     return (
       <React.Fragment>
         <div className={styles.helpbreadcrumb}>
@@ -30,7 +30,7 @@ export function HelpText({ helptext }) {
         >
           {helptext.title}
         </Title>
-        <BodyParser body={helptext?.body?.value} dataCy={"help-text-body"} />
+        <Markdown body={helptext.body} dataCy="help-text-body" />
       </React.Fragment>
     );
   } else {
@@ -55,12 +55,11 @@ export default function Wrap({ helpTextId }) {
     return <Skeleton lines={2} className={styles.helpskeleton} />;
   }
 
-  if (!data || !data?.nodeById || error) {
-    // @TODO some error here .. message for user .. log ??
+  if (!data || !data?.bibliotekdkCms?.helpText || error) {
     return null;
   }
 
-  return <HelpText helptext={data?.nodeById} />;
+  return <HelpText helptext={data.bibliotekdkCms.helpText} />;
 }
 Wrap.propTypes = {
   helpTextId: PropTypes.string,
