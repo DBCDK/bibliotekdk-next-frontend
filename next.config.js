@@ -165,7 +165,6 @@ module.exports = {
     clientSecret: process.env.CLIENT_SECRET,
     jwtSecret: process.env.NEXTAUTH_SECRET,
     disableDrupalTranslate: process.env.DISABLE_DRUPAL_TRANSLATE || false,
-    maxError500Count: process.env.MAX_ERROR_COUNT || 2,
     allowRobots: process.env.ALLOW_ROBOTS === "true" ? true : false,
   },
   publicRuntimeConfig: {
