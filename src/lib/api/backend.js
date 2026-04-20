@@ -11,23 +11,13 @@ const nextJsConfig = getConfig();
  * get translations from backend
  */
 export default async function fetchTranslations() {
-  const disableFlag = nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate;
-  console.log(
-    "[fetchTranslations] disableDrupalTranslate =",
-    disableFlag,
-    "=> skipping fetch:",
-    !!disableFlag
-  );
-
-  if (disableFlag) {
+  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate) {
     return;
   }
 
   const url = config.backend.url + "/api/translation/get_translations";
   const cacheKey = config.backend.cacheKey;
   const params = { translations: {}, cachekey: cacheKey };
-
-  console.log("[fetchTranslations] fetching translations from:", url);
 
   // status flag
   let ok = true;
@@ -40,13 +30,6 @@ export default async function fetchTranslations() {
       },
       body: JSON.stringify(params),
     });
-
-    console.log(
-      "[fetchTranslations] response status:",
-      response.status,
-      response.statusText
-    );
-
     const result = await response.json().catch((error) => {
       // @TODO log
       console.log(error, "FETCH ERROR");
