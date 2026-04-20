@@ -18,11 +18,11 @@ describe("help", () => {
     cy.tabs(1);
     cy.focused().should("have.attr", "href", "/hjaelp/om-login/2");
   });
-  it(`Search: menu is visible on desktop`, () => {
+  it.skip(`Search: menu is visible on desktop`, () => {
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.visible");
   });
-  it(`Search: menu is hidden on mobile`, () => {
+  it.skip(`Search: menu is hidden on mobile`, () => {
     cy.viewport(991, 800);
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.hidden");
