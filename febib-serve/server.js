@@ -16,6 +16,7 @@ const {
 const { handleHealthRoute, HEALTH_PATH } = require("./routes/health");
 const { handleClientErrorsRoute } = require("./routes/clientErrors");
 const { recordHttpRequestResult } = require("./utils/metrics");
+const { getHeaderValue, extractClientIp } = require("./utils/headers");
 const { createProxyServer } = require("./core/proxyServer");
 
 createProxyServer({
@@ -36,8 +37,8 @@ createProxyServer({
   },
   onComplete: ({ req, statusCode, timings = {} }) => {
     const totalMs = timings.totalMs ?? timings.upstreamTotalMs ?? 0;
-    const userAgent = req.headers["user-agent"];
-    const userAgentValue = Array.isArray(userAgent) ? userAgent.join(", ") : userAgent;
+    const userAgentValue = getHeaderValue(req.headers["user-agent"]);
+    const ip = extractClientIp(req);
     if (!(req.url === HEALTH_PATH && req.method === "GET")) {
       recordHttpRequestResult(statusCode, totalMs);
     }
@@ -46,6 +47,7 @@ createProxyServer({
       request: {
         method: req.method,
         url: req.url,
+        ip,
         userAgent: userAgentValue,
         userAgentIsBot:
           typeof userAgentValue === "string" ? isbot(userAgentValue) : false,
