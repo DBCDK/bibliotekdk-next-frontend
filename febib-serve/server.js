@@ -8,8 +8,7 @@
 const { log } = require("dbc-node-logger");
 const isbot = require("isbot");
 const {
-  NEXT_SOCKET_PATH,
-  PROXY_PORT,
+  PORT,
   UPSTREAM_TIMEOUT_MS,
   CLIENT_JS_ERROR_BODY_LIMIT_BYTES,
 } = require("./config");
@@ -18,14 +17,19 @@ const { handleClientErrorsRoute } = require("./routes/clientErrors");
 const { recordHttpRequestResult } = require("./utils/metrics");
 const { getHeaderValue, extractClientIp } = require("./utils/headers");
 const { createProxyServer } = require("./core/proxyServer");
+const socketPath = process.env.FEBIB_SERVE_SOCKET_PATH;
+
+if (!socketPath) {
+  throw new Error("Missing FEBIB_SERVE_SOCKET_PATH in runtime environment.");
+}
 
 createProxyServer({
-  socketPath: NEXT_SOCKET_PATH,
-  port: PROXY_PORT,
+  socketPath,
+  port: PORT,
   timeoutMs: UPSTREAM_TIMEOUT_MS,
   maxBodyBytes: CLIENT_JS_ERROR_BODY_LIMIT_BYTES,
   onRequest: async ({ req, res, forward }) => {
-    if (handleHealthRoute({ req, res })) {
+    if (await handleHealthRoute({ req, res })) {
       return;
     }
 

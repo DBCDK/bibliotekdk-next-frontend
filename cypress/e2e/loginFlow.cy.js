@@ -28,7 +28,7 @@ describe(`Different ways to open login modal with library that has borrowerCheck
       });
     });
     cy.visit(
-      `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
+      `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`,
     );
     cy.consentAllowAll();
     cy.get("[data-cy=article-prompt-button-log-ind]")
@@ -48,12 +48,12 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=header-link-login]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
-      .type("Sankt Andreas Bibliotek");
-    cy.get('[data-cy="text-Skt. Andreas Bibliotek"]')
+      .type("Sankt Annæ");
+    cy.get('[data-cy="text-Sankt Annæ Gymnasiebibliotek"]')
       .should("be.visible")
       .click();
     cy.get(
-      '[data-cy="text-sankt-andreas-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
+      '[data-cy="text-sankt-annæ-gymnasiebibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]',
     ).should("be.visible");
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
@@ -68,7 +68,7 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
       });
     });
     cy.visit(
-      `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
+      `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`,
     );
     cy.consentAllowAll();
     cy.get("[data-cy=article-prompt-button-log-ind]")
@@ -77,12 +77,12 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=text-log-ind]").should("be.visible");
     cy.get("[data-cy=pickup-search-input]")
       .should("be.visible")
-      .type("Sankt Andreas Bibliotek");
-    cy.get('[data-cy="text-Skt. Andreas Bibliotek"]')
+      .type("Sankt Annæ");
+    cy.get('[data-cy="text-Sankt Annæ Gymnasiebibliotek"]')
       .should("be.visible")
       .click();
     cy.get(
-      '[data-cy="text-sankt-andreas-bibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]'
+      '[data-cy="text-sankt-annæ-gymnasiebibliotek-login-kan-ikke-bruges-på-bibliotek.dk"]',
     ).should("be.visible");
     cy.get("[data-cy=button-tilbage]").should("be.visible").click();
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
@@ -90,7 +90,7 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
 
   it("FFU login should not have acces to profile button in header", () => {
     cy.visit(
-      "/iframe.html?id=layout-header--header-no-unique-id&viewMode=story"
+      "/iframe.html?id=layout-header--header-no-unique-id&viewMode=story",
     );
 
     cy.get("[data-cy=header-link-logout] p").should("have.text", "Log ud");

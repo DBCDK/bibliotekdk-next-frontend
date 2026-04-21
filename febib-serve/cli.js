@@ -3,7 +3,6 @@
 const path = require("node:path");
 const fs = require("node:fs");
 const { spawn } = require("node:child_process");
-const { NEXT_SOCKET_PATH } = require("./config");
 
 const adapter = process.argv[2];
 if (!adapter) {
@@ -25,11 +24,14 @@ const serverEntryPath = path.isAbsolute(serverEntryInput)
   : path.resolve(workspaceRoot, serverEntryInput);
 
 const PUBLIC_PORT = String(process.env.PORT || "3000");
+const SOCKET_PATH = `/tmp/febib-serve-${process.pid}-${Date.now().toString(
+  36,
+)}.sock`;
 
 const baseEnv = {
   ...process.env,
-  PROXY_PORT: PUBLIC_PORT,
-  NEXT_SOCKET_PATH,
+  PORT: PUBLIC_PORT,
+  FEBIB_SERVE_SOCKET_PATH: SOCKET_PATH,
 };
 
 if (!fs.existsSync(serverEntryPath)) {
@@ -49,7 +51,10 @@ const appProc = spawn(
 
 const proxyProc = spawn(process.execPath, [path.join(__dirname, "server.js")], {
   cwd: workspaceRoot,
-  env: baseEnv,
+  env: {
+    ...baseEnv,
+    APP_PID: String(appProc.pid),
+  },
   stdio: "inherit",
 });
 

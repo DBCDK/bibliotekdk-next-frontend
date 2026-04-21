@@ -3,10 +3,14 @@ const http = require("node:http");
 const path = require("node:path");
 const next = require("next");
 const { log } = require("dbc-node-logger");
-const { NEXT_SOCKET_PATH } = require("../config");
 
 const workspaceRoot = path.resolve(__dirname, "../..");
 require(path.join(workspaceRoot, "logger.js"));
+const socketPath = process.env.FEBIB_SERVE_SOCKET_PATH;
+
+if (!socketPath) {
+  throw new Error("Missing FEBIB_SERVE_SOCKET_PATH in runtime environment.");
+}
 
 const mode = process.argv[2] || "dev";
 if (mode !== "start" && mode !== "dev") {
@@ -26,24 +30,24 @@ function safeUnlinkSocket(socketPath) {
 }
 
 async function main() {
-  safeUnlinkSocket(NEXT_SOCKET_PATH);
+  safeUnlinkSocket(socketPath);
 
   const app = next({ dev, dir: workspaceRoot });
   const handle = app.getRequestHandler();
   await app.prepare();
 
   const server = http.createServer((req, res) => handle(req, res));
-  process.on("exit", () => safeUnlinkSocket(NEXT_SOCKET_PATH));
+  process.on("exit", () => safeUnlinkSocket(socketPath));
 
   server.on("error", (error) => {
     log.error("next socket server failed", { error: String(error) });
     process.exit(1);
   });
 
-  server.listen(NEXT_SOCKET_PATH, () => {
+  server.listen(socketPath, () => {
     log.info("next app socket server started", {
       mode,
-      nextSocketPath: NEXT_SOCKET_PATH,
+      nextSocketPath: socketPath,
     });
   });
 }

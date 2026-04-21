@@ -14,7 +14,8 @@ Primary goals:
 - support simple alarm rules based on these signals
 - accept client-side JS error reports via `/api/errorLogger`
 
-The app server runs behind a Unix socket. The proxy handles the public HTTP interface.
+The app server runs behind a Unix socket. The socket path is generated per CLI run to avoid collisions when multiple projects run at the same time.
+The proxy handles the public HTTP interface.
 
 ## Request Flow
 
@@ -74,7 +75,7 @@ Typical usage from repository root:
 
   - handles `GET /health`
   - builds health payload from rolling metrics
-  - evaluates threshold rules (`MAX_ERROR_COUNT`, `HOWRU_MAX_5XX_COUNT`)
+  - evaluates threshold rules (`THRESHOLD_JS_CLIENT_ERROR_COUNT`, `THRESHOLD_HTTP_5XX_COUNT`, `THRESHOLD_APP_CPU_USAGE`, `THRESHOLD_RESPONSE_TIME_P95_MS`)
 
 - `routes/clientErrors.js`
 
@@ -90,7 +91,7 @@ Typical usage from repository root:
 - `adapters/next-app-server.js`
 
   - current concrete adapter implementation
-  - binds the current app server to `NEXT_SOCKET_PATH`
+  - binds the current app server to the runtime-generated Unix socket
 
 - `config.js`
   - runtime defaults and env-based configuration
@@ -102,9 +103,11 @@ Typical usage from repository root:
 - rolling 5xx volume
 - rolling client JS error volume
 - proxy-layer response-time stats
+- app/proxy process CPU and memory usage (OS-level sample)
+- active threshold settings (`thresholds`) for quick operational overview
 
-`metrics-5min.ok` is the alarm summary flag.  
-`metrics-5min.errors` contains threshold violations.
+`ok` (root level) is the health summary flag.  
+`errors` (root level) contains threshold violations.
 
 Application/domain dependency checks should remain in separate application-specific health endpoints.
 
@@ -128,9 +131,13 @@ Both layers are complementary: HAProxy for platform-level ingress, runtime proxy
 
 Defined in `config.js`:
 
-- `NEXT_SOCKET_PATH` (default `/tmp/next-app.sock`)
-- `PROXY_PORT` (default `3000`)
+- `PORT` (default `3000`)
 - `UPSTREAM_TIMEOUT_MS` (default `30000`)
-- `MAX_ERROR_COUNT` (max allowed rolling `JS_CLIENT_ERROR`, default `10`)
-- `HOWRU_MAX_5XX_COUNT` (max allowed rolling 5xx count, default `10`)
+- `HEALTH_GRACE_WINDOW_SECONDS` (default `30`, startup window where health does not fail on threshold violations)
+- `THRESHOLD_JS_CLIENT_ERROR_COUNT` (max allowed rolling `JS_CLIENT_ERROR`, default `50`)
+- `THRESHOLD_HTTP_5XX_COUNT` (max allowed rolling 5xx count, default `50`)
+- `THRESHOLD_APP_CPU_USAGE` (max allowed rolling app `cpuUsage`, default `100`)
+- `THRESHOLD_RESPONSE_TIME_P95_MS` (max allowed rolling `responseTimesMs.p95` in ms, default `3000`)
 - `CLIENT_JS_ERROR_BODY_LIMIT_BYTES` (default `32768`)
+
+Threshold behavior: set a threshold to `0` to disable that specific alarm rule.
