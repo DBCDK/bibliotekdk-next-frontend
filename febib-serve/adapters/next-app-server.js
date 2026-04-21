@@ -1,3 +1,9 @@
+/**
+ * Next.js app adapter for febib-serve.
+ *
+ * Boots the Next.js server and binds it to the runtime-provided Unix socket
+ * used internally by the local proxy process.
+ */
 const fs = require("node:fs");
 const http = require("node:http");
 const path = require("node:path");

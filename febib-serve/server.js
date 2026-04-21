@@ -1,9 +1,9 @@
 /**
- * Reverse proxy in front of the app socket server.
+ * febib-serve runtime composition entrypoint.
  *
- * - Local routes: `/health`, `/api/errorLogger`
- * - Everything else proxied over Unix socket to app server
- * - WebSocket upgrade passthrough for Next.js HMR
+ * Wires local routes (`/health`, `/api/errorLogger`) and forwards all
+ * remaining traffic to the upstream app socket through `createProxyServer`.
+ * Also centralizes request completion logging and metrics recording.
  */
 const { log } = require("dbc-node-logger");
 const isbot = require("isbot");

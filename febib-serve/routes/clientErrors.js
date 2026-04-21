@@ -1,3 +1,9 @@
+/**
+ * Client error ingestion route (`POST /api/errorLogger`).
+ *
+ * Parses reported browser-side errors, applies basic log throttling,
+ * records accepted events in metrics, and returns JSON responses.
+ */
 const { log } = require("dbc-node-logger");
 const { inc, JS_CLIENT_ERROR } = require("../utils/metrics");
 

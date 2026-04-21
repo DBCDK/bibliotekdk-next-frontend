@@ -1,3 +1,9 @@
+/**
+ * Health route for febib-serve (`GET /health`).
+ *
+ * Combines rolling metrics, process usage, thresholds, and grace-window state
+ * into one health response used for status checks and alerting.
+ */
 const { log } = require("dbc-node-logger");
 const {
   HEALTH_GRACE_WINDOW_SECONDS,

@@ -1,3 +1,9 @@
+/**
+ * Process usage sampler for febib-serve.
+ *
+ * Polls OS-level CPU and memory for app/proxy processes every 5 seconds,
+ * stores samples in a fixed ring buffer, and exposes 1-minute averages.
+ */
 const { execFile } = require("node:child_process");
 const { promisify } = require("node:util");
 

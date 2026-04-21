@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+/**
+ * febib-serve CLI entrypoint.
+ *
+ * Starts the app adapter process and the local proxy process,
+ * wires shared runtime environment values, and coordinates shutdown.
+ */
 const path = require("node:path");
 const fs = require("node:fs");
 const { spawn } = require("node:child_process");

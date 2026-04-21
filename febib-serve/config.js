@@ -1,3 +1,9 @@
+/**
+ * Runtime configuration for febib-serve.
+ *
+ * Defines defaults and resolves supported environment variables
+ * used by the proxy runtime, routes, and health thresholds.
+ */
 const DEFAULT_PORT = 3000;
 const DEFAULT_UPSTREAM_TIMEOUT_MS = 30000;
 const DEFAULT_HEALTH_GRACE_WINDOW_SECONDS = 30;

@@ -1,7 +1,8 @@
 /**
- * Shared rolling metrics (5 min):
- * - counts by key (HTTP_<status>, JS_CLIENT_ERROR, ...)
- * - response-time histogram for percentile estimates
+ * Rolling metrics store for febib-serve.
+ *
+ * Tracks 5-minute count windows (for `HTTP_<status>`, `JS_CLIENT_ERROR`, etc.)
+ * and keeps a response-time histogram used for percentile estimation.
  */
 
 const BUCKET_MS = 10 * 1000;

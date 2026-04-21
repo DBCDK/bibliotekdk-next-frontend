@@ -1,3 +1,9 @@
+/**
+ * Core proxy framework for febib-serve.
+ *
+ * Provides the HTTP/WebSocket proxy server, request/response helper methods,
+ * upstream timing collection, and lifecycle callbacks (`onRequest`, `onComplete`).
+ */
 const http = require("node:http");
 const net = require("node:net");
 
