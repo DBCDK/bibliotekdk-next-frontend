@@ -48,21 +48,19 @@ createProxyServer({
     }
 
     log.info("request completed", {
-      request: {
-        method: req.method,
-        url: req.url,
-        ip,
-        userAgent: userAgentValue,
-        userAgentIsBot:
-          typeof userAgentValue === "string" ? isbot(userAgentValue) : false,
-        statusCode,
-        timings: {
-          upstreamQueueMs: timings.upstreamQueueMs,
-          upstreamConnectMs: timings.upstreamConnectMs,
-          upstreamTtfbMs: timings.upstreamTtfbMs,
-          upstreamResponseMs: timings.upstreamResponseMs,
-          upstreamTotalMs: timings.upstreamTotalMs,
-        },
+      method: req.method,
+      url: req.url,
+      ip,
+      userAgent: userAgentValue,
+      userAgentIsBot:
+        typeof userAgentValue === "string" ? isbot(userAgentValue) : false,
+      statusCode,
+      timings: {
+        upstreamQueueMs: timings.upstreamQueueMs,
+        upstreamConnectMs: timings.upstreamConnectMs,
+        upstreamTtfbMs: timings.upstreamTtfbMs,
+        upstreamResponseMs: timings.upstreamResponseMs,
+        upstreamTotalMs: timings.upstreamTotalMs,
       },
     });
   },
