@@ -34,13 +34,13 @@ export function helpTextParseMenu(helpTexts) {
 
 function sortOrder() {
   return [
-    "Søgning",
-    "Bestilling",
-    "Login",
-    "Privatlivspolitik",
-    "Om bibliotek.dk",
+    "soegning",
+    "bestilling",
+    "login",
+    "privatlivspolitik",
+    "om_bibliotek_dk",
     "Personlige data",
-    "Profil",
+    "profil",
     "Teknik",
     "Mobil version",
     "Tilgængelighed",
