@@ -1,0 +1,12 @@
+{
+  "name": "@dbcdk/febib-serve",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Standalone runtime CLI with sane default monitoring",
+  "bin": {
+    "febib-serve": "cli.js"
+  },
+  "dependencies": {
+    "isbot": "^3.0.13"
+  }
+}
