@@ -34,7 +34,7 @@ export function helpTextParseMenu(helpTexts) {
 
 function sortOrder() {
   return [
-    "soegning",
+    "sogning",
     "bestilling",
     "login",
     "privatlivspolitik",
