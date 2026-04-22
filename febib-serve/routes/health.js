@@ -58,10 +58,10 @@ function buildHealthResponse() {
     healthGraceWindowSeconds > 0 && upForMs < healthGraceWindowSeconds * 1000;
   const ok5xx =
     isDisabledThreshold(thresholdHttp5xxCount) ||
-    count5xx < thresholdHttp5xxCount;
+    count5xx <= thresholdHttp5xxCount;
   const okClientErrors =
     isDisabledThreshold(thresholdJsClientErrorCount) ||
-    clientErrorsCount < thresholdJsClientErrorCount;
+    clientErrorsCount <= thresholdJsClientErrorCount;
   const okCpu =
     isDisabledThreshold(thresholdAppCpuUsage) ||
     !Number.isFinite(appCpuUsage) || Number(appCpuUsage) <= thresholdAppCpuUsage;
@@ -75,12 +75,12 @@ function buildHealthResponse() {
   const errors = [];
   if (!graceWindowActive && !ok5xx) {
     errors.push(
-      `Rolling 5m HTTP 5xx count ${count5xx} must be < ${thresholdHttp5xxCount}`,
+      `Rolling 5m HTTP 5xx count ${count5xx} must be <= ${thresholdHttp5xxCount}`,
     );
   }
   if (!graceWindowActive && !okClientErrors) {
     errors.push(
-      `Rolling 5m ${JS_CLIENT_ERROR}: ${clientErrorsCount} must be < ${thresholdJsClientErrorCount}`,
+      `Rolling 5m ${JS_CLIENT_ERROR}: ${clientErrorsCount} must be <= ${thresholdJsClientErrorCount}`,
     );
   }
   if (!graceWindowActive && !okCpu) {
@@ -118,12 +118,8 @@ function buildHealthResponse() {
     processUsage,
   };
 
-  if (!ok) {
-    log.info("health check failed", { check: "metrics", errors });
-  }
-
-  log.info("health status", {
-    healthStatus: { ok, upSince, body: JSON.stringify(body) },
+  log.info("howru status", {
+    howruStatus: { ok, upSince, body: JSON.stringify(body) },
   });
 
   return {

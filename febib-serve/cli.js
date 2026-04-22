@@ -39,6 +39,7 @@ const baseEnv = {
   PORT: PUBLIC_PORT,
   FEBIB_SERVE_SOCKET_PATH: SOCKET_PATH,
 };
+const SHUTDOWN_FORCE_KILL_TIMEOUT_MS = 10_000;
 
 if (!fs.existsSync(serverEntryPath)) {
   // Keep runtime failure explicit when swapping app server implementation.
@@ -65,23 +66,66 @@ const proxyProc = spawn(process.execPath, [path.join(__dirname, "server.js")], {
 });
 
 let stopping = false;
+let forceKillTimer;
+let appExitCode = 0;
+let proxyExitCode = 0;
+let appExited = false;
+let proxyExited = false;
 
 function stopBoth(signal = "SIGTERM") {
-  if (stopping) return;
-  stopping = true;
-  if (!appProc.killed) appProc.kill(signal);
-  if (!proxyProc.killed) proxyProc.kill(signal);
+  if (!stopping) {
+    stopping = true;
+    if (!appProc.killed) appProc.kill(signal);
+    if (!proxyProc.killed) proxyProc.kill(signal);
+  }
+
+  if (forceKillTimer) return;
+  forceKillTimer = setTimeout(() => {
+    if (!appProc.killed) appProc.kill("SIGKILL");
+    if (!proxyProc.killed) proxyProc.kill("SIGKILL");
+  }, SHUTDOWN_FORCE_KILL_TIMEOUT_MS);
+  if (typeof forceKillTimer.unref === "function") {
+    forceKillTimer.unref();
+  }
+}
+
+function tryFinalize() {
+  if (!appExited || !proxyExited) return;
+  if (forceKillTimer) {
+    clearTimeout(forceKillTimer);
+  }
+  const finalCode = appExitCode !== 0 ? appExitCode : proxyExitCode;
+  process.exit(finalCode ?? 0);
+}
+
+function handleChildProcessError(name, error) {
+  console.error(`[febib-serve] Failed to start ${name} process:`, String(error));
+  if (name === "app") {
+    appExited = true;
+    appExitCode = 1;
+  } else {
+    proxyExited = true;
+    proxyExitCode = 1;
+  }
+  stopBoth("SIGTERM");
+  tryFinalize();
 }
 
 process.on("SIGINT", () => stopBoth("SIGINT"));
 process.on("SIGTERM", () => stopBoth("SIGTERM"));
+appProc.on("error", (error) => handleChildProcessError("app", error));
+proxyProc.on("error", (error) => handleChildProcessError("proxy", error));
 
-appProc.on("exit", (code) => {
+appProc.on("exit", (code, signal) => {
+  appExited = true;
+  appExitCode = typeof code === "number" ? code : signal ? 1 : 0;
   if (!proxyProc.killed) proxyProc.kill("SIGTERM");
-  process.exit(code ?? 0);
+  tryFinalize();
 });
 
-proxyProc.on("exit", (code) => {
+proxyProc.on("exit", (code, signal) => {
+  proxyExited = true;
+  proxyExitCode = typeof code === "number" ? code : signal ? 1 : 0;
   if (!appProc.killed) appProc.kill("SIGTERM");
-  process.exit(code ?? 0);
+  tryFinalize();
 });

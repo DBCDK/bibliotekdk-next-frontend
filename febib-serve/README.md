@@ -141,3 +141,5 @@ Defined in `config.js`:
 - `CLIENT_JS_ERROR_BODY_LIMIT_BYTES` (default `32768`)
 
 Threshold behavior: set a threshold to `0` to disable that specific alarm rule.
+Threshold checks use inclusive limits (`<=`).
+Invalid numeric env values automatically fall back to defaults (for example negative thresholds, out-of-range ports, and non-integer byte limits).

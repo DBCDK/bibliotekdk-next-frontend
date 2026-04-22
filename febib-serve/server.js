@@ -39,15 +39,14 @@ createProxyServer({
 
     return forward();
   },
-  onComplete: ({ req, statusCode, timings = {} }) => {
+  onComplete: ({ req, statusCode, timings = {}, failure }) => {
     const totalMs = timings.totalMs ?? timings.upstreamTotalMs ?? 0;
     const userAgentValue = getHeaderValue(req.headers["user-agent"]);
     const ip = extractClientIp(req);
     if (!(req.url === HEALTH_PATH && req.method === "GET")) {
       recordHttpRequestResult(statusCode, totalMs);
     }
-
-    log.info("request completed", {
+    const event = {
       method: req.method,
       url: req.url,
       ip,
@@ -62,7 +61,13 @@ createProxyServer({
         upstreamResponseMs: timings.upstreamResponseMs,
         upstreamTotalMs: timings.upstreamTotalMs,
       },
-    });
+      ...(failure ? { failure } : {}),
+    };
+    if (failure && failure.reason !== "client_aborted") {
+      log.error("request completed", event);
+    } else {
+      log.info("request completed", event);
+    }
   },
   onListen: ({ port, socketPath }) => {
     log.info("proxy started", {

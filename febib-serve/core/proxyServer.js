@@ -6,6 +6,7 @@
  */
 const http = require("node:http");
 const net = require("node:net");
+const { log } = require("dbc-node-logger");
 
 function toMs(startNs, endNs = process.hrtime.bigint()) {
   return Number(endNs - startNs) / 1e6;
@@ -38,14 +39,6 @@ function buildUpstreamTimings({
     upstreamResponseMs: roundedDuration(upstreamResponseAtNs, finishedAtNs),
     upstreamTotalMs: roundedDuration(upstreamStartedAtNs, finishedAtNs),
   });
-}
-
-function safeParseJson(rawBody) {
-  try {
-    return JSON.parse(rawBody);
-  } catch {
-    return {};
-  }
 }
 
 function readJsonBody(req, { maxBytes }) {
@@ -82,7 +75,15 @@ function readJsonBody(req, { maxBytes }) {
 
     req.on("end", () => {
       const rawBody = Buffer.concat(chunks).toString("utf8");
-      settleResolve(safeParseJson(rawBody));
+      if (!rawBody.trim()) {
+        settleResolve({});
+        return;
+      }
+      try {
+        settleResolve(JSON.parse(rawBody));
+      } catch {
+        settleReject(400, "Invalid JSON");
+      }
     });
   });
 }
@@ -145,115 +146,158 @@ function proxyWebSocketUpgrade({ req, socket, head, socketPath }) {
   socket.on("error", () => !upstreamSocket.destroyed && upstreamSocket.destroy());
 }
 
-function proxyToUpstream({
+function runUpstreamRequest({
   req,
   res,
   socketPath,
   agent,
   timeoutMs,
   startedAtNs,
-  onComplete,
 }) {
-  let settled = false;
-  const timingPoints = {
-    upstreamStartedAtNs: process.hrtime.bigint(),
-  };
+  return new Promise((resolve) => {
+    let done = false;
+    let clientClosed = false;
+    const timingPoints = {
+      upstreamStartedAtNs: process.hrtime.bigint(),
+    };
 
-  const complete = (statusCode) => {
-    const finishedAtNs = process.hrtime.bigint();
-    onComplete?.({
-      req,
-      res,
-      statusCode,
-      timings: buildUpstreamTimings({
-        startedAtNs,
-        ...timingPoints,
-        finishedAtNs,
-      }),
-    });
-  };
-
-  const fail = ({ statusCode, body }) => {
-    if (settled) return;
-    settled = true;
-    if (!res.headersSent) {
-      res.send(statusCode, body, { "content-type": "text/plain" });
-    } else {
-      res.destroy();
-    }
-    onComplete?.({
-      req,
-      res,
-      statusCode,
-      timings: buildUpstreamTimings({
-        startedAtNs,
-        ...timingPoints,
-        finishedAtNs: process.hrtime.bigint(),
-      }),
-    });
-  };
-
-  const upstream = http.request(
-    {
-      socketPath,
-      method: req.method,
-      path: req.url,
-      headers: { ...req.headers },
-      agent,
-    },
-    (upstreamRes) => {
-      if (settled) return;
-      settled = true;
-      timingPoints.upstreamResponseAtNs = process.hrtime.bigint();
-      const statusCode = upstreamRes.statusCode || 502;
-
-      upstreamRes.on("error", () => res.destroy());
-      res.on("error", () => upstreamRes.destroy());
-
-      res.writeHead(statusCode, upstreamRes.headers);
-      res.once("finish", () => complete(statusCode));
-      upstreamRes.pipe(res);
-    },
-  );
-
-  upstream.on("socket", (socket) => {
-    timingPoints.upstreamSocketAtNs = process.hrtime.bigint();
-    if (socket.connecting) {
-      socket.once("connect", () => {
-        timingPoints.upstreamConnectedAtNs = process.hrtime.bigint();
+    const finish = ({ statusCode, failure }) => {
+      if (done) return;
+      done = true;
+      resolve({
+        statusCode,
+        timings: buildUpstreamTimings({
+          startedAtNs,
+          ...timingPoints,
+          finishedAtNs: process.hrtime.bigint(),
+        }),
+        failure,
       });
-      return;
-    }
-    timingPoints.upstreamConnectedAtNs = timingPoints.upstreamSocketAtNs;
-  });
+    };
 
-  upstream.setTimeout(timeoutMs, () => {
-    upstream.destroy();
-    fail({
-      statusCode: 504,
-      body: "Gateway Timeout",
+    const failResponse = ({ statusCode, body, failure, sendResponse = true }) => {
+      if (sendResponse && !res.headersSent) {
+        res.send(statusCode, body, { "content-type": "text/plain" });
+      } else if (!res.writableEnded) {
+        res.destroy();
+      }
+      finish({ statusCode, failure });
+    };
+
+    const upstream = http.request(
+      {
+        socketPath,
+        method: req.method,
+        path: req.url,
+        headers: { ...req.headers },
+        agent,
+      },
+      (upstreamRes) => {
+        if (done) return;
+        timingPoints.upstreamResponseAtNs = process.hrtime.bigint();
+        const statusCode = upstreamRes.statusCode || 502;
+
+        upstreamRes.on("error", () => !res.writableEnded && res.destroy());
+        res.on("error", () => upstreamRes.destroy());
+
+        res.writeHead(statusCode, upstreamRes.headers);
+        res.once("finish", () => finish({ statusCode }));
+        upstreamRes.pipe(res);
+      },
+    );
+
+    upstream.on("socket", (socket) => {
+      timingPoints.upstreamSocketAtNs = process.hrtime.bigint();
+      if (socket.connecting) {
+        socket.once("connect", () => {
+          timingPoints.upstreamConnectedAtNs = process.hrtime.bigint();
+        });
+        return;
+      }
+      timingPoints.upstreamConnectedAtNs = timingPoints.upstreamSocketAtNs;
     });
-  });
 
-  upstream.on("error", (err) => {
-    void err;
-    fail({
-      statusCode: 503,
-      body: "Service Unavailable",
+    upstream.setTimeout(timeoutMs, () => {
+      upstream.destroy();
+      failResponse({
+        statusCode: 504,
+        body: "Gateway Timeout",
+        failure: {
+          reason: "upstream_timeout",
+          message: "Gateway Timeout",
+        },
+      });
     });
-  });
 
-  req.on("aborted", () => upstream.destroy());
-  req.on("error", (err) => {
-    upstream.destroy();
-    fail({
-      statusCode: 400,
-      body: "Bad Request",
+    upstream.on("error", (error) => {
+      if (clientClosed) {
+        failResponse({
+          statusCode: 499,
+          body: "Client Closed Request",
+          sendResponse: false,
+          failure: {
+            reason: "client_aborted",
+            message: "Client Closed Request",
+          },
+        });
+        return;
+      }
+
+      failResponse({
+        statusCode: 503,
+        body: "Service Unavailable",
+        failure: {
+          reason: "upstream_error",
+          message: "Service Unavailable",
+          error: String(error),
+          code: error?.code,
+        },
+      });
     });
-  });
-  res.on("close", () => !res.writableEnded && upstream.destroy());
 
-  req.pipe(upstream);
+    req.on("aborted", () => {
+      clientClosed = true;
+      failResponse({
+        statusCode: 499,
+        body: "Client Closed Request",
+        sendResponse: false,
+        failure: {
+          reason: "client_aborted",
+          message: "Client Closed Request",
+        },
+      });
+      upstream.destroy();
+    });
+
+    req.on("error", () => {
+      upstream.destroy();
+      failResponse({
+        statusCode: 400,
+        body: "Bad Request",
+        failure: {
+          reason: "request_error",
+          message: "Bad Request",
+        },
+      });
+    });
+
+    res.on("close", () => {
+      if (res.writableEnded) return;
+      clientClosed = true;
+      failResponse({
+        statusCode: 499,
+        body: "Client Closed Request",
+        sendResponse: false,
+        failure: {
+          reason: "client_aborted",
+          message: "Client Closed Request",
+        },
+      });
+      upstream.destroy();
+    });
+
+    req.pipe(upstream);
+  });
 }
 
 function createProxyServer({
@@ -277,28 +321,62 @@ function createProxyServer({
       shouldForward = true;
     };
 
-    const handled = await onRequest?.({ req, res, startedAtNs, forward });
-    if (!shouldForward && (handled || res.writableEnded || res.headersSent)) {
-      onComplete?.({
-        req,
-        res,
-        statusCode: res.statusCode,
+    let result;
+    try {
+      const handled = await onRequest?.({ req, res, startedAtNs, forward });
+      if (!shouldForward && (handled || res.writableEnded || res.headersSent)) {
+        result = {
+          statusCode: res.statusCode,
+          timings: {
+            totalMs: roundedDuration(startedAtNs, process.hrtime.bigint()),
+          },
+        };
+      } else {
+        result = await runUpstreamRequest({
+          req,
+          res,
+          socketPath,
+          agent,
+          timeoutMs,
+          startedAtNs,
+        });
+      }
+    } catch (error) {
+      if (!res.headersSent && !res.writableEnded) {
+        res.send(500, "Internal Server Error", { "content-type": "text/plain" });
+      } else if (!res.writableEnded) {
+        res.destroy();
+      }
+
+      result = {
+        statusCode: res.statusCode || 500,
         timings: {
           totalMs: roundedDuration(startedAtNs, process.hrtime.bigint()),
         },
-      });
-      return;
+        failure: {
+          reason: "on_request_error",
+          message: "Internal Server Error",
+          error: String(error),
+        },
+      };
     }
 
-    proxyToUpstream({
-      req,
-      res,
-      socketPath,
-      agent,
-      timeoutMs,
-      startedAtNs,
-      onComplete,
-    });
+    try {
+      onComplete?.({
+        req,
+        res,
+        statusCode: result.statusCode,
+        timings: result.timings,
+        failure: result.failure,
+      });
+    } catch (error) {
+      log.error("onComplete failed", {
+        method: req.method,
+        url: req.url,
+        statusCode: result.statusCode,
+        error: String(error),
+      });
+    }
   });
 
   server.on("clientError", (_err, socket) => {
