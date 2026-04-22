@@ -7,31 +7,29 @@ import config from "@/config";
 import getConfig from "next/config";
 const nextJsConfig = getConfig();
 
-import Translate from "@/components/base/translate/Translate.json";
-
 /**
  * get translations from backend
  */
 export default async function fetchTranslations() {
-  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate === "true") {
+  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate) {
     return;
   }
 
+  const url = config.backend.url + "/api/translation/get_translations";
   const cacheKey = config.backend.cacheKey;
-  const params = { translations: Translate, cachekey: cacheKey };
+  const params = { translations: {}, cachekey: cacheKey };
+
   // status flag
   let ok = true;
   // @TODO errorhandling
   try {
-    const response = await fetch(config.backend.url + "/get_translations", {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify(params),
     });
-
     const result = await response.json().catch((error) => {
       // @TODO log
       console.log(error, "FETCH ERROR");
