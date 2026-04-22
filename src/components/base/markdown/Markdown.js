@@ -5,6 +5,12 @@ import PropTypes from "prop-types";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
+import styles from "./Markdown.module.css";
+
+/**
+ * Normalize newlines to ensure consistent spacing between paragraphs
+ */
+const normalizeNewlines = (str) => str.replace(/\n/g, "  \n");
 
 export const markdownComponents = {
   h1: (props) => <Title type="title3" tag="h1" {...props} />,
@@ -52,12 +58,12 @@ export default function Markdown({
   }
 
   return (
-    <div className={className} data-cy={dataCy}>
+    <div className={`${styles.markdown} ${className}`} data-cy={dataCy}>
       <ReactMarkdown
         components={{ ...markdownComponents, ...(components || {}) }}
         {...rest}
       >
-        {content}
+        {normalizeNewlines(content)}
       </ReactMarkdown>
     </div>
   );

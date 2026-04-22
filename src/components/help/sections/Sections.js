@@ -164,7 +164,6 @@ export default function Wrap(props) {
   }
 
   const allHelpTexts = data.bibliotekdkCms.helpTexts;
-  console.log("allHelpTexts", allHelpTexts);
 
   return <Sections {...props} data={allHelpTexts} />;
 }
