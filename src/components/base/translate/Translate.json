@@ -4021,23 +4021,23 @@
       }
     },
     "helpmenu": {
-      "Om bibliotek.dk": {
+      "om_bibliotek_dk": {
         "da": "Om bibliotek.dk",
         "en": "About bibliotek.dk"
       },
-      "Søgning": {
+      "soegning": {
         "da": "Søgning",
         "en": "Search"
       },
-      "Bestilling": {
+      "bestilling": {
         "da": "Bestilling",
         "en": "Order"
       },
-      "Login": {
+      "login": {
         "da": "Login",
         "en": "Login"
       },
-      "Profil": {
+      "profil": {
         "da": "Profil",
         "en": "Profile"
       },
@@ -4049,7 +4049,7 @@
         "da": "Mobil version",
         "en": "Mobile version"
       },
-      "Privatlivspolitik": {
+      "privatlivspolitik": {
         "da": "Privatlivspolitik",
         "en": "Privacy"
       },

@@ -1,0 +1,16 @@
+.markdown h1 {
+  margin-top: var(--pt6);
+  margin-bottom: var(--pt2);
+}
+.markdown h2 {
+  margin-top: var(--pt5);
+  margin-bottom: var(--pt1_5);
+}
+.markdown h3 {
+  margin-top: var(--pt4);
+  margin-bottom: var(--pt1);
+}
+
+.markdown > :first-child {
+  margin-top: 0;
+}
