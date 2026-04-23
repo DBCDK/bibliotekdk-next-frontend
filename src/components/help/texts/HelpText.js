@@ -55,11 +55,13 @@ export default function Wrap({ helpTextId }) {
     return <Skeleton lines={2} className={styles.helpskeleton} />;
   }
 
-  if (!data || !data?.bibliotekdkCms?.helpText || error) {
+  const helptext = data?.bibliotekdkCms?.helpTexts?.[0];
+
+  if (!data || !helptext || error) {
     return null;
   }
 
-  return <HelpText helptext={data.bibliotekdkCms.helpText} />;
+  return <HelpText helptext={helptext} />;
 }
 Wrap.propTypes = {
   helpTextId: PropTypes.string,

@@ -15,20 +15,27 @@ const HELPTEXT_FIELDS = `
   }
 `;
 
+const SITE = process.env.NEXT_PUBLIC_SITE || "bibliotekDk"; //TODO: maybe store default in a constant and reuse it in other queries
+
 /**
  * All published help texts — used for the landing page sections and sidebar menu.
  */
 export function publishedHelptexts({ locale = getLocale() } = {}) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query PublishedHelptextsQuery($locale: BibliotekdkCmsI18NLocaleCode) {
+    query: `query PublishedHelptextsQuery($locale: BibliotekdkCmsI18NLocaleCode, $site: String!) {
       bibliotekdkCms {
-        helpTexts(status: PUBLISHED, locale: $locale, pagination: { limit: 100 }) {
+        helpTexts(
+          status: PUBLISHED,
+          locale: $locale,
+          pagination: { limit: 100 },
+          filters: { sites: { name: { eq: $site } } }
+        ) {
           ${HELPTEXT_FIELDS}
         }
       }
     }`,
-    variables: { locale },
+    variables: { locale, site: SITE },
     slowThreshold: 3000,
   };
 }
@@ -40,16 +47,23 @@ export function helpText({ helpTextId }) {
   const locale = getLocale();
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query HelptextByIdQuery($documentId: ID!, $locale: BibliotekdkCmsI18NLocaleCode) {
+    query: `query HelptextByIdQuery($documentId: ID!, $locale: BibliotekdkCmsI18NLocaleCode, $site: String!) {
       bibliotekdkCms {
-        helpText(documentId: $documentId, status: PUBLISHED, locale: $locale) {
+        helpTexts(
+          status: PUBLISHED,
+          locale: $locale,
+          filters: {
+            documentId: { eq: $documentId },
+            sites: { name: { eq: $site } }
+          }
+        ) {
           ${HELPTEXT_FIELDS}
           createdAt
           updatedAt
         }
       }
     }`,
-    variables: { documentId: helpTextId, locale },
+    variables: { documentId: helpTextId, locale, site: SITE },
     slowThreshold: 3000,
   };
 }
