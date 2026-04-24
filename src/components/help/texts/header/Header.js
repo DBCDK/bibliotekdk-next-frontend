@@ -31,13 +31,13 @@ export default function Header({ helpTextId }) {
     helpTextId && helpText({ helpTextId: helpTextId })
   );
 
-  if (!data || !data.bibliotekdkCms?.helpText || isLoading || error) {
+  const helptext = data?.bibliotekdkCms?.helpTexts?.[0];
+
+  if (!data || !helptext || isLoading || error) {
     return null;
   }
 
   const context = { context: "metadata" };
-
-  const helptext = data.bibliotekdkCms.helpText;
 
   const pageTitle = Translate({
     ...context,
