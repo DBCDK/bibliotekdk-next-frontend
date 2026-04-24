@@ -85,7 +85,7 @@ pipeline {
                 script {
                     ansiColor("xterm") {
                         sh "mkdir -p cypress/reports"
-                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/dbc-cypress:latest"
+                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/dbc-cypress:node-and-dependency-updates-8"
                         sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
                         sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
                     }
