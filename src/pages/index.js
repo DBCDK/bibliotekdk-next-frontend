@@ -11,6 +11,7 @@ import { fetchAll } from "@/lib/api/apiServerOnly";
 import Header from "@/components/header/Header";
 import React from "react";
 import { InspirationSlider } from "@/components/inspiration";
+import { Slider as InspirationSliderSkeleton } from "@/components/inspiration/slider/Slider";
 import { LinkCard } from "@/components/linkcard";
 
 import { useData } from "@/lib/api/api";
@@ -27,8 +28,8 @@ const FrontpageSkeleton = () => (
       skeleton
       template="triple"
     />
-    <InspirationSlider skeleton />
-    <InspirationSlider skeleton />
+    <InspirationSliderSkeleton isLoading data={[]} lazyLoad={false} />
+    <InspirationSliderSkeleton isLoading data={[]} lazyLoad={false} />
     <ArticleSection
       title=""
       articles={Array(2).fill({})}
