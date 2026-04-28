@@ -276,7 +276,7 @@ describe("Server Side Rendering", () => {
   });
 
   describe(`find`, () => {
-    it.skip(`has correct metadata`, () => {
+    it(`has correct metadata`, () => {
       getPageHead("/find/simpel?q.all=ost").then((res) => {
         expect(res.title).to.include("Alle resultater med &quot;ost&quot;");
         expect(res.description).to.match(
