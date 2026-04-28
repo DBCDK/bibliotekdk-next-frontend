@@ -31,7 +31,7 @@ describe("Multi Order", () => {
       cy.get('[data-cy="input"]').clear().type("test@dbc.dk");
       cy.contains("Godkend").click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
 
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -124,7 +124,7 @@ describe("Multi Order", () => {
       // submit button disabled, while submitting order
       cy.get('[data-cy="submit-button"]').should("be.disabled");
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
 
       cy.contains(
         "Du vil få besked når dine materialer er klar til afhentning på Branch - Modtager ILL"
@@ -247,7 +247,7 @@ describe("Multi Order", () => {
       cy.get('[data-cy="pincode-input"]').type("1234");
       cy.get('[data-cy="submit-button"]').click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
 
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -306,7 +306,7 @@ describe("Multi Order", () => {
 
       cy.contains("Godkend").click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
 
       cy.contains(
         "Digitale artikler bliver leveret til din mail fra det Det Kgl. Bibliotek"
@@ -371,7 +371,7 @@ describe("Multi Order", () => {
 
       cy.get('[data-cy="submit-button"]').click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
       cy.contains("2 materialer er bestilt");
 
       cy.contains(
@@ -448,7 +448,7 @@ describe("Multi Order", () => {
 
       cy.get('[data-cy="submit-button"]').click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
       cy.contains("2 materialer er bestilt");
 
       cy.contains(
