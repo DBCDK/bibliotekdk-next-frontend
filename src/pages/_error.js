@@ -17,26 +17,18 @@ function Error() {
 }
 
 /**
- * Get serverside props - if an error is serverside - log it and increase
- * errorcount for howru function
+ * Get serverside props - if an error is serverside - log it
  * @param res
  * @param err
  * @returns {{statusCode: (*|number)}}
  */
 Error.getInitialProps = ({ req, res, err }) => {
-  let incErrors = null;
   if (typeof window === "undefined") {
-    incErrors = require("../utils/errorCount").incErrorCount;
-
-    // log for kibana
     log.error("SERVER SIDE ERROR", {
       error: String(err),
       stacktrace: err.stack,
       url: req.url,
     });
-
-    // increase error count for howru function
-    incErrors();
   }
 
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
