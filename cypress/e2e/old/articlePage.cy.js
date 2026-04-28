@@ -2,12 +2,12 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("ArticlePage", () => {
-  describe("News article (from drupal)", () => {
+  describe("News article (from Strapi)", () => {
     beforeEach(() => {
       cy.visit("/iframe.html?id=articles-page--article-page&viewMode=story");
     });
-    it(`Check if article has parsed body image`, () => {
-      // check for onlye 1 figure
+    it(`Check if article has markdown body image`, () => {
+      // check for only 1 figure
       cy.get("[data-cy=article-body]").find("figure").should("have.length", 1);
       // check img attributes
       cy.get("[data-cy=article-body]")
@@ -22,7 +22,7 @@ describe("ArticlePage", () => {
         .find("img")
         .invoke("attr", "title")
         .should("eq", "Hængekøje hygge med bog");
-      // check for onlye 1 figure caption
+      // check for only 1 figure caption
       cy.get("[data-cy=article-body]")
         .find("figcaption")
         .should("have.length", 1);
@@ -31,8 +31,8 @@ describe("ArticlePage", () => {
         .find("figcaption")
         .contains("Hængekøje hygge med bog");
     });
-    it(`Check if article has parsed body image`, () => {
-      // check for onlye 1 figure
+    it(`Check if article has markdown body image`, () => {
+      // check for only 1 figure
       cy.get("[data-cy=article-body]").find("figure").should("have.length", 1);
       // check img attributes
       cy.get("[data-cy=article-body]")
@@ -47,7 +47,7 @@ describe("ArticlePage", () => {
         .find("img")
         .invoke("attr", "title")
         .should("eq", "Hængekøje hygge med bog");
-      // check for onlye 1 figure caption
+      // check for only 1 figure caption
       cy.get("[data-cy=article-body]")
         .find("figcaption")
         .should("have.length", 1);
@@ -61,7 +61,7 @@ describe("ArticlePage", () => {
       cy.contains("Læsetid: 3 min.");
     });
 
-    it(`Shows correct category for news article (the ones from drupal)`, () => {
+    it(`Shows correct category for news article`, () => {
       cy.contains("Nyhed");
     });
 

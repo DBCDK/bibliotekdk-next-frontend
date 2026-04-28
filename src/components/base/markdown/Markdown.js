@@ -12,13 +12,51 @@ import styles from "./Markdown.module.css";
  */
 const normalizeNewlines = (str) => str.replace(/\n/g, "  \n");
 
+function MarkdownImage({ src, alt = "", title, ...props }) {
+  const imageProps = { ...props };
+  delete imageProps.node;
+  const image = <img src={src} alt={alt} title={title || ""} {...imageProps} />;
+
+  if (!title) {
+    return image;
+  }
+
+  return (
+    <figure>
+      {image}
+      <figcaption>{title}</figcaption>
+    </figure>
+  );
+}
+
+function MarkdownParagraph({ children, ...props }) {
+  const contentChildren = React.Children.toArray(children).filter(
+    (child) => !(typeof child === "string" && child.trim() === "")
+  );
+  const containsOnlyImage =
+    contentChildren.length === 1 &&
+    React.isValidElement(contentChildren[0]) &&
+    contentChildren[0].type === MarkdownImage;
+
+  if (containsOnlyImage) {
+    return children;
+  }
+
+  return (
+    <Text type="text2" tag="p" {...props}>
+      {children}
+    </Text>
+  );
+}
+
 export const markdownComponents = {
   h1: (props) => <Title type="title3" tag="h1" {...props} />,
   h2: (props) => <Title type="title4" tag="h2" {...props} />,
   h3: (props) => <Title type="title5" tag="h3" {...props} />,
-  p: (props) => <Text type="text2" tag="p" {...props} />,
+  p: MarkdownParagraph,
   li: (props) => <Text type="text2" tag="li" {...props} />,
   strong: (props) => <Text type="text1" tag="strong" {...props} />,
+  img: MarkdownImage,
   a: (props) => (
     <Link border={{ bottom: { keepVisible: true } }} href={props.href}>
       {props.children}
