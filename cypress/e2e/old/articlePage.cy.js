@@ -6,7 +6,7 @@ describe("ArticlePage", () => {
     beforeEach(() => {
       cy.visit("/iframe.html?id=articles-page--article-page&viewMode=story");
     });
-    it.skip(`Check if article has parsed body image`, () => {
+    it(`Check if article has parsed body image`, () => {
       // check for onlye 1 figure
       cy.get("[data-cy=article-body]").find("figure").should("have.length", 1);
       // check img attributes
@@ -31,7 +31,7 @@ describe("ArticlePage", () => {
         .find("figcaption")
         .contains("Hængekøje hygge med bog");
     });
-    it.skip(`Check if article has parsed body image`, () => {
+    it(`Check if article has parsed body image`, () => {
       // check for onlye 1 figure
       cy.get("[data-cy=article-body]").find("figure").should("have.length", 1);
       // check img attributes
