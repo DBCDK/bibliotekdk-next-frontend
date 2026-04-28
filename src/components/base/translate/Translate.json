@@ -45,10 +45,7 @@
       "publishedFrom": { "da": "Udgivet fra", "en": "Published from" },
       "publishedIn": { "da": "Udgivet i", "en": "Published in" },
       "reviewedIn": { "da": "Anmeldt i", "en": "Reviewed in" },
-      "seeAllReviews": {
-        "da": "Se alle anmeldelser",
-        "en": "See all reviews"
-      },
+      "seeAllReviews": { "da": "Se alle anmeldelser", "en": "See all reviews" },
       "creator-search": {
         "da": "S\u00f8g p\u00e5 navn",
         "en": "Search for name"
@@ -57,14 +54,8 @@
         "da": "Se p\u00e5 forfatterweb.dk",
         "en": "View on forfatterweb.dk"
       },
-      "view-publications": {
-        "da": "Alle v\u00e6rker",
-        "en": "All works"
-      },
-      "selected-prizes": {
-        "da": "Udvalgte priser",
-        "en": "Selected prizes"
-      },
+      "view-publications": { "da": "Alle v\u00e6rker", "en": "All works" },
+      "selected-prizes": { "da": "Udvalgte priser", "en": "Selected prizes" },
       "awards": { "da": "Priser:", "en": "Awards:" },
       "more_about": { "da": "Mere om %s", "en": "More about %s" },
       "forfatterweb": { "da": "Forfatterweb.dk", "en": "forfatterweb.dk" }
@@ -170,10 +161,7 @@
         "en": "Chambermusic"
       },
       "all_phrase.chambermusictype": { "da": "Alle", "en": "All" },
-      "phrase.generalaudience": {
-        "da": "M\u00e5lgruppe",
-        "en": "Audience"
-      },
+      "phrase.generalaudience": { "da": "M\u00e5lgruppe", "en": "Audience" },
       "phrase.mainlanguage": { "da": "Sprog", "en": "Languages" },
       "all_phrase.mainlanguage": { "en": "All languages", "da": "Alle" },
       "phrase.specificmaterialtype": {
@@ -183,10 +171,7 @@
       "phrase.gameplatform": { "da": "Platform", "en": "Platform" },
       "all_nota": { "da": "Alle", "en": "All" },
       "nota": { "da": "Nota", "en": "Nota" },
-      "all_phrase.pegi": {
-        "da": "PEGI m\u00e6rkning",
-        "en": "PEGI mark"
-      },
+      "all_phrase.pegi": { "da": "PEGI m\u00e6rkning", "en": "PEGI mark" },
       "phrase.pegi": { "da": "PEGI m\u00e6rkning", "en": "PEGI mark" },
       "all_phrase.players": { "da": "Spillere", "en": "Players" },
       "phrase.players": { "da": "Antal spillere", "en": "Players" },
@@ -198,24 +183,15 @@
         "da": "Alle platforme",
         "en": "All Platforms"
       },
-      "all_phrase.genreandform": {
-        "da": "Alle genrer",
-        "en": "All genres"
-      },
-      "phrase.genreandform": {
-        "da": "Genre og form",
-        "en": "Genre and form"
-      },
+      "all_phrase.genreandform": { "da": "Alle genrer", "en": "All genres" },
+      "phrase.genreandform": { "da": "Genre og form", "en": "Genre and form" },
       "all_phrase.filmnationality": {
         "da": "Alle nationaliteter",
         "en": "All nationalities"
       },
       "all_term.source": { "da": "Alle", "en": "All" },
       "term.source": { "da": "Fagbibliografier", "en": "Databases" },
-      "phrase.filmnationality": {
-        "da": "Nationalitet",
-        "en": "Nationality"
-      },
+      "phrase.filmnationality": { "da": "Nationalitet", "en": "Nationality" },
       "all_phrase.specificmaterialtype": {
         "da": "Alle materialer",
         "en": "All materials"
@@ -224,29 +200,17 @@
         "da": "Materialetype",
         "en": "Materialtype"
       },
-      "all_phrase.generalmaterialtype": {
-        "en": "All materials",
-        "da": "Alle"
-      },
+      "all_phrase.generalmaterialtype": { "en": "All materials", "da": "Alle" },
       "publicationyear": {
         "da": "Udgivelses\u00e5r",
         "en": "Publication year"
       },
-      "all_publicationyear": {
-        "en": "All publication years",
-        "da": "Alle"
-      },
+      "all_publicationyear": { "en": "All publication years", "da": "Alle" },
       "ages": { "da": "Aldersgruppe", "en": "Audience" },
       "all_ages": { "en": "All audiences", "da": "Alle" },
-      "search_dropdown": {
-        "da": "S\u00f8g i %s...",
-        "en": "Search in %s..."
-      },
+      "search_dropdown": { "da": "S\u00f8g i %s...", "en": "Search in %s..." },
       "this_year": { "da": "I \u00e5r (%s)", "en": "This year (%s)" },
-      "last_x_years": {
-        "da": "Seneste %s \u00e5r",
-        "en": "Last %s years"
-      },
+      "last_x_years": { "da": "Seneste %s \u00e5r", "en": "Last %s years" },
       "for_x_y_years": {
         "da": "For %s-%s-\u00e5rige",
         "en": "For %s-%s years"
@@ -264,14 +228,8 @@
         "en": "To and including %s"
       },
       "exact_years_old": { "da": "%s \u00e5r", "en": "%s years" },
-      "years_range": {
-        "da": "%s-%s-\u00e5rige",
-        "en": "%s-%s years old"
-      },
-      "x_years_and_up": {
-        "da": "%s \u00e5r og op",
-        "en": "%s years and up"
-      },
+      "years_range": { "da": "%s-%s-\u00e5rige", "en": "%s-%s years old" },
+      "x_years_and_up": { "da": "%s \u00e5r og op", "en": "%s years and up" },
       "up_to_x_years": {
         "da": "Til og med %s \u00e5r",
         "en": "To and including %s \u00e5r"
@@ -374,10 +332,7 @@
     "complex-search-facets": {
       "label-instrument": { "da": "Instrument", "en": "Instrument" },
       "label-choirtype": { "da": "Kortype", "en": "Choirtype" },
-      "label-chambermusictype": {
-        "da": "Kammermusik",
-        "en": "Chambermusic"
-      },
+      "label-chambermusictype": { "da": "Kammermusik", "en": "Chambermusic" },
       "label-publicationyear": {
         "da": "Udgivelses\u00e5r",
         "en": "Publicationyear"
@@ -400,24 +355,15 @@
       },
       "label-subject": { "da": "Emne", "en": "Subject" },
       "label-mainlanguage": { "da": "Sprog", "en": "Language" },
-      "label-generalaudience": {
-        "da": "M\u00e5lgruppe",
-        "en": "Audience"
-      },
+      "label-generalaudience": { "da": "M\u00e5lgruppe", "en": "Audience" },
       "label-fictionalcharacter": {
         "da": "Fiktiv hovedperson",
         "en": "Fictive person"
       },
-      "label-genreandform": {
-        "da": "Genre og form",
-        "en": "Genre og form"
-      },
+      "label-genreandform": { "da": "Genre og form", "en": "Genre og form" },
       "label-ages": { "da": "Aldersgruppe", "en": "Ages" },
       "label-primarytarget": { "da": "Fagligt niveau", "en": "Level" },
-      "label-hostpublicationtype": {
-        "da": "Artikeltype",
-        "en": "Article type"
-      }
+      "label-hostpublicationtype": { "da": "Artikeltype", "en": "Article type" }
     },
     "logo": {
       "default_logo_text": {
@@ -519,10 +465,7 @@
       }
     },
     "general": {
-      "SkipToMain": {
-        "da": "G\u00e5 til indhold",
-        "en": "Skip to content"
-      },
+      "SkipToMain": { "da": "G\u00e5 til indhold", "en": "Skip to content" },
       "heroTxt": {
         "en": "Search, find, borrow",
         "da": "S\u00f8g, find, l\u00e5n"
@@ -552,10 +495,7 @@
         "en": "Image carousel. Use arrow keys to navigate"
       },
       "description": { "da": "Beskrivelse:", "en": "Description:" },
-      "saveChanges": {
-        "da": "Gem \u00e6ndringerne",
-        "en": "Save changes"
-      },
+      "saveChanges": { "da": "Gem \u00e6ndringerne", "en": "Save changes" },
       "article": { "da": "Artikel", "en": "Article" },
       "articles": { "da": "Artikler", "en": "Articles" },
       "volume": { "da": "Udgave", "en": "Volume" },
@@ -595,10 +535,7 @@
       "name": { "da": "Navn", "en": "Name" },
       "accept": { "da": "Godkend", "en": "Accept" },
       "select": { "da": "V\u00e6lg", "en": "Select" },
-      "change": {
-        "da": "Skift",
-        "en": "LABEL mangler overs\u00e6ttelse"
-      },
+      "change": { "da": "Skift", "en": "LABEL mangler overs\u00e6ttelse" },
       "your-library": { "da": "dit bibliotek", "en": "your library" },
       "lecturerStatement": {
         "da": "Bibliotekernes vurdering",
@@ -618,10 +555,7 @@
         "da": "Sp\u00f8rg ikke igen",
         "en": "Don\u0027t ask again"
       },
-      "multipleLanguages": {
-        "da": "flere sprog",
-        "en": "multiple languages"
-      },
+      "multipleLanguages": { "da": "flere sprog", "en": "multiple languages" },
       "back-to": { "da": "Tilbage til", "en": "Back to" },
       "notNow": { "da": "Ikke nu", "en": "Not now" },
       "kundeserviceBibdk": {
@@ -647,10 +581,7 @@
         "en": "All articles in the same issue"
       },
       "tableHeadArticle": { "da": "Artikel", "en": "Article" },
-      "tableHeaderDescription": {
-        "da": "Beskrivelse",
-        "en": "Description"
-      },
+      "tableHeaderDescription": { "da": "Beskrivelse", "en": "Description" },
       "tableHeaderSubjects": { "da": "Emner", "en": "Subjects" },
       "tableHeaderExtent": { "da": "Omfang", "en": "Extent" },
       "periodicaOverviewTitle": { "da": "Tidsskrift", "en": "Periodica" },
@@ -658,10 +589,7 @@
         "da": "Artiklen er en del af %s",
         "en": "The article is a part of %s"
       },
-      "search": {
-        "da": "S\u00f8g i artiklerne",
-        "en": "Search the articles"
-      }
+      "search": { "da": "S\u00f8g i artiklerne", "en": "Search the articles" }
     },
     "articles": {
       "deliveredBy": {
@@ -721,10 +649,7 @@
       "branches": { "da": "Afdelinger", "en": "Branches" },
       "find_library": { "da": "Find et bibliotek", "en": "Find library" },
       "about": { "en": "About bibliotek.dk", "da": "Om Bibliotek.dk" },
-      "help": {
-        "da": "Hj\u00e6lp og vejledning",
-        "en": "Help and guides"
-      },
+      "help": { "da": "Hj\u00e6lp og vejledning", "en": "Help and guides" },
       "press": { "da": "Presse og grafik", "en": "Press and graphics" },
       "privacy": { "da": "Privatlivspolitik", "en": "Privacy" },
       "suppliers": { "da": "Leverand\u00f8rer", "en": "Suppliers" },
@@ -746,23 +671,14 @@
         "da": "Beskrivelse fra materialet",
         "en": "Description from material"
       },
-      "creatorsFromDescription": {
-        "da": "Bidrag",
-        "en": "Contributions"
-      },
+      "creatorsFromDescription": { "da": "Bidrag", "en": "Contributions" },
       "playingtime": {
         "da": "Estimeret spilletid",
         "en": "Estimated playingtime"
       },
       "id": { "da": "Id", "en": "Id" },
-      "requirements": {
-        "da": "N\u00f8dvendigt udstyr",
-        "en": "Required gear"
-      },
-      "physicalDescriptionArticles": {
-        "da": "Sidetal",
-        "en": "Pagenumber"
-      },
+      "requirements": { "da": "N\u00f8dvendigt udstyr", "en": "Required gear" },
+      "physicalDescriptionArticles": { "da": "Sidetal", "en": "Pagenumber" },
       "physicalDescriptionArticlesAlternative": {
         "da": "Omfang",
         "en": "Extent"
@@ -792,10 +708,7 @@
         "en": "physicalDescription"
       },
       "language": { "da": "Sprog", "en": "language" },
-      "locationtitle": {
-        "da": "Hvor er bogen?",
-        "en": "Where is the book?"
-      },
+      "locationtitle": { "da": "Hvor er bogen?", "en": "Where is the book?" },
       "title": { "da": "Titel", "en": "Title" },
       "originalTitle": { "da": "Originaltitel", "en": "Original Title" },
       "alternativeTitle": {
@@ -894,10 +807,7 @@
         "en": "Available at %s"
       },
       "home_no_branch_specified": { "da": "Hjemme", "en": "Available" },
-      "not_on_shelf": {
-        "da": "Ikke p\u00e5 hylden",
-        "en": "Not of shelf"
-      },
+      "not_on_shelf": { "da": "Ikke p\u00e5 hylden", "en": "Not of shelf" },
       "agency_shelf_status_unknown": {
         "da": "Status kendes ikke",
         "en": "Status is unknown"
@@ -994,10 +904,7 @@
         "da": "Se detaljeret status hos %s",
         "en": "See detailed status at %s"
       },
-      "about_the_branch": {
-        "da": "Om afdelingen",
-        "en": "About the branch"
-      },
+      "about_the_branch": { "da": "Om afdelingen", "en": "About the branch" },
       "no_information_about_opening_hours": {
         "da": "Information om afdelings \u00e5bningstider mangler",
         "en": "Information about the opening hours of the branch is missing"
@@ -1142,10 +1049,7 @@
         "da": "Husk at uanset hvilket bibliotek, der har materialet, s\u00e5 kan du bestille det hjem. Bibliotek.dk skaffer det f\u00f8rst ledige materiale, som du kan l\u00e5ne, og leverer det til dit \u00f8nskede afhentningssted.",
         "en": "Please notice: You can pick up the material at any library you want. Your library itself does not have to have it on the shelf."
       },
-      "label_not_for_loan": {
-        "da": "Udl\u00e5nes ikke",
-        "en": "Not for loan"
-      },
+      "label_not_for_loan": { "da": "Udl\u00e5nes ikke", "en": "Not for loan" },
       "label_at_home": { "da": "P\u00e5 hylden", "en": "On shelf" },
       "label_on_loan": {
         "da": "Udl\u00e5nt indtil %s",
@@ -1171,10 +1075,7 @@
         "en": "Item available at pickupAgency, item may be ordered through the library\u0027s catalogue",
         "da": "Materialet kan bestilles direkte p\u00e5 "
       },
-      "message_ON_SHELF": {
-        "en": "On the shelf",
-        "da": "P\u00e5 hylden"
-      },
+      "message_ON_SHELF": { "en": "On the shelf", "da": "P\u00e5 hylden" },
       "message_ON_SHELF_IS_LOAN_RESTRICTED": {
         "da": "P\u00e5 hylden, men udl\u00e5nes kun til egne brugere",
         "en": "On the shelf"
@@ -1298,19 +1199,13 @@
         "da": "Du bliver sendt til nota.dk - adgang kr\u00e6ver dokumenteret l\u00e6sehandicap",
         "en": "You will be sent to nota.dk - access requires documented reading disability"
       },
-      "onlineAccessAt": {
-        "da": "Du bliver sendt til",
-        "en": "Click to go to"
-      },
+      "onlineAccessAt": { "da": "Du bliver sendt til", "en": "Click to go to" },
       "Order (not logged in)": { "da": "Bestil", "en": "Order" },
       "Order-online-disabled": {
         "da": "Er ikke tilg\u00e6ngelig",
         "en": "Not available"
       },
-      "Order-disabled": {
-        "en": "Not available",
-        "da": "Kan ikke bestilles"
-      },
+      "Order-disabled": { "en": "Not available", "da": "Kan ikke bestilles" },
       "Order-disabled-but-owned": {
         "da": "Kan ikke bestilles til hjeml\u00e5n",
         "en": "Not available for home loan"
@@ -1327,14 +1222,8 @@
       "material-direction-here": { "da": "Her", "en": "Here" },
       "material-typename-literature": { "da": "Bogen", "en": "The book" },
       "material-typename-ebook": { "da": "E-bogen", "en": "The e-book" },
-      "material-typename-article": {
-        "da": "Artiklen",
-        "en": "The article"
-      },
-      "material-typename-music": {
-        "da": "Til musikken",
-        "en": "To the music"
-      },
+      "material-typename-article": { "da": "Artiklen", "en": "The article" },
+      "material-typename-music": { "da": "Til musikken", "en": "To the music" },
       "material-typename-podcast": {
         "da": "Til podcasten",
         "en": "To the podcast"
@@ -1357,15 +1246,9 @@
         "da": "Portr\u00e6ttet",
         "en": "The portrait"
       },
-      "material-typename-default": {
-        "da": "Materialet",
-        "en": "The material"
-      },
+      "material-typename-default": { "da": "Materialet", "en": "The material" },
       "all-editions": { "da": "alle udgaver", "en": "all editions" },
-      "work_groupings_overview_description": {
-        "en": "%s of ",
-        "da": "%s af "
-      }
+      "work_groupings_overview_description": { "en": "%s of ", "da": "%s af " }
     },
     "details": {
       "recalled": {
@@ -1388,10 +1271,7 @@
       "playingtime": { "da": "Spilletid", "en": "Playing time" },
       "extent": { "da": "Omfang", "en": "Extent" },
       "level": { "da": "Sv\u00e6rhedsgrad", "en": "level" },
-      "subtitle": {
-        "da": "Seneste udgave, %s",
-        "en": "Latest edition, %s"
-      },
+      "subtitle": { "da": "Seneste udgave, %s", "en": "Latest edition, %s" },
       "language": { "da": "Sprog", "en": "Language" },
       "pages": { "da": "Sideantal", "en": "Number of pages" },
       "ensemble": { "da": "Bes\u00e6tning", "en": "Ensemble" },
@@ -1418,19 +1298,13 @@
       "audience_level": { "da": "Niveau", "en": "Level" },
       "contribution": { "en": "Contributions", "da": "Ophav" },
       "genre/form": { "da": "Genre og form", "en": "Genre and form" },
-      "in_series_and_universes": {
-        "da": "Indg\u00e5r i",
-        "en": "Found in"
-      },
+      "in_series_and_universes": { "da": "Indg\u00e5r i", "en": "Found in" },
       "creators": { "da": "Ophav", "en": "Authors" },
       "audience": { "da": "M\u00e5lgruppe", "en": "Audience" },
       "audience-age": { "da": "For %s-\u00e5rige", "en": "For ages %s" },
       "adaption": { "da": "Filmatisering af", "en": "Adaption of" },
       "hasadaption": { "da": "Filmatisering", "en": "Film adaption" },
-      "firstEdition": {
-        "da": "Originaludgave",
-        "en": "Original edition"
-      },
+      "firstEdition": { "da": "Originaludgave", "en": "Original edition" },
       "game-audience": { "da": "Aldersm\u00e6rkning", "en": "Age" },
       "game-requirements": {
         "da": "N\u00f8dvendigt udstyr",
@@ -1439,9 +1313,7 @@
       "other-audience": { "en": "Audience", "da": "M\u00e5lgruppe" },
       "creatorsfromdescription": { "da": "Gruppe", "en": "Group" }
     },
-    "description": {
-      "title": { "da": "Beskrivelse", "en": "Description" }
-    },
+    "description": { "title": { "da": "Beskrivelse", "en": "Description" } },
     "relatedworks": {
       "title": { "da": "Relaterede v\u00e6rker", "en": "Related works" },
       "ARTICLE-subtitle": {
@@ -1490,10 +1362,7 @@
         "en": "Other %s in the"
       },
       "number_in_series": { "da": "Del %s", "en": "Part %s" },
-      "begin_with_this": {
-        "da": "Begynd med denne",
-        "en": "Begin with this"
-      }
+      "begin_with_this": { "da": "Begynd med denne", "en": "Begin with this" }
     },
     "universe": {
       "everything_in_universe": {
@@ -1545,10 +1414,7 @@
       "page-title": { "da": "Huskeliste", "en": "Bookmarks" },
       "result-amount": { "da": "materialer", "en": "materials" },
       "select-all": { "da": "V\u00e6lg alle", "en": "Select All" },
-      "remove-selected": {
-        "da": "Fjern valgte",
-        "en": "Remove selected"
-      },
+      "remove-selected": { "da": "Fjern valgte", "en": "Remove selected" },
       "order": { "da": "Bestil", "en": "Order" },
       "select-action": { "da": "Referencer", "en": "References" },
       "remove": { "en": "Remove", "da": "Fjern" },
@@ -1644,10 +1510,7 @@
         "da": "%s materialer kunne ikke bestilles!",
         "en": "%s material couldn\u0027t be ordered!"
       },
-      "order-overview": {
-        "da": "Bestillingsoversigt",
-        "en": "Order overview"
-      },
+      "order-overview": { "da": "Bestillingsoversigt", "en": "Order overview" },
       "multiorder-ordered": { "da": "Bestilt", "en": "Ordered" },
       "multiorder-error-ordering": {
         "da": "Bestilling fejlet",
@@ -1668,10 +1531,7 @@
     },
     "reviews": {
       "title": { "da": "Anmeldelser (%s)", "en": "Reviews (%s)" },
-      "reviewLinkText": {
-        "da": "L\u00e6s anmeldelse",
-        "en": "Read review"
-      },
+      "reviewLinkText": { "da": "L\u00e6s anmeldelse", "en": "Read review" },
       "alternateReviewLinkText": {
         "en": "Read review on DBC webarchive",
         "da": "L\u00e6s pdf-udgave"
@@ -1689,10 +1549,7 @@
         "en": "The libraries\u0027"
       },
       "materialTitle-2": { "da": "vurdering", "en": "assessment" },
-      "litteratursiden": {
-        "da": "Litteratursiden",
-        "en": "Litteratursiden"
-      },
+      "litteratursiden": { "da": "Litteratursiden", "en": "Litteratursiden" },
       "abstract": { "da": "Kort om bogen", "en": "Abstract" },
       "audience": {
         "da": "Anvendelse/m\u00e5lgruppe/niveau",
@@ -1709,20 +1566,14 @@
         "en": "Other books on the same subject",
         "da": "Andre materialer om samme emne"
       },
-      "similar_materials-2": {
-        "en": "Similar books",
-        "da": "Se ogs\u00e5"
-      }
+      "similar_materials-2": { "en": "Similar books", "da": "Se ogs\u00e5" }
     },
     "header": {
       "banner-text": {
         "en": "Pick up your orders at your preferred library",
         "da": "Hent dine bestillinger p\u00e5 dit foretrukne bibliotek"
       },
-      "digitalOffers": {
-        "da": "Biblioteket online",
-        "en": "Digital products"
-      },
+      "digitalOffers": { "da": "Biblioteket online", "en": "Digital products" },
       "askLibrarian": {
         "da": "Sp\u00f8rg en bibliotekar",
         "en": "Ask a librarian"
@@ -1797,10 +1648,7 @@
         "en": "Write you cql searches here"
       },
       "timeForSearch": { "en": "time", "da": "Tid" },
-      "loanOptions": {
-        "da": "L\u00e5nemuligheder:",
-        "en": "Loan options:"
-      },
+      "loanOptions": { "da": "L\u00e5nemuligheder:", "en": "Loan options:" },
       "more": { "da": "Se flere", "en": "More" },
       "filter-your-search": {
         "da": "Filtrer din s\u00f8gning",
@@ -1818,14 +1666,8 @@
       },
       "filters": { "en": "Filters", "da": "Filtre" },
       "filtersCount": { "da": "Filtre (%s)", "en": "Filters (%s)" },
-      "filtersImageAlt": {
-        "da": "\u00c5ben filtre",
-        "en": "Open filters"
-      },
-      "showXResults": {
-        "da": "Vis %s resultater",
-        "en": "Show %s results"
-      },
+      "filtersImageAlt": { "da": "\u00c5ben filtre", "en": "Open filters" },
+      "showXResults": { "da": "Vis %s resultater", "en": "Show %s results" },
       "showXResult": { "da": "Vis %s resultat", "en": "Show %s result" },
       "noResults": {
         "da": "Din s\u00f8gning giver ingen resultater",
@@ -1865,10 +1707,7 @@
       "label-creator": { "da": "Forfatter", "en": "Creator" },
       "label-literature-creator": { "da": "Forfatter", "en": "Author" },
       "label-article-creator": { "da": "Forfatter", "en": "Author" },
-      "label-movie-creator": {
-        "en": "Director",
-        "da": "Instrukt\u00f8r"
-      },
+      "label-movie-creator": { "en": "Director", "da": "Instrukt\u00f8r" },
       "label-game-creator": { "en": "Publisher", "da": "Udgiver" },
       "label-music-creator": { "da": "Kunstner", "en": "Artist" },
       "label-sheetmusic-creator": { "en": "Creator", "da": "Komponist" },
@@ -2159,10 +1998,7 @@
         "da": "Tracktitel",
         "en": "Tracktitle"
       },
-      "advanced-dropdown-movie_term.title": {
-        "da": "Titel",
-        "en": "Title"
-      },
+      "advanced-dropdown-movie_term.title": { "da": "Titel", "en": "Title" },
       "advanced-dropdown-game_term.publisher": {
         "da": "Udgiver",
         "en": "Publisher"
@@ -2282,15 +2118,9 @@
         "da": "Avanceret s\u00f8gning",
         "en": "Advanced search"
       },
-      "topbar-cql-search": {
-        "da": "CQL s\u00f8gning",
-        "en": "CQL search"
-      },
+      "topbar-cql-search": { "da": "CQL s\u00f8gning", "en": "CQL search" },
       "topbar-simple-search-mobile": { "da": "S\u00f8g", "en": "Search" },
-      "topbar-advanced-search-mobile": {
-        "da": "Avanceret",
-        "en": "Advanced"
-      },
+      "topbar-advanced-search-mobile": { "da": "Avanceret", "en": "Advanced" },
       "topbar-cql-search-mobile": { "da": "CQL", "en": "CQL" },
       "yourSearch": { "da": "Din s\u00f8gning", "en": "Your search" },
       "search": { "da": "S\u00f8gning", "en": "search" },
@@ -2316,10 +2146,7 @@
         "da": "Afgr\u00e6ns yderligere",
         "en": "Narrow your search"
       },
-      "searchHistory": {
-        "da": "S\u00f8gehistorik",
-        "en": "Search history"
-      },
+      "searchHistory": { "da": "S\u00f8gehistorik", "en": "Search history" },
       "history-filter-label": { "da": "Filtre", "en": "Filters" },
       "history-yesterday": { "da": "Ig\u00e5r", "en": "Yesterday" },
       "history-today": { "da": "I dag", "en": "Today" },
@@ -2330,10 +2157,7 @@
         "da": "Brug for hj\u00e6lp til s\u00f8gning?"
       },
       "mobile_helpAndGuidance": { "da": "Hj\u00e6lp", "en": "Help" },
-      "get-search-codes": {
-        "da": "S\u00f8gekoder",
-        "en": "Search codes"
-      },
+      "get-search-codes": { "da": "S\u00f8gekoder", "en": "Search codes" },
       "combineSearch": {
         "da": "Kombiner s\u00f8gninger",
         "en": "Combine search"
@@ -2349,10 +2173,7 @@
     },
     "suggester": {
       "search": { "da": "S\u00f8g", "en": "Search" },
-      "placeholderRelative": {
-        "en": "Search among %s",
-        "da": "S\u00f8g i %s"
-      },
+      "placeholderRelative": { "en": "Search among %s", "da": "S\u00f8g i %s" },
       "placeholder": {
         "da": "S\u00f8g i b\u00f8ger, film, musik og mere",
         "en": "Search books, movies, music and more"
@@ -2365,15 +2186,9 @@
       "creator": { "da": "Forfatter", "en": "Author" },
       "subject": { "da": "Emne", "en": "Subject" },
       "history": { "da": "Historik", "en": "History" },
-      "historyTitle": {
-        "da": "S\u00f8gehistorik",
-        "en": "Search history"
-      },
+      "historyTitle": { "da": "S\u00f8gehistorik", "en": "Search history" },
       "historyClear": { "da": "Ryd", "en": "Clear" },
-      "suggestions": {
-        "da": "S\u00f8geforslag",
-        "en": "Search suggestions"
-      }
+      "suggestions": { "da": "S\u00f8geforslag", "en": "Search suggestions" }
     },
     "quickfilters": {
       "label-physical-online": {
@@ -2414,10 +2229,7 @@
       "label-mainLanguages": { "da": "Sprog", "en": "Language" },
       "label-materialTypes": { "da": "Materialetype", "en": "Format" },
       "label-creatorfunction": { "da": "Rolle", "en": "Role" },
-      "label-materialTypesSpecific": {
-        "da": "Materialetype",
-        "en": "Format"
-      },
+      "label-materialTypesSpecific": { "da": "Materialetype", "en": "Format" },
       "label-fictionalCharacter": {
         "da": "Fiktive karakterer",
         "en": "Fictitious characters"
@@ -2431,10 +2243,7 @@
         "da": "For b\u00f8rn/voksne",
         "en": "For children/adults"
       },
-      "label-accessTypes": {
-        "da": "Fysisk/digital",
-        "en": "Physical/digital"
-      },
+      "label-accessTypes": { "da": "Fysisk/digital", "en": "Physical/digital" },
       "label-fictionNonfiction": {
         "da": "Sk\u00f8n-/faglitteratur",
         "en": "Fiction/Non-fiction"
@@ -2445,10 +2254,7 @@
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-literature-mainLanguages": {
-        "da": "Sprog",
-        "en": "Language"
-      },
+      "label-literature-mainLanguages": { "da": "Sprog", "en": "Language" },
       "label-literature-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
@@ -2594,10 +2400,7 @@
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-sheetmusic-mainLanguages": {
-        "da": "Sprog",
-        "en": "Language"
-      },
+      "label-sheetmusic-mainLanguages": { "da": "Sprog", "en": "Language" },
       "label-sheetmusic-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
@@ -2620,14 +2423,8 @@
         "en": "Fiction/Non-fiction"
       },
       "label-sheetmusic-subjects": { "da": "Emne", "en": "Subject" },
-      "label-sheetmusic-creators": {
-        "da": "Komponist",
-        "en": "Composer"
-      },
-      "label-all": {
-        "da": "Alle materialekategorier",
-        "en": "All categories"
-      },
+      "label-sheetmusic-creators": { "da": "Komponist", "en": "Composer" },
+      "label-all": { "da": "Alle materialekategorier", "en": "All categories" },
       "label-review": { "da": "Anmeldelse", "en": "Review" },
       "label-literature": { "da": "B\u00f8ger", "en": "Books" },
       "label-article": { "da": "Artikler", "en": "Articles" },
@@ -2668,10 +2465,7 @@
         "da": "Alle bestillingsmuligheder",
         "en": "All order options"
       },
-      "title-search": {
-        "da": "Flere s\u00f8gemuligheder",
-        "en": "Title"
-      },
+      "title-search": { "da": "Flere s\u00f8gemuligheder", "en": "Title" },
       "title-agencylocalizations": {
         "da": "Se hvor materialet er p\u00e5 hylden",
         "en": "See where the material is on shelf"
@@ -2686,10 +2480,7 @@
         "da": "Afhentes p\u00e5 dit lokale bibliotek",
         "en": "Pickup at your local library"
       },
-      "order-combined-copy": {
-        "da": "Bestil eksemplar",
-        "en": "Order copy"
-      },
+      "order-combined-copy": { "da": "Bestil eksemplar", "en": "Order copy" },
       "order-combined-copy-description": {
         "en": "LABEL: mangler overs\u00e6ttelse",
         "da": "Materialet sendes til din e-mailadresse eller afhentes p\u00e5 dit bibliotek"
@@ -2742,10 +2533,7 @@
     "navigation": {
       "frontpage": { "da": "Forside", "en": "Front page" },
       "categories": { "da": "Kategorier", "en": "Categories" },
-      "digitalOffers": {
-        "da": "Biblioteket online",
-        "en": "Digital products"
-      },
+      "digitalOffers": { "da": "Biblioteket online", "en": "Digital products" },
       "askLibrarian": {
         "da": "Sp\u00f8rg en bibliotekar",
         "en": "Ask a librarian"
@@ -2794,10 +2582,7 @@
         "da": "Sp\u00f8rg en bibliotekar",
         "en": "Ask a librarian"
       },
-      "header-button-ask-short": {
-        "da": "Bibliotekar",
-        "en": "Librarian"
-      },
+      "header-button-ask-short": { "da": "Bibliotekar", "en": "Librarian" },
       "faq-title": {
         "da": "Ofte stillede sp\u00f8rgsm\u00e5l",
         "en": "Frequently asked questions"
@@ -2814,10 +2599,7 @@
         "da": "Vis flere sp\u00f8rgsm\u00e5l",
         "en": "Show more questions"
       },
-      "all-pages": {
-        "da": "Alle hj\u00e6lpesider",
-        "en": "All help pages"
-      },
+      "all-pages": { "da": "Alle hj\u00e6lpesider", "en": "All help pages" },
       "faq-group-other": { "da": "Andet", "en": "Other" },
       "help-breadcrumb": { "da": "Hj\u00e6lp", "en": "Help" },
       "help-search-placeholder": {
@@ -2859,22 +2641,13 @@
         "da": "Kun interesseret i en bestemt artikel?",
         "en": "Only interested in a particular article?"
       },
-      "label-publicationDateOfComponent": {
-        "da": "\u00c5r",
-        "en": "Year"
-      },
-      "label-volume": {
-        "en": "Volume",
-        "da": "H\u00e6fte, nummer eller bind"
-      },
+      "label-publicationDateOfComponent": { "da": "\u00c5r", "en": "Year" },
+      "label-volume": { "en": "Volume", "da": "H\u00e6fte, nummer eller bind" },
       "label-authorOfComponent": {
         "da": "Artiklens forfatter",
         "en": "Author of the article"
       },
-      "label-titleOfComponent": {
-        "da": "Artiklens titel",
-        "en": "Title"
-      },
+      "label-titleOfComponent": { "da": "Artiklens titel", "en": "Title" },
       "label-pagination": { "da": "Sidetal", "en": "Pages" },
       "placeholder-publicationDateOfComponent": {
         "da": "Fx 2023",
@@ -2914,10 +2687,7 @@
         "da": "Biblioteket har indk\u00f8bt %s eksemplar",
         "en": "Library bought %s copy"
       },
-      "specific-edition": {
-        "da": "Bestil udgave",
-        "en": "Order edition"
-      },
+      "specific-edition": { "da": "Bestil udgave", "en": "Order edition" },
       "check-policy-fail": {
         "en": "The material cannot be ordered at this pickup location. Choose another.",
         "da": "Materialet kan ikke bestilles til dette afhentningssted. V\u00e6lg et andet."
@@ -2942,10 +2712,7 @@
         "da": "Udgave underordnet",
         "en": "Any edition"
       },
-      "will-order-digital-copy": {
-        "da": "Digital kopi",
-        "en": "Digital copy"
-      },
+      "will-order-digital-copy": { "da": "Digital kopi", "en": "Digital copy" },
       "will-order-digital-copy-delivered-by": {
         "da": "Leveres via Digital Artikelservice",
         "en": "Delivered by The Royal Danish Library"
@@ -2954,10 +2721,7 @@
         "en": "The article is sent to your inbox from The Royal Danish Library",
         "da": "Artiklen sendes af Det Kgl. Bibliotek til din e-mailadresse"
       },
-      "pickup-title": {
-        "da": "Afhentningssted",
-        "en": "Pickup location"
-      },
+      "pickup-title": { "da": "Afhentningssted", "en": "Pickup location" },
       "pickup-title-digital-copy": {
         "da": "Dit bibliotek",
         "en": "Your library"
@@ -3047,10 +2811,7 @@
         "en": "Order number: %s",
         "da": "Bestillingsnummer: %s"
       },
-      "order-to": {
-        "da": "Bestil til %s",
-        "en": "Order for pickup at %s"
-      },
+      "order-to": { "da": "Bestil til %s", "en": "Order for pickup at %s" },
       "order-to-description": {
         "en": "To order there, you must fill in your loaner information",
         "da": "For at bestille skal du logge ind ved at udfylde dine l\u00e5neroplysninger"
@@ -3129,10 +2890,7 @@
         "da": "For at gennemf\u00f8re bestillingen skal du udfylde dine l\u00e5neroplysninger ved %s",
         "en": "To complete the order, you need to fill out your loaner information at %s"
       },
-      "go-to-order": {
-        "da": "G\u00e5 til bestilling",
-        "en": "Go to order"
-      },
+      "go-to-order": { "da": "G\u00e5 til bestilling", "en": "Go to order" },
       "save-info-in-browser": {
         "da": "Gem informationer til n\u00e6ste bestilling",
         "en": "Save information for next order"
@@ -3161,10 +2919,7 @@
         "da": "F\u00e5 et overblik over dine bestillinger under",
         "en": "Get an overview of your orders under"
       },
-      "get-overview-2": {
-        "en": "on your profile",
-        "da": "p\u00e5 din profil"
-      },
+      "get-overview-2": { "en": "on your profile", "da": "p\u00e5 din profil" },
       "pincode-placeholder": {
         "en": "LABEL: Mangler overs\u00e6ttelse!",
         "da": "Skriv din pinkode fra biblioteket"
@@ -3245,10 +3000,7 @@
         "da": "Du skal bruge dine l\u00e5neroplysninger i n\u00e6ste trin",
         "en": "You have to use your borrower data in the next step"
       },
-      "or-mit-id": {
-        "da": "Log ind med MitID",
-        "en": "Login with MitID"
-      },
+      "or-mit-id": { "da": "Log ind med MitID", "en": "Login with MitID" },
       "mit-id": { "da": "MitID", "en": "MitID" },
       "create-library-user": {
         "da": "Opret dig som l\u00e5ner p\u00e5 et bibliotek",
@@ -3320,10 +3072,7 @@
         "en": "A system error occurred during login, please try again in a moment."
       },
       "system-error-header": { "da": "Loginfejl", "en": "Login Error" },
-      "other-options": {
-        "da": "Andre muligheder",
-        "en": "Other options"
-      },
+      "other-options": { "da": "Andre muligheder", "en": "Other options" },
       "latest-login": { "da": "Seneste login", "en": "Latest login" }
     },
     "form": {
@@ -3340,10 +3089,7 @@
         "da": "Skriv din e-mailadresse"
       },
       "icon-label-selected": { "da": "valgt", "en": "selected" },
-      "icon-label-not-selected": {
-        "da": "ikke valgt",
-        "en": "not selected"
-      },
+      "icon-label-not-selected": { "da": "ikke valgt", "en": "not selected" },
       "userId-label": { "da": "L\u00e5ner-id", "en": "Loaner-id" },
       "pincode-label": { "da": "Pinkode", "en": "Pincode" },
       "userName-label": { "da": "Navn", "en": "Name" },
@@ -3354,10 +3100,7 @@
         "en": "Loaner card number"
       },
       "customId-label": { "da": "CustomId", "en": "CustomId" },
-      "userTelephone-label": {
-        "da": "Telefonnummer",
-        "en": "Phone number"
-      },
+      "userTelephone-label": { "da": "Telefonnummer", "en": "Phone number" },
       "cpr-label": { "da": "CPR", "en": "CPR" },
       "userDateOfBirth-label": {
         "da": "F\u00f8dselsdato",
@@ -3393,10 +3136,7 @@
         "da": "Skriv dit telefonnummer",
         "en": "Enter your phone number"
       },
-      "cpr-placeholder": {
-        "da": "Skriv dit CPR",
-        "en": "Enter your CPR"
-      },
+      "cpr-placeholder": { "da": "Skriv dit CPR", "en": "Enter your CPR" },
       "userDateOfBirth-placeholder": {
         "da": "Skriv din f\u00f8dselsdato",
         "en": "Enter your date of birth"
@@ -3514,10 +3254,7 @@
       }
     },
     "removeLibrary": {
-      "title": {
-        "da": "Fjern %s",
-        "en": "LABEL: Mangler overs\u00e6ttelse!"
-      },
+      "title": { "da": "Fjern %s", "en": "LABEL: Mangler overs\u00e6ttelse!" },
       "text": {
         "da": "Du er ved at fjerne %s fra din liste over biblioteker. Er du sikker p\u00e5 at du vil fjerne biblioteket fra listen over dine biblioteker?",
         "en": "LABEL: Mangler overs\u00e6ttelse!"
@@ -3586,10 +3323,7 @@
         "da": "Alle artikler | Bibliotek.dk",
         "en": "All articles | Bibliotek.dk"
       },
-      "article-title": {
-        "da": "%s | Bibliotek.dk",
-        "en": "%s | Bibliotek.dk"
-      },
+      "article-title": { "da": "%s | Bibliotek.dk", "en": "%s | Bibliotek.dk" },
       "help-title": {
         "da": "Hj\u00e6lp og vejledning | Bibliotek.dk",
         "en": "Help and guidance | Bibliotek.dk"
@@ -3739,10 +3473,7 @@
         "da": "Avisartikel",
         "en": "Articles from newspapers"
       },
-      "category-articles-99.4": {
-        "da": "Biografier",
-        "en": "Biographies"
-      },
+      "category-articles-99.4": { "da": "Biografier", "en": "Biographies" },
       "category-articles-60.1": {
         "da": "Erhverv og ledelse ",
         "en": "Business Management"
@@ -3853,10 +3584,7 @@
         "en": "Find a good movie ",
         "da": "Her finder du nye og popul\u00e6re film inden for alle genrer og typer"
       },
-      "category-movies-nyeste": {
-        "da": "Nyeste film",
-        "en": "New movies"
-      },
+      "category-movies-nyeste": { "da": "Nyeste film", "en": "New movies" },
       "category-movies-popul\u00e6re": {
         "da": "Popul\u00e6re film",
         "en": "Popular movies"
@@ -3874,19 +3602,13 @@
         "da": "Dokumentarfilm",
         "en": "Documentary Movies"
       },
-      "category-movies-komedier": {
-        "da": "Komedier",
-        "en": "Comedy Movies"
-      },
+      "category-movies-komedier": { "da": "Komedier", "en": "Comedy Movies" },
       "category-movies-kunst-og-kunstnere": {
         "da": "Kunst og kunstnere",
         "en": "Art and artists"
       },
       "category-movies-tegnefilm": { "da": "Tegnefilm", "en": "Cartoon" },
-      "category-movies-tv-serier": {
-        "da": "TV-serier",
-        "en": "TV series"
-      },
+      "category-movies-tv-serier": { "da": "TV-serier", "en": "TV series" },
       "category-movies-dvd": { "en": "dvd", "da": "DVD" },
       "category-movies-video": { "da": "VHS", "en": "VHS" },
       "category-movies-film-(net)": {
@@ -3899,10 +3621,7 @@
         "da": "Her finder du ny og popul\u00e6r musik inden for alverdens genrer",
         "en": "Find music of all genres"
       },
-      "category-music-nyeste": {
-        "da": "Nyeste musik",
-        "en": "New music"
-      },
+      "category-music-nyeste": { "da": "Nyeste musik", "en": "New music" },
       "category-music-popul\u00e6re": {
         "da": "Popul\u00e6r musik",
         "en": "Popular music"
@@ -3911,10 +3630,7 @@
         "da": "Musik for b\u00f8rn",
         "en": "Children\u0027s music"
       },
-      "category-music-cd-(musik)": {
-        "da": "CD\u0027er",
-        "en": "CD\u0027s"
-      },
+      "category-music-cd-(musik)": { "da": "CD\u0027er", "en": "CD\u0027s" },
       "category-music-grammofonplade": {
         "da": "LP\u0027er",
         "en": "Gramophone records"
@@ -3980,10 +3696,7 @@
         "da": "Trommeskoler",
         "en": "Drumming schools"
       },
-      "title-nonfiction": {
-        "da": "title-nonfiction",
-        "en": "Nonfiction"
-      },
+      "title-nonfiction": { "da": "title-nonfiction", "en": "Nonfiction" },
       "description-nonfiction": {
         "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Find literature about all kinds of subjects"
@@ -3996,10 +3709,7 @@
         "en": "Popular nonfiction",
         "da": "Popul\u00e6r faglitteratur"
       },
-      "category-nonfiction-51": {
-        "da": "Matematik",
-        "en": "Mathematics"
-      },
+      "category-nonfiction-51": { "da": "Matematik", "en": "Mathematics" },
       "category-nonfiction-72": {
         "da": "Kunstv\u00e6rker",
         "en": "Reproductions of individual artists\u0027 works"
@@ -4028,14 +3738,8 @@
         "da": "Slesvig-Holsten",
         "en": "The History of Slesvig-Holsten"
       },
-      "category-nonfiction-04.6": {
-        "da": "Blandede tekster",
-        "en": "Essays"
-      },
-      "category-nonfiction-37.1": {
-        "da": "Undervisning",
-        "en": "Education"
-      },
+      "category-nonfiction-04.6": { "da": "Blandede tekster", "en": "Essays" },
+      "category-nonfiction-37.1": { "da": "Undervisning", "en": "Education" },
       "title-childrenbooksnonfiction": {
         "da": "title-childrenbooksnonfiction",
         "en": "Nonfiction books for children"
@@ -4108,10 +3812,7 @@
         "da": "Popul\u00e6re e-b\u00f8ger",
         "en": "Ebooks"
       },
-      "category-ebooks-lyd": {
-        "da": "Lydb\u00f8ger",
-        "en": "Audio books"
-      },
+      "category-ebooks-lyd": { "da": "Lydb\u00f8ger", "en": "Audio books" },
       "category-ebooks-ebog": { "da": "E-b\u00f8ger", "en": "Ebooks" },
       "category-ebooks-sk\u00f8nlitteratur": {
         "da": "E-b\u00f8ger sk\u00f8nlitteratur",
@@ -4156,15 +3857,9 @@
       "administer": { "da": "Administrer", "en": "Administer" },
       "myLibraries": { "da": "Mine biblioteker", "en": "My libraries" },
       "bookmarks": { "da": "Huskeliste", "en": "Bookmarks" },
-      "orderHistory": {
-        "en": "Order history",
-        "da": "Bestillingshistorik"
-      },
+      "orderHistory": { "en": "Order history", "da": "Bestillingshistorik" },
       "myProfile": { "da": "Min profil", "en": "My profile" },
-      "savedSearches": {
-        "da": "Gemte s\u00f8gninger",
-        "en": "saved searches"
-      },
+      "savedSearches": { "da": "Gemte s\u00f8gninger", "en": "saved searches" },
       "profileMenu": { "da": "Profilmenu", "en": "Profile menu" },
       "loansAndReservations": {
         "da": "L\u00e5n og reserveringer",
@@ -4226,10 +3921,7 @@
         "da": "Vil du slette din brugerprofil p\u00e5 bibliotek.dk?",
         "en": "Do you wish to delete your profile at bibliotek.dk?"
       },
-      "delete-order": {
-        "da": "Slet reservering",
-        "en": "Delete reservation"
-      },
+      "delete-order": { "da": "Slet reservering", "en": "Delete reservation" },
       "delete-order-questionmark": {
         "da": "Slet reservering?",
         "en": "Delete reservation?"
@@ -4251,10 +3943,7 @@
         "da": "Klar til afhentning",
         "en": "Ready to pickup"
       },
-      "pickup-deadline": {
-        "da": "Hent senest",
-        "en": "Pickup at the latest"
-      },
+      "pickup-deadline": { "da": "Hent senest", "en": "Pickup at the latest" },
       "date-overdue": {
         "da": "Frist overskredet!",
         "en": "Return deadline overdue!"
@@ -4264,15 +3953,9 @@
         "da": "Du ser l\u00e5n og reserveringer for",
         "en": "Overview of your loans and reservations at "
       },
-      "your-libraries": {
-        "da": "dine biblioteker",
-        "en": "your libraries"
-      },
+      "your-libraries": { "da": "dine biblioteker", "en": "your libraries" },
       "material": { "da": "Materiale", "en": "Material" },
-      "return-deadline": {
-        "da": "Afleveringsfrist",
-        "en": "Return deadline"
-      },
+      "return-deadline": { "da": "Afleveringsfrist", "en": "Return deadline" },
       "loaner-library": {
         "da": "Udl\u00e5nsbibliotek",
         "en": "Loaning library"
@@ -4280,10 +3963,7 @@
       "status": { "da": "Status", "en": "Status" },
       "pickup-at": { "da": "Afhentes p\u00e5", "en": "Pickup at" },
       "price": { "da": "Pris", "en": "Price" },
-      "front-of-row": {
-        "da": "Forrest i k\u00f8en",
-        "en": "Front of queue"
-      },
+      "front-of-row": { "da": "Forrest i k\u00f8en", "en": "Front of queue" },
       "in-row": { "da": "foran dig", "en": "in front of you" },
       "no-results-loans": {
         "da": "Du har ingen aktive l\u00e5n",
@@ -4325,10 +4005,7 @@
         "da": "M\u00e5 vi gemme dine bestillinger i l\u00e6ngere tid?",
         "en": "Would you like to save your orders for a longer period of time?"
       },
-      "youHaveOrdered": {
-        "da": "Du har bestilt",
-        "en": "You have ordered"
-      },
+      "youHaveOrdered": { "da": "Du har bestilt", "en": "You have ordered" },
       "youHaveOrderedDigitalOrder": {
         "da": "Du vil modtage en email fra Det Kgl. Bibliotek med artiklen",
         "en": "You will receive an email from The Royal Library with the article"
@@ -4342,10 +4019,7 @@
         "da": "Digital kopi bestilt",
         "en": "Digital copy ordered"
       },
-      "titleNotFound": {
-        "da": "titel ikke fundet",
-        "en": "title not found"
-      },
+      "titleNotFound": { "da": "titel ikke fundet", "en": "title not found" },
       "date": { "da": "Dato", "en": "Date" },
       "activity": { "da": "Aktivitet", "en": "Activity" },
       "dataCollectionTitle": {
@@ -4364,14 +4038,8 @@
         "en": "Do you want to change your consent so that your orders are no longer saved in the history?\n\nInstead, only orders for the past 30 days will be displayed",
         "da": "Vil du \u00e6ndre dit samtykke, s\u00e5 dine bestillinger ikke l\u00e6ngere bliver gemt i historikken?\r\n\r\nFremover vil der s\u00e5 kun blive vist bestillinger for de seneste 30 dage.\r\n\r\nOBS: bestillinger f\u00f8r de seneste 30 dage bliver f\u00f8rst slettet i nat."
       },
-      "consentButton": {
-        "da": "Giv tilladelse",
-        "en": "Give Permission"
-      },
-      "revokeConsent": {
-        "da": "Tilbagekald samtykke",
-        "en": "Revoke consent"
-      },
+      "consentButton": { "da": "Giv tilladelse", "en": "Give Permission" },
+      "revokeConsent": { "da": "Tilbagekald samtykke", "en": "Revoke consent" },
       "goBackButton": { "da": "Tilbage", "en": "Go Back" },
       "consentInfoTextpart1": {
         "da": "Her kan du se en oversigt over dine bestillinger. Du har givet",
@@ -4442,10 +4110,7 @@
         "da": "G\u00e5 til bestillingshistorik",
         "en": "Go to order history"
       },
-      "errorOccured": {
-        "da": "Der opstod en fejl",
-        "en": "An error occured"
-      },
+      "errorOccured": { "da": "Der opstod en fejl", "en": "An error occured" },
       "tryAgain": {
         "da": "Pr\u00f8v igen eller kontakt ",
         "en": "Try again or contact "
@@ -4482,10 +4147,7 @@
         "da": "Afhentningssted ikke fundet",
         "en": "PickupAgency not found"
       },
-      "UNKNOWN_USER": {
-        "da": "Brugeren ikke fundet",
-        "en": "User not found"
-      },
+      "UNKNOWN_USER": { "da": "Brugeren ikke fundet", "en": "User not found" },
       "ERROR_UNAUTHENTICATED_USER": {
         "da": "Brugeren er ikke logget ind",
         "en": "User not authenticated"
