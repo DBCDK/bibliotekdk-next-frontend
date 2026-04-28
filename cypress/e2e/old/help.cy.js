@@ -18,11 +18,11 @@ describe("help", () => {
     cy.tabs(1);
     cy.focused().should("have.attr", "href", "/hjaelp/om-login/2");
   });
-  it.skip(`Search: menu is visible on desktop`, () => {
+  it(`Search: menu is visible on desktop`, () => {
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.visible");
   });
-  it.skip(`Search: menu is hidden on mobile`, () => {
+  it(`Search: menu is hidden on mobile`, () => {
     cy.viewport(991, 800);
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.hidden");
@@ -58,7 +58,7 @@ describe("help", () => {
 });
 
 describe("help menu", () => {
-  it.skip(`Help menu - tab & click`, () => {
+  it(`Help menu - tab & click`, () => {
     cy.visit("/iframe.html?path=/story/help-menu--help-menu");
     cy.get("[data-cy=help-menu]").should("be.visible");
     cy.get("[data-cy=help-menu]").contains("Søgning");
@@ -67,7 +67,7 @@ describe("help menu", () => {
 });
 
 describe("Help texts", () => {
-  it.skip("Help text load properly", () => {
+  it("Help text load properly", () => {
     cy.visit("/iframe.html?path=/story/help-helptext--wrapped-story-help-text");
 
     cy.get("[data-cy=help-text-title]")
