@@ -15,16 +15,11 @@ const normalizeNewlines = (str) => str.replace(/\n/g, "  \n");
 function MarkdownImage({ src, alt = "", title, ...props }) {
   const imageProps = { ...props };
   delete imageProps.node;
-  const image = <img src={src} alt={alt} title={title || ""} {...imageProps} />;
-
-  if (!title) {
-    return image;
-  }
 
   return (
     <figure>
-      {image}
-      <figcaption>{title}</figcaption>
+      <img src={src} alt={alt} title={title || ""} {...imageProps} />
+      {title && <figcaption>{title}</figcaption>}
     </figure>
   );
 }
