@@ -30,10 +30,7 @@ export function HelpMenuWithId() {
   return (
     <div>
       <StoryTitle>Helptext Menu expanded by id</StoryTitle>
-      <HelpTextMenu
-        helpTexts={allHelp.data.helpTexts}
-        helpTextId={"19"}
-      />
+      <HelpTextMenu helpTexts={allHelp.data.helpTexts} helpTextId={"19"} />
     </div>
   );
 }
