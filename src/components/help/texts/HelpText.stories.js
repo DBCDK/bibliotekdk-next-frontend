@@ -46,7 +46,7 @@ WrappedStoryHelpText.story = {
               documentId: "42",
               title: "Sådan søger du i Bibliotek.dk",
               body: `I Bibliotek.dk kan du finde danske bibliotekers materialer`,
-              group: "Søgning",
+              group: "sogning",
               image: null,
               createdAt: "2021-04-28T09:56:34+0200",
               updatedAt: "2022-06-30T10:29:43+0200",

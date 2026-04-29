@@ -5,35 +5,35 @@
         "documentId": "19",
         "title": "Om Login",
         "body": "<p><strong>Her skal du bruge login</strong><br />\r\n<br />\r\nLogin <strong>skal</strong> bruges hvis du vil bruge disse muligheder i bibliotek.dk:</p>",
-        "group": "Login",
+        "group": "login",
         "image": null
       },
       {
         "documentId": "21",
         "title": "Sådan søger du i bibliotek.dk",
         "body": "<p><strong>Søgning</strong></p>\r\n\r\n<ol>\r\n\t<li>Skriv et eller flere ord i den hvide boks</li>\r\n</ol>",
-        "group": "Søgning",
+        "group": "sogning",
         "image": null
       },
       {
         "documentId": "22",
         "title": "WAYF",
         "body": "<p>Du kan logge ind med et WAYF-login på bibliotek.dk.</p>",
-        "group": "Login",
+        "group": "login",
         "image": null
       },
       {
         "documentId": "24",
         "title": "Om bibliotek.dk",
         "body": "<h3>Hvad kan jeg bruge bibliotek.dk til?</h3>\r\n\r\n<p>På bibliotek.dk kan du finde og bestille materialer fra danske biblioteker.</p>",
-        "group": "Om bibliotek.dk",
+        "group": "om_bibliotek_dk",
         "image": null
       },
       {
         "documentId": "25",
         "title": "Kontakt os",
         "body": "<p>Du er altid velkommen til at kontakte os.</p>",
-        "group": "Om bibliotek.dk",
+        "group": "om_bibliotek_dk",
         "image": null
       }
     ]

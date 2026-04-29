@@ -2,6 +2,6 @@
   "documentId": "19",
   "title": "Om Login",
   "body": "<p><strong>Her skal du bruge login</strong><br />\r\n<br />\r\nLogin <strong>skal</strong> bruges hvis du vil bruge disse muligheder i bibliotek.dk:</p>\r\n\r\n<ul>\r\n\t<li>Se udlånsstatus, forny og annullér via bibliotek.dk - klik på Lånerstatus under Min side</li>\r\n\t<li>Adgang til at læse artikler hos Infomedia</li>\r\n\t<li>Bestille kopier via linket Bestil kopi</li>\r\n\t<li>Adgang til at gemme poster og søgninger i huskeliste</li>\r\n</ul>\r\n\r\n<p><br />\r\n<br />\r\n<strong>Du kan logge ind på fire forskellige måder</strong><br />\r\n<br />\r\nKlik på Log ind, så får du disse login-muligheder:</p>\r\n\r\n<ul>\r\n\t<li>Bibliotekslogin – her bruger du dine lånerdata fra dit bibliotek</li>\r\n\t<li>NemId – klik på Bibliotekslogin, så finder du NemId</li>\r\n\t<li>WAYF</li>\r\n\t<li>bibliotek.dk-login – mailadresse og kodeord</li>\r\n</ul>",
-  "group": "Login",
+  "group": "login",
   "image": null
 }

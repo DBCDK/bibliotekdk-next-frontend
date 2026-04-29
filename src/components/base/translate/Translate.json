@@ -2561,17 +2561,27 @@
         "da": "Om Bibliotek.dk"
       },
       "S\u00f8gning": { "da": "S\u00f8gning", "en": "Search" },
+      "sogning": { "da": "S\u00f8gning", "en": "Search" },
       "Bestilling": { "da": "Bestilling", "en": "Order" },
+      "bestilling": { "da": "Bestilling", "en": "Order" },
       "Login": { "en": "Login", "da": "Login" },
+      "login": { "en": "Login", "da": "Login" },
       "Profil": { "da": "Profil", "en": "Profile" },
+      "profil": { "da": "Profil", "en": "Profile" },
       "Teknik": { "da": "Teknik", "en": "Technique" },
       "Mobil version": { "da": "Mobil version", "en": "Mobile version" },
       "Privatlivspolitik": { "da": "Privatlivspolitik", "en": "Privacy" },
+      "privatlivspolitik": { "da": "Privatlivspolitik", "en": "Privacy" },
       "Tilg\u00e6ngelighed": {
         "da": "Tilg\u00e6ngelighed",
         "en": "Accessibility"
       },
-      "Kontakt": { "da": "Kontakt", "en": "Contact" }
+      "tilgaengelighed": { "da": "Tilg\u00e6ngelighed", "en": "Accessibility" },
+      "Kontakt": { "da": "Kontakt", "en": "Contact" },
+      "kontakt": { "da": "Kontakt", "en": "Contact" },
+      "om_bibliotek_dk": { "da": "Om Bibliotek.dk", "en": "About bibliotek.dk" },
+      "Personlige data": { "da": "Personlige data", "en": "Personal data" },
+      "personlige_data": { "da": "Personlige data", "en": "Personal data" }
     },
     "help": {
       "Help and guides": {
