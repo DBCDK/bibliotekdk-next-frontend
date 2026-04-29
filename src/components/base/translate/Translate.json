@@ -2579,7 +2579,10 @@
       "tilgaengelighed": { "da": "Tilg\u00e6ngelighed", "en": "Accessibility" },
       "Kontakt": { "da": "Kontakt", "en": "Contact" },
       "kontakt": { "da": "Kontakt", "en": "Contact" },
-      "om_bibliotek_dk": { "da": "Om Bibliotek.dk", "en": "About bibliotek.dk" },
+      "om_bibliotek_dk": {
+        "da": "Om Bibliotek.dk",
+        "en": "About bibliotek.dk"
+      },
       "Personlige data": { "da": "Personlige data", "en": "Personal data" },
       "personlige_data": { "da": "Personlige data", "en": "Personal data" }
     },
