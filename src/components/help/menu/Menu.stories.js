@@ -17,7 +17,7 @@ export function HelpMenu() {
   return (
     <div>
       <StoryTitle>Helptext Menu collapsed</StoryTitle>
-      <HelpTextMenu helpTexts={allHelp.data.nodeQuery.entities} />
+      <HelpTextMenu helpTexts={allHelp.data.helpTexts} />
     </div>
   );
 }
@@ -31,7 +31,7 @@ export function HelpMenuWithId() {
     <div>
       <StoryTitle>Helptext Menu expanded by id</StoryTitle>
       <HelpTextMenu
-        helpTexts={allHelp.data.nodeQuery.entities}
+        helpTexts={allHelp.data.helpTexts}
         helpTextId={"19"}
       />
     </div>

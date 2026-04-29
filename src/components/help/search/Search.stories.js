@@ -50,6 +50,32 @@ export function ShowResults() {
     />
   );
 }
+ShowResults.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        BibliotekdkCms: {
+          helpTexts: () => [
+            {
+              documentId: "19",
+              title: "Om Login",
+              body: "Login skal bruges hvis du vil bruge disse muligheder i bibliotek.dk.",
+              group: "Login",
+              image: null,
+            },
+            {
+              documentId: "21",
+              title: "Sådan søger du i bibliotek.dk",
+              body: "Skriv et eller flere ord i den hvide boks.",
+              group: "Søgning",
+              image: null,
+            },
+          ],
+        },
+      },
+    },
+  },
+};
 
 export function Loading() {
   return <Page result={[]} isLoading={true} query={"hest"} />;
