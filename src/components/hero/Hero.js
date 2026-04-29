@@ -9,7 +9,7 @@ import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
 import Image from "@/components/base/image";
 import { useData } from "@/lib/api/api";
-import { frontpageHero } from "@/lib/api/hero.fragments";
+import { cmsFrontpage, getCmsFrontpage } from "@/lib/api/frontpage.fragments";
 import Text from "@/components/base/text/Text";
 import useSiteConfig from "@/components/hooks/useSiteConfig";
 import Ornament1WhiteSvg from "@/public/icons/ornament1white.svg";
@@ -84,10 +84,26 @@ export function parseHero(data) {
   );
 }
 
+export function parseCmsHero(data) {
+  const frontpage = getCmsFrontpage(data);
+  if (!frontpage?.hero?.image?.url) return null;
+  return {
+    description: frontpage.hero.description,
+    image: {
+      alt: frontpage.hero.alternativeText || "",
+      url: frontpage.hero.image.url,
+      width: frontpage.hero.image.width,
+      height: frontpage.hero.image.height,
+      ogurl: frontpage.hero.image.url,
+    },
+  };
+}
+
 export default function Wrap() {
   const { hero } = useSiteConfig();
   const useSiteHero = !!hero?.path;
-  const { data } = useData(!useSiteHero && frontpageHero());
+  const { data: cmsData } = useData(!useSiteHero && cmsFrontpage());
+
   const heroImage = useSiteHero
     ? {
         description: hero?.description,
@@ -96,7 +112,7 @@ export default function Wrap() {
           url: hero.path,
         },
       }
-    : parseHero(data);
+    : parseCmsHero(cmsData);
 
   return <Hero image={heroImage} />;
 }

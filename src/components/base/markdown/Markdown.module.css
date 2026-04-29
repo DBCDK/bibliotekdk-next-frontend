@@ -1,0 +1,60 @@
+.markdown {
+  font-size: 17px;
+  line-height: 26px;
+}
+
+.markdown figure {
+  padding: var(--pt4) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.markdown figure img {
+  max-width: 100%;
+}
+
+.markdown figcaption {
+  font-size: 14px;
+  line-height: 22px;
+  padding: var(--pt1) 0 0 0;
+}
+
+.markdown strong {
+  font-weight: normal;
+  font-family: var(--body-font-semibold);
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: var(--pt5);
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font-semibold);
+  font-weight: 400;
+  padding-top: var(--pt3);
+  padding-bottom: var(--pt1);
+  font-style: normal;
+}
+
+.markdown p {
+  padding-bottom: var(--pt3);
+}
+
+.markdown > :first-child {
+  padding-top: 0;
+}
+
+@media (min-width: 992px) {
+  .markdown figure img {
+    max-width: 100%;
+  }
+}

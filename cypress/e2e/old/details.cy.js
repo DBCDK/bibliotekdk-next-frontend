@@ -10,9 +10,9 @@ describe("Details", () => {
     cy.contains("Seneste udgave, Bog", { timeout: 15000 }).should("exist");
 
     cy.get("[data-cy=text-sprog]").should("have.text", "Sprog");
-    cy.get("[data-cy=text-længde]").should("have.text", "Længde");
+    cy.get("[data-cy=text-omfang]").should("have.text", "Omfang");
     cy.get("[data-cy=text-udgivet]").should("have.text", "Udgivet");
-    cy.get("[data-cy=text-bidrag]").should("have.text", "Bidrag");
+    cy.get("[data-cy=text-ophav]").should("have.text", "Ophav");
     cy.get("[data-cy=creator-contributor-text-helper")
       .should("exist")
       .first()
@@ -24,7 +24,7 @@ describe("Details", () => {
       .should("contain", "roles")
       .should("contain", "function.singular");
 
-    cy.get("[data-cy=text-genre-form]").should("have.text", "Genre/form");
+    cy.get("[data-cy=text-genre-og-form]").should("have.text", "Genre og form");
 
     cy.get("[data-cy*=text-lix]").should("have.text", "lix: 2222");
   });
@@ -38,7 +38,7 @@ describe("Details", () => {
     );
 
     cy.get("[data-cy=text-sprog]").should("have.text", "Sprog");
-    cy.get("[data-cy=text-længde]").should("have.text", "Længde");
+    cy.get("[data-cy=text-omfang]").should("have.text", "Omfang");
     cy.get("[data-cy=text-udgivet]").should("have.text", "Udgivet");
     cy.get("[data-cy=text-skuespillere]").should("have.text", "Skuespillere");
     cy.get("[data-cy=text-dk5]").should("have.text", "dk5");
@@ -55,7 +55,7 @@ describe("Details", () => {
     cy.contains("Anders Thomas Jensen");
     cy.should("not.contain", "(ophav)");
 
-    cy.get("[data-cy=text-genre-form]")
+    cy.get("[data-cy=text-genre-og-form]")
       .next("div")
       .first()
       .should("have.text", "actionfilm, thriller, science fiction");
@@ -68,9 +68,9 @@ describe("Details", () => {
     cy.contains("Seneste udgave, Artikel", { timeout: 15000 }).should("exist");
 
     cy.get("[data-cy=text-sprog]").should("exist");
-    cy.get("[data-cy=text-længde]").should("exist");
+    cy.get("[data-cy=text-omfang]").should("exist");
     cy.get("[data-cy=text-udgivet]").should("exist");
-    cy.get("[data-cy=text-bidrag]").should("exist");
+    cy.get("[data-cy=text-ophav]").should("exist");
   });
 
   it("should not have details where there is no manifestation of type (should not happen)", () => {

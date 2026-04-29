@@ -38,13 +38,13 @@ describe("LoanerForm", () => {
     cy.get("[data-cy=input-userId]").should("be.visible").type("123");
     cy.get("[data-cy=input-userName]").should("be.visible").type("Bernd");
     cy.get("[data-cy=button-gå-til-bestilling]").should("be.visible").click();
-    cy.get("[data-cy=text-angiv-venligst-en-korrekt-email-adresse]").should(
+    cy.get("[data-cy=text-angiv-venligst-en-korrekt-e-mailadresse]").should(
       "be.visible"
     );
     //no error if all fields have been filled out and email adress correct
     cy.get("[data-cy=input-userMail]").should("be.visible").type("@test.dk");
     cy.get("[data-cy=button-gå-til-bestilling]").should("be.visible").click();
-    cy.get("[data-cy=text-angiv-venligst-en-korrekt-email-adresse]").should(
+    cy.get("[data-cy=text-angiv-venligst-en-korrekt-e-mailadresse]").should(
       "not.exist"
     );
     cy.get("[data-cy=text-udfyld-venligst-alle-felter]").should("not.exist");

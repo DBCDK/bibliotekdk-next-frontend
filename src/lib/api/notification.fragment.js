@@ -1,29 +1,24 @@
-// @TODO export below in a function
 import { ApiEnums } from "@/lib/api/api";
 
-export function notificationsQuery({ language }) {
+export function notificationsQuery() {
+  const site = process.env.NEXT_PUBLIC_SITE || "bibliotekDk"; //TODO: maybe store default in a constant and reuse it in other queries
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query NotificationsFragmentsNotificationQuery($language: LanguageId!) {
-      nodeQuery(filter: {conditions: {field: "type", value: "notification", operator: EQUAL}}) {
-        count
-        entities(language:$language) {
-          ... on NodeNotification {
-            nid
-            langcode {
-              value
-            }
-            fieldNotificationText{
-              value
-            }
-            fieldNotificationType
-            }
-          }  
+    query NotificationsFragmentsNotificationQuery($site: String!) {
+      bibliotekdkCms {
+        notifications(
+          status: PUBLISHED
+          filters: { sites: { name: { eq: $site } } }
+        ) {
+          documentId
+          title
+          text
+          type
         }
-       monitor(name: "notifications")
+      }
     }`,
-    variables: { language },
+    variables: { site },
     slowThreshold: 3000,
   };
 }

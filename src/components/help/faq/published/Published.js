@@ -4,7 +4,6 @@ import Accordion from "@/components/base/accordion";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
-import { getLanguage } from "@/components/base/translate/Translate";
 import { groupSortData } from "../utils";
 import styles from "./Published.module.css";
 import { useData } from "@/lib/api/api";
@@ -59,22 +58,19 @@ Published.propTypes = {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  const langcode = getLanguage();
-  // real data goes here ...
-  const { isLoading, data, error } = useData(
-    faqFragments.publishedFaqs(langcode)
-  );
+  // locale is not needed in the query (FAQ has no locale in Strapi)
+  // but we keep getLocale available for future use
+  const { isLoading, data, error } = useData(faqFragments.publishedFaqs());
 
   if (isLoading) {
     return <Skeleton lines={6} className={styles.helpskeleton} />;
   }
 
-  if (!data || !data.faq || error) {
-    // @TODO some error here .. message for user .. log ??
+  if (!data || !data.bibliotekdkCms || error) {
     return null;
   }
 
-  const realdata = data.faq.entities;
+  const realdata = data.bibliotekdkCms.faqs;
 
   return <Published {...props} data={realdata} />;
 }
