@@ -24,11 +24,11 @@ function isExternalUrl(url) {
   return /^https?:\/\//.test(url);
 }
 
-export default function LinkCard({ title, buttonText, url, image }) {
+export default function LinkCard({ title, buttonText, url, image, backgroundColor }) {
   const target = isExternalUrl(url) ? "_blank" : "_self";
 
   return (
-    <Section title={false} divider={{ content: false }}>
+    <Section title={false} divider={{ content: false }} backgroundColor={backgroundColor}>
       <Col
         as={LinkOnlyInternalAnimations}
         href={url}
@@ -67,6 +67,7 @@ LinkCard.propTypes = {
   title: PropTypes.string.isRequired,
   buttonText: PropTypes.string,
   url: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string,
   image: PropTypes.shape({
     url: PropTypes.string,
     alternativeText: PropTypes.string,
