@@ -20,14 +20,43 @@
   padding: var(--pt1) 0 0 0;
 }
 
+.markdown p,
+.markdown li,
+.markdown strong,
+.markdown em {
+  letter-spacing: normal;
+}
+
 .markdown strong {
   font-weight: normal;
   font-family: var(--body-font-semibold);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown em {
+  font-style: italic;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .markdown ul,
 .markdown ol {
   padding-left: var(--pt5);
+  margin: 0;
+}
+
+.markdown ul {
+  list-style: disc;
+}
+
+.markdown ol {
+  list-style: decimal;
+}
+
+.markdown li {
+  font-size: 17px;
+  line-height: 26px;
 }
 
 .markdown h1,
@@ -43,14 +72,40 @@
   padding-top: var(--pt3);
   padding-bottom: var(--pt1);
   font-style: normal;
+  letter-spacing: normal;
 }
 
 .markdown p {
   padding-bottom: var(--pt3);
+  font-size: 17px;
+  line-height: 26px;
+}
+
+.markdown a {
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .markdown > :first-child {
   padding-top: 0;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: var(--pt2) 0 var(--pt3) 0;
+}
+
+.th,
+.td {
+  text-align: left;
+  padding: var(--pt1) var(--pt2);
+  border-bottom: 1px solid var(--gray-1, #e6e6e6);
+}
+
+.th {
+  font-family: var(--body-font-semibold);
+  font-weight: 400;
 }
 
 @media (min-width: 992px) {

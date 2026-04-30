@@ -7,10 +7,12 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import styles from "./Markdown.module.css";
 
-/**
- * Normalize newlines to ensure consistent spacing between paragraphs
- */
-const normalizeNewlines = (str) => str.replace(/\n/g, "  \n");
+const normalizeNewlines = (str) =>
+  str.trim().replace(/(^|\n)(\d+)\./g, "$1$2\\.");
+
+const isExternalHref = (href = "") => {
+  return href.startsWith("http://") || href.startsWith("https://");
+};
 
 function MarkdownImage({ src, alt = "", title, ...props }) {
   const imageProps = { ...props };
@@ -44,32 +46,39 @@ function MarkdownParagraph({ children, ...props }) {
   );
 }
 
+function MarkdownLink({ href, children }) {
+  const isExternal = isExternalHref(href);
+
+  return (
+    <Link
+      border={{ bottom: { keepVisible: true } }}
+      href={href}
+      target={isExternal ? "_blank" : "_self"}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+    >
+      {children}
+    </Link>
+  );
+}
+
 export const markdownComponents = {
-  h1: (props) => <Title type="title3" tag="h1" {...props} />,
-  h2: (props) => <Title type="title4" tag="h2" {...props} />,
-  h3: (props) => <Title type="title5" tag="h3" {...props} />,
+  h1: (props) => <Title type="title6" tag="h1" {...props} />,
+  h2: (props) => <Title type="title6" tag="h2" {...props} />,
+  h3: (props) => <Title type="title6" tag="h3" {...props} />,
+  h4: (props) => <Title type="title6" tag="h4" {...props} />,
+  h5: (props) => <Title type="title6" tag="h5" {...props} />,
+  h6: (props) => <Title type="title6" tag="h6" {...props} />,
   p: MarkdownParagraph,
   li: (props) => <Text type="text2" tag="li" {...props} />,
-  strong: (props) => <Text type="text1" tag="strong" {...props} />,
+  strong: (props) => <Text type="text2" tag="strong" {...props} />,
+  em: (props) => <Text type="text2" tag="em" {...props} />,
   img: MarkdownImage,
-  a: (props) => (
-    <Link border={{ bottom: { keepVisible: true } }} href={props.href}>
-      {props.children}
-    </Link>
-  ),
+  a: MarkdownLink,
+  table: (props) => <table className={styles.table} {...props} />,
+  th: (props) => <th className={styles.th} {...props} />,
+  td: (props) => <td className={styles.td} {...props} />,
 };
 
-/**
- * Renders markdown using a shared set of components so that headings,
- * paragraphs, lists, links, etc. match the design system across the app.
- *
- * @param {Object} props
- * @param {string} props.children The markdown string to render
- * @param {Object} [props.components] Optional overrides merged on top of the defaults
- * @param {boolean} [props.skeleton] When true, renders a skeleton placeholder instead of the markdown
- * @param {number} [props.lines] Number of skeleton lines to render
- * @returns {React.ReactElement|null}
- */
 export default function Markdown({
   children,
   body,
