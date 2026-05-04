@@ -1,0 +1,33 @@
+.content {
+  display: grid;
+  grid-template-areas: "promoImage" "promoText";
+  grid-template-columns: 1fr;
+  gap: var(--pt4);
+  align-items: center;
+}
+
+.imageWrapper {
+  grid-area: promoImage;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  width: 100%;
+}
+
+.text {
+  grid-area: promoText;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt2);
+}
+
+.button {
+  width: fit-content;
+}
+
+@media (min-width: 768px) {
+  .content {
+    grid-template-areas: "promoText promoImage";
+    grid-template-columns: 5fr 7fr;
+    gap: var(--pt8);
+  }
+}

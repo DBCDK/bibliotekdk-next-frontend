@@ -1,19 +1,17 @@
 /**
- * Parse helptexts by groups
+ * Parse helptexts by groups.
  * @param helpTexts
  * @returns {{}}
- *  eg. {Søgning:[{id:25, title:fisk}. {id:1,title:hest}]}
+ *  eg. {Søgning:[{id:"abc123", title:"fisk"}]}
  */
 export function helpTextParseMenu(helpTexts) {
-  // sort helptexts by group
   const structuredHelpTexts = {};
-  let element = {};
-  let group;
 
   helpTexts.forEach((helptext) => {
     if (helptext) {
-      element = setGroupElement(helptext);
-      group = helptext.fieldHelpTextGroup;
+      const element = setGroupElement(helptext);
+      const group = helptext.group;
+      if (!group) return;
       if (structuredHelpTexts[group]) {
         structuredHelpTexts[group].push(element);
       } else {
@@ -30,20 +28,19 @@ export function helpTextParseMenu(helpTexts) {
         structuredHelpTexts[sortOrder()[index]];
     }
   }
-  // some elements are not in fixed array - eg if a new is added in backend
-  // merge not included elements
+  // some elements are not in fixed array — merge not included elements
   return { ...sortedHelpText, ...structuredHelpTexts };
 }
 
 function sortOrder() {
   return [
-    "Søgning",
-    "Bestilling",
-    "Login",
-    "Privatlivspolitik",
-    "Om bibliotek.dk",
+    "sogning",
+    "bestilling",
+    "login",
+    "privatlivspolitik",
+    "om_bibliotek_dk",
     "Personlige data",
-    "Profil",
+    "profil",
     "Teknik",
     "Mobil version",
     "Tilgængelighed",
@@ -51,13 +48,13 @@ function sortOrder() {
 }
 
 /**
- * Defines an element in a help group
- * @param heltptext
- * @returns {{id: (number|string|*), title}}
+ * Defines an element in a help group.
+ * @param helptext
+ * @returns {{id: string, title: string}}
  */
-function setGroupElement(heltptext) {
+function setGroupElement(helptext) {
   return {
-    id: heltptext.nid,
-    title: heltptext.title,
+    id: helptext.documentId,
+    title: helptext.title,
   };
 }

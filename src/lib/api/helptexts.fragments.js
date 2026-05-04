@@ -1,79 +1,69 @@
-import { lang, getLanguage } from "@/components/base/translate";
+import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
-import { getLangcode } from "@/components/base/translate/Translate";
-/**
- * Helptexts - published
- */
-export function publishedHelptexts({ language }) {
-  const langcode = getLangcode(language);
-  if (!language) {
-    return null;
+import { getLocale } from "@/components/base/translate/Translate";
+
+const HELPTEXT_FIELDS = `
+  documentId
+  title
+  body
+  group
+  image {
+    url
+    alternativeText
+    width
+    height
   }
+`;
+
+const SITE = process.env.NEXT_PUBLIC_SITE || "bibliotekDk"; //TODO: maybe store default in a constant and reuse it in other queries
+
+/**
+ * All published help texts — used for the landing page sections and sidebar menu.
+ */
+export function publishedHelptexts({ locale = getLocale() } = {}) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query ($language: LanguageId! $langcode: [String]){
-      nodeQuery (limit:75 filter: {conditions: [
-        {field: "type", value: ["help_text"]},
-        {field: "status", value:"1"},
-        {field: "langcode", value: $langcode}
-      ] }) {
-        count
-        entities(language:$language) {
-        ... on NodeHelpText {
-            nid
-            title
-            body{
-              value
-              processed
-            }
-            fieldHelpTextGroup
-            fieldImage {
-              alt
-              title
-              url
-              width
-              height
-            }
-          }
+    query: `query PublishedHelptextsQuery($locale: BibliotekdkCmsI18NLocaleCode, $site: String!) {
+      bibliotekdkCms {
+        helpTexts(
+          status: PUBLISHED,
+          locale: $locale,
+          pagination: { limit: 100 },
+          filters: { sites: { name: { eq: $site } } }
+        ) {
+          ${HELPTEXT_FIELDS}
         }
       }
-     monitor(name: "published_helptexts")
     }`,
-    variables: { language, langcode },
+    variables: { locale, site: SITE },
     slowThreshold: 3000,
   };
 }
 
+/**
+ * Single help text by documentId.
+ */
 export function helpText({ helpTextId }) {
-  const language = getLanguage();
-
+  const locale = getLocale();
   return {
     apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `query helptext ($helpTextId: String!, $language: LanguageId!) {
-      nodeById(id: $helpTextId, language: $language) {
-        ... on NodeHelpText {
-          nid
-          title
-          body {
-            value
-            processed
+    query: `query HelptextByIdQuery($documentId: ID!, $locale: BibliotekdkCmsI18NLocaleCode, $site: String!) {
+      bibliotekdkCms {
+        helpTexts(
+          status: PUBLISHED,
+          locale: $locale,
+          filters: {
+            documentId: { eq: $documentId },
+            sites: { name: { eq: $site } }
           }
-          entityCreated
-          entityChanged
-          fieldHelpTextGroup
-          fieldImage {
-            alt
-            title
-            url
-            width
-            height
-          }
+        ) {
+          ${HELPTEXT_FIELDS}
+          createdAt
+          updatedAt
         }
       }
-      monitor(name: "helptext_by_id")
     }`,
-    variables: { helpTextId, language },
+    variables: { documentId: helpTextId, locale, site: SITE },
     slowThreshold: 3000,
   };
 }
@@ -81,7 +71,7 @@ export function helpText({ helpTextId }) {
 export function helpTextSearch({ q }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    delay: 100, // add small delay to avoid flicker when query is fast
+    delay: 100,
     query: `query ($q: String!, $language: LanguageCodeEnum) {
               help(q: $q, language: $language) {
                 result {

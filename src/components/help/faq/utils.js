@@ -1,6 +1,5 @@
 import orderBy from "lodash/orderBy";
 import groupBy from "lodash/groupBy";
-import get from "lodash/get";
 
 import Translate from "@/components/base/translate";
 
@@ -13,7 +12,7 @@ import Translate from "@/components/base/translate";
  */
 export function sortData(data) {
   data = data.map((d) => {
-    return { title: d.title, content: get(d, "body.value", "") };
+    return { title: d.title, content: d.body || "" };
   });
 
   // sort faq alfabetic order
@@ -30,10 +29,7 @@ export function sortData(data) {
 export function groupData(data) {
   const fallback = Translate({ context: "help", label: "faq-group-other" });
 
-  const groups = groupBy(
-    data,
-    (e) => e?.fieldTags[0]?.entity?.entityLabel || fallback
-  );
+  const groups = groupBy(data, (e) => e?.categories?.[0]?.name || fallback);
 
   return groups;
 }
@@ -48,14 +44,11 @@ export function groupData(data) {
 export function groupSortData(data) {
   const fallback = Translate({ context: "help", label: "faq-group-other" });
 
-  const groups = groupBy(
-    data,
-    (e) => e?.fieldTags[0]?.entity?.entityLabel || fallback
-  );
+  const groups = groupBy(data, (e) => e?.categories?.[0]?.name || fallback);
 
-  // Sort groups naturaly by keyname
+  // Sort groups naturally by keyname
   const sortedKeys = Object.keys(groups).sort();
-  // Fallback group keyname is send to last
+  // Fallback group keyname is sent to last
   sortedKeys.push(sortedKeys.splice(sortedKeys.indexOf(fallback), 1)[0]);
 
   const sortedGroups = {};

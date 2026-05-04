@@ -13,9 +13,7 @@ describe("bibliographic data", () => {
       .should("have.attr", "href")
       .should("not.be.empty")
       .and("contain", "/find/simpel?q.all=");
-    cy.get("[data-cy=link-references]").contains(
-      "Download til referencesystemer"
-    );
+    cy.get("[data-cy=link-references]").contains("Hent reference");
 
     cy.contains("Kopier link til udgave");
   });
@@ -23,7 +21,7 @@ describe("bibliographic data", () => {
   it("Full manifestation - check localizationlink", () => {
     cy.visit("/iframe.html?id=work-bibliographic-data--full-manifestation");
 
-    cy.contains("Se om den er hjemme på dit bibliotek");
+    cy.contains("Se hvor den er hjemme");
     cy.contains("Kopier link til udgave");
   });
 });

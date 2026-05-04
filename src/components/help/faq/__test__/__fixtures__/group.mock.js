@@ -1,102 +1,47 @@
 const data = {
-  faq: {
-    count: 4,
-    entities: [
+  bibliotekdkCms: {
+    faqs: [
       {
-        langcode: {
-          value: "en",
-        },
-        nid: 30,
+        documentId: "doc-30",
         title: "abc",
-        promote: false,
-        body: {
-          value: "<p>This faq goes first in the group ...</p>",
-        },
-        fieldTags: [
-          {
-            entity: {
-              entityLabel: "Bestillinger",
-            },
-          },
-        ],
+        promoted: false,
+        body: "<p>This faq goes first in the group ...</p>",
+        categories: [{ name: "Bestillinger" }],
       },
       {
-        langcode: {
-          value: "en",
-        },
-        nid: 31,
+        documentId: "doc-31a",
         title: "ghi",
-        promote: true,
-        body: {
-          value: "<p>This faq goes last in the group ...</p>",
-        },
-        fieldTags: [
-          {
-            entity: {
-              entityLabel: "Søgninger",
-            },
-          },
-        ],
+        promoted: true,
+        body: "<p>This faq goes last in the group ...</p>",
+        categories: [{ name: "Søgninger" }],
       },
       {
-        langcode: {
-          value: "en",
-        },
-        nid: 31,
+        documentId: "doc-31b",
         title: "def",
-        promote: true,
-        body: {
-          value: "<p>This faq goes second in the group ...</p>",
-        },
-        fieldTags: [
-          {
-            entity: {
-              entityLabel: "Søgninger",
-            },
-          },
-        ],
+        promoted: true,
+        body: "<p>This faq goes second in the group ...</p>",
+        categories: [{ name: "Søgninger" }],
       },
       {
-        langcode: {
-          value: "da",
-        },
-        nid: 32,
+        documentId: "doc-32a",
         title: "def",
-        promote: false,
-        body: {
-          value: "<p>This faq goes last in the group ...</p>",
-        },
-        fieldTags: [],
+        promoted: false,
+        body: "<p>This faq goes last in the group ...</p>",
+        categories: null,
       },
       {
-        langcode: {
-          value: "da",
-        },
-        nid: 32,
+        documentId: "doc-32b",
         title: "abc",
-        promote: false,
-        body: {
-          value: "<p>This faq goes first in the group ...</p>",
-        },
-        fieldTags: [],
+        promoted: false,
+        body: "<p>This faq goes first in the group ...</p>",
+        categories: null,
       },
       {
-        langcode: {
-          value: "en",
-        },
-        nid: 31,
+        documentId: "doc-31c",
         title: "abc",
-        promote: true,
-        body: {
-          value: "<p>This faq goes first in the group...</p>",
-        },
-        fieldTags: [
-          {
-            entity: {
-              entityLabel: "Søgninger",
-            },
-          },
-        ],
+        promoted: true,
+        body: "<p>This faq goes first in the group...</p>",
+        categories: [{ name: "Søgninger" }],
       },
     ],
   },

@@ -4,51 +4,126 @@
  */
 
 import { ApiEnums } from "@/lib/api/api";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLangcode, getLocale } from "@/components/base/translate/Translate";
+
+const ARTICLE_FIELDS = `
+  documentId
+  title
+  subheadline
+  body
+  promoted
+  categories {
+    documentId
+    name
+  }
+  image {
+    alternativeText
+    caption
+    url
+    width
+    height
+  }
+  createdAt
+  updatedAt
+  publishedAt
+`;
+
+function normalizeImage(article) {
+  if (article?.fieldImage || !article?.image) {
+    return article?.fieldImage;
+  }
+
+  return {
+    alt: article.image.alternativeText || "",
+    title: article.image.caption || "",
+    url: article.image.url,
+    width: article.image.width,
+    height: article.image.height,
+  };
+}
+
+function normalizeCategoryNames(article) {
+  if (Array.isArray(article?.category)) {
+    return article.category;
+  }
+
+  if (Array.isArray(article?.categories)) {
+    return article.categories.map((category) => category?.name).filter(Boolean);
+  }
+
+  return [];
+}
+
+export function normalizeArticle(article) {
+  if (!article) {
+    return article;
+  }
+
+  const category = normalizeCategoryNames(article);
+  const alternativeUrl = article?.fieldAlternativeArticleUrl?.uri || null;
+
+  return {
+    ...article,
+    documentId: article.documentId || article.nid,
+    nid: article.nid || article.documentId,
+    entityCreated: article.entityCreated || article.createdAt,
+    entityChanged: article.entityChanged || article.updatedAt,
+    entityPublished: article.entityPublished || article.publishedAt,
+    fieldRubrik: article.fieldRubrik || article.subheadline,
+    fieldImage: normalizeImage(article),
+    category,
+    body:
+      typeof article?.body === "string"
+        ? { value: article.body }
+        : article?.body,
+    alternativeUrl,
+    fieldAlternativeArticleUrl:
+      article?.fieldAlternativeArticleUrl ||
+      (alternativeUrl
+        ? {
+            uri: alternativeUrl,
+          }
+        : null),
+  };
+}
+
+export function getArticle(data) {
+  return normalizeArticle(data?.bibliotekdkCms?.article || data?.article);
+}
+
+export function getArticles(data) {
+  if (data?.bibliotekdkCms?.articles) {
+    return data.bibliotekdkCms.articles.map(normalizeArticle);
+  }
+
+  if (data?.nodeQuery?.entities) {
+    return data.nodeQuery.entities
+      .filter((article) => article && article.__typename === "NodeArticle")
+      .map(normalizeArticle);
+  }
+
+  return [];
+}
 
 /**
  *
- * Fetch a specific article by id (nid)
+ * Fetch a specific article by document id
  *
  * @param {Object} params
  * @param {string} params.articleId the id of the article
+ * @param {"da"|"en"} params.locale Strapi locale
  */
-export function article({ articleId, language }) {
+export function article({ articleId, locale = getLocale() }) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `query ($articleId: String! $language: LanguageId! ) {
-        article: nodeById(id: $articleId language:$language ) {
-          __typename
-          ... on NodeArticle {
-            nid
-            entityCreated
-            entityChanged
-            title
-            fieldRubrik
-            body {
-              value
-            }
-            entityOwner {
-              name
-            }
-            fieldImage {
-              alt
-              title
-              url
-              width
-              height
-            }
-            fieldTags {
-              entity {
-                entityLabel
-              }
-            }
-          }
-          }
-          monitor(name: "article_lookup")
-        }`,
-    variables: { articleId, language },
+    query: `query ($articleId: ID! $locale: BibliotekdkCmsI18NLocaleCode) {
+      bibliotekdkCms {
+        article(documentId: $articleId, status: PUBLISHED, locale: $locale) {
+          ${ARTICLE_FIELDS}
+        }
+      }
+    }`,
+    variables: { articleId, locale },
     slowThreshold: 3000,
   };
 }
@@ -104,41 +179,22 @@ export function promotedArticles({ language = "EN_GB" }) {
 /**
  * All published Articles
  */
-export function allArticles({ language = "EN_GB" }) {
-  const langcode = getLangcode(language);
+export function allArticles({ locale = getLocale() } = {}) {
   return {
     apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `query( $language: LanguageId! $langcode: [String] ) {
-      nodeQuery (limit:125 filter: {conditions: [
-        {field: "type", value: ["article"]},
-        {field: "status", value: "1"},
-        {field: "langcode", value: $langcode}
-      ] }) {
-        entities(language:$language) {
-          __typename
-          ... on NodeArticle {
-            nid
-            title
-            fieldRubrik
-            entityCreated
-            fieldAlternativeArticleUrl{
-              uri
-              title
-            }           
-            fieldImage {
-              alt
-              title
-              url
-              width
-              height
-            }
-          }
+    query: `query($locale: BibliotekdkCmsI18NLocaleCode) {
+      bibliotekdkCms {
+        articles(
+          status: PUBLISHED
+          locale: $locale
+          pagination: { limit: 125 }
+          sort: ["createdAt:desc"]
+        ) {
+          ${ARTICLE_FIELDS}
         }
       }
-      monitor(name: "all_articles")
     }`,
-    variables: { language, langcode },
+    variables: { locale },
     slowThreshold: 3000,
   };
 }

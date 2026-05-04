@@ -12,7 +12,10 @@ export default function HelpBtn({ className = "" }) {
 
   return (
     <Link
-      href={getHelpUrl("soegning-baade-enkel-og-avanceret", "179")}
+      href={getHelpUrl(
+        "soegning-baade-enkel-og-avanceret",
+        "yuwm5980txdpskxr6hbnes17"
+      )}
       className={`${styles.help} ${className}`}
       border={{ bottom: { keepVisible: true } }}
       target="_blank"

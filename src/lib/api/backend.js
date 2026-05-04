@@ -4,45 +4,40 @@
  */
 
 import config from "@/config";
+import { log } from "dbc-node-logger";
 import getConfig from "next/config";
 const nextJsConfig = getConfig();
-
-import Translate from "@/components/base/translate/Translate.json";
 
 /**
  * get translations from backend
  */
 export default async function fetchTranslations() {
-  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate === "true") {
+  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate) {
     return;
   }
-
-  const cacheKey = config.backend.cacheKey;
-  const params = { translations: Translate, cachekey: cacheKey };
-  // status flag
-  let ok = true;
-  // @TODO errorhandling
+  const siteName = config.site;
+  const url = config.backend.url + "/api/translation/get_translations";
   try {
-    const response = await fetch(config.backend.url + "/get_translations", {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-
-      body: JSON.stringify(params),
+      body: JSON.stringify({ siteName }),
+      next: {
+        revalidate: 600, // Next.js cache: 10 minutes
+      },
     });
+    const result = await response.json();
 
-    const result = await response.json().catch((error) => {
-      // @TODO log
-      console.log(error, "FETCH ERROR");
-      ok = false;
-    });
-
-    return { ok, result };
+    return { ok: response.ok, result };
   } catch (e) {
-    // @TODO log
-    console.log(e, "ERROR");
-    ok = false;
-    return { ok };
+    log.error("Fetch translations from backend failed", {
+      error: String(e),
+      stacktrace: e.stack,
+      siteName,
+      url,
+    });
+    return { ok: false };
   }
 }

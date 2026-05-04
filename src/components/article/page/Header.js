@@ -16,7 +16,7 @@ import * as articleFragments from "@/lib/api/article.fragments";
 import { getJSONLD } from "@/lib/jsonld/article";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
-import { getLanguage } from "@/components/base/translate";
+import { getLocale } from "@/components/base/translate";
 
 /**
  * The article page Header React component
@@ -27,14 +27,15 @@ import { getLanguage } from "@/components/base/translate";
  * @returns {React.JSX.Element}
  */
 export default function Header({ articleId }) {
-  const language = getLanguage();
-  const data = useData(articleFragments.article({ articleId, language }));
+  const locale = getLocale();
+  const data = useData(articleFragments.article({ articleId, locale }));
 
-  if (!data.data || !data.data.article || data.isLoading || data.error) {
+  const article = articleFragments.getArticle(data.data);
+
+  if (!article || data.isLoading || data.error) {
     return null;
   }
 
-  const article = data.data.article;
   return (
     <Head
       title={article.title}

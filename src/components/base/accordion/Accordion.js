@@ -12,12 +12,12 @@ import Title from "@/components/base/title";
 import styles from "./Accordion.module.css";
 import animations from "@/components/base/animation/animations.module.css";
 
-import BodyParser from "@/components/base/bodyparser";
 import React, { useEffect, useState } from "react";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { useRouter } from "next/router";
 import Link from "@/components/base/link";
 import cx from "classnames";
+import Markdown from "@/components/base/markdown/Markdown";
 
 /**
  * The Component function
@@ -248,7 +248,7 @@ export function AccordionSkeleton({ className }) {
             eventKey={a.key || i.toString()}
             isLoading={true}
           >
-            <BodyParser body={a.content} />
+            <Markdown body={a.content} />
           </Item>
         ))}
       </>
@@ -287,7 +287,7 @@ export default function Accordion({
       key={`${a.title}_${i}`}
       eventKey={a.key || i.toString()}
     >
-      <BodyParser body={a.content} />
+      <Markdown body={a.content} />
     </Item>
   ));
 

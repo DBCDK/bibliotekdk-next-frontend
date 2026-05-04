@@ -31,12 +31,16 @@ describe("Multi Order", () => {
       cy.get('[data-cy="input"]').clear().type("test@dbc.dk");
       cy.contains("Godkend").click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
 
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
           materialsToOrder: [
-            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] , exactEdition: false},
+            {
+              key: "WORK_ILL_ACCESSBOOK",
+              pids: ["PID_ILL_ACCESS"],
+              exactEdition: false,
+            },
           ],
           pickUpBranch: "BRANCH_NO_BORROWERCHECK",
           userParameters: {
@@ -124,7 +128,7 @@ describe("Multi Order", () => {
       // submit button disabled, while submitting order
       cy.get('[data-cy="submit-button"]').should("be.disabled");
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
 
       cy.contains(
         "Du vil få besked når dine materialer er klar til afhentning på Branch - Modtager ILL"
@@ -135,7 +139,11 @@ describe("Multi Order", () => {
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
           materialsToOrder: [
-            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] , exactEdition: false},
+            {
+              key: "WORK_ILL_ACCESSBOOK",
+              pids: ["PID_ILL_ACCESS"],
+              exactEdition: false,
+            },
           ],
           pickUpBranch: "BRANCH_ACCEPT_ILL",
           userParameters: {
@@ -179,7 +187,11 @@ describe("Multi Order", () => {
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
           materialsToOrder: [
-            { key: "WORK_ILL_ACCESSBOOK", pids: ["PID_ILL_ACCESS"] , exactEdition: false},
+            {
+              key: "WORK_ILL_ACCESSBOOK",
+              pids: ["PID_ILL_ACCESS"],
+              exactEdition: false,
+            },
           ],
           pickUpBranch: "BRANCH_MOBILE_LOCATIONS",
           pickUpBranchSubdivision: "Kiosken",
@@ -247,7 +259,7 @@ describe("Multi Order", () => {
       cy.get('[data-cy="pincode-input"]').type("1234");
       cy.get('[data-cy="submit-button"]').click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
 
       cy.getConsoleEntry("submitMultipleOrders").then((entry) => {
         expect(entry[1]).to.deep.equal({
@@ -283,7 +295,7 @@ describe("Multi Order", () => {
 
       cy.contains("Kan ikke bestilles til dit bibliotek");
       cy.contains(
-        "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
+        "Materialet kan ikke bestilles til dette afhentningssted. Vælg et andet."
       );
 
       cy.contains("1 materiale kan ikke bestilles");
@@ -306,7 +318,7 @@ describe("Multi Order", () => {
 
       cy.contains("Godkend").click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
 
       cy.contains(
         "Digitale artikler bliver leveret til din mail fra det Det Kgl. Bibliotek"
@@ -371,7 +383,7 @@ describe("Multi Order", () => {
 
       cy.get('[data-cy="submit-button"]').click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
       cy.contains("2 materialer er bestilt");
 
       cy.contains(
@@ -448,7 +460,7 @@ describe("Multi Order", () => {
 
       cy.get('[data-cy="submit-button"]').click();
 
-      cy.contains("Bestillingen blev gennemført");
+      cy.contains("Bestillingen er gennemført");
       cy.contains("2 materialer er bestilt");
 
       cy.contains(
@@ -478,7 +490,7 @@ describe("Multi Order", () => {
                 pid: "PID_PERIODICA_2",
                 authorOfComponent: "another author",
                 publicationDateOfComponent: "2000",
-              },  
+              },
               exactEdition: false,
             },
           ],
@@ -508,7 +520,7 @@ describe("Multi Order", () => {
       cy.get('[data-cy="multiorder-button-close"]').click();
       cy.contains("Bestil single ILL").click();
 
-      cy.contains("Du har allerede bestilt en udgave af dette materiale");
+      cy.contains("Du har allerede bestilt dette materiale");
       cy.get('[data-cy="submit-button"]').should("be.disabled");
       cy.contains("Bestil alligevel").click();
       cy.get('[data-cy="submit-button"]').click();
@@ -526,7 +538,7 @@ describe("Multi Order", () => {
       cy.get('[data-cy="multiorder-button-close"]').click();
       cy.contains("Bestil single ILL").click();
 
-      cy.contains("Du har allerede bestilt en udgave af dette materiale");
+      cy.contains("Du har allerede bestilt dette materiale");
       cy.get('[data-cy="submit-button"]').should("be.disabled");
       cy.contains("Bestil ikke").click();
       cy.contains("Der er ingen materialer i din bestillingsliste");
@@ -537,7 +549,7 @@ describe("Multi Order", () => {
       );
       cy.contains("Bestil e-bog").click();
 
-      cy.contains("1 materiale findes online, og kræver ikke bestilling");
+      cy.contains("1 materiale kan ikke bestilles");
       cy.contains("Der er ingen materialer der kræver bestilling");
       cy.contains("Tilbage").click();
     });
@@ -547,7 +559,7 @@ describe("Multi Order", () => {
       );
       cy.contains("Bestil e-bog og fysisk").click();
 
-      cy.contains("1 materiale findes online, og kræver ikke bestilling");
+      cy.contains("1 materiale kan ikke bestilles");
       cy.contains("På næste side vises det materiale, som du kan bestille");
       cy.contains("Næste").click();
     });

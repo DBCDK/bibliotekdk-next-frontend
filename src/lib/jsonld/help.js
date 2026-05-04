@@ -11,14 +11,14 @@ import Translate from "@/components/base/translate";
  * @returns {Object} JSON-LD representation of article
  */
 export function getJSONLD({
-  nid,
+  documentId,
   title,
-  fieldImage,
+  image,
   body,
-  entityCreated,
-  entityChanged,
+  createdAt,
+  updatedAt,
 }) {
-  const url = getCanonicalArticleUrl({ title, nid });
+  const url = getCanonicalArticleUrl({ title, nid: documentId });
   const description = Translate({
     context: "metadata",
     label: "help-description",
@@ -31,11 +31,11 @@ export function getJSONLD({
       "@id": url,
     },
     headline: title,
-    image: [fieldImage],
-    datePublished: entityCreated,
-    dateModified: entityChanged,
+    image: [image],
+    datePublished: createdAt,
+    dateModified: updatedAt,
     description,
-    articleBody: body && body.value,
+    articleBody: body,
     author: {
       "@type": "Organization",
       name: "Bibliotek.dk",
