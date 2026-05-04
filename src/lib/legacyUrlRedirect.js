@@ -276,7 +276,7 @@ export const articleUrls = [
 ];
 
 /**
- * helper function to get the redirect URL for a given drupal ID. 
+ * helper function to get the redirect URL for a given drupal ID.
  * @param {*} id - the drupal ID (e.g. 179)
  * @param {*} urls - the array of URLs (helpTextUrls or articleUrls)
  * @param {*} pathPrefix - the path prefix (hjaelp or artikel)
@@ -302,8 +302,6 @@ function getLegacyRedirect(id, urls, pathPrefix) {
   return `/${pathPrefix}/${url.encodedTitle}/${url.strapiId}`;
 }
 
-
-
 /**
  * Get new strapi url for a given help text drupalID.
  * @param {*} helpTextId - the help text drupalID (e.g. 179)
@@ -312,7 +310,6 @@ function getLegacyRedirect(id, urls, pathPrefix) {
 export function getStrapiHelpTextRedirect(helpTextId) {
   return getLegacyRedirect(helpTextId, helpTextUrls, "hjaelp");
 }
-
 
 /**
  * Get new strapi url for a given article drupalID.
