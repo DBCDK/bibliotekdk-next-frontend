@@ -20,10 +20,10 @@ import { cmsFrontpage, getCmsFrontpage } from "@/lib/api/frontpage.fragments";
 import { normalizeArticle } from "@/lib/api/article.fragments";
 import { getLocale } from "@/components/base/translate/Translate";
 
-
-const sectionBackgroundColors = [ "var(--parchment)","var(--jagged-ice)"];
+const sectionBackgroundColors = ["var(--parchment)", "var(--jagged-ice)"];
 
 /**
+ * TODO: use colors from CMS instead
  * Get the background color for every second section.
  * Returns null for the other sections.
  */
@@ -32,8 +32,8 @@ function getSectionBackgroundColor(index) {
   if (index % 2 === 0) {
     return null;
   }
-// Use half the section index to rotate through colors on every second section.
-const colorIndex = Math.floor(index / 2) % sectionBackgroundColors.length;
+  // Use half the section index to rotate through colors on every second section.
+  const colorIndex = Math.floor(index / 2) % sectionBackgroundColors.length;
   return sectionBackgroundColors[colorIndex];
 }
 

@@ -6,12 +6,10 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import styles from "./Markdown.module.css";
+import remarkGfm from "remark-gfm";
 
-const normalizeNewlines = (str) =>
-  str.trim().replace(/(^|\n)(\d+)\./g, "$1$2\\.");
-
-const isExternalHref = (href = "") => {
-  return href.startsWith("http://") || href.startsWith("https://");
+const normalizeNewlines = (str) => {
+  return str.trim().replace(/(^|\n)(\d+)\./g, "$1$2\\.");
 };
 
 function MarkdownImage({ src, alt = "", title, ...props }) {
@@ -47,7 +45,7 @@ function MarkdownParagraph({ children, ...props }) {
 }
 
 function MarkdownLink({ href, children }) {
-  const isExternal = isExternalHref(href);
+  const isExternal = href.startsWith("http://") || href.startsWith("https://");
 
   return (
     <Link
@@ -102,6 +100,7 @@ export default function Markdown({
   return (
     <div className={`${styles.markdown} ${className}`} data-cy={dataCy}>
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
         components={{ ...markdownComponents, ...(components || {}) }}
         {...rest}
       >
