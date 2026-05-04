@@ -1,7 +1,8 @@
 import { ApiEnums } from "@/lib/api/api";
+import { getSite } from "@/components/hooks/useSiteConfig";
 
 export function notificationsQuery() {
-  const site = process.env.NEXT_PUBLIC_SITE || "bibliotekDk"; //TODO: maybe store default in a constant and reuse it in other queries
+  const site = getSite();
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
