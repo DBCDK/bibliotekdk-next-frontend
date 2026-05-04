@@ -20,6 +20,23 @@ import { cmsFrontpage, getCmsFrontpage } from "@/lib/api/frontpage.fragments";
 import { normalizeArticle } from "@/lib/api/article.fragments";
 import { getLocale } from "@/components/base/translate/Translate";
 
+const sectionBackgroundColors = ["var(--parchment)", "var(--jagged-ice)"];
+
+/**
+ * TODO: use colors from CMS instead
+ * Get the background color for every second section.
+ * Returns null for the other sections.
+ */
+function getSectionBackgroundColor(index) {
+  //null -> no background color(white)
+  if (index % 2 === 0) {
+    return null;
+  }
+  // Use half the section index to rotate through colors on every second section.
+  const colorIndex = Math.floor(index / 2) % sectionBackgroundColors.length;
+  return sectionBackgroundColors[colorIndex];
+}
+
 const FrontpageSkeleton = () => (
   <>
     <ArticleSection
@@ -64,7 +81,9 @@ const Index = () => {
         {showSkeleton && <FrontpageSkeleton />}
 
         {!showSkeleton &&
-          frontpage?.sections?.filter(Boolean).map((section) => {
+          frontpage?.sections?.filter(Boolean).map((section, index) => {
+            const backgroundColor = getSectionBackgroundColor(index);
+
             if (
               section.__typename === "BibliotekdkCmsComponentFrontpageSection"
             ) {
@@ -74,6 +93,7 @@ const Index = () => {
                   title={section.title}
                   articles={section.articles?.map(normalizeArticle)}
                   template={section.template}
+                  color={backgroundColor}
                 />
               );
             }
@@ -94,6 +114,7 @@ const Index = () => {
                   ]}
                   limit={section.limit || 30}
                   divider={{ content: !section.showDivider }}
+                  backgroundColor={backgroundColor}
                 />
               );
             }
@@ -108,6 +129,7 @@ const Index = () => {
                   buttonText={section.buttonText}
                   url={section.url}
                   image={section.image}
+                  backgroundColor={backgroundColor}
                 />
               );
             }
