@@ -1,6 +1,7 @@
 import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
 import { getLocale } from "@/components/base/translate/Translate";
+import { getSite } from "@/components/hooks/useSiteConfig";
 
 const HELPTEXT_FIELDS = `
   documentId
@@ -15,12 +16,11 @@ const HELPTEXT_FIELDS = `
   }
 `;
 
-const SITE = process.env.NEXT_PUBLIC_SITE || "bibliotekDk"; //TODO: maybe store default in a constant and reuse it in other queries
-
 /**
  * All published help texts — used for the landing page sections and sidebar menu.
  */
 export function publishedHelptexts({ locale = getLocale() } = {}) {
+  const site = getSite();
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query PublishedHelptextsQuery($locale: BibliotekdkCmsI18NLocaleCode, $site: String!) {
@@ -35,7 +35,7 @@ export function publishedHelptexts({ locale = getLocale() } = {}) {
         }
       }
     }`,
-    variables: { locale, site: SITE },
+    variables: { locale, site },
     slowThreshold: 3000,
   };
 }
@@ -45,6 +45,7 @@ export function publishedHelptexts({ locale = getLocale() } = {}) {
  */
 export function helpText({ helpTextId }) {
   const locale = getLocale();
+  const site = getSite();
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query HelptextByIdQuery($documentId: ID!, $locale: BibliotekdkCmsI18NLocaleCode, $site: String!) {
@@ -63,7 +64,7 @@ export function helpText({ helpTextId }) {
         }
       }
     }`,
-    variables: { documentId: helpTextId, locale, site: SITE },
+    variables: { documentId: helpTextId, locale, site },
     slowThreshold: 3000,
   };
 }

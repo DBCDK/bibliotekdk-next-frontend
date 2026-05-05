@@ -17,11 +17,12 @@
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { article } from "@/lib/api/article.fragments";
+import { getStrapiArticleRedirect } from "@/lib/legacyUrlRedirect";
 
 import Page from "@/components/article/page";
 import ArticleHeader from "@/components/article/page/Header";
 import Header from "@/components/header/Header";
-import React from "react";
+import React, { useEffect } from "react";
 import { getLocale } from "@/components/base/translate/Translate";
 
 /**
@@ -30,6 +31,13 @@ import { getLocale } from "@/components/base/translate/Translate";
 export default function ArticlePage() {
   const router = useRouter();
   const { articleId } = router.query;
+  const redirectUrl = getStrapiArticleRedirect(articleId);
+
+  useEffect(() => {
+    if (redirectUrl) {
+      router.replace(redirectUrl);
+    }
+  }, [redirectUrl, router]);
 
   /**
    * Updates the query params in the url
@@ -37,6 +45,10 @@ export default function ArticlePage() {
    *
    * @param {Object} query
    */
+
+  if (redirectUrl) {
+    return null;
+  }
 
   return (
     <React.Fragment>
@@ -66,6 +78,18 @@ const serverQueries = [article];
  */
 ArticlePage.getInitialProps = async (ctx) => {
   const articleId = ctx?.query?.articleId;
+  const redirectUrl = getStrapiArticleRedirect(articleId);
+
+  // if redirectUrl is found, that means that article has old drupal URL and needs to be redirected to the new strapi URL
+  if (redirectUrl) {
+    if (ctx.res) {
+      ctx.res.writeHead(301, { Location: redirectUrl });
+      ctx.res.end();
+    }
+
+    return {};
+  }
+
   const locale = getLocale();
   return await fetchAll(serverQueries, ctx, { articleId, locale });
 };

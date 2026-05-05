@@ -16,10 +16,11 @@
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { helpText, publishedHelptexts } from "@/lib/api/helptexts.fragments";
+import { getStrapiHelpTextRedirect } from "@/lib/legacyUrlRedirect";
 import Header from "@/components/help/texts/header";
 
 import Page from "@/components/help/texts/page";
-import React from "react";
+import React, { useEffect } from "react";
 import Custom404 from "@/pages/404";
 
 /**
@@ -28,9 +29,20 @@ import Custom404 from "@/pages/404";
 export default function HelptextPage() {
   const router = useRouter();
   const { helpTextId } = router.query;
+  const redirectUrl = getStrapiHelpTextRedirect(helpTextId);
+
+  useEffect(() => {
+    if (redirectUrl) {
+      router.replace(redirectUrl);
+    }
+  }, [redirectUrl, router]);
 
   if (typeof helpTextId === "undefined" || helpTextId === null) {
     return <Custom404 />;
+  }
+
+  if (redirectUrl) {
+    return null;
   }
 
   return (
@@ -58,6 +70,15 @@ const serverQueries = [helpText, publishedHelptexts];
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-HelptextPage.getInitialProps = (ctx) => {
-  return fetchAll(serverQueries, ctx);
+HelptextPage.getInitialProps = async (ctx) => {
+  const redirectUrl = getStrapiHelpTextRedirect(ctx.query.helpTextId);
+  if (redirectUrl) {
+    if (ctx.res) {
+      ctx.res.writeHead(301, { Location: redirectUrl });
+      ctx.res.end();
+    }
+    return {};
+  }
+
+  return await fetchAll(serverQueries, ctx);
 };
