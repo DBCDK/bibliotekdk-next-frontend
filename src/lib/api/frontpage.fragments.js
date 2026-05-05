@@ -4,16 +4,17 @@
 
 import { ApiEnums } from "@/lib/api/api";
 import { getLocale } from "@/components/base/translate/Translate";
+import { getSite } from "@/components/hooks/useSiteConfig";
 
 /**
  * Fetch the frontpage entry from the Strapi CMS for the current site.
- * Site is read from NEXT_PUBLIC_SITE, defaulting to "bibliotekDk".
+ * Site is read from Next runtime config, defaulting to "bibliotekdk".
  *
  * @param {Object} params
  * @param {string} [params.locale] Strapi locale code
  */
 export function cmsFrontpage({ locale = getLocale() } = {}) {
-  const site = process.env.NEXT_PUBLIC_SITE || "bibliotekDk";
+  const site = getSite();
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query CmsFrontpage($site: String!, $locale: BibliotekdkCmsI18NLocaleCode) {
