@@ -554,7 +554,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     // @TODO add a link to helptext here
     helpTxtLink: {
       label: "Fagbibliografier",
-      href: "/hjaelp/Fagbibliografier/234",
+      href: "/hjaelp/fagbibliografier/btuxptll4kiloux0qafa3ixp",
     },
   };
 

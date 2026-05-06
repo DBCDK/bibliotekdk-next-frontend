@@ -15,13 +15,16 @@ export const actions = [
   { label: "scientificArticles", href: "/artikler", hidden: true },
   {
     label: "askLibrarian",
-    href: "/hjaelp/kontakt-os/25",
+    href: "/hjaelp/kontakt-os/s1vnq2otybohylfivoys5elr",
     // target: "_blank",
   },
-  { label: "becomeLoaner", href: "/hjaelp/ny-bruger/45" },
-  { label: "digitalOffers", href: "/artikel/digitale-bibliotekstilbud/5" },
+  { label: "becomeLoaner", href: "/hjaelp/ny-bruger/y8h9krkl7itol8phpur2x99d" },
+  {
+    label: "digitalOffers",
+    href: "/artikel/online-bibliotekstilbud/n15de9c8umm7j1qrrdiiss2i",
+  },
   { label: "useTheLibraries", href: "/#!", hidden: true },
   { label: "mySearches", href: "/#!", hidden: true },
   { label: "helpCenter", href: "/hjaelp" },
-  { label: "contactUs", href: "/hjaelp/kontakt-os/25" },
+  { label: "contactUs", href: "/hjaelp/kontakt-os/s1vnq2otybohylfivoys5elr" },
 ];
