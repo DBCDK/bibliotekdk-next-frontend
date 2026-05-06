@@ -32,6 +32,7 @@ function Icon({
   className = "",
   children = null,
   bgColor = null,
+  fit = "default",
   size = 5,
   onClick = null,
   onKeyDown = null,
@@ -45,12 +46,17 @@ function Icon({
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const shapeStyle = bgColor ? styles.round : "";
+  const fitStyle = fit === "full" ? styles.fitFull : "";
 
   const Tag = tag;
 
   // Scale according to W or H
   const hasAuto = !!(size.h === "auto" || size.w === "auto");
-  const scaleStyle = hasAuto && size.w === "auto" ? styles.autoW : styles.autoH;
+  const scaleStyle = hasAuto
+    ? size.w === "auto"
+      ? styles.autoW
+      : styles.autoH
+    : "";
 
   // Set scale sizes
   const height = size.h === "auto" ? size.h : `var(--pt${size.h || size})`;
@@ -80,7 +86,7 @@ function Icon({
     <Tag
       style={dynamicStyles}
       data-disabled={disabled || null}
-      className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle} ${scaleStyle}`}
+      className={`${styles.icon} ${className} ${shapeStyle} ${fitStyle} ${disabledStyle} ${scaleStyle}`}
       onClick={onClick}
       onKeyDown={onKeyDown}
       aria-hidden={ariaHidden}
@@ -142,6 +148,7 @@ Container.propTypes = {
     PropTypes.number,
   ]),
   bgColor: PropTypes.string,
+  fit: PropTypes.oneOf(["default", "full"]),
   size: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,

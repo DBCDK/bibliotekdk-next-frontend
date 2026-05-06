@@ -39,6 +39,11 @@
   align-items: flex-start !important;
   cursor: pointer;
 }
+
+.tooltipCursor {
+  color: var(--blue);
+}
+
 .showMoreButtonContainer {
   height: var(--pt5);
   align-self: flex-end;

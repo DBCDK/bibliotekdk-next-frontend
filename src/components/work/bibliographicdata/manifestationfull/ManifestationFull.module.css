@@ -21,6 +21,7 @@
 
 .fullmanifestation .copy_link {
   margin-bottom: var(--pt5);
+  color: var(--blue);
 }
 .reservationwrapper {
   display: flex;

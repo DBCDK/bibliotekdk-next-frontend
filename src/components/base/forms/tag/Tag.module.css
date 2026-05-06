@@ -13,6 +13,11 @@
   transition: transform 0.15s;
 }
 
+.tag svg{
+  width: 16px;
+  height: 16px;
+}
+
 .tag i {
   position: absolute;
   right: 0;

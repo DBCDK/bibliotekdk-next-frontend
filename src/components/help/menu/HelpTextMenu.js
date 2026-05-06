@@ -32,7 +32,7 @@ function MenuLink({ label, href = "#!", active = false }) {
       </Link>
       {active && (
         <span className={styles.helpiconlink}>
-          <Icon size={1}>
+          <Icon size={2}>
             <ArrowRightBlueSvg />
           </Icon>
         </span>
@@ -81,7 +81,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
           >
             <span className={styles.helpicongroup}>
               <Icon
-                size={{ w: 1, h: 1 }}
+                size={2}
                 className={expanded || activelink ? styles.helpiconrotate : ""}
               >
                 <ArrowRightBlueSvg />
@@ -162,7 +162,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
         </Link>
         {active && (
           <span className={styles.helpiconlink}>
-            <Icon size={{ w: 1, h: 1 }}>
+            <Icon size={2}>
               <ArrowRightBlueSvg />
             </Icon>
           </span>
