@@ -26,7 +26,6 @@ import styles from "./Menu.module.css";
  */
 
 function Menu({ modal }) {
-
   const isStudiebib = config.site === "studiebib";
 
   const url = isStudiebib
