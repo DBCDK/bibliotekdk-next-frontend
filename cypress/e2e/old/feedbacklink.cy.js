@@ -10,7 +10,7 @@ describe("feedbacklink", () => {
     cy.get("[data-cy=feedbacklink-to-kundeservice]").should(
       "have.attr",
       "href",
-      "https://bibliotek.dk/hjaelp/kontakt-os/25"
+      "https://bibliotek.dk/hjaelp/kontakt-os/s1vnq2otybohylfivoys5elr"
     );
   });
 });

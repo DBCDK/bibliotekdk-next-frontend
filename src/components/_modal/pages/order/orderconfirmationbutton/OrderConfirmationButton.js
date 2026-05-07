@@ -40,7 +40,7 @@ function OrderConfirmationButton({
             <Link
               target="_blank"
               disabled={false}
-              href={"/hjaelp/digital-artikelservice/84"}
+              href={"/hjaelp/digital-artikelservice/r2yi60s1ou3uuiexkur4xuem"}
               border={{ top: false, bottom: { keepVisible: true } }}
             >
               <Text type="text3">

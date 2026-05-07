@@ -76,16 +76,23 @@ const ContactLinks = () => {
   // Object holding info to generate contact links * NOTICE Keys of objects are translated.
   const contact_links = {
     // find_library: { pathname: "/", query: {} },
-    about: { pathname: "/hjaelp/om-bibliotek-dk/24", query: {} },
+    about: {
+      pathname: "/hjaelp/om-bibliotek-dk/sudc5c37exhbcqb6kxgc9qe7",
+      query: {},
+    },
     help: { pathname: "/hjaelp", query: {} },
     // press: { pathname: "/", query: {} },
-    contact: { pathname: "/hjaelp/kontakt-os/25", query: {} },
+    contact: {
+      pathname: "/hjaelp/kontakt-os/s1vnq2otybohylfivoys5elr",
+      query: {},
+    },
     privacy: {
-      pathname: "/hjaelp/privatlivspolitik-saadan-haandterer-vi-dine-data-/26",
+      pathname:
+        "/hjaelp/privatlivspolitik-saadan-haandterer-vi-dine-data-/ecxejjsilqighjgyd2dfgr0t",
       query: {},
     },
     suppliers: {
-      pathname: "/artikel/leverandører/59",
+      pathname: "/artikel/leverandoerer/f296rlm1m368h0ng1nmsdx93",
       query: {},
     },
     English: { pathname: "/", query: {} },

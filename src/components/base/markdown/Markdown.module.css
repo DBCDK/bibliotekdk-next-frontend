@@ -43,7 +43,13 @@
 .markdown ul,
 .markdown ol {
   padding-left: var(--pt5);
-  margin: 0;
+  margin: 0 0 var(--pt3) 0;
+}
+
+.markdown li::marker {
+  font: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .markdown ul {
@@ -57,6 +63,18 @@
 .markdown li {
   font-size: 17px;
   line-height: 26px;
+}
+
+.markdown pre,
+.markdown code {
+  font-family: var(--body-font);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown pre {
+  margin: 0;
+  white-space: pre-wrap;
 }
 
 .markdown h1,
@@ -79,6 +97,7 @@
   padding-bottom: var(--pt3);
   font-size: 17px;
   line-height: 26px;
+  white-space: pre-line;
 }
 
 .markdown a {

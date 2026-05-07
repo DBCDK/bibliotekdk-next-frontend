@@ -33,17 +33,21 @@ export default function ArticlePreview({ article, skeleton, rubrik = true }) {
         data-cy="article-preview"
         target={`${target}`}
       >
-        {image && (
-          <div className={styles.imagewrapper}>
+        <div
+          className={`${styles.imagewrapper} ${
+            !image && !skeleton ? styles.imageplaceholder : ""
+          }`}
+        >
+          {image && (
             <Image
               src={image.url}
               alt={image.alt}
               layout="fill"
               objectFit="cover"
             />
-            {skeleton && <Skeleton className={styles.imageskeleton} />}
-          </div>
-        )}
+          )}
+          {skeleton && <Skeleton className={styles.imageskeleton} />}
+        </div>
 
         <Title
           className={styles.title}

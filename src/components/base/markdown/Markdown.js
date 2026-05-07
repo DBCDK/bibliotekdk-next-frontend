@@ -8,7 +8,7 @@ import Link from "@/components/base/link";
 import styles from "./Markdown.module.css";
 import remarkGfm from "remark-gfm";
 
-const normalizeNewlines = (str) => {
+const normalizeMarkdown = (str) => {
   return str.trim().replace(/(^|\n)(\d+)\./g, "$1$2\\.");
 };
 
@@ -104,7 +104,7 @@ export default function Markdown({
         components={{ ...markdownComponents, ...(components || {}) }}
         {...rest}
       >
-        {normalizeNewlines(content)}
+        {normalizeMarkdown(content)}
       </ReactMarkdown>
     </div>
   );

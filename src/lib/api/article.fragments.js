@@ -5,6 +5,7 @@
 
 import { ApiEnums } from "@/lib/api/api";
 import { getLangcode, getLocale } from "@/components/base/translate/Translate";
+import { getSite } from "@/components/hooks/useSiteConfig";
 
 const ARTICLE_FIELDS = `
   documentId
@@ -88,7 +89,11 @@ export function normalizeArticle(article) {
 }
 
 export function getArticle(data) {
-  return normalizeArticle(data?.bibliotekdkCms?.article || data?.article);
+  return normalizeArticle(
+    data?.bibliotekdkCms?.article ||
+      data?.bibliotekdkCms?.articles?.[0] ||
+      data?.article
+  );
 }
 
 export function getArticles(data) {
@@ -114,16 +119,25 @@ export function getArticles(data) {
  * @param {"da"|"en"} params.locale Strapi locale
  */
 export function article({ articleId, locale = getLocale() }) {
+  const site = getSite();
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query ($articleId: ID! $locale: BibliotekdkCmsI18NLocaleCode) {
+    query: `query ($articleId: ID! $locale: BibliotekdkCmsI18NLocaleCode, $site: String!) {
       bibliotekdkCms {
-        article(documentId: $articleId, status: PUBLISHED, locale: $locale) {
+        articles(
+          status: PUBLISHED
+          locale: $locale
+          filters: {
+            documentId: { eq: $articleId }
+            sites: { name: { eq: $site } }
+          }
+          pagination: { limit: 1 }
+        ) {
           ${ARTICLE_FIELDS}
         }
       }
     }`,
-    variables: { articleId, locale },
+    variables: { articleId, locale, site },
     slowThreshold: 3000,
   };
 }
@@ -180,13 +194,15 @@ export function promotedArticles({ language = "EN_GB" }) {
  * All published Articles
  */
 export function allArticles({ locale = getLocale() } = {}) {
+  const site = getSite();
   return {
     apiUrl: ApiEnums.FBI_API,
-    query: `query($locale: BibliotekdkCmsI18NLocaleCode) {
+    query: `query($locale: BibliotekdkCmsI18NLocaleCode, $site: String!) {
       bibliotekdkCms {
         articles(
           status: PUBLISHED
           locale: $locale
+          filters: { sites: { name: { eq: $site } } }
           pagination: { limit: 125 }
           sort: ["createdAt:desc"]
         ) {
@@ -194,7 +210,7 @@ export function allArticles({ locale = getLocale() } = {}) {
         }
       }
     }`,
-    variables: { locale },
+    variables: { locale, site },
     slowThreshold: 3000,
   };
 }
