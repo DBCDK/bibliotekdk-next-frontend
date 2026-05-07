@@ -241,7 +241,7 @@ function ListItem({
           })}
           helptxtLink={{
             label: "Fagbibliografier",
-            href: "/hjaelp/fagbibliografier/234",
+            href: "/hjaelp/fagbibliografier/btuxptll4kiloux0qafa3ixp",
           }}
           className={styles.helptxtlink}
         />

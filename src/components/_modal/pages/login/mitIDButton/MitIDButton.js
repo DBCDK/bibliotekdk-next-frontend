@@ -61,7 +61,7 @@ export default function MitIDButton({ callBackUUID, redirectPath }) {
         onClick={() => {
           collect.collectCreateLibraryUser();
         }}
-        href="/artikel/bliv-laaner/43"
+        href="/artikel/ny-bruger-paa-bibliotek-dk/al20u5vp18nq82dvzhhct6pd"
         className={styles.createLibraryUserLink}
         border={{ bottom: { keepVisible: true } }}
       >

@@ -20,6 +20,9 @@
   padding-bottom: 56%;
   margin-bottom: var(--pt2);
 }
+.imageplaceholder {
+  background-color: var(--parchment);
+}
 .imageskeleton {
   padding-bottom: var(--pt05);
 }

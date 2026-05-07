@@ -17,7 +17,7 @@ export default function Banner() {
           <Col className={styles.content}>
             <IconLink
               className={styles.link}
-              href="/hjaelp/kontakt-os/25"
+              href="/hjaelp/kontakt-os/s1vnq2otybohylfivoys5elr"
               dataCy="header-link-askLibrarian"
               iconSrc={Bubble}
               border={{ top: false, bottom: { keepVisible: false } }}
