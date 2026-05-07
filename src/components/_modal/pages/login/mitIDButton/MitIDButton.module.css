@@ -10,6 +10,9 @@
   padding-bottom: var(--pt2);
   margin-top: var(--pt05);
   margin-bottom: var(--pt7);
+
+  /* mitID blue color */
+  outline: 2px solid #0019bd;
 }
 
 .mitIDIcon {

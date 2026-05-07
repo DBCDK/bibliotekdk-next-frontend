@@ -39,8 +39,14 @@
   display: none;
 }
 
-li.language {
+li.website {
   margin-top: var(--pt7);
+}
+
+li.website:hover .websitelink {
+  --underline-bottom-hover-color: var(--white);
+  --underline-font-color: var(--white);
+  --underline-font-hover-color: var(--white);
 }
 
 /* Link component styles override */
@@ -48,6 +54,14 @@ li.language {
   --underline-bottom-hover-color: var(--white);
   --underline-font-color: var(--white);
   --underline-font-hover-color: var(--white);
+}
+
+.websitelink {
+  display: inline-flex;
+}
+
+.websitelink > p:first-child {
+  margin-right: var(--pt1);
 }
 
 @media (min-width: 576px) {

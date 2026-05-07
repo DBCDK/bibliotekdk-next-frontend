@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import config from "@/config";
 
 import Language from "@/components/base/language";
 
@@ -25,6 +26,14 @@ import styles from "./Menu.module.css";
  */
 
 function Menu({ modal }) {
+  const isStudiebib = config.site === "studiebib";
+
+  const url = isStudiebib
+    ? "https://www.bibliotek.dk"
+    : "https://www.studie.bibliotek.dk";
+
+  const label = isStudiebib ? "studiebibWebsiteName" : "bibdkWebsiteName";
+
   return (
     <div className={`${styles.menu}`} data-cy="menu-modal">
       <Top
@@ -63,10 +72,26 @@ function Menu({ modal }) {
             </li>
           );
         })}
+
+        <li className={styles.website}>
+          <Link
+            className={`${styles.link} ${styles.websitelink}`}
+            dataCy="menu-link-website"
+            href={url}
+          >
+            <Text type="text2">
+              {Translate({ context: "general", label: "goto" })}
+            </Text>
+            <Text type="text2">
+              {Translate({ context: "navigation", label })}
+            </Text>
+          </Link>
+        </li>
+
         <li className={styles.language}>
           <Language>
             <Link className={styles.link} dataCy="menu-link-language">
-              <Text type="text2">
+              <Text type="text2" tag="span">
                 {Translate({ context: "general", label: "language" })}
               </Text>
             </Link>
