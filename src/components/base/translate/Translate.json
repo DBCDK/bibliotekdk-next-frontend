@@ -465,6 +465,7 @@
       }
     },
     "general": {
+      "goto": { "da": "Gå til", "en": "Go to" },
       "SkipToMain": { "da": "G\u00e5 til indhold", "en": "Skip to content" },
       "heroTxt": {
         "en": "Search, find, borrow",
@@ -2553,6 +2554,11 @@
         "da": "Hj\u00e6lp og vejledninger",
         "en": "Help and instructions"
       },
+      "studiebibWebsiteName": {
+        "da": "studie.bibliotek.dk",
+        "en": "studie.bibliotek.dk"
+      },
+      "bibdkWebsiteName": { "da": "bibliotek.dk", "en": "bibliotek.dk" },
       "contactUs": { "da": "Kontakt os", "en": "Contact us" }
     },
     "helpmenu": {

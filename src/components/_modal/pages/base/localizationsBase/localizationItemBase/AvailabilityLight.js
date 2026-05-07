@@ -9,7 +9,7 @@ import * as PropTypes from "prop-types";
  */
 export function AvailabilityLight({
   branch,
-  style = { paddingTop: "var(--pt05)" },
+  style = { marginTop: "var(--pt05)" },
 }) {
   return (
     <Icon

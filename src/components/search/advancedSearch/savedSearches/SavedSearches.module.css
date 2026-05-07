@@ -33,6 +33,7 @@
 .removeItemIcon {
   cursor: pointer;
   justify-self: flex-end;
+  color: var(--dove);
 }
 
 .accordionContentContainer {

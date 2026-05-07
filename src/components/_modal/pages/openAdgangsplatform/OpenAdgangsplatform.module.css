@@ -24,6 +24,10 @@
   margin-top: var(--pt2);
 }
 
+.login button i {
+  margin-left: var(--pt1);
+}
+
 @media (min-width: 576px) {
   .login {
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);

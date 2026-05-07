@@ -20,6 +20,8 @@
 
 .helpicongroup {
   padding-right: var(--pt1);
+  position: relative;
+  top: 2px;
 }
 
 .helpiconlink {
@@ -30,8 +32,6 @@
 
 .helpiconrotate {
   transform: rotate(90deg);
-  position: relative;
-  top: 5px;
 }
 
 .helphide {
