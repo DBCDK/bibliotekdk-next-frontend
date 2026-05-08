@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import config from "@/config";
 
 import Language from "@/components/base/language";
+import useSiteConfig from "@/components/hooks/useSiteConfig";
 
 import { actions } from "@/lib/Navigation";
 import { cyKey } from "@/utils/trim";
@@ -26,7 +26,8 @@ import styles from "./Menu.module.css";
  */
 
 function Menu({ modal }) {
-  const isStudiebib = config.site === "studiebib";
+  const { site } = useSiteConfig();
+  const isStudiebib = site === "studiebib";
 
   const url = isStudiebib
     ? "https://www.bibliotek.dk"
