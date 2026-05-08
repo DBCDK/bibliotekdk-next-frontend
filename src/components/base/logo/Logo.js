@@ -50,7 +50,7 @@ function TestUserActive() {
  * @returns {React.JSX.Element}
  */
 export default function Logo({ href = "/", colors, ...props }) {
-  const { logo } = useSiteConfig();
+  const { logo, site } = useSiteConfig();
   const LogoVariant = LOGO_VARIANTS[logo?.variant] || LogoWithText;
   const resolvedColors = {
     ...DEFAULT_COLORS,
@@ -69,7 +69,11 @@ export default function Logo({ href = "/", colors, ...props }) {
         name: "logo",
       })}
     >
-      <div className={styles.display_flex}>
+      <div
+        className={`${styles.display_flex} ${
+          site === "studiebib" ? styles.studiebibMobile : ""
+        }`}
+      >
         <LogoVariant
           style={{
             "--logo-color": resolvedColors.logo,
