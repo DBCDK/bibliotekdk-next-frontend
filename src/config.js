@@ -24,7 +24,7 @@ const config = {
     timeout: process.env.API_TIMEOUT_MS || 150,
     cacheKey: process.env.NEXT_BACKEND_CACHE_KEY || "alfa",
   },
-  site: process.env.NEXT_PUBLIC_SITE || "bibliotekDk",
+  site: process.env.NEXT_PUBLIC_SITE || "bibliotekdk",
 };
 
 export default config;
