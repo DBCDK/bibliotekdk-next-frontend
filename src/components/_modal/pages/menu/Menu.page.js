@@ -30,9 +30,9 @@ function Menu({ modal }) {
 
   const url = isStudiebib
     ? "https://www.bibliotek.dk"
-    : "https://www.studie.bibliotek.dk";
+    : "https://studie.bibliotek.dk";
 
-  const label = isStudiebib ? "studiebibWebsiteName" : "bibdkWebsiteName";
+  const label = isStudiebib ? "bibdkWebsiteName" : "studiebibWebsiteName";
 
   return (
     <div className={`${styles.menu}`} data-cy="menu-modal">
