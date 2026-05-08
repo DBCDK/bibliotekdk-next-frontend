@@ -9,7 +9,7 @@
  * via getServerSideProps is used when the React app
  * is rendered.
  */
-import React, { useEffect } from "react";
+import React from "react";
 
 import { SessionProvider } from "next-auth/react";
 import smoothscroll from "smoothscroll-polyfill";
@@ -139,14 +139,6 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
   if (router?.query?.debug === "true") {
     enableDebug();
   }
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-site", site);
-
-    return () => {
-      document.documentElement.removeAttribute("data-site");
-    };
-  }, [site]);
 
   return (
     <ErrorBoundary>
