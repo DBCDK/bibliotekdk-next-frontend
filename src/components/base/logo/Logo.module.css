@@ -16,3 +16,9 @@
 .defaultLogo *[data-text="true"] {
   color: var(--logo-text-color, var(--mine-shaft));
 }
+
+@media (max-width: 767px) {
+  .studiebibMobile {
+    height: calc(var(--pt6) * 0.85);
+  }
+}
