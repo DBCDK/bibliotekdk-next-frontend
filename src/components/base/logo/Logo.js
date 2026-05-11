@@ -5,14 +5,28 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import useTestUser from "@/components/hooks/useTestUser";
 import useSiteConfig from "@/components/hooks/useSiteConfig";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import LogoWithText from "./logo_text.svg";
+import LogoWithoutText from "./logo_notext.svg";
 import BibdkLogoWithText from "./bibdk/logo_text.svg";
+import BibdkLogoWithoutText from "./bibdk/logo_notext.svg";
 import StudiebibLogoWithText from "./studiebib/logo_text.svg";
+import StudiebibLogoWithoutText from "./studiebib/logo_notext.svg";
 
 const LOGO_VARIANTS = {
-  bibliotekdk: BibdkLogoWithText,
-  studiebib: StudiebibLogoWithText,
+  default: {
+    withText: LogoWithText,
+    withoutText: LogoWithoutText,
+  },
+  bibliotekdk: {
+    withText: BibdkLogoWithText,
+    withoutText: BibdkLogoWithoutText,
+  },
+  studiebib: {
+    withText: StudiebibLogoWithText,
+    withoutText: StudiebibLogoWithoutText,
+  },
 };
 
 const DEFAULT_COLORS = {
@@ -49,9 +63,19 @@ function TestUserActive() {
  *  Colors for svg logo and text
  * @returns {React.JSX.Element}
  */
-export default function Logo({ href = "/", colors, ...props }) {
+export default function Logo({
+  href = "/",
+  colors,
+  mobileWithoutText = false,
+  ...props
+}) {
   const { logo, site } = useSiteConfig();
-  const LogoVariant = LOGO_VARIANTS[logo?.variant] || LogoWithText;
+  const breakpoint = useBreakpoint();
+  const isMobile = mobileWithoutText && ["xs", "sm"].includes(breakpoint);
+  const logoVariant = LOGO_VARIANTS[logo?.variant] || LOGO_VARIANTS.default;
+  const LogoVariant = isMobile
+    ? logoVariant.withoutText
+    : logoVariant.withText;
   const resolvedColors = {
     ...DEFAULT_COLORS,
     ...colors,
@@ -95,4 +119,5 @@ Logo.propTypes = {
     text: PropTypes.string,
   }),
   href: PropTypes.string,
+  mobileWithoutText: PropTypes.bool,
 };
