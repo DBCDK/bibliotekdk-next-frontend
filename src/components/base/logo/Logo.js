@@ -73,9 +73,7 @@ export default function Logo({
   const breakpoint = useBreakpoint();
   const isMobile = mobileWithoutText && ["xs", "sm"].includes(breakpoint);
   const logoVariant = LOGO_VARIANTS[logo?.variant] || LOGO_VARIANTS.default;
-  const LogoVariant = isMobile
-    ? logoVariant.withoutText
-    : logoVariant.withText;
+  const LogoVariant = isMobile ? logoVariant.withoutText : logoVariant.withText;
   const resolvedColors = {
     ...DEFAULT_COLORS,
     ...colors,
