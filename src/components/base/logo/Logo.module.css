@@ -17,7 +17,19 @@
   color: var(--logo-text-color, var(--mine-shaft));
 }
 
+.mobileOnlyLogo {
+  display: none;
+}
+
 @media (max-width: 767px) {
+  .mobileHideWithText {
+    display: none;
+  }
+
+  .mobileOnlyLogo {
+    display: block;
+  }
+
   .studiebibMobile {
     height: calc(var(--pt6) * 0.85);
   }

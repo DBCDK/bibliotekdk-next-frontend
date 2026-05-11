@@ -5,7 +5,6 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import useTestUser from "@/components/hooks/useTestUser";
 import useSiteConfig from "@/components/hooks/useSiteConfig";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import LogoWithText from "./logo_text.svg";
 import LogoWithoutText from "./logo_notext.svg";
@@ -70,10 +69,9 @@ export default function Logo({
   ...props
 }) {
   const { logo, site } = useSiteConfig();
-  const breakpoint = useBreakpoint();
-  const isMobile = mobileWithoutText && ["xs", "sm"].includes(breakpoint);
   const logoVariant = LOGO_VARIANTS[logo?.variant] || LOGO_VARIANTS.default;
-  const LogoVariant = isMobile ? logoVariant.withoutText : logoVariant.withText;
+  const LogoWithTextVariant = logoVariant.withText;
+  const LogoWithoutTextVariant = logoVariant.withoutText;
   const resolvedColors = {
     ...DEFAULT_COLORS,
     ...colors,
@@ -96,14 +94,26 @@ export default function Logo({
           site === "studiebib" ? styles.studiebibMobile : ""
         }`}
       >
-        <LogoVariant
+        <LogoWithTextVariant
           style={{
             "--logo-color": resolvedColors.logo,
             "--logo-text-color": resolvedColors.text,
           }}
-          className={styles.defaultLogo}
+          className={`${styles.defaultLogo} ${
+            mobileWithoutText ? styles.mobileHideWithText : ""
+          }`}
           alt={Translate({ context: "logo", label: "default_logo_text" })}
         />
+        {mobileWithoutText && (
+          <LogoWithoutTextVariant
+            style={{
+              "--logo-color": resolvedColors.logo,
+              "--logo-text-color": resolvedColors.text,
+            }}
+            className={`${styles.defaultLogo} ${styles.mobileOnlyLogo}`}
+            alt={Translate({ context: "logo", label: "default_logo_text" })}
+          />
+        )}
       </div>
       <TestUserActive />
     </Link>
