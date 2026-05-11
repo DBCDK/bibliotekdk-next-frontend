@@ -38,7 +38,7 @@ export function Header({
     >
       <Row className={styles.row}>
         <Col xs={3}>
-          <Logo />
+          <Logo mobileWithoutText />
         </Col>
 
         <Col
