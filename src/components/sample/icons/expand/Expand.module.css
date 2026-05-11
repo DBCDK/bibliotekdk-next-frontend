@@ -43,6 +43,7 @@
   position: relative;
   width: var(--pt2);
   height: var(--pt2);
+  color: var(--blue);
 }
 
 /* Grundopsætning for begge ikoner */

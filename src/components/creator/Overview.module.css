@@ -89,6 +89,7 @@
   align-items: flex-start;
   gap: var(--pt05);
   margin-top: var(--pt05);
+  color: var(--blue);
 }
 
 .awards > *:first-child {
