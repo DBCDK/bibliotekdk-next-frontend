@@ -502,7 +502,7 @@ export default function SavedSearches() {
                             <Text type="text2">{formatedDate}</Text>
 
                             <Icon
-                              className={styles.removeItemIcon}
+                              className={`${styles.removeItemIcon} ${styles.removeItemIconBlue}`}
                               size={3}
                               tabIndex={0}
                               onClick={(e) => {
