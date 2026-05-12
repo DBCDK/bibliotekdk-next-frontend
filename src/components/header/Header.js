@@ -126,7 +126,7 @@ export function Header({
         <Container className={styles.header} fluid>
           <Row className={styles.bottom}>
             <Col xs={3} lg={2} className={styles.logoWrapper}>
-              <Logo />
+              <Logo mobileWithoutText />
             </Col>
             <Col
               xs={{ span: 7, offset: 1 }}

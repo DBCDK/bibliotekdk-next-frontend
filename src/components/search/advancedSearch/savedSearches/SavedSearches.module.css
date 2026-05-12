@@ -36,6 +36,10 @@
   color: var(--dove);
 }
 
+.removeItemIconBlue {
+  color: var(--blue);
+}
+
 .accordionContentContainer {
   cursor: pointer;
   align-items: center;

@@ -129,7 +129,7 @@
 
 @media (min-width: 768px) {
   .full_cover_carousel .arrow_styling {
-    display: initial;
+    display: flex;
   }
 
   .full_cover_carousel {

@@ -16,6 +16,7 @@
   width: var(--pt9);
   border-radius: 50%;
   border: 1px solid var(--blue);
+  color: var(--blue);
   display: flex;
   justify-content: center;
   align-items: center;
