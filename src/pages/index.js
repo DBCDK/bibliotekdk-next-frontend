@@ -36,6 +36,12 @@ function getSectionBackgroundColor(index) {
   const colorIndex = Math.floor(index / 2) % sectionBackgroundColors.length;
   return sectionBackgroundColors[colorIndex];
 }
+/**
+ * Get a unique key for a frontpage section.
+ */
+function getSectionKey(section, index, locale) {
+  return `${locale}-${section.__typename}-${section.id ?? index}`;
+}
 
 const FrontpageSkeleton = () => (
   <>
@@ -89,7 +95,7 @@ const Index = () => {
             ) {
               return (
                 <ArticleSection
-                  key={section.id}
+                  key={getSectionKey(section, index, locale)}
                   title={section.title}
                   articles={section.articles?.map(normalizeArticle)}
                   template={section.template}
@@ -104,7 +110,7 @@ const Index = () => {
             ) {
               return (
                 <InspirationSlider
-                  key={section.id}
+                  key={getSectionKey(section, index, locale)}
                   title={section.title}
                   filters={[
                     {
@@ -124,7 +130,7 @@ const Index = () => {
             ) {
               return (
                 <LinkCard
-                  key={section.id}
+                  key={getSectionKey(section, index, locale)}
                   title={section.title}
                   buttonText={section.buttonText}
                   url={section.url}
