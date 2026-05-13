@@ -56,6 +56,7 @@ export function cmsFrontpage({ locale = getLocale() } = {}) {
                   url
                   width
                   height
+                  formats
                 }
               }
             }
@@ -77,6 +78,7 @@ export function cmsFrontpage({ locale = getLocale() } = {}) {
                 url
                 width
                 height
+                formats
               }
             }
           }

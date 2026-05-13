@@ -134,7 +134,17 @@ const Index = () => {
                   title={section.title}
                   buttonText={section.buttonText}
                   url={section.url}
-                  image={section.image}
+                  image={{
+                    ...section.image,
+                    url:
+                      section.image?.formats?.medium?.url || section.image?.url,
+                    width:
+                      section.image?.formats?.medium?.width ||
+                      section.image?.width,
+                    height:
+                      section.image?.formats?.medium?.height ||
+                      section.image?.height,
+                  }}
                   backgroundColor={backgroundColor}
                 />
               );

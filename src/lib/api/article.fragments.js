@@ -34,12 +34,14 @@ function normalizeImage(article) {
     return article?.fieldImage;
   }
 
+  const small = article.image.formats?.small;
+
   return {
     alt: article.image.alternativeText || "",
     title: article.image.caption || "",
-    url: article.image.url,
-    width: article.image.width,
-    height: article.image.height,
+    url: small?.url || article.image.url,
+    width: small?.width || article.image.width,
+    height: small?.height || article.image.height,
   };
 }
 
