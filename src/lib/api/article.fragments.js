@@ -34,6 +34,7 @@ function normalizeImage(article) {
     return article?.fieldImage;
   }
 
+  // Use the medium format if available, otherwise fallback to the original image
   const image = article.image.formats?.medium || article.image;
 
   return {
