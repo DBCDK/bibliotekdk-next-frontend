@@ -13,6 +13,7 @@ import React from "react";
 import { InspirationSlider } from "@/components/inspiration";
 import { Slider as InspirationSliderSkeleton } from "@/components/inspiration/slider/Slider";
 import { LinkCard } from "@/components/linkcard";
+import { CqlSlider } from "@/components/frontpage/cqlSlider";
 
 import { useData } from "@/lib/api/api";
 import { parseCmsHero } from "@/components/hero/Hero";
@@ -68,6 +69,7 @@ const Index = () => {
   const frontpage = getCmsFrontpage(data);
   const ogImage = parseCmsHero(data);
   const showSkeleton = isLoading || !frontpage?.sections;
+  const sections = frontpage?.sections || [];
 
   return (
     <>
@@ -87,7 +89,7 @@ const Index = () => {
         {showSkeleton && <FrontpageSkeleton />}
 
         {!showSkeleton &&
-          frontpage?.sections?.filter(Boolean).map((section, index) => {
+          sections.filter(Boolean).map((section, index) => {
             const backgroundColor = getSectionBackgroundColor(index);
 
             if (
@@ -120,6 +122,21 @@ const Index = () => {
                   ]}
                   limit={section.limit || 30}
                   divider={{ content: !section.showDivider }}
+                  backgroundColor={backgroundColor}
+                />
+              );
+            }
+
+            if (
+              section.__typename === "BibliotekdkCmsComponentFrontpageCqlSlider"
+            ) {
+              return (
+                <CqlSlider
+                  key={getSectionKey(section, index, locale)}
+                  title={section.title}
+                  cql={section.cql}
+                  limit={section.limit || 30}
+                  divider={{ content: true }}
                   backgroundColor={backgroundColor}
                 />
               );
