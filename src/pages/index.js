@@ -69,7 +69,6 @@ const Index = () => {
   const frontpage = getCmsFrontpage(data);
   const ogImage = parseCmsHero(data);
   const showSkeleton = isLoading || !frontpage?.sections;
-  const sections = frontpage?.sections || [];
 
   return (
     <>
@@ -89,7 +88,7 @@ const Index = () => {
         {showSkeleton && <FrontpageSkeleton />}
 
         {!showSkeleton &&
-          sections.filter(Boolean).map((section, index) => {
+          frontpage.sections.filter(Boolean).map((section, index) => {
             const backgroundColor = getSectionBackgroundColor(index);
 
             if (
