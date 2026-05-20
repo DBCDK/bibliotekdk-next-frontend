@@ -57,11 +57,15 @@ const theme = {
 };
 
 export function openMobileSuggester(router = Router) {
+  // iOS requires focus to be triggered from a user gesture.
+  // The mobile suggester container used to be display:none when closed, so
+  // we focus first (while still in the click handler) and then open the
+  // mobile suggester. A short retry helps with mount/animation timing.
+  focusInput();
   router.push({
     pathname: router.pathname,
     query: { ...router.query, suggester: true },
   });
-  focusInput();
   setTimeout(() => focusInput(), 100);
 }
 
@@ -365,24 +369,6 @@ export default function Wrap(props) {
       });
     }
   }, [query, data?.suggest?.result]);
-
-  // autofocus if query param focus=1 is set
-  useEffect(() => {
-    if (!router.isReady) return;
-    if (router.query.focus !== "1") return;
-
-    requestAnimationFrame(() => {
-      setTimeout(() => focusInput(), 150);
-
-      const rest = { ...router.query };
-      delete rest.focus;
-
-      router.replace({ pathname: router.pathname, query: rest }, undefined, {
-        shallow: true,
-        scroll: false,
-      });
-    });
-  }, [router.isReady, router.query.focus]);
 
   if (props.skeleton || isLoading) {
     className = `${className} ${styles.skeleton}`;
