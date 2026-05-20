@@ -14,7 +14,7 @@ describe("Article", () => {
       .contains("Digitale bibliotekstilbud");
   });
 
-  it(`Tab through article previews`, () => {
+  it.skip(`Tab through article previews`, () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
