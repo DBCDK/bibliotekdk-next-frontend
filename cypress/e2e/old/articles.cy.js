@@ -34,11 +34,7 @@ describe("Article", () => {
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
     cy.get("[data-cy=article-preview]")
-      .first()
-      .should("exist")
-      .tab()
-      .should("exist")
-      .tab()
+      .contains("Digitale bibliotekstilbud")
       .click();
 
     // Check URL path is as expected
