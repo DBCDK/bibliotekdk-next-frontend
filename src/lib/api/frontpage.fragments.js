@@ -56,6 +56,7 @@ export function cmsFrontpage({ locale = getLocale() } = {}) {
                   url
                   width
                   height
+                  formats
                 }
               }
             }
@@ -67,6 +68,12 @@ export function cmsFrontpage({ locale = getLocale() } = {}) {
               limit
               showDivider
             }
+            ... on BibliotekdkCmsComponentFrontpageCqlSlider {
+              id
+              title
+              cql
+              limit
+            }
             ... on BibliotekdkCmsComponentFrontpageLinkCard {
               id
               title
@@ -77,6 +84,7 @@ export function cmsFrontpage({ locale = getLocale() } = {}) {
                 url
                 width
                 height
+                formats
               }
             }
           }

@@ -34,12 +34,15 @@ function normalizeImage(article) {
     return article?.fieldImage;
   }
 
+  // Use the medium format if available, otherwise fallback to the original image
+  const image = article.image.formats?.medium || article.image;
+
   return {
     alt: article.image.alternativeText || "",
     title: article.image.caption || "",
-    url: article.image.url,
-    width: article.image.width,
-    height: article.image.height,
+    url: image.url,
+    width: image.width,
+    height: image.height,
   };
 }
 

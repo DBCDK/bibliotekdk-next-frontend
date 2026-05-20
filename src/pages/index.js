@@ -13,6 +13,7 @@ import React from "react";
 import { InspirationSlider } from "@/components/inspiration";
 import { Slider as InspirationSliderSkeleton } from "@/components/inspiration/slider/Slider";
 import { LinkCard } from "@/components/linkcard";
+import { CqlSlider } from "@/components/frontpage/cqlSlider";
 
 import { useData } from "@/lib/api/api";
 import { parseCmsHero } from "@/components/hero/Hero";
@@ -87,7 +88,7 @@ const Index = () => {
         {showSkeleton && <FrontpageSkeleton />}
 
         {!showSkeleton &&
-          frontpage?.sections?.filter(Boolean).map((section, index) => {
+          frontpage.sections.filter(Boolean).map((section, index) => {
             const backgroundColor = getSectionBackgroundColor(index);
 
             if (
@@ -126,6 +127,21 @@ const Index = () => {
             }
 
             if (
+              section.__typename === "BibliotekdkCmsComponentFrontpageCqlSlider"
+            ) {
+              return (
+                <CqlSlider
+                  key={getSectionKey(section, index, locale)}
+                  title={section.title}
+                  cql={section.cql}
+                  limit={section.limit || 30}
+                  divider={{ content: true }}
+                  backgroundColor={backgroundColor}
+                />
+              );
+            }
+
+            if (
               section.__typename === "BibliotekdkCmsComponentFrontpageLinkCard"
             ) {
               return (
@@ -134,7 +150,17 @@ const Index = () => {
                   title={section.title}
                   buttonText={section.buttonText}
                   url={section.url}
-                  image={section.image}
+                  image={{
+                    ...section.image,
+                    url:
+                      section.image?.formats?.medium?.url || section.image?.url,
+                    width:
+                      section.image?.formats?.medium?.width ||
+                      section.image?.width,
+                    height:
+                      section.image?.formats?.medium?.height ||
+                      section.image?.height,
+                  }}
                   backgroundColor={backgroundColor}
                 />
               );
