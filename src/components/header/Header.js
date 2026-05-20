@@ -86,7 +86,6 @@ export function Header({
         // iOS requires focus to be triggered from a user gesture.
         // The route change can delay mounting, so retry shortly after.
         focusInput();
-      //  setTimeout(() => focusInput(), 100);
       },
     },
     {
@@ -184,7 +183,6 @@ export function Header({
                   router.push(
                     `/find/simpel${params}${params ? "&" : "?"}focus=1`
                   );
-               //   focusInput();
                   // input fccus
                   setTimeout(() => focusInput(), 100);
                 }}
