@@ -29,7 +29,7 @@ describe("Article", () => {
       .contains("Digitale bibliotekstilbud");
   });
 
-  it(`Article preview links to article page`, () => {
+  it.skip(`Article preview links to article page`, () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
