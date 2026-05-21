@@ -32,7 +32,7 @@ export const SITE_CONFIGS = {
     label: "studie.bibliotek.dk",
     logo: {
       variant: "studiebib",
-      ogImage: "/img/bibdk-default-img.png",
+      ogImage: "/img/studiebib-default-img.webp",
       faviconSvg: "/favicon/studiebib/favicon.svg",
       faviconIco: "/favicon/studiebib/favicon.ico",
     },
