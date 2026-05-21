@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import PropTypes from "prop-types";
-
+import Image from "@/components/base/image";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -12,14 +12,21 @@ const normalizeMarkdown = (str) => {
   return str.trim().replace(/(^|\n)(\d+)\./g, "$1$2\\.");
 };
 
-function MarkdownImage({ src, alt = "", title, ...props }) {
+function MarkdownImage({ src, alt = "", title, width, height, ...props }) {
   const imageProps = { ...props };
   delete imageProps.node;
 
   return (
     <figure>
-      <img src={src} alt={alt} title={title || ""} {...imageProps} />
-      {title && <figcaption>{title}</figcaption>}
+      <Image
+        {...imageProps}
+        src={src}
+        alt={alt}
+        title={title || ""}
+        width={Number(width) || 1400}
+        height={Number(height) || 788}
+        className={styles.markdownImage}
+      />
     </figure>
   );
 }
