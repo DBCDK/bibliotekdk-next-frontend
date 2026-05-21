@@ -39,12 +39,13 @@ export function Promoted({ className = "", data = [], isLoading }) {
     >
       <Col lg={8}>
         <Accordion data={sortedData} isLoading={isLoading} />
-        <Link href="/hjaelp/faq" a={false}>
+        <Link href="/hjaelp/faq">
           <Button
             type="secondary"
             size="medium"
             className={styles.button}
             skeleton={isLoading}
+            asLink={true}
           >
             {Translate({ context: "help", label: "show-more-faq" })}
           </Button>
