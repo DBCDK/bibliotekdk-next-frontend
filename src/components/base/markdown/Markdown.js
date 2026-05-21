@@ -12,7 +12,7 @@ const normalizeMarkdown = (str) => {
   return str.trim().replace(/(^|\n)(\d+)\./g, "$1$2\\.");
 };
 
-function MarkdownImage({ src, alt = "", title, width, height, ...props }) {
+function MarkdownImage({ src, alt = "", title, ...props }) {
   const imageProps = { ...props };
   delete imageProps.node;
 
@@ -23,8 +23,8 @@ function MarkdownImage({ src, alt = "", title, width, height, ...props }) {
         src={src}
         alt={alt}
         title={title || ""}
-        width={Number(width) || 1400}
-        height={Number(height) || 788}
+        width={1400}
+        height={788}
         className={styles.markdownImage}
       />
     </figure>
