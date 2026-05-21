@@ -132,3 +132,8 @@
     max-width: 100%;
   }
 }
+
+.markdownImage {
+  max-width: 100%;
+  height: auto;
+}
