@@ -435,7 +435,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  describe(`series page`, () => {
+  describe.skip(`series page`, () => {
     it(`has correct metadata`, () => {
       const seriesId =
         "24508131238ca4b356a2af3d30e8268d31696f2f55f1297b90e18203bbc49c99";

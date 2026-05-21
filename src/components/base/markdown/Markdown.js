@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import PropTypes from "prop-types";
-
+import Image from "@/components/base/image";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -18,8 +18,15 @@ function MarkdownImage({ src, alt = "", title, ...props }) {
 
   return (
     <figure>
-      <img src={src} alt={alt} title={title || ""} {...imageProps} />
-      {title && <figcaption>{title}</figcaption>}
+      <Image
+        {...imageProps}
+        src={src}
+        alt={alt}
+        title={title || ""}
+        width={1400}
+        height={788}
+        className={styles.markdownImage}
+      />
     </figure>
   );
 }
