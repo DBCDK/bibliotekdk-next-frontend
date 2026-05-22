@@ -27,6 +27,7 @@ function MarkdownImage({ src, alt = "", title, ...props }) {
         height={788}
         className={styles.markdownImage}
       />
+      {title && <figcaption>{title}</figcaption>}
     </figure>
   );
 }
