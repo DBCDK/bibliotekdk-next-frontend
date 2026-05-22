@@ -8,7 +8,7 @@
     "build:next": "next build",
     "build:next:no:lint": "next build --no-lint",
     "build:next:no:lint:f": "run-s -l build:next:no:lint",
-    "start:next": "febib-serve next start",
+    "start:next": "NODE_ENV=production febib-serve next start",
     "dev:storybook": "STORYBOOK_ACTIVE=1 storybook dev -s ../public -p \"${STORYBOOK_PORT:-4000}\"",
     "build:storybook": "STORYBOOK_ACTIVE=1 storybook build -c .storybook -o dist/storybook --quiet && cp -r public/* dist/storybook/",
     "build:storybook:f": "run-s -l build:storybook",
