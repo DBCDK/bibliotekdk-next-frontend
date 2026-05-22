@@ -32,7 +32,6 @@ COPY --chown=node:node --from=build /home/node/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /home/node/app/package.json ./
 COPY --chown=node:node --from=build /home/node/app/next.config.js ./
 COPY --chown=node:node --from=build /home/node/app/logger.js ./
-COPY --chown=node:node --from=build /home/node/app/febib-serve ./febib-serve
 
 EXPOSE 3000 4000
 USER node
