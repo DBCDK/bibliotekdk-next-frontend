@@ -6,7 +6,6 @@ import Section from "@/components/base/section";
 import Accordion from "@/components/base/accordion";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
-import Link from "@/components/base/link";
 
 import { sortData } from "../utils";
 
@@ -39,17 +38,17 @@ export function Promoted({ className = "", data = [], isLoading }) {
     >
       <Col lg={8}>
         <Accordion data={sortedData} isLoading={isLoading} />
-        <Link href="/hjaelp/faq">
-          <Button
-            type="secondary"
-            size="medium"
-            className={styles.button}
-            skeleton={isLoading}
-            asLink={true}
-          >
-            {Translate({ context: "help", label: "show-more-faq" })}
-          </Button>
-        </Link>
+        <Button
+          type="secondary"
+          size="medium"
+          className={styles.button}
+          skeleton={isLoading}
+          asLink={true}
+          href="/hjaelp/faq"
+          target="_self"
+        >
+          {Translate({ context: "help", label: "show-more-faq" })}
+        </Button>
       </Col>
     </Section>
   );

@@ -9,6 +9,7 @@
 .button {
   margin-top: var(--pt2);
   width: 100%;
+  text-decoration: none;
 }
 
 @media (min-width: 576px) {
