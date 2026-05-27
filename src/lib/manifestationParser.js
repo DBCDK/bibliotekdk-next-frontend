@@ -247,6 +247,14 @@ const fields = () => [
         .join(", "),
   },
   {
+    dataField: "pid",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "faustNumber",
+    }),
+    valueParser: (pid) => pid?.split(":")?.[1] || "",
+  },
+  {
     dataField: "shelfmark",
     label: Translate({
       context: "bibliographic-data",
