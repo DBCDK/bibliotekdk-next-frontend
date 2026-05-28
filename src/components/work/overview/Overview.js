@@ -23,7 +23,6 @@ import {
 import Title from "@/components/base/title/Title";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
-import isEmpty from "lodash/isEmpty";
 import SampleButton from "@/components/sample";
 import Ornament1Svg from "@/public/icons/ornament1.svg";
 
@@ -45,20 +44,9 @@ export function Overview({
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
 
-  const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
-    useMemo(() => {
-      return manifestationMaterialTypeFactory(manifestations);
-    }, [work, manifestations]);
-
-  // Ensure rendering always has a valid selected type, even if the URL type
-  // is stale from a previous work during client-side navigation.
-  const effectiveType = useMemo(() => {
-    if (!isEmpty(type) && inUniqueMaterialTypes(type)) {
-      return type;
-    }
-
-    return uniqueMaterialTypes?.[0]?.map((mat) => mat?.specificDisplay) || [];
-  }, [type, uniqueMaterialTypes, inUniqueMaterialTypes]);
+  const { uniqueMaterialTypes, flatPidsByType } = useMemo(() => {
+    return manifestationMaterialTypeFactory(manifestations);
+  }, [work, manifestations]);
 
   // OBS: We load allPids for CoverCarousel, to ensure smooth change of MaterialType
   const allPids = useMemo(
@@ -67,8 +55,8 @@ export function Overview({
   );
 
   const selectedPids = useMemo(
-    () => flatPidsByType(effectiveType),
-    [effectiveType, flatPidsByType]
+    () => flatPidsByType(type),
+    [type, flatPidsByType]
   );
 
   const checkForPeriodicaArticle = (pids) => {
@@ -141,7 +129,7 @@ export function Overview({
                   uniqueMaterialTypes={uniqueMaterialTypes}
                   skeleton={skeleton}
                   onTypeChange={onTypeChange}
-                  type={effectiveType}
+                  type={type}
                 />
               </Col>
               <Col xs={12} className={styles.basket}>
@@ -153,7 +141,7 @@ export function Overview({
 
                 <SampleButton
                   workId={workId}
-                  type={effectiveType?.[0]}
+                  type={type?.[0]}
                   className={styles.sample}
                 />
 
