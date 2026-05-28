@@ -1,0 +1,316 @@
+{
+  "byNid": {
+    "38": {
+      "body": {
+        "processed": "<p>Du kan søge og bestille materialer (bøger, artikler, cd'er, dvd'er, brætspil, konsolspil, osv.) fra alle landets<span><span> folkebiblioteker og forskningsbiblioteker. </span></span></p>\n\n<p><span><span>Når du bestiller, finder vi det bibliotek, som har materialet hurtigst muligt og leverer det til dig på dit lokale bibliotek. Du vælger afhentningssted ved bestilling.</span></span></p>\n\n<p> </p>",
+        "value": "<p>Du kan søge og bestille materialer (bøger, artikler, cd'er, dvd'er, brætspil, konsolspil, osv.) fra alle landets<span><span> folkebiblioteker og forskningsbiblioteker. </span></span></p>\r\n\r\n<p><span><span>Når du bestiller, finder vi det bibliotek, som har materialet hurtigst muligt og leverer det til dig på dit lokale bibliotek. Du vælger afhentningssted ved bestilling.</span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 38,
+      "promote": true,
+      "title": "Hvad kan jeg på Bibliotek.dk?"
+    },
+    "49": {
+      "body": {
+        "processed": "<p><span><span><span><span><span>Du logger på Bibliotek.dk med dit CPR-nummer og en pinkode.</span></span></span></span></span></p>\n\n<p><span><span><span><span><span>Pinkoden er den samme, som du bruger på dit lokale bibliotek.</span></span></span></span></span></p>\n\n<p>Hvis du ikke kan huske pinkoden, skal du henvende dig til dit lokale bibliotek for at få en ny. På de fleste biblioteker kan det lade sig gøre online:</p>\n\n<ul><li>Gå ind på dit biblioteks hjemmeside</li>\n\t<li>Log ind med MitId</li>\n\t<li>Nu kan du ændre din pinkode under din profil.</li>\n</ul>",
+        "value": "<p><span><span><span><span><span>Du logger på Bibliotek.dk med dit CPR-nummer og en pinkode.</span></span></span></span></span></p>\r\n\r\n<p><span><span><span><span><span>Pinkoden er den samme, som du bruger på dit lokale bibliotek.</span></span></span></span></span></p>\r\n\r\n<p>Hvis du ikke kan huske pinkoden, skal du henvende dig til dit lokale bibliotek for at få en ny. På de fleste biblioteker kan det lade sig gøre online:</p>\r\n\r\n<ul>\r\n\t<li>Gå ind på dit biblioteks hjemmeside</li>\r\n\t<li>Log ind med MitId</li>\r\n\t<li>Nu kan du ændre din pinkode under din profil.</li>\r\n</ul>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 49,
+      "promote": false,
+      "title": "Hvordan får jeg en ny pinkode?"
+    },
+    "51": {
+      "body": {
+        "processed": "<p>NOTA er <strong>Danmarks Nationalbibliotek for mennesker med læsevanskeligheder</strong>. NOTA hed tidligere Danmarks Blindebibliotek. Du skal være tilmeldt NOTA for at kunne låne materialer der. Se mere om NOTA her: <a href=\"https://nota.dk/\">NOTA</a></p>\n\n<p> </p>",
+        "value": "<p>NOTA er <strong>Danmarks Nationalbibliotek for mennesker med læsevanskeligheder</strong>. NOTA hed tidligere Danmarks Blindebibliotek. Du skal være tilmeldt NOTA for at kunne låne materialer der. Se mere om NOTA her: <a href=\"https://nota.dk/\">NOTA</a></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "NOTA"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 51,
+      "promote": true,
+      "title": "Hvad er NOTA?"
+    },
+    "52": {
+      "body": {
+        "processed": "<p><span lang=\"DA-DK\" xml:lang=\"DA-DK\" xml:lang=\"DA-DK\"><span>Du kan efter søgning filtrere på materialetypen Lydbog, hvis du kun ønsker at se lydbøger i søgeresultatet. Vær opmærksom på at der findes flere typer af lydbøger: online, mp3 og cd.</span></span><span> </span></p>\n\n<p><span lang=\"DA-DK\" xml:lang=\"DA-DK\" xml:lang=\"DA-DK\"><span>Du kan også på et fremsøgt materiale vælge materialetype:</span></span><span><br /><img alt=\"Udklip med materialetyper\" data-entity-type=\"file\" data-entity-uuid=\"1d693d49-73e1-4c0d-9583-ae7b5bb11ccb\" src=\"/sites/default/files/inline-images/kaptajnen_0.jpg\" width=\"541\" height=\"261\" loading=\"lazy\" /></span></p>",
+        "value": "<p><span lang=\"DA-DK\"><span>Du kan efter søgning filtrere på materialetypen Lydbog, hvis du kun ønsker at se lydbøger i søgeresultatet. Vær opmærksom på at der findes flere typer af lydbøger: online, mp3 og cd.</span></span><span> </span></p>\r\n\r\n<p><span lang=\"DA-DK\"><span>Du kan også på et fremsøgt materiale vælge materialetype:</span></span><span><br />\r\n<img alt=\"Udklip med materialetyper\" data-entity-type=\"file\" data-entity-uuid=\"1d693d49-73e1-4c0d-9583-ae7b5bb11ccb\" src=\"http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/kaptajnen_0.jpg\" /></span></p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 52,
+      "promote": false,
+      "title": "Hvordan finder jeg lydbøger?"
+    },
+    "185": {
+      "body": {
+        "processed": "<p>Når du bestiller i Bibliotek.dk, sættes din interessedato automatisk til tre måneder efter bestillingsdatoen. Det ændres i løbet af kort tid til seks måneder.</p>\n\n<p>Du kan ikke ændre den i Bibliotek.dk. Hvis du vil forlænge eller forkorte interesseperioden, kan du gøre det på dit eget biblioteks hjemmeside.</p>",
+        "value": "<p>Når du bestiller i Bibliotek.dk, sættes din interessedato automatisk til tre måneder efter bestillingsdatoen. Det ændres i løbet af kort tid til seks måneder.</p>\r\n\r\n<p>Du kan ikke ændre den i Bibliotek.dk. Hvis du vil forlænge eller forkorte interesseperioden, kan du gøre det på dit eget biblioteks hjemmeside.</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 185,
+      "promote": false,
+      "title": "Hvor er interessedatoen?"
+    },
+    "186": {
+      "body": {
+        "processed": "<p>Man kan endnu ikke fravælge NOTAs materialer i søgninger i Bibliotek.dk. Men det er på planen og bliver en del af Bibliotek.dk i løbet af foråret 2024.</p>",
+        "value": "<p>Man kan endnu ikke fravælge NOTAs materialer i søgninger i Bibliotek.dk. Men det er på planen og bliver en del af Bibliotek.dk i løbet af foråret 2024.</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "NOTA"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 186,
+      "promote": false,
+      "title": "Kan man fravælge NOTAs materialer i søgningen?"
+    },
+    "187": {
+      "body": {
+        "processed": "<p>Du kan komme ud for, at et sprog mangler i rulleboksene i den avancerede søgning. Brug feedback-knappen på siden til at gøre os opmærksom på et sprog, du mangler - så tilføjer vi det så hurtigt vi kan. Der er en løsning på vej, så vi på et tidspunkt - om ikke så længe - kan vise alle sprog.</p>",
+        "value": "<p>Du kan komme ud for, at et sprog mangler i rulleboksene i den avancerede søgning. Brug feedback-knappen på siden til at gøre os opmærksom på et sprog, du mangler - så tilføjer vi det så hurtigt vi kan. Der er en løsning på vej, så vi på et tidspunkt - om ikke så længe - kan vise alle sprog.</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 187,
+      "promote": false,
+      "title": "Mangler et sprog i avanceret søgning?"
+    },
+    "188": {
+      "body": {
+        "processed": "<p>Når du åbner et materiale, ser du i den øverste del de generelle oplysninger. Hvis du har bruge for mere specifikke oplysninger, kan du åbne posten på udgaveniveau. Rul ned til Udgaver  på siden eller klik på Udgaver-fanen. DK5 er placeret på udgaveniveau, fordi DK5-klassemærket kan ændres fra udgave til udgave. Det skyldes, at der løbende sker tilretninger af DK5-systemet. Hvis du har brug for at dykke ned i DK5-systemet, finder du det her: <a href=\"https://dk5.dk/\">DK5</a></p>\n\n<p>Her ser du DK5-klassemærket:</p>\n\n<p><img alt=\"Post udgaveniveau med markering af klassemærket\" data-entity-type=\"file\" data-entity-uuid=\"3e604009-a192-4033-b162-1e164a48159e\" src=\"/sites/default/files/inline-images/dk5_oss.png\" width=\"667\" height=\"464\" loading=\"lazy\" /></p>",
+        "value": "<p>Når du åbner et materiale, ser du i den øverste del de generelle oplysninger. Hvis du har bruge for mere specifikke oplysninger, kan du åbne posten på udgaveniveau. Rul ned til Udgaver&nbsp; på siden eller klik på Udgaver-fanen. DK5 er placeret på udgaveniveau, fordi DK5-klassemærket kan ændres fra udgave til udgave. Det skyldes, at der løbende sker tilretninger af DK5-systemet. Hvis du har brug for at dykke ned i DK5-systemet, finder du det her: <a href=\"https://dk5.dk/\">DK5</a></p>\r\n\r\n<p>Her ser du DK5-klassemærket:</p>\r\n\r\n<p><img alt=\"Post udgaveniveau med markering af klassemærket\" data-entity-type=\"file\" data-entity-uuid=\"3e604009-a192-4033-b162-1e164a48159e\" src=\"http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/dk5_oss.png\" /></p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 188,
+      "promote": false,
+      "title": "Hvor finder jeg DK5-klassemærket?"
+    },
+    "191": {
+      "body": {
+        "processed": "<p><span> </span>Når man søger i Bibliotek.dk, får man ikke vist antal søgehits. Og man behøver ikke kende antallet: Den rankering, der ligger bag rækkefølgen, gør, at man som oftest får relevante søgehits allerede på første og anden side.</p>\n\n<p>Den søgemetode (fuzzy-søgning), der ligger bag søgningen, søger på flere parametre og rammer derfor særdeles bredt. Når man søger, søger man nemlig ikke kun på det eksakte søgeudtryk, men også på det der er tæt på. Derfor bliver det fulde søgeresultat meget stort, så stort, at det ikke giver mening at vise det.</p>\n\n<p>Hvis man har behov for at kende det nøjagtige antal søgehits, anbefaler vi, at man bruger den udvidede søgning. Den finder du ved at vælge Avanceret ved siden af søgefeltet.</p>\n\n<p><img alt=\"Avanceret søgning - knap ved siden af søgefeltet\" data-entity-type=\"file\" data-entity-uuid=\"29eb09c0-d03c-4b7b-b0f6-1117b1e67e1c\" src=\"/sites/default/files/inline-images/avanceret_knap_0.jpg\" width=\"814\" height=\"140\" loading=\"lazy\" /></p>\n\n<p> </p>",
+        "value": "<p><span>&nbsp;</span>Når man søger i Bibliotek.dk, får man ikke vist antal søgehits. Og man behøver ikke kende antallet: Den rankering, der ligger bag rækkefølgen, gør, at man som oftest får relevante søgehits allerede på første og anden side.</p>\r\n\r\n<p>Den søgemetode (fuzzy-søgning), der ligger bag søgningen, søger på flere parametre og rammer derfor særdeles bredt. Når man søger, søger man nemlig ikke kun på det eksakte søgeudtryk, men også på det der er tæt på. Derfor bliver det fulde søgeresultat meget stort, så stort, at det ikke giver mening at vise det.</p>\r\n\r\n<p>Hvis man har behov for at kende det nøjagtige antal søgehits, anbefaler vi, at man bruger den udvidede søgning. Den finder du ved at vælge Avanceret ved siden af søgefeltet.</p>\r\n\r\n<p><img alt=\"Avanceret søgning - knap ved siden af søgefeltet\" data-entity-type=\"file\" data-entity-uuid=\"29eb09c0-d03c-4b7b-b0f6-1117b1e67e1c\" src=\"http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/avanceret_knap_0.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 191,
+      "promote": false,
+      "title": "Hvorfor ser jeg ikke antal søgehits?"
+    }
+  },
+  "count": 9,
+  "entities": [
+    {
+      "body": {
+        "processed": "<p>Når du bestiller i Bibliotek.dk, sættes din interessedato automatisk til tre måneder efter bestillingsdatoen. Det ændres i løbet af kort tid til seks måneder.</p>\n\n<p>Du kan ikke ændre den i Bibliotek.dk. Hvis du vil forlænge eller forkorte interesseperioden, kan du gøre det på dit eget biblioteks hjemmeside.</p>",
+        "value": "<p>Når du bestiller i Bibliotek.dk, sættes din interessedato automatisk til tre måneder efter bestillingsdatoen. Det ændres i løbet af kort tid til seks måneder.</p>\r\n\r\n<p>Du kan ikke ændre den i Bibliotek.dk. Hvis du vil forlænge eller forkorte interesseperioden, kan du gøre det på dit eget biblioteks hjemmeside.</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 185,
+      "promote": false,
+      "title": "Hvor er interessedatoen?"
+    },
+    {
+      "body": {
+        "processed": "<p>Man kan endnu ikke fravælge NOTAs materialer i søgninger i Bibliotek.dk. Men det er på planen og bliver en del af Bibliotek.dk i løbet af foråret 2024.</p>",
+        "value": "<p>Man kan endnu ikke fravælge NOTAs materialer i søgninger i Bibliotek.dk. Men det er på planen og bliver en del af Bibliotek.dk i løbet af foråret 2024.</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "NOTA"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 186,
+      "promote": false,
+      "title": "Kan man fravælge NOTAs materialer i søgningen?"
+    },
+    {
+      "body": {
+        "processed": "<p>Du kan komme ud for, at et sprog mangler i rulleboksene i den avancerede søgning. Brug feedback-knappen på siden til at gøre os opmærksom på et sprog, du mangler - så tilføjer vi det så hurtigt vi kan. Der er en løsning på vej, så vi på et tidspunkt - om ikke så længe - kan vise alle sprog.</p>",
+        "value": "<p>Du kan komme ud for, at et sprog mangler i rulleboksene i den avancerede søgning. Brug feedback-knappen på siden til at gøre os opmærksom på et sprog, du mangler - så tilføjer vi det så hurtigt vi kan. Der er en løsning på vej, så vi på et tidspunkt - om ikke så længe - kan vise alle sprog.</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 187,
+      "promote": false,
+      "title": "Mangler et sprog i avanceret søgning?"
+    },
+    {
+      "body": {
+        "processed": "<p>Når du åbner et materiale, ser du i den øverste del de generelle oplysninger. Hvis du har bruge for mere specifikke oplysninger, kan du åbne posten på udgaveniveau. Rul ned til Udgaver  på siden eller klik på Udgaver-fanen. DK5 er placeret på udgaveniveau, fordi DK5-klassemærket kan ændres fra udgave til udgave. Det skyldes, at der løbende sker tilretninger af DK5-systemet. Hvis du har brug for at dykke ned i DK5-systemet, finder du det her: <a href=\"https://dk5.dk/\">DK5</a></p>\n\n<p>Her ser du DK5-klassemærket:</p>\n\n<p><img alt=\"Post udgaveniveau med markering af klassemærket\" data-entity-type=\"file\" data-entity-uuid=\"3e604009-a192-4033-b162-1e164a48159e\" src=\"/sites/default/files/inline-images/dk5_oss.png\" width=\"667\" height=\"464\" loading=\"lazy\" /></p>",
+        "value": "<p>Når du åbner et materiale, ser du i den øverste del de generelle oplysninger. Hvis du har bruge for mere specifikke oplysninger, kan du åbne posten på udgaveniveau. Rul ned til Udgaver&nbsp; på siden eller klik på Udgaver-fanen. DK5 er placeret på udgaveniveau, fordi DK5-klassemærket kan ændres fra udgave til udgave. Det skyldes, at der løbende sker tilretninger af DK5-systemet. Hvis du har brug for at dykke ned i DK5-systemet, finder du det her: <a href=\"https://dk5.dk/\">DK5</a></p>\r\n\r\n<p>Her ser du DK5-klassemærket:</p>\r\n\r\n<p><img alt=\"Post udgaveniveau med markering af klassemærket\" data-entity-type=\"file\" data-entity-uuid=\"3e604009-a192-4033-b162-1e164a48159e\" src=\"http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/dk5_oss.png\" /></p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 188,
+      "promote": false,
+      "title": "Hvor finder jeg DK5-klassemærket?"
+    },
+    {
+      "body": {
+        "processed": "<p><span> </span>Når man søger i Bibliotek.dk, får man ikke vist antal søgehits. Og man behøver ikke kende antallet: Den rankering, der ligger bag rækkefølgen, gør, at man som oftest får relevante søgehits allerede på første og anden side.</p>\n\n<p>Den søgemetode (fuzzy-søgning), der ligger bag søgningen, søger på flere parametre og rammer derfor særdeles bredt. Når man søger, søger man nemlig ikke kun på det eksakte søgeudtryk, men også på det der er tæt på. Derfor bliver det fulde søgeresultat meget stort, så stort, at det ikke giver mening at vise det.</p>\n\n<p>Hvis man har behov for at kende det nøjagtige antal søgehits, anbefaler vi, at man bruger den udvidede søgning. Den finder du ved at vælge Avanceret ved siden af søgefeltet.</p>\n\n<p><img alt=\"Avanceret søgning - knap ved siden af søgefeltet\" data-entity-type=\"file\" data-entity-uuid=\"29eb09c0-d03c-4b7b-b0f6-1117b1e67e1c\" src=\"/sites/default/files/inline-images/avanceret_knap_0.jpg\" width=\"814\" height=\"140\" loading=\"lazy\" /></p>\n\n<p> </p>",
+        "value": "<p><span>&nbsp;</span>Når man søger i Bibliotek.dk, får man ikke vist antal søgehits. Og man behøver ikke kende antallet: Den rankering, der ligger bag rækkefølgen, gør, at man som oftest får relevante søgehits allerede på første og anden side.</p>\r\n\r\n<p>Den søgemetode (fuzzy-søgning), der ligger bag søgningen, søger på flere parametre og rammer derfor særdeles bredt. Når man søger, søger man nemlig ikke kun på det eksakte søgeudtryk, men også på det der er tæt på. Derfor bliver det fulde søgeresultat meget stort, så stort, at det ikke giver mening at vise det.</p>\r\n\r\n<p>Hvis man har behov for at kende det nøjagtige antal søgehits, anbefaler vi, at man bruger den udvidede søgning. Den finder du ved at vælge Avanceret ved siden af søgefeltet.</p>\r\n\r\n<p><img alt=\"Avanceret søgning - knap ved siden af søgefeltet\" data-entity-type=\"file\" data-entity-uuid=\"29eb09c0-d03c-4b7b-b0f6-1117b1e67e1c\" src=\"http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/avanceret_knap_0.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 191,
+      "promote": false,
+      "title": "Hvorfor ser jeg ikke antal søgehits?"
+    },
+    {
+      "body": {
+        "processed": "<p>Du kan søge og bestille materialer (bøger, artikler, cd'er, dvd'er, brætspil, konsolspil, osv.) fra alle landets<span><span> folkebiblioteker og forskningsbiblioteker. </span></span></p>\n\n<p><span><span>Når du bestiller, finder vi det bibliotek, som har materialet hurtigst muligt og leverer det til dig på dit lokale bibliotek. Du vælger afhentningssted ved bestilling.</span></span></p>\n\n<p> </p>",
+        "value": "<p>Du kan søge og bestille materialer (bøger, artikler, cd'er, dvd'er, brætspil, konsolspil, osv.) fra alle landets<span><span> folkebiblioteker og forskningsbiblioteker. </span></span></p>\r\n\r\n<p><span><span>Når du bestiller, finder vi det bibliotek, som har materialet hurtigst muligt og leverer det til dig på dit lokale bibliotek. Du vælger afhentningssted ved bestilling.</span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 38,
+      "promote": true,
+      "title": "Hvad kan jeg på Bibliotek.dk?"
+    },
+    {
+      "body": {
+        "processed": "<p><span><span><span><span><span>Du logger på Bibliotek.dk med dit CPR-nummer og en pinkode.</span></span></span></span></span></p>\n\n<p><span><span><span><span><span>Pinkoden er den samme, som du bruger på dit lokale bibliotek.</span></span></span></span></span></p>\n\n<p>Hvis du ikke kan huske pinkoden, skal du henvende dig til dit lokale bibliotek for at få en ny. På de fleste biblioteker kan det lade sig gøre online:</p>\n\n<ul><li>Gå ind på dit biblioteks hjemmeside</li>\n\t<li>Log ind med MitId</li>\n\t<li>Nu kan du ændre din pinkode under din profil.</li>\n</ul>",
+        "value": "<p><span><span><span><span><span>Du logger på Bibliotek.dk med dit CPR-nummer og en pinkode.</span></span></span></span></span></p>\r\n\r\n<p><span><span><span><span><span>Pinkoden er den samme, som du bruger på dit lokale bibliotek.</span></span></span></span></span></p>\r\n\r\n<p>Hvis du ikke kan huske pinkoden, skal du henvende dig til dit lokale bibliotek for at få en ny. På de fleste biblioteker kan det lade sig gøre online:</p>\r\n\r\n<ul>\r\n\t<li>Gå ind på dit biblioteks hjemmeside</li>\r\n\t<li>Log ind med MitId</li>\r\n\t<li>Nu kan du ændre din pinkode under din profil.</li>\r\n</ul>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 49,
+      "promote": false,
+      "title": "Hvordan får jeg en ny pinkode?"
+    },
+    {
+      "body": {
+        "processed": "<p>NOTA er <strong>Danmarks Nationalbibliotek for mennesker med læsevanskeligheder</strong>. NOTA hed tidligere Danmarks Blindebibliotek. Du skal være tilmeldt NOTA for at kunne låne materialer der. Se mere om NOTA her: <a href=\"https://nota.dk/\">NOTA</a></p>\n\n<p> </p>",
+        "value": "<p>NOTA er <strong>Danmarks Nationalbibliotek for mennesker med læsevanskeligheder</strong>. NOTA hed tidligere Danmarks Blindebibliotek. Du skal være tilmeldt NOTA for at kunne låne materialer der. Se mere om NOTA her: <a href=\"https://nota.dk/\">NOTA</a></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "NOTA"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 51,
+      "promote": true,
+      "title": "Hvad er NOTA?"
+    },
+    {
+      "body": {
+        "processed": "<p><span lang=\"DA-DK\" xml:lang=\"DA-DK\" xml:lang=\"DA-DK\"><span>Du kan efter søgning filtrere på materialetypen Lydbog, hvis du kun ønsker at se lydbøger i søgeresultatet. Vær opmærksom på at der findes flere typer af lydbøger: online, mp3 og cd.</span></span><span> </span></p>\n\n<p><span lang=\"DA-DK\" xml:lang=\"DA-DK\" xml:lang=\"DA-DK\"><span>Du kan også på et fremsøgt materiale vælge materialetype:</span></span><span><br /><img alt=\"Udklip med materialetyper\" data-entity-type=\"file\" data-entity-uuid=\"1d693d49-73e1-4c0d-9583-ae7b5bb11ccb\" src=\"/sites/default/files/inline-images/kaptajnen_0.jpg\" width=\"541\" height=\"261\" loading=\"lazy\" /></span></p>",
+        "value": "<p><span lang=\"DA-DK\"><span>Du kan efter søgning filtrere på materialetypen Lydbog, hvis du kun ønsker at se lydbøger i søgeresultatet. Vær opmærksom på at der findes flere typer af lydbøger: online, mp3 og cd.</span></span><span> </span></p>\r\n\r\n<p><span lang=\"DA-DK\"><span>Du kan også på et fremsøgt materiale vælge materialetype:</span></span><span><br />\r\n<img alt=\"Udklip med materialetyper\" data-entity-type=\"file\" data-entity-uuid=\"1d693d49-73e1-4c0d-9583-ae7b5bb11ccb\" src=\"http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/kaptajnen_0.jpg\" /></span></p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 52,
+      "promote": false,
+      "title": "Hvordan finder jeg lydbøger?"
+    }
+  ],
+  "langcode": "en",
+  "language": "EN",
+  "locale": "da"
+}

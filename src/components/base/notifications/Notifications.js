@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { useData } from "@/lib/api/api";
-import { notificationsQuery } from "@/lib/api/notification.fragment";
 import styles from "./Notifications.module.css";
 import cx from "classnames";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
@@ -13,6 +11,7 @@ import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
 import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
+import { getNotifications } from "@/local-data/cms/resolvers";
 
 /**
  * list of notifications
@@ -76,13 +75,7 @@ export function Notifications({ notificationObject }) {
 }
 
 function notificationsFilter(data) {
-  const notificationfetch =
-    data &&
-    data.nodeQuery &&
-    data.nodeQuery.entities &&
-    data.nodeQuery.entities.filter((notification) => notification);
-
-  return notificationfetch ? notificationfetch : [];
+  return Array.isArray(data) ? data.filter((notification) => notification) : [];
 }
 
 /**
@@ -90,12 +83,10 @@ function notificationsFilter(data) {
  * @returns {React.JSX.Element}
  */
 export default function Wrap() {
-  const langcode = { language: getLanguage() };
-  const { data } = useData(notificationsQuery(langcode));
-
+  const data = getNotifications(getLanguage());
   return <Notifications notificationObject={data} />;
 }
 
 Notifications.propTypes = {
-  notificationObject: PropTypes.object,
+  notificationObject: PropTypes.array,
 };

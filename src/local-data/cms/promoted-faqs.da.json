@@ -1,0 +1,74 @@
+{
+  "byNid": {
+    "38": {
+      "body": {
+        "processed": "<p>Du kan søge og bestille materialer (bøger, artikler, cd'er, dvd'er, brætspil, konsolspil, osv.) fra alle landets<span><span> folkebiblioteker og forskningsbiblioteker. </span></span></p>\n\n<p><span><span>Når du bestiller, finder vi det bibliotek, som har materialet hurtigst muligt og leverer det til dig på dit lokale bibliotek. Du vælger afhentningssted ved bestilling.</span></span></p>\n\n<p> </p>",
+        "value": "<p>Du kan søge og bestille materialer (bøger, artikler, cd'er, dvd'er, brætspil, konsolspil, osv.) fra alle landets<span><span> folkebiblioteker og forskningsbiblioteker. </span></span></p>\r\n\r\n<p><span><span>Når du bestiller, finder vi det bibliotek, som har materialet hurtigst muligt og leverer det til dig på dit lokale bibliotek. Du vælger afhentningssted ved bestilling.</span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 38,
+      "promote": true,
+      "title": "Hvad kan jeg på Bibliotek.dk?"
+    },
+    "51": {
+      "body": {
+        "processed": "<p>NOTA er <strong>Danmarks Nationalbibliotek for mennesker med læsevanskeligheder</strong>. NOTA hed tidligere Danmarks Blindebibliotek. Du skal være tilmeldt NOTA for at kunne låne materialer der. Se mere om NOTA her: <a href=\"https://nota.dk/\">NOTA</a></p>\n\n<p> </p>",
+        "value": "<p>NOTA er <strong>Danmarks Nationalbibliotek for mennesker med læsevanskeligheder</strong>. NOTA hed tidligere Danmarks Blindebibliotek. Du skal være tilmeldt NOTA for at kunne låne materialer der. Se mere om NOTA her: <a href=\"https://nota.dk/\">NOTA</a></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "NOTA"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 51,
+      "promote": true,
+      "title": "Hvad er NOTA?"
+    }
+  },
+  "count": 2,
+  "entities": [
+    {
+      "body": {
+        "processed": "<p>Du kan søge og bestille materialer (bøger, artikler, cd'er, dvd'er, brætspil, konsolspil, osv.) fra alle landets<span><span> folkebiblioteker og forskningsbiblioteker. </span></span></p>\n\n<p><span><span>Når du bestiller, finder vi det bibliotek, som har materialet hurtigst muligt og leverer det til dig på dit lokale bibliotek. Du vælger afhentningssted ved bestilling.</span></span></p>\n\n<p> </p>",
+        "value": "<p>Du kan søge og bestille materialer (bøger, artikler, cd'er, dvd'er, brætspil, konsolspil, osv.) fra alle landets<span><span> folkebiblioteker og forskningsbiblioteker. </span></span></p>\r\n\r\n<p><span><span>Når du bestiller, finder vi det bibliotek, som har materialet hurtigst muligt og leverer det til dig på dit lokale bibliotek. Du vælger afhentningssted ved bestilling.</span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 38,
+      "promote": true,
+      "title": "Hvad kan jeg på Bibliotek.dk?"
+    },
+    {
+      "body": {
+        "processed": "<p>NOTA er <strong>Danmarks Nationalbibliotek for mennesker med læsevanskeligheder</strong>. NOTA hed tidligere Danmarks Blindebibliotek. Du skal være tilmeldt NOTA for at kunne låne materialer der. Se mere om NOTA her: <a href=\"https://nota.dk/\">NOTA</a></p>\n\n<p> </p>",
+        "value": "<p>NOTA er <strong>Danmarks Nationalbibliotek for mennesker med læsevanskeligheder</strong>. NOTA hed tidligere Danmarks Blindebibliotek. Du skal være tilmeldt NOTA for at kunne låne materialer der. Se mere om NOTA her: <a href=\"https://nota.dk/\">NOTA</a></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "NOTA"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en"
+      },
+      "nid": 51,
+      "promote": true,
+      "title": "Hvad er NOTA?"
+    }
+  ],
+  "langcode": "en",
+  "language": "EN",
+  "locale": "da"
+}

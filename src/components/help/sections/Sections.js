@@ -2,9 +2,6 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-import { useData } from "@/lib/api/api";
-import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
-
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
@@ -18,6 +15,7 @@ import { encodeString } from "@/lib/utils";
 
 import styles from "./Sections.module.css";
 import { getLanguage } from "@/components/base/translate/Translate";
+import { getPublishedHelptexts } from "@/local-data/cms/resolvers";
 
 /**
  * The Sections page React component
@@ -153,17 +151,7 @@ export function SectionsSkeleton(props) {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  // real data goes here ...
-  const langcode = { language: getLanguage() };
-  const { data } = useData(publishedHelptexts(langcode));
-
-  if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
-    // @TODO skeleton
-    return <SectionsSkeleton {...props} />;
-  }
-
-  const allHelpTexts = data.nodeQuery.entities;
-
+  const allHelpTexts = getPublishedHelptexts(getLanguage());
   return <Sections {...props} data={allHelpTexts} />;
 }
 

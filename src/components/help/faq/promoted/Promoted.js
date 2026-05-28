@@ -10,10 +10,8 @@ import Link from "@/components/base/link";
 
 import { sortData } from "../utils";
 
-import { useData } from "@/lib/api/api";
-import { promotedFaqs } from "@/lib/api/faq.fragments";
-
 import { getLanguage } from "@/components/base/translate/Translate";
+import { getPromotedFaqs } from "@/local-data/cms/resolvers";
 
 import styles from "./Promoted.module.css";
 
@@ -72,18 +70,8 @@ Promoted.propTypes = {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  const langcode = getLanguage();
-  // real data goes here ...
-  const { isLoading, data, error } = useData(promotedFaqs(langcode));
-
-  if ((!data || !data.faq || error) && !isLoading) {
-    // @TODO some error here .. message for user .. log ??
-    return null;
-  }
-
-  const realData = data?.faq?.entities;
-
-  return <Promoted {...props} isLoading={isLoading} data={realData} />;
+  const realData = getPromotedFaqs(getLanguage());
+  return <Promoted {...props} isLoading={false} data={realData} />;
 }
 
 Wrap.propTypes = {

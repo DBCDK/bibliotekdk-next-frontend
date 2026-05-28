@@ -10,13 +10,12 @@
 import PropTypes from "prop-types";
 import Head from "next/head";
 
-import { useData } from "@/lib/api/api";
-import { helpText } from "@/lib/api/helptexts.fragments.js";
-
 import { getJSONLD } from "@/lib/jsonld/help";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
 import Translate from "@/components/base/translate";
+import { getLanguage } from "@/components/base/translate";
+import { getHelpTextById } from "@/local-data/cms/resolvers";
 
 /**
  * The article page Header React component
@@ -27,18 +26,14 @@ import Translate from "@/components/base/translate";
  * @returns {React.JSX.Element}
  */
 export default function Header({ helpTextId }) {
-  const { isLoading, data, error } = useData(
-    helpTextId && helpText({ helpTextId: helpTextId })
-  );
+  const helptext = getHelpTextById(helpTextId, getLanguage());
 
-  if (!data || !data.nodeById || isLoading || error) {
+  if (!helptext) {
     // @TODO some error here .. message for user .. log ??
     return null;
   }
 
   const context = { context: "metadata" };
-
-  const helptext = data.nodeById;
 
   const pageTitle = Translate({
     ...context,

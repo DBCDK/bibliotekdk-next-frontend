@@ -37,31 +37,6 @@ export function WrappedStoryHelpText() {
 }
 WrappedStoryHelpText.story = {
   parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        Query: {
-          nodeById: () => {
-            return {
-              nid: 42,
-              title: "Sådan søger du i Bibliotek.dk",
-              body: {
-                value: `<p>I Bibliotek.dk kan du finde danske bibliotekers materialer</p>`,
-                processed: `<p>I Bibliotek.dk kan du finde danske bibliotekers materialer</p>`,
-              },
-              entityCreated: "2021-04-28T09:56:34+0200",
-              entityChanged: "2022-06-30T10:29:43+0200",
-              fieldHelpTextGroup: "Søgning",
-              fieldImage: null,
-            };
-          },
-        },
-        Node: {
-          __resolveType: () => "NodeHelpText",
-        },
-      },
-      // url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
-    },
     nextRouter: {
       showInfo: true,
       pathname: "/",

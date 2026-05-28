@@ -1,0 +1,32 @@
+{
+  "exportedAt": "2026-05-27T15:20:32.310Z",
+  "languages": [
+    {
+      "counts": {
+        "articles": 4,
+        "faqs": 5,
+        "helptexts": 19,
+        "notifications": 5,
+        "promotedArticles": 3,
+        "promotedFaqs": 2
+      },
+      "langcode": "en-gb",
+      "language": "EN_GB",
+      "locale": "en"
+    },
+    {
+      "counts": {
+        "articles": 51,
+        "faqs": 9,
+        "helptexts": 23,
+        "notifications": 5,
+        "promotedArticles": 49,
+        "promotedFaqs": 2
+      },
+      "langcode": "en",
+      "language": "EN",
+      "locale": "da"
+    }
+  ],
+  "source": "https://fbi-api.dbc.dk/StudieSoeg/graphql"
+}

@@ -1,13 +1,12 @@
 import React from "react";
-import { useData } from "@/lib/api/api";
-import { helpText } from "@/lib/api/helptexts.fragments.js";
 import Title from "@/components/base/title";
 import PropTypes from "prop-types";
 import styles from "./HelpText.module.css";
 import Breadcrumbs from "@/components/base/breadcrumbs/Breadcrumbs";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
-import Skeleton from "@/components/base/skeleton";
 import Translate from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate";
+import { getHelpTextById } from "@/local-data/cms/resolvers";
 
 /**
  * Entry function for a helptext
@@ -47,20 +46,14 @@ HelpText.propTypes = {
  * @returns {React.ReactElement|null}
  */
 export default function Wrap({ helpTextId }) {
-  const { isLoading, data, error } = useData(
-    helpTextId && helpText({ helpTextId: helpTextId })
-  );
+  const helptext = getHelpTextById(helpTextId, getLanguage());
 
-  if (isLoading) {
-    return <Skeleton lines={2} className={styles.helpskeleton} />;
-  }
-
-  if (!data || !data?.nodeById || error) {
+  if (!helptext) {
     // @TODO some error here .. message for user .. log ??
     return null;
   }
 
-  return <HelpText helptext={data?.nodeById} />;
+  return <HelpText helptext={helptext} />;
 }
 Wrap.propTypes = {
   helpTextId: PropTypes.string,

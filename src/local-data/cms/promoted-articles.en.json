@@ -1,0 +1,130 @@
+{
+  "byNid": {
+    "5": {
+      "__typename": "NodeArticle",
+      "body": {
+        "value": "<h2><strong>The library offers you a lot of free digital services</strong></h2>\r\n\r\n<p>You can use your digital library as when you borrow books or let yourself in at the library whenever it fits into your everyday life. In more cases you will find an app containing the digital service.</p>\r\n\r\n<h2><span>Filmstriben - the libraries' Netflix</span></h2>\r\n\r\n<p><a href=\"https://fjernleje.filmstriben.dk/\"><img alt=\"Filmstriben logo\" data-entity-type=\"file\" data-entity-uuid=\"52c078ce-bccb-411d-9402-ab70128abaee\" height=\"76\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/filmstriben_logo_960x320px.jpg\" width=\"227\" /></a></p>\r\n\r\n<p>See all time classics, <span lang=\"en\">whimsical short movies or french avantgarde movies. See black and white masterpieces of Dreyer, when you get sick of tv series. Or see (again) iconic westerns in wide format. Filmstriben </span>prioritizes <span lang=\"en\">films that provide food for thought. In Danish.</span><br />\r\n<a href=\"https://fjernleje.filmstriben.dk/\" target=\"_blank\">Go to Filmstriben</a></p>\r\n\r\n<h2>e-Reolen - the libraries' national service offering e-books and audio books</h2>\r\n\r\n<p><a href=\"https://ereolen.dk\"><img alt=\"Ereolens logo\" data-entity-type=\"file\" data-entity-uuid=\"9348ed68-e51c-441e-873f-6eddca37ef90\" height=\"43\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/eReolen-v1-black.png\" width=\"202\" /></a></p>\r\n\r\n<p>Many thousands of books you can borrow and always a lot you can borrow right away. New and old titles are constantly being added to the collection. At e-Reolen you find biographies, crime novels, the great classics, the heartbreaking love novel and the experimental short novel. Available as an app or on ereolen.dk. In Danish.<br />\r\n<a href=\"https://ereolen.dk/\" target=\"_blank\"><span>Go to eReolen</span></a></p>\r\n\r\n<h4>At e-Reolen Global you will find english books.</h4>\r\n\r\n<h4><img alt=\"ereolen global logo\" data-entity-type=\"file\" data-entity-uuid=\"af7da2d6-49b3-4eec-8736-41ec136792be\" height=\"44\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/eReolen-Global---Grey.png\" width=\"367\" /><br />\r\n<a href=\"https://ereolenglobal.overdrive.com/\"><span>Go to e-Reolen Global</span></a></h4>\r\n\r\n<h4>e-Reolen GO</h4>\r\n\r\n<p><img alt=\"Ereolen go logo\" data-entity-type=\"file\" data-entity-uuid=\"be641ab0-4264-41af-b061-69d30f0b6ae0\" height=\"54\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/eReolen-Go.png\" width=\"341\" /></p>\r\n\r\n<p>A service providing digital access to audio and e-books for children.</p>\r\n\r\n<p>Go to <a href=\"https://ereolengo.dk/\">e-Reolen GO </a><br />\r\n<br />\r\nAll materials available on e-Reolen are also searchable through bibliotek.dk</p>\r\n\r\n<h2>Forfatterweb</h2>\r\n\r\n<p><img alt=\"Forfatterweb logo\" data-entity-type=\"file\" data-entity-uuid=\"55ea3492-cdaf-4eb7-a211-b74aba258603\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/fwlogo.png\" /></p>\r\n\r\n<p>Whether you are writing about an established authorship or a new author, Forfatterweb is a must. Forfatterweb contains descriptions of primarily Danish authorships including portraits and biographies and references to analyzes of the authors' works. You will also find</p>\r\n\r\n<ul>\r\n\t<li>short descriptions of literary themes</li>\r\n\t<li>introductions to literary periods including an overview of the most important events in the actual period</li>\r\n\t<li>definitions of literary genres</li>\r\n</ul>\r\n\r\n<p>In Danish.</p>\r\n\r\n<p><a href=\"https://forfatterweb.dk/\" target=\"_blank\"><span>Go to forfatterweb</span></a></p>\r\n\r\n<h2>Tidsskrift.dk</h2>\r\n\r\n<p><img alt=\"Tidsskrift.dk's logo\" data-entity-type=\"file\" data-entity-uuid=\"e643b698-b8b3-45b0-a77b-e82760b22d00\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/tidsskriftdk.png\" /></p>\r\n\r\n<p>Tidsskrift.dk is the Royal Danish Library’s portal for the publication of professional, scientific and cultural journals in digital full-text.<br />\r\nTidsskrift.dk is also part of National Strategy for Open Access, which is supported by the Ministry of Education and Research. The site is available in English.<br />\r\n<a href=\"https://tidsskrift.dk/\" target=\"_blank\">Go to tidsskrift.dk</a></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "entityPublished": true,
+      "fieldAlternativeArticleUrl": null,
+      "fieldArticlePosition": "1",
+      "fieldArticleSection": "section 1",
+      "fieldImage": {
+        "alt": "Billede af person der taster",
+        "height": 559,
+        "title": "",
+        "url": "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/2022-12/Online%20bibliotekstilbud.png",
+        "width": 993
+      },
+      "fieldRubrik": "Learn more about authors, music and all kind of subjects\r\n",
+      "nid": 5,
+      "title": "Your digital library"
+    },
+    "7": {
+      "__typename": "NodeArticle",
+      "body": {
+        "value": "<p><strong>Ask a Librarian is the national question service of the Danish libraries.</strong></p>\r\n\r\n<p><a href=\"https://www.sprgbib.dk/bv/ask\">Continue to \"Ask a Librarian</a>\"</p>\r\n\r\n<p>Here you will get answers to questions such as:</p>\r\n\r\n<ul>\r\n\t<li>fact related questions</li>\r\n\t<li>help with search strategy</li>\r\n\t<li>references to&nbsp;books, articles, online resources, and much more</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>When willI receive an answer?</strong></p>\r\n\r\n<p>We do our best to answer your question within 24 hours. If you post your question during weekends or public holidays, we will answer in the first coming weekday.</p>\r\n"
+      },
+      "entityPublished": true,
+      "fieldAlternativeArticleUrl": null,
+      "fieldArticlePosition": "no position",
+      "fieldArticleSection": "no section",
+      "fieldImage": {
+        "alt": "Billede af bibliotekar der taler i telefon",
+        "height": 289,
+        "title": "",
+        "url": "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/2021-01/2.png",
+        "width": 474
+      },
+      "fieldRubrik": "You can ask about anything - and you can ask whenever it suits you.",
+      "nid": 7,
+      "title": "Ask a librarian"
+    },
+    "76": {
+      "__typename": "NodeArticle",
+      "body": {
+        "value": "<p>Bibliotek.dk offers you a large amount of online materials. Among others, you can find articles, reports and e-books. Read more about how to find them. Please note, that many articles are in Danish.</p>\r\n\r\n<h2>Search tips</h2>\r\n\r\n<p>First, some general tips to search materials at Bibliotek.dk:</p>\r\n\r\n<ul>\r\n\t<li>Use both Danish and English search terms for a wider selection</li>\r\n\t<li>Use the filters to refine your search</li>\r\n\t<li>Use also the filters to get an overview of formats and subjects.</li>\r\n</ul>\r\n\r\n<h2>Articles</h2>\r\n\r\n<p>To search online articles, choose articles in the drop down menu or click on Articles on top of the page:</p>\r\n\r\n<p><img alt=\"Articles chosen\" data-entity-type=\"file\" data-entity-uuid=\"7c4c1400-4837-49bb-9511-417a0657172c\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/articles_0.jpg\" /></p>\r\n\r\n<p>At Bibliotek.dk, you will find<span lang=\"en\"> several providers of online articles</span>, e.g.:</p>\r\n\r\n<p><strong>Retriever: </strong>Articles from newspapers and many journals and magazines, e.g. from Ingeniøren, Computerworld og Mandag Morgen. You have to be logged in at bibliotek.dk to have access to them.</p>\r\n\r\n<p><strong>Faktalink: </strong>A collection of articles about a wide range of subjects, also popular and current subjects. The articles contains <span lang=\"en\">references to sources and references to related content.</span> Find the articles at Bibliotek.dk or here: <a href=\"https://faktalink.dk\">Faktalink</a> (Only danish articles)</p>\r\n\r\n<p><strong>Forfatterweb: </strong>A collection of author portraits, incl. bibliographies. Find them at Bibliotek.dk or here: <a href=\"https://forfatterweb.dk\">Forfatterweb</a> (Only danish articles)</p>\r\n\r\n<p><strong>DBC Webarkiv: </strong>Pdf versions of&nbsp; articles, reviews, books and reports. <span lang=\"en\">Due to an agreement with a number of publishers&nbsp;DBC archives digital materials and makes them available in pdf format.</span></p>\r\n\r\n<h2>Reports</h2>\r\n\r\n<p>Please note, that reports are registered as e-books. \"Ebog\" is Danish for \"E-book\"</p>\r\n\r\n<p><img alt=\"Data on a report\" data-entity-type=\"file\" data-entity-uuid=\"2f50141d-bae8-4274-bff4-68921e95846f\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/reports_ebog.jpg\" /></p>\r\n\r\n<h2>E-books</h2>\r\n\r\n<p>You have access to English e-books at eReolen Global via Bibliotek.dk. Click \"Get the book\" to go to eReolen Global.</p>\r\n\r\n<p><img alt=\"Ebog white fragility\" data-entity-type=\"file\" data-entity-uuid=\"601c808e-d272-4465-acfb-54c139abc255\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/whitefragility.jpg\" /></p>\r\n\r\n<h2>Contact us</h2>\r\n\r\n<p>Feel free to contact us with questions or comments: <a href=\"https://kundeservice.dbc.dk/bibdk\">Customer service</a></p>\r\n"
+      },
+      "entityPublished": true,
+      "fieldAlternativeArticleUrl": null,
+      "fieldArticlePosition": "2",
+      "fieldArticleSection": "section 1",
+      "fieldImage": {
+        "alt": "To hænder ved et pc-tastatur",
+        "height": 800,
+        "title": "",
+        "url": "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/2022-01/digitaleopgaver.jpg",
+        "width": 1200
+      },
+      "fieldRubrik": "Find online materials about your favourite subject",
+      "nid": 76,
+      "title": "Online materials at Bibliotek.dk"
+    }
+  },
+  "count": 3,
+  "entities": [
+    {
+      "__typename": "NodeArticle",
+      "body": {
+        "value": "<h2><strong>The library offers you a lot of free digital services</strong></h2>\r\n\r\n<p>You can use your digital library as when you borrow books or let yourself in at the library whenever it fits into your everyday life. In more cases you will find an app containing the digital service.</p>\r\n\r\n<h2><span>Filmstriben - the libraries' Netflix</span></h2>\r\n\r\n<p><a href=\"https://fjernleje.filmstriben.dk/\"><img alt=\"Filmstriben logo\" data-entity-type=\"file\" data-entity-uuid=\"52c078ce-bccb-411d-9402-ab70128abaee\" height=\"76\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/filmstriben_logo_960x320px.jpg\" width=\"227\" /></a></p>\r\n\r\n<p>See all time classics, <span lang=\"en\">whimsical short movies or french avantgarde movies. See black and white masterpieces of Dreyer, when you get sick of tv series. Or see (again) iconic westerns in wide format. Filmstriben </span>prioritizes <span lang=\"en\">films that provide food for thought. In Danish.</span><br />\r\n<a href=\"https://fjernleje.filmstriben.dk/\" target=\"_blank\">Go to Filmstriben</a></p>\r\n\r\n<h2>e-Reolen - the libraries' national service offering e-books and audio books</h2>\r\n\r\n<p><a href=\"https://ereolen.dk\"><img alt=\"Ereolens logo\" data-entity-type=\"file\" data-entity-uuid=\"9348ed68-e51c-441e-873f-6eddca37ef90\" height=\"43\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/eReolen-v1-black.png\" width=\"202\" /></a></p>\r\n\r\n<p>Many thousands of books you can borrow and always a lot you can borrow right away. New and old titles are constantly being added to the collection. At e-Reolen you find biographies, crime novels, the great classics, the heartbreaking love novel and the experimental short novel. Available as an app or on ereolen.dk. In Danish.<br />\r\n<a href=\"https://ereolen.dk/\" target=\"_blank\"><span>Go to eReolen</span></a></p>\r\n\r\n<h4>At e-Reolen Global you will find english books.</h4>\r\n\r\n<h4><img alt=\"ereolen global logo\" data-entity-type=\"file\" data-entity-uuid=\"af7da2d6-49b3-4eec-8736-41ec136792be\" height=\"44\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/eReolen-Global---Grey.png\" width=\"367\" /><br />\r\n<a href=\"https://ereolenglobal.overdrive.com/\"><span>Go to e-Reolen Global</span></a></h4>\r\n\r\n<h4>e-Reolen GO</h4>\r\n\r\n<p><img alt=\"Ereolen go logo\" data-entity-type=\"file\" data-entity-uuid=\"be641ab0-4264-41af-b061-69d30f0b6ae0\" height=\"54\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/eReolen-Go.png\" width=\"341\" /></p>\r\n\r\n<p>A service providing digital access to audio and e-books for children.</p>\r\n\r\n<p>Go to <a href=\"https://ereolengo.dk/\">e-Reolen GO </a><br />\r\n<br />\r\nAll materials available on e-Reolen are also searchable through bibliotek.dk</p>\r\n\r\n<h2>Forfatterweb</h2>\r\n\r\n<p><img alt=\"Forfatterweb logo\" data-entity-type=\"file\" data-entity-uuid=\"55ea3492-cdaf-4eb7-a211-b74aba258603\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/fwlogo.png\" /></p>\r\n\r\n<p>Whether you are writing about an established authorship or a new author, Forfatterweb is a must. Forfatterweb contains descriptions of primarily Danish authorships including portraits and biographies and references to analyzes of the authors' works. You will also find</p>\r\n\r\n<ul>\r\n\t<li>short descriptions of literary themes</li>\r\n\t<li>introductions to literary periods including an overview of the most important events in the actual period</li>\r\n\t<li>definitions of literary genres</li>\r\n</ul>\r\n\r\n<p>In Danish.</p>\r\n\r\n<p><a href=\"https://forfatterweb.dk/\" target=\"_blank\"><span>Go to forfatterweb</span></a></p>\r\n\r\n<h2>Tidsskrift.dk</h2>\r\n\r\n<p><img alt=\"Tidsskrift.dk's logo\" data-entity-type=\"file\" data-entity-uuid=\"e643b698-b8b3-45b0-a77b-e82760b22d00\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/tidsskriftdk.png\" /></p>\r\n\r\n<p>Tidsskrift.dk is the Royal Danish Library’s portal for the publication of professional, scientific and cultural journals in digital full-text.<br />\r\nTidsskrift.dk is also part of National Strategy for Open Access, which is supported by the Ministry of Education and Research. The site is available in English.<br />\r\n<a href=\"https://tidsskrift.dk/\" target=\"_blank\">Go to tidsskrift.dk</a></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "entityPublished": true,
+      "fieldAlternativeArticleUrl": null,
+      "fieldArticlePosition": "1",
+      "fieldArticleSection": "section 1",
+      "fieldImage": {
+        "alt": "Billede af person der taster",
+        "height": 559,
+        "title": "",
+        "url": "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/2022-12/Online%20bibliotekstilbud.png",
+        "width": 993
+      },
+      "fieldRubrik": "Learn more about authors, music and all kind of subjects\r\n",
+      "nid": 5,
+      "title": "Your digital library"
+    },
+    {
+      "__typename": "NodeArticle",
+      "body": {
+        "value": "<p><strong>Ask a Librarian is the national question service of the Danish libraries.</strong></p>\r\n\r\n<p><a href=\"https://www.sprgbib.dk/bv/ask\">Continue to \"Ask a Librarian</a>\"</p>\r\n\r\n<p>Here you will get answers to questions such as:</p>\r\n\r\n<ul>\r\n\t<li>fact related questions</li>\r\n\t<li>help with search strategy</li>\r\n\t<li>references to&nbsp;books, articles, online resources, and much more</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>When willI receive an answer?</strong></p>\r\n\r\n<p>We do our best to answer your question within 24 hours. If you post your question during weekends or public holidays, we will answer in the first coming weekday.</p>\r\n"
+      },
+      "entityPublished": true,
+      "fieldAlternativeArticleUrl": null,
+      "fieldArticlePosition": "no position",
+      "fieldArticleSection": "no section",
+      "fieldImage": {
+        "alt": "Billede af bibliotekar der taler i telefon",
+        "height": 289,
+        "title": "",
+        "url": "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/2021-01/2.png",
+        "width": 474
+      },
+      "fieldRubrik": "You can ask about anything - and you can ask whenever it suits you.",
+      "nid": 7,
+      "title": "Ask a librarian"
+    },
+    {
+      "__typename": "NodeArticle",
+      "body": {
+        "value": "<p>Bibliotek.dk offers you a large amount of online materials. Among others, you can find articles, reports and e-books. Read more about how to find them. Please note, that many articles are in Danish.</p>\r\n\r\n<h2>Search tips</h2>\r\n\r\n<p>First, some general tips to search materials at Bibliotek.dk:</p>\r\n\r\n<ul>\r\n\t<li>Use both Danish and English search terms for a wider selection</li>\r\n\t<li>Use the filters to refine your search</li>\r\n\t<li>Use also the filters to get an overview of formats and subjects.</li>\r\n</ul>\r\n\r\n<h2>Articles</h2>\r\n\r\n<p>To search online articles, choose articles in the drop down menu or click on Articles on top of the page:</p>\r\n\r\n<p><img alt=\"Articles chosen\" data-entity-type=\"file\" data-entity-uuid=\"7c4c1400-4837-49bb-9511-417a0657172c\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/articles_0.jpg\" /></p>\r\n\r\n<p>At Bibliotek.dk, you will find<span lang=\"en\"> several providers of online articles</span>, e.g.:</p>\r\n\r\n<p><strong>Retriever: </strong>Articles from newspapers and many journals and magazines, e.g. from Ingeniøren, Computerworld og Mandag Morgen. You have to be logged in at bibliotek.dk to have access to them.</p>\r\n\r\n<p><strong>Faktalink: </strong>A collection of articles about a wide range of subjects, also popular and current subjects. The articles contains <span lang=\"en\">references to sources and references to related content.</span> Find the articles at Bibliotek.dk or here: <a href=\"https://faktalink.dk\">Faktalink</a> (Only danish articles)</p>\r\n\r\n<p><strong>Forfatterweb: </strong>A collection of author portraits, incl. bibliographies. Find them at Bibliotek.dk or here: <a href=\"https://forfatterweb.dk\">Forfatterweb</a> (Only danish articles)</p>\r\n\r\n<p><strong>DBC Webarkiv: </strong>Pdf versions of&nbsp; articles, reviews, books and reports. <span lang=\"en\">Due to an agreement with a number of publishers&nbsp;DBC archives digital materials and makes them available in pdf format.</span></p>\r\n\r\n<h2>Reports</h2>\r\n\r\n<p>Please note, that reports are registered as e-books. \"Ebog\" is Danish for \"E-book\"</p>\r\n\r\n<p><img alt=\"Data on a report\" data-entity-type=\"file\" data-entity-uuid=\"2f50141d-bae8-4274-bff4-68921e95846f\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/reports_ebog.jpg\" /></p>\r\n\r\n<h2>E-books</h2>\r\n\r\n<p>You have access to English e-books at eReolen Global via Bibliotek.dk. Click \"Get the book\" to go to eReolen Global.</p>\r\n\r\n<p><img alt=\"Ebog white fragility\" data-entity-type=\"file\" data-entity-uuid=\"601c808e-d272-4465-acfb-54c139abc255\" src=\"http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/whitefragility.jpg\" /></p>\r\n\r\n<h2>Contact us</h2>\r\n\r\n<p>Feel free to contact us with questions or comments: <a href=\"https://kundeservice.dbc.dk/bibdk\">Customer service</a></p>\r\n"
+      },
+      "entityPublished": true,
+      "fieldAlternativeArticleUrl": null,
+      "fieldArticlePosition": "2",
+      "fieldArticleSection": "section 1",
+      "fieldImage": {
+        "alt": "To hænder ved et pc-tastatur",
+        "height": 800,
+        "title": "",
+        "url": "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/2022-01/digitaleopgaver.jpg",
+        "width": 1200
+      },
+      "fieldRubrik": "Find online materials about your favourite subject",
+      "nid": 76,
+      "title": "Online materials at Bibliotek.dk"
+    }
+  ],
+  "langcode": "en-gb",
+  "language": "EN_GB",
+  "locale": "en"
+}

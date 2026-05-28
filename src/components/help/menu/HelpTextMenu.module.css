@@ -3,11 +3,6 @@
   top: var(--pt4);
 }
 
-.helpskeleton {
-  max-height: 250px;
-  position: relative;
-}
-
 .link {
   margin-bottom: calc(var(--pt1) * 0.9);
   display: flex;

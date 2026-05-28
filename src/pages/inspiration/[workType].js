@@ -19,7 +19,6 @@ import merge from "lodash/merge";
 
 import { useData } from "@/lib/api/api";
 import * as inspirationFragments from "@/lib/api/inspiration.fragments";
-import { frontpageHero } from "@/lib/api/hero.fragments";
 
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
@@ -333,12 +332,14 @@ export default function Wrap() {
 Wrap.getInitialProps = async (ctx) => {
   const filters = MAP[ctx?.query?.workType];
 
+  if (ctx?.query?.workType === "artikler") {
+    return {};
+  }
+
   // Get subCategories data
-  const serverQueries = await fetchAll(
-    [inspirationFragments.categories, frontpageHero],
-    ctx,
-    { filters }
-  );
+  const serverQueries = await fetchAll([inspirationFragments.categories], ctx, {
+    filters,
+  });
 
   const categories = Object.values(serverQueries.initialData)?.[0]?.data
     ?.inspiration?.categories;

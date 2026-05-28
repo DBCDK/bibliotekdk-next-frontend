@@ -10,21 +10,18 @@ export default exportedObject;
 
 // a single notification in an array
 function notification() {
-  return {
-    nodeQuery: {
-      count: 1,
-      entities: [
-        {
-          nid: 13,
-          langcode: {
-            value: "en",
-          },
-          fieldNotificationText: "dether er en warning",
-          fieldNotificationType: "warning",
-        },
-      ],
+  return [
+    {
+      nid: 13,
+      langcode: {
+        value: "en",
+      },
+      fieldNotificationText: {
+        value: "dether er en warning",
+      },
+      fieldNotificationType: "warning",
     },
-  };
+  ];
 }
 
 /**

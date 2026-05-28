@@ -11,12 +11,12 @@ import Faq from "@/components/help/faq/promoted";
 import HelpTextMenu from "@/components/help/menu";
 import Translate from "@/components/base/translate";
 
-import { useData } from "@/lib/api/api";
-import { helpTextSearch } from "@/lib/api/helptexts.fragments";
 import { useRouter } from "next/router";
 
 import styles from "./Page.module.css";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import { getLanguage } from "@/components/base/translate";
+import { searchHelptexts } from "@/local-data/cms/resolvers";
 
 /**
  * The page showing help search results
@@ -93,7 +93,7 @@ Page.propTypes = {
 export default function Wrap() {
   const router = useRouter();
   const { q } = router.query;
-  const { isLoading, data } = useData(q && helpTextSearch({ q }));
+  const result = searchHelptexts(q, getLanguage());
 
-  return <Page result={data?.help?.result} isLoading={isLoading} query={q} />;
+  return <Page result={result} isLoading={false} query={q} />;
 }

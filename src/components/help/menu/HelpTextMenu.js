@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import Text from "@/components/base/text/Text";
 import styles from "./HelpTextMenu.module.css";
 import Icon from "@/components/base/icon/Icon";
 import cx from "classnames";
 import Link from "@/components/base/link";
-import { useData } from "@/lib/api/api";
-import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import PropTypes from "prop-types";
 import { encodeString } from "@/lib/utils";
 
 import { helpTextParseMenu } from "../utils.js";
-import Skeleton from "@/components/base/skeleton";
 import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
+import { getPublishedHelptexts } from "@/local-data/cms/resolvers";
 
 /**
  * Other menu links
@@ -117,12 +115,13 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
  * @returns {React.JSX.Element}
  */
 export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
+  const router = useRouter();
   const menus = helpTextParseMenu(helpTexts);
   const groups = Object.keys(menus).map((groupname) => {
     return { name: groupname };
   });
 
-  const isFaqPage = Router.pathname.includes("/faq");
+  const isFaqPage = router.pathname.includes("/faq");
 
   return (
     <div className={styles.container}>
@@ -176,20 +175,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
  * @returns {React.ReactElement|null}
  */
 export default function Wrap({ helpTextId, ...props }) {
-  const { isLoading, data } = useData(
-    publishedHelptexts({ language: getLanguage() })
-  );
-
-  if (isLoading) {
-    return <Skeleton className={styles.helpskeleton} lines={8} />;
-  }
-
-  if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
-    // @TODO some error here .. message for user .. log ??
-    return null;
-  }
-
-  const allHelpTexts = data.nodeQuery.entities;
+  const allHelpTexts = getPublishedHelptexts(getLanguage());
 
   return (
     <HelpTextMenu {...props} helpTexts={allHelpTexts} helpTextId={helpTextId} />

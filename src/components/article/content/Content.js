@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { useData } from "@/lib/api/api";
 
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
@@ -12,13 +11,12 @@ import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
-import * as articleFragments from "@/lib/api/article.fragments";
-
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { getLanguage } from "@/components/base/translate/Translate";
+import { getArticleById } from "@/local-data/cms/resolvers";
 import { Rating } from "@/components/base/rating/Rating";
 import { ReviewHeadingLink } from "@/components/article/lectorreview/reviewheading/ReviewHeading";
 
@@ -348,25 +346,16 @@ export function ContentSkeleton(props) {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  const langcode = { language: getLanguage() };
+  const article = getArticleById(props.articleId, getLanguage());
 
-  let articleArgs = { ...props, ...langcode };
-  const { data, isLoading, error } = useData(
-    articleFragments.article(articleArgs)
-  );
-
-  if (error) {
+  if (!article) {
     return null;
-  }
-
-  if (isLoading) {
-    return <ContentSkeleton {...props} data={null} />;
   }
 
   const parsed = {
     article: {
-      ...data?.article,
-      entityCreated: timestampToShortDate(data?.article?.entityCreated),
+      ...article,
+      entityCreated: timestampToShortDate(article?.entityCreated),
     },
   };
 

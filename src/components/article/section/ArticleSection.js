@@ -1,12 +1,11 @@
 import { useMemo } from "react";
 import PropTypes from "prop-types";
-import { promotedArticles } from "@/lib/api/article.fragments";
-import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
 import Single from "./templates/single";
 import Double from "./templates/double";
 import Triple from "./templates/triple";
 import { getLanguage } from "@/components/base/translate/Translate";
+import { getPromotedArticles } from "@/local-data/cms/resolvers";
 
 /**
  * Get context by template name (template settings)
@@ -73,11 +72,7 @@ function parseArticles(articles, matchTag, numberOfArticles) {
 function getArticleData(data) {
   return (
     data &&
-    data.nodeQuery &&
-    data.nodeQuery.entities &&
-    data.nodeQuery.entities.filter(
-      (article) => article && article.__typename === "NodeArticle"
-    )
+    data.filter((article) => article && article.__typename === "NodeArticle")
   );
 }
 
@@ -135,12 +130,8 @@ ArticleSection.propTypes = {
 };
 
 export default function Wrap(props) {
-  const { data, isLoading } = useData(
-    promotedArticles({ language: getLanguage() })
-  );
-
-  const articles = getArticleData(data);
-  return <ArticleSection {...props} articles={articles} skeleton={isLoading} />;
+  const articles = getArticleData(getPromotedArticles(getLanguage()));
+  return <ArticleSection {...props} articles={articles} skeleton={false} />;
 }
 
 Wrap.propTypes = {

@@ -10,13 +10,11 @@
 import PropTypes from "prop-types";
 import Head from "next/head";
 
-import { useData } from "@/lib/api/api";
-import * as articleFragments from "@/lib/api/article.fragments";
-
 import { getJSONLD } from "@/lib/jsonld/article";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
 import { getLanguage } from "@/components/base/translate";
+import { getArticleById } from "@/local-data/cms/resolvers";
 
 /**
  * The article page Header React component
@@ -27,14 +25,11 @@ import { getLanguage } from "@/components/base/translate";
  * @returns {React.JSX.Element}
  */
 export default function Header({ articleId }) {
-  const language = getLanguage();
-  const data = useData(articleFragments.article({ articleId, language }));
+  const article = getArticleById(articleId, getLanguage());
 
-  if (!data.data || !data.data.article || data.isLoading || data.error) {
+  if (!article) {
     return null;
   }
-
-  const article = data.data.article;
 
   return (
     <Head>

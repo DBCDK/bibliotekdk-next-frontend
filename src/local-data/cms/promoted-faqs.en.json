@@ -1,0 +1,62 @@
+{
+  "byNid": {
+    "38": {
+      "body": {
+        "processed": "<p>You can search and order materials (books, games, music, articles, movies) from Denmark's public libraries and research libraries.</p>\n\n<p>When you order a material, we deliver it to you <span lang=\"en\" xml:lang=\"en\" xml:lang=\"en\">as early as possible, so you can pick it up at your own library. </span></p>\n\n<p><span lang=\"en\" xml:lang=\"en\" xml:lang=\"en\">So if you order a book which is not available at your own library, we - and the infrastructure - do what we can to find the book as quick as possible and send it to your library. </span></p>",
+        "value": "<p>You can search and order materials (books, games, music, articles, movies) from Denmark's public libraries and research libraries.</p>\r\n\r\n<p>When you order a material, we deliver it to you <span lang=\"en\">as early as possible, so you can pick it up at your own library. </span></p>\r\n\r\n<p><span lang=\"en\">So if you order a book which is not available at your own library, we - and the infrastructure - do what we can to find the book as quick as possible and send it to your library. </span></p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 38,
+      "promote": true,
+      "title": "What can I do at Bibliotek.dk?"
+    },
+    "49": {
+      "body": {
+        "processed": "<p>In order to log in, you need a CPR-number and a pincode. If you have forgotten your pincode, please contact your local library to get a new one. In most libraries you can make the pincode online:</p>\n\n<ul><li>Go to your library's website</li>\n\t<li>Log in with MitId</li>\n\t<li>Now you can make a new pincode in your account</li>\n</ul><p> </p>",
+        "value": "<p>In order to log in, you need a CPR-number and a pincode. If you have forgotten your pincode, please contact your local library to get a new one. In most libraries you can make the pincode online:</p>\r\n\r\n<ul>\r\n\t<li>Go to your library's website</li>\r\n\t<li>Log in with MitId</li>\r\n\t<li>Now you can make a new pincode in your account</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 49,
+      "promote": true,
+      "title": "How do I get a new pincode?"
+    }
+  },
+  "count": 2,
+  "entities": [
+    {
+      "body": {
+        "processed": "<p>You can search and order materials (books, games, music, articles, movies) from Denmark's public libraries and research libraries.</p>\n\n<p>When you order a material, we deliver it to you <span lang=\"en\" xml:lang=\"en\" xml:lang=\"en\">as early as possible, so you can pick it up at your own library. </span></p>\n\n<p><span lang=\"en\" xml:lang=\"en\" xml:lang=\"en\">So if you order a book which is not available at your own library, we - and the infrastructure - do what we can to find the book as quick as possible and send it to your library. </span></p>",
+        "value": "<p>You can search and order materials (books, games, music, articles, movies) from Denmark's public libraries and research libraries.</p>\r\n\r\n<p>When you order a material, we deliver it to you <span lang=\"en\">as early as possible, so you can pick it up at your own library. </span></p>\r\n\r\n<p><span lang=\"en\">So if you order a book which is not available at your own library, we - and the infrastructure - do what we can to find the book as quick as possible and send it to your library. </span></p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 38,
+      "promote": true,
+      "title": "What can I do at Bibliotek.dk?"
+    },
+    {
+      "body": {
+        "processed": "<p>In order to log in, you need a CPR-number and a pincode. If you have forgotten your pincode, please contact your local library to get a new one. In most libraries you can make the pincode online:</p>\n\n<ul><li>Go to your library's website</li>\n\t<li>Log in with MitId</li>\n\t<li>Now you can make a new pincode in your account</li>\n</ul><p> </p>",
+        "value": "<p>In order to log in, you need a CPR-number and a pincode. If you have forgotten your pincode, please contact your local library to get a new one. In most libraries you can make the pincode online:</p>\r\n\r\n<ul>\r\n\t<li>Go to your library's website</li>\r\n\t<li>Log in with MitId</li>\r\n\t<li>Now you can make a new pincode in your account</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 49,
+      "promote": true,
+      "title": "How do I get a new pincode?"
+    }
+  ],
+  "langcode": "en-gb",
+  "language": "EN_GB",
+  "locale": "en"
+}

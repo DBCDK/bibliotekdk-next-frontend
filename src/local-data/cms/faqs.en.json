@@ -1,0 +1,176 @@
+{
+  "byNid": {
+    "38": {
+      "body": {
+        "processed": "<p>You can search and order materials (books, games, music, articles, movies) from Denmark's public libraries and research libraries.</p>\n\n<p>When you order a material, we deliver it to you <span lang=\"en\" xml:lang=\"en\" xml:lang=\"en\">as early as possible, so you can pick it up at your own library. </span></p>\n\n<p><span lang=\"en\" xml:lang=\"en\" xml:lang=\"en\">So if you order a book which is not available at your own library, we - and the infrastructure - do what we can to find the book as quick as possible and send it to your library. </span></p>",
+        "value": "<p>You can search and order materials (books, games, music, articles, movies) from Denmark's public libraries and research libraries.</p>\r\n\r\n<p>When you order a material, we deliver it to you <span lang=\"en\">as early as possible, so you can pick it up at your own library. </span></p>\r\n\r\n<p><span lang=\"en\">So if you order a book which is not available at your own library, we - and the infrastructure - do what we can to find the book as quick as possible and send it to your library. </span></p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 38,
+      "promote": true,
+      "title": "What can I do at Bibliotek.dk?"
+    },
+    "49": {
+      "body": {
+        "processed": "<p>In order to log in, you need a CPR-number and a pincode. If you have forgotten your pincode, please contact your local library to get a new one. In most libraries you can make the pincode online:</p>\n\n<ul><li>Go to your library's website</li>\n\t<li>Log in with MitId</li>\n\t<li>Now you can make a new pincode in your account</li>\n</ul><p> </p>",
+        "value": "<p>In order to log in, you need a CPR-number and a pincode. If you have forgotten your pincode, please contact your local library to get a new one. In most libraries you can make the pincode online:</p>\r\n\r\n<ul>\r\n\t<li>Go to your library's website</li>\r\n\t<li>Log in with MitId</li>\r\n\t<li>Now you can make a new pincode in your account</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 49,
+      "promote": true,
+      "title": "How do I get a new pincode?"
+    },
+    "51": {
+      "body": {
+        "processed": "<p>NOTA is the Danish Library and Expertise Center for people with print disabilities.</p>\n\n<p>To become a member of NOTA you must be able to document that you cannot read ordinary printed text. Members of NOTA are visually impaired, dyslexic or otherwise impaired. See more about <a href=\"https://nota.dk/om-nota/english\">NOTA</a></p>\n\n<p> </p>\n\n<p> </p>",
+        "value": "<p>NOTA is the Danish Library and Expertise Center for people with print disabilities.</p>\r\n\r\n<p>To become a member of NOTA you must be able to document that you cannot read ordinary printed text. Members of NOTA are visually impaired, dyslexic or otherwise impaired. See more about <a href=\"https://nota.dk/om-nota/english\">NOTA</a></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "NOTA"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 51,
+      "promote": false,
+      "title": "What is NOTA?"
+    },
+    "52": {
+      "body": {
+        "processed": "<p>It is not possible to search specific material formats. But you can choose format in the description (in Danish):</p>\n\n<p><img alt=\"Udklip med materialetyper\" data-entity-type=\"file\" data-entity-uuid=\"c944e2f2-b5ad-44cf-9ac6-2c05f97b47fd\" src=\"/sites/default/files/inline-images/kaptajnen_1.jpg\" width=\"541\" height=\"261\" loading=\"lazy\" /></p>\n\n<p> </p>",
+        "value": "<p>It is not possible to search specific material formats. But you can choose format in the description (in Danish):</p>\r\n\r\n<p><img alt=\"Udklip med materialetyper\" data-entity-type=\"file\" data-entity-uuid=\"c944e2f2-b5ad-44cf-9ac6-2c05f97b47fd\" src=\"http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/kaptajnen_1.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 52,
+      "promote": false,
+      "title": "How do I find online audiobooks?"
+    },
+    "187": {
+      "body": {
+        "processed": "<p>You may find that a language is missing in the drop-down boxes in the advanced search. Use the feedback button on the page to let us know which language you are missing - then we will add it as soon as we can. There is a solution on the way, so that we soon will be able to show all languages.</p>",
+        "value": "<p>You may find that a language is missing in the drop-down boxes in the advanced search. Use the feedback button on the page to let us know which language you are missing - then we will add it as soon as we can. There is a solution on the way, so that we soon will be able to show all languages.</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 187,
+      "promote": false,
+      "title": "Missing a language in advanced search?"
+    }
+  },
+  "count": 5,
+  "entities": [
+    {
+      "body": {
+        "processed": "<p>You may find that a language is missing in the drop-down boxes in the advanced search. Use the feedback button on the page to let us know which language you are missing - then we will add it as soon as we can. There is a solution on the way, so that we soon will be able to show all languages.</p>",
+        "value": "<p>You may find that a language is missing in the drop-down boxes in the advanced search. Use the feedback button on the page to let us know which language you are missing - then we will add it as soon as we can. There is a solution on the way, so that we soon will be able to show all languages.</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 187,
+      "promote": false,
+      "title": "Missing a language in advanced search?"
+    },
+    {
+      "body": {
+        "processed": "<p>You can search and order materials (books, games, music, articles, movies) from Denmark's public libraries and research libraries.</p>\n\n<p>When you order a material, we deliver it to you <span lang=\"en\" xml:lang=\"en\" xml:lang=\"en\">as early as possible, so you can pick it up at your own library. </span></p>\n\n<p><span lang=\"en\" xml:lang=\"en\" xml:lang=\"en\">So if you order a book which is not available at your own library, we - and the infrastructure - do what we can to find the book as quick as possible and send it to your library. </span></p>",
+        "value": "<p>You can search and order materials (books, games, music, articles, movies) from Denmark's public libraries and research libraries.</p>\r\n\r\n<p>When you order a material, we deliver it to you <span lang=\"en\">as early as possible, so you can pick it up at your own library. </span></p>\r\n\r\n<p><span lang=\"en\">So if you order a book which is not available at your own library, we - and the infrastructure - do what we can to find the book as quick as possible and send it to your library. </span></p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 38,
+      "promote": true,
+      "title": "What can I do at Bibliotek.dk?"
+    },
+    {
+      "body": {
+        "processed": "<p>In order to log in, you need a CPR-number and a pincode. If you have forgotten your pincode, please contact your local library to get a new one. In most libraries you can make the pincode online:</p>\n\n<ul><li>Go to your library's website</li>\n\t<li>Log in with MitId</li>\n\t<li>Now you can make a new pincode in your account</li>\n</ul><p> </p>",
+        "value": "<p>In order to log in, you need a CPR-number and a pincode. If you have forgotten your pincode, please contact your local library to get a new one. In most libraries you can make the pincode online:</p>\r\n\r\n<ul>\r\n\t<li>Go to your library's website</li>\r\n\t<li>Log in with MitId</li>\r\n\t<li>Now you can make a new pincode in your account</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 49,
+      "promote": true,
+      "title": "How do I get a new pincode?"
+    },
+    {
+      "body": {
+        "processed": "<p>NOTA is the Danish Library and Expertise Center for people with print disabilities.</p>\n\n<p>To become a member of NOTA you must be able to document that you cannot read ordinary printed text. Members of NOTA are visually impaired, dyslexic or otherwise impaired. See more about <a href=\"https://nota.dk/om-nota/english\">NOTA</a></p>\n\n<p> </p>\n\n<p> </p>",
+        "value": "<p>NOTA is the Danish Library and Expertise Center for people with print disabilities.</p>\r\n\r\n<p>To become a member of NOTA you must be able to document that you cannot read ordinary printed text. Members of NOTA are visually impaired, dyslexic or otherwise impaired. See more about <a href=\"https://nota.dk/om-nota/english\">NOTA</a></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "NOTA"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 51,
+      "promote": false,
+      "title": "What is NOTA?"
+    },
+    {
+      "body": {
+        "processed": "<p>It is not possible to search specific material formats. But you can choose format in the description (in Danish):</p>\n\n<p><img alt=\"Udklip med materialetyper\" data-entity-type=\"file\" data-entity-uuid=\"c944e2f2-b5ad-44cf-9ac6-2c05f97b47fd\" src=\"/sites/default/files/inline-images/kaptajnen_1.jpg\" width=\"541\" height=\"261\" loading=\"lazy\" /></p>\n\n<p> </p>",
+        "value": "<p>It is not possible to search specific material formats. But you can choose format in the description (in Danish):</p>\r\n\r\n<p><img alt=\"Udklip med materialetyper\" data-entity-type=\"file\" data-entity-uuid=\"c944e2f2-b5ad-44cf-9ac6-2c05f97b47fd\" src=\"http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/sites/default/files/inline-images/kaptajnen_1.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n"
+      },
+      "fieldTags": [
+        {
+          "entity": {
+            "entityLabel": "Søgning"
+          }
+        }
+      ],
+      "langcode": {
+        "value": "en-gb"
+      },
+      "nid": 52,
+      "promote": false,
+      "title": "How do I find online audiobooks?"
+    }
+  ],
+  "langcode": "en-gb",
+  "language": "EN_GB",
+  "locale": "en"
+}

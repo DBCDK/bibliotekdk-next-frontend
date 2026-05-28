@@ -1,17 +1,14 @@
 import PropTypes from "prop-types";
 import { useMemo } from "react";
-import get from "lodash/get";
 
 import { sortArticles } from "./utils";
-
-import { useData } from "@/lib/api/api";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import ArticlePreview from "@/components/article/preview";
 
-import { allArticles } from "@/lib/api/article.fragments";
 import { getLanguage } from "@/components/base/translate/Translate";
+import { getAllArticles } from "@/local-data/cms/resolvers";
 
 import styles from "./Articles.module.css";
 
@@ -44,11 +41,9 @@ Articles.propTypes = {
 };
 
 export default function Wrap(props) {
-  const langcode = { language: getLanguage() };
-  const { isLoading, data } = useData(allArticles(langcode));
-  const articles = get(data, "nodeQuery.entities", []).filter(
+  const articles = getAllArticles(getLanguage()).filter(
     (article) => article && article.__typename === "NodeArticle"
   );
 
-  return <Articles {...props} articles={articles} skeleton={isLoading} />;
+  return <Articles {...props} articles={articles} skeleton={false} />;
 }

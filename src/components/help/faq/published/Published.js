@@ -7,9 +7,7 @@ import Translate from "@/components/base/translate";
 import { getLanguage } from "@/components/base/translate/Translate";
 import { groupSortData } from "../utils";
 import styles from "./Published.module.css";
-import { useData } from "@/lib/api/api";
-import * as faqFragments from "@/lib/api/faq.fragments";
-import Skeleton from "@/components/base/skeleton";
+import { getPublishedFaqs } from "@/local-data/cms/resolvers";
 
 /**
  * The FAQ Published React component
@@ -59,23 +57,7 @@ Published.propTypes = {
  * @returns {React.JSX.Element}
  */
 export default function Wrap(props) {
-  const langcode = getLanguage();
-  // real data goes here ...
-  const { isLoading, data, error } = useData(
-    faqFragments.publishedFaqs(langcode)
-  );
-
-  if (isLoading) {
-    return <Skeleton lines={6} className={styles.helpskeleton} />;
-  }
-
-  if (!data || !data.faq || error) {
-    // @TODO some error here .. message for user .. log ??
-    return null;
-  }
-
-  const realdata = data.faq.entities;
-
+  const realdata = getPublishedFaqs(getLanguage());
   return <Published {...props} data={realdata} />;
 }
 
