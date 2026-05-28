@@ -11,7 +11,7 @@ import Reviews from "../reviews";
 import BibliographicData from "../bibliographicdata";
 import Series from "../series";
 import Header from "@/components/header/Header";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
 
@@ -26,6 +26,8 @@ import PeriodicaArticles from "@/components/work/periodicaArticles/PeriodicaArti
 import Issues from "@/components/work/periodicaArticles/Issues";
 import PeriodicaOverview from "../periodicaoverview/PeriodicaOverview";
 import { ContentsSection } from "@/components/work/contents";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * The work page React component
@@ -43,6 +45,21 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
   const mainRef = useRef();
   const [containerWidth, setContainerWidth] = useState();
   const fbiWork = useData(workFragments.overviewWork({ workId }));
+  const manifestations = fbiWork.data?.work?.manifestations?.mostRelevant;
+
+  const { uniqueMaterialTypes, inUniqueMaterialTypes } = useMemo(() => {
+    return manifestationMaterialTypeFactory(manifestations);
+  }, [manifestations]);
+
+  // Resolve the URL type to a valid work type before passing it to sections.
+  // The URL is only updated when the user explicitly selects a material type.
+  const selectedType = useMemo(() => {
+    if (!isEmpty(type) && inUniqueMaterialTypes(type)) {
+      return type;
+    }
+
+    return uniqueMaterialTypes?.[0]?.map((mat) => mat?.specificDisplay) || [];
+  }, [type, uniqueMaterialTypes, inUniqueMaterialTypes]);
 
   useEffect(() => {
     // TODO: Make a more elegant solution, when someone has an idea.
@@ -82,30 +99,30 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             workId={workId}
             onTypeChange={onTypeChange}
             login={login}
-            type={type}
+            type={selectedType}
             anchor-label={Translate({ context: "workmenu", label: "loan" })}
           />
 
           <Anchor.Menu />
           <Details
             workId={workId}
-            type={type}
+            type={selectedType}
             anchor-label={Translate({ context: "details", label: "title" })}
           />
           <Description
             workId={workId}
-            type={type}
+            type={selectedType}
             anchor-label={Translate({ context: "description", label: "title" })}
           />
           <ContentsSection
             workId={workId}
-            type={type}
+            type={selectedType}
             anchor-label={Translate({ context: "content", label: "title" })}
           />
 
           <RelatedWorks
             workId={workId}
-            type={type}
+            type={selectedType}
             anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}
           />
 
