@@ -207,6 +207,7 @@ export const workSliderFragment = `fragment workSliderFragment on Work {
 export const cacheWorkFragment = `fragment cacheWorkFragment on Work {
   traceId
   workId
+  workTypes
   series {
     title
     seriesId
