@@ -721,6 +721,7 @@
       "co-creators": { "da": "Skabere", "en": "Creators" },
       "contributors": { "da": "Bidrag", "en": "Contribution" },
       "isbn": { "da": "ISBN", "en": "ISBN" },
+      "faustNumber": { "da": "Faustnummer", "en": "Faust number" },
       "publisher": { "da": "Udgiver", "en": "Publisher" },
       "edition": { "da": "Udgave", "en": "Edition" },
       "originals": { "da": "Originaludgivelse", "en": "Original" },

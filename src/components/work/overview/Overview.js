@@ -11,7 +11,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import ReservationButtonWrapper from "@/components/work/reservationbutton/ReservationButton";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
@@ -23,29 +23,8 @@ import {
 import Title from "@/components/base/title/Title";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 import BookmarkDropdown from "@/components/work/overview/bookmarkDropdown/BookmarkDropdown";
-import isEmpty from "lodash/isEmpty";
 import SampleButton from "@/components/sample";
 import Ornament1Svg from "@/public/icons/ornament1.svg";
-
-function useInitMaterialType(
-  uniqueMaterialTypes,
-  inUniqueMaterialTypes,
-  type,
-  onTypeChange,
-  workId
-) {
-  useEffect(() => {
-    if (
-      uniqueMaterialTypes &&
-      uniqueMaterialTypes?.[0] !== type &&
-      (isEmpty(type) || !inUniqueMaterialTypes(type))
-    ) {
-      onTypeChange({
-        type: uniqueMaterialTypes?.[0],
-      });
-    }
-  }, [workId]);
-}
 
 /**
  * The Component function
@@ -65,23 +44,9 @@ export function Overview({
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
 
-  const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
-    useMemo(() => {
-      return manifestationMaterialTypeFactory(manifestations);
-    }, [work, manifestations]);
-
-  useInitMaterialType(
-    uniqueMaterialTypes,
-    inUniqueMaterialTypes,
-    type,
-    onTypeChange,
-    workId
-  );
-
-  // If no type has been selected, use default
-  if (!type?.[0] && uniqueMaterialTypes?.[0]?.[0]?.specificDisplay) {
-    type = [uniqueMaterialTypes[0][0].specificDisplay];
-  }
+  const { uniqueMaterialTypes, flatPidsByType } = useMemo(() => {
+    return manifestationMaterialTypeFactory(manifestations);
+  }, [work, manifestations]);
 
   // OBS: We load allPids for CoverCarousel, to ensure smooth change of MaterialType
   const allPids = useMemo(
@@ -89,7 +54,10 @@ export function Overview({
     [manifestations]
   );
 
-  const selectedPids = useMemo(() => flatPidsByType(type), [type]);
+  const selectedPids = useMemo(
+    () => flatPidsByType(type),
+    [type, flatPidsByType]
+  );
 
   const checkForPeriodicaArticle = (pids) => {
     // restrict to óne pid only (this is an article)
