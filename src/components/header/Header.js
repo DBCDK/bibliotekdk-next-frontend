@@ -81,7 +81,12 @@ export function Header({
       label: "search",
       icon: SearchIcon,
       className: styles.mobileSearch,
-      onClick: () => router.push("/find/simpel"),
+      onClick: () => {
+        router.push("/find/simpel");
+        // iOS requires focus to be triggered from a user gesture.
+        // The route change can delay mounting, so retry shortly after.
+        focusInput();
+      },
     },
     {
       label: getLoginLabel(),
@@ -178,7 +183,6 @@ export function Header({
                   router.push(
                     `/find/simpel${params}${params ? "&" : "?"}focus=1`
                   );
-
                   // input fccus
                   setTimeout(() => focusInput(), 100);
                 }}

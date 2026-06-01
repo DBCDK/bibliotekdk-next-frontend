@@ -1,5 +1,19 @@
 .container {
-  display: none;
+  /* Keep mounted (iOS focus workaround).
+     When closed on mobile, we hide it visually and disable pointer events,
+     but avoid display:none so the real input can be focused synchronously
+     from the user gesture that opens the suggester. */
+  display: block;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+
+  /* closed (mobile) */
+  top: 25%;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .container.isMobile {
@@ -13,6 +27,7 @@
   /* init */
   top: 25%;
   opacity: 0;
+  pointer-events: auto;
 
   /* animation */
   animation: slideInFromMiddle 0.2s ease-out forwards;
@@ -114,6 +129,7 @@
   border: none;
   padding: 0 var(--pt5) 0 0;
   border-radius: 0;
+  appearance: none;
   -webkit-appearance: none;
 }
 
@@ -199,6 +215,11 @@
   .container {
     position: relative;
     display: block;
+    width: auto;
+    height: auto;
+    top: unset;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .input_wrap {
