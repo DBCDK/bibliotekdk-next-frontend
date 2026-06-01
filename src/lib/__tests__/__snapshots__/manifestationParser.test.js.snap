@@ -204,6 +204,11 @@ Array [
     ],
   },
   Object {
+    "dataField": "pid",
+    "label": "Faustnummer",
+    "value": "53001211",
+  },
+  Object {
     "dataField": "notes",
     "label": "Note",
     "value": Array [
