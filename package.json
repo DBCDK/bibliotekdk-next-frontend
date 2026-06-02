@@ -93,7 +93,7 @@
     "style-loader": "^3.3.3"
   },
   "dependencies": {
-    "@dbcdk/febib-shared": "^0.1.4",
+    "@dbcdk/febib-shared": "^0.1.5",
     "@dbcdk/login-nextjs": "^4.0.9",
     "@rooks/use-mutation-observer": "^4.11.0",
     "autosuggest-highlight": "^3.1.1",
