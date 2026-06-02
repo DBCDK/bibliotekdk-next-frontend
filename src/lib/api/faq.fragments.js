@@ -20,7 +20,7 @@ export function publishedFaqs() {
     query: `
       query PublishedFaqsQuery {
         bibliotekdkCms {
-          faqs(status: PUBLISHED) {
+          faqs(status: PUBLISHED, pagination: { limit: 50 }) {
             ${FAQ_FIELDS}
           }
         }
