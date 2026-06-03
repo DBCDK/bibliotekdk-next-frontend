@@ -8,6 +8,7 @@
 
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { decodeCookie } from "@/utils/jwt";
+import { log } from "dbc-node-logger";
 
 const fbiApiUrl = new URL(process.env.NEXT_PUBLIC_FBI_API_URL).origin;
 
@@ -49,7 +50,7 @@ export function sanitizeHeaders(originalHeaders, accessToken) {
     const keyLower = key.toLowerCase();
 
     if (keyLower.startsWith("x-") && !allowedCustomHeaders.includes(keyLower)) {
-      console.warn(`⚠️ Skipping unapproved custom header: ${key}: ${value}`);
+      log.warn(`Skipping unapproved custom header: ${key}: ${value}`);
     }
 
     if (allowedCustomHeaders.includes(keyLower)) {
