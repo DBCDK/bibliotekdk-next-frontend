@@ -523,9 +523,9 @@ export function useOrderValidation({ pids }) {
       checkBeforeConfirm: false,
     },
     periodica: {
-      isValid: !isPeriodica || !!periodicaForm?.publicationDateOfComponent,
+      isValid: !isPeriodica || !!periodicaForm?.publicationYearOfComponent,
       message: isPeriodica &&
-        !periodicaForm?.publicationDateOfComponent && { label: "require-year" },
+        !periodicaForm?.publicationYearOfComponent && { label: "require-year" },
       checkBeforeConfirm: false,
     },
     isBlocked: {
@@ -665,11 +665,11 @@ export function useMultiOrderValidation({ orders }) {
 const formatArticleForm = (formData, pid) => {
   if (!formData || !pid) return null;
 
-  const { publicationDateOfComponent, authorOfComponent, titleOfComponent } =
+  const { publicationYearOfComponent, authorOfComponent, titleOfComponent } =
     formData;
 
   return {
-    publicationDateOfComponent,
+    publicationYearOfComponent,
     volumeOfComponent: formData.volume,
     authorOfComponent,
     titleOfComponent,

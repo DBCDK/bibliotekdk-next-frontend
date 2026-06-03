@@ -2661,7 +2661,7 @@
         "da": "Kun interesseret i en bestemt artikel?",
         "en": "Only interested in a particular article?"
       },
-      "label-publicationDateOfComponent": { "da": "\u00c5r", "en": "Year" },
+      "label-publicationYearOfComponent": { "da": "\u00c5r", "en": "Year" },
       "label-volume": { "en": "Volume", "da": "H\u00e6fte, nummer eller bind" },
       "label-authorOfComponent": {
         "da": "Artiklens forfatter",
@@ -2669,7 +2669,7 @@
       },
       "label-titleOfComponent": { "da": "Artiklens titel", "en": "Title" },
       "label-pagination": { "da": "Sidetal", "en": "Pages" },
-      "placeholder-publicationDateOfComponent": {
+      "placeholder-publicationYearOfComponent": {
         "da": "Fx 2023",
         "en": "E.g., 2023"
       },
