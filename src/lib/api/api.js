@@ -8,6 +8,7 @@ import useCookieConsent from "@/components/hooks/useCookieConsent";
 import { useRouter } from "next/router";
 import { mutate as globalMutate } from "swr";
 import getConfig from "next/config";
+import config from "@/config";
 
 export const APIMockContext = createContext();
 
@@ -33,7 +34,8 @@ export function enableDebug() {
 const forced_profile =
   getConfig()?.publicRuntimeConfig?.fbi_api_force_profile || null;
 
-const internalUrl = getConfig()?.publicRuntimeConfig?.app?.url || null;
+// SSR calls should stay inside the pod to avoid a roundtrip through HAProxy.
+const serverSideAppUrl = `http://127.0.0.1:${config.port}`;
 
 /**
  * Our custom fetcher
@@ -65,7 +67,7 @@ export async function fetcher(
 
   // Calculate apiUrl
   const host =
-    typeof window === "undefined" ? internalUrl : window.location.origin;
+    typeof window === "undefined" ? serverSideAppUrl : window.location.origin;
 
   const profile =
     forced_profile ||
