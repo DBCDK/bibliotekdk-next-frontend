@@ -1,4 +1,4 @@
-  // Contact card is currently unused; kept in case it becomes relevant again.
+// Contact card is currently unused; kept in case it becomes relevant again.
 import ArticleSection from "@/components/article/section";
 
 import styles from "./Contact.module.css";
