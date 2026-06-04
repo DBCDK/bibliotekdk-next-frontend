@@ -11,8 +11,6 @@ const articles = [
   {
     nid: 1,
     title: "Digitale bibliotekstilbud",
-    fieldArticleSection: "section 2",
-    fieldArticlePosition: "3",
     fieldRubrik:
       "Læs mere om forfattere, musik og temaer. Se film, læs artikler, e- og lydbøger, og meget mere.",
     fieldImage: {
@@ -31,8 +29,6 @@ const articles = [
   {
     nid: 2,
     title: "Spørg en bibliotekar",
-    fieldArticleSection: "section 2",
-    fieldArticlePosition: "1",
     fieldRubrik:
       "Online bibliotekarhjælp. Få råd og hjælp til alt fra informationssøgning til reservationer.",
     fieldImage: {
@@ -51,8 +47,6 @@ const articles = [
   {
     nid: 3,
     title: "Bibliotek.dk",
-    fieldArticleSection: "section 2",
-    fieldArticlePosition: "2",
     fieldRubrik:
       "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
     fieldImage: {
@@ -78,8 +72,6 @@ const articles = [
       title: "some image title",
       url: "/img/bibdk-hero-scaled.jpeg",
     },
-    fieldArticleSection: "section 4",
-    fieldArticlePosition: "1",
     fieldTags: [
       { entity: { entityLabel: "section-other" } },
       { entity: { entityLabel: "pos-1" } },
@@ -98,8 +90,6 @@ const articles = [
       uri: "internal:/artikler",
       title: "Vejledninger og information",
     },
-    fieldArticleSection: "section 3",
-    fieldArticlePosition: "1",
     fieldTags: [
       { entity: { entityLabel: "section-other" } },
       { entity: { entityLabel: "pos-1" } },
@@ -108,6 +98,10 @@ const articles = [
   null,
 ];
 
+const sectionTwoArticles = [articles[1], articles[2], articles[0]];
+const singleArticle = [articles[3]];
+const alternativeUrlArticle = [articles[4]];
+
 export function SingleSection() {
   return (
     <div>
@@ -115,8 +109,7 @@ export function SingleSection() {
       <StoryDescription>Action button goes to current article</StoryDescription>
       <ArticleSection
         title={false}
-        articles={articles}
-        matchTag="section 4"
+        articles={singleArticle}
         template="single"
       />
     </div>
@@ -140,8 +133,7 @@ export function SingleSectionAlternativeUrl() {
       </StoryDescription>
       <ArticleSection
         title={false}
-        articles={articles}
-        matchTag="section 3"
+        articles={alternativeUrlArticle}
         template="single"
       />
     </div>
@@ -161,8 +153,7 @@ export function DoubleSection() {
       <StoryTitle>2 articles template</StoryTitle>
       <ArticleSection
         title="Bibliotek.dk tilbyder"
-        articles={articles}
-        matchTag="section 2"
+        articles={sectionTwoArticles}
         template="double"
       />
     </div>
@@ -175,8 +166,7 @@ export function TripleSection() {
       <StoryTitle>3 articles template</StoryTitle>
       <ArticleSection
         title="Bibliotek.dk tilbyder"
-        articles={articles}
-        matchTag="section 2"
+        articles={sectionTwoArticles}
         template="triple"
       />
     </div>

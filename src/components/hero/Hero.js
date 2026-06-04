@@ -62,28 +62,6 @@ export function Hero({ image }) {
   );
 }
 
-export function parseHero(data) {
-  const heros =
-    data?.nodeQuery?.entities &&
-    data.nodeQuery.entities.filter(
-      (hero) => hero && hero.__typename === "NodeHeroFrontpage"
-    );
-  // grab the first - entities are sorted by last edit
-  return (
-    heros &&
-    heros[0] && {
-      description: heros[0].fieldHeroDescription,
-      image: {
-        alt: heros[0].fieldImage.alt,
-        url: heros[0].fieldImage.url,
-        width: heros[0].fieldImage.width,
-        height: heros[0].fieldImage.height,
-        ogurl: "/_next/image?url=" + heros[0].fieldImage.url + "&w=3840&q=75",
-      },
-    }
-  );
-}
-
 export function parseCmsHero(data) {
   const frontpage = getCmsFrontpage(data);
   if (!frontpage?.hero?.image?.url) return null;
