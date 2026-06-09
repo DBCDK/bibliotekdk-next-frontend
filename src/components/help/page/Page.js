@@ -2,7 +2,6 @@ import Container from "react-bootstrap/Container";
 
 import Faq from "@/components/help/faq/promoted";
 import Sections from "../sections";
-import Contact from "../contact";
 import Head from "@/components/head";
 import Translate from "@/components/base/translate";
 
@@ -36,7 +35,6 @@ export default function Page() {
         <Container className={styles.top} fluid>
           <Faq className={styles.faq} />
           <Sections />
-          <Contact />
         </Container>
       </main>
     </React.Fragment>

@@ -4,7 +4,7 @@
  */
 
 import { ApiEnums } from "@/lib/api/api";
-import { getLangcode, getLocale } from "@/components/base/translate/Translate";
+import { getLocale } from "@/components/base/translate/Translate";
 import { getSite } from "@/components/hooks/useSiteConfig";
 
 const ARTICLE_FIELDS = `
@@ -104,12 +104,6 @@ export function getArticles(data) {
     return data.bibliotekdkCms.articles.map(normalizeArticle);
   }
 
-  if (data?.nodeQuery?.entities) {
-    return data.nodeQuery.entities
-      .filter((article) => article && article.__typename === "NodeArticle")
-      .map(normalizeArticle);
-  }
-
   return [];
 }
 
@@ -141,54 +135,6 @@ export function article({ articleId, locale = getLocale() }) {
       }
     }`,
     variables: { articleId, locale, site },
-    slowThreshold: 3000,
-  };
-}
-
-/**
- * Articles that are promoted to the frontpage
- */
-export function promotedArticles({ language = "EN_GB" }) {
-  const langcode = getLangcode(language);
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `query ( $language: LanguageId! $langcode: [String] ) {
-      nodeQuery (limit:75 filter: {conditions: [
-        {field: "type", value: ["article"]}, 
-        {field: "promote", value: "1"},
-        {field: "status", value: "1"},
-        {field: "langcode", value: $langcode}
-      ] }) {
-        entities (language:$language) {
-          __typename
-          ... on NodeArticle {
-            nid
-            title
-            fieldRubrik
-            fieldArticleSection
-            fieldArticlePosition
-            entityPublished
-            body {
-              value
-            }
-            fieldAlternativeArticleUrl{
-              uri
-              title
-            }           
-            fieldImage {
-              alt
-              title
-              url
-              width
-              height
-            }
-          }
-        }
-      }
-      monitor(name: "promoted_articles")
-    }`,
-    variables: { language, langcode },
     slowThreshold: 3000,
   };
 }

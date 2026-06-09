@@ -365,7 +365,7 @@ describe("Multi Order", () => {
 
       // Edit first periodica
       cy.contains("Vælg eksemplar eller artikel").first().click();
-      cy.get('[data-cy="input-publicationDateOfComponent"]').type("1999");
+      cy.get('[data-cy="input-publicationYearOfComponent"]').type("1999");
       cy.contains("Gem").click();
 
       cy.contains("1 materiale mangler at få udfyldt informationer");
@@ -373,7 +373,7 @@ describe("Multi Order", () => {
 
       // Edit second periodica
       cy.contains("Vælg eksemplar eller artikel").click();
-      cy.get('[data-cy="input-publicationDateOfComponent"]').type("2000");
+      cy.get('[data-cy="input-publicationYearOfComponent"]').type("2000");
       cy.contains("Gem").click();
 
       cy.contains("År: 1999");
@@ -402,7 +402,7 @@ describe("Multi Order", () => {
               pids: ["PID_PERIODICA_1"],
               periodicaForm: {
                 pid: "PID_PERIODICA_1",
-                publicationDateOfComponent: "1999",
+                publicationYearOfComponent: "1999",
               },
               exactEdition: false,
             },
@@ -411,7 +411,7 @@ describe("Multi Order", () => {
               pids: ["PID_PERIODICA_2"],
               periodicaForm: {
                 pid: "PID_PERIODICA_2",
-                publicationDateOfComponent: "2000",
+                publicationYearOfComponent: "2000",
               },
               exactEdition: false,
             },
@@ -442,7 +442,7 @@ describe("Multi Order", () => {
 
       // Edit first periodica
       cy.contains("Vælg eksemplar eller artikel").first().click();
-      cy.get('[data-cy="input-publicationDateOfComponent"]').type("1999");
+      cy.get('[data-cy="input-publicationYearOfComponent"]').type("1999");
       cy.contains("Kun interesseret i en bestemt artikel").click();
       cy.get('[data-cy="input-authorOfComponent"]').should("be.visible");
       cy.get('[data-cy="input-authorOfComponent"]').type("author");
@@ -450,7 +450,7 @@ describe("Multi Order", () => {
 
       // Edit second periodica
       cy.contains("Vælg eksemplar eller artikel").first().click();
-      cy.get('[data-cy="input-publicationDateOfComponent"]').type("2000");
+      cy.get('[data-cy="input-publicationYearOfComponent"]').type("2000");
       // cy.contains("Kun interesseret i en bestemt artikel").click();
       cy.get('[data-cy="input-authorOfComponent"]').should("be.visible");
       cy.get('[data-cy="input-authorOfComponent"]').type("another author");
@@ -479,7 +479,7 @@ describe("Multi Order", () => {
               periodicaForm: {
                 pid: "PID_PERIODICA_1",
                 authorOfComponent: "author",
-                publicationDateOfComponent: "1999",
+                publicationYearOfComponent: "1999",
               },
               exactEdition: false,
             },
@@ -489,7 +489,7 @@ describe("Multi Order", () => {
               periodicaForm: {
                 pid: "PID_PERIODICA_2",
                 authorOfComponent: "another author",
-                publicationDateOfComponent: "2000",
+                publicationYearOfComponent: "2000",
               },
               exactEdition: false,
             },

@@ -67,7 +67,7 @@ function Field({ label, required, value, onChange, hasTry }) {
  */
 export function PeriodicaForm({ modal, context, active }) {
   const fields = [
-    { key: "publicationDateOfComponent", required: true },
+    { key: "publicationYearOfComponent", required: true },
     { key: "volume" },
   ];
   const articleFields = [
