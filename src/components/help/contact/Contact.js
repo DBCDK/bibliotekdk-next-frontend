@@ -1,3 +1,4 @@
+// Contact card is currently unused; kept in case it becomes relevant again.
 import ArticleSection from "@/components/article/section";
 
 import styles from "./Contact.module.css";
@@ -15,7 +16,6 @@ export default function Contact() {
     <div className={styles.contact}>
       <ArticleSection
         title={false}
-        matchTag="section 5"
         template="single"
         color="var(--jagged-ice)"
       />
