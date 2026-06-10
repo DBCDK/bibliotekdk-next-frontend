@@ -1,5 +1,6 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
+const site = Cypress.env("site");
 
 describe("help", () => {
   it(`Search: should show empty response message`, () => {
@@ -27,10 +28,10 @@ describe("help", () => {
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.hidden");
   });
-  it(`Search: filter by language`, () => {
+  it(`Search: sends CMS help text search variables`, () => {
     // Intercept help search requests
     cy.intercept("POST", `${fbiApiPath}`, (req) => {
-      if (req.body.query.includes("help(")) {
+      if (req.body.query.includes("helpTexts(")) {
         req.alias = "apiHelpRequest";
       }
     });
@@ -39,20 +40,10 @@ describe("help", () => {
 
     cy.consentAllowAll();
 
-    // Default should be danish
     cy.get("#help-suggester-input").type("a");
     cy.wait("@apiHelpRequest").then((interception) => {
       const variables = interception.request.body.variables;
-      expect(variables).to.deep.equal({ q: "a", language: "DA" });
-    });
-
-    // Change language to english
-    cy.get("[data-cy=header-menu]").click();
-
-    cy.get("[data-cy=menu-link-language]").click();
-    cy.wait("@apiHelpRequest").then((interception) => {
-      const variables = interception.request.body.variables;
-      expect(variables).to.deep.equal({ q: "a", language: "EN" });
+      expect(variables).to.deep.equal({ q: "a", site });
     });
   });
 });
