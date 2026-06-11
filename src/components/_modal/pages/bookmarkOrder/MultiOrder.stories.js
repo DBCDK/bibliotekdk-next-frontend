@@ -76,6 +76,7 @@ const BRANCHES = {
     postalCode: "2020",
     city: "Sjov by",
     borrowerCheck: false,
+    culrDataSync: false,
     userParameters: [
       {
         description: "brugerId",
