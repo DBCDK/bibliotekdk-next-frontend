@@ -209,16 +209,19 @@ export function handleOnSelect({
 
   // next two cases comes from branchDetails - user selects a library (branch) to order from.
   if (alreadyLoggedin && (hasBorchk || hasCulrDataSync)) {
-    // this one comes from branchdetails
-    if (orders && typeof start === "function" && origin === "branchDetails") {
+    const isBranchDetailsOrder =
+      orders && typeof start === "function" && origin === "branchDetails";
+
+    if (isBranchDetailsOrder) {
       start({ orders: orders });
-    } else {
-      // this one comes from pickup selection
-      // Set new branch without new log-in
-      updateLoanerInfo({ pickupBranch: branch.branchId });
-      // update context at previous modal
-      modal.prev();
+      return;
     }
+
+    // this one comes from pickup selection
+    // Set new branch without new log-in
+    updateLoanerInfo({ pickupBranch: branch.branchId });
+    // update context at previous modal
+    modal.prev();
     return;
   }
 
@@ -240,11 +243,11 @@ export function handleOnSelect({
     return;
   }
 
+  // @TODO if user is authenticated we should show some other message here - like
+  // "you need to log out to order at this library ..."
   let title;
   let text;
 
-  // @TODO if user is authenticated we should show some other message here - like
-  // "you need to log out to order at this library ..."
   //  FFU library selected
   if (isFFUAgency(branch)) {
     // if branch has a website url - include it as a variabel
