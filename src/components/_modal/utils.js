@@ -205,8 +205,10 @@ export function handleOnSelect({
   // New selected branch has borrowercheck
   const hasBorchk = branch.borrowerCheck;
 
+  const hasCulrDataSync = branch.culrDataSync;
+
   // next two cases comes from branchDetails - user selects a library (branch) to order from.
-  if (alreadyLoggedin && hasBorchk) {
+  if (alreadyLoggedin && (hasBorchk || hasCulrDataSync)) {
     // this one comes from branchdetails
     if (orders && typeof start === "function" && origin === "branchDetails") {
       start({ orders: orders });
