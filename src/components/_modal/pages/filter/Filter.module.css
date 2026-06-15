@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   padding: 0 var(--pt2) var(--pt2) var(--pt2);
-  transform: translateZ(0);
 }
 
 .filter > .wrap {
