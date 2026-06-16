@@ -18,7 +18,6 @@ import { useRouter } from "next/router";
 import styles from "./Page.module.css";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
-
 function truncateBody(body = "") {
   const maxLength = 200;
   return body.length > maxLength ? `${body.slice(0, maxLength)}...` : body;
