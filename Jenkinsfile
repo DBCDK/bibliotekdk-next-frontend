@@ -89,7 +89,7 @@ pipeline {
             agent {
                 docker {
                     label 'devel11'
-                    image "docker-dbc.artifacts.dbccloud.dk/dbc-node:node25"
+                    image "docker-dbc.artifacts.dbccloud.dk/dbc-node:latest"
                     alwaysPull true
                 }
             }
