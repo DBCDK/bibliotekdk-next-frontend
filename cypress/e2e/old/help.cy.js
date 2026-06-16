@@ -31,7 +31,7 @@ describe("help", () => {
   it(`Search: sends CMS help text search variables`, () => {
     // Intercept help search requests
     cy.intercept("POST", `${fbiApiPath}`, (req) => {
-      if (req.body.query.includes("helpTexts(")) {
+      if (req.body.query.includes("HelpTextSearchQuery")) {
         req.alias = "apiHelpRequest";
       }
     });
