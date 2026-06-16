@@ -33,7 +33,7 @@ import Banner from "@/components/banner/Banner";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
-import Modal from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";

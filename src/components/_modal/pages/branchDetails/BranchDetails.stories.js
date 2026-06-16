@@ -2,7 +2,7 @@ import { StoryDescription, StoryTitle } from "@/storybook";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 
-import Modal from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
 import isEmpty from "lodash/isEmpty";

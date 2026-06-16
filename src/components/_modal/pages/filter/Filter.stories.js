@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import FilterConnected, { Filter } from "./Filter.page";
-import Modal, { useModal } from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
+import { useModal } from "@/components/_modal";
 
 import useFilters from "@/components/hooks/useFilters";
 

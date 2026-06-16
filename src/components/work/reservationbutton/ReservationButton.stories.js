@@ -5,7 +5,7 @@ import ReservationButtonWrapper, {
 import { AccessEnum } from "@/lib/enums";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
-import Modal from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import { useModal } from "@/components/_modal";
 

@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Test_parseManifestation 1`] = `
-Array [
-  Object {
+[
+  {
     "dataField": "titles",
     "label": "Titel",
     "value": <React.Fragment>
@@ -15,42 +15,42 @@ Array [
       </div>
     </React.Fragment>,
   },
-  Object {
+  {
     "dataField": "creators",
     "label": "Skabere",
     "value": <ParsedAndRenderedCreators
       creatorsOrContributors={
-        Array [
-          Object {
+        [
+          {
             "display": "Duncan Jones",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "instruktør",
                 },
               },
-              Object {
-                "function": Object {
+              {
+                "function": {
                   "singular": "manuskript",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Charles Leavitt",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "manuskript",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Simon Duggan",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "filmfotograf",
                 },
               },
@@ -60,97 +60,97 @@ Array [
       }
     />,
   },
-  Object {
+  {
     "dataField": "contributors",
     "label": "Bidrag",
     "value": <RenderContributors
       contributors={
-        Array [
-          Object {
+        [
+          {
             "display": "Travis Fimmel",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Paula Patton",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Ben Foster",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Dominic Cooper",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Toby Kebbell",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Ben Schnetzer",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Rob Kazinsky",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Clancy Brown",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
             ],
           },
-          Object {
+          {
             "display": "Daniel Wu",
-            "roles": Array [
-              Object {
-                "function": Object {
+            "roles": [
+              {
+                "function": {
                   "singular": "skuespiller",
                 },
               },
@@ -159,38 +159,38 @@ Array [
         ]
       }
       materialTypes={
-        Array [
+        [
           "FILMS",
         ]
       }
     />,
   },
-  Object {
+  {
     "dataField": "publisher",
     "label": "Udgiver",
     "value": "Universal Sony Pictures Home Entertainment",
   },
-  Object {
+  {
     "dataField": "edition",
     "label": "Udgivelsesår",
     "value": "2017",
   },
-  Object {
+  {
     "dataField": "physicalDescription",
     "label": "Omfang",
     "value": "1 blu-ray disc, blu-ray ; ca. 2 t., 3 min.",
   },
-  Object {
+  {
     "dataField": "classifications",
     "label": "DK5",
-    "value": Array [
+    "value": [
       <Container
         tag="div"
       >
         <Wrap
           border={
-            Object {
-              "bottom": Object {
+            {
+              "bottom": {
                 "keepVisible": true,
               },
               "top": false,
@@ -203,15 +203,15 @@ Array [
       </Container>,
     ],
   },
-  Object {
+  {
     "dataField": "pid",
     "label": "Faustnummer",
     "value": "53001211",
   },
-  Object {
+  {
     "dataField": "notes",
     "label": "Note",
-    "value": Array [
+    "value": [
       <div>
         <div>
           Produktion: Universal Pictures (USA), Legendary Pictures (USA), Atlas Entertainment (USA), 2015
@@ -227,76 +227,76 @@ Array [
       </div>,
     ],
   },
-  Object {
+  {
     "dataField": "languages",
     "label": "Anvendt sprog",
     "value": <ParsedAndRenderedLanguages
       languages={
-        Object {
-          "main": Array [
-            Object {
+        {
+          "main": [
+            {
               "display": "engelsk",
             },
           ],
-          "original": Array [],
-          "spoken": Array [
-            Object {
+          "original": [],
+          "spoken": [
+            {
               "display": "fransk",
             },
-            Object {
+            {
               "display": "tysk",
             },
-            Object {
+            {
               "display": "italiensk",
             },
-            Object {
+            {
               "display": "spansk",
             },
-            Object {
+            {
               "display": "hindi",
             },
           ],
-          "subtitles": Array [
-            Object {
+          "subtitles": [
+            {
               "display": "engelsk",
             },
-            Object {
+            {
               "display": "fransk",
             },
-            Object {
+            {
               "display": "tysk",
             },
-            Object {
+            {
               "display": "italiensk",
             },
-            Object {
+            {
               "display": "spansk",
             },
-            Object {
+            {
               "display": "nederlandsk",
             },
-            Object {
+            {
               "display": "dansk",
             },
-            Object {
+            {
               "display": "finsk",
             },
-            Object {
+            {
               "display": "norsk",
             },
-            Object {
+            {
               "display": "svensk",
             },
-            Object {
+            {
               "display": "portugisisk",
             },
-            Object {
+            {
               "display": "hindi",
             },
-            Object {
+            {
               "display": "arabisk",
             },
-            Object {
+            {
               "display": "islandsk",
             },
           ],
@@ -308,27 +308,27 @@ Array [
 `;
 
 exports[`Test_parseManifestation 2`] = `
-Array [
-  Object {
+[
+  {
     "dataField": "creators",
     "label": "Skabere",
     "value": <ParsedAndRenderedCreators
       creatorsOrContributors={
-        Array [
-          Object {
+        [
+          {
             "name": "some contributor",
           },
-          Object {
+          {
             "name": "some other contributor",
           },
         ]
       }
     />,
   },
-  Object {
+  {
     "dataField": "notes",
     "label": "Note",
-    "value": Array [
+    "value": [
       <div>
         <div>
            
