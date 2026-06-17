@@ -40,8 +40,19 @@ export function createMemoryRouter() {
   // The actual router object that will be injected into NextJS
   const router = {
     action: history[current].action,
+    basePath: "",
+    events: {
+      emit: () => {},
+      off: () => {},
+      on: () => {},
+    },
+    isFallback: false,
+    isLocaleDomain: false,
+    isPreview: false,
+    isReady: true,
     query: history[current].query,
     pathname: history[current].pathname,
+    route: history[current].pathname,
     asPath: history[current].pathname,
   };
 
@@ -51,6 +62,7 @@ export function createMemoryRouter() {
     router.action = action;
     router.query = query || {};
     router.pathname = pathname || "/";
+    router.route = pathname || "/";
     router.asPath = pathname || "/";
 
     listeners.forEach((func) => func());
@@ -74,6 +86,7 @@ export function createMemoryRouter() {
       { pathname, query, action: "replace" },
     ];
     updateRouter();
+    return Promise.resolve(true);
   };
   router.push = (...args) => {
     const { pathname, query } = parse(...args);
@@ -83,15 +96,18 @@ export function createMemoryRouter() {
     ];
     current++;
     updateRouter();
+    return Promise.resolve(true);
   };
   router.back = () => {
     current = Math.max(current - 1, 0);
     updateRouter();
   };
+  router.beforePopState = () => {};
   router.go = (index) => {
     current = Math.max(0, Math.min(current + index, history.length - 1));
     updateRouter();
   };
+  router.reload = () => {};
   router.prefetch = async () => {};
   router.reset = reset;
 

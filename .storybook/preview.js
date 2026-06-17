@@ -11,7 +11,10 @@ import { Provider as ModalContextProvider } from "../src/components/_modal/Modal
 import { GraphQLMocker } from "@/lib/api/mockedFetcher";
 import { StoryRouter } from "@/components/base/storybook";
 import Router from "next/router";
+import { createRouter as createStorybookRouter } from "@storybook/nextjs/router.mock";
+import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 import { SessionProvider } from "next-auth/react";
+import { SWRConfig } from "swr";
 import { createMemoryRouter, useMemoryRouter } from "./nextMemoryRouter";
 import AdvancedSearchProvider from "@/components/search/advancedSearch/advancedSearchContext";
 import { UseManyProvider } from "@/components/hooks/useMany";
@@ -22,53 +25,21 @@ Router.router = memoryRouter;
 export const decorators = [
   (Story, context) => {
     const { showInfo, pathname, query } = context?.parameters?.nextRouter || {};
+    const session = context?.parameters?.session
+      ? { accessToken: "dummy-token", ...context?.parameters?.session }
+      : {
+          accessToken: "dummy-token",
+          user: {
+            uniqueId: "mocked-uniqueId",
+            userId: "mocked-uniqueId",
+          },
+        };
 
     // Register to router changes
     // Will trigger rerender when change occurs
     useMemoryRouter({ memoryRouter, pathname, query });
+    createStorybookRouter(memoryRouter);
 
-    return (
-      <>
-        {showInfo && <StoryRouter router={memoryRouter} />}
-        <Story />
-        <UseManyProvider />
-      </>
-    );
-  },
-  (Story) => {
-    return (
-      <AdvancedSearchProvider router={memoryRouter}>
-        <Story />
-      </AdvancedSearchProvider>
-    );
-  },
-  (Story, context) => {
-    return (
-      <SessionProvider
-        session={
-          context?.parameters?.session
-            ? { accessToken: "dummy-token", ...context?.parameters?.session }
-            : {
-                accessToken: "dummy-token",
-                user: {
-                  uniqueId: "mocked-uniqueId",
-                  userId: "mocked-uniqueId",
-                },
-              }
-        }
-      >
-        <Story />
-      </SessionProvider>
-    );
-  },
-  (Story) => {
-    return (
-      <ModalContextProvider router={memoryRouter}>
-        <Story />
-      </ModalContextProvider>
-    );
-  },
-  (Story, context) => {
     return (
       <GraphQLMocker
         url={
@@ -80,7 +51,19 @@ export const decorators = [
         beforeFetch={context?.parameters?.graphql?.urlbeforeFetch}
         debug={context?.parameters?.graphql?.debug}
       >
-        <Story />
+        <SWRConfig value={{ provider: () => new Map(), dedupingInterval: 0 }}>
+          <RouterContext.Provider value={memoryRouter}>
+            <AdvancedSearchProvider router={memoryRouter}>
+              <SessionProvider session={session}>
+                <ModalContextProvider router={memoryRouter}>
+                  {showInfo && <StoryRouter router={memoryRouter} />}
+                  <Story />
+                  <UseManyProvider />
+                </ModalContextProvider>
+              </SessionProvider>
+            </AdvancedSearchProvider>
+          </RouterContext.Provider>
+        </SWRConfig>
       </GraphQLMocker>
     );
   },
