@@ -23,7 +23,7 @@ export function WrappedSeriesSlider() {
     </div>
   );
 }
-WrappedSeriesSlider.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const WrappedSeriesSliderStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -55,7 +55,11 @@ WrappedSeriesSlider.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
-
+WrappedSeriesSlider.parameters = WrappedSeriesSliderStory.parameters;
+WrappedSeriesSlider.args = WrappedSeriesSliderStory.args;
+WrappedSeriesSlider.decorators = WrappedSeriesSliderStory.decorators;
+WrappedSeriesSlider.storyName =
+  WrappedSeriesSliderStory.name || WrappedSeriesSliderStory.storyName;
 export function LoadingSeries() {
   return (
     <div>

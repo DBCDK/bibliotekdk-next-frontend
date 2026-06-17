@@ -58,14 +58,21 @@ export function CoverCarouselMultipleCovers() {
     />
   );
 }
-CoverCarouselMultipleCovers.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const CoverCarouselMultipleCoversStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
     },
   },
 });
-
+CoverCarouselMultipleCovers.parameters =
+  CoverCarouselMultipleCoversStory.parameters;
+CoverCarouselMultipleCovers.args = CoverCarouselMultipleCoversStory.args;
+CoverCarouselMultipleCovers.decorators =
+  CoverCarouselMultipleCoversStory.decorators;
+CoverCarouselMultipleCovers.storyName =
+  CoverCarouselMultipleCoversStory.name ||
+  CoverCarouselMultipleCoversStory.storyName;
 export function CoverCarouselSingleManifestation() {
   const coverCarouselProps = {
     allPids: ["some-pid-1", "some-pid-2", "some-pid-3"],
@@ -84,14 +91,26 @@ export function CoverCarouselSingleManifestation() {
     />
   );
 }
-CoverCarouselSingleManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {},
+const CoverCarouselSingleManifestationStory = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
     },
-  },
-});
-
+  }
+);
+CoverCarouselSingleManifestation.parameters =
+  CoverCarouselSingleManifestationStory.parameters;
+CoverCarouselSingleManifestation.args =
+  CoverCarouselSingleManifestationStory.args;
+CoverCarouselSingleManifestation.decorators =
+  CoverCarouselSingleManifestationStory.decorators;
+CoverCarouselSingleManifestation.storyName =
+  CoverCarouselSingleManifestationStory.name ||
+  CoverCarouselSingleManifestationStory.storyName;
 export function CoverCarouselMultipleManifestationsSingleCover() {
   const coverCarouselProps = {
     allPids: ["some-pid-1", "some-pid-2", "some-pid-3", "some-pid-6"],
@@ -110,7 +129,7 @@ export function CoverCarouselMultipleManifestationsSingleCover() {
     />
   );
 }
-CoverCarouselMultipleManifestationsSingleCover.story = merge(
+const CoverCarouselMultipleManifestationsSingleCoverStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -121,6 +140,15 @@ CoverCarouselMultipleManifestationsSingleCover.story = merge(
     },
   }
 );
+CoverCarouselMultipleManifestationsSingleCover.parameters =
+  CoverCarouselMultipleManifestationsSingleCoverStory.parameters;
+CoverCarouselMultipleManifestationsSingleCover.args =
+  CoverCarouselMultipleManifestationsSingleCoverStory.args;
+CoverCarouselMultipleManifestationsSingleCover.decorators =
+  CoverCarouselMultipleManifestationsSingleCoverStory.decorators;
+CoverCarouselMultipleManifestationsSingleCover.storyName =
+  CoverCarouselMultipleManifestationsSingleCoverStory.name ||
+  CoverCarouselMultipleManifestationsSingleCoverStory.storyName;
 export function NamedCoverCarouselTenManifestations() {
   const manifestations = Array(5)
     .fill([])

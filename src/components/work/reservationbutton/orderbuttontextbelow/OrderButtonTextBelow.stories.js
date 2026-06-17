@@ -66,14 +66,18 @@ export function BookButtonTxt() {
   );
 }
 
-BookButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const BookButtonTxtStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
     },
   },
 });
-
+BookButtonTxt.parameters = BookButtonTxtStory.parameters;
+BookButtonTxt.args = BookButtonTxtStory.args;
+BookButtonTxt.decorators = BookButtonTxtStory.decorators;
+BookButtonTxt.storyName =
+  BookButtonTxtStory.name || BookButtonTxtStory.storyName;
 export function EBookButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
@@ -83,7 +87,7 @@ export function EBookButtonTxt() {
     />
   );
 }
-EBookButtonTxt.story = {
+const EBookButtonTxtStory = {
   ...ButtonTxtStoryBuilder("EBook", {
     Query: {
       work: () => {
@@ -134,7 +138,11 @@ EBookButtonTxt.story = {
     },
   }),
 };
-
+EBookButtonTxt.parameters = EBookButtonTxtStory.parameters;
+EBookButtonTxt.args = EBookButtonTxtStory.args;
+EBookButtonTxt.decorators = EBookButtonTxtStory.decorators;
+EBookButtonTxt.storyName =
+  EBookButtonTxtStory.name || EBookButtonTxtStory.storyName;
 export function EAudioBookPhysicalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
@@ -144,7 +152,7 @@ export function EAudioBookPhysicalButtonTxt() {
     />
   );
 }
-EAudioBookPhysicalButtonTxt.story = {
+const EAudioBookPhysicalButtonTxtStory = {
   ...ButtonTxtStoryBuilder("lydbog (cd-mp3)", {
     Query: {
       work: () => {
@@ -198,7 +206,14 @@ EAudioBookPhysicalButtonTxt.story = {
     },
   }),
 };
-
+EAudioBookPhysicalButtonTxt.parameters =
+  EAudioBookPhysicalButtonTxtStory.parameters;
+EAudioBookPhysicalButtonTxt.args = EAudioBookPhysicalButtonTxtStory.args;
+EAudioBookPhysicalButtonTxt.decorators =
+  EAudioBookPhysicalButtonTxtStory.decorators;
+EAudioBookPhysicalButtonTxt.storyName =
+  EAudioBookPhysicalButtonTxtStory.name ||
+  EAudioBookPhysicalButtonTxtStory.storyName;
 export function EAudioBookDigitalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
@@ -208,7 +223,7 @@ export function EAudioBookDigitalButtonTxt() {
     />
   );
 }
-EAudioBookDigitalButtonTxt.story = {
+const EAudioBookDigitalButtonTxtStory = {
   ...ButtonTxtStoryBuilder("lydbog (net)", {
     Query: {
       work: () => {
@@ -268,7 +283,14 @@ EAudioBookDigitalButtonTxt.story = {
     },
   }),
 };
-
+EAudioBookDigitalButtonTxt.parameters =
+  EAudioBookDigitalButtonTxtStory.parameters;
+EAudioBookDigitalButtonTxt.args = EAudioBookDigitalButtonTxtStory.args;
+EAudioBookDigitalButtonTxt.decorators =
+  EAudioBookDigitalButtonTxtStory.decorators;
+EAudioBookDigitalButtonTxt.storyName =
+  EAudioBookDigitalButtonTxtStory.name ||
+  EAudioBookDigitalButtonTxtStory.storyName;
 export function PeriodicaButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
@@ -279,7 +301,7 @@ export function PeriodicaButtonTxt() {
     />
   );
 }
-PeriodicaButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const PeriodicaButtonTxtStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -295,7 +317,11 @@ PeriodicaButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
-
+PeriodicaButtonTxt.parameters = PeriodicaButtonTxtStory.parameters;
+PeriodicaButtonTxt.args = PeriodicaButtonTxtStory.args;
+PeriodicaButtonTxt.decorators = PeriodicaButtonTxtStory.decorators;
+PeriodicaButtonTxt.storyName =
+  PeriodicaButtonTxtStory.name || PeriodicaButtonTxtStory.storyName;
 export function SlowLoadingButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
@@ -306,7 +332,7 @@ export function SlowLoadingButtonTxt() {
     />
   );
 }
-SlowLoadingButtonTxt.story = {
+const SlowLoadingButtonTxtStory = {
   ...ButtonTxtStoryBuilder("Slow Loading", {
     Query: {
       manifestations: async () => {
@@ -330,3 +356,8 @@ SlowLoadingButtonTxt.story = {
     },
   }),
 };
+SlowLoadingButtonTxt.parameters = SlowLoadingButtonTxtStory.parameters;
+SlowLoadingButtonTxt.args = SlowLoadingButtonTxtStory.args;
+SlowLoadingButtonTxt.decorators = SlowLoadingButtonTxtStory.decorators;
+SlowLoadingButtonTxt.storyName =
+  SlowLoadingButtonTxtStory.name || SlowLoadingButtonTxtStory.storyName;

@@ -1,8 +1,14 @@
 describe("Localizations", () => {
+  function openLocalizationsFlow() {
+    cy.contains("a", "Se hvor den er hjemme", { timeout: 15000 })
+      .should("be.visible")
+      .click();
+  }
+
   it("Show error message when temporarily closed", () => {
     cy.visit("/iframe.html?id=localizations-base--localizations-base-flow");
     cy.contains("Localizations", { timeout: 15000 }).should("exist");
-    cy.get("a", { timeout: 10000 }).first().should("exist").click();
+    openLocalizationsFlow();
 
     cy.contains("Se hvor materialet er på hylden");
 
@@ -21,7 +27,7 @@ describe("Localizations", () => {
   it("Show holdings with different statuses", () => {
     cy.visit("/iframe.html?id=localizations-base--localizations-base-flow");
     cy.contains("Localizations", { timeout: 15000 }).should("exist");
-    cy.get("a", { timeout: 10000 }).first().should("exist").click();
+    openLocalizationsFlow();
 
     cy.contains("Se hvor materialet er på hylden");
 
@@ -50,7 +56,7 @@ describe("Localizations", () => {
   it("Show unlisted branch message", () => {
     cy.visit("/iframe.html?id=localizations-base--localizations-base-flow");
     cy.contains("Localizations", { timeout: 15000 }).should("exist");
-    cy.get("a", { timeout: 10000 }).first().should("exist").click();
+    openLocalizationsFlow();
 
     cy.contains("Se hvor materialet er på hylden");
 

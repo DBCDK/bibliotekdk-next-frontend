@@ -26,7 +26,7 @@ export function BookmarkList() {
   );
 }
 
-BookmarkList.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const BookmarkListStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       debug: true,
@@ -51,7 +51,10 @@ BookmarkList.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
-
+BookmarkList.parameters = BookmarkListStory.parameters;
+BookmarkList.args = BookmarkListStory.args;
+BookmarkList.decorators = BookmarkListStory.decorators;
+BookmarkList.storyName = BookmarkListStory.name || BookmarkListStory.storyName;
 BookmarkList.decorators = [
   (Story) => {
     window.localStorage.setItem(

@@ -15,7 +15,7 @@ export function ProfileMenuStoryWithDebt() {
   useMockLoanerInfo({});
   return <ProfileMenu />;
 }
-ProfileMenuStoryWithDebt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const ProfileMenuStoryWithDebtStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -28,12 +28,16 @@ ProfileMenuStoryWithDebt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
-
+ProfileMenuStoryWithDebt.parameters = ProfileMenuStoryWithDebtStory.parameters;
+ProfileMenuStoryWithDebt.args = ProfileMenuStoryWithDebtStory.args;
+ProfileMenuStoryWithDebt.decorators = ProfileMenuStoryWithDebtStory.decorators;
+ProfileMenuStoryWithDebt.storyName =
+  ProfileMenuStoryWithDebtStory.name || ProfileMenuStoryWithDebtStory.storyName;
 export function ProfileMenuStoryWithoutDebt() {
   useMockLoanerInfo({ debt: [] });
   return <ProfileMenu />;
 }
-ProfileMenuStoryWithoutDebt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const ProfileMenuStoryWithoutDebtStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -46,3 +50,11 @@ ProfileMenuStoryWithoutDebt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+ProfileMenuStoryWithoutDebt.parameters =
+  ProfileMenuStoryWithoutDebtStory.parameters;
+ProfileMenuStoryWithoutDebt.args = ProfileMenuStoryWithoutDebtStory.args;
+ProfileMenuStoryWithoutDebt.decorators =
+  ProfileMenuStoryWithoutDebtStory.decorators;
+ProfileMenuStoryWithoutDebt.storyName =
+  ProfileMenuStoryWithoutDebtStory.name ||
+  ProfileMenuStoryWithoutDebtStory.storyName;

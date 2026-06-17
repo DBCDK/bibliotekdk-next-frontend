@@ -46,52 +46,44 @@ export function MusicNoTags() {
   );
 }
 
-MusicNoTags.story = {
-  parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        Query: {
-          recommendations: () => ({
-            subjects: [
-              { subject: "savn", traceId: "t1" },
-              { subject: "melankoli", traceId: "t2" },
-            ],
-          }),
-        },
-        Work: {
-          workTypes: () => ["MUSIC"],
-        },
-        SubjectContainer: {
-          dbcVerified: () => [
-            {
-              display: "savn",
-              __typename: "SubjectText",
-              language: {
-                display: "dansk",
-                isoCode: "dan",
-              },
-            },
-            {
-              display: "melankoli",
-              __typename: "SubjectText",
-              language: {
-                display: "dansk",
-                isoCode: "dan",
-              },
-            },
+MusicNoTags.parameters = {
+  graphql: {
+    debug: true,
+    resolvers: {
+      Query: {
+        recommendations: () => ({
+          subjects: [
+            { subject: "savn", traceId: "t1" },
+            { subject: "melankoli", traceId: "t2" },
           ],
-        },
+        }),
+      },
+      Work: {
+        workTypes: () => ["MUSIC"],
+      },
+      SubjectContainer: {
+        dbcVerified: () => [
+          {
+            display: "savn",
+            __typename: "SubjectText",
+            language: {
+              display: "dansk",
+              isoCode: "dan",
+            },
+          },
+          {
+            display: "melankoli",
+            __typename: "SubjectText",
+            language: {
+              display: "dansk",
+              isoCode: "dan",
+            },
+          },
+        ],
       },
     },
   },
-  nextRouter: {
-    showInfo: true,
-    pathname: "/",
-    query: {},
-  },
 };
-
 export function Connected() {
   return (
     <div>
@@ -104,48 +96,41 @@ export function Connected() {
   );
 }
 
-Connected.story = {
-  parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        Query: {
-          recommendations: () => ({
-            subjects: [
-              { subject: "savn", traceId: "t1" },
-              { subject: "melankoli", traceId: "t2" },
-            ],
-          }),
-        },
-        Work: {
-          workTypes: () => ["LITERATURE"],
-        },
-        SubjectContainer: {
-          dbcVerified: () => [
-            {
-              display: "savn",
-              __typename: "SubjectText",
-              language: {
-                display: "dansk",
-                isoCode: "dan",
-              },
-            },
-            {
-              display: "melankoli",
-              __typename: "SubjectText",
-              language: {
-                display: "dansk",
-                isoCode: "dan",
-              },
-            },
+Connected.parameters = {
+  graphql: {
+    debug: true,
+    resolvers: {
+      Query: {
+        recommendations: () => ({
+          subjects: [
+            { subject: "savn", traceId: "t1" },
+            { subject: "melankoli", traceId: "t2" },
           ],
-        },
+        }),
+      },
+      Work: {
+        workTypes: () => ["LITERATURE"],
+      },
+      SubjectContainer: {
+        dbcVerified: () => [
+          {
+            display: "savn",
+            __typename: "SubjectText",
+            language: {
+              display: "dansk",
+              isoCode: "dan",
+            },
+          },
+          {
+            display: "melankoli",
+            __typename: "SubjectText",
+            language: {
+              display: "dansk",
+              isoCode: "dan",
+            },
+          },
+        ],
       },
     },
-  },
-  nextRouter: {
-    showInfo: true,
-    pathname: "/",
-    query: {},
   },
 };

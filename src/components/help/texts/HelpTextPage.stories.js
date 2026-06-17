@@ -15,13 +15,11 @@ export function HelpTextPage() {
     </div>
   );
 }
-HelpTextPage.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Node: {
-          __resolveType: () => "NodeHelpText",
-        },
+HelpTextPage.parameters = {
+  graphql: {
+    resolvers: {
+      Node: {
+        __resolveType: () => "NodeHelpText",
       },
     },
   },

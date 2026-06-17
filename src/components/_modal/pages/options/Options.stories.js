@@ -33,10 +33,14 @@ export function AllOptions() {
     </>
   );
 }
-AllOptions.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const AllOptionsStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: { Query: { user: () => USER_7 } },
     },
   },
 });
+AllOptions.parameters = AllOptionsStory.parameters;
+AllOptions.args = AllOptionsStory.args;
+AllOptions.decorators = AllOptionsStory.decorators;
+AllOptions.storyName = AllOptionsStory.name || AllOptionsStory.storyName;

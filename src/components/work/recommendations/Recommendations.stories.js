@@ -18,39 +18,37 @@ export function WrappedRecommendationsSlider() {
     </div>
   );
 }
-WrappedRecommendationsSlider.story = {
-  parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        Mutation: {
-          data_collect: ({ variables }) => {
-            // Log for Cypress
-            console.debug("data_collect", variables?.input);
-            return "OK";
-          },
-        },
-        RecommendationResponse: {
-          result: (
-            args // Return empty array if wrong workId is given
-          ) =>
-            args?.variables?.workId === WORK_ID
-              ? [...new Array(20).fill({})]
-              : [],
-        },
-        Manifestations: {
-          mostRelevant: () => [...new Array(1).fill({})],
-        },
-        Cover: {
-          origin: () => "fbiinfo",
-          detail: ({ path }) => `https://picsum.photos/seed/${path}/200/300`,
+WrappedRecommendationsSlider.parameters = {
+  graphql: {
+    debug: true,
+    resolvers: {
+      Mutation: {
+        data_collect: ({ variables }) => {
+          // Log for Cypress
+          console.debug("data_collect", variables?.input);
+          return "OK";
         },
       },
+      RecommendationResponse: {
+        result: (
+          args // Return empty array if wrong workId is given
+        ) =>
+          args?.variables?.workId === WORK_ID
+            ? [...new Array(20).fill({})]
+            : [],
+      },
+      Manifestations: {
+        mostRelevant: () => [...new Array(1).fill({})],
+      },
+      Cover: {
+        origin: () => "fbiinfo",
+        detail: ({ path }) => `https://picsum.photos/seed/${path}/200/300`,
+      },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/",
-      query: {},
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
   },
 };

@@ -26,111 +26,108 @@ export function WrappedInfomediaReviewPage() {
     </div>
   );
 }
-WrappedInfomediaReviewPage.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Subject: {
-          __resolveType: () => "SubjectText",
-        },
-        Query: {
-          work: (args) =>
-            args.variables.workId === "some-work-id"
-              ? {
-                  workId: "some-work-id",
-                  titles: {
-                    main: ["Great book"],
-                  },
-                  subjects: {
-                    dbcVerified: [
-                      {
-                        display: "Some topic",
-                        type: "TOPIC",
-                        __typename: "SubjectText",
-                        language: {
-                          isoCode: "dan",
-                        },
+WrappedInfomediaReviewPage.parameters = {
+  graphql: {
+    resolvers: {
+      Subject: {
+        __resolveType: () => "SubjectText",
+      },
+      Query: {
+        work: (args) =>
+          args.variables.workId === "some-work-id"
+            ? {
+                workId: "some-work-id",
+                titles: {
+                  main: ["Great book"],
+                },
+                subjects: {
+                  dbcVerified: [
+                    {
+                      display: "Some topic",
+                      type: "TOPIC",
+                      __typename: "SubjectText",
+                      language: {
+                        isoCode: "dan",
                       },
-                      {
-                        display: "Some other topic",
-                        type: "TOPIC",
-                        __typename: "SubjectText",
-                        language: {
-                          isoCode: "dan",
-                        },
+                    },
+                    {
+                      display: "Some other topic",
+                      type: "TOPIC",
+                      __typename: "SubjectText",
+                      language: {
+                        isoCode: "dan",
                       },
-                    ],
-                  },
-                  relations: {
-                    hasReview: [
-                      {
-                        pid: "pid",
-                        creators: [
+                    },
+                  ],
+                },
+                relations: {
+                  hasReview: [
+                    {
+                      pid: "pid",
+                      creators: [
+                        {
+                          display: "Some creator",
+                        },
+                      ],
+                      access: [
+                        {
+                          __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+                          id: "some-article-id",
+                        },
+                      ],
+
+                      physicalDescription: {
+                        summaryFull: "Some page number",
+                        materialUnits: [
                           {
-                            display: "Some creator",
+                            extent: "Some extent",
+                            summary: "Some summary",
                           },
                         ],
-                        access: [
-                          {
-                            __resolveType: AccessEnum.INFOMEDIA_SERVICE,
-                            id: "some-article-id",
-                          },
-                        ],
-
-                        physicalDescription: {
-                          summaryFull: "Some page number",
-                          materialUnits: [
-                            {
-                              extent: "Some extent",
-                              summary: "Some summary",
-                            },
-                          ],
-                        },
-
-                        hostPublication: {
-                          title: "Infomedia publication",
-                          issue: "2005-06-24",
-                        },
-                        recordCreationDate: "20050627",
-                        review: {
-                          rating: "5/6",
-                          reviewByLibrarians: [],
-                        },
                       },
-                    ],
-                  },
-                }
-              : null,
 
-          manifestation: () => null,
+                      hostPublication: {
+                        title: "Infomedia publication",
+                        issue: "2005-06-24",
+                      },
+                      recordCreationDate: "20050627",
+                      review: {
+                        rating: "5/6",
+                        reviewByLibrarians: [],
+                      },
+                    },
+                  ],
+                },
+              }
+            : null,
 
-          infomedia: (args) =>
-            args.variables.id === "some-article-id"
-              ? {
-                  article: {
-                    id: "some-article-id",
-                    headLine: "Some review headline",
-                    subHeadLine: "Some review subHeadLine",
-                    byLine: "Some byLine",
-                    dateLine: "24. December 2000",
-                    paper: "Some paper",
-                    text: '<p id="p1">Some text given as html ...</p>',
-                    hedLine: "Some hedline",
-                    logo: "<p>Infomedia disclaimer</p>",
-                  },
-                }
-              : null,
-        },
+        manifestation: () => null,
+
+        infomedia: (args) =>
+          args.variables.id === "some-article-id"
+            ? {
+                article: {
+                  id: "some-article-id",
+                  headLine: "Some review headline",
+                  subHeadLine: "Some review subHeadLine",
+                  byLine: "Some byLine",
+                  dateLine: "24. December 2000",
+                  paper: "Some paper",
+                  text: '<p id="p1">Some text given as html ...</p>',
+                  hedLine: "Some hedline",
+                  logo: "<p>Infomedia disclaimer</p>",
+                },
+              }
+            : null,
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/",
-      query: { workId: "some-work-id", articleId: "some-article-id" },
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: { workId: "some-work-id", articleId: "some-article-id" },
   },
 };
-
 export function WrappedLectorReviewPage() {
   return (
     <div>
@@ -139,36 +136,33 @@ export function WrappedLectorReviewPage() {
     </div>
   );
 }
-WrappedLectorReviewPage.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Subject: {
-          __resolveType: () => "SubjectText",
-        },
-        Query: {
-          manifestation: (args) =>
-            args.variables.pid === "some-article-id"
-              ? {
-                  pid: "some-article-id",
-                  review: REVIEW_1,
-                  relations: {
-                    isReviewOf: [MANIFESTATION_6],
-                  },
-                }
-              : null,
-          infomedia: () => ({}),
-        },
+WrappedLectorReviewPage.parameters = {
+  graphql: {
+    resolvers: {
+      Subject: {
+        __resolveType: () => "SubjectText",
+      },
+      Query: {
+        manifestation: (args) =>
+          args.variables.pid === "some-article-id"
+            ? {
+                pid: "some-article-id",
+                review: REVIEW_1,
+                relations: {
+                  isReviewOf: [MANIFESTATION_6],
+                },
+              }
+            : null,
+        infomedia: () => ({}),
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/",
-      query: { workId: "some-work-id", articleId: "some-article-id" },
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: { workId: "some-work-id", articleId: "some-article-id" },
   },
 };
-
 export function WrappedInfomediaArticlePage() {
   return (
     <div>
@@ -177,33 +171,29 @@ export function WrappedInfomediaArticlePage() {
     </div>
   );
 }
-WrappedInfomediaArticlePage.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Query: {
-          work: (args) =>
-            args.variables.workId === "some-work-id" ? {} : null,
-          infomedia: (args) =>
-            args.variables.id === "some-article-id" ? {} : null,
-        },
-        InfomediaArticle: {
-          logo: () => "<p>Infomedia disclaimer</p>",
-        },
-        Subject: {
-          __resolveType: () => "SubjectText",
-        },
-        SubjectText: { type: () => "TOPIC" },
+WrappedInfomediaArticlePage.parameters = {
+  graphql: {
+    resolvers: {
+      Query: {
+        work: (args) => (args.variables.workId === "some-work-id" ? {} : null),
+        infomedia: (args) =>
+          args.variables.id === "some-article-id" ? {} : null,
       },
-    },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/",
-      query: { workId: "some-work-id", infomediaId: "some-article-id" },
+      InfomediaArticle: {
+        logo: () => "<p>Infomedia disclaimer</p>",
+      },
+      Subject: {
+        __resolveType: () => "SubjectText",
+      },
+      SubjectText: { type: () => "TOPIC" },
     },
   },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: { workId: "some-work-id", infomediaId: "some-article-id" },
+  },
 };
-
 export function ArticlePage() {
   const articleBody = `## Overskrift 2
 

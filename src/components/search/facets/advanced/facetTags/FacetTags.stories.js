@@ -17,15 +17,13 @@ export function FacetWithTags() {
   );
 }
 
-FacetWithTags.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: "/avanceret",
-      query: {
-        facets:
-          '[{"searchIndex": "specificmaterialtype", "values": [{ "value": "e-bog", "name": "e-bog" },{ "value": "node", "name": "node" } ]},{ "searchIndex": "subject", "values": [{ "value": "fisk", "name": "fisk" }]}]',
-      },
+FacetWithTags.parameters = {
+  nextRouter: {
+    showInfo: true,
+    pathname: "/avanceret",
+    query: {
+      facets:
+        '[{"searchIndex": "specificmaterialtype", "values": [{ "value": "e-bog", "name": "e-bog" },{ "value": "node", "name": "node" } ]},{ "searchIndex": "subject", "values": [{ "value": "fisk", "name": "fisk" }]}]',
     },
   },
 };

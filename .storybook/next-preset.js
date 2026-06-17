@@ -33,6 +33,7 @@ module.exports = {
             __dirname,
             "../src/components/base/clamp/Clamp.module.css"
           ),
+          "next/link": require.resolve("next/link"),
           "@": path.resolve(__dirname, "../src"),
         },
       },
