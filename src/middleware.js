@@ -7,6 +7,10 @@ function getFaviconVariant() {
 }
 
 export function middleware(request) {
+  if (request.method === "OPTIONS") {
+    return new NextResponse(null, { status: 204 });
+  }
+
   const { pathname } = request.nextUrl;
 
   if (!ROOT_FAVICON_PATHS.has(pathname)) {
@@ -21,5 +25,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/favicon.ico", "/favicon.svg"],
+  matcher: ["/", "/((?!_next/static|_next/image).*)"],
 };
