@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Receipt from "./";
-import Modal, { useModal } from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
+import { useModal } from "@/components/_modal";
 
 const exportedObject = {
   title: "Modal/Receipt",

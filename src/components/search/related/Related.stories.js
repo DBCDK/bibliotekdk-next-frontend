@@ -47,23 +47,20 @@ export function Connected() {
   );
 }
 
-Connected.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        SearchResponse: {
-          hitcount: () => "998",
-        },
+Connected.parameters = {
+  graphql: {
+    resolvers: {
+      SearchResponse: {
+        hitcount: () => "998",
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/find",
-      query: { "q.all": "hest" },
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/find",
+    query: { "q.all": "hest" },
   },
 };
-
 export function Empty() {
   return (
     <div>
@@ -76,25 +73,23 @@ export function Empty() {
   );
 }
 
-Empty.story = {
-  parameters: {
-    graphql: {
-      debug: true,
-      // url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
-      resolvers: {
-        Query: {
-          search: () => {
-            return {
-              hitcount: 0,
-            };
-          },
+Empty.parameters = {
+  graphql: {
+    debug: true,
+    // url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+    resolvers: {
+      Query: {
+        search: () => {
+          return {
+            hitcount: 0,
+          };
         },
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: `/find?workTypes=game`,
-      query: { [FilterTypeEnum.WORK_TYPES]: "game" },
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: `/find?workTypes=game`,
+    query: { [FilterTypeEnum.WORK_TYPES]: "game" },
   },
 };

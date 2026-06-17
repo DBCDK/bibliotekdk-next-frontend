@@ -19,10 +19,14 @@ export function Default() {
   );
 }
 
-Default.story = {
+const DefaultStory = {
   nextRouter: {
     showInfo: true,
     pathname: "/avanceret",
     query: { cql: "Harry potter" },
   },
 };
+Default.parameters = DefaultStory.parameters;
+Default.args = DefaultStory.args;
+Default.decorators = DefaultStory.decorators;
+Default.storyName = DefaultStory.name || DefaultStory.storyName;

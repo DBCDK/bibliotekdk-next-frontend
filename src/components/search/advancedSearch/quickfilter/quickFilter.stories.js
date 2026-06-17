@@ -17,15 +17,13 @@ export function QuickFilterDefault() {
   );
 }
 
-QuickFilterDefault.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: "/avanceret",
-      query: {
-        quickfilters:
-          '[{"searchIndex": "term.fictionnonfiction", "value": "nonfiction"}]',
-      },
+QuickFilterDefault.parameters = {
+  nextRouter: {
+    showInfo: true,
+    pathname: "/avanceret",
+    query: {
+      quickfilters:
+        '[{"searchIndex": "term.fictionnonfiction", "value": "nonfiction"}]',
     },
   },
 };

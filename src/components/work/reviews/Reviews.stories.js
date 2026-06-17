@@ -19,44 +19,41 @@ export function WrappedReviewsSlider() {
     </div>
   );
 }
-WrappedReviewsSlider.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Query: {
-          work: () => ({
-            workId: "some-work-id",
-            titles: {
-              main: ["Great book"],
-            },
-            relations: {
-              hasReview: [
-                unavailableReview(1),
-                unavailableReview(2),
-                unavailableReview(3),
-                reviewAvailableAtExternalSite(4),
-                reviewAvailableAtExternalSite(5),
-                reviewAvailableAtExternalSite(6),
-                reviewAvailableAtExternalSite(7),
-                reviewAvailableAtInfomedia(8),
-                reviewAvailableAtInfomedia(9),
-                reviewAvailableAtInfomedia(10),
-                librariansReview(11),
-                librariansReview(12),
-              ],
-            },
-          }),
-        },
+WrappedReviewsSlider.parameters = {
+  graphql: {
+    resolvers: {
+      Query: {
+        work: () => ({
+          workId: "some-work-id",
+          titles: {
+            main: ["Great book"],
+          },
+          relations: {
+            hasReview: [
+              unavailableReview(1),
+              unavailableReview(2),
+              unavailableReview(3),
+              reviewAvailableAtExternalSite(4),
+              reviewAvailableAtExternalSite(5),
+              reviewAvailableAtExternalSite(6),
+              reviewAvailableAtExternalSite(7),
+              reviewAvailableAtInfomedia(8),
+              reviewAvailableAtInfomedia(9),
+              reviewAvailableAtInfomedia(10),
+              librariansReview(11),
+              librariansReview(12),
+            ],
+          },
+        }),
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/",
-      query: {},
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
   },
 };
-
 export function LoadingSlider() {
   return (
     <div>

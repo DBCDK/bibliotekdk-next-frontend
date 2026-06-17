@@ -21,16 +21,13 @@ export function Default() {
   );
 }
 
-Default.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: "/avanceret",
-      query: { cql: "Harry potter" },
-    },
+Default.parameters = {
+  nextRouter: {
+    showInfo: true,
+    pathname: "/avanceret",
+    query: { cql: "Harry potter" },
   },
 };
-
 export function FacetsLoading() {
   return (
     <div>
@@ -73,15 +70,13 @@ export function FacetsInUrl() {
   );
 }
 
-FacetsInUrl.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: "/avanceret",
-      query: {
-        facets:
-          '[{"searchIndex": "specificmaterialtype", "values": [{ "value": "e-bog", "name": "e-bog" },{ "value": "node", "name": "node" } ]},{ "searchIndex": "subject", "values": [{ "value": "fisk", "name": "fisk" }]}]',
-      },
+FacetsInUrl.parameters = {
+  nextRouter: {
+    showInfo: true,
+    pathname: "/avanceret",
+    query: {
+      facets:
+        '[{"searchIndex": "specificmaterialtype", "values": [{ "value": "e-bog", "name": "e-bog" },{ "value": "node", "name": "node" } ]},{ "searchIndex": "subject", "values": [{ "value": "fisk", "name": "fisk" }]}]',
     },
   },
 };

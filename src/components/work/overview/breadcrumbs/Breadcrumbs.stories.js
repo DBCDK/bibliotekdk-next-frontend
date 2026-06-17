@@ -48,14 +48,18 @@ export function BreadcrumbsAll3Present() {
     />
   );
 }
-BreadcrumbsAll3Present.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const BreadcrumbsAll3PresentStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
     },
   },
 });
-
+BreadcrumbsAll3Present.parameters = BreadcrumbsAll3PresentStory.parameters;
+BreadcrumbsAll3Present.args = BreadcrumbsAll3PresentStory.args;
+BreadcrumbsAll3Present.decorators = BreadcrumbsAll3PresentStory.decorators;
+BreadcrumbsAll3Present.storyName =
+  BreadcrumbsAll3PresentStory.name || BreadcrumbsAll3PresentStory.storyName;
 export function Breadcrumbs2presentNotGenreAndForm() {
   const breadcrumbsProps = {
     workId: "some-work-id-2",
@@ -68,13 +72,26 @@ export function Breadcrumbs2presentNotGenreAndForm() {
     />
   );
 }
-Breadcrumbs2presentNotGenreAndForm.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {},
+const Breadcrumbs2presentNotGenreAndFormStory = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
     },
-  },
-});
+  }
+);
+Breadcrumbs2presentNotGenreAndForm.parameters =
+  Breadcrumbs2presentNotGenreAndFormStory.parameters;
+Breadcrumbs2presentNotGenreAndForm.args =
+  Breadcrumbs2presentNotGenreAndFormStory.args;
+Breadcrumbs2presentNotGenreAndForm.decorators =
+  Breadcrumbs2presentNotGenreAndFormStory.decorators;
+Breadcrumbs2presentNotGenreAndForm.storyName =
+  Breadcrumbs2presentNotGenreAndFormStory.name ||
+  Breadcrumbs2presentNotGenreAndFormStory.storyName;
 export function Breadcrumbs2presentNotFictionNonfiction() {
   const breadcrumbsProps = {
     workId: "some-work-id-3",
@@ -87,7 +104,7 @@ export function Breadcrumbs2presentNotFictionNonfiction() {
     />
   );
 }
-Breadcrumbs2presentNotFictionNonfiction.story = merge(
+const Breadcrumbs2presentNotFictionNonfictionStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -98,7 +115,15 @@ Breadcrumbs2presentNotFictionNonfiction.story = merge(
     },
   }
 );
-
+Breadcrumbs2presentNotFictionNonfiction.parameters =
+  Breadcrumbs2presentNotFictionNonfictionStory.parameters;
+Breadcrumbs2presentNotFictionNonfiction.args =
+  Breadcrumbs2presentNotFictionNonfictionStory.args;
+Breadcrumbs2presentNotFictionNonfiction.decorators =
+  Breadcrumbs2presentNotFictionNonfictionStory.decorators;
+Breadcrumbs2presentNotFictionNonfiction.storyName =
+  Breadcrumbs2presentNotFictionNonfictionStory.name ||
+  Breadcrumbs2presentNotFictionNonfictionStory.storyName;
 export function BreadcrumbsNamed3elementsInArray() {
   const description = "Named - 3 elements in array";
 

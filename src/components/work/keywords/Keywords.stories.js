@@ -26,77 +26,74 @@ export function KeywordsSection() {
     </div>
   );
 }
-KeywordsSection.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Work: {
-          extendedWork: () => null,
-        },
-        SubjectContainer: {
-          dbcVerified: () => [
-            {
-              __typename: "SubjectText",
-              display: "historie",
-              language: {
-                display: "dansk",
-                isoCode: "dan",
-              },
-              type: "TOPIC",
+KeywordsSection.parameters = {
+  graphql: {
+    resolvers: {
+      Work: {
+        extendedWork: () => null,
+      },
+      SubjectContainer: {
+        dbcVerified: () => [
+          {
+            __typename: "SubjectText",
+            display: "historie",
+            language: {
+              display: "dansk",
+              isoCode: "dan",
             },
-            {
-              __typename: "SubjectText",
-              display: "historie",
-              language: {
-                display: "dansk",
-                isoCode: "dan",
-              },
-              type: "TOPIC",
+            type: "TOPIC",
+          },
+          {
+            __typename: "SubjectText",
+            display: "historie",
+            language: {
+              display: "dansk",
+              isoCode: "dan",
             },
-            {
-              __typename: "SubjectText",
-              display: "den 2. verdenskrig",
-              language: {
-                display: "dansk",
-                isoCode: "dan",
-              },
-              type: "TOPIC",
+            type: "TOPIC",
+          },
+          {
+            __typename: "SubjectText",
+            display: "den 2. verdenskrig",
+            language: {
+              display: "dansk",
+              isoCode: "dan",
             },
-            {
-              __typename: "SubjectText",
-              display: "Tyskland",
-              language: {
-                display: "dansk",
-                isoCode: "dan",
-              },
-              type: "LOCATION",
+            type: "TOPIC",
+          },
+          {
+            __typename: "SubjectText",
+            display: "Tyskland",
+            language: {
+              display: "dansk",
+              isoCode: "dan",
             },
-            {
-              __typename: "SubjectText",
-              display: "2. heimsbardagi",
-              language: {
-                display: "færøsk",
-                isoCode: "fao",
-              },
-              type: "TOPIC",
+            type: "LOCATION",
+          },
+          {
+            __typename: "SubjectText",
+            display: "2. heimsbardagi",
+            language: {
+              display: "færøsk",
+              isoCode: "fao",
             },
-            {
-              __typename: "TimePeriod",
-              display: "1930-1939",
-              type: "TIME_PERIOD",
-            },
-          ],
-        },
+            type: "TOPIC",
+          },
+          {
+            __typename: "TimePeriod",
+            display: "1930-1939",
+            type: "TIME_PERIOD",
+          },
+        ],
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/",
-      query: {},
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
   },
 };
-
 /**
  * Returns Loading description section
  *

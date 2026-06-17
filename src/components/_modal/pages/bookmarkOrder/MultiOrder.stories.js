@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import Modal from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import { useModal } from "@/components/_modal";
 import { useOrderFlow } from "@/components/hooks/order";
@@ -124,8 +124,14 @@ export function AuthenticatedUser() {
     </>
   );
 }
-AuthenticatedUser.story = createStoryParameters({ user: AUTHENTICATED_USER });
-
+const AuthenticatedUserStory = createStoryParameters({
+  user: AUTHENTICATED_USER,
+});
+AuthenticatedUser.parameters = AuthenticatedUserStory.parameters;
+AuthenticatedUser.args = AuthenticatedUserStory.args;
+AuthenticatedUser.decorators = AuthenticatedUserStory.decorators;
+AuthenticatedUser.storyName =
+  AuthenticatedUserStory.name || AuthenticatedUserStory.storyName;
 export function UnauthenticatedUser() {
   return (
     <>
@@ -135,10 +141,14 @@ export function UnauthenticatedUser() {
     </>
   );
 }
-UnauthenticatedUser.story = createStoryParameters({
+const UnauthenticatedUserStory = createStoryParameters({
   user: UNAUTHENTICATED_USER,
 });
-
+UnauthenticatedUser.parameters = UnauthenticatedUserStory.parameters;
+UnauthenticatedUser.args = UnauthenticatedUserStory.args;
+UnauthenticatedUser.decorators = UnauthenticatedUserStory.decorators;
+UnauthenticatedUser.storyName =
+  UnauthenticatedUserStory.name || UnauthenticatedUserStory.storyName;
 export function FFUUser() {
   return (
     <>
@@ -148,10 +158,13 @@ export function FFUUser() {
     </>
   );
 }
-FFUUser.story = createStoryParameters({
+const FFUUserStory = createStoryParameters({
   user: FFU_USER,
 });
-
+FFUUser.parameters = FFUUserStory.parameters;
+FFUUser.args = FFUUserStory.args;
+FFUUser.decorators = FFUUserStory.decorators;
+FFUUser.storyName = FFUUserStory.name || FFUUserStory.storyName;
 export function MitIdNoAgencies() {
   return (
     <>
@@ -163,10 +176,14 @@ export function MitIdNoAgencies() {
     </>
   );
 }
-MitIdNoAgencies.story = createStoryParameters({
+const MitIdNoAgenciesStory = createStoryParameters({
   user: MITID_NO_AGENCIES_USER,
 });
-
+MitIdNoAgencies.parameters = MitIdNoAgenciesStory.parameters;
+MitIdNoAgencies.args = MitIdNoAgenciesStory.args;
+MitIdNoAgencies.decorators = MitIdNoAgenciesStory.decorators;
+MitIdNoAgencies.storyName =
+  MitIdNoAgenciesStory.name || MitIdNoAgenciesStory.storyName;
 function MultiOrderStory() {
   const modal = useModal();
 

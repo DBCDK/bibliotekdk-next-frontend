@@ -24,7 +24,7 @@ export const ProfileLayoutNoUniqueId = () => {
     </>
   );
 };
-ProfileLayoutNoUniqueId.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const ProfileLayoutNoUniqueIdStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     session: {
       accessToken: "dummy-token",
@@ -40,7 +40,11 @@ ProfileLayoutNoUniqueId.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     nextRouter: { pathname: "/profil/laan-og-reserveringer" },
   },
 });
-
+ProfileLayoutNoUniqueId.parameters = ProfileLayoutNoUniqueIdStory.parameters;
+ProfileLayoutNoUniqueId.args = ProfileLayoutNoUniqueIdStory.args;
+ProfileLayoutNoUniqueId.decorators = ProfileLayoutNoUniqueIdStory.decorators;
+ProfileLayoutNoUniqueId.storyName =
+  ProfileLayoutNoUniqueIdStory.name || ProfileLayoutNoUniqueIdStory.storyName;
 export const ProfileLayoutWithUniqueId = () => {
   const router = useRouter();
   return (
@@ -53,7 +57,7 @@ export const ProfileLayoutWithUniqueId = () => {
     </>
   );
 };
-ProfileLayoutWithUniqueId.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const ProfileLayoutWithUniqueIdStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     session: {
       accessToken: "dummy-token",
@@ -62,5 +66,12 @@ ProfileLayoutWithUniqueId.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     nextRouter: { pathname: "/profil/laan-og-reserveringer" },
   },
 });
-
+ProfileLayoutWithUniqueId.parameters =
+  ProfileLayoutWithUniqueIdStory.parameters;
+ProfileLayoutWithUniqueId.args = ProfileLayoutWithUniqueIdStory.args;
+ProfileLayoutWithUniqueId.decorators =
+  ProfileLayoutWithUniqueIdStory.decorators;
+ProfileLayoutWithUniqueId.storyName =
+  ProfileLayoutWithUniqueIdStory.name ||
+  ProfileLayoutWithUniqueIdStory.storyName;
 export default exportedObject;

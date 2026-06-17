@@ -1,6 +1,7 @@
 import DeleteOrder from ".";
 import { useEffect } from "react";
-import Modal, { useModal } from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
+import { useModal } from "@/components/_modal";
 import Translate from "@/components/base/translate/Translate";
 
 const exportedObject = {

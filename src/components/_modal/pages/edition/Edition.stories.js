@@ -59,14 +59,21 @@ export function EditionSingleManifestation() {
     />
   );
 }
-EditionSingleManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const EditionSingleManifestationStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
     },
   },
 });
-
+EditionSingleManifestation.parameters =
+  EditionSingleManifestationStory.parameters;
+EditionSingleManifestation.args = EditionSingleManifestationStory.args;
+EditionSingleManifestation.decorators =
+  EditionSingleManifestationStory.decorators;
+EditionSingleManifestation.storyName =
+  EditionSingleManifestationStory.name ||
+  EditionSingleManifestationStory.storyName;
 export function EditionSingleManifestationImageToLeft() {
   const editionProps = {
     context: {
@@ -87,7 +94,7 @@ export function EditionSingleManifestationImageToLeft() {
     />
   );
 }
-EditionSingleManifestationImageToLeft.story = merge(
+const EditionSingleManifestationImageToLeftStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -98,7 +105,15 @@ EditionSingleManifestationImageToLeft.story = merge(
     },
   }
 );
-
+EditionSingleManifestationImageToLeft.parameters =
+  EditionSingleManifestationImageToLeftStory.parameters;
+EditionSingleManifestationImageToLeft.args =
+  EditionSingleManifestationImageToLeftStory.args;
+EditionSingleManifestationImageToLeft.decorators =
+  EditionSingleManifestationImageToLeftStory.decorators;
+EditionSingleManifestationImageToLeft.storyName =
+  EditionSingleManifestationImageToLeftStory.name ||
+  EditionSingleManifestationImageToLeftStory.storyName;
 export function EditionSingleManifestationNoOrderTxt() {
   const editionProps = {
     context: {
@@ -119,7 +134,7 @@ export function EditionSingleManifestationNoOrderTxt() {
   );
 }
 
-EditionSingleManifestationNoOrderTxt.story = merge(
+const EditionSingleManifestationNoOrderTxtStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -130,7 +145,15 @@ EditionSingleManifestationNoOrderTxt.story = merge(
     },
   }
 );
-
+EditionSingleManifestationNoOrderTxt.parameters =
+  EditionSingleManifestationNoOrderTxtStory.parameters;
+EditionSingleManifestationNoOrderTxt.args =
+  EditionSingleManifestationNoOrderTxtStory.args;
+EditionSingleManifestationNoOrderTxt.decorators =
+  EditionSingleManifestationNoOrderTxtStory.decorators;
+EditionSingleManifestationNoOrderTxt.storyName =
+  EditionSingleManifestationNoOrderTxtStory.name ||
+  EditionSingleManifestationNoOrderTxtStory.storyName;
 export function EditionAnyManifestation() {
   const editionProps = {
     context: {
@@ -151,14 +174,18 @@ export function EditionAnyManifestation() {
   );
 }
 
-EditionAnyManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const EditionAnyManifestationStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
     },
   },
 });
-
+EditionAnyManifestation.parameters = EditionAnyManifestationStory.parameters;
+EditionAnyManifestation.args = EditionAnyManifestationStory.args;
+EditionAnyManifestation.decorators = EditionAnyManifestationStory.decorators;
+EditionAnyManifestation.storyName =
+  EditionAnyManifestationStory.name || EditionAnyManifestationStory.storyName;
 export function EditionAnyManifestationImageToLeft() {
   const editionProps = {
     context: {
@@ -180,14 +207,26 @@ export function EditionAnyManifestationImageToLeft() {
   );
 }
 
-EditionAnyManifestationImageToLeft.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {},
+const EditionAnyManifestationImageToLeftStory = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
     },
-  },
-});
-
+  }
+);
+EditionAnyManifestationImageToLeft.parameters =
+  EditionAnyManifestationImageToLeftStory.parameters;
+EditionAnyManifestationImageToLeft.args =
+  EditionAnyManifestationImageToLeftStory.args;
+EditionAnyManifestationImageToLeft.decorators =
+  EditionAnyManifestationImageToLeftStory.decorators;
+EditionAnyManifestationImageToLeft.storyName =
+  EditionAnyManifestationImageToLeftStory.name ||
+  EditionAnyManifestationImageToLeftStory.storyName;
 export function EditionAnyManifestationNoOrderTxt() {
   const editionProps = {
     context: {
@@ -208,14 +247,26 @@ export function EditionAnyManifestationNoOrderTxt() {
   );
 }
 
-EditionAnyManifestationNoOrderTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {},
+const EditionAnyManifestationNoOrderTxtStory = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
     },
-  },
-});
-
+  }
+);
+EditionAnyManifestationNoOrderTxt.parameters =
+  EditionAnyManifestationNoOrderTxtStory.parameters;
+EditionAnyManifestationNoOrderTxt.args =
+  EditionAnyManifestationNoOrderTxtStory.args;
+EditionAnyManifestationNoOrderTxt.decorators =
+  EditionAnyManifestationNoOrderTxtStory.decorators;
+EditionAnyManifestationNoOrderTxt.storyName =
+  EditionAnyManifestationNoOrderTxtStory.name ||
+  EditionAnyManifestationNoOrderTxtStory.storyName;
 export function EditionAnyManifestationNoOrderTxtImageToLeft() {
   const editionProps = {
     context: {
@@ -237,7 +288,7 @@ export function EditionAnyManifestationNoOrderTxtImageToLeft() {
   );
 }
 
-EditionAnyManifestationNoOrderTxtImageToLeft.story = merge(
+const EditionAnyManifestationNoOrderTxtImageToLeftStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -248,7 +299,15 @@ EditionAnyManifestationNoOrderTxtImageToLeft.story = merge(
     },
   }
 );
-
+EditionAnyManifestationNoOrderTxtImageToLeft.parameters =
+  EditionAnyManifestationNoOrderTxtImageToLeftStory.parameters;
+EditionAnyManifestationNoOrderTxtImageToLeft.args =
+  EditionAnyManifestationNoOrderTxtImageToLeftStory.args;
+EditionAnyManifestationNoOrderTxtImageToLeft.decorators =
+  EditionAnyManifestationNoOrderTxtImageToLeftStory.decorators;
+EditionAnyManifestationNoOrderTxtImageToLeft.storyName =
+  EditionAnyManifestationNoOrderTxtImageToLeftStory.name ||
+  EditionAnyManifestationNoOrderTxtImageToLeftStory.storyName;
 export function EditionAnyManifestationDigitalCopy() {
   const editionProps = {
     context: {
@@ -269,23 +328,35 @@ export function EditionAnyManifestationDigitalCopy() {
   );
 }
 
-EditionAnyManifestationDigitalCopy.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Query: {
-          user: () => USER_3,
-          branches: () => {
-            return {
-              result: [BRANCH_3],
-            };
+const EditionAnyManifestationDigitalCopyStory = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {
+          Query: {
+            user: () => USER_3,
+            branches: () => {
+              return {
+                result: [BRANCH_3],
+              };
+            },
           },
         },
       },
     },
-  },
-});
-
+  }
+);
+EditionAnyManifestationDigitalCopy.parameters =
+  EditionAnyManifestationDigitalCopyStory.parameters;
+EditionAnyManifestationDigitalCopy.args =
+  EditionAnyManifestationDigitalCopyStory.args;
+EditionAnyManifestationDigitalCopy.decorators =
+  EditionAnyManifestationDigitalCopyStory.decorators;
+EditionAnyManifestationDigitalCopy.storyName =
+  EditionAnyManifestationDigitalCopyStory.name ||
+  EditionAnyManifestationDigitalCopyStory.storyName;
 export function EditionAnyManifestationDigitalCopyImageToLeft() {
   const editionProps = {
     context: {
@@ -309,7 +380,7 @@ export function EditionAnyManifestationDigitalCopyImageToLeft() {
   );
 }
 
-EditionAnyManifestationDigitalCopyImageToLeft.story = merge(
+const EditionAnyManifestationDigitalCopyImageToLeftStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -329,3 +400,12 @@ EditionAnyManifestationDigitalCopyImageToLeft.story = merge(
     },
   }
 );
+EditionAnyManifestationDigitalCopyImageToLeft.parameters =
+  EditionAnyManifestationDigitalCopyImageToLeftStory.parameters;
+EditionAnyManifestationDigitalCopyImageToLeft.args =
+  EditionAnyManifestationDigitalCopyImageToLeftStory.args;
+EditionAnyManifestationDigitalCopyImageToLeft.decorators =
+  EditionAnyManifestationDigitalCopyImageToLeftStory.decorators;
+EditionAnyManifestationDigitalCopyImageToLeft.storyName =
+  EditionAnyManifestationDigitalCopyImageToLeftStory.name ||
+  EditionAnyManifestationDigitalCopyImageToLeftStory.storyName;

@@ -37,7 +37,7 @@ export function RelatedWorksPhysicalBook() {
   );
 }
 
-RelatedWorksPhysicalBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const RelatedWorksPhysicalBookStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
@@ -52,3 +52,8 @@ RelatedWorksPhysicalBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+RelatedWorksPhysicalBook.parameters = RelatedWorksPhysicalBookStory.parameters;
+RelatedWorksPhysicalBook.args = RelatedWorksPhysicalBookStory.args;
+RelatedWorksPhysicalBook.decorators = RelatedWorksPhysicalBookStory.decorators;
+RelatedWorksPhysicalBook.storyName =
+  RelatedWorksPhysicalBookStory.name || RelatedWorksPhysicalBookStory.storyName;

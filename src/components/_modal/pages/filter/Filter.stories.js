@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import FilterConnected, { Filter } from "./Filter.page";
-import Modal, { useModal } from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
+import { useModal } from "@/components/_modal";
 
 import useFilters from "@/components/hooks/useFilters";
 
@@ -68,43 +69,40 @@ export function Connected() {
     </div>
   );
 }
-Connected.story = {
-  parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        SearchResponse: {
-          // Base the hitcount on the selection of a specific subject
-          hitcount: (args) =>
-            args?.variables?.filters?.subjects?.includes("krimi") ? 8 : 20,
+Connected.parameters = {
+  graphql: {
+    debug: true,
+    resolvers: {
+      SearchResponse: {
+        // Base the hitcount on the selection of a specific subject
+        hitcount: (args) =>
+          args?.variables?.filters?.subjects?.includes("krimi") ? 8 : 20,
 
-          // Return two facets
-          facets: () => [...new Array(3).fill({})],
-        },
-        FacetResult: {
-          // Return the names of the two facets
-          name: ({ getNext }) => getNext(["subjects", "creators", "workTypes"]),
+        // Return two facets
+        facets: () => [...new Array(3).fill({})],
+      },
+      FacetResult: {
+        // Return the names of the two facets
+        name: ({ getNext }) => getNext(["subjects", "creators", "workTypes"]),
 
-          // Let each facet have two values
-          values: () => [...new Array(3).fill({})],
-        },
-        FacetValue: {
-          term: ({ path, getNext }) =>
-            path.includes("facets[0]")
-              ? getNext(["krimi", "gys", "with, comma"])
-              : getNext(["Hans Hansen", "Jens Jensen", "Ole Olesen"]),
-          score: ({ getNext }) => getNext([8, 12, 2]),
-        },
+        // Let each facet have two values
+        values: () => [...new Array(3).fill({})],
+      },
+      FacetValue: {
+        term: ({ path, getNext }) =>
+          path.includes("facets[0]")
+            ? getNext(["krimi", "gys", "with, comma"])
+            : getNext(["Hans Hansen", "Jens Jensen", "Ole Olesen"]),
+        score: ({ getNext }) => getNext([8, 12, 2]),
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/find",
-      query: { "q.all": "some query" },
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/find",
+    query: { "q.all": "some query" },
   },
 };
-
 export function Default() {
   const { setStack } = useModal();
 

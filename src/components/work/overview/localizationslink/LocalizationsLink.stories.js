@@ -46,14 +46,26 @@ export function LocalizationsLinkPreferredOnline() {
     />
   );
 }
-LocalizationsLinkPreferredOnline.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {},
+const LocalizationsLinkPreferredOnlineStory = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
     },
-  },
-});
-
+  }
+);
+LocalizationsLinkPreferredOnline.parameters =
+  LocalizationsLinkPreferredOnlineStory.parameters;
+LocalizationsLinkPreferredOnline.args =
+  LocalizationsLinkPreferredOnlineStory.args;
+LocalizationsLinkPreferredOnline.decorators =
+  LocalizationsLinkPreferredOnlineStory.decorators;
+LocalizationsLinkPreferredOnline.storyName =
+  LocalizationsLinkPreferredOnlineStory.name ||
+  LocalizationsLinkPreferredOnlineStory.storyName;
 export function LocalizationsLinkNoAvailable() {
   const localizationLinkProps = {
     selectedPids: ["some-pid-1"],
@@ -66,7 +78,7 @@ export function LocalizationsLinkNoAvailable() {
     />
   );
 }
-LocalizationsLinkNoAvailable.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const LocalizationsLinkNoAvailableStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -81,7 +93,14 @@ LocalizationsLinkNoAvailable.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
-
+LocalizationsLinkNoAvailable.parameters =
+  LocalizationsLinkNoAvailableStory.parameters;
+LocalizationsLinkNoAvailable.args = LocalizationsLinkNoAvailableStory.args;
+LocalizationsLinkNoAvailable.decorators =
+  LocalizationsLinkNoAvailableStory.decorators;
+LocalizationsLinkNoAvailable.storyName =
+  LocalizationsLinkNoAvailableStory.name ||
+  LocalizationsLinkNoAvailableStory.storyName;
 export function LocalizationsLinkAvailableAtLibraries() {
   const localizationLinkProps = {
     selectedPids: ["some-pid-1"],
@@ -94,7 +113,7 @@ export function LocalizationsLinkAvailableAtLibraries() {
     />
   );
 }
-LocalizationsLinkAvailableAtLibraries.story = merge(
+const LocalizationsLinkAvailableAtLibrariesStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -105,7 +124,15 @@ LocalizationsLinkAvailableAtLibraries.story = merge(
     },
   }
 );
-
+LocalizationsLinkAvailableAtLibraries.parameters =
+  LocalizationsLinkAvailableAtLibrariesStory.parameters;
+LocalizationsLinkAvailableAtLibraries.args =
+  LocalizationsLinkAvailableAtLibrariesStory.args;
+LocalizationsLinkAvailableAtLibraries.decorators =
+  LocalizationsLinkAvailableAtLibrariesStory.decorators;
+LocalizationsLinkAvailableAtLibraries.storyName =
+  LocalizationsLinkAvailableAtLibrariesStory.name ||
+  LocalizationsLinkAvailableAtLibrariesStory.storyName;
 export function LocalizationsLinkNoIllButAvailableAtLibraries() {
   const localizationLinkProps = {
     selectedPids: ["some-pid-1"],
@@ -118,7 +145,7 @@ export function LocalizationsLinkNoIllButAvailableAtLibraries() {
     />
   );
 }
-LocalizationsLinkNoIllButAvailableAtLibraries.story = merge(
+const LocalizationsLinkNoIllButAvailableAtLibrariesStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -139,7 +166,15 @@ LocalizationsLinkNoIllButAvailableAtLibraries.story = merge(
     },
   }
 );
-
+LocalizationsLinkNoIllButAvailableAtLibraries.parameters =
+  LocalizationsLinkNoIllButAvailableAtLibrariesStory.parameters;
+LocalizationsLinkNoIllButAvailableAtLibraries.args =
+  LocalizationsLinkNoIllButAvailableAtLibrariesStory.args;
+LocalizationsLinkNoIllButAvailableAtLibraries.decorators =
+  LocalizationsLinkNoIllButAvailableAtLibrariesStory.decorators;
+LocalizationsLinkNoIllButAvailableAtLibraries.storyName =
+  LocalizationsLinkNoIllButAvailableAtLibrariesStory.name ||
+  LocalizationsLinkNoIllButAvailableAtLibrariesStory.storyName;
 export function LocalizationsLinkSlowResponse() {
   const localizationLinkProps = {
     selectedPids: ["some-pid-1"],
@@ -153,7 +188,7 @@ export function LocalizationsLinkSlowResponse() {
   );
 }
 
-LocalizationsLinkSlowResponse.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const LocalizationsLinkSlowResponseStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -170,3 +205,11 @@ LocalizationsLinkSlowResponse.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+LocalizationsLinkSlowResponse.parameters =
+  LocalizationsLinkSlowResponseStory.parameters;
+LocalizationsLinkSlowResponse.args = LocalizationsLinkSlowResponseStory.args;
+LocalizationsLinkSlowResponse.decorators =
+  LocalizationsLinkSlowResponseStory.decorators;
+LocalizationsLinkSlowResponse.storyName =
+  LocalizationsLinkSlowResponseStory.name ||
+  LocalizationsLinkSlowResponseStory.storyName;
