@@ -21,73 +21,71 @@ export function Connected() {
   );
 }
 
-Connected.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Categories: {
-          category: () => "fiction",
-          subCategories: () => ["nyeste"],
-        },
-        Category: {
-          title: () => "nyeste",
-          result: () => [
-            {
-              work: {
-                workId: "workId-1",
-                titles: { main: ["title-1"] },
-                creators: [{ display: "creator-1" }],
-              },
-              manifestation: {
-                materialTypes: [
-                  {
-                    materialTypeSpecific: { display: "bog", code: "BOOK" },
-                    materialTypeGeneral: { display: "bøger", code: "BOOKS" },
-                  },
-                ],
-              },
+Connected.parameters = {
+  graphql: {
+    resolvers: {
+      Categories: {
+        category: () => "fiction",
+        subCategories: () => ["nyeste"],
+      },
+      Category: {
+        title: () => "nyeste",
+        result: () => [
+          {
+            work: {
+              workId: "workId-1",
+              titles: { main: ["title-1"] },
+              creators: [{ display: "creator-1" }],
             },
-            {
-              work: {
-                workId: "workId-2",
-                titles: { main: ["title-2"] },
-                creators: [{ display: "creator-2" }],
-              },
-              manifestation: {
-                materialTypes: [
-                  {
-                    materialTypeSpecific: { display: "bog", code: "BOOK" },
-                    materialTypeGeneral: { display: "bøger", code: "BOOKS" },
-                  },
-                ],
-              },
+            manifestation: {
+              materialTypes: [
+                {
+                  materialTypeSpecific: { display: "bog", code: "BOOK" },
+                  materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+                },
+              ],
             },
-            {
-              work: {
-                workId: "workId-3",
-                titles: { main: ["title-3"] },
-                creators: [{ display: "creator-3" }],
-              },
-              manifestation: {
-                materialTypes: [
-                  {
-                    materialTypeSpecific: { display: "bog", code: "BOOK" },
-                    materialTypeGeneral: { display: "bøger", code: "BOOKS" },
-                  },
-                ],
-              },
+          },
+          {
+            work: {
+              workId: "workId-2",
+              titles: { main: ["title-2"] },
+              creators: [{ display: "creator-2" }],
             },
-          ],
-        },
-        Cover: {
-          detail: ({ path }) => `https://picsum.photos/seed/${path}/200/300`,
-        },
+            manifestation: {
+              materialTypes: [
+                {
+                  materialTypeSpecific: { display: "bog", code: "BOOK" },
+                  materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+                },
+              ],
+            },
+          },
+          {
+            work: {
+              workId: "workId-3",
+              titles: { main: ["title-3"] },
+              creators: [{ display: "creator-3" }],
+            },
+            manifestation: {
+              materialTypes: [
+                {
+                  materialTypeSpecific: { display: "bog", code: "BOOK" },
+                  materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+      Cover: {
+        detail: ({ path }) => `https://picsum.photos/seed/${path}/200/300`,
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/",
-      query: {},
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
   },
 };

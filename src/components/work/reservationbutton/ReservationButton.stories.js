@@ -71,14 +71,21 @@ export function ReservationButtonPhysicalBook() {
   );
 }
 
-ReservationButtonPhysicalBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const ReservationButtonPhysicalBookStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
     },
   },
 });
-
+ReservationButtonPhysicalBook.parameters =
+  ReservationButtonPhysicalBookStory.parameters;
+ReservationButtonPhysicalBook.args = ReservationButtonPhysicalBookStory.args;
+ReservationButtonPhysicalBook.decorators =
+  ReservationButtonPhysicalBookStory.decorators;
+ReservationButtonPhysicalBook.storyName =
+  ReservationButtonPhysicalBookStory.name ||
+  ReservationButtonPhysicalBookStory.storyName;
 export function ReservationButtonPhysicalBookNoILLButIsOwnedByAgency() {
   return (
     <ReservationButtonComponentBuilder
@@ -89,7 +96,7 @@ export function ReservationButtonPhysicalBookNoILLButIsOwnedByAgency() {
   );
 }
 
-ReservationButtonPhysicalBookNoILLButIsOwnedByAgency.story = merge(
+const ReservationButtonPhysicalBookNoILLButIsOwnedByAgencyStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -110,7 +117,15 @@ ReservationButtonPhysicalBookNoILLButIsOwnedByAgency.story = merge(
     },
   }
 );
-
+ReservationButtonPhysicalBookNoILLButIsOwnedByAgency.parameters =
+  ReservationButtonPhysicalBookNoILLButIsOwnedByAgencyStory.parameters;
+ReservationButtonPhysicalBookNoILLButIsOwnedByAgency.args =
+  ReservationButtonPhysicalBookNoILLButIsOwnedByAgencyStory.args;
+ReservationButtonPhysicalBookNoILLButIsOwnedByAgency.decorators =
+  ReservationButtonPhysicalBookNoILLButIsOwnedByAgencyStory.decorators;
+ReservationButtonPhysicalBookNoILLButIsOwnedByAgency.storyName =
+  ReservationButtonPhysicalBookNoILLButIsOwnedByAgencyStory.name ||
+  ReservationButtonPhysicalBookNoILLButIsOwnedByAgencyStory.storyName;
 export function ReservationButtonEBook() {
   useMockLoanerInfo({});
   return (
@@ -121,14 +136,18 @@ export function ReservationButtonEBook() {
     />
   );
 }
-ReservationButtonEBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const ReservationButtonEBookStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
     },
   },
 });
-
+ReservationButtonEBook.parameters = ReservationButtonEBookStory.parameters;
+ReservationButtonEBook.args = ReservationButtonEBookStory.args;
+ReservationButtonEBook.decorators = ReservationButtonEBookStory.decorators;
+ReservationButtonEBook.storyName =
+  ReservationButtonEBookStory.name || ReservationButtonEBookStory.storyName;
 export function ReservationButtonEAudioBook() {
   return (
     <ReservationButtonComponentBuilder
@@ -137,7 +156,7 @@ export function ReservationButtonEAudioBook() {
     />
   );
 }
-ReservationButtonEAudioBook.story = {
+const ReservationButtonEAudioBookStory = {
   ...ReservationButtonStoryBuilder("EAudioBook", {
     Query: {
       work: () => {
@@ -190,7 +209,14 @@ ReservationButtonEAudioBook.story = {
     },
   }),
 };
-
+ReservationButtonEAudioBook.parameters =
+  ReservationButtonEAudioBookStory.parameters;
+ReservationButtonEAudioBook.args = ReservationButtonEAudioBookStory.args;
+ReservationButtonEAudioBook.decorators =
+  ReservationButtonEAudioBookStory.decorators;
+ReservationButtonEAudioBook.storyName =
+  ReservationButtonEAudioBookStory.name ||
+  ReservationButtonEAudioBookStory.storyName;
 export function ReservationButtonGame() {
   return (
     <ReservationButtonComponentBuilder
@@ -199,7 +225,7 @@ export function ReservationButtonGame() {
     />
   );
 }
-ReservationButtonGame.story = {
+const ReservationButtonGameStory = {
   ...ReservationButtonStoryBuilder("Playstation 4", {
     Query: {
       work: () => {
@@ -255,7 +281,11 @@ ReservationButtonGame.story = {
     },
   }),
 };
-
+ReservationButtonGame.parameters = ReservationButtonGameStory.parameters;
+ReservationButtonGame.args = ReservationButtonGameStory.args;
+ReservationButtonGame.decorators = ReservationButtonGameStory.decorators;
+ReservationButtonGame.storyName =
+  ReservationButtonGameStory.name || ReservationButtonGameStory.storyName;
 export function ReservationButtonDisabled() {
   return (
     <ReservationButtonComponentBuilder
@@ -266,7 +296,7 @@ export function ReservationButtonDisabled() {
     />
   );
 }
-ReservationButtonDisabled.story = {
+const ReservationButtonDisabledStory = {
   ...ReservationButtonStoryBuilder("Button disabled", {
     Query: {
       manifestations: () => {
@@ -317,7 +347,14 @@ ReservationButtonDisabled.story = {
     },
   }),
 };
-
+ReservationButtonDisabled.parameters =
+  ReservationButtonDisabledStory.parameters;
+ReservationButtonDisabled.args = ReservationButtonDisabledStory.args;
+ReservationButtonDisabled.decorators =
+  ReservationButtonDisabledStory.decorators;
+ReservationButtonDisabled.storyName =
+  ReservationButtonDisabledStory.name ||
+  ReservationButtonDisabledStory.storyName;
 export function ReservationButtonNotLoggedIn() {
   const descriptionName = "Not logged in";
   const modal = useModal();
@@ -356,7 +393,7 @@ export function ReservationButtonPhysicalBookLoanNotPossible() {
     />
   );
 }
-ReservationButtonPhysicalBookLoanNotPossible.story = {
+const ReservationButtonPhysicalBookLoanNotPossibleStory = {
   ...ReservationButtonStoryBuilder("Book", {
     Query: {
       work: () => {
@@ -412,7 +449,15 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
     },
   }),
 };
-
+ReservationButtonPhysicalBookLoanNotPossible.parameters =
+  ReservationButtonPhysicalBookLoanNotPossibleStory.parameters;
+ReservationButtonPhysicalBookLoanNotPossible.args =
+  ReservationButtonPhysicalBookLoanNotPossibleStory.args;
+ReservationButtonPhysicalBookLoanNotPossible.decorators =
+  ReservationButtonPhysicalBookLoanNotPossibleStory.decorators;
+ReservationButtonPhysicalBookLoanNotPossible.storyName =
+  ReservationButtonPhysicalBookLoanNotPossibleStory.name ||
+  ReservationButtonPhysicalBookLoanNotPossibleStory.storyName;
 export function ReservationButtonSlowResponse() {
   return (
     <ReservationButtonComponentBuilder
@@ -421,7 +466,7 @@ export function ReservationButtonSlowResponse() {
     />
   );
 }
-ReservationButtonSlowResponse.story = {
+const ReservationButtonSlowResponseStory = {
   ...ReservationButtonStoryBuilder("Slow", {
     Query: {
       work: () => {
@@ -468,7 +513,14 @@ ReservationButtonSlowResponse.story = {
     },
   }),
 };
-
+ReservationButtonSlowResponse.parameters =
+  ReservationButtonSlowResponseStory.parameters;
+ReservationButtonSlowResponse.args = ReservationButtonSlowResponseStory.args;
+ReservationButtonSlowResponse.decorators =
+  ReservationButtonSlowResponseStory.decorators;
+ReservationButtonSlowResponse.storyName =
+  ReservationButtonSlowResponseStory.name ||
+  ReservationButtonSlowResponseStory.storyName;
 const descriptionName = "Not logged in flow";
 const user = {
   authUser: {},
@@ -509,16 +561,28 @@ export function ReservationButtonNotLoggedInFlow() {
   );
 }
 
-ReservationButtonNotLoggedInFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    session: {}, // makes isAuthenticated: false
-    nextRouter: {
-      showInfo: true,
-      query: {},
+const ReservationButtonNotLoggedInFlowStory = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      session: {}, // makes isAuthenticated: false
+      nextRouter: {
+        showInfo: true,
+        query: {},
+      },
     },
-  },
-});
-
+  }
+);
+ReservationButtonNotLoggedInFlow.parameters =
+  ReservationButtonNotLoggedInFlowStory.parameters;
+ReservationButtonNotLoggedInFlow.args =
+  ReservationButtonNotLoggedInFlowStory.args;
+ReservationButtonNotLoggedInFlow.decorators =
+  ReservationButtonNotLoggedInFlowStory.decorators;
+ReservationButtonNotLoggedInFlow.storyName =
+  ReservationButtonNotLoggedInFlowStory.name ||
+  ReservationButtonNotLoggedInFlowStory.storyName;
 export function ReservationButtonLoginFlow() {
   return (
     <div>
@@ -543,7 +607,7 @@ export function ReservationButtonLoginFlow() {
   );
 }
 
-ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const ReservationButtonLoginFlowStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
@@ -554,3 +618,11 @@ ReservationButtonLoginFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+ReservationButtonLoginFlow.parameters =
+  ReservationButtonLoginFlowStory.parameters;
+ReservationButtonLoginFlow.args = ReservationButtonLoginFlowStory.args;
+ReservationButtonLoginFlow.decorators =
+  ReservationButtonLoginFlowStory.decorators;
+ReservationButtonLoginFlow.storyName =
+  ReservationButtonLoginFlowStory.name ||
+  ReservationButtonLoginFlowStory.storyName;

@@ -116,7 +116,7 @@ export function LocalizationsBaseFlow() {
     />
   );
 }
-LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const LocalizationsBaseFlowStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -206,3 +206,8 @@ LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+LocalizationsBaseFlow.parameters = LocalizationsBaseFlowStory.parameters;
+LocalizationsBaseFlow.args = LocalizationsBaseFlowStory.args;
+LocalizationsBaseFlow.decorators = LocalizationsBaseFlowStory.decorators;
+LocalizationsBaseFlow.storyName =
+  LocalizationsBaseFlowStory.name || LocalizationsBaseFlowStory.storyName;

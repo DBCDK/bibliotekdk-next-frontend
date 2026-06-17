@@ -65,23 +65,21 @@ export function Connected() {
     </div>
   );
 }
-Connected.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        SearchResponse: {
-          works: ({ variables }) =>
-            variables?.q?.all === "hest"
-              ? [...ALL_WORKS, ...ALL_WORKS].slice(0, 10)
-              : [],
-          hitcount: () => [...ALL_WORKS, ...ALL_WORKS].slice(0, 10).length,
-        },
+Connected.parameters = {
+  graphql: {
+    resolvers: {
+      SearchResponse: {
+        works: ({ variables }) =>
+          variables?.q?.all === "hest"
+            ? [...ALL_WORKS, ...ALL_WORKS].slice(0, 10)
+            : [],
+        hitcount: () => [...ALL_WORKS, ...ALL_WORKS].slice(0, 10).length,
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/find",
-      query: { "q.all": "hest" },
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/find",
+    query: { "q.all": "hest" },
   },
 };

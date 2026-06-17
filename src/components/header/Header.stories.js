@@ -34,16 +34,13 @@ export function HeaderNotSignedIn() {
   );
 }
 
-HeaderNotSignedIn.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: urlParams.get("nextRouter.pathname") || "/",
-      query: {},
-    },
+HeaderNotSignedIn.parameters = {
+  nextRouter: {
+    showInfo: true,
+    pathname: urlParams.get("nextRouter.pathname") || "/",
+    query: {},
   },
 };
-
 /**
  * Returns Header
  *
@@ -65,16 +62,13 @@ export function HeaderNoUniqueId() {
   );
 }
 
-HeaderNoUniqueId.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: urlParams.get("nextRouter.pathname") || "/",
-      query: {},
-    },
+HeaderNoUniqueId.parameters = {
+  nextRouter: {
+    showInfo: true,
+    pathname: urlParams.get("nextRouter.pathname") || "/",
+    query: {},
   },
 };
-
 /**
  * Returns Header
  *
@@ -96,12 +90,10 @@ export function HeaderSignedIn() {
   );
 }
 
-HeaderSignedIn.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: urlParams.get("nextRouter.pathname") || "/",
-      query: {},
-    },
+HeaderSignedIn.parameters = {
+  nextRouter: {
+    showInfo: true,
+    pathname: urlParams.get("nextRouter.pathname") || "/",
+    query: {},
   },
 };

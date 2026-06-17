@@ -28,56 +28,48 @@ export function WrappedDetailsSection() {
   );
 }
 
-WrappedDetailsSection.story = {
-  parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        Work: {
-          genreAndForm: () => ["actionfilm", "thriller", "science fiction"],
-          workTypes: () => ["LITERATURE"],
-        },
+WrappedDetailsSection.parameters = {
+  graphql: {
+    debug: true,
+    resolvers: {
+      Work: {
+        genreAndForm: () => ["actionfilm", "thriller", "science fiction"],
+        workTypes: () => ["LITERATURE"],
+      },
 
-        Manifestation: {
-          access: () => [
+      Manifestation: {
+        access: () => [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+        languages: () => ({
+          subtitles: [],
+          spoken: [],
+          main: [
             {
-              __typename: "InterLibraryLoan",
-              loanIsPossible: true,
+              display: "dansk",
             },
           ],
-          languages: () => ({
-            subtitles: [],
-            spoken: [],
-            main: [
-              {
-                display: "dansk",
-              },
-            ],
-          }),
-          audience: () => ({
-            generalAudience: [
-              "Mærkning: Tilladt for alle men frarådes børn under 7 år",
-            ],
-            lix: "2222",
-          }),
-
-          materialTypes: () => [
-            {
-              materialTypeSpecific: { display: "bog", code: "BOOK" },
-              materialTypeGeneral: { display: "bøger", code: "BOOKS" },
-            },
+        }),
+        audience: () => ({
+          generalAudience: [
+            "Mærkning: Tilladt for alle men frarådes børn under 7 år",
           ],
-        },
+          lix: "2222",
+        }),
+
+        materialTypes: () => [
+          {
+            materialTypeSpecific: { display: "bog", code: "BOOK" },
+            materialTypeGeneral: { display: "bøger", code: "BOOKS" },
+          },
+        ],
       },
     },
   },
-  nextRouter: {
-    showInfo: true,
-    pathname: "/",
-    query: {},
-  },
 };
-
 /**
  * Returns details section
  *
@@ -96,117 +88,109 @@ export function WrappedDetailsSectionMovie() {
   );
 }
 
-WrappedDetailsSectionMovie.story = {
-  parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        Work: {
-          genreAndForm: () => ["actionfilm", "thriller", "science fiction"],
-          workTypes: () => ["MOVIE"],
-        },
+WrappedDetailsSectionMovie.parameters = {
+  graphql: {
+    debug: true,
+    resolvers: {
+      Work: {
+        genreAndForm: () => ["actionfilm", "thriller", "science fiction"],
+        workTypes: () => ["MOVIE"],
+      },
 
-        Manifestation: {
-          access: () => [
-            {
-              __typename: "InterLibraryLoan",
-              loanIsPossible: true,
-            },
-          ],
-          creators: () => [
-            {
-              display: "William Steig",
-              roles: [
-                {
-                  functionCode: "drt",
-                  function: {
-                    singular: "instruktør",
-                    plural: "instruktører",
-                  },
-                },
-              ],
-            },
-            {
-              display: "Anders Thomas Jensen",
-              roles: [
-                {
-                  functionCode: "cre",
-                  function: {
-                    singular: "ophav",
-                    plural: "ophav",
-                  },
-                },
-              ],
-            },
-          ],
-          contributors: () => [
-            {
-              display: "Nikolaj Lie Kaas",
-              roles: [
-                {
-                  function: {
-                    plural: "skuespillere",
-                    singular: "skuespiller",
-                  },
-                  functionCode: "act",
-                },
-              ],
-            },
-          ],
-          audience: () => ({
-            generalAudience: [
-              "Mærkning: Tilladt for alle men frarådes børn under 7 år",
-            ],
-          }),
-          languages: () => ({
-            subtitles: [],
-            spoken: [],
-            main: [
+      Manifestation: {
+        access: () => [
+          {
+            __typename: "InterLibraryLoan",
+            loanIsPossible: true,
+          },
+        ],
+        creators: () => [
+          {
+            display: "William Steig",
+            roles: [
               {
-                display: "dansk",
+                functionCode: "drt",
+                function: {
+                  singular: "instruktør",
+                  plural: "instruktører",
+                },
               },
             ],
-          }),
-          physicalDescription: () => ({
-            summaryFull: "1 dvd-video ca. 50 min.",
-          }),
-          materialTypes: () => [
-            {
-              materialTypeSpecific: {
-                display: "film (dvd)",
-                code: "FILM_DVD",
+          },
+          {
+            display: "Anders Thomas Jensen",
+            roles: [
+              {
+                functionCode: "cre",
+                function: {
+                  singular: "ophav",
+                  plural: "ophav",
+                },
               },
-              materialTypeGeneral: { display: "film", code: "FILMS" },
+            ],
+          },
+        ],
+        contributors: () => [
+          {
+            display: "Nikolaj Lie Kaas",
+            roles: [
+              {
+                function: {
+                  plural: "skuespillere",
+                  singular: "skuespiller",
+                },
+                functionCode: "act",
+              },
+            ],
+          },
+        ],
+        audience: () => ({
+          generalAudience: [
+            "Mærkning: Tilladt for alle men frarådes børn under 7 år",
+          ],
+        }),
+        languages: () => ({
+          subtitles: [],
+          spoken: [],
+          main: [
+            {
+              display: "dansk",
             },
           ],
-          edition: () => ({
-            publicationYear: {
-              display: "2011",
+        }),
+        physicalDescription: () => ({
+          summaryFull: "1 dvd-video ca. 50 min.",
+        }),
+        materialTypes: () => [
+          {
+            materialTypeSpecific: {
+              display: "film (dvd)",
+              code: "FILM_DVD",
             },
-          }),
-          classifications: () => [
-            {
-              code: "86-06",
-              system: "DK5",
-              display: "86-06 Dansk skønlitteratur",
-            },
-            {
-              code: "sk",
-              system: "DK5",
-              display: "Skønlitteratur",
-            },
-          ],
-        },
+            materialTypeGeneral: { display: "film", code: "FILMS" },
+          },
+        ],
+        edition: () => ({
+          publicationYear: {
+            display: "2011",
+          },
+        }),
+        classifications: () => [
+          {
+            code: "86-06",
+            system: "DK5",
+            display: "86-06 Dansk skønlitteratur",
+          },
+          {
+            code: "sk",
+            system: "DK5",
+            display: "Skønlitteratur",
+          },
+        ],
       },
     },
   },
-  nextRouter: {
-    showInfo: true,
-    pathname: "/",
-    query: {},
-  },
 };
-
 /**
  * Returns details section
  *
@@ -228,7 +212,7 @@ export function WrappedDetailsSectionArtikelArtikelOnline() {
   );
 }
 
-WrappedDetailsSectionArtikelArtikelOnline.story = merge(
+const WrappedDetailsSectionArtikelArtikelOnlineStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -244,7 +228,15 @@ WrappedDetailsSectionArtikelArtikelOnline.story = merge(
     },
   }
 );
-
+WrappedDetailsSectionArtikelArtikelOnline.parameters =
+  WrappedDetailsSectionArtikelArtikelOnlineStory.parameters;
+WrappedDetailsSectionArtikelArtikelOnline.args =
+  WrappedDetailsSectionArtikelArtikelOnlineStory.args;
+WrappedDetailsSectionArtikelArtikelOnline.decorators =
+  WrappedDetailsSectionArtikelArtikelOnlineStory.decorators;
+WrappedDetailsSectionArtikelArtikelOnline.storyName =
+  WrappedDetailsSectionArtikelArtikelOnlineStory.name ||
+  WrappedDetailsSectionArtikelArtikelOnlineStory.storyName;
 /**
  * Returns details section
  *
@@ -263,7 +255,7 @@ export function WrappedDetailsSectionNoManifestationsNoDetails() {
   );
 }
 
-WrappedDetailsSectionNoManifestationsNoDetails.story = merge(
+const WrappedDetailsSectionNoManifestationsNoDetailsStory = merge(
   {},
   DEFAULT_STORY_PARAMETERS,
   {
@@ -279,7 +271,15 @@ WrappedDetailsSectionNoManifestationsNoDetails.story = merge(
     },
   }
 );
-
+WrappedDetailsSectionNoManifestationsNoDetails.parameters =
+  WrappedDetailsSectionNoManifestationsNoDetailsStory.parameters;
+WrappedDetailsSectionNoManifestationsNoDetails.args =
+  WrappedDetailsSectionNoManifestationsNoDetailsStory.args;
+WrappedDetailsSectionNoManifestationsNoDetails.decorators =
+  WrappedDetailsSectionNoManifestationsNoDetailsStory.decorators;
+WrappedDetailsSectionNoManifestationsNoDetails.storyName =
+  WrappedDetailsSectionNoManifestationsNoDetailsStory.name ||
+  WrappedDetailsSectionNoManifestationsNoDetailsStory.storyName;
 /**
  * Returns loading details section
  *

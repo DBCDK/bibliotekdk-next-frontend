@@ -59,14 +59,18 @@ export function OverviewWrapped() {
   );
 }
 
-OverviewWrapped.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const OverviewWrappedStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
     },
   },
 });
-
+OverviewWrapped.parameters = OverviewWrappedStory.parameters;
+OverviewWrapped.args = OverviewWrappedStory.args;
+OverviewWrapped.decorators = OverviewWrappedStory.decorators;
+OverviewWrapped.storyName =
+  OverviewWrappedStory.name || OverviewWrappedStory.storyName;
 export function OverviewWrappedNoType() {
   const [type, setType] = useState([]);
 
@@ -83,7 +87,7 @@ export function OverviewWrappedNoType() {
   return <OverviewComponentBuilder overviewProps={overviewProps} type={[]} />;
 }
 
-OverviewWrappedNoType.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const OverviewWrappedNoTypeStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {},
@@ -98,7 +102,11 @@ OverviewWrappedNoType.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
-
+OverviewWrappedNoType.parameters = OverviewWrappedNoTypeStory.parameters;
+OverviewWrappedNoType.args = OverviewWrappedNoTypeStory.args;
+OverviewWrappedNoType.decorators = OverviewWrappedNoTypeStory.decorators;
+OverviewWrappedNoType.storyName =
+  OverviewWrappedNoTypeStory.name || OverviewWrappedNoTypeStory.storyName;
 /**
  * skeleton
  *

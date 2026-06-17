@@ -18,7 +18,7 @@ const { DEFAULT_STORY_PARAMETERS, useMockLoanerInfo } = automock_utils();
 export function BibData() {
   return <BibliographicData workId={"some-work-id-1"} />;
 }
-BibData.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const BibDataStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -43,7 +43,10 @@ BibData.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
-
+BibData.parameters = BibDataStory.parameters;
+BibData.args = BibDataStory.args;
+BibData.decorators = BibDataStory.decorators;
+BibData.storyName = BibDataStory.name || BibDataStory.storyName;
 /**
  * Returns bibliographic data component
  */
@@ -123,7 +126,7 @@ export function FullManifestation() {
   );
 }
 
-FullManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const FullManifestationStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -148,3 +151,8 @@ FullManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+FullManifestation.parameters = FullManifestationStory.parameters;
+FullManifestation.args = FullManifestationStory.args;
+FullManifestation.decorators = FullManifestationStory.decorators;
+FullManifestation.storyName =
+  FullManifestationStory.name || FullManifestationStory.storyName;
