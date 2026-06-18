@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`sortArticles desc 1`] = `
-Array [
-  Object {
+[
+  {
     "entityCreated": "2021-02-25T14:40:40+0100",
-    "entityUrl": Object {
+    "entityUrl": {
       "path": "/node/4",
     },
-    "fieldImage": Object {
+    "fieldImage": {
       "alt": "some image alt",
       "title": "some image title",
       "url": "/img/bibdk-hero-scaled.jpeg",
@@ -16,12 +16,12 @@ Array [
     "nid": 4,
     "title": "Nyeste artikel",
   },
-  Object {
+  {
     "entityCreated": "2021-01-20T14:38:46+0100",
-    "entityUrl": Object {
+    "entityUrl": {
       "path": "/node/3",
     },
-    "fieldImage": Object {
+    "fieldImage": {
       "alt": "some image alt",
       "title": "some image title",
       "url": "/img/bibdk-hero-scaled.jpeg",
@@ -30,12 +30,12 @@ Array [
     "nid": 3,
     "title": "Ny artikel",
   },
-  Object {
+  {
     "entityCreated": "2021-01-13T13:47:27+0100",
-    "entityUrl": Object {
+    "entityUrl": {
       "path": "/node/2",
     },
-    "fieldImage": Object {
+    "fieldImage": {
       "alt": "some image alt",
       "title": "some image title",
       "url": "/img/bibdk-hero-scaled.jpeg",
@@ -44,12 +44,12 @@ Array [
     "nid": 2,
     "title": "Gammel artikel",
   },
-  Object {
+  {
     "entityCreated": "2021-01-05T10:19:13+0100",
-    "entityUrl": Object {
+    "entityUrl": {
       "path": "/node/1",
     },
-    "fieldImage": Object {
+    "fieldImage": {
       "alt": "some image alt",
       "title": "some image title",
       "url": "/img/bibdk-hero-scaled.jpeg",

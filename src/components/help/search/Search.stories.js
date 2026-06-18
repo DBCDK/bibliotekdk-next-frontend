@@ -13,19 +13,16 @@ export function EmptyInput() {
 export function NoResults() {
   return <Page result={[]} isLoading={false} query={"hest"} />;
 }
-NoResults.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        EntityQueryResult: {
-          entities: () => [...new Array(10).fill({})],
-        },
-        Entity: { __resolveType: () => "NodeFaq" },
+NoResults.parameters = {
+  graphql: {
+    resolvers: {
+      EntityQueryResult: {
+        entities: () => [...new Array(10).fill({})],
       },
+      Entity: { __resolveType: () => "NodeFaq" },
     },
   },
 };
-
 export function ShowResults() {
   return (
     <Page
@@ -50,33 +47,30 @@ export function ShowResults() {
     />
   );
 }
-ShowResults.story = {
-  parameters: {
-    graphql: {
-      resolvers: {
-        BibliotekdkCms: {
-          helpTexts: () => [
-            {
-              documentId: "19",
-              title: "Om Login",
-              body: "Login skal bruges hvis du vil bruge disse muligheder i bibliotek.dk.",
-              group: "login",
-              image: null,
-            },
-            {
-              documentId: "21",
-              title: "Sådan søger du i bibliotek.dk",
-              body: "Skriv et eller flere ord i den hvide boks.",
-              group: "sogning",
-              image: null,
-            },
-          ],
-        },
+ShowResults.parameters = {
+  graphql: {
+    resolvers: {
+      BibliotekdkCms: {
+        helpTexts: () => [
+          {
+            documentId: "19",
+            title: "Om Login",
+            body: "Login skal bruges hvis du vil bruge disse muligheder i bibliotek.dk.",
+            group: "login",
+            image: null,
+          },
+          {
+            documentId: "21",
+            title: "Sådan søger du i bibliotek.dk",
+            body: "Skriv et eller flere ord i den hvide boks.",
+            group: "sogning",
+            image: null,
+          },
+        ],
       },
     },
   },
 };
-
 export function Loading() {
   return <Page result={[]} isLoading={true} query={"hest"} />;
 }

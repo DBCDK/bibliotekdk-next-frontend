@@ -41,7 +41,7 @@
 }
 
 .feedbackicon path {
-  fill: white;
+  fill: var(--mine-shaft);
 }
 
 .spanwrap {
@@ -52,14 +52,16 @@
 }
 
 .spanwrap:hover,
-.spanwrap:focus-visible {
+.spanwrap:focus-visible,
+.spanwrap:active {
   animation: fadeIn 1s;
   background-color: var(--blue);
 }
 
-.spanwrap:hover img,
-.spanwrap:focus-visible img {
-  filter: invert(1);
+.spanwrap:hover .feedbackicon path,
+.spanwrap:focus-visible .feedbackicon path,
+.spanwrap:active .feedbackicon path {
+  fill: var(--white);
 }
 
 .feedbackthankyou {

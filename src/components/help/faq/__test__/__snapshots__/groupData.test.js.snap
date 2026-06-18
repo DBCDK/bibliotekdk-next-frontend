@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Group data 1`] = `
-Object {
-  "Andet": Array [
-    Object {
+{
+  "Andet": [
+    {
       "body": "<p>This faq goes last in the group ...</p>",
       "categories": null,
       "documentId": "doc-32a",
       "promoted": false,
       "title": "def",
     },
-    Object {
+    {
       "body": "<p>This faq goes first in the group ...</p>",
       "categories": null,
       "documentId": "doc-32b",
@@ -18,11 +18,11 @@ Object {
       "title": "abc",
     },
   ],
-  "Bestillinger": Array [
-    Object {
+  "Bestillinger": [
+    {
       "body": "<p>This faq goes first in the group ...</p>",
-      "categories": Array [
-        Object {
+      "categories": [
+        {
           "name": "Bestillinger",
         },
       ],
@@ -31,11 +31,11 @@ Object {
       "title": "abc",
     },
   ],
-  "Søgninger": Array [
-    Object {
+  "Søgninger": [
+    {
       "body": "<p>This faq goes last in the group ...</p>",
-      "categories": Array [
-        Object {
+      "categories": [
+        {
           "name": "Søgninger",
         },
       ],
@@ -43,10 +43,10 @@ Object {
       "promoted": true,
       "title": "ghi",
     },
-    Object {
+    {
       "body": "<p>This faq goes second in the group ...</p>",
-      "categories": Array [
-        Object {
+      "categories": [
+        {
           "name": "Søgninger",
         },
       ],
@@ -54,10 +54,10 @@ Object {
       "promoted": true,
       "title": "def",
     },
-    Object {
+    {
       "body": "<p>This faq goes first in the group...</p>",
-      "categories": Array [
-        Object {
+      "categories": [
+        {
           "name": "Søgninger",
         },
       ],

@@ -141,7 +141,7 @@ module.exports = {
         permanent: false,
       },
       {
-        source: "/work/((?!work-of)):workId",
+        source: "/work/:workId((?!work-of).*)",
         destination: "/materiale/titel_skaber/work-of%3A:workId",
         permanent: true,
       },

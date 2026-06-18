@@ -25,7 +25,7 @@ export const LoansAndReservationsStory = () => {
     </>
   );
 };
-LoansAndReservationsStory.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const LoansAndReservationsStoryStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -34,7 +34,14 @@ LoansAndReservationsStory.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
-
+LoansAndReservationsStory.parameters =
+  LoansAndReservationsStoryStory.parameters;
+LoansAndReservationsStory.args = LoansAndReservationsStoryStory.args;
+LoansAndReservationsStory.decorators =
+  LoansAndReservationsStoryStory.decorators;
+LoansAndReservationsStory.storyName =
+  LoansAndReservationsStoryStory.name ||
+  LoansAndReservationsStoryStory.storyName;
 export const LoansAndReservationsWithFjernLaanStory = () => {
   return (
     <>
@@ -50,7 +57,7 @@ export const LoansAndReservationsWithFjernLaanStory = () => {
     </>
   );
 };
-LoansAndReservationsWithFjernLaanStory.story = merge(
+const LoansAndReservationsWithFjernLaanStoryStory = merge(
   {},
   {
     parameters: {
@@ -62,7 +69,15 @@ LoansAndReservationsWithFjernLaanStory.story = merge(
     },
   }
 );
-
+LoansAndReservationsWithFjernLaanStory.parameters =
+  LoansAndReservationsWithFjernLaanStoryStory.parameters;
+LoansAndReservationsWithFjernLaanStory.args =
+  LoansAndReservationsWithFjernLaanStoryStory.args;
+LoansAndReservationsWithFjernLaanStory.decorators =
+  LoansAndReservationsWithFjernLaanStoryStory.decorators;
+LoansAndReservationsWithFjernLaanStory.storyName =
+  LoansAndReservationsWithFjernLaanStoryStory.name ||
+  LoansAndReservationsWithFjernLaanStoryStory.storyName;
 export const LoansAndReservationsStoryActions = () => {
   return (
     <>
@@ -78,23 +93,35 @@ export const LoansAndReservationsStoryActions = () => {
     </>
   );
 };
-LoansAndReservationsStoryActions.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Query: { user: () => USER_7 },
-        RenewLoanResponse: {
-          renewed: () => false,
-          error: () => "some error",
-          dueDate: () => "",
-        },
-        DeleteOrderResponse: {
-          deleted: () => false,
-          error: () => "some-error",
+const LoansAndReservationsStoryActionsStory = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {
+          Query: { user: () => USER_7 },
+          RenewLoanResponse: {
+            renewed: () => false,
+            error: () => "some error",
+            dueDate: () => "",
+          },
+          DeleteOrderResponse: {
+            deleted: () => false,
+            error: () => "some-error",
+          },
         },
       },
     },
-  },
-});
-
+  }
+);
+LoansAndReservationsStoryActions.parameters =
+  LoansAndReservationsStoryActionsStory.parameters;
+LoansAndReservationsStoryActions.args =
+  LoansAndReservationsStoryActionsStory.args;
+LoansAndReservationsStoryActions.decorators =
+  LoansAndReservationsStoryActionsStory.decorators;
+LoansAndReservationsStoryActions.storyName =
+  LoansAndReservationsStoryActionsStory.name ||
+  LoansAndReservationsStoryActionsStory.storyName;
 export default exportedObject;

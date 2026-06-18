@@ -23,7 +23,7 @@ export function Default() {
   );
 }
 
-Default.story = merge(
+const DefaultStory = merge(
   {},
   {
     parameters: {
@@ -49,7 +49,10 @@ Default.story = merge(
     },
   }
 );
-
+Default.parameters = DefaultStory.parameters;
+Default.args = DefaultStory.args;
+Default.decorators = DefaultStory.decorators;
+Default.storyName = DefaultStory.name || DefaultStory.storyName;
 export function NoAuthenticated() {
   return (
     <div>
@@ -65,7 +68,7 @@ export function NoAuthenticated() {
   );
 }
 
-NoAuthenticated.story = merge(
+const NoAuthenticatedStory = merge(
   {},
   {
     parameters: {
@@ -88,3 +91,8 @@ NoAuthenticated.story = merge(
     },
   }
 );
+NoAuthenticated.parameters = NoAuthenticatedStory.parameters;
+NoAuthenticated.args = NoAuthenticatedStory.args;
+NoAuthenticated.decorators = NoAuthenticatedStory.decorators;
+NoAuthenticated.storyName =
+  NoAuthenticatedStory.name || NoAuthenticatedStory.storyName;

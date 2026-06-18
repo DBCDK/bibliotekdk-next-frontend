@@ -18,6 +18,25 @@ import { useRouter } from "next/router";
 import styles from "./Page.module.css";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
+function truncateBody(body = "") {
+  const maxLength = 200;
+  return body.length > maxLength ? `${body.slice(0, maxLength)}...` : body;
+}
+
+/**
+ * Will truncate the body of the help text to the max length and add an ellipsis
+ */
+function normalizeHelpTextSearchResults(helpTexts = []) {
+  return helpTexts.map(({ documentId, title, body, group }) => ({
+    id: documentId,
+    nid: documentId,
+    orgTitle: title,
+    title,
+    body: truncateBody(body),
+    group,
+  }));
+}
+
 /**
  * The page showing help search results
  *
@@ -82,6 +101,9 @@ export default function Wrap() {
   const router = useRouter();
   const { q } = router.query;
   const { isLoading, data } = useData(q && helpTextSearch({ q }));
+  const result = normalizeHelpTextSearchResults(
+    data?.bibliotekdkCms?.helpTexts
+  );
 
-  return <Page result={data?.help?.result} isLoading={isLoading} query={q} />;
+  return <Page result={result} isLoading={isLoading} query={q} />;
 }

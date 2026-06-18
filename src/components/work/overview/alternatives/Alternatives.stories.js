@@ -64,14 +64,22 @@ export function AlternativeOptionsNoAlternatives() {
     />
   );
 }
-AlternativeOptionsNoAlternatives.story = {
+const AlternativeOptionsNoAlternativesStory = {
   ...AlternativeOptionsStoryBuilder("AlternativeOptionsNoAlternatives", {
     Query: {
       manifestations: () => {},
     },
   }),
 };
-
+AlternativeOptionsNoAlternatives.parameters =
+  AlternativeOptionsNoAlternativesStory.parameters;
+AlternativeOptionsNoAlternatives.args =
+  AlternativeOptionsNoAlternativesStory.args;
+AlternativeOptionsNoAlternatives.decorators =
+  AlternativeOptionsNoAlternativesStory.decorators;
+AlternativeOptionsNoAlternatives.storyName =
+  AlternativeOptionsNoAlternativesStory.name ||
+  AlternativeOptionsNoAlternativesStory.storyName;
 export function AlternativeOptionsWithAlternatives() {
   return (
     <AlternativeOptionsComponentBuilder
@@ -79,7 +87,7 @@ export function AlternativeOptionsWithAlternatives() {
     />
   );
 }
-AlternativeOptionsWithAlternatives.story = {
+const AlternativeOptionsWithAlternativesStory = {
   ...AlternativeOptionsStoryBuilder("AlternativeOptionsWithAlternatives", {
     Query: {
       manifestations: () => {
@@ -103,7 +111,15 @@ AlternativeOptionsWithAlternatives.story = {
     },
   }),
 };
-
+AlternativeOptionsWithAlternatives.parameters =
+  AlternativeOptionsWithAlternativesStory.parameters;
+AlternativeOptionsWithAlternatives.args =
+  AlternativeOptionsWithAlternativesStory.args;
+AlternativeOptionsWithAlternatives.decorators =
+  AlternativeOptionsWithAlternativesStory.decorators;
+AlternativeOptionsWithAlternatives.storyName =
+  AlternativeOptionsWithAlternativesStory.name ||
+  AlternativeOptionsWithAlternativesStory.storyName;
 export function AlternativeOptionsSlowResponse() {
   return (
     <AlternativeOptionsComponentBuilder
@@ -111,7 +127,7 @@ export function AlternativeOptionsSlowResponse() {
     />
   );
 }
-AlternativeOptionsSlowResponse.story = {
+const AlternativeOptionsSlowResponseStory = {
   ...AlternativeOptionsStoryBuilder("AlternativeOptionsSlowResponse", {
     Query: {
       manifestations: async () => {
@@ -136,3 +152,11 @@ AlternativeOptionsSlowResponse.story = {
     },
   }),
 };
+AlternativeOptionsSlowResponse.parameters =
+  AlternativeOptionsSlowResponseStory.parameters;
+AlternativeOptionsSlowResponse.args = AlternativeOptionsSlowResponseStory.args;
+AlternativeOptionsSlowResponse.decorators =
+  AlternativeOptionsSlowResponseStory.decorators;
+AlternativeOptionsSlowResponse.storyName =
+  AlternativeOptionsSlowResponseStory.name ||
+  AlternativeOptionsSlowResponseStory.storyName;

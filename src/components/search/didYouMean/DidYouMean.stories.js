@@ -19,12 +19,10 @@ export function Default() {
   );
 }
 
-Default.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: "/find",
-      query: { q: { all: "Harry potter" } },
-    },
+Default.parameters = {
+  nextRouter: {
+    showInfo: true,
+    pathname: "/find",
+    query: { q: { all: "Harry potter" } },
   },
 };

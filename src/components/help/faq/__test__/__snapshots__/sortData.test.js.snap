@@ -1,20 +1,20 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Sort data 1`] = `
-Array [
-  Object {
+[
+  {
     "content": "<p>This faq goes first ...</p>",
     "title": "abc",
   },
-  Object {
+  {
     "content": "<p>This faq goes next ...</p>",
     "title": "def",
   },
-  Object {
+  {
     "content": "<p>This faq goes third</p>",
     "title": "ghi",
   },
-  Object {
+  {
     "content": "<p>This faq goes last ...</p>",
     "title": "jkl",
   },

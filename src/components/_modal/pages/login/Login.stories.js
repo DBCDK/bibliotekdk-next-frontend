@@ -51,35 +51,33 @@ export function LoginHeader() {
   );
 }
 
-LoginHeader.story = {
-  parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        Query: {
-          monitor: () => "some-monitor",
-        },
-        BranchResult: {
-          hitcount: () => "10",
-          agencyUrl: () => "some-agencyUrl",
-          borrowerStatus: () => BORROWER_STATUS_TRUE,
-          result: () => [
-            {
-              name: "Test agency",
-            },
-            { name: "Test agency 2" },
-          ],
-        },
-        Highlight: {
-          key: () => "some-key",
-          value: () => "some-value",
-        },
+LoginHeader.parameters = {
+  graphql: {
+    debug: true,
+    resolvers: {
+      Query: {
+        monitor: () => "some-monitor",
+      },
+      BranchResult: {
+        hitcount: () => "10",
+        agencyUrl: () => "some-agencyUrl",
+        borrowerStatus: () => BORROWER_STATUS_TRUE,
+        result: () => [
+          {
+            name: "Test agency",
+          },
+          { name: "Test agency 2" },
+        ],
+      },
+      Highlight: {
+        key: () => "some-key",
+        value: () => "some-value",
       },
     },
-    nextRouter: {
-      showInfo: true,
-      pathname: "/",
-      query: {},
-    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
   },
 };

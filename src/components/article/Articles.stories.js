@@ -115,14 +115,11 @@ export function SingleSection() {
     </div>
   );
 }
-SingleSection.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-    },
+SingleSection.parameters = {
+  nextRouter: {
+    showInfo: true,
   },
 };
-
 export function SingleSectionAlternativeUrl() {
   return (
     <div>
@@ -139,14 +136,11 @@ export function SingleSectionAlternativeUrl() {
     </div>
   );
 }
-SingleSectionAlternativeUrl.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-    },
+SingleSectionAlternativeUrl.parameters = {
+  nextRouter: {
+    showInfo: true,
   },
 };
-
 export function DoubleSection() {
   return (
     <div>
@@ -172,14 +166,11 @@ export function TripleSection() {
     </div>
   );
 }
-TripleSection.story = {
-  parameters: {
-    nextRouter: {
-      showInfo: true,
-    },
+TripleSection.parameters = {
+  nextRouter: {
+    showInfo: true,
   },
 };
-
 export function Loading() {
   return (
     <div>

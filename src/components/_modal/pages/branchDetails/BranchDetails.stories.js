@@ -2,7 +2,7 @@ import { StoryDescription, StoryTitle } from "@/storybook";
 import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 
-import Modal from "@/components/_modal";
+import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
 import isEmpty from "lodash/isEmpty";
@@ -116,7 +116,7 @@ export function LocalizationsBaseFlow() {
     />
   );
 }
-LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+const LocalizationsBaseFlowStory = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
@@ -206,3 +206,8 @@ LocalizationsBaseFlow.story = merge({}, DEFAULT_STORY_PARAMETERS, {
     },
   },
 });
+LocalizationsBaseFlow.parameters = LocalizationsBaseFlowStory.parameters;
+LocalizationsBaseFlow.args = LocalizationsBaseFlowStory.args;
+LocalizationsBaseFlow.decorators = LocalizationsBaseFlowStory.decorators;
+LocalizationsBaseFlow.storyName =
+  LocalizationsBaseFlowStory.name || LocalizationsBaseFlowStory.storyName;

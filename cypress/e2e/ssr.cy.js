@@ -2,6 +2,10 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const helpDescriptionPattern =
   /^Find hjælp og vejledning( til bibliotek\.dk)? omkring fx bestilling, søgning og login\.$/;
 
+function serializeAttribute(value) {
+  return value?.replace(/&/g, "&amp;");
+}
+
 function getPageHead(path) {
   return cy
     .request({
@@ -14,32 +18,42 @@ function getPageHead(path) {
     })
     .its("body")
     .then((html) => {
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const jsonldContent = doc.querySelector(
+        'script[type="application/ld+json"]'
+      )?.textContent;
+      const alternate = Array.from(
+        doc.querySelectorAll('link[rel="alternate"][hreflang]')
+      ).map(
+        (link) =>
+          `<link rel="alternate" hreflang="${link.getAttribute(
+            "hreflang"
+          )}" href="${serializeAttribute(link.getAttribute("href"))}"/>`
+      );
+
       let jsonld;
       try {
-        jsonld = JSON.parse(
-          html.match(
-            /<script type="application\/ld\+json">(.*?)<\/script>/
-          )?.[1]
-        );
+        jsonld = JSON.parse(jsonldContent);
       } catch (e) {}
+
       return {
-        title: html.match(/<title>(.*?)<\/title>/)[1],
-        description: html.match(
-          /<meta name="description" content="(.*?)"/
-        )?.[1],
-        "og:url": html.match(/<meta property="og:url" content="(.*?)"/)?.[1],
-        "og:title": html.match(
-          /<meta property="og:title" content="(.*?)"/
-        )?.[1],
-        "og:description": html.match(
-          /<meta property="og:description" content="(.*?)"/
-        )?.[1],
-        "og:image": html.match(
-          /<meta property="og:image" content="(.*?)"/
-        )?.[1],
-        alternate: html.match(
-          /<link rel="alternate" hreflang=".*?" href=".*?"\/>/g
-        ),
+        title: doc.querySelector("title")?.textContent,
+        description: doc
+          .querySelector('meta[name="description"]')
+          ?.getAttribute("content"),
+        "og:url": doc
+          .querySelector('meta[property="og:url"]')
+          ?.getAttribute("content"),
+        "og:title": doc
+          .querySelector('meta[property="og:title"]')
+          ?.getAttribute("content"),
+        "og:description": doc
+          .querySelector('meta[property="og:description"]')
+          ?.getAttribute("content"),
+        "og:image": doc
+          .querySelector('meta[property="og:image"]')
+          ?.getAttribute("content"),
+        alternate,
         jsonld,
       };
     });
@@ -278,18 +292,16 @@ describe("Server Side Rendering", () => {
   describe(`find`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/find/simpel?q.all=ost").then((res) => {
-        expect(res.title).to.include("Alle resultater med &quot;ost&quot;");
+        expect(res.title).to.include('Alle resultater med "ost"');
         expect(res.description).to.match(
-          /Bibliotekerne har i alt \d+ resultater med &quot;ost&quot;. Bibliotek.dk er én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv./
+          /Bibliotekerne har i alt \d+ resultater med "ost". Bibliotek.dk er én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv./
         );
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/find/simpel?q.all=ost"
         );
-        expect(res["og:title"]).to.include(
-          "Alle resultater med &quot;ost&quot;"
-        );
+        expect(res["og:title"]).to.include('Alle resultater med "ost"');
         expect(res["og:description"]).to.match(
-          /Bibliotekerne har i alt \d+ resultater med &quot;ost&quot;. Bibliotek.dk er én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv./
+          /Bibliotekerne har i alt \d+ resultater med "ost". Bibliotek.dk er én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv./
         );
         expect(res["og:image"]).to.exist;
       });

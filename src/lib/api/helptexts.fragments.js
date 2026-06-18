@@ -1,4 +1,3 @@
-import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
 import { getLocale } from "@/components/base/translate/Translate";
 import { getSite } from "@/components/hooks/useSiteConfig";
@@ -70,22 +69,33 @@ export function helpText({ helpTextId }) {
 }
 
 export function helpTextSearch({ q }) {
+  const site = getSite();
+
   return {
     apiUrl: ApiEnums.FBI_API,
     delay: 100,
-    query: `query ($q: String!, $language: LanguageCodeEnum) {
-              help(q: $q, language: $language) {
-                result {
-                  body
-                  group
-                  nid      
-                  orgTitle
-                  title
-                }
-              }
-          monitor(name: "helptext_search")
-        }`,
-    variables: { q, language: lang?.toUpperCase() },
+    query: `query HelpTextSearchQuery($q: String!, $site: String!) {
+      bibliotekdkCms {
+        helpTexts(
+          status: PUBLISHED
+          pagination: { limit: 20 }
+          filters: {
+            sites: { name: { eq: $site } }
+            or: [
+              { title: { containsi: $q } }
+              { body: { containsi: $q } }
+            ]
+          }
+        ) {
+          documentId
+          title
+          body
+          group
+        }
+      }
+      monitor(name: "helptext_search")
+    }`,
+    variables: { q, site },
     slowThreshold: 3000,
   };
 }
