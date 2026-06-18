@@ -341,6 +341,7 @@ const accessFragment = `fragment accessFragment on Manifestation {
       note
       loginRequired
       type
+      urlText
     }
     ... on InfomediaService {
       id
