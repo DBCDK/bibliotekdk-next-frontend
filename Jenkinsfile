@@ -200,9 +200,9 @@ pipeline {
             sh '''
                 echo Clean up
                 mkdir -p logs
-                docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt || true
-                docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v || true
-                docker rmi ${IMAGE_NAME} || true
+                docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt
+                docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
+                docker rmi ${IMAGE_NAME}
             '''
 
             junit skipPublishingChecks: true, allowEmptyResults: true, testResults: 'cypress/reports/*.xml'
