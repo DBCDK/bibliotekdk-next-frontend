@@ -91,6 +91,7 @@ pipeline {
                     label 'devel11'
                     image "docker-dbc.artifacts.dbccloud.dk/dbc-node:node25"
                     alwaysPull true
+                    reuseNode true
                 }
             }
             steps {
