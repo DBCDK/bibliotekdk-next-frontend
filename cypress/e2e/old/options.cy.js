@@ -11,7 +11,7 @@ describe("Overview", () => {
       "exist"
     );
     cy.contains("Luk");
-    cy.contains("Link til E-bog")
+    cy.contains("manifestations[0].unit.manifestations[1].access[0].urlText")
       .should("exist")
       .parent()
       .find("a")
