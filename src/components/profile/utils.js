@@ -79,7 +79,6 @@ export function getWorkUrlForProfile({
     materialTypeAsUrl && !isEmpty(materialTypeAsUrl) && materialTypeAsUrl;
 
   const query = {
-    workId: workId,
     ...(chosenMaterialType && { type: chosenMaterialType }),
   };
 
