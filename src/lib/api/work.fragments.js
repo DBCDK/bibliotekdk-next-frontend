@@ -240,6 +240,7 @@ export function reviews({ workId }) {
                         loginRequired
                         type
                         status
+                        urlText
                       }
                       ... on DigitalArticleService {
                         issn
@@ -1299,6 +1300,7 @@ const manifestationAccess = `fragment manifestationAccess on Manifestation {
       note
       loginRequired
       type
+      urlText
     }
     ... on InfomediaService {
       id

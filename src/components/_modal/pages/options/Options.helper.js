@@ -69,14 +69,16 @@ const templateProps = {
   propsForOnline(props) {
     return {
       linkProps: { href: props?.url, target: "_blank" },
-      linkText: Translate({
-        context: "options",
-        label: "online-link-title",
-        vars: [
-          formatMaterialTypesToPresentation(props?.materialTypesArray),
-          props?.origin,
-        ],
-      }),
+      linkText:
+        props?.urlText ||
+        Translate({
+          context: "options",
+          label: "online-link-title",
+          vars: [
+            formatMaterialTypesToPresentation(props?.materialTypesArray),
+            props?.origin,
+          ],
+        }),
       descriptionText: Translate({
         context: "options",
         label: "online-link-description",

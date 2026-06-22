@@ -30,6 +30,7 @@ export function accessForManifestations({ pids }) {
                 loginRequired
                 type
                 status
+                urlText
               }
               ... on InfomediaService {
                 id
