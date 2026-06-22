@@ -226,8 +226,6 @@ function TableItem({ order }) {
   const { orderId, creationDate, work } = order;
   const isDigitalOrder = !orderId; //digital acrticle service orders do not have orderId
 
-  const title = work?.titles?.main?.[0];
-  const creator = work?.creators[0]?.display;
   const { day, monthName, isToday, hours, minutes } = parseDate(creationDate);
   const time = `Kl. ${hours}.${minutes}`;
   const dateString = isToday
@@ -250,10 +248,9 @@ function TableItem({ order }) {
             {dateString}
           </Text>
           <WorkInfo
-            title={title}
-            creator={creator}
             workId={work?.workId}
-            date={dateString}
+            titles={work?.titles}
+            creators={work?.creators}
             isDigitalOrder={isDigitalOrder}
           />
         </div>
@@ -280,10 +277,9 @@ function TableItem({ order }) {
       </td>
       <td className={styles.activity}>
         <WorkInfo
-          title={title}
-          creator={creator}
           workId={work?.workId}
-          date={dateString}
+          titles={work?.titles}
+          creators={work?.creators}
           isDigitalOrder={isDigitalOrder}
         />
       </td>
@@ -303,9 +299,11 @@ function TableItem({ order }) {
  * Used in TableItem. Shows info (like title, author, link to work) for a given order
  * @returns
  */
-function WorkInfo({ title, creator, workId, isDigitalOrder }) {
+function WorkInfo({ workId, titles, creators, isDigitalOrder }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
+  const title = titles?.main?.[0];
+  const creator = creators?.[0]?.display;
   const workTitle =
     title || Translate({ context: "profile", label: "titleNotFound" });
 
@@ -330,7 +328,7 @@ function WorkInfo({ title, creator, workId, isDigitalOrder }) {
         }) + " "}
         {workId ? (
           <Link
-            href={getWorkUrlForProfile({ workId })}
+            href={getWorkUrlForProfile({ workId, titles, creators })}
             border={{
               top: false,
               bottom: {
