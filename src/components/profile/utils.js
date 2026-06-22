@@ -63,22 +63,15 @@ export function getWorkUrlForProfile({
   creators,
   scrollToEdition = false,
 }) {
-  if (!workId) {
-    if (pid && !isEmpty(pid) && isPid(pid)) {
-      return `/work/${pid}`;
-    }
-    return "";
-  }
-
-  if (!titles || isEmpty(titles) || !creators || isEmpty(creators)) {
-    return `/work/${workId}`;
+  if (!workId && !pid) {
+    return;
   }
 
   // Pathname
   const pathname = getCanonicalWorkUrl({
-    title: titles?.main?.[0],
-    creators: creators,
-    id: workId,
+    title: titles?.main?.[0] || "titel",
+    creators: creators || [{ display: "skaber" }],
+    id: workId || `work-of:${pid}`,
   });
 
   // MaterialTypes
