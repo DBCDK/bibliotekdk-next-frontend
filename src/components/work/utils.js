@@ -23,7 +23,6 @@ export function openAgencyLocalizationsModal({
 }
 
 export function openReferencesModal(modal, pids, workId, manifestation) {
-
   const materialType = manifestation?.materialTypes
     ?.map((type) => type?.materialTypeSpecific?.code)
     ?.filter(Boolean)
