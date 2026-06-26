@@ -141,18 +141,18 @@ module.exports = {
         permanent: false,
       },
       {
-        source: "/work/:workId((?!work-of).*)",
+        source: "/work/pid/:pid",
+        destination: "/linkme.php/?rec.id=:pid",
+        permanent: true,
+      },
+      {
+        source: "/work/:workId((?!work-of)(?!pid/).*)",
         destination: "/materiale/titel_skaber/work-of%3A:workId",
         permanent: true,
       },
       {
         source: "/work/work-of:workId",
         destination: "/materiale/titel_skaber/work-of:workId",
-        permanent: true,
-      },
-      {
-        source: "/work/pid/:pid",
-        destination: "/linkme.php/?rec.id=:pid",
         permanent: true,
       },
     ];
