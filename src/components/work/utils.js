@@ -23,11 +23,16 @@ export function openAgencyLocalizationsModal({
 }
 
 export function openReferencesModal(modal, pids, workId, manifestation) {
+  const materialType = manifestation?.materialTypes
+    ?.map((type) => type?.materialTypeSpecific?.code)
+    ?.filter(Boolean)
+    ?.join(" / ");
+
   // fake a bookmarked material for multi references page
   const material = {
     manifestations: [manifestation],
     materialId: manifestation?.pid,
-    materialType: manifestation?.materialTypes?.[0]?.materialTypeSpecific?.code,
+    materialType,
     workId: workId,
   };
   modal.push("multiReferences", {
