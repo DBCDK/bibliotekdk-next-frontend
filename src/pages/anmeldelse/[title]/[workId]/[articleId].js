@@ -36,7 +36,11 @@ export function ReviewPage(props) {
         <>
           {article && (
             <>
-              <Content data={{ article }} backToMaterial={material} />
+              <Content
+                data={{ article }}
+                backToMaterial={material}
+                renderHtml={true}
+              />
             </>
           )}
 

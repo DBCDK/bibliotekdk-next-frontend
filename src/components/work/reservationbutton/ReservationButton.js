@@ -277,7 +277,6 @@ export const ReservationButton = ({
     }
 
     if (publizonAccess) {
-      console.log("buttonType", buttonType);
       return {
         props: accessibleOnlineWithLoginProps,
         text: Translate({

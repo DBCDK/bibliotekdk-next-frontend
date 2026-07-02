@@ -30,7 +30,7 @@ export function InfomediaArticle(props) {
         <ContentSkeleton />
       ) : (
         <>
-          <Content data={{ article }} />
+          <Content data={{ article }} renderHtml={true} />
 
           <ArticleLoginPrompt articleId={articleId} />
         </>

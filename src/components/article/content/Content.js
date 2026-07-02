@@ -18,6 +18,7 @@ import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
 import Markdown from "@/components/base/markdown/Markdown";
+import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { getLocale } from "@/components/base/translate/Translate";
 import { Rating } from "@/components/base/rating/Rating";
 import { ReviewHeadingLink } from "@/components/article/lectorreview/reviewheading/ReviewHeading";
@@ -146,6 +147,7 @@ export function Content({
   className = "",
   data = {},
   backToMaterial = null,
+  renderHtml = false,
   skeleton = false,
 }) {
   if (!data?.article) {
@@ -293,12 +295,21 @@ export function Content({
             md={{ span: 10, offset: 1 }}
             lg={{ span: 6, offset: 3 }}
           >
-            <Markdown
-              body={article?.body?.value}
-              className={styles.body}
-              skeleton={skeleton}
-              lines={10}
-            />
+            {renderHtml ? (
+              <BodyParser
+                body={article?.body?.value}
+                className={styles.body}
+                skeleton={skeleton}
+                lines={10}
+              />
+            ) : (
+              <Markdown
+                body={article?.body?.value}
+                className={styles.body}
+                skeleton={skeleton}
+                lines={10}
+              />
+            )}
             {article?.disclaimer && (
               <div className={styles.disclaimer}>
                 <img src={article?.disclaimer?.logo} alt="logo" />
