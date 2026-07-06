@@ -96,29 +96,34 @@ function flattenAccess(manifestations) {
           return;
         }
 
+        const normalizedAccessEntry = {
+          ...accessEntry,
+          url: accessEntry?.proxyUrl ?? accessEntry?.url ?? accessEntry?.ereolUrl,
+        };
+
         // Create a key for this access entry to identify duplicates
         const keyArr = JSON.stringify(
           [
-            accessEntry?.__typename,
-            accessEntry?.url,
-            accessEntry?.id,
-            accessEntry?.issn,
+            normalizedAccessEntry?.__typename,
+            normalizedAccessEntry?.url,
+            normalizedAccessEntry?.id,
+            normalizedAccessEntry?.issn,
           ]?.filter((part) => !!part)
         );
 
         // If this access is not seen before, we create it
         if (!accessMap[keyArr]) {
-          accessMap[keyArr] = { ...accessEntry, pids: [] };
+          accessMap[keyArr] = { ...normalizedAccessEntry, pids: [] };
 
           // If infomedia, we generate URL based on id
-          if (accessEntry?.id) {
+          if (normalizedAccessEntry?.id) {
             accessMap[keyArr].url = infomediaUrl(
               encodeTitleCreator(
                 manifestionInUnit?.titles?.main?.[0],
                 manifestionInUnit?.creators
               ),
               `work-of:${manifestionInUnit?.pid}`,
-              accessEntry?.id
+              normalizedAccessEntry?.id
             );
           }
         }

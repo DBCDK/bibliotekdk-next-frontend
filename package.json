@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:next": "febib-serve next dev",
+    "dev:5000": "NEXTAUTH_URL=http://localhost:5000 next dev -p 5000",
     "build:next": "next build",
     "build:next:no:lint": "next build --no-lint",
     "build:next:no:lint:f": "run-s -l build:next:no:lint",

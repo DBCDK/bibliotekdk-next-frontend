@@ -35,6 +35,7 @@ function Button({
   asLink = false,
   target = "_blank",
   href = "",
+  rel = undefined,
 }) {
   const key = dataCy || cyKey({ name: children, prefix: "button" });
   // should button act as a link ? or a button ?
@@ -45,6 +46,7 @@ function Button({
     <Tag
       href={href}
       target={target}
+      rel={rel}
       id={id}
       data-cy={key}
       className={cx([
@@ -124,6 +126,7 @@ Container.propTypes = {
   ariaControls: PropTypes.string,
   asLink: PropTypes.bool,
   href: PropTypes.string,
+  rel: PropTypes.string,
 };
 
 Button.propTypes = Container.propTypes;

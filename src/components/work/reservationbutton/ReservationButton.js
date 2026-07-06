@@ -206,6 +206,9 @@ export const ReservationButton = ({
   const publizonAccess = Boolean(
     access?.filter((entry) => entry?.__typename === "Publizon").length > 0
   );
+  const loginRequiredAccess = Boolean(
+    access?.[0]?.__typename === "AccessUrl" && access?.[0]?.loginRequired
+  );
 
   const type = materialTypesMap?.[access?.[0]?.pids?.[0]];
 
@@ -232,6 +235,8 @@ export const ReservationButton = ({
     dataCy: "button-order-overview",
     href: access?.[0]?.url,
     asLink: true,
+    target: "_blank",
+    rel: access?.[0]?.loginRequired ? "noreferrer" : undefined,
   };
 
   // INFOMEDIA
@@ -284,6 +289,17 @@ export const ReservationButton = ({
           label: "publizon-local-library-btn",
         }),
         icon: <ExternalSvg className={styles.icon} />,
+        preferSecondary: false,
+      };
+    }
+
+    if (loginRequiredAccess) {
+      return {
+        props:
+          isAuthenticated && access?.[0]?.url
+            ? accessibleOnlineAndNoLoginProps
+            : accessibleOnlineWithLoginProps,
+        text: constructButtonText(workTypes, materialTypes, shortText),
         preferSecondary: false,
       };
     }
