@@ -302,18 +302,22 @@ export const ReservationButton = ({
     }
 
     if (loginRequiredAccess) {
-      return {
-        props: loginRequiredAccessUnavailable
-          ? inaccessibleOnlineProps
-          : isAuthenticated && access?.[0]?.url
+      const selectedLoginRequiredProps = loginRequiredAccessUnavailable
+        ? inaccessibleOnlineProps
+        : isAuthenticated && access?.[0]?.url
           ? accessibleOnlineAndNoLoginProps
-          : accessibleOnlineWithLoginProps,
-        text: loginRequiredAccessUnavailable
-          ? Translate({
-              context: "overview",
-              label: "url_unavailable",
-            })
-          : constructButtonText(workTypes, materialTypes, shortText),
+          : accessibleOnlineWithLoginProps;
+
+      const selectedLoginRequiredText = loginRequiredAccessUnavailable
+        ? Translate({
+            context: "overview",
+            label: "url_unavailable",
+          })
+        : constructButtonText(workTypes, materialTypes, shortText);
+
+      return {
+        props: selectedLoginRequiredProps,
+        text: selectedLoginRequiredText,
         preferSecondary: false,
       };
     }
