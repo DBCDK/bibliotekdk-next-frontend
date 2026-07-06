@@ -98,7 +98,8 @@ function flattenAccess(manifestations) {
 
         const normalizedAccessEntry = {
           ...accessEntry,
-          url: accessEntry?.proxyUrl ?? accessEntry?.url ?? accessEntry?.ereolUrl,
+          url:
+            accessEntry?.proxyUrl ?? accessEntry?.url ?? accessEntry?.ereolUrl,
         };
 
         // Create a key for this access entry to identify duplicates

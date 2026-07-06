@@ -306,8 +306,8 @@ export const ReservationButton = ({
         props: loginRequiredAccessUnavailable
           ? inaccessibleOnlineProps
           : isAuthenticated && access?.[0]?.url
-            ? accessibleOnlineAndNoLoginProps
-            : accessibleOnlineWithLoginProps,
+          ? accessibleOnlineAndNoLoginProps
+          : accessibleOnlineWithLoginProps,
         text: loginRequiredAccessUnavailable
           ? Translate({
               context: "overview",
