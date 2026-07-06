@@ -96,7 +96,7 @@ function getProxyAccessDestination(json) {
       a?.type === "RESOURCE" &&
       a?.status === "OK" &&
       typeof a?.proxyUrl === "string" &&
-      a.proxyUrl
+      a?.proxyUrl
   );
 
   return proxyAccess?.proxyUrl || null;

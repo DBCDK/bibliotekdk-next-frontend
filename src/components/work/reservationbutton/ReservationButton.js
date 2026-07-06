@@ -209,6 +209,9 @@ export const ReservationButton = ({
   const loginRequiredAccess = Boolean(
     access?.[0]?.__typename === "AccessUrl" && access?.[0]?.loginRequired
   );
+  const loginRequiredAccessUnavailable = Boolean(
+    loginRequiredAccess && isAuthenticated && !access?.[0]?.proxyUrl
+  );
 
   const type = materialTypesMap?.[access?.[0]?.pids?.[0]];
 
@@ -245,6 +248,11 @@ export const ReservationButton = ({
     dataCy: "button-order-overview",
     onClick: () =>
       handleGoToLogin(modal, access, isAuthenticated, isFolkUser, type),
+  };
+
+  const inaccessibleOnlineProps = {
+    dataCy: "button-order-overview-disabled",
+    disabled: true,
   };
 
   const loginRequiredProps = {
@@ -295,11 +303,17 @@ export const ReservationButton = ({
 
     if (loginRequiredAccess) {
       return {
-        props:
-          isAuthenticated && access?.[0]?.url
+        props: loginRequiredAccessUnavailable
+          ? inaccessibleOnlineProps
+          : isAuthenticated && access?.[0]?.url
             ? accessibleOnlineAndNoLoginProps
             : accessibleOnlineWithLoginProps,
-        text: constructButtonText(workTypes, materialTypes, shortText),
+        text: loginRequiredAccessUnavailable
+          ? Translate({
+              context: "overview",
+              label: "url_unavailable",
+            })
+          : constructButtonText(workTypes, materialTypes, shortText),
         preferSecondary: false,
       };
     }
