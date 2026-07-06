@@ -302,11 +302,13 @@ export const ReservationButton = ({
     }
 
     if (loginRequiredAccess) {
-      const selectedLoginRequiredProps = loginRequiredAccessUnavailable
-        ? inaccessibleOnlineProps
-        : isAuthenticated && access?.[0]?.url
-          ? accessibleOnlineAndNoLoginProps
-          : accessibleOnlineWithLoginProps;
+      let selectedLoginRequiredProps = accessibleOnlineWithLoginProps;
+
+      if (loginRequiredAccessUnavailable) {
+        selectedLoginRequiredProps = inaccessibleOnlineProps;
+      } else if (isAuthenticated && access?.[0]?.url) {
+        selectedLoginRequiredProps = accessibleOnlineAndNoLoginProps;
+      }
 
       const selectedLoginRequiredText = loginRequiredAccessUnavailable
         ? Translate({
