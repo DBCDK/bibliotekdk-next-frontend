@@ -28,11 +28,19 @@ function OrderButtonTextBelow({
   isPeriodica,
   isAuthenticated,
 }) {
+  const unavailableViaLocalLibrary = Boolean(
+    isAuthenticated &&
+      access?.[0]?.__typename === AccessEnum.ACCESS_URL &&
+      access?.[0]?.loginRequired === true &&
+      !access?.[0]?.proxyUrl
+  );
+
   const isNota =
     access?.[0]?.url?.includes("nota.dk") ||
     access?.[0]?.origin?.includes("nota.dk");
 
   const caseScenarioMap = [
+    unavailableViaLocalLibrary,
     Boolean(access?.[0]?.url),
     Boolean(isPeriodica),
     hasDigitalCopy,
@@ -44,6 +52,11 @@ function OrderButtonTextBelow({
   ];
 
   const translationForButtonText = [
+    () =>
+      Translate({
+        ...context,
+        label: "url_unavailable_local_library",
+      }),
     () => {
       if (isNota) {
         return Translate({ ...context, label: "nota-access-restriction" });

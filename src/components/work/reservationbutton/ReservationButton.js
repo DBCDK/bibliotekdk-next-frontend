@@ -206,6 +206,12 @@ export const ReservationButton = ({
   const publizonAccess = Boolean(
     access?.filter((entry) => entry?.__typename === "Publizon").length > 0
   );
+  const loginRequiredAccess = Boolean(
+    access?.[0]?.__typename === "AccessUrl" && access?.[0]?.loginRequired
+  );
+  const loginRequiredAccessUnavailable = Boolean(
+    loginRequiredAccess && isAuthenticated && !access?.[0]?.proxyUrl
+  );
 
   const type = materialTypesMap?.[access?.[0]?.pids?.[0]];
 
@@ -232,6 +238,8 @@ export const ReservationButton = ({
     dataCy: "button-order-overview",
     href: access?.[0]?.url,
     asLink: true,
+    target: "_blank",
+    rel: access?.[0]?.loginRequired ? "noreferrer" : undefined,
   };
 
   // INFOMEDIA
@@ -240,6 +248,11 @@ export const ReservationButton = ({
     dataCy: "button-order-overview",
     onClick: () =>
       handleGoToLogin(modal, access, isAuthenticated, isFolkUser, type),
+  };
+
+  const inaccessibleOnlineProps = {
+    dataCy: "button-order-overview-disabled",
+    disabled: true,
   };
 
   const loginRequiredProps = {
@@ -284,6 +297,29 @@ export const ReservationButton = ({
           label: "publizon-local-library-btn",
         }),
         icon: <ExternalSvg className={styles.icon} />,
+        preferSecondary: false,
+      };
+    }
+
+    if (loginRequiredAccess) {
+      let selectedLoginRequiredProps = accessibleOnlineWithLoginProps;
+
+      if (loginRequiredAccessUnavailable) {
+        selectedLoginRequiredProps = inaccessibleOnlineProps;
+      } else if (isAuthenticated && access?.[0]?.url) {
+        selectedLoginRequiredProps = accessibleOnlineAndNoLoginProps;
+      }
+
+      const selectedLoginRequiredText = loginRequiredAccessUnavailable
+        ? Translate({
+            context: "overview",
+            label: "url_unavailable",
+          })
+        : constructButtonText(workTypes, materialTypes, shortText);
+
+      return {
+        props: selectedLoginRequiredProps,
+        text: selectedLoginRequiredText,
         preferSecondary: false,
       };
     }

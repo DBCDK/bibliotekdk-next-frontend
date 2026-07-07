@@ -63,6 +63,40 @@ export function publizonSampleRedirect({ pid = "" }) {
   };
 }
 
+export function proxyAccessRedirect({ pid = "" }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query ProxyAccessRedirect($pid: String!) {
+              manifestation(pid: $pid) {
+                pid
+                materialTypes {
+                  materialTypeSpecific {
+                    display
+                  }
+                }
+                ownerWork {
+                  workId
+                }
+                access {
+                  __typename
+                  ... on AccessUrl {
+                    url
+                    proxyUrl
+                    origin
+                    loginRequired
+                    urlText
+                    note
+                    type
+                    status
+                  }
+                }
+              }
+            }`,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
 export function publizonSamples({ pids = [] }) {
   return {
     apiUrl: ApiEnums.FBI_API,

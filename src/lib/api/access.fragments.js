@@ -26,6 +26,7 @@ export function accessForManifestations({ pids }) {
               ... on AccessUrl {
                 origin
                 url
+                proxyUrl
                 note
                 loginRequired
                 type
@@ -37,7 +38,7 @@ export function accessForManifestations({ pids }) {
               }
               ... on Ereol {
                 origin
-                url
+                ereolUrl: url
                 canAlwaysBeLoaned
                 note
               }
