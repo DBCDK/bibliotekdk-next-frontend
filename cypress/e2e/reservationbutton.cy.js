@@ -43,10 +43,19 @@ describe("Reservation button", () => {
 
     cy.visit(urla);
 
+    cy.window().then((win) => {
+      cy.stub(win, "open").as("windowOpen");
+    });
+
     cy.get("[data-cy=button-order-overview]", { timeout: 15000 })
       .should("exist")
-      .should("have.attr", "href", expectedUrl)
-      .should("have.attr", "target", "_blank");
+      .click();
+
+    cy.get("@windowOpen").should(
+      "have.been.calledOnceWith",
+      expectedUrl,
+      "_blank"
+    );
   });
 
   it("user logged in material unavailable", () => {

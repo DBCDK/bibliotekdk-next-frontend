@@ -402,7 +402,9 @@ const MANIFESTATION_7 = {
     {
       __typename: AccessEnum.ACCESS_URL,
       url: "https://ereol.combo/langurl",
+      proxyUrl: "https://ereol.combo/langurl",
       origin: "https://ereol.combo",
+      loginRequired: false,
       type: "RESOURCE",
       status: "OK",
     },
@@ -420,7 +422,9 @@ const MANIFESTATION_7 = {
           {
             __typename: AccessEnum.ACCESS_URL,
             url: "https://ereol.combo/langurl",
+            proxyUrl: "https://ereol.combo/langurl",
             origin: "https://ereol.combo",
+            loginRequired: false,
             type: "RESOURCE",
             status: "OK",
           },
