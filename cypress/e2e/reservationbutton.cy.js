@@ -39,26 +39,14 @@ describe("Reservation button", () => {
   it("digital material", () => {
     const urla =
       "/iframe.html?id=work-reservationbutton--reservation-button-e-book";
+    const expectedUrl = "https://ereol.combo/langurl";
 
     cy.visit(urla);
-    cy.intercept(urla).as("urlan");
-
-    cy.window().then((win) => {
-      cy.stub(win, "open").as("Open");
-      win.first = true;
-    });
-
-    cy.window().its("first").should("be.true");
 
     cy.get("[data-cy=button-order-overview]", { timeout: 15000 })
       .should("exist")
-      .click();
-
-    // We test if the window is "opening" properly
-    cy.get("@Open").should(
-      "have.been.calledOnceWith",
-      "https://ereol.combo/langurl"
-    );
+      .should("have.attr", "href", expectedUrl)
+      .should("have.attr", "target", "_blank");
   });
 
   it("user logged in material unavailable", () => {
