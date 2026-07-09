@@ -1,7 +1,9 @@
 const truthyValues = new Set(["1", "true", "yes", "on"]);
 
 function isEnvEnabled(value) {
-  return typeof value === "string" && truthyValues.has(value.trim().toLowerCase());
+  return (
+    typeof value === "string" && truthyValues.has(value.trim().toLowerCase())
+  );
 }
 
 export function getSecureCookieEnabled() {
