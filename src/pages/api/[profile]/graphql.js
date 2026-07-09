@@ -28,6 +28,7 @@ const VERIFICATION_COOKIE_NAME = "verification.cookie";
 export function sanitizeHeaders(originalHeaders, accessToken) {
   const allowedCustomHeaders = [
     "x-debug",
+    "x-request-id",
     "x-tracking-consent",
     "x-session-token",
     "x-unique-visitor-id",

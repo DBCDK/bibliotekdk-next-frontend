@@ -6,6 +6,7 @@ import {
 import { NextAuth } from "@dbcdk/login-nextjs";
 import { log } from "dbc-node-logger";
 import getConfig from "next/config";
+import { getSecureCookieEnabled } from "@/utils/cookieOptions";
 import { decodeCookie } from "@/utils/jwt";
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
@@ -22,9 +23,8 @@ export const options = {
       options: {
         httpOnly: true,
         sameSite: "Lax",
-        secure: true,
         path: "/",
-        secure: !process.env.CYPRESS, //set secure to false when running Cypress tests
+        secure: getSecureCookieEnabled(),
         expires: null,
       },
     },
@@ -34,7 +34,7 @@ export const options = {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: !process.env.CYPRESS, //set secure to false when running Cypress tests
+        secure: getSecureCookieEnabled(),
         expires: null,
       },
     },
