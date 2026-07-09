@@ -6,6 +6,7 @@
  */
 
 import { serialize } from "cookie";
+import { getSecureCookieEnabled } from "@/utils/cookieOptions";
 
 const COOKIE_NAME = "verification.cookie";
 
@@ -16,7 +17,7 @@ export default function handler(req, res) {
 
   const cookie = serialize(COOKIE_NAME, "", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: getSecureCookieEnabled(),
     sameSite: "strict",
     path: "/",
     expires: new Date(0), // Sætter en udløbsdato i fortiden
