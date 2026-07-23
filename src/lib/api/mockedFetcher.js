@@ -263,6 +263,12 @@ function defaultMockResolver(parent, _args, context, info) {
     return parent?.[fieldName];
   }
 
+  // Story fixtures often provide `url` but not `proxyUrl` on AccessUrl entries.
+  // Falling back keeps mocked access links stable instead of generating unique paths.
+  if (fieldName === "proxyUrl" && typeof parent?.url === "string") {
+    return parent.url;
+  }
+
   // No mock resolver was provided for the field
   // We return a default value based on what the
   // return type is

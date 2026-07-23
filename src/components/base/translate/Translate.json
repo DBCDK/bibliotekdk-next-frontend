@@ -1172,6 +1172,14 @@
         "da": "Kr\u00e6ver login via bibliotek med abonnement",
         "en": "Login required"
       },
+      "url_unavailable": {
+        "da": "Ikke tilg\u00e6ngelig",
+        "en": "Unavailable"
+      },
+      "url_unavailable_local_library": {
+        "da": "Dit lokale bibliotek giver ikke adgang",
+        "en": "Your local library does not provide access"
+      },
       "label_infomediaAccess": {
         "en": "Library login is required for reading article",
         "da": "Brug bibliotekslogin, n\u00e5r du skal l\u00e6se artiklen"

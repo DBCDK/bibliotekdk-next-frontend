@@ -11,7 +11,6 @@ import { Provider as ModalContextProvider } from "../src/components/_modal/Modal
 import { GraphQLMocker } from "@/lib/api/mockedFetcher";
 import { StoryRouter } from "@/components/base/storybook";
 import Router from "next/router";
-import { createRouter as createStorybookRouter } from "@storybook/nextjs/router.mock";
 import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 import { SessionProvider } from "next-auth/react";
 import { useMemo } from "react";
@@ -53,7 +52,6 @@ export const decorators = [
     // Register to router changes
     // Will trigger rerender when change occurs
     useMemoryRouter({ memoryRouter, pathname, query });
-    createStorybookRouter(memoryRouter);
 
     return (
       <GraphQLMocker
@@ -92,3 +90,10 @@ export const parameters = {
     router: memoryRouter,
   },
 };
+
+const preview = {
+  decorators,
+  parameters,
+};
+
+export default preview;

@@ -9,6 +9,7 @@
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { decodeCookie, encodeCookie } from "@/utils/jwt";
 import { serialize } from "cookie";
+import { getSecureCookieEnabled } from "@/utils/cookieOptions";
 
 const ANON_COOKIE_NAME = "next-auth.anon-session";
 const AUTH_COOKIE_NAME = "next-auth.session-token";
@@ -52,7 +53,7 @@ export default async function handler(req, res) {
 
   const cookie = serialize(COOKIE_NAME, signedJwt, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: getSecureCookieEnabled(),
     sameSite: "strict",
     path: "/",
     maxAge: 60 * 60 * 24, // 1 day

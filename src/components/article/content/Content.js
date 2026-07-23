@@ -64,7 +64,7 @@ function ArticleHeader({ article, skeleton }) {
             <Text
               type="text3"
               dataCy="article-header-date"
-              skeleton={skeleton}
+              skeleton={skeleton || !article?.entityCreated}
               lines={1}
             >
               {article?.entityCreated}

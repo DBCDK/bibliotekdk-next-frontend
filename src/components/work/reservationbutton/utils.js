@@ -24,15 +24,6 @@ export function getBaseUrl(url) {
   return url;
 }
 
-/**
- * check if url is ebookcentral or ebscohost
- * @param {string} url
- * @returns
- */
-export function isEbookCentralOrEbscohost(url) {
-  return url && (url.includes("ebookcentral") || url.includes("ebscohost"));
-}
-
 export function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
   return hasTranslation({
@@ -99,7 +90,7 @@ export async function handleGoToLogin(
   const urlSuffix = type ? `${selector}type=${type}` : "";
 
   // Use agencyUrl for Publizon (with optional suffix), otherwise use the direct url
-  let url = a0.url;
+  let url = a0.proxyUrl || a0.url;
 
   if (isPublizon) {
     // Publizon uses agencyUrl; if it's missing we can't redirect (unless we show login)
@@ -136,15 +127,16 @@ export async function handleGoToLogin(
   // Decide whether we should show the login modal instead of redirecting
   const goToLogin =
     (isPublizon && !isAuthenticated) ||
-    (!isAuthenticated && a0.loginRequired && isEbookCentralOrEbscohost(url));
+    (!isAuthenticated &&
+      a0.__typename === "AccessUrl" &&
+      a0.loginRequired === true);
 
   if (goToLogin) {
-    if (isPublizon) {
-      // Set redirect path for Publizon to internal redirect handler
-      const pid = access?.[0]?.pids?.[0];
-      const provider = "ReservationButton_Publizon";
-      await setLoginIntent({ pid, provider });
-    }
+    const pid = access?.[0]?.pids?.[0];
+    const provider = isPublizon
+      ? "ReservationButton_Publizon"
+      : "ReservationButton_ProxyAccess";
+    await setLoginIntent({ pid, provider });
 
     return openLoginModal({ modal, redirectPath: "/api/redirect" });
   }

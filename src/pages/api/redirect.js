@@ -1,5 +1,6 @@
 // src/pages/api/redirect.js
 import { getServerSession } from "@dbcdk/login-nextjs/server";
+import getConfig from "next/config";
 import { decodeCookie } from "@/utils/jwt";
 import {
   decodeIntent,
@@ -7,9 +8,13 @@ import {
   isSafeRedirectUrl,
   LOGIN_INTENT_COOKIE,
 } from "@/lib/loginIntent.utils";
-import { publizonSampleRedirect } from "@/lib/api/manifestation.fragments";
+import {
+  proxyAccessRedirect,
+  publizonSampleRedirect,
+} from "@/lib/api/manifestation.fragments";
 
-const PROFILE = "bibdk21";
+const PROFILE =
+  getConfig()?.publicRuntimeConfig?.fbi_api_force_profile || "bibdk21";
 const AUTH_COOKIE_NAME = "next-auth.session-token";
 
 // Keep redirect_error values predictable (nice for UI + avoids odd URL values)
@@ -39,8 +44,9 @@ function addTypeParam(urlStr, type) {
 
 async function callProfileGraphql(req, profile, queryObj) {
   const origin = getAppOrigin(req);
+  const targetUrl = `${origin}/api/${profile}/graphql`;
 
-  const res = await fetch(`${origin}/api/${profile}/graphql`, {
+  const res = await fetch(targetUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -81,6 +87,21 @@ function fallbackToPid(req, res, pid, reason = REDIRECT_REASONS.UNKNOWN) {
   );
 }
 
+function getProxyAccessDestination(json) {
+  const accessList = json?.data?.manifestation?.access || [];
+  const proxyAccess = accessList.find(
+    (a) =>
+      a?.__typename === "AccessUrl" &&
+      a?.loginRequired === true &&
+      a?.type === "RESOURCE" &&
+      a?.status === "OK" &&
+      typeof a?.proxyUrl === "string" &&
+      a?.proxyUrl
+  );
+
+  return proxyAccess?.proxyUrl || null;
+}
+
 export default async function handler(req, res) {
   await getServerSession(req, res);
 
@@ -95,6 +116,7 @@ export default async function handler(req, res) {
   }
 
   const pid = intent.pid;
+  const provider = intent.provider;
 
   // Optional: login-check (if not logged in, we still fallback to /work/<pid> per your rule)
   const sessionCookie = req.cookies?.[AUTH_COOKIE_NAME];
@@ -108,8 +130,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Build query and call existing proxy
-    const queryObj = publizonSampleRedirect({ pid });
+    const isProxyAccessIntent = provider === "ReservationButton_ProxyAccess";
+    const queryObj = isProxyAccessIntent
+      ? proxyAccessRedirect({ pid })
+      : publizonSampleRedirect({ pid });
     const { status, json } = await callProfileGraphql(req, PROFILE, queryObj);
 
     // Any non-200 or GraphQL errors => fallback
@@ -118,21 +142,31 @@ export default async function handler(req, res) {
       return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
     }
 
-    const accessList = json?.data?.manifestation?.access || [];
-    const publizon = accessList.find((a) => a?.__typename === "Publizon");
-    const agencyUrl = publizon?.agencyUrl;
+    let destination;
 
-    const type =
-      json?.data?.manifestation?.materialTypes?.[0]?.materialTypeSpecific
-        ?.display || null;
+    if (isProxyAccessIntent) {
+      destination = getProxyAccessDestination(json);
+    } else {
+      const accessList = json?.data?.manifestation?.access || [];
+      const publizon = accessList.find((a) => a?.__typename === "Publizon");
+      const agencyUrl = publizon?.agencyUrl;
 
-    if (!agencyUrl) {
-      // Covers "no Publizon access" OR "Publizon without agencyUrl"
-      clearIntentCookie(req, res);
-      return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
+      const type =
+        json?.data?.manifestation?.materialTypes?.[0]?.materialTypeSpecific
+          ?.display || null;
+
+      if (!agencyUrl) {
+        clearIntentCookie(req, res);
+        return fallbackToPid(req, res, pid, REDIRECT_REASONS.UNKNOWN);
+      }
+
+      destination = addTypeParam(agencyUrl, type);
     }
 
-    const destination = addTypeParam(agencyUrl, type);
+    if (!destination) {
+      clearIntentCookie(req, res);
+      return fallbackToPid(req, res, pid, REDIRECT_REASONS.NO_URL);
+    }
 
     if (!isSafeRedirectUrl(destination)) {
       clearIntentCookie(req, res);
