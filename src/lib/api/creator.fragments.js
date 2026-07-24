@@ -347,6 +347,15 @@ export function creatorOverview({ display }) {
   creatorByDisplay(display: $display) {
     display
     viafid
+    editorialData {
+      image {
+        medium
+        large
+        small
+        alt
+        credits
+      }
+    }
     forfatterweb {
       url
       image {

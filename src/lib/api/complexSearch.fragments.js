@@ -255,6 +255,15 @@ export function extraHits({ cql }) {
           display
           firstName
           lastName
+          editorialData{
+            image{
+              medium
+              large
+              small
+              alt
+              credits
+            }
+          }
           wikidata{
             image{
               medium

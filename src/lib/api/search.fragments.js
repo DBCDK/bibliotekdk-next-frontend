@@ -213,6 +213,15 @@ export function extraHits({ q, filters = {} }) {
           display
           firstName
           lastName
+          editorialData {
+            image {
+              medium
+              large
+              small
+              alt
+              credits
+            }
+          }
           wikidata {
             image {
               medium
