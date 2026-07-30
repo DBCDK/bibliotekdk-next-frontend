@@ -96,7 +96,7 @@ const templateProps = {
       descriptionText: Translate({
         context: "options",
         label: "infomedia-link-description",
-        vars: ["infomedia"],
+        vars: ["Retriever"],
       }),
     };
   },
