@@ -494,9 +494,16 @@ function registerSwipeHandlers(target, swipeEnabledRef, handlersRef, onTap) {
   target.addEventListener("pointermove", onPointerMove, { passive: true });
   target.addEventListener("pointerup", onPointerUp, { passive: true });
   target.addEventListener("pointercancel", onCancel, { passive: true });
-  target.addEventListener("mousedown", onMouseDown, { passive: true });
-  target.addEventListener("mousemove", onMouseMove, { passive: true });
-  target.addEventListener("mouseup", onMouseUp, { passive: true });
+
+  // Mouse listeners are a fallback for browsers without pointer events.
+  // Never bind them alongside pointer events: iOS synthesizes a mouse
+  // down/up pair after each tap, which would run finish() twice and fire
+  // onTap (and window.open for external links) twice per tap.
+  if (typeof window === "undefined" || !window.PointerEvent) {
+    target.addEventListener("mousedown", onMouseDown, { passive: true });
+    target.addEventListener("mousemove", onMouseMove, { passive: true });
+    target.addEventListener("mouseup", onMouseUp, { passive: true });
+  }
 }
 
 function waitForLayout(el, timeoutMs = 1400) {
@@ -1456,7 +1463,18 @@ export function useEpubReader({
   const handleTapAt = useCallback(
     (clientX, clientY) => {
       const host = viewerRef?.current;
-      const frame = host?.querySelector?.("iframe");
+      // In spread mode epubjs renders one iframe per visible page, so pick
+      // the frame that actually contains the tap point.
+      const frames = Array.from(host?.querySelectorAll?.("iframe") || []);
+      const frame = frames.find((f) => {
+        const fr = f.getBoundingClientRect();
+        return (
+          clientX >= fr.left &&
+          clientX <= fr.right &&
+          clientY >= fr.top &&
+          clientY <= fr.bottom
+        );
+      });
       const doc = frame?.contentDocument;
       const r = renditionRef.current;
       const book = bookRef.current;
@@ -1489,7 +1507,7 @@ export function useEpubReader({
 
       const hit = (book && normalizeToSpineHref(book, resolved)) || resolved;
       try {
-        r.display(hit);
+        Promise.resolve(r.display(hit)).catch(() => {});
       } catch {}
     },
     [viewerRef]
