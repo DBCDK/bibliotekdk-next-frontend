@@ -14,7 +14,7 @@ describe("Article", () => {
       .contains("Digitale bibliotekstilbud");
   });
 
-  it.skip(`Tab through article previews`, () => {
+  it(`Tab through article previews`, () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
@@ -22,6 +22,7 @@ describe("Article", () => {
       .first()
       .contains("Spørg en bibliotekar")
       .parent()
+      .focus()
       .tab()
       .contains("Bibliotek.dk")
       .parent()
@@ -29,13 +30,13 @@ describe("Article", () => {
       .contains("Digitale bibliotekstilbud");
   });
 
-  it.skip(`Article preview links to article page`, () => {
+  it(`Article preview links to article page`, () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
     cy.get("[data-cy=article-preview]")
       .first()
-      .should("exist")
+      .focus()
       .tab()
       .should("exist")
       .tab()

@@ -1,2 +1,2 @@
-FROM docker-dbc.artifacts.dbccloud.dk/dbc-cypress:old-202621
+FROM docker-dbc.artifacts.dbccloud.dk/dbc-cypress:latest
 # Do custom stuff here

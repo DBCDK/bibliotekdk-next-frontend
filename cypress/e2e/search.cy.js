@@ -376,9 +376,10 @@ describe("Search", () => {
   });
 
   describe("Related search subjects", () => {
-    it.skip(`Can tab through related keywords`, () => {
+    it(`Can tab through related keywords`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--default");
       cy.get("[data-cy=related-subject-heste]")
+        .focus()
         .should("have.attr", "data-cy", "related-subject-heste")
         .tab()
         .should("have.attr", "data-cy", "related-subject-børnebøger")
