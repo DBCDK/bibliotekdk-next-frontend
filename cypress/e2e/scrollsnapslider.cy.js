@@ -31,6 +31,12 @@ describe("ScrollSnapSlider", () => {
     // First scroll
     cy.get("[data-cy=right_arrow]", { timeout: 10000 }).click();
 
+    // Wait for the smooth scroll to actually move the slider
+    // before sampling scroll position (scrolling may start late on slow runs)
+    cy.get("#relatedWorks_slide").should(($el) =>
+      expect($el[0].scrollLeft).to.be.greaterThan(0)
+    );
+
     cy.get("#relatedWorks_slide").should(appendScrollToArrayWithProps);
 
     cy.contains("Hugo i Sølvskoven 2").should(($el) =>
@@ -45,6 +51,10 @@ describe("ScrollSnapSlider", () => {
 
     // Second scroll
     cy.get("[data-cy=right_arrow]", { timeout: 10000 }).click();
+
+    cy.get("#relatedWorks_slide").should(($el) =>
+      expect($el[0].scrollLeft).to.be.greaterThan(leftScroll.at(-1))
+    );
 
     cy.get("#relatedWorks_slide").should(appendScrollToArrayWithProps);
 
