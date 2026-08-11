@@ -313,7 +313,9 @@ export function Content({
             {article?.disclaimer && (
               <div className={styles.disclaimer}>
                 <img src={article?.disclaimer?.logo} alt="logo" />
-                {article?.disclaimer?.text && <Text type="text3">{article?.disclaimer?.text}</Text>}
+                {article?.disclaimer?.text && (
+                  <Text type="text3">{article?.disclaimer?.text}</Text>
+                )}
               </div>
             )}
           </Col>
