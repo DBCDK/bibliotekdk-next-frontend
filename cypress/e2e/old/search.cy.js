@@ -103,6 +103,7 @@ describe("Search => storybook", () => {
     cy.visit("/iframe.html?id=search-pagination--default&viewMode=story");
 
     cy.get("[data-cy=page-1-button]")
+      .focus()
       .should("exist")
       .should("have.attr", "data-cy", "page-1-button")
       .tab()
