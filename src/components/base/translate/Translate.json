@@ -3021,6 +3021,10 @@
         "en": "You have to use your borrower data in the next step"
       },
       "or-mit-id": { "da": "Log ind med MitID", "en": "Login with MitID" },
+      "uses-mitid": {
+        "da": "%s benytter MitID til login",
+        "en": "%s uses MitID to log in"
+      },
       "mit-id": { "da": "MitID", "en": "MitID" },
       "create-library-user": {
         "da": "Opret dig som l\u00e5ner p\u00e5 et bibliotek",
