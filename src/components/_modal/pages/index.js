@@ -14,6 +14,7 @@ import BranchLocalizations from "./branchLocalizations";
 import BranchDetails from "./branchDetails";
 import OrderHistoryDataConsent from "./orderHistoryDataConsent";
 import Login from "./login";
+import MitIDOnly from "./login/mitIDOnly";
 import MobileLogin from "./mobileLogin";
 import OpenAdgangsplatform from "./openAdgangsplatform";
 import LoginNotSupported from "./loginNotSupported";
@@ -51,6 +52,7 @@ const _modal = {
   BranchDetails,
   OrderHistoryDataConsent,
   Login,
+  MitIDOnly,
   MobileLogin,
   LoginNotSupported,
   OpenAdgangsplatform,

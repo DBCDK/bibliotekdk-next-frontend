@@ -28,6 +28,7 @@ export function search({
         agencyUrl
         result {
           borrowerCheck
+          loginBibDkAccess
           culrDataSync
           agencyName
           agencyType

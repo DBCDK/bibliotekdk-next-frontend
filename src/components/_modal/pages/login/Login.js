@@ -84,7 +84,6 @@ export function Login({
     } else {
       collect.collectSearchLibrary();
     }
-
     //save last login branch id
     if (branch?.borrowerCheck) {
       modal.push("openAdgangsplatform", {
@@ -93,6 +92,14 @@ export function Login({
         name: branch.name,
         agencyName: originUrl ? originUrl : branch.agencyName, //TODO do we have originUrl and how does it look like?
         callbackUID: callbackUID,
+        redirectPath,
+      });
+      return;
+    }
+    if (branch?.loginBibDkAccess) {
+      modal.push("mitIDOnly", {
+        agencyName: branch.agencyName,
+        callbackUID,
         redirectPath,
       });
       return;

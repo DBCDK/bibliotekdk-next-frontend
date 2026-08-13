@@ -95,4 +95,25 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
 
     cy.get("[data-cy=header-link-logout] p").should("have.text", "Log ud");
   });
+
+  it("opens MitID modal when selected library has loginBibDkAccess", () => {
+    cy.intercept("POST", fbiApiPath, (req) => {
+      if (req.body?.query?.includes("LibraryFragmentsSearch")) {
+        req.continue((res) => {
+          res.body?.data?.branches?.result?.forEach((branch) => {
+            branch.borrowerCheck = false;
+            branch.loginBibDkAccess = true;
+          });
+        });
+      }
+    });
+
+    cy.visit(nextjsBaseUrl);
+    cy.consentAllowAll();
+    cy.get("[data-cy=header-link-login]").should("be.visible").click();
+    cy.get("[data-cy=pickup-search-input]").should("be.visible").type("Val");
+    cy.contains("Valby Bibliotek").click();
+    cy.contains("benytter MitID til login").should("be.visible");
+    cy.get("[data-cy=mitid-button]").should("be.visible");
+  });
 });
