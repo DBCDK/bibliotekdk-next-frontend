@@ -15,7 +15,7 @@ describe("Multi Order", () => {
 
       cy.contains("Log ind via dit bibliotek");
     });
-    it.only("Should require loaner form to be filled, when ordering to agency without borchk", () => {
+    it("Should require loaner form to be filled, when ordering to agency without borchk", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?args=&id=order-multiorder--unauthenticated-user&viewMode=story"
       );
