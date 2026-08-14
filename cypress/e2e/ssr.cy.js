@@ -181,8 +181,7 @@ describe("Server Side Rendering", () => {
         "/materiale/title_author/work-of%3A870970-basis%3A53189148?type=node"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
-          // Redirect to proper, persistent workId
-          "http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of:800010-katalog:99122931235705763"
+          "http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of:870970-basis:53189148"
         );
 
         expect(res.jsonld.mainEntity["@type"]).to.equal("CreativeWork");
