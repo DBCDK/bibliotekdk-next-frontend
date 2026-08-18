@@ -302,8 +302,34 @@ function injectStyle(doc, { isFixedLayout = false } = {}) {
   doc.head?.appendChild(style);
 }
 
-function registerSwipeHandlers(doc, swipeEnabledRef, handlersRef) {
-  if (!doc) return;
+/**
+ * epubjs renders into an iframe sandboxed with `allow-same-origin` only, so
+ * scripting is disabled inside it and WebKit never delivers touch events to the
+ * listeners we attach from the host page. Making the iframe transparent to
+ * pointer input lets the gesture land on the host element instead, where the
+ * listeners do run. Taps on links are forwarded back in by hit testing.
+ */
+function setIframePointerPassthrough(viewerEl, enabled) {
+  const frames = Array.from(viewerEl?.querySelectorAll?.("iframe") || []);
+  for (const frame of frames) {
+    try {
+      frame.style.pointerEvents = enabled ? "none" : "";
+    } catch {}
+  }
+  return frames.length;
+}
+
+/**
+ * Binds swipe navigation to `target`, which may be a document (the epub iframe)
+ * or a plain element in the host page.
+ *
+ * The host-page binding is what makes swiping work in iOS Safari: epubjs
+ * sandboxes its iframe with `allow-same-origin` only, and WebKit will not
+ * dispatch touch events to listeners the parent attaches to a frame that has
+ * scripting disabled.
+ */
+function registerSwipeHandlers(target, swipeEnabledRef, handlersRef, onTap) {
+  if (!target) return;
 
   let start = null;
   let pointerId = null;
@@ -312,8 +338,8 @@ function registerSwipeHandlers(doc, swipeEnabledRef, handlersRef) {
   const isInteractive = (el) =>
     !!el?.closest?.("a,button,input,select,textarea,label");
 
-  if (doc[boundFlag]) return;
-  doc[boundFlag] = true;
+  if (target[boundFlag]) return;
+  target[boundFlag] = true;
 
   const reset = () => {
     start = null;
@@ -378,7 +404,18 @@ function registerSwipeHandlers(doc, swipeEnabledRef, handlersRef) {
     const elapsed = Date.now() - startedAt;
 
     if (cancelledVertical) return;
-    if (absX < 28 || absX < absY * 1.05) return;
+
+    if (absX < 28 || absX < absY * 1.05) {
+      // A tap, not a swipe. When bound to the host page the iframe is
+      // pointer-events:none, so links inside the book need forwarding.
+      if (onTap && absX < 10 && absY < 10 && elapsed < 500) {
+        try {
+          onTap(x, y);
+        } catch {}
+      }
+      return;
+    }
+
     if (elapsed > 900) return;
 
     const { next, prev } = handlersRef.current || {};
@@ -449,17 +486,24 @@ function registerSwipeHandlers(doc, swipeEnabledRef, handlersRef) {
     reset();
   };
 
-  doc.addEventListener("touchstart", onTouchStart, { passive: true });
-  doc.addEventListener("touchmove", onTouchMove, { passive: false });
-  doc.addEventListener("touchend", onTouchEnd, { passive: true });
-  doc.addEventListener("touchcancel", onCancel, { passive: true });
-  doc.addEventListener("pointerdown", onPointerDown, { passive: true });
-  doc.addEventListener("pointermove", onPointerMove, { passive: true });
-  doc.addEventListener("pointerup", onPointerUp, { passive: true });
-  doc.addEventListener("pointercancel", onCancel, { passive: true });
-  doc.addEventListener("mousedown", onMouseDown, { passive: true });
-  doc.addEventListener("mousemove", onMouseMove, { passive: true });
-  doc.addEventListener("mouseup", onMouseUp, { passive: true });
+  target.addEventListener("touchstart", onTouchStart, { passive: true });
+  target.addEventListener("touchmove", onTouchMove, { passive: false });
+  target.addEventListener("touchend", onTouchEnd, { passive: true });
+  target.addEventListener("touchcancel", onCancel, { passive: true });
+  target.addEventListener("pointerdown", onPointerDown, { passive: true });
+  target.addEventListener("pointermove", onPointerMove, { passive: true });
+  target.addEventListener("pointerup", onPointerUp, { passive: true });
+  target.addEventListener("pointercancel", onCancel, { passive: true });
+
+  // Mouse listeners are a fallback for browsers without pointer events.
+  // Never bind them alongside pointer events: iOS synthesizes a mouse
+  // down/up pair after each tap, which would run finish() twice and fire
+  // onTap (and window.open for external links) twice per tap.
+  if (typeof window === "undefined" || !window.PointerEvent) {
+    target.addEventListener("mousedown", onMouseDown, { passive: true });
+    target.addEventListener("mousemove", onMouseMove, { passive: true });
+    target.addEventListener("mouseup", onMouseUp, { passive: true });
+  }
 }
 
 function waitForLayout(el, timeoutMs = 1400) {
@@ -827,6 +871,11 @@ export function useEpubReader({
               isFullscreen: fullscreenNow,
             });
           }
+          // New view -> new iframe, so re-apply passthrough for the host surface.
+          if (swipeEnabledRef.current) {
+            setIframePointerPassthrough(viewerRef.current, true);
+          }
+
           registerSwipeHandlers(doc, swipeEnabledRef, swipeHandlersRef);
         });
       } catch {}
@@ -834,6 +883,10 @@ export function useEpubReader({
       const relocatedHandler = (loc) => onRelocatedRef.current?.(loc);
       rendition.on("relocated", relocatedHandler);
       rendition.on("rendered", (_section, view) => {
+        if (swipeEnabledRef.current) {
+          setIframePointerPassthrough(viewerRef.current, true);
+        }
+
         const isFixedLayout = isFixedLayoutRef.current;
         if (!isFixedLayout) return;
         const fullscreenNow = isFullscreenRef.current;
@@ -1404,6 +1457,81 @@ export function useEpubReader({
   useEffect(() => {
     swipeHandlersRef.current = { prev: handlePrev, next: handleNext };
   }, [handlePrev, handleNext]);
+
+  // With pointer passthrough enabled the iframe no longer receives taps, so
+  // resolve link clicks ourselves by hit testing the book document.
+  const handleTapAt = useCallback(
+    (clientX, clientY) => {
+      const host = viewerRef?.current;
+      // In spread mode epubjs renders one iframe per visible page, so pick
+      // the frame that actually contains the tap point.
+      const frames = Array.from(host?.querySelectorAll?.("iframe") || []);
+      const frame = frames.find((f) => {
+        const fr = f.getBoundingClientRect();
+        return (
+          clientX >= fr.left &&
+          clientX <= fr.right &&
+          clientY >= fr.top &&
+          clientY <= fr.bottom
+        );
+      });
+      const doc = frame?.contentDocument;
+      const r = renditionRef.current;
+      const book = bookRef.current;
+      if (!doc || !r) return;
+
+      const rect = frame.getBoundingClientRect();
+      const el = doc.elementFromPoint?.(
+        clientX - rect.left,
+        clientY - rect.top
+      );
+      const anchor = el?.closest?.("a[href]");
+      if (!anchor) return;
+
+      const href = anchor.getAttribute("href") || "";
+      const isExternal = /^(https?:|mailto:|tel:)/i.test(href);
+
+      if (isExternal) {
+        try {
+          window.open(href, "_blank", "noopener,noreferrer");
+        } catch {}
+        return;
+      }
+
+      const base = lastHrefRef.current || "";
+      let resolved = href;
+      try {
+        const u = new URL(href, `https://epub.local/${base}`);
+        resolved = u.pathname.replace(/^\//, "") + (u.hash || "");
+      } catch {}
+
+      const hit = (book && normalizeToSpineHref(book, resolved)) || resolved;
+      try {
+        Promise.resolve(r.display(hit)).catch(() => {});
+      } catch {}
+    },
+    [viewerRef]
+  );
+
+  const handleTapAtRef = useRef(handleTapAt);
+  useEffect(() => {
+    handleTapAtRef.current = handleTapAt;
+  }, [handleTapAt]);
+
+  // Host-page swipe surface (works even when the sandboxed iframe swallows events)
+  useEffect(() => {
+    const host = viewerRef?.current;
+    if (!host) return;
+
+    host.style.touchAction = swipeable ? "pan-y" : "";
+    setIframePointerPassthrough(host, swipeable);
+
+    if (!swipeable) return;
+
+    registerSwipeHandlers(host, swipeEnabledRef, swipeHandlersRef, (x, y) =>
+      handleTapAtRef.current?.(x, y)
+    );
+  }, [swipeable, viewerRef, status]);
 
   const handleJump = useCallback(async (href) => {
     const r = renditionRef.current;
