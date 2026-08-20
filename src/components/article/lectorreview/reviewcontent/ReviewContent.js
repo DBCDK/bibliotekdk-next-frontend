@@ -47,7 +47,12 @@ function substituteContentSubstitute(single) {
     );
   });
 
-  return <BodyParser body={placeholder?.replaceAll("\\", '"') || single?.content} Tag={"p"} />;
+  return (
+    <BodyParser
+      body={placeholder?.replaceAll("\\", '"') || single?.content}
+      Tag={"p"}
+    />
+  );
 }
 
 /**
