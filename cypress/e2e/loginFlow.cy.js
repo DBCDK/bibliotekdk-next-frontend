@@ -96,13 +96,13 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=header-link-logout] p").should("have.text", "Log ud");
   });
 
-  it("opens MitID modal when selected library has loginBibDkAccess", () => {
+  it("opens MitID modal when borrowerCheckBibliotekdk is false", () => {
     cy.intercept("POST", fbiApiPath, (req) => {
       if (req.body?.query?.includes("LibraryFragmentsSearch")) {
         req.continue((res) => {
           res.body?.data?.branches?.result?.forEach((branch) => {
-            branch.borrowerCheck = false;
-            branch.loginBibDkAccess = true;
+            branch.borrowerCheck = true;
+            branch.borrowerCheckBibliotekdk = false;
           });
         });
       }

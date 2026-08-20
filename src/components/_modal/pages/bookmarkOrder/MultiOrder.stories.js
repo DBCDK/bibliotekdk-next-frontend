@@ -77,7 +77,6 @@ const BRANCHES = {
     city: "Sjov by",
     borrowerCheck: false,
     culrDataSync: false,
-    loginBibDkAccess: false,
     userParameters: [
       {
         description: "brugerId",
