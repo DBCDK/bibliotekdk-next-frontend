@@ -47,7 +47,7 @@ function substituteContentSubstitute(single) {
     );
   });
 
-  return <BodyParser body={placeholder?.replaceAll("\\", '"')} Tag={"p"} />;
+  return <BodyParser body={placeholder?.replaceAll("\\", '"') || single?.content} Tag={"p"} />;
 }
 
 /**
