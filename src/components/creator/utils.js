@@ -22,7 +22,6 @@ export function getCreatorPortrait(creator) {
     };
   }
 
-
   const forfatterwebUrl =
     creator?.forfatterweb?.image?.medium?.url ||
     creator?.forfatterweb?.image?.large?.url;
