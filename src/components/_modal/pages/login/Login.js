@@ -85,7 +85,7 @@ export function Login({
       collect.collectSearchLibrary();
     }
     //save last login branch id
-    if (branch?.borrowerCheck && branch?.borrowerCheckBibliotekdk === false) {
+    if (branch?.borrowerCheck && branch?.borrowerCheckUsePincode === false) {
       modal.push("mitIDOnly", {
         agencyName: branch.agencyName,
         callbackUID,
