@@ -189,6 +189,12 @@ export function useManifestationAccess({ pids, filter }) {
     // ereolen is closed and replaced by publizon access on th elocal libraries
     access = access?.filter((acc) => acc.__typename !== AccessEnum.EREOL);
 
+    // we no longer use the infomedia service - access entries with only an
+    // infomedia id are treated as if they have no online access
+    access = access?.filter(
+      (acc) => acc.__typename !== AccessEnum.INFOMEDIA_SERVICE
+    );
+
     const accessMap = {};
     access.forEach((entry) => (accessMap[entry.__typename] = entry));
 
