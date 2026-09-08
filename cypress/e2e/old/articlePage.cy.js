@@ -61,7 +61,7 @@ describe("ArticlePage", () => {
       // Metadata
       cy.contains("Titel på Infomedia-artikel");
       cy.contains("Computerworld");
-      cy.contains("Artiklen er leveret af Infomedia");
+      cy.contains("Artiklen er leveret af Retriever");
       cy.contains("Læsetid: 1 min.");
       cy.contains("En kategori");
 
@@ -77,7 +77,7 @@ describe("ArticlePage", () => {
       cy.contains("Noget med kursiv");
 
       // Logo and disclaimer
-      cy.get("img[src$='/infomedia_logo.svg']").should("be.visible");
+      cy.get("img[src$='/retriever.png']").should("be.visible");
       cy.contains(
         "Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse."
       );

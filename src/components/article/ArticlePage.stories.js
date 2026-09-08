@@ -266,9 +266,9 @@ export function InfomediaArticle() {
       category: ["En kategori"],
       creators: [{ name: "Gudrun Jensen" }, { name: "Anders Andersen" }],
       paper: "Computerworld",
-      deliveredBy: "Infomedia",
+      deliveredBy: "Retriever",
       disclaimer: {
-        logo: "/infomedia_logo.svg",
+        logo: "/retriever.png",
         text: "Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse.",
       },
     },

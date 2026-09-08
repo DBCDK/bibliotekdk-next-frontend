@@ -65,9 +65,9 @@ function parseInfomediaArticle(work, infomediaArticle = {}) {
       ?.filter((subject) => subject.type === "TOPIC")
       ?.filter((subject) => subject?.language?.isoCode === "dan")
       .map((subject) => subject.display),
-    deliveredBy: "Infomedia",
+    deliveredBy: "Retriever",
     disclaimer: {
-      logo: "/infomedia_logo.svg",
+      logo: "/retriever.png",
       text: infomediaArticle?.logo?.match(/<p>(.*?)<\/p>/)?.[1],
     },
     pages: manifestation?.physicalDescription?.summaryFull,
