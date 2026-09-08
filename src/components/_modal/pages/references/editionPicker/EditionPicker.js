@@ -4,6 +4,7 @@ import Cover from "@/components/base/cover";
 import styles from "./EditionPicker.module.css";
 import Text from "@/components/base/text";
 import translate from "@/components/base/translate";
+import { getCreatorDisplay } from "@/lib/utils";
 
 const EditionOption = ({ manifestation, onClick, materialKey }) => {
   const { cover, edition, titles, ownerWork, pid } = manifestation;
@@ -35,7 +36,7 @@ const EditionOption = ({ manifestation, onClick, materialKey }) => {
           {edition?.edition && `, ${edition.edition}`}
         </Title>
         <Text type="text2">
-          {ownerWork?.creators?.[0]?.display}
+          {getCreatorDisplay(ownerWork?.creators?.[0])}
           {ownerWork?.workYear?.display && `, ${ownerWork?.workYear?.display}`}
         </Text>
       </div>
@@ -61,7 +62,7 @@ const EditionPicker = ({ context }) => {
         {material?.titles?.full?.[0]}
       </Title>
       <Text type="text2" className={styles.EditionPickerSubTitle}>
-        {material?.creators?.[0]?.display}
+        {getCreatorDisplay(material?.creators?.[0])}
       </Text>
       <Title tag="h4" type="text2" className={styles.MaterialType}>
         {materialType}

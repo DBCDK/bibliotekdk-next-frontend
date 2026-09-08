@@ -20,6 +20,7 @@ import {
 } from "../utils";
 
 import styles from "./Item.module.css";
+import { getCreatorDisplay } from "@/lib/utils";
 
 /**
  *
@@ -32,7 +33,9 @@ function Item({ data, work, isLoading }) {
 
   const date = getDate(data);
   const rating = data.review?.rating;
-  const creator = data.creators?.map(({ display }) => display).join(", ");
+  const creator = data.creators
+    ?.map((creator) => getCreatorDisplay(creator))
+    .join(", ");
   const publisher = getPublisher(data);
   const content = getContent(data);
   const urls = getUrls(data, work) || [];

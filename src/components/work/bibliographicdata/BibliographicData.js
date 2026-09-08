@@ -19,6 +19,7 @@ import isEmpty from "lodash/isEmpty";
 import capitalize from "lodash/capitalize";
 import { createEditionText } from "../details/utils/details.utils";
 import styles from "./BibliographicData.module.css";
+import { getCreatorDisplay } from "@/lib/utils";
 
 /**
  * Export function of the Component
@@ -124,7 +125,7 @@ export function BibliographicData({ manifestations, workId }) {
             // priority 3
             manifestation?.titles?.identifyingAddition ||
             // priority 4
-            manifestation?.creators?.[0]?.display ||
+            getCreatorDisplay(manifestation?.creators?.[0]) ||
             // priority 5
             "";
 

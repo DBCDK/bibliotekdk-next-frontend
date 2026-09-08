@@ -1,7 +1,11 @@
 import Link from "@/components/base/link";
 import Text from "@/components/base/text/Text";
 import Cover from "@/components/base/cover";
-import { encodeTitleCreator, getSeriesUrl } from "@/lib/utils";
+import {
+  encodeTitleCreator,
+  getSeriesUrl,
+  getCreatorDisplay,
+} from "@/lib/utils";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { subjectUrl } from "@/components/work/keywords/Keywords";
 import { useMemo } from "react";
@@ -43,7 +47,9 @@ export function WorkRow({ work, isFirst = false, year, creatorId, isLoading }) {
       .filter((creator) => creator.display !== creatorId)
       .map((creator) => {
         const functionName = creator.roles?.[0]?.function?.singular;
-        return `${creator.display} ${functionName ? `(${functionName})` : ""}`;
+        return `${getCreatorDisplay(creator)} ${
+          functionName ? `(${functionName})` : ""
+        }`;
       }),
   ]
     .filter(Boolean)

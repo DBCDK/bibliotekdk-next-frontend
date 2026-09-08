@@ -2,6 +2,7 @@ export const creatorsFragment = `fragment creatorsFragment on CreatorInterface {
   ... on Corporation {
     __typename
     display
+    andOthers
     nameSort
     roles {
       function {
@@ -14,6 +15,7 @@ export const creatorsFragment = `fragment creatorsFragment on CreatorInterface {
   ... on Person {
     __typename
     display
+    andOthers
     nameSort
     roles {
       function {
@@ -29,6 +31,7 @@ const creatorsFragmentForAccessFactory = `fragment creatorsFragmentForAccessFact
   ... on Corporation {
     __typename
     display
+    andOthers
     nameSort
     roles {
       functionCode
@@ -41,6 +44,7 @@ const creatorsFragmentForAccessFactory = `fragment creatorsFragmentForAccessFact
   ... on Person {
     __typename
     display
+    andOthers
     nameSort
     roles {
       functionCode

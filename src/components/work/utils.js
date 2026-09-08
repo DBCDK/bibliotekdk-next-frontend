@@ -5,7 +5,10 @@ import { useData } from "@/lib/api/api";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
+import {
+  extractCreatorsPrioritiseCorporation,
+  getCreatorDisplay,
+} from "@/lib/utils";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
 export function openAgencyLocalizationsModal({
@@ -58,7 +61,7 @@ function getPageTitle(work) {
   return `${work?.titles?.main[0]}${
     work?.creators && work?.creators[0]
       ? ` af ${extractCreatorsPrioritiseCorporation(work?.creators)
-          ?.map((creator) => creator?.display)
+          ?.map((creator) => getCreatorDisplay(creator))
           ?.join(", ")}`
       : ""
   }`;
@@ -71,7 +74,7 @@ function getPageTitle(work) {
  */
 function getPageDescription(work) {
   const title = work?.titles?.main[0];
-  const creator = work?.creators?.[0]?.display || "";
+  const creator = getCreatorDisplay(work?.creators?.[0]) || "";
 
   const { uniqueMaterialTypes: materialTypesArray } =
     manifestationMaterialTypeFactory(work?.manifestations?.all);

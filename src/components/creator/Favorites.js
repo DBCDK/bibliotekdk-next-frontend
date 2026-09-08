@@ -8,7 +8,12 @@ import Icon from "@/components/base/icon";
 import ChevronSvg from "@/public/icons/chevron.svg";
 import Translate from "@/components/base/translate";
 import Cover from "@/components/base/cover/Cover";
-import { getInfomediaReviewUrl, getWorkUrl, encodeString } from "@/lib/utils";
+import {
+  getInfomediaReviewUrl,
+  getWorkUrl,
+  encodeString,
+  getCreatorDisplay,
+} from "@/lib/utils";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { useData } from "@/lib/api/api";
 import { reviewsForCreator } from "@/lib/api/creator.fragments";
@@ -153,7 +158,7 @@ function mapToFavoritesItem({ work, review }) {
     work?.manifestations?.mostRelevant || work?.manifestations?.all
   )?.detail;
   const reviewerName = review?.creators
-    ?.map((c) => c?.display)
+    ?.map((c) => getCreatorDisplay(c))
     ?.filter(Boolean)
     ?.join(", ");
   const workHref = getWorkUrl(

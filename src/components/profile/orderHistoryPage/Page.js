@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import * as userFragments from "@/lib/api/user.fragments";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { getWorkUrlForProfile } from "@/components/profile/utils";
-import { parseDate } from "@/lib/utils";
+import { parseDate, getCreatorDisplay } from "@/lib/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 const ITEMS_PER_PAGE = 20;
@@ -303,7 +303,7 @@ function WorkInfo({ workId, titles, creators, isDigitalOrder }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
   const title = titles?.main?.[0];
-  const creator = creators?.[0]?.display;
+  const creator = getCreatorDisplay(creators?.[0]);
   const workTitle =
     title || Translate({ context: "profile", label: "titleNotFound" });
 

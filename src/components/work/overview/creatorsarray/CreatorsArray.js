@@ -19,6 +19,7 @@ export function CreatorsArray({ creators: creatorsBeforeFilter, skeleton }) {
               {creator.display}
             </Text>
           </Link>
+          {creator.andOthers ? " m.fl." : ""}
           {creators?.length > index + 1 ? ", " : ""}
         </span>
       );

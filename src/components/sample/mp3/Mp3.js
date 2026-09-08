@@ -5,6 +5,7 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 
 import styles from "./Mp3.module.css";
+import { getCreatorDisplay } from "@/lib/utils";
 
 /**
  * Lille, tilgængelig mp3-afspiller.
@@ -16,7 +17,7 @@ import styles from "./Mp3.module.css";
 export default function AudioSample({ src, className = "", data }) {
   const coverUrl = data?.cover?.large?.url;
   const title = data?.titles?.main?.[0] || "Lydbogssample";
-  const creators = data?.creators?.map((c) => c.display).join(", ");
+  const creators = data?.creators?.map((c) => getCreatorDisplay(c)).join(", ");
 
   return (
     <div className={`${styles.wrap} ${className}`}>

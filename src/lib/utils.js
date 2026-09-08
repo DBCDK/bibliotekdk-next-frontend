@@ -254,6 +254,21 @@ export function extractCreatorsPrioritiseCorporation(creatorsBeforeFilter) {
 }
 
 /**
+ * Get the display name of a creator.
+ * If creator.andOthers is true, "m.fl." is appended to the name
+ * (the creator is listed on behalf of several creators)
+ *
+ * @param {Object} creator
+ * @returns {string|undefined} undefined if creator has no display name
+ */
+export function getCreatorDisplay(creator) {
+  if (!creator?.display) {
+    return undefined;
+  }
+  return creator.andOthers ? `${creator.display} m.fl.` : creator.display;
+}
+
+/**
  * Encode title and creator to be used
  * as part of the URL path
  *

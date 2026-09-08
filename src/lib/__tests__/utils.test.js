@@ -2,7 +2,32 @@ import {
   encodeTitleCreator,
   getCanonicalWorkUrl,
   chainFunctions,
+  getCreatorDisplay,
 } from "../utils";
+
+describe("getCreatorDisplay", () => {
+  it("returns display when andOthers is not set", () => {
+    expect(getCreatorDisplay({ display: "En Forfatter" })).toEqual(
+      "En Forfatter"
+    );
+    expect(
+      getCreatorDisplay({ display: "En Forfatter", andOthers: false })
+    ).toEqual("En Forfatter");
+  });
+
+  it("appends m.fl. when andOthers is true", () => {
+    expect(
+      getCreatorDisplay({ display: "En Forfatter", andOthers: true })
+    ).toEqual("En Forfatter m.fl.");
+  });
+
+  it("returns undefined when creator or display is missing", () => {
+    expect(getCreatorDisplay(undefined)).toBeUndefined();
+    expect(getCreatorDisplay(null)).toBeUndefined();
+    expect(getCreatorDisplay({ andOthers: true })).toBeUndefined();
+    expect(getCreatorDisplay({ display: "", andOthers: true })).toBeUndefined();
+  });
+});
 
 describe("encodeTitleCreator", () => {
   it("regular", () => {
