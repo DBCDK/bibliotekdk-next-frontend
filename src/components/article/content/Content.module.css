@@ -95,6 +95,11 @@
   margin-top: var(--pt10);
   margin-bottom: var(--pt10);
 }
+.disclaimer img {
+  width: 297px;
+  height: auto;
+}
+
 .disclaimer > p {
   margin-top: var(--pt2);
 }

@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
 import { creatorOverview } from "@/lib/api/creator.fragments";
+import { getCreatorPortrait } from "@/components/creator/utils";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate/Translate";
@@ -21,9 +22,12 @@ import Tooltip from "@/components/base/tooltip";
 export function useCreatorOverview(creatorId) {
   const { data, isLoading } = useData(creatorOverview({ display: creatorId }));
 
-  const image = data?.creatorByDisplay?.forfatterweb?.image?.large?.url && {
-    url: data?.creatorByDisplay?.forfatterweb?.image?.large?.url,
-    attributionText: "Forfatterweb",
+  const portrait = getCreatorPortrait(data?.creatorByDisplay);
+
+  const image = portrait && {
+    url: portrait.src,
+    alt: portrait.alt,
+    attributionText: portrait.credits,
   };
 
   return {
@@ -206,7 +210,7 @@ export function Overview({
               <>
                 <Cover
                   src={creatorData?.image?.url}
-                  alt={creatorData?.display}
+                  alt={creatorData?.image?.alt || creatorData?.display}
                   skeleton={isLoading && !creatorData?.image?.url}
                 />
                 {creatorData?.image?.attributionText && (

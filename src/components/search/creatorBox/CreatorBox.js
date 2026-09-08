@@ -5,6 +5,7 @@ import Text from "@/components/base/text";
 import Cover from "@/components/base/cover/Cover";
 import { useRouter } from "next/router";
 import useDataCollect from "@/lib/useDataCollect";
+import { getCreatorPortrait } from "@/components/creator/utils";
 
 function formatOccupation(items) {
   const max = 3;
@@ -55,6 +56,8 @@ export default function CreatorBox({
   const name =
     creatorHit?.display ||
     [creatorHit?.firstName, creatorHit?.lastName].filter(Boolean).join(" ");
+
+  const portrait = getCreatorPortrait(creatorHit);
   const occupation = formatOccupation(creatorHit?.wikidata?.occupation);
 
   const maxAwardsToShow = 3;
@@ -76,14 +79,12 @@ export default function CreatorBox({
 
   return (
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
-      {creatorHit?.forfatterweb?.image?.medium?.url && (
+      {portrait?.src && (
         <div className={styles.portraitWrapper}>
           <Cover
-            src={creatorHit?.forfatterweb?.image?.medium?.url}
-            alt={"creatorData?.display"}
-            skeleton={
-              isLoading && !creatorHit?.forfatterweb?.image?.medium?.url
-            }
+            src={portrait.src}
+            alt={portrait.alt}
+            skeleton={isLoading && !portrait.src}
             size="fill"
             onClick={() => {
               collect.collectCreatorTeaserClick({
@@ -92,15 +93,17 @@ export default function CreatorBox({
               router.push(`/ophav/${encodeURIComponent(creatorHit.display)}`);
             }}
           />
-          <Text
-            type="text5"
-            tag="p"
-            className={styles.attribution}
-            lines={2}
-            clamp
-          >
-            {Translate({ context: "creator", label: "forfatterweb" })}
-          </Text>
+          {portrait?.credits && (
+            <Text
+              type="text5"
+              tag="p"
+              className={styles.attribution}
+              lines={2}
+              clamp
+            >
+              {portrait.credits}
+            </Text>
+          )}
         </div>
       )}
 
