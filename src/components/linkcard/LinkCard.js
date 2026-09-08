@@ -52,7 +52,7 @@ export default function LinkCard({
             <Link className={styles.title}>{title}</Link>
           </Title>
           <Link a={false} target={target}>
-            <Button type="secondary" size="medium" className={styles.button}>
+            <Button type="secondary" size="medium" className={styles.button} asLink>
               {buttonText}
             </Button>
           </Link>
