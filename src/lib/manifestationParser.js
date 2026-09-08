@@ -667,6 +667,7 @@ export function ParsedAndRenderedCreators({
             >
               {C.display}
             </Link>
+            {C?.andOthers ? " m.fl." : ""}
             {parseFunction(C)}
             <br />
           </Text>

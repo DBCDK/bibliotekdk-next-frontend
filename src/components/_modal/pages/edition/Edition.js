@@ -33,6 +33,7 @@ import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 import { useBranchInfo } from "@/components/hooks/useBranchInfo";
 import { useManifestationAccess } from "@/components/hooks/useManifestationAccess";
 import { useOrderService, usePeriodicaForm } from "@/components/hooks/order";
+import { getCreatorDisplay } from "@/lib/utils";
 
 /**
  * Shows grey box with text if no manifestation is found.
@@ -113,7 +114,7 @@ export function Edition({
             lines={1}
           >
             {manifestation?.creators
-              ?.map((creator) => creator?.display)
+              ?.map((creator) => getCreatorDisplay(creator))
               .join(", ")}
           </Text>
         </div>

@@ -8,6 +8,7 @@ import {
   getSeriesUrl,
   getUniverseUrl,
   getWorkUrl,
+  getCreatorDisplay,
 } from "@/lib/utils";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -117,8 +118,9 @@ export function templateForVerticalWorkCard({ material }) {
 
   const fullTitle = tvSeriesTitle || material?.titles?.full?.join(": ");
   const creators = material?.creators;
-  const firstCreator =
-    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+  const firstCreator = getCreatorDisplay(
+    extractCreatorsPrioritiseCorporation(creators)?.[0]
+  );
 
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
@@ -226,8 +228,9 @@ export function templateForUniversePageWork({ material }) {
 export function templateForUniverseWorkBase({ material, classNameAddition }) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
-  const firstCreator =
-    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+  const firstCreator = getCreatorDisplay(
+    extractCreatorsPrioritiseCorporation(creators)?.[0]
+  );
 
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
@@ -304,8 +307,9 @@ export function templateForUniverseSeriesBase({ material, classNameAddition }) {
   const fullTitle = titles[0] || material?.title;
 
   const creators = firstWork?.creators;
-  const firstCreator =
-    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+  const firstCreator = getCreatorDisplay(
+    extractCreatorsPrioritiseCorporation(creators)?.[0]
+  );
 
   const coversBeforeSlice = material?.members?.map((member) =>
     getCoverImage(member?.work?.manifestations?.mostRelevant)
@@ -381,8 +385,9 @@ export function templateForSeriesSlider({ material, series }) {
   const fullTitle = material?.titles?.full?.join(": ");
   const isTvSerie = type === "tvSerie";
   const creators = material?.creators;
-  const firstCreator =
-    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+  const firstCreator = getCreatorDisplay(
+    extractCreatorsPrioritiseCorporation(creators)?.[0]
+  );
 
   const coverSrc = getCoverImage(material?.manifestations?.mostRelevant);
 
@@ -501,7 +506,7 @@ export function templateForBigWorkCard({ includeCreators, isLoading, member }) {
         {((includeCreators && creators && !isEmpty(creators)) || isLoading) && (
           <Text {...propFunc("text2", 8)} title={abstract} skeleton={isLoading}>
             {Translate({ context: "general", label: "by" })}{" "}
-            {creators?.map((creator) => creator.display).join(", ")}
+            {creators?.map((creator) => getCreatorDisplay(creator)).join(", ")}
           </Text>
         )}
         {(abstract || isLoading) && (
@@ -532,8 +537,9 @@ export function templateForBigWorkCard({ includeCreators, isLoading, member }) {
 export function templateForHeaderWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
-  const firstCreator =
-    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+  const firstCreator = getCreatorDisplay(
+    extractCreatorsPrioritiseCorporation(creators)?.[0]
+  );
   const { flatMaterialTypes } = manifestationMaterialTypeFactory([material]);
   const formattedMaterialTypes =
     formatMaterialTypesToPresentation(flatMaterialTypes);
@@ -578,8 +584,9 @@ export function templateForHeaderWorkCard(material) {
 export function templateForRelatedWorks(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
-  const firstCreator =
-    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+  const firstCreator = getCreatorDisplay(
+    extractCreatorsPrioritiseCorporation(creators)?.[0]
+  );
   const formattedMaterialTypes = formatMaterialTypesToPresentation(
     material?.materialTypesArray
   );
@@ -630,8 +637,9 @@ export function templateForLocalizations(
     singleManifestation === true
       ? material?.creators
       : material?.ownerWork?.creators;
-  const firstCreator =
-    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
+  const firstCreator = getCreatorDisplay(
+    extractCreatorsPrioritiseCorporation(creators)?.[0]
+  );
   const formattedMaterialTypes = formatMaterialTypesToPresentation(
     material?.materialTypesArray
   );
@@ -714,7 +722,7 @@ export function templateImageToLeft({
     material?.ownerWork?.titles?.full?.join(": ");
   const creators = material?.creators || material?.ownerWork?.creators;
   const creatorsString = extractCreatorsPrioritiseCorporation(creators)
-    ?.flatMap((c) => c?.display)
+    ?.flatMap((c) => getCreatorDisplay(c))
     .filter((pre) => !isEmpty(pre))
     ?.join(", ");
 

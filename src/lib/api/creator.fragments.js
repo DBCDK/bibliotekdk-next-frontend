@@ -137,6 +137,7 @@ export function worksByCreator({
       }
       creators {
         display
+        andOthers
         ... on Person {
           __typename
           nameSort
@@ -433,6 +434,7 @@ export function reviewsForCreator({ creator, limit = 100, offset = 0 }) {
         hasReview {
           creators {
             display
+            andOthers
           }
           hostPublication {
             title

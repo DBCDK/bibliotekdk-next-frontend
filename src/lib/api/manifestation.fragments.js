@@ -107,6 +107,7 @@ export function publizonSamples({ pids = [] }) {
                 }
                 creators {
                   display
+                  andOthers
                 }
                 cover {
                   large {
