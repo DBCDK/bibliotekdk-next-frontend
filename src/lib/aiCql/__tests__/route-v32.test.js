@@ -5,10 +5,7 @@ jest.mock("@/utils/jwt", () => ({
   decodeCookie: jest.fn(),
 }));
 
-import {
-  selectCreatorSuggestion,
-  translate,
-} from "@/pages/api/ai/v3.2/cql";
+import { selectCreatorSuggestion, translate } from "@/pages/api/ai/v3.2/cql";
 
 const CONFIG = {
   apiKey: "test",
@@ -36,8 +33,7 @@ const AST = {
     { field: "specificmaterialtype", op: "=", values: ["bog"] },
   ],
 };
-const ORIGINAL_CQL =
-  'term.creator="dostojveski" AND worktype=literature';
+const ORIGINAL_CQL = 'term.creator="dostojveski" AND worktype=literature';
 const CORRECTED_CQL =
   'term.creator="F.M. Dostojevskij" AND worktype=literature';
 

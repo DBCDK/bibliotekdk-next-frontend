@@ -60,8 +60,7 @@ export function useWorktype(ast) {
   return {
     ...ast,
     clauses: ast.clauses.map((clause) =>
-      clause?.field === "specificmaterialtype" &&
-      Array.isArray(clause.values)
+      clause?.field === "specificmaterialtype" && Array.isArray(clause.values)
         ? {
             ...clause,
             field: "worktype",
