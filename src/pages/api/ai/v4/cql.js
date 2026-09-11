@@ -70,6 +70,15 @@ function debug(step, data = {}) {
   }
 }
 
+function getOpenRouterErrorMessage(err) {
+  try {
+    const body = JSON.parse(err.body);
+    return body?.error?.message || body?.message || err.message;
+  } catch {
+    return err.message;
+  }
+}
+
 /**
  * One chat completion in "tool" mode, falling back to plain JSON output when
  * OpenRouter has no tool-capable endpoint for the model.
@@ -307,7 +316,9 @@ export default async function handler(req, res) {
         timeout: err.timeout,
       });
       return res.status(err.timeout ? 504 : 502).json({
-        error: err.timeout ? "AI service timeout" : "AI service unavailable",
+        error: err.timeout
+          ? "AI service timeout"
+          : getOpenRouterErrorMessage(err),
       });
     }
     console.error(`${LOG_PREFIX}: request error`, {
