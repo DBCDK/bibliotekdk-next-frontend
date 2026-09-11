@@ -86,6 +86,7 @@ function Page({
       simpel: hasQuery,
       avanceret: hasAdvancedSearch && allowAdvancedSubmit,
       cql: hasCqlSearch || hasAdvancedSearch,
+      ai: hasCqlSearch,
     }[mode] ?? false;
 
   const shouldShowHistory = !isLoading && !hasActiveSearch;

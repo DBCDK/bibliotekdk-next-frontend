@@ -1,0 +1,5 @@
+-when user clicks on the search. the ai-søgning  tab should be still on. right now it switches to cql tab. 
+-the search should be shown in the ai-søgnign tab.
+-the cql should be shown in a conversation like way above or below the search
+-maybe show the src/components/search/advancedSearch/topBar/TopBar.js or similar way of formating. should look good and ux friendly
+-create a ai-readme.md file explaning the setup, the agent, the llm calls etc.

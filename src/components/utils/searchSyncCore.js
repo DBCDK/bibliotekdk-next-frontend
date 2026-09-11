@@ -10,6 +10,7 @@ export const MODE = {
   SIMPLE: "simpel",
   ADVANCED: "avanceret",
   CQL: "cql",
+  AI: "ai",
   HISTORY: "history",
 };
 
@@ -17,6 +18,7 @@ export const MODE_PATH = {
   [MODE.SIMPLE]: "/find/simpel",
   [MODE.ADVANCED]: "/find/avanceret",
   [MODE.CQL]: "/find/cql",
+  [MODE.AI]: "/find/ai",
   [MODE.HISTORY]: "/find/historik/seneste",
 };
 
@@ -96,14 +98,26 @@ export function injectWorkTypeIntoFS(fieldSearch, workType) {
  * - simple.qAll
  * - advanced.fieldSearch
  * - cql.cql
+ * - ai.prompt / ai.cql (natural language prompt + generated CQL)
  * - workTypes (current selected type, default "all")
  */
 export const initialSnap = {
   simple: { qAll: null },
   advanced: { fieldSearch: null },
   cql: { cql: null },
+  ai: { prompt: null, cql: null },
   workTypes: "all",
 };
+
+function cloneSnap(snap) {
+  return {
+    simple: { ...snap.simple },
+    advanced: { ...snap.advanced },
+    cql: { ...snap.cql },
+    ai: { ...(snap.ai || initialSnap.ai) },
+    workTypes: snap.workTypes,
+  };
+}
 
 // ---------------- Reducer with LADDER RULES ----------------
 /**
@@ -111,19 +125,15 @@ export const initialSnap = {
  * - COMMIT_SIMPLE (text)
  * - COMMIT_ADVANCED (fieldSearch)
  * - COMMIT_CQL (cql)
+ * - COMMIT_AI (prompt, cql)
  * - SET_WORKTYPE (workType)
  *
- * lastOrigin (SIMPLE/ADVANCED/CQL or null) is passed in and returned so the
+ * lastOrigin (SIMPLE/ADVANCED/CQL/AI or null) is passed in and returned so the
  * hook can remember where the last real search came from.
  */
 export function reduceCommit(action, snap, lastOrigin) {
   const next = {
-    snap: {
-      simple: { ...snap.simple },
-      advanced: { ...snap.advanced },
-      cql: { ...snap.cql },
-      workTypes: snap.workTypes,
-    },
+    snap: cloneSnap(snap),
     lastOrigin,
   };
 
@@ -140,9 +150,10 @@ export function reduceCommit(action, snap, lastOrigin) {
         next.snap.workTypes = "all";
       }
 
-      if (lastOrigin === MODE.CQL) {
+      if (lastOrigin === MODE.CQL || lastOrigin === MODE.AI) {
         next.snap.advanced.fieldSearch = null;
         next.snap.cql.cql = null;
+        next.snap.ai = { ...initialSnap.ai };
       }
 
       next.lastOrigin = MODE.SIMPLE;
@@ -163,9 +174,10 @@ export function reduceCommit(action, snap, lastOrigin) {
         next.snap.workTypes = "all";
       }
 
-      // If previously at CQL and now committing in ADVANCED, reset CQL rung
-      if (lastOrigin === MODE.CQL) {
+      // If previously at CQL/AI and now committing in ADVANCED, reset upper rungs
+      if (lastOrigin === MODE.CQL || lastOrigin === MODE.AI) {
         next.snap.cql.cql = null;
+        next.snap.ai = { ...initialSnap.ai };
       }
 
       next.lastOrigin = MODE.ADVANCED;
@@ -179,9 +191,26 @@ export function reduceCommit(action, snap, lastOrigin) {
       // CQL commit clears lower rungs + resets workTypes (policy: NO carry-down)
       next.snap.simple.qAll = null;
       next.snap.advanced.fieldSearch = null;
+      next.snap.ai = { ...initialSnap.ai };
       next.snap.workTypes = "all";
 
       next.lastOrigin = MODE.CQL;
+      break;
+    }
+
+    case "COMMIT_AI": {
+      const cql = norm(action.cql);
+      const prompt = norm(action.prompt);
+      next.snap.ai.cql = isNonEmpty(cql) ? cql : null;
+      next.snap.ai.prompt = isNonEmpty(prompt) ? prompt : null;
+
+      // AI commit behaves like a CQL commit: clears lower rungs, no carry-down
+      next.snap.simple.qAll = null;
+      next.snap.advanced.fieldSearch = null;
+      next.snap.cql.cql = null;
+      next.snap.workTypes = "all";
+
+      next.lastOrigin = MODE.AI;
       break;
     }
 
@@ -204,18 +233,14 @@ export function reduceCommit(action, snap, lastOrigin) {
 /**
  * - Always reflect ?workTypes= (fallback "all")
  * - In CQL mode, a cql= param is treated as a COMMIT (and clears others)
+ * - In AI mode, cql= (+ prompt=) params are treated as an AI COMMIT
  * - In ADVANCED mode, fieldSearch without workType => workTypes becomes "all" (bugfix mirror)
  * - IMPORTANT: ADVANCED hydration only sets lastOrigin=ADVANCED when lastOrigin is null
  *              (deep-link / first load). Seeded nav from SIMPLE must not change origin.
  */
 export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
   const next = {
-    snap: {
-      simple: { ...snap.simple },
-      advanced: { ...snap.advanced },
-      cql: { ...snap.cql },
-      workTypes: snap.workTypes,
-    },
+    snap: cloneSnap(snap),
     lastOrigin,
   };
 
@@ -249,8 +274,23 @@ export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
       next.snap.cql.cql = cqlInUrl;
       next.snap.simple.qAll = null;
       next.snap.advanced.fieldSearch = null;
+      next.snap.ai = { ...initialSnap.ai };
       next.snap.workTypes = "all";
       next.lastOrigin = MODE.CQL;
+    }
+  }
+
+  if (currentMode === MODE.AI) {
+    const cqlInUrl = norm(query?.cql);
+    if (isNonEmpty(cqlInUrl)) {
+      const promptInUrl = norm(query?.prompt);
+      next.snap.ai.cql = cqlInUrl;
+      next.snap.ai.prompt = isNonEmpty(promptInUrl) ? promptInUrl : null;
+      next.snap.simple.qAll = null;
+      next.snap.advanced.fieldSearch = null;
+      next.snap.cql.cql = null;
+      next.snap.workTypes = "all";
+      next.lastOrigin = MODE.AI;
     }
   }
 
@@ -289,6 +329,7 @@ export function hydrateFromUrl(currentMode, query, snap, lastOrigin) {
  * 2) ADVANCED commit may seed CQL (with workType)
  * 3) CQL commit never seeds down; going down after CQL shows empty views
  * 4) Returning to SIMPLE should show its committed query ONLY if SIMPLE is the origin
+ * 5) AI commit behaves like CQL (never seeds down) but seeds CQL with the generated query
  */
 export function computeUrlForMode(targetMode, snap, lastOrigin) {
   const empty = () => ({ query: {} });
@@ -304,13 +345,25 @@ export function computeUrlForMode(targetMode, snap, lastOrigin) {
     };
   };
 
-  // 3) Down from CQL → always empty
+  // 3) Down from CQL/AI → always empty
   if (
-    lastOrigin === MODE.CQL &&
+    (lastOrigin === MODE.CQL || lastOrigin === MODE.AI) &&
     (targetMode === MODE.ADVANCED || targetMode === MODE.SIMPLE)
   ) {
     const out = empty();
-    dbgCORE("computeUrlForMode() out CQL→down (empty)", out);
+    dbgCORE("computeUrlForMode() out CQL/AI→down (empty)", out);
+    return out;
+  }
+
+  if (targetMode === MODE.AI) {
+    // Staying on AI keeps its own conversation (prompt + generated cql)
+    if (lastOrigin === MODE.AI && isNonEmpty(snap.ai?.cql)) {
+      const out = { query: { cql: snap.ai.cql, prompt: snap.ai.prompt } };
+      dbgCORE("computeUrlForMode() out AI→AI keep", out);
+      return out;
+    }
+    const out = empty();
+    dbgCORE("computeUrlForMode() out AI empty", out);
     return out;
   }
 
@@ -343,6 +396,12 @@ export function computeUrlForMode(targetMode, snap, lastOrigin) {
         ? { query: { cql: snap.cql.cql } }
         : empty();
       dbgCORE("computeUrlForMode() out CQL→CQL keep/empty", out);
+      return out;
+    }
+    // 5) AI → CQL (seed the editor with the generated cql)
+    if (lastOrigin === MODE.AI && isNonEmpty(snap.ai?.cql)) {
+      const out = { query: { cql: snap.ai.cql } };
+      dbgCORE("computeUrlForMode() out AI→CQL", out);
       return out;
     }
     // 2) ADVANCED → CQL (seed with fieldSearch and workType)

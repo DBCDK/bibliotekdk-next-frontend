@@ -230,7 +230,13 @@ export function useEnhanceSearchHistoryItem() {
     const isAdvanced = !isSimple && !isEmpty(item.fieldSearch);
     const type = Translate({
       context: "improved-search",
-      label: isSimple ? "simple" : isAdvanced ? "advanced" : "cql",
+      label: isSimple
+        ? "simple"
+        : isAdvanced
+        ? "advanced"
+        : item.mode === "ai"
+        ? "ai"
+        : "cql",
     });
 
     const goToItemUrl = () => {

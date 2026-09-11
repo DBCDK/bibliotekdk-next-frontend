@@ -24,6 +24,7 @@ function getModeFromRouter(router) {
   if (base.includes("/find/historik")) return MODE.HISTORY;
   if (base.includes("/find/avanceret")) return MODE.ADVANCED;
   if (base.includes("/find/cql")) return MODE.CQL;
+  if (base.includes("/find/ai")) return MODE.AI;
   return MODE.SIMPLE;
 }
 
@@ -38,7 +39,7 @@ function getModeFromRouter(router) {
  */
 export function useSearchSync() {
   const [snap, setSnap] = useState(initialSnap);
-  const lastOriginRef = useRef(null); // MODE of last commit (SIMPLE/ADVANCED/CQL) or null
+  const lastOriginRef = useRef(null); // MODE of last commit (SIMPLE/ADVANCED/CQL/AI) or null
   const router = useRouter();
 
   const mode = useMemo(() => getModeFromRouter(router), [router.asPath]);
@@ -182,6 +183,28 @@ export function useSearchSync() {
     [snap, pushUrl]
   );
 
+  const handleAiCommit = useCallback(
+    (prompt, cqlString) => {
+      dbgSYNC("handleAiCommit()", { prompt, cqlString });
+      const out = reduceCommit(
+        { type: "COMMIT_AI", prompt, cql: cqlString },
+        snap,
+        lastOriginRef.current
+      );
+      setSnap(out.snap);
+      lastOriginRef.current = out.lastOrigin;
+
+      const q = {};
+      if (out.snap.ai.cql) q.cql = out.snap.ai.cql;
+      if (out.snap.ai.prompt) q.prompt = out.snap.ai.prompt;
+
+      dbgSYNC("handleAiCommit() → pushUrl", { query: q });
+      // Stay on the AI tab; the generated cql is carried in the URL
+      pushUrl(MODE_PATH[MODE.AI], q);
+    },
+    [snap, pushUrl]
+  );
+
   const resetAll = useCallback(() => {
     dbgSYNC("resetAll()", {
       prevSnap: snap,
@@ -204,6 +227,7 @@ export function useSearchSync() {
     handleSimpleCommit,
     handleAdvancedCommit,
     handleCqlCommit,
+    handleAiCommit,
     resetAll,
   };
 }

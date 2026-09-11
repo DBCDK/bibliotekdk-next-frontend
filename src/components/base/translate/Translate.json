@@ -1602,6 +1602,28 @@
       "advanced": { "da": "Avanceret", "en": "Advanced" },
       "cql": { "da": "CQL", "en": "CQL" },
       "cql-desktop": { "da": "CQL-s\u00f8gning", "en": "CQL search" },
+      "ai": { "da": "AI-s\u00f8gning", "en": "AI search" },
+      "ai-placeholder": {
+        "da": "Beskriv med dine egne ord, hvad du s\u00f8ger efter",
+        "en": "Describe in your own words what you are looking for"
+      },
+      "ai-description": {
+        "da": "AI overs\u00e6tter din tekst til en CQL-s\u00f8gning og udf\u00f8rer s\u00f8gningen",
+        "en": "AI translates your text into a CQL search and performs the search"
+      },
+      "ai-loading": { "da": "Overs\u00e6tter...", "en": "Translating..." },
+      "ai-error": {
+        "da": "Kunne ikke overs\u00e6tte din tekst til en s\u00f8gning. Pr\u00f8v igen.",
+        "en": "Could not translate your text into a search. Please try again."
+      },
+      "ai-cql-label": {
+        "da": "Din tekst oversat til CQL-s\u00f8gning",
+        "en": "Your text translated to a CQL search"
+      },
+      "ai-edit-cql": {
+        "da": "Rediger i CQL-s\u00f8gning",
+        "en": "Edit in CQL search"
+      },
       "history-latest": {
         "da": "Seneste s\u00f8gninger",
         "en": "Latest searches"
@@ -2132,6 +2154,8 @@
       "topbar-simple-search-mobile": { "da": "S\u00f8g", "en": "Search" },
       "topbar-advanced-search-mobile": { "da": "Avanceret", "en": "Advanced" },
       "topbar-cql-search-mobile": { "da": "CQL", "en": "CQL" },
+      "topbar-ai-search": { "da": "AI-s\u00f8gning", "en": "AI search" },
+      "topbar-ai-search-mobile": { "da": "AI", "en": "AI" },
       "yourSearch": { "da": "Din s\u00f8gning", "en": "Your search" },
       "search": { "da": "S\u00f8gning", "en": "search" },
       "results": { "da": "Resultater", "en": "Results" },

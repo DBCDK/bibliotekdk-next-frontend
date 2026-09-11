@@ -187,7 +187,8 @@ export default function TopBar({ isLoading = false, className = "" }) {
   const mode = router?.query?.mode || "simpel"; // default fallback
 
   const labelKey =
-    { simpel: "simple", avanceret: "advanced", cql: "cql" }[mode] || "simple";
+    { simpel: "simple", avanceret: "advanced", cql: "cql", ai: "ai" }[mode] ||
+    "simple";
 
   const isMobile = breakpoint === "xs";
   const mobileSurfix = isMobile ? "-mobile" : "";

@@ -68,7 +68,7 @@ export default function Wrap({ page = 1, onWorkClick }) {
   // Mode
   const { query, isReady } = useRouter();
   const isAdvancedMode = query?.mode === "avanceret";
-  const isCqlMode = query?.mode === "cql";
+  const isCqlMode = ["cql", "ai"].includes(query?.mode);
 
   // Block result fetch on submit=false url parameter
   const submit = query?.submit;

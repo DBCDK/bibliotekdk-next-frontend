@@ -106,7 +106,7 @@ export default function FindPage() {
 FindPage.getInitialProps = async (ctx) => {
   const mode = ctx.query.mode || ctx.params?.mode;
 
-  const validModes = ["simpel", "avanceret", "cql"];
+  const validModes = ["simpel", "avanceret", "cql", "ai"];
   if (!validModes.includes(mode)) {
     if (ctx.res) {
       ctx.res.writeHead(302, { Location: "/find/simpel" });
@@ -118,7 +118,7 @@ FindPage.getInitialProps = async (ctx) => {
   const queryFilters = getQueryFilters(ctx.query);
   const queryQ = getQueryQ(ctx.query);
 
-  const modeForFetch = mode === "cql" ? "avanceret" : mode;
+  const modeForFetch = mode === "cql" || mode === "ai" ? "avanceret" : mode;
 
   return await fetchAll([searchFragments.hitcount], ctx, {
     filters: queryFilters,

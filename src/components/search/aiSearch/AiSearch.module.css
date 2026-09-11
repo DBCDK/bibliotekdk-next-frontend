@@ -1,0 +1,91 @@
+.aisearch {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pt1);
+}
+
+.input {
+  flex-grow: 2;
+  width: 100%;
+  max-width: 100%;
+  min-height: var(--pt7);
+  padding: var(--pt1) var(--pt2);
+  border: 1px solid var(--gray);
+  border-radius: 0;
+  -webkit-appearance: none;
+  resize: vertical;
+
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font);
+}
+
+.input:focus {
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
+}
+
+.input:disabled {
+  background-color: var(--concrete);
+  color: var(--gray);
+  cursor: not-allowed;
+}
+
+.button {
+  padding: 0 var(--pt2);
+  max-width: min-content;
+  height: var(--pt7);
+}
+
+.description {
+  padding-top: var(--pt2);
+  color: var(--gray);
+}
+
+.error {
+  color: var(--error-red, #d32f2f);
+}
+
+/* === Output === */
+.output {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt1);
+  padding-top: var(--pt2);
+}
+
+.label {
+  color: var(--gray);
+}
+
+.cql {
+  margin: 0;
+  padding: var(--pt1_5) var(--pt2);
+  background-color: var(--white);
+  border: 1px solid var(--iron);
+  border-left: 3px solid var(--blue);
+  font-family: ibm_plex_mono, Consolas, Monaco, monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cql :global(.token-type_FIELD) {
+  color: #1e874b;
+}
+.cql :global(.token-type_ASSIGNMENT),
+.cql :global(.token-type_WITHIN),
+.cql :global(.token-type_PARENTHESIS_BEGIN),
+.cql :global(.token-type_PARENTHESIS_END),
+.cql :global(.token-type_RANGE_OPERATOR),
+.cql :global(.token-type_OPERATOR) {
+  color: var(--blue);
+}
+
+@media (min-width: 992px) {
+  .button {
+    width: 125px;
+    min-width: 125px;
+  }
+}

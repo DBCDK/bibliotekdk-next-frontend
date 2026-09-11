@@ -14,6 +14,7 @@ import Tabs from "../base/tabs";
 import SimpleSearch from "./simple";
 import AdvancedSearch from "./advancedSearch/advancedSearch/AdvancedSearch";
 import CqlTextArea from "./advancedSearch/cqlTextArea/CqlTextArea";
+import AiSearch from "./aiSearch";
 import WorkTypeMenu from "@/components/search/advancedSearch/workTypeMenu/WorkTypeMenu";
 
 import Translate from "@/components/base/translate";
@@ -37,6 +38,7 @@ export function Search({
   onSimpleCommit,
   onAdvancedCommit,
   onCQLCommit,
+  onAiCommit,
   onResetAll,
 }) {
   const breakpoint = useBreakpoint();
@@ -141,6 +143,28 @@ export function Search({
               </Tab>
 
               <Tab
+                eventKey={MODE.AI}
+                title={Translate({
+                  context: "improved-search",
+                  label: "ai",
+                })}
+              >
+                <Row className={styles.tabRow}>
+                  <Col sm={12} lg={{ span: 9 }} className={styles.content}>
+                    <AiSearch onCommit={onAiCommit} />
+                  </Col>
+                  <Col className={styles.links} sm={12} lg={{ span: 3 }}>
+                    {!isHistory && (
+                      <div>
+                        <IndexesBtn className={styles.indexes} />
+                        <HelpBtn className={styles.help} />
+                      </div>
+                    )}
+                  </Col>
+                </Row>
+              </Tab>
+
+              <Tab
                 eventKey={MODE.HISTORY}
                 title={Translate({
                   context: "improved-search",
@@ -170,6 +194,7 @@ export default function Wrap() {
     handleSimpleCommit,
     handleAdvancedCommit,
     handleCqlCommit,
+    handleAiCommit,
     resetAll,
   } = useSearchSync();
 
@@ -231,6 +256,7 @@ export default function Wrap() {
       onSimpleCommit={handleSimpleCommit}
       onAdvancedCommit={handleAdvancedCommit}
       onCQLCommit={handleCqlCommit}
+      onAiCommit={handleAiCommit}
       onResetAll={handleResetAll}
     />
   );
