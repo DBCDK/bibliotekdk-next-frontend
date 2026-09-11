@@ -187,13 +187,17 @@ export default function TopBar({ isLoading = false, className = "" }) {
   const mode = router?.query?.mode || "simpel"; // default fallback
 
   const labelKey =
-    { simpel: "simple", avanceret: "advanced", cql: "cql", ai: "ai" }[mode] ||
-    "simple";
+    { simpel: "simple", avanceret: "advanced", cql: "cql" }[mode] || "simple";
 
   const isMobile = breakpoint === "xs";
   const mobileSurfix = isMobile ? "-mobile" : "";
 
-  const searchHeading = t("search", `topbar-${labelKey}-search${mobileSurfix}`);
+  const searchHeading =
+    mode === "ai"
+      ? isMobile
+        ? "AI"
+        : "AI-søgning"
+      : t("search", `topbar-${labelKey}-search${mobileSurfix}`);
 
   if (!hasAnyValues) return null;
 

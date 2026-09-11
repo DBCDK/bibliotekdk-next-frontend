@@ -4,14 +4,11 @@ import { useRouter } from "next/router";
 import Button from "@/components/base/button";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
-import Translate from "@/components/base/translate";
 import { tokenize } from "@/components/utils/cql/parser";
 import { TOKEN_TYPES } from "@/components/utils/cql/definitions";
 import { MODE, MODE_PATH } from "@/components/utils/searchSyncCore";
 
 import styles from "./AiSearch.module.css";
-
-const t = (label) => Translate({ context: "improved-search", label });
 
 /**
  * Which translation endpoint to use. Defaults to the newest route (v4: AST →
@@ -49,20 +46,20 @@ function CqlOutput({ cql, isLoading, error }) {
     <div className={styles.output} aria-live="polite">
       {isLoading && (
         <Text type="text4" className={styles.label}>
-          {t("ai-loading")}
+          Oversætter...
         </Text>
       )}
 
       {!isLoading && error && (
         <Text type="text2" className={styles.error} dataCy="ai-search-error">
-          {t("ai-error")}
+          Kunne ikke oversætte din tekst til en søgning. Prøv igen.
         </Text>
       )}
 
       {!isLoading && !error && cql && (
         <>
           <Text type="text4" className={styles.label}>
-            {t("ai-cql-label")}
+            Din tekst oversat til CQL-søgning
           </Text>
           <pre className={styles.cql} data-cy="ai-search-cql">
             <HighlightedCql cql={cql} />
@@ -73,7 +70,7 @@ function CqlOutput({ cql, isLoading, error }) {
               border={{ top: false, bottom: { keepVisible: true } }}
               dataCy="ai-search-edit-cql"
             >
-              {t("ai-edit-cql")}
+              Rediger i CQL-søgning
             </Link>
           </Text>
         </>
@@ -101,7 +98,7 @@ export function AiSearchView({
           value={prompt}
           rows={3}
           data-cy="ai-search-input"
-          placeholder={t("ai-placeholder")}
+          placeholder="Beskriv med dine egne ord, hvad du søger efter"
           onChange={(e) => onChange(e.target.value)}
           disabled={isLoading}
           onKeyDown={(e) => {
@@ -111,7 +108,7 @@ export function AiSearchView({
               onSearch();
             }
           }}
-          aria-label={t("ai")}
+          aria-label="AI-søgning"
         />
         <Button
           className={styles.button}
@@ -120,9 +117,7 @@ export function AiSearchView({
           disabled={isLoading}
           dataCy="ai-search-button"
         >
-          {isLoading
-            ? t("ai-loading")
-            : Translate({ context: "search", label: "advancedSearch_button" })}
+          {isLoading ? "Oversætter..." : "Søg"}
         </Button>
       </div>
 
@@ -130,7 +125,7 @@ export function AiSearchView({
         <CqlOutput cql={output.cql} isLoading={isLoading} error={error} />
       ) : (
         <Text type="text3" className={styles.description}>
-          {t("ai-description")}
+          AI oversætter din tekst til en CQL-søgning og udfører søgningen
         </Text>
       )}
     </div>

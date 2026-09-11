@@ -142,13 +142,7 @@ export function Search({
                 </Row>
               </Tab>
 
-              <Tab
-                eventKey={MODE.AI}
-                title={Translate({
-                  context: "improved-search",
-                  label: "ai",
-                })}
-              >
+              <Tab eventKey={MODE.AI} title="AI-søgning">
                 <Row className={styles.tabRow}>
                   <Col sm={12} lg={{ span: 9 }} className={styles.content}>
                     <AiSearch onCommit={onAiCommit} />
