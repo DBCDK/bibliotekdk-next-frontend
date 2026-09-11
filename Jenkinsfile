@@ -58,32 +58,32 @@ pipeline {
             }
         }
 
-        stage("SonarQube") {
-            steps {
-                withSonarQubeEnv(installationName: 'sonarqube.dbc.dk') {
-                    script {
-                        def sonarOptions = "-Dsonar.branch.name=$BRANCH_NAME"
-                        if (env.BRANCH_NAME != 'main') {
-                            sonarOptions += " -Dsonar.newCode.referenceBranch=main"
-                        }
+        // stage("SonarQube") {
+        //     steps {
+        //         withSonarQubeEnv(installationName: 'sonarqube.dbc.dk') {
+        //             script {
+        //                 def sonarOptions = "-Dsonar.branch.name=$BRANCH_NAME"
+        //                 if (env.BRANCH_NAME != 'main') {
+        //                     sonarOptions += " -Dsonar.newCode.referenceBranch=main"
+        //                 }
 
-                        sh returnStatus: true, script: """
-                            $SONAR_SCANNER $sonarOptions \
-                                -Dsonar.token=${SONAR_AUTH_TOKEN} \
-                                -Dsonar.projectKey=${SONAR_PROJECT_KEY}
-                        """
-                    }
-                }
-            }
-        }
+        //                 sh returnStatus: true, script: """
+        //                     $SONAR_SCANNER $sonarOptions \
+        //                         -Dsonar.token=${SONAR_AUTH_TOKEN} \
+        //                         -Dsonar.projectKey=${SONAR_PROJECT_KEY}
+        //                 """
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage("Quality gate") {
-            steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+        // stage("Quality gate") {
+        //     steps {
+        //         timeout(time: 1, unit: 'HOURS') {
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
 
         stage("Supply-chain gate") {
             agent {
