@@ -23,7 +23,11 @@ import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
 import Skeleton from "@/components/base/skeleton/Skeleton";
 import { getMaterialTypeForPresentation } from "@/lib/manifestationFactoryUtils";
-import { getSessionStorageItem, setSessionStorageItem } from "@/lib/utils";
+import {
+  getSessionStorageItem,
+  setSessionStorageItem,
+  getCreatorDisplay,
+} from "@/lib/utils";
 import { useAnalyzeMaterial } from "@/components/hooks/useAnalyzeMaterial";
 import { useOrderFlow } from "@/components/hooks/order";
 import { useModal } from "@/components/_modal";
@@ -519,10 +523,11 @@ const BookmarkPage = () => {
 
       <div className={styles.listContainer}>
         {populatedBookmarks?.map((bookmark, idx) => {
-          const corporationCreator =
+          const corporationCreator = getCreatorDisplay(
             bookmark?.manifestations?.[0]?.ownerWork.creators?.filter(
               (creator) => creator?.__typename === "Corporation"
-            )[0]?.display;
+            )[0]
+          );
 
           return (
             <MaterialRow
@@ -533,7 +538,9 @@ const BookmarkPage = () => {
               titles={bookmark?.manifestations?.[0]?.titles}
               creator={
                 corporationCreator ||
-                bookmark?.manifestations?.[0]?.ownerWork.creators[0]?.display
+                getCreatorDisplay(
+                  bookmark?.manifestations?.[0]?.ownerWork.creators[0]
+                )
               }
               creators={bookmark?.manifestations?.[0]?.ownerWork.creators}
               materialType={getMaterialTypeForPresentation(

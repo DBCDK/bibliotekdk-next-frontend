@@ -7,6 +7,7 @@ import Text from "@/components/base/text";
 import {
   encodeString,
   extractCreatorsPrioritiseCorporation,
+  getCreatorDisplay,
 } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import {
@@ -52,9 +53,11 @@ export const dataReducer = (dataType, data) => {
         title: data?.manifestation?.titles?.main?.[0] || data?.title,
         titles: data?.manifestation?.titles,
         creator:
-          extractCreatorsPrioritiseCorporation(
-            data?.manifestation?.creators
-          )?.[0]?.display || data?.creator,
+          getCreatorDisplay(
+            extractCreatorsPrioritiseCorporation(
+              data?.manifestation?.creators
+            )?.[0]
+          ) || data?.creator,
         creators: data?.manifestation?.creators,
         materialType: materialTypesPresentation,
         flatMaterialTypes: flatMaterialTypes,
@@ -73,9 +76,11 @@ export const dataReducer = (dataType, data) => {
         title: data?.manifestation?.titles?.main?.[0] || data?.title,
         titles: data?.manifestation?.titles,
         creator:
-          extractCreatorsPrioritiseCorporation(
-            data?.manifestation?.creators
-          )?.[0]?.display || data?.creator,
+          getCreatorDisplay(
+            extractCreatorsPrioritiseCorporation(
+              data?.manifestation?.creators
+            )?.[0]
+          ) || data?.creator,
         creators: data?.manifestation?.creators,
         materialType: materialTypesPresentation,
         flatMaterialTypes: flatMaterialTypes,

@@ -14,6 +14,7 @@ export function orderHistory({ offset, limit }) {
                 workId
                 creators{
                   display
+                  andOthers
                 }
                 titles {
                   main

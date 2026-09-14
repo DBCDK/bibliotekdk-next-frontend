@@ -11,6 +11,7 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Description.module.css";
 import isEmpty from "lodash/isEmpty";
+import { getCreatorDisplay } from "@/lib/utils";
 
 /**
  * Parse creators array to see if description should include information
@@ -25,7 +26,7 @@ function parseCreatorsForInterview(creators) {
   // person(s) being interviewed
   const interviewee = creators
     .filter((creator) => creator?.roles?.[0]?.functionCode === "ive")
-    .map((creator) => creator.display);
+    .map((creator) => getCreatorDisplay(creator));
   // if there are more persons we want the last person to be seperated with "og"
   // like: "jens, peter og hans"
   let intervieweeAsString = "";
@@ -39,7 +40,7 @@ function parseCreatorsForInterview(creators) {
   // person(s) interviewing
   const interviewer = creators
     .filter((creator) => creator?.roles?.[0]?.functionCode === "ivr")
-    .map((creator) => creator.display)
+    .map((creator) => getCreatorDisplay(creator))
     .join(", ");
 
   return (

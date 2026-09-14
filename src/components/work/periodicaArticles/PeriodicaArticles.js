@@ -9,7 +9,7 @@ import Accordion, { Item } from "@/components/base/accordion";
 import translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import { PeriodicaIssuByWork } from "@/lib/api/periodica.fragments";
-import { encodeTitleCreator } from "@/lib/utils";
+import { encodeTitleCreator, getCreatorDisplay } from "@/lib/utils";
 
 /**
  * show articles for an issue wrapped in an accordion
@@ -151,7 +151,9 @@ export function PeriodicaArticle({ manifestation }) {
         </Text>
 
         <Text type="text2" className={styles.creators} lines={2} clamp={true}>
-          {manifestation.creators.map((crea) => crea.display).join(", ")}
+          {manifestation.creators
+            .map((crea) => getCreatorDisplay(crea))
+            .join(", ")}
         </Text>
       </div>
     );

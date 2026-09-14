@@ -117,6 +117,7 @@ export function publizonSamples({ workId }) {
                   }
                   creators {
                     display
+                    andOthers
                   }
                   cover {
                     large {
