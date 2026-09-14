@@ -111,7 +111,8 @@ export async function chatCompletion({
     body.tools = tools;
     body.tool_choice = toolChoice || "required";
   }
-  body.reasoning = { enabled: false };
+  body.reasoning =
+    config.provider === "glyphgate" ? { effort: "low" } : { enabled: false };
 
   if (responseFormat) {
     body.response_format = responseFormat;

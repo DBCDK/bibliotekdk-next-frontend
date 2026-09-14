@@ -5,7 +5,7 @@ jest.mock("@/utils/jwt", () => ({
   decodeCookie: jest.fn(),
 }));
 
-import { translate } from "@/pages/api/ai/v4/cql";
+import { callModel, translate } from "@/pages/api/ai/v4/cql";
 import {
   FIELDS,
   FIELD_ALIASES,
@@ -13,6 +13,7 @@ import {
 } from "@/lib/aiCql/v4/indexes";
 import { selectSuggestion } from "@/lib/aiCql/v4/suggest";
 import { compile } from "@/lib/aiCql/compiler";
+import { getConfig, PROVIDER } from "@/lib/aiCql/v4/provider";
 
 const CONFIG = {
   apiKey: "test",
@@ -78,6 +79,102 @@ function suggester(map) {
   };
   return { suggestImpl, calls };
 }
+
+describe("v4 LLM provider", () => {
+  it("can create GlyphGate config with LLMTOKEN", () => {
+    const config = getConfig(
+      {
+        LLMTOKEN: "glyph-token",
+        LLM_BASE_URL: "https://glyph-gate.test/",
+      },
+      "glyphgate"
+    );
+
+    expect(config).toMatchObject({
+      provider: "glyphgate",
+      apiKey: "glyph-token",
+      baseUrl: "https://glyph-gate.test/v1",
+      model: "google/gemma-4-26B-A4B-internal",
+    });
+  });
+
+  it("uses OpenRouter by default", () => {
+    const config = getConfig({
+      OPENROUTER_API_KEY: "openrouter-token",
+      OPENROUTER_MODEL: "test/openrouter-model",
+    });
+
+    expect(PROVIDER).toBe("openrouter");
+    expect(config).toMatchObject({
+      apiKey: "openrouter-token",
+      model: "test/openrouter-model",
+    });
+  });
+
+  it("sends provider-specific tool and reasoning options", async () => {
+    let requestBody;
+    const fetchImpl = async (url, init) => {
+      requestBody = JSON.parse(init.body);
+      return toolCall({ clauses: [] });
+    };
+
+    await callModel({
+      messages: [],
+      cfg: { ...CONFIG, provider: "glyphgate" },
+      fetchImpl,
+    });
+
+    expect(requestBody.tool_choice).toBe("auto");
+    expect(requestBody.reasoning).toEqual({ effort: "low" });
+
+    await callModel({
+      messages: [],
+      cfg: CONFIG,
+      fetchImpl,
+    });
+
+    expect(requestBody.tool_choice).toEqual({
+      type: "function",
+      function: { name: "build_query" },
+    });
+    expect(requestBody.reasoning).toEqual({ enabled: false });
+  });
+
+  it("retries GlyphGate server errors without tools", async () => {
+    const calls = [];
+    const fetchImpl = async (url, init) => {
+      const body = JSON.parse(init.body);
+      calls.push(body);
+      if (body.tools) {
+        return {
+          ok: false,
+          status: 500,
+          text: async () => "Internal Server Error",
+        };
+      }
+      return {
+        ok: true,
+        status: 200,
+        text: async () =>
+          JSON.stringify({
+            choices: [
+              { message: { content: JSON.stringify({ clauses: [] }) } },
+            ],
+          }),
+      };
+    };
+
+    const result = await callModel({
+      messages: [],
+      cfg: { ...CONFIG, provider: "glyphgate" },
+      fetchImpl,
+    });
+
+    expect(result.mode).toBe("json");
+    expect(calls).toHaveLength(2);
+    expect(calls[1].tools).toBeUndefined();
+  });
+});
 
 describe("v4 pipeline", () => {
   it("replaces open-vocabulary values with the first suggestion", async () => {

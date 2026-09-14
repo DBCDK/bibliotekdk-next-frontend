@@ -42,10 +42,10 @@ import {
   chatCompletion,
   extractToolArguments,
   extractUsage,
-  getConfig,
   OpenRouterError,
 } from "@/lib/aiCql/openrouter";
 import { FIELDS, FIELD_ALIASES } from "@/lib/aiCql/v4/indexes";
+import { getConfig } from "@/lib/aiCql/v4/provider";
 import {
   buildMessages,
   buildSystemPrompt,
@@ -81,7 +81,7 @@ function getOpenRouterErrorMessage(err) {
 
 /**
  * One chat completion in "tool" mode, falling back to plain JSON output when
- * OpenRouter has no tool-capable endpoint for the model.
+ * the provider has no tool-capable endpoint for the model.
  *
  * @returns {Promise<{ json: Object, durationMs: number, mode: string }>}
  */
@@ -90,19 +90,25 @@ export async function callModel({ messages, cfg, fetchImpl }) {
     const r = await chatCompletion({
       messages,
       tools: [TOOL],
-      toolChoice: { type: "function", function: { name: TOOL_NAME } },
+      toolChoice:
+        cfg.provider === "glyphgate"
+          ? "auto"
+          : { type: "function", function: { name: TOOL_NAME } },
       config: cfg,
       fetchImpl,
     });
     return { ...r, mode: "tool" };
   } catch (err) {
-    if (!(err instanceof OpenRouterError) || !err.isRoutingError) {
+    const shouldRetryWithoutTools =
+      err instanceof OpenRouterError &&
+      (err.isRoutingError ||
+        (cfg.provider === "glyphgate" && err.status >= 500));
+    if (!shouldRetryWithoutTools) {
       throw err;
     }
-    console.warn(
-      `${LOG_PREFIX}: no tool-capable endpoint, retrying with JSON output`,
-      { model: cfg.model }
-    );
+    console.warn(`${LOG_PREFIX}: tool call failed, retrying with JSON output`, {
+      model: cfg.model,
+    });
   }
 
   const r = await chatCompletion({
@@ -153,7 +159,7 @@ async function toAst(prompt, { cfg, fetchImpl }) {
  *
  * @param {string} prompt
  * @param {Object} [options]
- * @param {Object} [options.config] OpenRouter config override
+ * @param {Object} [options.config] LLM provider config override
  * @param {Object} [options.suggest] result of getSuggestConfig()
  * @param {string} [options.accessToken] FBI-API bearer token (no lookup without it)
  * @param {Function} [options.fetchImpl] fetch used for the LLM
@@ -265,7 +271,7 @@ export default async function handler(req, res) {
 
   const config = getConfig();
   if (!config.apiKey) {
-    console.error(`${LOG_PREFIX}: OPENROUTER_API_KEY is not configured`);
+    console.error(`${LOG_PREFIX}: LLM provider token is not configured`);
     return res.status(500).json({ error: "AI search is not configured" });
   }
 
