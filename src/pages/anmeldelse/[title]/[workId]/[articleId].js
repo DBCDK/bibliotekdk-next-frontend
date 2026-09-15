@@ -3,9 +3,13 @@ import { useRouter } from "next/router";
 import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import { infomediaArticle } from "@/lib/api/infomedia.fragments";
+import { retrieverArticle } from "@/lib/api/retriever.fragments";
 
-import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
+import {
+  dateToShortDate,
+  numericToISO,
+  timestampToShortDate,
+} from "@/utils/datetimeConverter";
 
 import * as workFragments from "@/lib/api/work.fragments";
 
@@ -54,13 +58,13 @@ export function ReviewPage(props) {
 /**
  * Parse work/article data to a format the Content component likes
  */
-function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
+function parseRetrieverArticle(publicReviewData, work, retrieverArticle) {
   // Review creation date
-  // if signed in, use the dateLine
+  // if signed in, use the publishingDate
   // if public, use the hostPublication?.issue
   // fallbacks to prettify recordCreationDate
   const entityCreated =
-    infomediaArticle?.dateLine ||
+    timestampToShortDate(retrieverArticle?.publishingDate) ||
     dateToShortDate(
       publicReviewData?.hostPublication?.issue ||
         (publicReviewData?.recordCreationDate &&
@@ -72,16 +76,16 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
     creators: publicReviewData?.creators?.map((creator) => {
       return { name: creator?.display };
     }),
-    title: infomediaArticle?.headLine || work?.titles?.main?.[0],
+    title: retrieverArticle?.headline || work?.titles?.main?.[0],
     entityCreated,
     subHeadLine:
-      infomediaArticle?.subHeadLine !== infomediaArticle?.headLine &&
-      infomediaArticle?.subHeadLine,
-    fieldRubrik: infomediaArticle?.hedLine,
+      retrieverArticle?.subHeadline !== retrieverArticle?.headline &&
+      retrieverArticle?.subHeadline,
     body: {
-      value: infomediaArticle?.text,
+      value: retrieverArticle?.fullTextHtml,
     },
-    paper: infomediaArticle?.paper || publicReviewData?.hostPublication?.title,
+    paper:
+      retrieverArticle?.sourceName || publicReviewData?.hostPublication?.title,
     category: work?.subjects?.dbcVerified
       ?.filter((subject) => subject.type === "TOPIC")
       ?.filter((subject) => subject?.language?.isoCode === "dan")
@@ -89,9 +93,10 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
     deliveredBy: "Retriever",
     disclaimer: {
       logo: "/retriever.png",
-      text: infomediaArticle?.logo?.match(/<p>(.*?)<\/p>/)?.[1],
     },
-    pages: publicReviewData?.physicalDescription?.summaryFull,
+    pages:
+      retrieverArticle?.pages ||
+      publicReviewData?.physicalDescription?.summaryFull,
     rating: publicReviewData?.review?.rating,
   };
 }
@@ -115,27 +120,27 @@ export default function Wrap() {
     error: lectorReviewError,
   } = useData(articleId && manifestationForLectorReview({ pid: articleId }));
 
-  const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
+  const hasRetrieverAccess = loanerInfo?.rights?.infomedia;
 
   const {
-    data: infomediaArticleData,
-    isLoading: isLoadingInfomedia,
-    error: infomediaError,
+    data: retrieverArticleData,
+    isLoading: isLoadingRetriever,
+    error: retrieverError,
   } = useData(
-    hasInfomediaAccess && articleId && infomediaArticle({ id: articleId })
+    hasRetrieverAccess && articleId && retrieverArticle({ id: articleId })
   );
 
-  const article = parseInfomediaArticle(
+  const article = parseRetrieverArticle(
     publicReviewData?.[0],
     data?.work,
-    infomediaArticleData?.infomedia?.article
+    retrieverArticleData?.retriever?.article
   );
 
-  if (lectorReviewError && infomediaError) {
+  if (lectorReviewError && retrieverError) {
     return <Custom404 />;
   }
 
-  if (lectorReviewIsLoading || isLoadingWork || isLoadingInfomedia) {
+  if (lectorReviewIsLoading || isLoadingWork || isLoadingRetriever) {
     return <ContentSkeleton></ContentSkeleton>;
   }
 
@@ -148,7 +153,7 @@ export default function Wrap() {
     );
   }
 
-  // make a heading for infomedia articles - just like librarians reviews
+  // make a heading for retriever articles - just like librarians reviews
   const material = {
     pid: publicReviewData?.[0]?.pid,
     titles: { full: data?.work?.titles?.main },
@@ -162,7 +167,7 @@ export default function Wrap() {
       material={material}
       article={article}
       notFound={data && !publicReviewData}
-      isLoading={isLoadingWork || isLoadingInfomedia}
+      isLoading={isLoadingWork || isLoadingRetriever}
       articleId={articleId}
     />
   );

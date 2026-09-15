@@ -78,7 +78,7 @@ export const FilterTypeEnum = Object.freeze({
 
 export const AccessEnum = Object.freeze({
   ACCESS_URL: "AccessUrl",
-  INFOMEDIA_SERVICE: "InfomediaService",
+  RETRIEVER_SERVICE: "RetrieverService",
   EREOL: "Ereol",
   DIGITAL_ARTICLE_SERVICE: "DigitalArticleService",
   INTER_LIBRARY_LOAN: "InterLibraryLoan",

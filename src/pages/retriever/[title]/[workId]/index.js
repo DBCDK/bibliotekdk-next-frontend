@@ -1,7 +1,7 @@
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useRouter } from "next/router";
 import { useData } from "@/lib/api/api";
-import * as infomediaFragments from "@/lib/api/infomedia.fragments";
+import * as retrieverFragments from "@/lib/api/retriever.fragments";
 import Custom404 from "@/pages/404";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 
@@ -16,16 +16,16 @@ export default function Wrap() {
   const pid = reviewPid ? reviewPid : parseForPid(workId);
   const { isAuthenticated } = useAuthentication();
 
-  const infomediaIds = useData(
+  const retrieverIds = useData(
     isAuthenticated &&
       pid &&
-      infomediaFragments.infomediaIdFromPid({ pid: pid })
+      retrieverFragments.retrieverIdFromPid({ pid: pid })
   )
     ?.data?.manifestation?.access?.map((obj) => obj.id)
     .filter((id) => id);
 
-  if (infomediaIds?.length === 1) {
-    router?.replace(`${router?.asPath}/${infomediaIds?.[0]}`);
+  if (retrieverIds?.length === 1) {
+    router?.replace(`${router?.asPath}/${retrieverIds?.[0]}`);
   }
   return <Custom404 />;
 }

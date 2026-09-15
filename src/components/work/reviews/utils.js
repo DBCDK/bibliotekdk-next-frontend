@@ -5,7 +5,7 @@ import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
 import {
   getWorkUrl,
   getMaterialReviewUrl,
-  getInfomediaReviewUrl,
+  getRetrieverReviewUrl,
 } from "@/lib/utils";
 
 /**
@@ -40,8 +40,8 @@ export function getReviewType(data) {
   if (data.review?.reviewByLibrarians?.length > 0) {
     return "isMaterialReview";
   }
-  if (data.access?.find((a) => a.__typename === "InfomediaService")) {
-    return "isInfomediaReview";
+  if (data.access?.find((a) => a.__typename === "RetrieverService")) {
+    return "isRetrieverReview";
   }
   return "isExternalReview";
 }
@@ -127,7 +127,7 @@ export function getUrls(data, work) {
   const title = titles?.main?.[0];
   const isType = getReviewType(data);
   const isMaterialReview = isType === "isMaterialReview";
-  const isInfomediaReview = isType === "isInfomediaReview";
+  const isRetrieverReview = isType === "isRetrieverReview";
 
   const urlTxt = title && encodeString(title);
 
@@ -139,11 +139,11 @@ export function getUrls(data, work) {
     );
   }
 
-  if (isInfomediaReview) {
-    const infomediaAccess = data.access?.find((a) => a.id);
+  if (isRetrieverReview) {
+    const retrieverAccess = data.access?.find((a) => a.id);
     return (
-      infomediaAccess.id && [
-        getInfomediaReviewUrl(urlTxt, workId, infomediaAccess.id),
+      retrieverAccess.id && [
+        getRetrieverReviewUrl(urlTxt, workId, retrieverAccess.id),
       ]
     );
   }

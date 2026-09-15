@@ -19,7 +19,7 @@ describe(`Different ways to open login modal with library that has borrowerCheck
     cy.get("[data-cy=text-log-ind]").should("be.visible");
   });
 
-  it("Infomedia shows correct login modal", () => {
+  it("Retriever shows correct login modal", () => {
     cy.fixture("articlepublicdata.json").then((fixture) => {
       cy.intercept("POST", `${fbiApiPath}`, (req) => {
         if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
@@ -28,7 +28,7 @@ describe(`Different ways to open login modal with library that has borrowerCheck
       });
     });
     cy.visit(
-      `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`,
+      `${nextjsBaseUrl}/retriever/en-artikel/work-of:870971-tsart:39160846/e842b5ee`,
     );
     cy.consentAllowAll();
     cy.get("[data-cy=article-prompt-button-log-ind]")
@@ -59,7 +59,7 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
     cy.get("[data-cy=pickup-search-input]").should("be.visible");
   });
 
-  it("Infomedia login not supported & back button leads back to pick up branch search", () => {
+  it("Retriever login not supported & back button leads back to pick up branch search", () => {
     cy.fixture("articlepublicdata.json").then((fixture) => {
       cy.intercept("POST", `${fbiApiPath}`, (req) => {
         if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
@@ -68,7 +68,7 @@ describe(`Different ways to open login modal with a (FFU) library that does NOT 
       });
     });
     cy.visit(
-      `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`,
+      `${nextjsBaseUrl}/retriever/en-artikel/work-of:870971-tsart:39160846/e842b5ee`,
     );
     cy.consentAllowAll();
     cy.get("[data-cy=article-prompt-button-log-ind]")

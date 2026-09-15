@@ -4,7 +4,7 @@
       "workTypes": ["article"],
       "manifestations": [
         {
-          "title": "Titel på Infomedia-artikel",
+          "title": "Titel på Retriever-artikel",
           "creators": [
             {
               "display": "Gudrun Jensen"

@@ -116,6 +116,11 @@ module.exports = {
   async redirects() {
     return [
       {
+        source: "/infomedia/:path*",
+        destination: "/retriever/:path*",
+        permanent: true,
+      },
+      {
         source: "/hj%C3%A6lp",
         destination: "/hjaelp",
         permanent: true,

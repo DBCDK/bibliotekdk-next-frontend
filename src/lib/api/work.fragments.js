@@ -231,7 +231,7 @@ export function reviews({ workId }) {
                     }
                     access {
                       __typename
-                      ... on InfomediaService {
+                      ... on RetrieverService {
                         id
                       }
                       ... on AccessUrl {
@@ -517,19 +517,19 @@ export function worksInSeries({ workIds }) {
 }
 
 /**
- * Infomedia
+ * Retriever
  *
  * @param {Object} variables
  * @param {string} variables.workId
  *
  * @returns {Object} a query object
  */
-export function infomediaArticlePublicInfo({ workId }) {
+export function retrieverArticlePublicInfo({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
 
     // delay: 4000, // for debugging
-    query: `query InfomediaPublic($workId: String!) {
+    query: `query RetrieverPublic($workId: String!) {
       work(id: $workId) {
         abstract
         workTypes
@@ -1303,7 +1303,7 @@ const manifestationAccess = `fragment manifestationAccess on Manifestation {
       type
       urlText
     }
-    ... on InfomediaService {
+    ... on RetrieverService {
       id
     }
     ... on Ereol {

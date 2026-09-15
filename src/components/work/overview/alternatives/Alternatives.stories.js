@@ -102,7 +102,7 @@ const AlternativeOptionsWithAlternativesStory = {
               },
               {
                 id: 123,
-                __typename: AccessEnum.INFOMEDIA_SERVICE,
+                __typename: AccessEnum.RETRIEVER_SERVICE,
               },
             ],
           },

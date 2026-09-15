@@ -1,5 +1,5 @@
 import { AccessEnum } from "@/lib/enums";
-import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
+import { encodeTitleCreator, retrieverUrl } from "@/lib/utils";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 /**
@@ -74,37 +74,37 @@ export function getAllAccess(manifestations) {
 }
 
 /**
- * Enrich InfomediaAccess with url, origin, and accessType
- * @param singleInfomediaAccess
+ * Enrich RetrieverAccess with url, origin, and accessType
+ * @param singleRetrieverAccess
  * @returns {Access}
  */
-export function enrichInfomediaAccess(singleInfomediaAccess) {
-  return singleInfomediaAccess?.id
+export function enrichRetrieverAccess(singleRetrieverAccess) {
+  return singleRetrieverAccess?.id
     ? {
-        ...singleInfomediaAccess,
-        url: infomediaUrl(
+        ...singleRetrieverAccess,
+        url: retrieverUrl(
           encodeTitleCreator(
-            singleInfomediaAccess?.titles?.[0],
-            singleInfomediaAccess?.creators
+            singleRetrieverAccess?.titles?.[0],
+            singleRetrieverAccess?.creators
           ),
-          `work-of:${singleInfomediaAccess?.pid}`,
-          singleInfomediaAccess.id
+          `work-of:${singleRetrieverAccess?.pid}`,
+          singleRetrieverAccess.id
         ),
-        origin: "infomedia",
-        accessType: "infomedia",
+        origin: "retriever",
+        accessType: "retriever",
       }
-    : singleInfomediaAccess;
+    : singleRetrieverAccess;
 }
 
 /**
  * Enrich any type of access with __typename specific fields
- * Currently only infomediaService-access is enriched
+ * Currently only retrieverService-access is enriched
  * @param singleAccess
  * @returns {Access}
  */
 export function enrichSingleAccess(singleAccess) {
   const enrichMapper = {
-    [AccessEnum.INFOMEDIA_SERVICE]: () => enrichInfomediaAccess(singleAccess),
+    [AccessEnum.RETRIEVER_SERVICE]: () => enrichRetrieverAccess(singleAccess),
   }[singleAccess?.__typename];
 
   return enrichMapper ? enrichMapper() : singleAccess;
@@ -171,14 +171,14 @@ export function prioritiseAccessUrl(access) {
 }
 
 /**
- * Prioritise a __typename InfomediaService-access
+ * Prioritise a __typename RetrieverService-access
  * * From lowest (1) to highest (0) priority (lower number sorts higher)
  * - (1) Missing or Non-string id (assume string id is valid id)
  * - (0) Present id of type string
  * @param access
  * @returns {number}
  */
-export function prioritiseInfomediaService(access) {
+export function prioritiseRetrieverService(access) {
   return typeof access?.id === "string" && access?.id ? 0 : 1;
 }
 
@@ -235,10 +235,10 @@ export function prioritiseInterLibraryLoan(access) {
 /**
  * Prioritised access provides access with an object of primary and secondary priority.
  * - typenamePriority is based on the __typename property in access
- * - -- (Order is: AccessUrl, InfomediaService, Ereol, DigitalArticleService, InterLibraryLoan)
+ * - -- (Order is: AccessUrl, RetrieverService, Ereol, DigitalArticleService, InterLibraryLoan)
  * - accessInternalValuePriority is based on deterministic and prioritised heuristics
  *   within each __typename (eg. "is the url present", "what is the origin", etc.)
- * - -- (Prioritisation specified in {@link prioritiseAccessUrl}, {@link prioritiseInfomediaService},
+ * - -- (Prioritisation specified in {@link prioritiseAccessUrl}, {@link prioritiseRetrieverService},
  *   {@link prioritiseEreol}, {@link prioritiseDigitalArticleService}, {@link prioritiseInterLibraryLoan})
  * @param access
  * @returns {{typenamePriority: (number), accessInternalValuePriority: (number)}}
@@ -248,8 +248,8 @@ export function prioritisedAccess(access) {
     // Et godt mantra: "Hurtigst, derefter tættest på kilden (altså også mest lignende oprindelige tilstand)"
     // ACCESS URL: alt andet > DBC Webarkiv
     [AccessEnum.ACCESS_URL]: () => prioritiseAccessUrl(access),
-    // INFOMEDIA_SERVICE: id > nederst! (manglende id)
-    [AccessEnum.INFOMEDIA_SERVICE]: () => prioritiseInfomediaService(access),
+    // RETRIEVER_SERVICE: id > nederst! (manglende id)
+    [AccessEnum.RETRIEVER_SERVICE]: () => prioritiseRetrieverService(access),
     // EREOL: Ereol > Ereolengo
     [AccessEnum.EREOL]: () => prioritiseEreol(access),
     // DIGITAL_ARTICLE_SERVICE
@@ -320,7 +320,7 @@ export function validInterLibraryLoanAccess(singleAccess) {
 
 /**
  * Provide allowed accesses, divided into 4 seperate arrays:
- * - onlineAccesses: includes __typename: AccessUrl, InfomediaService, Ereol (excluding {@link specialAccessTypes})
+ * - onlineAccesses: includes __typename: AccessUrl, RetrieverService, Ereol (excluding {@link specialAccessTypes})
  * - digitalArticleServiceAccesses: for __typename DigitalArticleService
  * - interLibraryLoanAccesses: for __typename InterLibraryLoanAccesses
  *   and when user does not have DigitalArticleService-access
