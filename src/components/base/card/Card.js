@@ -4,7 +4,7 @@ import Cover from "@/components/base/cover";
 
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
-import { encodeTitleCreator } from "@/lib/utils";
+import { encodeTitleCreator, getCreatorDisplay } from "@/lib/utils";
 
 /**
  * The skeleton card React component
@@ -91,7 +91,7 @@ export default function Card({
               lines={2}
               clamp={true}
             >
-              {creators?.[0]?.display}
+              {getCreatorDisplay(creators?.[0])}
             </Text>
           )}
         </div>

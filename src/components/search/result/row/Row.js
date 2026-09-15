@@ -8,6 +8,7 @@ import Cover from "@/components/base/cover";
 import {
   encodeTitleCreator,
   extractCreatorsPrioritiseCorporation,
+  getCreatorDisplay,
 } from "@/lib/utils";
 import Link from "@/components/base/link";
 
@@ -180,7 +181,7 @@ export default function ResultRow({
   // it is hard to say how many creators we want .. 15 ??
   const numberOfCreatorToShow = 15;
   const creatorsNames = extractCreatorsPrioritiseCorporation(work?.creators)
-    ?.map((creator) => creator.display)
+    ?.map((creator) => getCreatorDisplay(creator))
     .slice(0, numberOfCreatorToShow);
 
   const { filters } = useFilters();

@@ -10,6 +10,7 @@ import { ReviewHeading } from "@/components/article/lectorreview/reviewheading/R
 import { ReviewInformation } from "@/components/article/lectorreview/reviewinformation/ReviewInformation";
 import { ReviewContent } from "@/components/article/lectorreview/reviewcontent/ReviewContent";
 import { SimilarMaterials } from "@/components/article/lectorreview/similarmaterials/SimilarMaterials";
+import { getCreatorDisplay } from "@/lib/utils";
 
 /**
  * LectorReviewPage displays the reviewByLibrarians.
@@ -41,7 +42,7 @@ export function LectorReviewPage({ review }) {
       <ReviewInformation
         creationDate={review?.recordCreationDate}
         reviewCreators={review?.creators
-          ?.map((creator) => creator.display)
+          ?.map((creator) => getCreatorDisplay(creator))
           .join(", ")}
       />
       <ReviewContent lectorReviews={lectorReviews} />

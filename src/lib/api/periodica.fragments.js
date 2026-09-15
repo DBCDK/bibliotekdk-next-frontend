@@ -31,6 +31,7 @@ export function PeriodicaIssuByWork({ id }) {
                 }
                 creators {
                   display
+                  andOthers
                 }
                 manifestations {
                   mostRelevant {
@@ -86,6 +87,7 @@ export function PeriodicaIssuByWork({ id }) {
                     }
                     creators {
                       display
+                      andOthers
                     }
                     abstract
                     subjects {
@@ -264,6 +266,7 @@ export function AllPeriodicaIssuesByworkId({
                       }
                       creators {
                         display
+                        andOthers
                       }
                       abstract
                       subjects {

@@ -269,6 +269,13 @@ function defaultMockResolver(parent, _args, context, info) {
     return parent.url;
   }
 
+  // Booleans default to true, but creators.andOthers is false for most
+  // real creators. Defaulting to true would append "m.fl." to every mocked
+  // creator name, breaking stories and tests that assert on the name.
+  if (fieldName === "andOthers") {
+    return false;
+  }
+
   // No mock resolver was provided for the field
   // We return a default value based on what the
   // return type is
