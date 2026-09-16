@@ -1,19 +1,17 @@
 describe("Overview", () => {
   describe("Page", () => {
-    it(`Displays the contents of a review from infomedia`, () => {
+    it(`Displays the contents of a review from retriever`, () => {
       cy.visit(
-        "/iframe.html?id=articles-page--wrapped-infomedia-review-page&viewMode=story"
+        "/iframe.html?id=articles-page--wrapped-retriever-review-page&viewMode=story"
       );
       cy.contains("Some review headline");
       cy.contains("Some paper (Some page number)");
       cy.contains("Læsetid: 1 min.");
       cy.contains("Some topic, Some other topic");
-      cy.contains("24. December 2000");
+      cy.contains("2000");
       cy.contains("Some creator");
-      cy.contains("Some review subHeadLine");
-      cy.contains("Some hedline");
+      cy.contains("Some review subHeadline");
       cy.contains("Some text given as html ...");
-      cy.contains("Infomedia disclaimer");
     });
     it(`Displays the contents of a lector review`, () => {
       cy.visit(
@@ -64,13 +62,13 @@ describe("Overview", () => {
       );
     });
 
-    it(`infomedia review should link to infomedia page`, () => {
-      cy.get("[data-cy=review-item-isInfomediaReview]")
+    it(`retriever review should link to retriever page`, () => {
+      cy.get("[data-cy=review-item-isRetrieverReview]")
         .contains("Læs anmeldelse")
         .should(
           "have.attr",
           "href",
-          "/anmeldelse/great-book/some-work-id/some-infomedia-id"
+          "/anmeldelse/great-book/some-work-id/some-retriever-id"
         );
     });
 
@@ -96,11 +94,11 @@ describe("Overview", () => {
       cy.wait(200);
       cy.get("[data-cy=right_arrow]").click({ force: true });
       cy.contains("External");
-      cy.contains("Infomedia");
+      cy.contains("Retriever");
 
       cy.wait(200);
       cy.get("[data-cy=right_arrow]").click({ force: true });
-      cy.contains("Infomedia");
+      cy.contains("Retriever");
       cy.contains("External");
       cy.contains("(no url)");
     });
@@ -111,7 +109,7 @@ describe("Overview", () => {
       cy.focused()
         .parent()
         .parent()
-        .should("have.attr", "data-cy", "review-infomedia");
+        .should("have.attr", "data-cy", "review-retriever");
       cy.tabs(1);
       cy.focused().should("have.attr", "data-cy", "link");
     });

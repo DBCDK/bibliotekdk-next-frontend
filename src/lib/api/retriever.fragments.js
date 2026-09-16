@@ -6,24 +6,24 @@
 import { ApiEnums } from "@/lib/api/api";
 
 /**
- * Informedia id
+ * Retriever id
  *
  * @param pid
  * @returns {{variables: {pid}, slowThreshold: number, query: string}}
  */
-export function infomediaIdFromPid({ pid }) {
+export function retrieverIdFromPid({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
       query ($pid: String!) {
         manifestation(pid: $pid) {
           access {
-            ... on InfomediaService {
+            ... on RetrieverService {
               id
             }
           }
         }
-        monitor(name: "bibdknext_work_infomedia")
+        monitor(name: "bibdknext_work_retriever")
       }
     `,
     variables: { pid },
@@ -32,34 +32,33 @@ export function infomediaIdFromPid({ pid }) {
 }
 
 /**
- * Infomedia
+ * Retriever
  *
  * @param {Object} variables
  * @param {string} variables.id
  *
  * @returns {Object} a query object
  */
-export function infomediaArticle({ id }) {
+export function retrieverArticle({ id }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
     query: `
     query ($id: String!) {
-      infomedia(id: $id) {
+      retriever(id: $id) {
         error
         article {
           id
-          headLine
-          subHeadLine
-          dateLine
+          headline
+          subHeadline
           byLine
-          paper
-          text
-          hedLine
-          logo
+          publishingDate
+          pages
+          sourceName
+          fullTextHtml
         }
       }
-      monitor(name: "bibdknext_work_infomedia")
+      monitor(name: "bibdknext_work_retriever")
     }
   `,
     variables: { id },

@@ -398,7 +398,7 @@ export function creatorOverview({ display }) {
 }
 
 /**
- * Fetch up to N works for a creator including review relations (Infomedia etc.)
+ * Fetch up to N works for a creator including review relations (Retriever etc.)
  * Excludes articles and reviews via workType filter.
  */
 export function reviewsForCreator({ creator, limit = 100, offset = 0 }) {
@@ -445,7 +445,7 @@ export function reviewsForCreator({ creator, limit = 100, offset = 0 }) {
           }
           access {
             __typename
-            ... on InfomediaService {
+            ... on RetrieverService {
               id
             }
           }

@@ -33,7 +33,7 @@ export function accessForManifestations({ pids }) {
                 status
                 urlText
               }
-              ... on InfomediaService {
+              ... on RetrieverService {
                 id
               }
               ... on Ereol {

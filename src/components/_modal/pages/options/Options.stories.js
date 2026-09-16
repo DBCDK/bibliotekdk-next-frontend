@@ -22,7 +22,7 @@ export function AllOptions() {
 
   return (
     <>
-      <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
+      <StoryTitle>Url, pdf, retriever and digital copy</StoryTitle>
       <StoryDescription>
         All options. Physical and digital copy are combined into one entry
       </StoryDescription>
