@@ -16,18 +16,20 @@ const agencyTypes = {
   ANDRE: "otherLibrary",
 };
 
-function RemoveLibraryButton({ agencyId, agencyName }) {
+function RemoveLibraryButton({ agencyId, agencyName, culrDataSync }) {
   const modal = useModal();
 
-  return (
-    <IconButton
-      icon={<CloseSvg />}
-      onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
-      alt={Translate({ context: "profile", label: "remove" })}
-    >
-      {Translate({ context: "profile", label: "remove" })}
-    </IconButton>
-  );
+  if (!culrDataSync) {
+    return (
+      <IconButton
+        icon={<CloseSvg />}
+        onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
+        alt={Translate({ context: "profile", label: "remove" })}
+      >
+        {Translate({ context: "profile", label: "remove" })}
+      </IconButton>
+    );
+  }
 }
 
 /**
@@ -40,14 +42,12 @@ function TableItem({
   agencyName,
   agencyId,
   agencyType,
+  culrDataSync,
   municipalityAgencyId,
-  loggedInAgencyId,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
   const isHomeLibrary = municipalityAgencyId === agencyId;
-  const isLoggedInLibrary = loggedInAgencyId === agencyId;
-
   const hasOnlyOneAgency = data.length <= 1;
 
   //const lastUsed = false; // Cannot be implemented yet
@@ -89,7 +89,11 @@ function TableItem({
         </div>
 
         {isFFUAgency && !hasOnlyOneAgency && (
-          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
+          <RemoveLibraryButton
+            agencyId={agencyId}
+            agencyName={agencyName}
+            culrDataSync={culrDataSync}
+          />
         )}
       </div>
     );
@@ -117,7 +121,7 @@ function TableItem({
           <RemoveLibraryButton
             agencyId={agencyId}
             agencyName={agencyName}
-            isLoggedInLibrary={isLoggedInLibrary}
+            culrDataSync={culrDataSync}
           />
         </td>
       )}
