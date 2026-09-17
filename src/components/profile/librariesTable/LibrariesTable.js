@@ -5,6 +5,7 @@ import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import PropTypes from "prop-types";
 
 import { useModal } from "@/components/_modal";
 import CloseSvg from "@/public/icons/close.svg";
@@ -31,6 +32,12 @@ function RemoveLibraryButton({ agencyId, agencyName, culrDataSync }) {
     );
   }
 }
+
+RemoveLibraryButton.propTypes = {
+  agencyId: PropTypes.string,
+  agencyName: PropTypes.string,
+  culrDataSync: PropTypes.bool,
+};
 
 /**
  * Tablerow to be used in LibrariesTable component.
@@ -129,6 +136,15 @@ function TableItem({
   );
 }
 
+TableItem.propTypes = {
+  data: PropTypes.array,
+  agencyName: PropTypes.string,
+  agencyId: PropTypes.string,
+  agencyType: PropTypes.string,
+  culrDataSync: PropTypes.bool,
+  municipalityAgencyId: PropTypes.string,
+};
+
 /**
  * Returns a table of users libraries
  * @param {Object} props
@@ -195,3 +211,8 @@ export default function LibrariesTable({ data, user }) {
     </table>
   );
 }
+
+LibrariesTable.propTypes = {
+  data: PropTypes.array,
+  user: PropTypes.object,
+};
