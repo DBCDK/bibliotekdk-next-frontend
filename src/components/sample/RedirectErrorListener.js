@@ -6,8 +6,8 @@ import useAuthentication from "../hooks/user/useAuthentication";
 
 const ERROR_MESSAGES = {
   no_url: {
-    title: "hasfolk-missing-url-title",
-    text: "hasfolk-missing-url-text",
+    title: "proxy-missing-url-title",
+    text: "proxy-missing-url-text",
   },
   not_logged_in: {
     title: "not-logged-in-title",
