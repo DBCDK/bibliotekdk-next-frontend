@@ -28,6 +28,7 @@ export default function MyLibrariesPage() {
       agencyId: agency?.result[0]?.agencyId,
       agencyName: agency?.result[0]?.agencyName,
       agencyType: agency?.result[0]?.agencyType,
+      culrDataSync: agency?.result[0]?.culrDataSync,
     }))
     .filter((agency) => !!agency.agencyName && !!agency.agencyId);
 
