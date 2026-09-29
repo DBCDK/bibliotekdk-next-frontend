@@ -70,9 +70,7 @@ function parseRetrieverArticle(work, retrieverArticle = {}) {
     disclaimer: {
       logo: "/retriever.png",
     },
-    pages:
-      retrieverArticle?.pages ||
-      manifestation?.physicalDescription?.summaryFull,
+    pages: manifestation?.physicalDescription?.summaryFull,
   };
 }
 
