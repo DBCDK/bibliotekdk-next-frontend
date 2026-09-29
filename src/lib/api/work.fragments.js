@@ -806,6 +806,7 @@ export function fbiOverviewDetail({ workId }) {
               }
               contributors {
                 display
+                andOthers
                 roles {
                   functionCode
                   function {
