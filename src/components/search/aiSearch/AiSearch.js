@@ -15,8 +15,7 @@ import styles from "./AiSearch.module.css";
  * catalogue suggester → CQL); set NEXT_PUBLIC_AI_CQL_ENDPOINT to an older one
  * (/api/ai/v3.2/cql, /api/ai/v3.1/cql, /api/ai/v3/cql, /api/ai/cql) to compare.
  */
-const AI_CQL_ENDPOINT =
-  process.env.NEXT_PUBLIC_AI_CQL_ENDPOINT || "/api/ai/v4/cql";
+const AI_CQL_ENDPOINT = "/api/ai/v6/cql";
 
 /**
  * Syntax highlighted CQL rendered as React elements (no innerHTML, since the

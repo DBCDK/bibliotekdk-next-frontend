@@ -17,7 +17,7 @@
 
 const DEFAULTS = Object.freeze({
   baseUrl: "https://openrouter.ai/api/v1",
-  model: "google/gemma-4-26b-a4b-it",
+  model:  "google/gemma-4-26b-a4b-it", //"qwen/qwen3.6-35b-a3b",
   //model:"google/gemma-3-12b-it",
   timeoutMs: 20000,
   title: "bibliotek.dk AI search",
