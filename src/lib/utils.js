@@ -366,7 +366,7 @@ export function getArticleUrl(title, articleId) {
  * @param {string} id
  * @returns {string}
  */
-export function getInfomediaReviewUrl(title, workId, id) {
+export function getRetrieverReviewUrl(title, workId, id) {
   return `/anmeldelse/${encodeString(title)}/${workId}/${id}`;
 }
 
@@ -422,15 +422,15 @@ export function getCanonicalArticleUrl(props) {
 }
 
 /**
- * Generalised infomediaUrl-builder
+ * Generalised retrieverUrl-builder
  *
  * @param {string} title
  * @param {string} workId
- * @param {string} infomadiaId
+ * @param {string} retrieverId
  * @returns {string}
  */
-export function infomediaUrl(title, workId, infomadiaId) {
-  return `/infomedia/${title}/${workId}/${infomadiaId}`;
+export function retrieverUrl(title, workId, retrieverId) {
+  return `/retriever/${title}/${workId}/${retrieverId}`;
 }
 
 export function uniqueSubjectEntries(oldArray) {

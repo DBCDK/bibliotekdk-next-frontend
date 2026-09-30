@@ -52,14 +52,14 @@ describe("ArticlePage", () => {
     });
   });
 
-  describe("Infomedia article", () => {
-    it(`Shows infomedia data`, () => {
+  describe("Retriever article", () => {
+    it(`Shows retriever data`, () => {
       cy.visit(
-        "/iframe.html?id=articles-page--infomedia-article&viewMode=story"
+        "/iframe.html?id=articles-page--retriever-article&viewMode=story"
       );
 
       // Metadata
-      cy.contains("Titel på Infomedia-artikel");
+      cy.contains("Titel på Retriever-artikel");
       cy.contains("Computerworld");
       cy.contains("Artiklen er leveret af Retriever");
       cy.contains("Læsetid: 1 min.");
@@ -79,13 +79,13 @@ describe("ArticlePage", () => {
       // Logo and disclaimer
       cy.get("img[src$='/retriever.png']").should("be.visible");
       cy.contains(
-        "Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse."
+        "Alt materiale i Retriever er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse."
       );
     });
 
     it("Print article", () => {
       cy.visit(
-        "/iframe.html?id=articles-page--infomedia-article&viewMode=story"
+        "/iframe.html?id=articles-page--retriever-article&viewMode=story"
       );
 
       cy.window().then((win) => {
@@ -111,10 +111,10 @@ describe("ArticlePage", () => {
       });
 
       cy.visit(
-        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
+        `${nextjsBaseUrl}/retriever/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
       );
 
-      //cy.contains("Titel på Infomedia-artikel");
+      //cy.contains("Titel på Retriever-artikel");
       cy.contains("Få adgang til hele artiklen");
 
       cy.get("[data-cy=article-prompt-button-log-ind]").should("be.visible");
@@ -149,7 +149,7 @@ describe("ArticlePage", () => {
       cy.login();
 
       cy.visit(
-        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
+        `${nextjsBaseUrl}/retriever/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
       );
 
       cy.contains(
@@ -180,7 +180,7 @@ describe("ArticlePage", () => {
       });
 
       cy.visit(
-        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
+        `${nextjsBaseUrl}/retriever/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
       );
 
       cy.contains("Siden blev ikke fundet");

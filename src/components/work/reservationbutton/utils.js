@@ -81,7 +81,7 @@ export async function handleGoToLogin(
   // Publizon always requires login
   const isPublizon = a0.__typename === "Publizon";
 
-  // Infomedia articles (have an id) should open in the same window/tab
+  // Retriever articles (have an id) should open in the same window/tab
   const urlTarget = a0.id ? "_self" : "_blank";
 
   // Add a CMS type query param for agencyUrl (only when relevant)

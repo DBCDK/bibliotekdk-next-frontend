@@ -1630,6 +1630,14 @@
         "da": "Der opstod en fejl, da vi fors\u00f8gte at sende dig videre til materialet p\u00e5 dit lokale folkebiblioteks hjemmeside.\u003C/br\u003E\u003C/br\u003EDu kan i stedet finde materialet direkte via dit lokale bibliotek for at f\u00e5 adgang.",
         "en": "An error occurred while we were trying to redirect you to the material on your local public library\u2019s website.\u003C/br\u003E\u003C/br\u003EYou can instead find the material directly via your local library to gain access."
       },
+      "proxy-missing-url-title": {
+        "da": "Dit lokale bibliotek giver ikke adgang",
+        "en": "Your local library does not provide access"
+      },
+      "proxy-missing-url-text": {
+        "da": "Biblioteket i din kommune giver desværre ikke adgang til det pågældende materiale.",
+        "en": "The library in your municipality does not provide access to this material."
+      },
       "not-logged-in-title": {
         "da": "Log ind mislykkedes",
         "en": "Sign-in failed"

@@ -1,7 +1,7 @@
 import {
   checkDigitalCopy,
   checkPhysicalCopy,
-  enrichInfomediaAccess,
+  enrichRetrieverAccess,
   getAllAccess,
   getAllAllowedEnrichedAccessSorted,
   getAllEnrichedAccessSorted,
@@ -10,7 +10,7 @@ import {
   prioritiseAccessUrl,
   prioritiseDigitalArticleService,
   prioritiseEreol,
-  prioritiseInfomediaService,
+  prioritiseRetrieverService,
   prioritiseInterLibraryLoan,
   sortPrioritisedAccess,
 } from "@/lib/accessFactoryUtils";
@@ -208,22 +208,22 @@ describe("getAllAccess", () => {
   });
 });
 
-describe("enrichInfomediaAccess", () => {
+describe("enrichRetrieverAccess", () => {
   it("singleAccess", () => {
-    const actual = enrichInfomediaAccess({
+    const actual = enrichRetrieverAccess({
       titles: ["HeJsÅ"],
       pid: "1loan",
-      __typename: AccessEnum.INFOMEDIA_SERVICE,
+      __typename: AccessEnum.RETRIEVER_SERVICE,
       id: "id_hej",
     });
     const expected = {
       titles: ["HeJsÅ"],
       pid: "1loan",
-      __typename: AccessEnum.INFOMEDIA_SERVICE,
+      __typename: AccessEnum.RETRIEVER_SERVICE,
       id: "id_hej",
-      url: "/infomedia/hejsaa/work-of:1loan/id_hej",
-      origin: "infomedia",
-      accessType: "infomedia",
+      url: "/retriever/hejsaa/work-of:1loan/id_hej",
+      origin: "retriever",
+      accessType: "retriever",
     };
     expect(actual).toEqual(expected);
   });
@@ -272,41 +272,41 @@ describe("prioritiseAccessUrl", () => {
   });
 });
 
-describe("prioritiseInfomediaService", () => {
+describe("prioritiseRetrieverService", () => {
   it("id empty string (expect 1)", () => {
-    const actual = prioritiseInfomediaService({
-      __typename: AccessEnum.INFOMEDIA_SERVICE,
+    const actual = prioritiseRetrieverService({
+      __typename: AccessEnum.RETRIEVER_SERVICE,
       id: "",
     });
     const expected = 1;
     expect(actual).toEqual(expected);
   });
   it("id null (expect 1)", () => {
-    const actual = prioritiseInfomediaService({
-      __typename: AccessEnum.INFOMEDIA_SERVICE,
+    const actual = prioritiseRetrieverService({
+      __typename: AccessEnum.RETRIEVER_SERVICE,
       id: null,
     });
     const expected = 1;
     expect(actual).toEqual(expected);
   });
   it("no id (expect 1)", () => {
-    const actual = prioritiseInfomediaService({
-      __typename: AccessEnum.INFOMEDIA_SERVICE,
+    const actual = prioritiseRetrieverService({
+      __typename: AccessEnum.RETRIEVER_SERVICE,
     });
     const expected = 1;
     expect(actual).toEqual(expected);
   });
   it("with id (expect 0)", () => {
-    const actual = prioritiseInfomediaService({
-      __typename: AccessEnum.INFOMEDIA_SERVICE,
+    const actual = prioritiseRetrieverService({
+      __typename: AccessEnum.RETRIEVER_SERVICE,
       id: "nisse",
     });
     const expected = 0;
     expect(actual).toEqual(expected);
   });
   it("wrong type id (expect 1)", () => {
-    const actual = prioritiseInfomediaService({
-      __typename: AccessEnum.INFOMEDIA_SERVICE,
+    const actual = prioritiseRetrieverService({
+      __typename: AccessEnum.RETRIEVER_SERVICE,
       id: 1,
     });
     const expected = 1;
@@ -407,17 +407,17 @@ describe("prioritiseInterLibraryLoan", () => {
 });
 
 describe("sortPrioritisedAccess", () => {
-  it("AccessUrl, InfomediaService (expect -1)", () => {
+  it("AccessUrl, RetrieverService (expect -1)", () => {
     const actual = sortPrioritisedAccess(
       { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" }
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "2loan" }
     );
     const expected = -1;
     expect(actual).toEqual(expected);
   });
-  it("InfomediaService, AccessUrl (expect +1)", () => {
+  it("RetrieverService, AccessUrl (expect +1)", () => {
     const actual = sortPrioritisedAccess(
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "2loan" },
       { __typename: AccessEnum.ACCESS_URL, pid: "2loan" }
     );
     const expected = 1;
@@ -498,7 +498,7 @@ const manifestationsWithAccess = [
     pid: "2loan",
     access: [
       {
-        __typename: AccessEnum.INFOMEDIA_SERVICE,
+        __typename: AccessEnum.RETRIEVER_SERVICE,
         id: "urla_2_0.dekaa",
         type: "RESOURCE",
       },
@@ -519,7 +519,7 @@ const manifestationsWithAccess = [
     pid: "3loan",
     access: [
       {
-        __typename: AccessEnum.INFOMEDIA_SERVICE,
+        __typename: AccessEnum.RETRIEVER_SERVICE,
         id: "urla_3_0.dekaa",
         type: "RESOURCE",
       },
@@ -555,7 +555,7 @@ const manifestationsWithAccess = [
         url: "urla_4_2.dekaa",
         type: "RESOURCE",
       },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: 1231, type: "RESOURCE" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, id: 1231, type: "RESOURCE" },
     ],
   },
 ];
@@ -568,9 +568,9 @@ describe("getAllEnrichedAccessSorted", () => {
       { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
       { __typename: AccessEnum.ACCESS_URL, pid: "1loan" },
       { __typename: AccessEnum.ACCESS_URL, pid: "3loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "3loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "4loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "3loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "4loan" },
       { __typename: AccessEnum.EREOL, pid: "4loan" },
       { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "2loan" },
       { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "4loan" },
@@ -597,9 +597,9 @@ describe("getAllAllowedEnrichedAccessSorted", () => {
     const expected = [
       { __typename: AccessEnum.ACCESS_URL, pid: "4loan" },
       { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "3loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "4loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "3loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "4loan" },
       { __typename: AccessEnum.EREOL, pid: "4loan" },
       { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "2loan" },
       { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "4loan" },
@@ -618,9 +618,9 @@ describe("getAllAllowedEnrichedAccessSorted", () => {
     const expected = [
       { __typename: AccessEnum.ACCESS_URL, pid: "4loan" },
       { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "3loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "4loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "3loan" },
+      { __typename: AccessEnum.RETRIEVER_SERVICE, pid: "4loan" },
       { __typename: AccessEnum.EREOL, pid: "4loan" },
       { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "2loan" },
       { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "3loan" },
@@ -758,7 +758,7 @@ describe("checkDigitalCopy", () => {
       {
         titles: ["HeJsÅ"],
         pid: "1loan",
-        __typename: AccessEnum.INFOMEDIA_SERVICE,
+        __typename: AccessEnum.RETRIEVER_SERVICE,
         id: "id_hej",
       },
       {
@@ -783,7 +783,7 @@ describe("checkPhysicalCopy", () => {
       {
         titles: ["HeJsÅ"],
         pid: "1loan",
-        __typename: AccessEnum.INFOMEDIA_SERVICE,
+        __typename: AccessEnum.RETRIEVER_SERVICE,
         id: "id_hej",
       },
       {

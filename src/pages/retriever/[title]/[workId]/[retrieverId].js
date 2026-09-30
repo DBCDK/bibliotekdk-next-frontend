@@ -4,7 +4,7 @@ import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import * as workFragments from "@/lib/api/work.fragments";
-import * as infomediaFragments from "@/lib/api/infomedia.fragments";
+import * as retrieverFragments from "@/lib/api/retriever.fragments";
 
 import {
   Content,
@@ -16,7 +16,7 @@ import { timestampToShortDate } from "@/utils/datetimeConverter";
 import Error from "next/error";
 import useLoanerInfo from "@/components/hooks/user/useLoanerInfo";
 
-export function InfomediaArticle(props) {
+export function RetrieverArticle(props) {
   const { articleId, article, notFound, isLoading } = props;
 
   const router = useRouter();
@@ -42,25 +42,26 @@ export function InfomediaArticle(props) {
 /**
  * Parse work/article data to a format the Content component likes
  */
-function parseInfomediaArticle(work, infomediaArticle = {}) {
+function parseRetrieverArticle(work, retrieverArticle = {}) {
   const manifestation = work?.manifestations?.latest;
   return {
     creators: work?.creators?.map((creator) => {
       return { name: creator?.display };
     }),
-    title: infomediaArticle?.headLine || work?.titles?.main?.[0],
+    title: retrieverArticle?.headline || work?.titles?.main?.[0],
     entityCreated:
-      infomediaArticle?.dateLine ||
+      timestampToShortDate(retrieverArticle?.publishingDate) ||
       (manifestation?.hostPublication?.issue &&
         timestampToShortDate(manifestation?.hostPublication?.issue)),
     subHeadLine:
-      infomediaArticle?.subHeadLine !== infomediaArticle?.headLine &&
-      infomediaArticle?.subHeadLine,
-    fieldRubrik: infomediaArticle?.hedLine || work?.abstract,
+      retrieverArticle?.subHeadline !== retrieverArticle?.headline &&
+      retrieverArticle?.subHeadline,
+    fieldRubrik: work?.abstract,
     body: {
-      value: infomediaArticle?.text,
+      value: retrieverArticle?.fullTextHtml,
     },
-    paper: infomediaArticle?.paper || manifestation?.hostPublication?.title,
+    paper:
+      retrieverArticle?.sourceName || manifestation?.hostPublication?.title,
     category: work?.subjects?.dbcVerified
       ?.filter((subject) => subject.type === "TOPIC")
       ?.filter((subject) => subject?.language?.isoCode === "dan")
@@ -68,39 +69,40 @@ function parseInfomediaArticle(work, infomediaArticle = {}) {
     deliveredBy: "Retriever",
     disclaimer: {
       logo: "/retriever.png",
-      text: infomediaArticle?.logo?.match(/<p>(.*?)<\/p>/)?.[1],
     },
-    pages: manifestation?.physicalDescription?.summaryFull,
+    pages:
+      retrieverArticle?.pages ||
+      manifestation?.physicalDescription?.summaryFull,
   };
 }
 
 export default function Wrap() {
   const router = useRouter();
-  const { workId, infomediaId } = router.query;
+  const { workId, retrieverId } = router.query;
   const { loanerInfo } = useLoanerInfo();
 
-  const hasInfomediaAccess = loanerInfo?.rights?.infomedia;
+  const hasRetrieverAccess = loanerInfo?.rights?.infomedia;
 
-  const { data: infomediaPublicData, isLoading: isLoadingInfomediaPublic } =
-    useData(workId && workFragments.infomediaArticlePublicInfo({ workId }));
+  const { data: retrieverPublicData, isLoading: isLoadingRetrieverPublic } =
+    useData(workId && workFragments.retrieverArticlePublicInfo({ workId }));
 
-  const { data: infomediaArticleData, isLoading: isLoadingInfomedia } = useData(
-    hasInfomediaAccess &&
-      infomediaId &&
-      infomediaFragments.infomediaArticle({ id: infomediaId })
+  const { data: retrieverArticleData, isLoading: isLoadingRetriever } = useData(
+    hasRetrieverAccess &&
+      retrieverId &&
+      retrieverFragments.retrieverArticle({ id: retrieverId })
   );
 
-  const article = parseInfomediaArticle(
-    infomediaPublicData?.work,
-    infomediaArticleData?.infomedia?.article
+  const article = parseRetrieverArticle(
+    retrieverPublicData?.work,
+    retrieverArticleData?.retriever?.article
   );
 
   return (
-    <InfomediaArticle
+    <RetrieverArticle
       article={article}
-      notFound={infomediaPublicData && !infomediaPublicData.work}
-      isLoading={isLoadingInfomediaPublic || isLoadingInfomedia}
-      articleId={infomediaId}
+      notFound={retrieverPublicData && !retrieverPublicData.work}
+      isLoading={isLoadingRetrieverPublic || isLoadingRetriever}
+      articleId={retrieverId}
     />
   );
 }

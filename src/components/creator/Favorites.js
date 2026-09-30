@@ -9,7 +9,7 @@ import ChevronSvg from "@/public/icons/chevron.svg";
 import Translate from "@/components/base/translate";
 import Cover from "@/components/base/cover/Cover";
 import {
-  getInfomediaReviewUrl,
+  getRetrieverReviewUrl,
   getWorkUrl,
   encodeString,
   getCreatorDisplay,
@@ -40,10 +40,10 @@ function parseIssueISO(issue) {
 }
 
 /**
- * Check that a review is from Infomedia.
+ * Check that a review is from Retriever.
  */
-function isInfomedia(review) {
-  return review?.access?.some((a) => a?.__typename === "InfomediaService");
+function isRetriever(review) {
+  return review?.access?.some((a) => a?.__typename === "RetrieverService");
 }
 
 /**
@@ -83,14 +83,14 @@ function sortByDateDesc(reviews) {
  * Returns review with parsed date info attached.
  */
 function selectBestReview(reviews = []) {
-  const infomediaReviews = reviews.filter(isInfomedia);
+  const retrieverReviews = reviews.filter(isRetriever);
 
-  if (infomediaReviews.length === 0) {
+  if (retrieverReviews.length === 0) {
     return null;
   }
 
   // Separate reviews with and without ratings
-  const withRatings = infomediaReviews
+  const withRatings = retrieverReviews
     .map((r) => ({
       ...r,
       ratingPercentage: toRatingPercentage(r),
@@ -112,7 +112,7 @@ function selectBestReview(reviews = []) {
   }
 
   // Otherwise, sort by date (newest first)
-  return sortByDateDesc(infomediaReviews)[0];
+  return sortByDateDesc(retrieverReviews)[0];
 }
 
 /**
@@ -151,8 +151,8 @@ function mapToFavoritesItem({ work, review }) {
   const mainTitle = Array.isArray(work?.titles?.main)
     ? work?.titles?.main?.[0]
     : work?.titles?.main;
-  const accessInf = review?.access?.find(
-    (a) => a?.__typename === "InfomediaService"
+  const accessRet = review?.access?.find(
+    (a) => a?.__typename === "RetrieverService"
   );
   const coverDetail = getCoverImage(
     work?.manifestations?.mostRelevant || work?.manifestations?.all
@@ -175,7 +175,7 @@ function mapToFavoritesItem({ work, review }) {
     date: review?.hostPublication?.issue || "",
     workTitle: mainTitle || "",
     workId: work?.workId || "",
-    infomediaId: accessInf?.id || "",
+    retrieverId: accessRet?.id || "",
     cover: coverDetail || null,
     workHref,
     reviewsCount: work?.relations?.hasReview?.length || 0,
@@ -264,11 +264,11 @@ function WorkReviewItem({ item, isLoading }) {
                 <span>
                   <Link
                     href={
-                      item?.infomediaId && item?.workId
-                        ? getInfomediaReviewUrl(
+                      item?.retrieverId && item?.workId
+                        ? getRetrieverReviewUrl(
                             item.workTitle || "",
                             item.workId,
-                            item.infomediaId
+                            item.retrieverId
                           )
                         : "#"
                     }

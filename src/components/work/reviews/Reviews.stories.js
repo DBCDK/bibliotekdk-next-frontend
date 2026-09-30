@@ -37,9 +37,9 @@ WrappedReviewsSlider.parameters = {
               reviewAvailableAtExternalSite(5),
               reviewAvailableAtExternalSite(6),
               reviewAvailableAtExternalSite(7),
-              reviewAvailableAtInfomedia(8),
-              reviewAvailableAtInfomedia(9),
-              reviewAvailableAtInfomedia(10),
+              reviewAvailableAtRetriever(8),
+              reviewAvailableAtRetriever(9),
+              reviewAvailableAtRetriever(10),
               librariansReview(11),
               librariansReview(12),
             ],
@@ -59,7 +59,7 @@ export function LoadingSlider() {
     <div>
       <StoryTitle>Loading</StoryTitle>
       <StoryDescription>
-        The loading/skeleton version of the review slider, uses the Infomedia
+        The loading/skeleton version of the review slider, uses the Retriever
         template as skeleton elements.
       </StoryDescription>
       <ReviewsSkeleton />
@@ -128,8 +128,8 @@ const reviewAvailableAtExternalSite = (number = 1) => {
   };
 };
 
-// Review that is available via infomedia
-const reviewAvailableAtInfomedia = (day = 1) => {
+// Review that is available via retriever
+const reviewAvailableAtRetriever = (day = 1) => {
   return {
     pid: "some pid",
     creators: [
@@ -139,13 +139,13 @@ const reviewAvailableAtInfomedia = (day = 1) => {
     ],
     access: [
       {
-        __resolveType: AccessEnum.INFOMEDIA_SERVICE,
-        id: "some-infomedia-id",
+        __resolveType: AccessEnum.RETRIEVER_SERVICE,
+        id: "some-retriever-id",
       },
       { __resolveType: AccessEnum.INTER_LIBRARY_LOAN },
     ],
     hostPublication: {
-      title: "Infomedia publication",
+      title: "Retriever publication",
       issue: `2005-06-${day}`,
     },
     recordCreationDate: "20050627",

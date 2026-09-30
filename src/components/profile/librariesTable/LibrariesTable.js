@@ -5,6 +5,7 @@ import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
+import PropTypes from "prop-types";
 
 import { useModal } from "@/components/_modal";
 import CloseSvg from "@/public/icons/close.svg";
@@ -16,19 +17,27 @@ const agencyTypes = {
   ANDRE: "otherLibrary",
 };
 
-function RemoveLibraryButton({ agencyId, agencyName }) {
+function RemoveLibraryButton({ agencyId, agencyName, culrDataSync }) {
   const modal = useModal();
 
-  return (
-    <IconButton
-      icon={<CloseSvg />}
-      onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
-      alt={Translate({ context: "profile", label: "remove" })}
-    >
-      {Translate({ context: "profile", label: "remove" })}
-    </IconButton>
-  );
+  if (!culrDataSync) {
+    return (
+      <IconButton
+        icon={<CloseSvg />}
+        onClick={() => modal.push("removeLibrary", { agencyId, agencyName })}
+        alt={Translate({ context: "profile", label: "remove" })}
+      >
+        {Translate({ context: "profile", label: "remove" })}
+      </IconButton>
+    );
+  }
 }
+
+RemoveLibraryButton.propTypes = {
+  agencyId: PropTypes.string,
+  agencyName: PropTypes.string,
+  culrDataSync: PropTypes.bool,
+};
 
 /**
  * Tablerow to be used in LibrariesTable component.
@@ -40,14 +49,12 @@ function TableItem({
   agencyName,
   agencyId,
   agencyType,
+  culrDataSync,
   municipalityAgencyId,
-  loggedInAgencyId,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs";
   const isHomeLibrary = municipalityAgencyId === agencyId;
-  const isLoggedInLibrary = loggedInAgencyId === agencyId;
-
   const hasOnlyOneAgency = data.length <= 1;
 
   //const lastUsed = false; // Cannot be implemented yet
@@ -89,7 +96,11 @@ function TableItem({
         </div>
 
         {isFFUAgency && !hasOnlyOneAgency && (
-          <RemoveLibraryButton agencyId={agencyId} agencyName={agencyName} />
+          <RemoveLibraryButton
+            agencyId={agencyId}
+            agencyName={agencyName}
+            culrDataSync={culrDataSync}
+          />
         )}
       </div>
     );
@@ -117,13 +128,22 @@ function TableItem({
           <RemoveLibraryButton
             agencyId={agencyId}
             agencyName={agencyName}
-            isLoggedInLibrary={isLoggedInLibrary}
+            culrDataSync={culrDataSync}
           />
         </td>
       )}
     </tr>
   );
 }
+
+TableItem.propTypes = {
+  data: PropTypes.array,
+  agencyName: PropTypes.string,
+  agencyId: PropTypes.string,
+  agencyType: PropTypes.string,
+  culrDataSync: PropTypes.bool,
+  municipalityAgencyId: PropTypes.string,
+};
 
 /**
  * Returns a table of users libraries
@@ -191,3 +211,8 @@ export default function LibrariesTable({ data, user }) {
     </table>
   );
 }
+
+LibrariesTable.propTypes = {
+  data: PropTypes.array,
+  user: PropTypes.object,
+};

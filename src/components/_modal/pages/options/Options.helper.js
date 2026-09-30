@@ -6,8 +6,8 @@ export const getTemplateProps = {
   [AccessEnum.ACCESS_URL](props) {
     return templateProps?.propsForOnline?.(props);
   },
-  [AccessEnum.INFOMEDIA_SERVICE](props) {
-    return templateProps?.propsForInfomedia?.(props);
+  [AccessEnum.RETRIEVER_SERVICE](props) {
+    return templateProps?.propsForRetriever?.(props);
   },
   [AccessEnum.DIGITAL_ARTICLE_SERVICE](props) {
     return templateProps?.propsForOnlineOrderLink?.(props);
@@ -86,7 +86,7 @@ const templateProps = {
       }),
     };
   },
-  propsForInfomedia(props) {
+  propsForRetriever(props) {
     return {
       linkProps: { href: props?.url, target: "_self" },
       linkText: Translate({

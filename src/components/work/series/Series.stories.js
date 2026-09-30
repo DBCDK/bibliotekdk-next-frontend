@@ -65,7 +65,7 @@ export function LoadingSeries() {
     <div>
       <StoryTitle>Loading</StoryTitle>
       <StoryDescription>
-        The loading/skeleton version of the review slider, uses the Infomedia
+        The loading/skeleton version of the review slider, uses the Retriever
         template as skeleton elements.
       </StoryDescription>
       <Series isLoading={true} />

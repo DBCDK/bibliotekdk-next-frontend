@@ -21,7 +21,7 @@ function TextAboveButton({ access, isAuthenticated }) {
   const a0 = access?.[0];
 
   const loginRequired =
-    a0?.loginRequired || ["InfomediaService"].includes(a0?.__typename);
+    a0?.loginRequired || ["RetrieverService"].includes(a0?.__typename);
 
   if (!loginRequired || isAuthenticated) return null;
 
@@ -197,9 +197,9 @@ export const ReservationButton = ({
       .length > 0
   );
 
-  const infomediaAccess = Boolean(
+  const retrieverAccess = Boolean(
     access?.filter(
-      (entry) => entry?.url && entry?.__typename === "InfomediaService"
+      (entry) => entry?.url && entry?.__typename === "RetrieverService"
     ).length > 0
   );
 
@@ -242,7 +242,7 @@ export const ReservationButton = ({
     rel: access?.[0]?.loginRequired ? "noreferrer" : undefined,
   };
 
-  // INFOMEDIA
+  // RETRIEVER
   const accessibleOnlineWithLoginProps = {
     skeleton: !access,
     dataCy: "button-order-overview",
@@ -281,7 +281,7 @@ export const ReservationButton = ({
       };
     }
 
-    if (infomediaAccess) {
+    if (retrieverAccess) {
       return {
         props: accessibleOnlineWithLoginProps,
         text: constructButtonText(workTypes, materialTypes, shortText),

@@ -16,7 +16,7 @@ import useAuthentication from "@/components/hooks/user/useAuthentication";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
- * For infomedia text is set ABOVE the button ( @see ReservationButton )
+ * For retriever text is set ABOVE the button ( @see ReservationButton )
  * @param access list of access objects for all editions of same materialtype
  * @param skeleton
  * @returns {React.ReactElement|null}
@@ -122,7 +122,7 @@ export default function Wrap({ selectedPids, skeleton }) {
 
   if (
     isEmpty(access) ||
-    access?.[0]?.__typename === AccessEnum.INFOMEDIA_SERVICE
+    access?.[0]?.__typename === AccessEnum.RETRIEVER_SERVICE
   ) {
     return null;
   }

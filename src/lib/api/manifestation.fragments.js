@@ -378,7 +378,7 @@ const accessFragment = `fragment accessFragment on Manifestation {
       type
       urlText
     }
-    ... on InfomediaService {
+    ... on RetrieverService {
       id
     }
     ... on Ereol {

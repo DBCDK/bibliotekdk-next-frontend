@@ -2,7 +2,7 @@ import { useData } from "@/lib/api/api";
 import { accessForManifestations } from "@/lib/api/access.fragments";
 import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
-import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
+import { encodeTitleCreator, retrieverUrl } from "@/lib/utils";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useRights from "@/components/hooks/user/useRights";
 
@@ -21,7 +21,7 @@ function sortAccessArray(accessArr) {
     if (access.__typename === AccessEnum.ACCESS_URL) {
       priority += 5000;
     }
-    if (access.__typename === AccessEnum.INFOMEDIA_SERVICE) {
+    if (access.__typename === AccessEnum.RETRIEVER_SERVICE) {
       priority += 4000;
     }
     if (access.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE) {
@@ -43,7 +43,7 @@ function sortAccessArray(accessArr) {
       priority -= 5000;
     }
 
-    // though zetland is an accessurl (+5000) we prioritize it lower than infomedia (+4000)
+    // though zetland is an accessurl (+5000) we prioritize it lower than retriever (+4000)
     if (access.origin === "www.zetland.dk") {
       priority -= 1001;
     }
@@ -116,9 +116,9 @@ function flattenAccess(manifestations) {
         if (!accessMap[keyArr]) {
           accessMap[keyArr] = { ...normalizedAccessEntry, pids: [] };
 
-          // If infomedia, we generate URL based on id
+          // If retriever, we generate URL based on id
           if (normalizedAccessEntry?.id) {
-            accessMap[keyArr].url = infomediaUrl(
+            accessMap[keyArr].url = retrieverUrl(
               encodeTitleCreator(
                 manifestionInUnit?.titles?.main?.[0],
                 manifestionInUnit?.creators
