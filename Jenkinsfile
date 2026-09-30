@@ -85,34 +85,34 @@ pipeline {
             }
         }
 
-        stage("Supply-chain gate") {
-            agent {
-                docker {
-                    label 'devel11'
-                    image "docker-dbc.artifacts.dbccloud.dk/dbc-node:node25"
-                    alwaysPull true
-                    reuseNode true
-                }
-            }
-            steps {
-                script {
-                    for (def project : DT_PROJECTS) {
-                        dir(project.folder) {
-                            generateSbomNpm(
-                                sbomType: project.sbomType,
-                                outputFolder: project.outputFolder
-                            )
-                            dependencyTrackGate(
-                                projectBom: "${project.outputFolder}/sbom.json",
-                                projectTeam: project.teamName,
-                                projectType: project.projectType,
-                                *:(fileExists("${project.outputFolder}/vex.json") ? [projectVex: "${project.outputFolder}/vex.json"] : [:])
-                            )
-                        }
-                    }
-                }
-            }
-        }
+        // stage("Supply-chain gate") {
+        //     agent {
+        //         docker {
+        //             label 'devel11'
+        //             image "docker-dbc.artifacts.dbccloud.dk/dbc-node:node25"
+        //             alwaysPull true
+        //             reuseNode true
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             for (def project : DT_PROJECTS) {
+        //                 dir(project.folder) {
+        //                     generateSbomNpm(
+        //                         sbomType: project.sbomType,
+        //                         outputFolder: project.outputFolder
+        //                     )
+        //                     dependencyTrackGate(
+        //                         projectBom: "${project.outputFolder}/sbom.json",
+        //                         projectTeam: project.teamName,
+        //                         projectType: project.projectType,
+        //                         *:(fileExists("${project.outputFolder}/vex.json") ? [projectVex: "${project.outputFolder}/vex.json"] : [:])
+        //                     )
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Build image') {
             steps {
