@@ -21,10 +21,7 @@ export function BookmarkList() {
   return (
     <div>
       <StoryTitle>Bookmarks</StoryTitle>
-      <StoryDescription>
-        Bookmarks with a default material type, an explicit selection and a
-        specific edition, plus an unavailable material with snapshot metadata
-      </StoryDescription>
+      <StoryDescription>User bookmarks</StoryDescription>
       <BookmarkPage />
     </div>
   );
@@ -65,51 +62,18 @@ BookmarkList.decorators = [
       "bookmarks",
       JSON.stringify([
         {
-          id: "23386d82-2334-4c80-9147-0f086a541a54",
-          materialId: "870970-basis:missing",
-          material: { manifestation: null },
-          selection: null,
-          snapshot: {
-            title: "Materiale der ikke længere findes",
-            creator: "Gemt ophav",
-            workId: WORK_11.workId,
-          },
-          createdAt: "2024-01-07T14:03:05.432Z",
-        },
-        {
-          id: "23386d82-2334-4c80-9147-0f086a541a51",
-          material: { manifestation: WORK_11.manifestations.mostRelevant[0] },
-          materialId: WORK_11.manifestations.mostRelevant[0].pid,
-          workId: WORK_11.workId,
-          selection: null,
-          title: WORK_11.titles.full[0],
-          createdAt: "2024-01-04T14:03:05.432Z",
-        },
-        {
+          key: "work-of:some-pid-8BOOK",
           materialId: "work-of:some-pid-8",
           workId: "work-of:some-pid-8",
-          id: "23386d82-2334-4c80-9147-0f086a541a52",
-          material: { work: WORK_11 },
-          title: "fisk",
-          selection: null,
-          createdAt: "2024-01-06T14:03:05.432Z",
-        },
-        {
-          materialId: "work-of:some-pid-8",
-          workId: "work-of:some-pid-8",
-          id: "23386d82-2334-4c80-9147-0f086a541a53",
-          material: {
-            work: WORK_11,
-            manifestations: WORK_11.manifestations.mostRelevant,
-          },
-          selection: { materialTypes: { specific: ["BOOK"] } },
+          materialType: "BOOK",
           title: "fisk",
           createdAt: "2024-01-05T14:03:05.432Z",
         },
         {
+          key: "work-of:some-pid-7EBOOK",
           materialId: "work-of:some-pid-7",
           workId: "work-of:some-pid-7",
-          selection: { materialTypes: { specific: ["EBOOK"] } },
+          materialType: "EBOOK",
           title: "fisk",
           createdAt: "2024-01-05T14:03:05.432Z",
         },

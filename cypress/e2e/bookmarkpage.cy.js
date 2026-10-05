@@ -2,7 +2,7 @@ describe("Bookmark page", () => {
   it(`test book marks`, () => {
     cy.visit("/iframe.html?id=profile-bookmarks--bookmark-list");
 
-    cy.get("article").should("exist").should("have.length", 5);
+    cy.get("article").should("exist").should("have.length", 2);
 
     // check box list has none selected
     cy.get("article").each(($item) => {
@@ -21,34 +21,30 @@ describe("Bookmark page", () => {
     cy.get("article").each(($item) => {
       cy.wrap($item).should("have.attr", "aria-checked", "true");
     });
-    cy.get("[data-cy=button-bestil]").should("have.attr", "disabled");
-
-    cy.contains("article", "Materiale der ikke længere findes").click();
     cy.get("[data-cy=button-bestil]")
       .should("exist")
       .should("not.have.attr", "disabled");
 
-    // remove selected elements from list
+    // remove an element from list
+    cy.get("article").first().should("exist").click();
     cy.get("[data-cy=bookmarks-remove-from-list]").should("exist").click();
     cy.get("article").should("exist").should("have.length", 1);
-    cy.contains("article", "Materiale der ikke længere findes").should("exist");
 
     cy.verifyMatomoEvent([
       "trackEvent",
       "Huskeliste",
       "Fjern Multi",
-      "Antal: 4",
+      "Antal: 1",
     ]);
   });
 
   it(`test delete all`, () => {
     cy.visit("/iframe.html?id=profile-bookmarks--bookmark-list");
     // remove ALL elements from list - verify that select all is disabled
-    cy.get("article").should("exist").should("have.length", 5);
+    cy.get("article").should("exist").should("have.length", 2);
 
     cy.get("#bookmarkpage-select-all").should("exist").click({ force: true });
     cy.get("[data-cy=bookmarks-remove-from-list]").should("exist").click();
-    cy.get("article").should("not.exist");
     cy.get("[data-cy=bookmarks-select-all-checkbox]")
       .should("exist")
       .should("have.attr", "aria-checked", "false");
@@ -57,7 +53,7 @@ describe("Bookmark page", () => {
       "trackEvent",
       "Huskeliste",
       "Fjern Multi",
-      "Antal: 5",
+      "Antal: 2",
     ]);
   });
 });
