@@ -1,29 +1,27 @@
-/**
- *
- * @param {bookmarks} {materialId: string, materialType: string}
- * @returns
- */
-
 export function addBookmarks({ bookmarks }) {
   return {
     query: `
-    mutation addBookmarks($bookmarks: [BookMarkInput!]!) {
-      users {
+    mutation addBookmarks($bookmarks: [BookmarksInput!]!) {
+      patron {
         addBookmarks(bookmarks: $bookmarks) {
-          bookmarksAdded {
-            materialType
+          status
+          items {
+            id
             materialId
-          }
-          bookmarksAlreadyExists {
-            materialType
-            materialId
+            status
+            selection {
+              materialTypes {
+                general
+                specific
+              }
+            }
           }
         }
       }
     }
     `,
     variables: {
-      bookmarks: bookmarks,
+      bookmarks,
     },
   };
 }
@@ -31,10 +29,14 @@ export function addBookmarks({ bookmarks }) {
 export function deleteBookmarks({ bookmarkIds }) {
   return {
     query: `
-    mutation deleteBookmarks($bookmarkIds: [Int!]!) {
-      users {
-        deleteBookmarks(bookmarkIds: $bookmarkIds) {
-          idsDeletedCount
+    mutation deleteBookmarks($bookmarkIds: [String!]!) {
+      patron {
+        deleteBookmarks(ids: $bookmarkIds) {
+          status
+          items {
+            id
+            status
+          }
         }
       }
     }

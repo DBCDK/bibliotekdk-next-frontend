@@ -5,7 +5,10 @@ import Text from "@/components/base/text/Text";
 
 import React, { useEffect, useRef, useState } from "react";
 import { cyKey } from "@/utils/trim";
-import useBookmarks from "@/components/hooks/useBookmarks";
+import useBookmarks, {
+  getBookmarkKey as getStoredBookmarkKey,
+} from "@/components/hooks/useBookmarks";
+import Translate from "@/components/base/translate";
 import Icon from "@/components/base/icon/Icon";
 import BookmarkMedium from "@/public/icons/bookmark_small.svg";
 import {
@@ -18,9 +21,13 @@ import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 
 export function getBookmarkKey(material) {
-  return (
-    material?.materialId + formatMaterialTypesToCode(material?.materialTypes)
-  );
+  return getStoredBookmarkKey({
+    materialId: material.materialId,
+    workId: material.materialId?.startsWith("work-of:")
+      ? material.materialId
+      : undefined,
+    materialType: formatMaterialTypesToCode(material.materialTypes),
+  });
 }
 
 export function BookMarkMaterialSelector({
@@ -39,7 +46,9 @@ export function BookMarkMaterialSelector({
     bookmarks: bookmarksBeforeFilterOnWorkId,
     setBookmark,
     isLoading,
-  } = useBookmarks();
+    error,
+    retry,
+  } = useBookmarks({ workId });
 
   const bookmarks = isLoading
     ? []
@@ -118,11 +127,41 @@ export function BookMarkMaterialSelector({
     setOptions([...materialTypeEditions, ...specificEditions]);
   };
 
+  const findBookmark = (material) => {
+    const exact = bookmarks?.find(
+      (bookmark) => getStoredBookmarkKey(bookmark) === getBookmarkKey(material)
+    );
+    if (exact) return exact;
+    if (material.materialId !== workId) return undefined;
+    return bookmarks?.find((bookmark) => {
+      if (bookmark.materialId !== workId) return false;
+      if (!bookmark.selection) {
+        return (
+          getBookmarkKey(material) ===
+          getBookmarkKey({
+            materialId: workId,
+            materialTypes: materialTypes[0],
+          })
+        );
+      }
+      const field = bookmark.selection.materialTypes.general
+        ? "general"
+        : "specific";
+      const codes = material.materialTypes.map(
+        (type) => type[field === "general" ? "generalCode" : "specificCode"]
+      );
+      return bookmark.selection.materialTypes[field].every((code) =>
+        codes.includes(code)
+      );
+    });
+  };
+
   const onSelect = async (material, workId) => {
+    if (isLoading || error) return;
     await setBookmark({
-      key: getBookmarkKey(material),
-      materialId: materialId,
-      workId: workId,
+      key: findBookmark(material)?.key,
+      materialId: material.materialId,
+      workId,
       materialType: formatMaterialTypesToCode(material.materialTypes),
       title,
     });
@@ -138,12 +177,23 @@ export function BookMarkMaterialSelector({
     }
   };
 
+  if (error) {
+    return (
+      <Text type="text3">
+        {Translate({ context: "receipt", label: "errorOccured" })}{" "}
+        <button type="button" onClick={retry}>
+          {Translate({ context: "general", label: "retry" })}
+        </button>
+      </Text>
+    );
+  }
+
   if (options.length === 1) {
     return (
       <Bookmark
         size={size}
         className={`${styles.bookmark} ${className}`}
-        selected={!isEmpty(bookmarks)}
+        selected={!!findBookmark(options[0])}
         onClick={async (e) => {
           e.preventDefault();
           await onSelect(options[0], workId);
@@ -180,10 +230,7 @@ export function BookMarkMaterialSelector({
         })}
       >
         {options.map((material, index) => {
-          const activeItem =
-            bookmarks?.findIndex(
-              (book) => book.key === getBookmarkKey(material)
-            ) !== -1;
+          const activeItem = !!findBookmark(material);
 
           return (
             <Dropdown.Item
