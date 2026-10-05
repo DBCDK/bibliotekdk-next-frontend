@@ -58,7 +58,9 @@ export function toBookmarkInput(bookmark) {
     materialId,
     selection: {
       materialTypes: {
-        [field]: [...new Set(selection.materialTypes[field])].sort(),
+        [field]: [...new Set(selection.materialTypes[field])].sort((a, b) =>
+          a < b ? -1 : a > b ? 1 : 0
+        ),
       },
     },
   };
