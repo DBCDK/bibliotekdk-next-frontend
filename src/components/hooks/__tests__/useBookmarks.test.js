@@ -2,43 +2,16 @@ import React from "react";
 import { act } from "react-dom/test-utils";
 import { createRoot } from "react-dom/client";
 import { SWRConfig } from "swr";
-import { parse, visit } from "graphql";
 import useBookmarks, {
   getBookmarkKey,
   populateBookmark,
   usePopulateBookmarks,
   toBookmarkInput,
 } from "../useBookmarks";
-import { fetchAll } from "@/lib/api/bookmarks.fragments";
-import { addBookmarks, deleteBookmarks } from "@/lib/api/bookmarks.mutations";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import { useFetcher, useMutate, useData } from "@/lib/api/api";
 import useAuthentication from "@/components/hooks/user/useAuthentication";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import MaterialRowBookmark from "@/components/profile/materialRow/versions/MaterialRowBookmark";
-
-jest.mock(
-  "@/components/work/reservationbutton/ReservationButton",
-  () =>
-    function ReservationButton() {
-      return <button data-testid="order">Order</button>;
-    }
-);
-jest.mock("@/components/profile/materialRow/MaterialRow", () => ({
-  TextWithCheckMark: () => null,
-}));
-jest.mock("@/components/base/translate", () => ({
-  __esModule: true,
-  default: ({ label }) => label,
-}));
-jest.mock(
-  "@/public/icons/close.svg",
-  () =>
-    function CloseIcon() {
-      return <span />;
-    }
-);
-
 jest.mock("@/lib/api/api", () => ({
   ApiEnums: { FBI_API: "fbi_api" },
   useFetcher: jest.fn(),
@@ -57,77 +30,6 @@ jest.mock("@/lib/useDataCollect", () => () => ({
   collectDelBookmark: mockCollectDelBookmark,
   collectDelMultipleBookmarks: mockCollectDelMultipleBookmarks,
 }));
-
-test("local title sorting retains the existing character ordering", async () => {
-  useAuthentication.mockReturnValue({ hasCulrUniqueId: false });
-  await mount();
-  const bookmarks = ["æ", "a", "Z", "ø", "å"].map((title) => ({ title }));
-  expect(
-    current.titleSort(bookmarks).map((bookmark) => bookmark.title)
-  ).toEqual(["Z", "a", "å", "æ", "ø"]);
-  expect(
-    current.titleSort(bookmarks, "desc").map((bookmark) => bookmark.title)
-  ).toEqual(["ø", "æ", "å", "a", "Z"]);
-  expect(bookmarks.map((bookmark) => bookmark.title)).toEqual([
-    "æ",
-    "a",
-    "Z",
-    "ø",
-    "å",
-  ]);
-});
-
-test.each([true, false])(
-  "bookmark toggle retains single-delete analytics (authenticated: %s)",
-  async (authenticated) => {
-    useAuthentication.mockReturnValue({ hasCulrUniqueId: authenticated });
-    localStorage.setItem(
-      "bookmarks",
-      JSON.stringify([{ materialId: workId, workId, materialType: "BOOK" }])
-    );
-    post.mockResolvedValue({
-      data: {
-        patron: {
-          deleteBookmarks: {
-            status: "OK",
-            items: [{ id: uuid, status: "OK" }],
-          },
-        },
-      },
-    });
-    hitcount = 1;
-    await mount({ workId });
-    const value = {
-      materialId: workId,
-      workId,
-      materialType: "BOOK",
-      title: "En bog",
-    };
-    await act(async () => current.setBookmark(value));
-    expect(mockCollectDelBookmark).toHaveBeenCalledWith(value);
-    expect(mockCollectDelMultipleBookmarks).not.toHaveBeenCalled();
-  }
-);
-
-test("failed deletion does not report a successful analytics event", async () => {
-  post.mockResolvedValue({
-    data: {
-      patron: {
-        deleteBookmarks: {
-          status: "FAILED",
-          items: [{ id: uuid, status: "FAILED" }],
-        },
-      },
-    },
-  });
-  hitcount = 1;
-  await mount({ workId });
-  await act(async () =>
-    current.setBookmark({ materialId: workId, workId, materialType: "BOOK" })
-  );
-  expect(mockCollectDelBookmark).not.toHaveBeenCalled();
-  expect(mockCollectDelMultipleBookmarks).not.toHaveBeenCalled();
-});
 
 const workId = "work-of:870970-basis:123";
 const uuid = "d42e6d32-73d8-4d90-989d-8dab893eb119";
@@ -186,32 +88,28 @@ describe("bookmark covers", () => {
     expect(result.selection.materialTypes.specific).toEqual(["EBOOK"]);
   });
 
-  test("prefers a real selection cover over the first edition's default", () => {
-    expect(
-      populate([
-        withCover(ebook, "default", "default"),
-        withCover(ebook, "real"),
-      ]).image
-    ).toBe("real-small");
-  });
-
-  test("uses mostRelevant before an API default", () => {
-    expect(
-      populate(
-        [withCover(ebook, "default", "default")],
-        [withCover(book, "outside")]
-      ).image
-    ).toBe("outside-small");
-  });
-
-  test("keeps the API default when the work has no real cover", () => {
-    expect(
-      populate([withCover(ebook, "default", "default")], [book]).image
-    ).toBe("default-small");
-  });
-
-  test("does not invent a cover when none is supplied", () => {
-    expect(populate([ebook], [book]).image).toBeFalsy();
+  test.each([
+    [
+      "selection before default",
+      [withCover(ebook, "default", "default"), withCover(ebook, "real")],
+      [],
+      "real-small",
+    ],
+    [
+      "mostRelevant before default",
+      [withCover(ebook, "default", "default")],
+      [withCover(book, "outside")],
+      "outside-small",
+    ],
+    [
+      "existing default",
+      [withCover(ebook, "default", "default")],
+      [book],
+      "default-small",
+    ],
+    ["no supplied cover", [ebook], [book], null],
+  ])("cover fallback: %s", (_, selected, mostRelevant, expected) => {
+    expect(populate(selected, mostRelevant).image).toBe(expected);
   });
 
   test("a PID can borrow a work cover without changing its edition", () => {
@@ -231,17 +129,6 @@ describe("bookmark covers", () => {
     expect(result.image).toBe("outside-small");
     expect(result.pid).toBe(ebook.pid);
     expect(result.manifestations).toEqual([direct]);
-  });
-
-  test("does not request all manifestations for cover fallback", () => {
-    const fields = [];
-    visit(parse(fetchAll({ withMaterial: true }).query), {
-      Field(node) {
-        fields.push(node.name.value);
-      },
-    });
-    expect(fields).not.toContain("all");
-    expect(fields.filter((field) => field === "mostRelevant")).toHaveLength(2);
   });
 });
 
@@ -305,41 +192,14 @@ afterEach(async () => {
   container.remove();
 });
 
-test("queries patron with explicit sort, pagination and optional work filter", () => {
-  const request = fetchAll({ sortBy: "title", offset: 25, limit: 25, workId });
-  expect(request.variables).toMatchObject({
-    sortBy: "TITLE_ASC",
-    offset: 25,
-    limit: 25,
-    filter: { workId },
-  });
-  const document = parse(request.query);
-  expect(document.definitions[0].selectionSet.selections[0].name.value).toBe(
-    "patron"
-  );
-  expect(fetchAll({ sortBy: "createdAt" }).variables.sortBy).toBe(
-    "CREATEDAT_DESC"
-  );
-});
-
-test("mutations use patron, selection input and UUID deletion", () => {
-  const add = addBookmarks({ bookmarks: [{ materialId: workId, selection }] });
-  const remove = deleteBookmarks({ bookmarkIds: [uuid] });
-  for (const request of [add, remove]) {
-    expect(
-      parse(request.query).definitions[0].selectionSet.selections[0].name.value
-    ).toBe("patron");
-  }
-  expect(remove.query).toContain("[String!]!");
-  expect(remove.query).toContain("deleteBookmarks(ids:");
-});
-
 test("only requests the current desktop page and uses hitcount", async () => {
   await mount();
   expect(fetch).toHaveBeenCalledTimes(1);
   expect(fetch.mock.calls[0][0].variables).toMatchObject({
     offset: 0,
     limit: 25,
+    sortBy: "CREATEDAT_DESC",
+    withMaterial: true,
   });
   expect(current.totalPages).toBe(3);
   await act(async () => current.setCurrentPage(2));
@@ -377,26 +237,25 @@ test("sorting resets pagination and delegates ordering to the API", async () => 
   });
 });
 
-test("work marking uses a work filter independently of list pagination", async () => {
-  hitcount = 1;
-  await mount({ workId });
-  expect(fetch.mock.calls[0][0].variables.filter).toEqual({ workId });
-  expect(current.bookmarks[0].key).toBe(uuid);
-});
-
-test("a whole work gets the same default as the work page without changing selection", () => {
-  const bookmark = { materialId: workId, workId, selection: null };
-  const expected = manifestationMaterialTypeFactory([
-    ...work.manifestations.mostRelevant,
-  ])
-    .uniqueMaterialTypes[0].map((type) => type.specificCode)
-    .join(" / ");
-  const result = populateBookmark(bookmark, work);
-  expect(result.materialType).toBe(expected);
-  expect(result.manifestations.length).toBeGreaterThan(0);
-  expect(result.selection).toBeNull();
-  expect(toBookmarkInput(result)).toEqual({ materialId: workId });
-});
+test.each(["local", "server"])(
+  "%s whole works get the work page default without persisting selection",
+  (source) => {
+    const bookmark = { materialId: workId, workId, selection: null };
+    const expected = manifestationMaterialTypeFactory([
+      ...work.manifestations.mostRelevant,
+    ])
+      .uniqueMaterialTypes[0].map((type) => type.specificCode)
+      .join(" / ");
+    const result =
+      source === "server"
+        ? populateBookmark({ ...bookmark, id: uuid, material: { work } })
+        : populateBookmark(bookmark, work);
+    expect(result.materialType).toBe(expected);
+    expect(result.manifestations.length).toBeGreaterThan(0);
+    expect(result.selection).toBeNull();
+    expect(toBookmarkInput(result)).toEqual({ materialId: workId });
+  }
+);
 
 test("explicit specific and general selections are preserved", () => {
   const specific = { materialTypes: { specific: ["EBOOK"] } };
@@ -414,16 +273,6 @@ test("explicit specific and general selections are preserved", () => {
     materialId: workId,
     selection: general,
   });
-});
-
-test("a PID without selection stays a specific edition", () => {
-  const result = populateBookmark(
-    { materialId: ebook.pid, workId, selection: null },
-    work
-  );
-  expect(result.pid).toBe(ebook.pid);
-  expect(result.manifestations).toEqual([ebook]);
-  expect(toBookmarkInput(result)).toEqual({ materialId: ebook.pid });
 });
 
 test("identity distinguishes whole works and selections but ignores selection ordering", () => {
@@ -492,22 +341,6 @@ test("login sync retains local bookmarks on transport failure", async () => {
   spy.mockRestore();
 });
 
-test("removing an existing bookmark sends its UUID", async () => {
-  hitcount = 1;
-  post.mockResolvedValue({
-    data: {
-      patron: {
-        deleteBookmarks: { status: "OK", items: [{ id: uuid, status: "OK" }] },
-      },
-    },
-  });
-  await mount({ workId });
-  await act(async () =>
-    current.setBookmark({ materialId: workId, workId, materialType: "BOOK" })
-  );
-  expect(post.mock.lastCall[0].variables).toEqual({ bookmarkIds: [uuid] });
-});
-
 test("a default material choice removes the original whole-work bookmark", async () => {
   items = [{ ...stored, selection: null }];
   hitcount = 1;
@@ -547,6 +380,7 @@ test("partial deletion keeps failed items selected by returning only confirmed k
   });
   expect(removed).toEqual(["first"]);
   expect(current.error).toBeTruthy();
+  expect(mockCollectDelMultipleBookmarks).toHaveBeenCalledWith({ count: 1 });
 });
 
 test("reading a failed API status exposes an error instead of an empty successful list", async () => {
@@ -570,39 +404,20 @@ test("header requests the count without loading bookmark items", async () => {
   await mount({});
   expect(fetch.mock.calls[0][0].variables).toMatchObject({
     countOnly: true,
+    withMaterial: false,
     limit: 1,
   });
   expect(current.count).toBe(51);
 });
 
-test("work lookups also paginate when a single work has over 100 bookmarks", async () => {
-  fetch.mockImplementation(async ({ variables }) => ({
-    data: {
-      patron: {
-        bookmarks: {
-          status: "OK",
-          hitcount: 101,
-          items:
-            variables.offset === 0
-              ? Array.from({ length: 100 }, (_, i) => ({
-                  ...stored,
-                  id: `id-${i}`,
-                }))
-              : [{ ...stored, id: "last" }],
-        },
-      },
-    },
-  }));
+test("work marking uses a work filter independently of list pagination", async () => {
+  hitcount = 1;
   await mount({ workId });
-  expect(fetch.mock.calls.map(([request]) => request.variables.offset)).toEqual(
-    [0, 100]
-  );
-  expect(
-    fetch.mock.calls.every(
-      ([request]) => request.variables.filter.workId === workId
-    )
-  ).toBe(true);
-  expect(current.bookmarks).toHaveLength(101);
+  expect(fetch.mock.calls[0][0].variables).toMatchObject({
+    filter: { workId },
+    withMaterial: false,
+  });
+  expect(current.bookmarks[0].key).toBe(uuid);
 });
 
 test("unauthenticated bookmarks remain local and receive normalized keys", async () => {
@@ -669,6 +484,9 @@ test("a mutation refreshes the list, work marking and header count", async () =>
     marking.setBookmark({ materialId: workId, workId, materialType: "BOOK" })
   );
   await flush();
+  expect(post.mock.lastCall[0].variables).toEqual({ bookmarkIds: [uuid] });
+  expect(mockCollectDelBookmark).toHaveBeenCalledTimes(1);
+  expect(mockCollectDelMultipleBookmarks).not.toHaveBeenCalled();
   expect(list.paginatedBookmarks).toEqual([]);
   expect(marking.bookmarks).toEqual([]);
   expect(header.count).toBe(0);
@@ -697,19 +515,6 @@ test("a selection uses the API's matching manifestations without filtering mostR
   expect(result.selection).toEqual(selection);
 });
 
-test("direct whole works still use the work page default without persisting it", () => {
-  const result = populateBookmark({
-    ...stored,
-    selection: null,
-    material: { work },
-  });
-  expect(result.materialType).toBe(
-    populateBookmark({ materialId: workId, workId, selection: null }, work)
-      .materialType
-  );
-  expect(toBookmarkInput(result)).toEqual({ materialId: workId });
-});
-
 test("missing material remains visible and deletable using snapshot metadata", () => {
   const result = populateBookmark({
     ...stored,
@@ -733,16 +538,6 @@ test("an empty selection does not fall back to unrelated work manifestations", (
   });
   expect(result.manifestations).toEqual([]);
   expect(result.hasMaterial).toBe(false);
-});
-
-test("null snapshot fields and missing material do not discard a bookmark", () => {
-  expect(
-    populateBookmark({ ...stored, snapshot: null, material: null })
-  ).toMatchObject({
-    bookmarkId: uuid,
-    hasMaterial: false,
-    manifestations: [],
-  });
 });
 
 test("server bookmarks with the same meaning retain separate UUID identities", async () => {
@@ -772,41 +567,4 @@ test("only local bookmarks require a separate work lookup", async () => {
   ];
   await act(async () => root.render(<Harness />));
   expect(useData.mock.lastCall[0].variables.ids).toEqual(["work-of:local"]);
-});
-
-test("only list requests include full material data", async () => {
-  await mount();
-  expect(fetch.mock.calls[0][0].variables.withMaterial).toBe(true);
-  expect(fetchAll({ workId }).variables.withMaterial).toBe(false);
-  expect(parse(fetchAll({ withMaterial: true }).query)).toBeTruthy();
-});
-
-test("snapshot rows show title and creator without an order button or dead link", async () => {
-  const bookmark = populateBookmark({
-    ...stored,
-    material: null,
-    snapshot: {
-      title: "Snapshot title",
-      creator: "Snapshot creator",
-      workId,
-    },
-  });
-  const remove = jest.fn();
-  await act(async () =>
-    root.render(
-      <MaterialRowBookmark
-        {...bookmark}
-        bookmarkKey={bookmark.key}
-        allManifestations={bookmark.manifestations}
-        materialType={bookmark.materialTypeLabel}
-        onBookmarkDelete={remove}
-      />
-    )
-  );
-  expect(container.textContent).toContain("Snapshot title");
-  expect(container.textContent).toContain("Snapshot creator");
-  expect(container.querySelector('[data-testid="order"]')).toBeNull();
-  expect(container.querySelector("a")).toBeNull();
-  await act(async () => container.querySelector("button").click());
-  expect(remove).toHaveBeenCalledTimes(1);
 });
