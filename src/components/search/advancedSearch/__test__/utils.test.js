@@ -20,7 +20,7 @@ test('escapes quotes once when converting a field containing "AND" to CQL', () =
 test.each([
   ["plain text", "hest", '(term.default="hest")'],
   ["question marks", "hvad?", '(term.default="hvad\\?")'],
-  ["backslashes", "C:\\temp", '(term.default="C:\\\\temp")'],
+  ["backslashes", "foo\\bar", '(term.default="foo\\\\bar")'],
   ["asterisk truncation", "hest*", '(term.default="hest*")'],
 ])("converts %s to CQL", (_description, value, expected) => {
   const actual = convertStateToCql({
