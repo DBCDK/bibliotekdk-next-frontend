@@ -1,5 +1,40 @@
-import { checkAndExpandInputFields } from "../utils";
+import { checkAndExpandInputFields, convertStateToCql } from "../utils";
 import { LogicalOperatorsEnum } from "@/components/search/enums";
+
+test('escapes quotes once when converting a field containing "AND" to CQL', () => {
+  const actual = convertStateToCql({
+    inputFields: [
+      {
+        value: '"En baggårds hemmeligheder" AND skalk',
+        prefixLogicalOperator: null,
+        searchIndex: "term.default",
+      },
+    ],
+  });
+
+  expect(actual).toBe(
+    '((term.default="\\"En baggårds hemmeligheder\\"" AND term.default="skalk" ))'
+  );
+});
+
+test.each([
+  ["plain text", "hest", '(term.default="hest")'],
+  ["question marks", "hvad?", '(term.default="hvad\\?")'],
+  ["backslashes", "foo\\bar", '(term.default="foo\\\\bar")'],
+  ["asterisk truncation", "hest*", '(term.default="hest*")'],
+])("converts %s to CQL", (_description, value, expected) => {
+  const actual = convertStateToCql({
+    inputFields: [
+      {
+        value,
+        prefixLogicalOperator: null,
+        searchIndex: "term.default",
+      },
+    ],
+  });
+
+  expect(actual).toBe(expected);
+});
 
 test("add to inputfields on OR, AND operators", () => {
   // special case - empty array
