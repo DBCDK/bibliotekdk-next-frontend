@@ -39,8 +39,10 @@ export const fetchAll = ({
   workId,
   countOnly = false,
   withMaterial = false,
+  profile,
 } = {}) => {
   return {
+    profile,
     query: `
     query patronBookmarks(
       $sortBy: OrderBookmarksByEnum

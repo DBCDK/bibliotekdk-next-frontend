@@ -176,7 +176,7 @@ beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
   root = createRoot(container);
-  items = [stored];
+  items = [{ ...stored, material: { work, manifestations: [book] } }];
   hitcount = 51;
   fetch = jest.fn(async () => ({
     data: { patron: { bookmarks: { status: "OK", hitcount, items } } },
@@ -211,20 +211,132 @@ test("only requests the current desktop page and uses hitcount", async () => {
   expect(current.paginatedBookmarks[0].bookmarkId).toBe(uuid);
 });
 
-test("mobile loads the next API page and keeps previous items", async () => {
+test("mobile keeps previous items and only requests fallback for the new page", async () => {
   useBreakpoint.mockReturnValue("xs");
   await mount();
   items = [{ ...stored, id: "second", materialId: "work-of:second" }];
   await act(async () => current.setCurrentPage(2));
   await flush();
   expect(fetch.mock.calls.map(([request]) => request.variables.offset)).toEqual(
-    [0, 25]
+    [0, 25, 25]
   );
+  expect(fetch.mock.lastCall[0].profile).toBe("present");
   expect(current.paginatedBookmarks.map((bm) => bm.bookmarkId)).toEqual([
     uuid,
     "second",
   ]);
 });
+
+test("fallback merges only matching unresolved bookmarks and preserves the original page", async () => {
+  const resolved = { ...stored, material: { work, manifestations: [book] } };
+  items = [
+    resolved,
+    { ...stored, id: "whole", selection: null },
+    {
+      ...stored,
+      id: "pid",
+      materialId: ebook.pid,
+      material: { manifestation: book },
+    },
+    { ...stored, id: "selection", material: { work, manifestations: [] } },
+    { ...stored, id: "changed" },
+    { ...stored, id: "missing" },
+  ];
+  const fallbackItems = [
+    {
+      ...resolved,
+      id: "selection",
+      selection: { materialTypes: { specific: ["BOOK", "BOOK"] } },
+    },
+    { ...resolved, id: "whole", selection: null },
+    { ...items[2], material: { manifestation: ebook } },
+    {
+      ...resolved,
+      id: "changed",
+      selection: { materialTypes: { specific: ["EBOOK"] } },
+    },
+    { ...resolved, material: null },
+    { ...resolved, id: "missing", materialId: "work-of:another" },
+  ];
+  fetch.mockImplementation(async ({ profile }) => ({
+    data: {
+      patron: {
+        bookmarks: {
+          status: "OK",
+          hitcount: profile ? 99 : 51,
+          items: profile ? fallbackItems : items,
+        },
+      },
+    },
+  }));
+  await mount();
+  expect(fetch).toHaveBeenCalledTimes(2);
+  expect(fetch.mock.calls[1][0].variables).toEqual(
+    fetch.mock.calls[0][0].variables
+  );
+  expect(current.count).toBe(51);
+  expect(current.paginatedBookmarks.map((item) => item.id)).toEqual(
+    items.map((item) => item.id)
+  );
+  expect(
+    current.paginatedBookmarks.map((item) => item.isAvailableInSearchProfile)
+  ).toEqual([true, false, false, false, false, false]);
+  expect(current.paginatedBookmarks[0].material).toEqual(resolved.material);
+  expect(current.paginatedBookmarks[1].material.work.workId).toBe(workId);
+  expect(current.paginatedBookmarks[2].material.manifestation.pid).toBe(
+    ebook.pid
+  );
+  expect(current.paginatedBookmarks[3].material.manifestations).toEqual([book]);
+  current.paginatedBookmarks.slice(4).forEach((item) => {
+    expect(populateBookmark(item)).toMatchObject({
+      title: "En bog",
+      hasMaterial: false,
+    });
+  });
+  post.mockResolvedValue({
+    data: {
+      patron: {
+        deleteBookmarks: {
+          status: "OK",
+          items: [{ id: "pid", status: "OK" }],
+        },
+      },
+    },
+  });
+  await act(async () =>
+    current.deleteBookmarks([current.paginatedBookmarks[2]])
+  );
+  expect(post.mock.lastCall[0].variables).toEqual({ bookmarkIds: ["pid"] });
+});
+
+test.each([
+  [false, "transport"],
+  [false, "graphql"],
+  [false, "status"],
+  [true, "transport"],
+  [true, "graphql"],
+  [true, "status"],
+])(
+  "profile errors remain errors (fallback: %s, failure: %s)",
+  async (fallback, failure) => {
+    items = [stored];
+    fetch.mockImplementation(async ({ profile }) => {
+      const page = {
+        data: { patron: { bookmarks: { status: "OK", hitcount: 1, items } } },
+      };
+      if (fallback && !profile) return page;
+      if (failure === "transport") throw new Error("network error");
+      if (failure === "graphql")
+        return { ...page, errors: [{ message: "failed" }] };
+      page.data.patron.bookmarks.status = "FAILED";
+      return page;
+    });
+    await mount();
+    expect(current.error).toBeTruthy();
+    expect(current.isLoading).toBe(false);
+    expect(fetch).toHaveBeenCalledTimes(fallback ? 2 : 1);
+  }
+);
 
 test("sorting resets pagination and delegates ordering to the API", async () => {
   await mount();

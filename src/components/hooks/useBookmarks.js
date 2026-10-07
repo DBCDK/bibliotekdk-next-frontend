@@ -71,6 +71,15 @@ export function getBookmarkKey(bookmark) {
   return JSON.stringify([materialId, selection || null]);
 }
 
+function hasResolvedMaterial({ materialId, selection, material }) {
+  if (!materialId?.startsWith("work-of:")) {
+    return !!materialId && material?.manifestation?.pid === materialId;
+  }
+  return selection
+    ? !!material?.manifestations?.some((manifestation) => manifestation?.pid)
+    : !!material?.work?.workId;
+}
+
 function normalizeBookmark(bookmark) {
   const selection = toBookmarkInput(bookmark).selection || null;
   return {
@@ -155,21 +164,56 @@ const useBookmarksCore = ({
       const items = [];
       let response;
       do {
-        const result = await fetch(
-          bookmarkFragments.fetchAll({
-            sortBy: sort,
-            offset,
-            limit,
-            workId: filterWorkId,
-            countOnly: onlyCount,
-            withMaterial,
-          })
-        );
-        response = result?.data?.patron?.bookmarks;
-        if (result?.errors?.length || response?.status !== "OK") {
-          throw new Error(response?.status || "Could not fetch bookmarks");
+        const fetchPage = async (profile) => {
+          const result = await fetch(
+            bookmarkFragments.fetchAll({
+              sortBy: sort,
+              offset,
+              limit,
+              workId: filterWorkId,
+              countOnly: onlyCount,
+              withMaterial,
+              profile,
+            })
+          );
+          const page = result?.data?.patron?.bookmarks;
+          if (
+            result?.error ||
+            result?.errors?.length ||
+            page?.status !== "OK"
+          ) {
+            throw new Error(page?.status || "Could not fetch bookmarks");
+          }
+          return page;
+        };
+        response = await fetchPage();
+        let pageItems = response.items || [];
+        if (withMaterial) {
+          const fallback = pageItems.some((item) => !hasResolvedMaterial(item))
+            ? await fetchPage("present")
+            : null;
+          const fallbackById = new Map(
+            fallback?.items?.map((item) => [item.id, item])
+          );
+          pageItems = pageItems.map((item) => {
+            const isAvailableInSearchProfile = hasResolvedMaterial(item);
+            const candidate = fallbackById.get(item.id);
+            const fallbackMaterial =
+              candidate &&
+              getBookmarkKey(candidate) === getBookmarkKey(item) &&
+              hasResolvedMaterial(candidate)
+                ? candidate.material
+                : null;
+            return {
+              ...item,
+              isAvailableInSearchProfile,
+              material: isAvailableInSearchProfile
+                ? item.material
+                : fallbackMaterial,
+            };
+          });
         }
-        items.push(...(response.items || []));
+        items.push(...pageItems);
         offset += limit;
       } while (filterWorkId && offset < response.hitcount);
       return { ...response, items };

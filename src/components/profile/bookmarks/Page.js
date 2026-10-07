@@ -193,7 +193,7 @@ const BookmarkPage = () => {
   };
 
   const onOrderManyClick = () => {
-    if (checkboxList.some((bookmark) => !bookmark.hasMaterial)) return;
+    if (hasUnavailableSelection) return;
     const orders = checkboxList?.map((order) => ({
       pids: order?.manifestations?.map((manifestation) => manifestation?.pid),
       bookmarkKey: order?.key,
@@ -204,7 +204,7 @@ const BookmarkPage = () => {
   };
 
   const onGetReferencesClick = () => {
-    if (checkboxList.some((bookmark) => !bookmark.hasMaterial)) return;
+    if (hasUnavailableSelection) return;
     modal.push("multiReferences", {
       materials: checkboxList,
     });
@@ -314,7 +314,8 @@ const BookmarkPage = () => {
   );
   const isNothingSelected = checkboxList.length === 0;
   const hasUnavailableSelection = checkboxList.some(
-    (bookmark) => !bookmark.hasMaterial
+    (bookmark) =>
+      !bookmark.hasMaterial || bookmark.isAvailableInSearchProfile === false
   );
 
   if (bookmarsDataLoading || isPopulateLoading) {
@@ -372,7 +373,10 @@ const BookmarkPage = () => {
         */}
       <>
         {checkboxList
-          .filter((item) => item.hasMaterial)
+          .filter(
+            (item) =>
+              item.hasMaterial && item.isAvailableInSearchProfile !== false
+          )
           .map((item, idx) => (
             <AnalyseItemAvailability
               key={`checkedItem-ref-${idx}`}
@@ -533,6 +537,7 @@ const BookmarkPage = () => {
               materialType={bookmark.materialTypeLabel}
               image={bookmark.image}
               hasMaterial={bookmark.hasMaterial}
+              isAvailableInSearchProfile={bookmark.isAvailableInSearchProfile}
               id={bookmark?.materialId}
               edition={constructEditionText(bookmark)}
               workId={bookmark?.workId}

@@ -112,6 +112,7 @@ const MaterialRowBookmark = ({
   allManifestations,
   materialType,
   hasMaterial = !!allManifestations?.length,
+  isAvailableInSearchProfile = true,
   onSelect,
   hasCheckbox,
   showSuccessfullyOrdered = false,
@@ -181,7 +182,9 @@ const MaterialRowBookmark = ({
         )}
         <div className={sharedStyles.textContainer}>
           <ConditionalWrapper
-            condition={!!title && !!workId && hasMaterial}
+            condition={
+              !!title && !!workId && hasMaterial && isAvailableInSearchProfile
+            }
             wrapper={(children) => (
               <Link
                 border={{
@@ -244,7 +247,9 @@ const MaterialRowBookmark = ({
           pid={pid}
           flatMaterialTypes={flatMaterialTypes}
           onBookmarkDelete={onBookmarkDelete}
-          relevantManifestations={allManifestations}
+          relevantManifestations={
+            hasMaterial && isAvailableInSearchProfile ? allManifestations : []
+          }
           showFailedAtCreation={showFailedAtCreation}
           showSuccessfullyOrdered={showSuccessfullyOrdered}
           handleOrderFinished={handleOrderFinished}
