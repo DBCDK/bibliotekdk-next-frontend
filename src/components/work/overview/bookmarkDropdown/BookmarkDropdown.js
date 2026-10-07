@@ -47,7 +47,6 @@ export function BookMarkMaterialSelector({
     setBookmark,
     isLoading,
     error,
-    retry,
   } = useBookmarks({ workId });
 
   const bookmarks = isLoading
@@ -180,10 +179,7 @@ export function BookMarkMaterialSelector({
   if (error) {
     return (
       <Text type="text3">
-        {Translate({ context: "receipt", label: "errorOccured" })}{" "}
-        <button type="button" onClick={retry}>
-          {Translate({ context: "general", label: "retry" })}
-        </button>
+        {Translate({ context: "receipt", label: "errorOccured" })}
       </Text>
     );
   }

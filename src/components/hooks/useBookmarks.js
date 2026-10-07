@@ -362,10 +362,6 @@ const useBookmarksCore = ({
     paginatedBookmarks: hasCulrUniqueId ? globalBookmarks : localPage,
     isLoading: hasCulrUniqueId ? globalLoading : !localBookmarks && !localError,
     error: (hasCulrUniqueId ? globalError : localError) || mutationError,
-    retry: () => {
-      setMutationError(null);
-      return refreshBookmarks();
-    },
     setSortBy,
     currentPage: hasCulrUniqueId ? currentPage : desktopPage,
     totalPages,
