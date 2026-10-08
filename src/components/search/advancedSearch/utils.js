@@ -24,7 +24,7 @@ function getInputFieldsQueryToCql(inputFields) {
           : [];
       const searchIndexWithValue = `${item.startParenthesis ? "(" : ""}${
         item.searchIndex
-      }="${item?.value?.replace(/"/g, '\\"').replace(/[?\\]/g, "\\$&")}" ${
+      }="${item?.value?.replace(/[?"\\]/g, "\\$&")}" ${
         item.endParenthesis ? ")" : ""
       }`;
 
