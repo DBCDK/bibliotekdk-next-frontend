@@ -1,0 +1,30 @@
+.image {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: var(--creator-image-aspect-ratio, 3 / 2);
+  line-height: 0;
+}
+
+.image img {
+  object-fit: contain;
+  object-position: 50% 0;
+  opacity: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+.loaded img {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.fallback {
+  width: 100%;
+  height: 100%;
+  background-color: var(--iron);
+}

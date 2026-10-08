@@ -221,8 +221,8 @@ function RenderCreatorValues({ values, skeleton }) {
               tag="span"
               className={styles.txtInline}
             >
-              {person?.andOthers ? " m.fl." : ""}
               {parseFunction(person)}
+              {person?.andOthers ? " m.fl." : ""}
             </Text>
           </div>
         ))}
