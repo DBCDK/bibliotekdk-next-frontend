@@ -8,7 +8,7 @@ import { getCreatorPortrait } from "@/components/creator/utils";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate/Translate";
-import Cover from "@/components/base/cover/Cover";
+import CreatorImage from "@/components/creator/CreatorImage";
 import Icon from "@/components/base/icon";
 import AiMarkdown from "@/components/base/markdown/AiMarkdown";
 import { IconLink } from "@/components/base/iconlink/IconLink";
@@ -208,7 +208,7 @@ export function Overview({
           >
             {(isLoading || creatorData?.image?.url) && (
               <>
-                <Cover
+                <CreatorImage
                   src={creatorData?.image?.url}
                   alt={creatorData?.image?.alt || creatorData?.display}
                   skeleton={isLoading && !creatorData?.image?.url}

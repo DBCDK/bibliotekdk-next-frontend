@@ -2,7 +2,7 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 import styles from "./CreatorBox.module.css";
 import Text from "@/components/base/text";
-import Cover from "@/components/base/cover/Cover";
+import CreatorImage from "@/components/creator/CreatorImage";
 import { useRouter } from "next/router";
 import useDataCollect from "@/lib/useDataCollect";
 import { getCreatorPortrait } from "@/components/creator/utils";
@@ -81,11 +81,10 @@ export default function CreatorBox({
     <section className={`${styles.block} ${className}`} data-cy={dataCy}>
       {portrait?.src && (
         <div className={styles.portraitWrapper}>
-          <Cover
+          <CreatorImage
             src={portrait.src}
             alt={portrait.alt}
             skeleton={isLoading && !portrait.src}
-            size="fill"
             onClick={() => {
               collect.collectCreatorTeaserClick({
                 name: creatorHit.display,
