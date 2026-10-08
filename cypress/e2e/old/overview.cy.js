@@ -10,7 +10,7 @@ describe("Overview", () => {
 
     //test bookmark dropdown
     it.only("Can click on BookmarkDropdown and select a value", () => {
-      cy.wait(500); //test will fail without this wait..
+      cy.get("[data-cy=tag-e-bog]").should("be.visible");
       //open bookmarkDropdown
       cy.get(`[data-cy=bookmark-button]`).click();
 

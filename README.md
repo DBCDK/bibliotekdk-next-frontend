@@ -37,6 +37,9 @@ The following environment variables can be set in the application. Variables pre
   URL to the GraphQL API. Default is http://bibliotekdk-next-api-1.febib-staging.svc.cloud.dbc.dk/graphql.
 - - **NEXT_PUBLIC_FBI_API_URL**
     URL to the FBI_API GraphQL API. Default is https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql.
+- **NEXT_PUBLIC_FBI_API_PRESENT_PROFILE**
+  Profile used only for bookmark material fallback. Default is `Huskeliste`.
+  Explicit `profile: "present"` requests use this profile even when `FBI_API_FORCE_PROFILE` is set. All other requests keep their existing profile selection.
 - **API_TIMEOUT_MS**
   Time in ms for how long the Next.js server should wait for data when doing server side rendering. Default is 150.
 - **NEXTAUTH_URL**

@@ -20,6 +20,7 @@ export const MaterialTypeOrderEnum = Object.freeze({
   LITERATURE: {
     BOG: { display: "bog", code: "BOOK" },
     EBOG: { display: "e-bog", code: "EBOOK" },
+    BILLEDBOG: { display: "billedbog", code: "PICTURE_BOOK" },
     "LYDBOG (ONLINE)": {
       display: "lydbog (online)",
       code: "AUDIO_BOOK_ONLINE",
@@ -29,7 +30,6 @@ export const MaterialTypeOrderEnum = Object.freeze({
       code: "AUDIO_BOOK_CD_MP3",
     },
     "LYDBOG (CD)": { display: "lydbog (cd)", code: "AUDIO_BOOK_CD" },
-    BILLEDBOG: { display: "billedbog", code: "PICTURE_BOOK" },
     "BILLEDBOG ONLINE": {
       display: "billedbog (online)",
       code: "PICTURE_BOOK_ONLINE",

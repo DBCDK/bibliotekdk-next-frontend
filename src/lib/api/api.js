@@ -52,6 +52,7 @@ export async function fetcher(
 ) {
   const {
     apiUrl: apiUrlFromQuery,
+    profile: requestedProfile,
     query,
     variables,
     delay,
@@ -70,8 +71,11 @@ export async function fetcher(
     typeof window === "undefined" ? serverSideAppUrl : window.location.origin;
 
   const profile =
-    forced_profile ||
-    (apiUrlFromQuery === ApiEnums.FBI_API ? "bibdk21" : "SimpleSearch");
+    requestedProfile === "present"
+      ? getConfig()?.publicRuntimeConfig?.fbi_api_present_profile ||
+        "Huskeliste"
+      : forced_profile ||
+        (apiUrlFromQuery === ApiEnums.FBI_API ? "bibdk21" : "SimpleSearch");
 
   const headers = {
     ...orgHeaders,
