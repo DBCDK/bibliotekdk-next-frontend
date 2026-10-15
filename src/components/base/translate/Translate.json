@@ -247,6 +247,14 @@
         "da": "Alle artikeltyper",
         "en": "All article types"
       },
+      "phrase.publicationstatus": {
+        "da": "Videnskabeligtniveau",
+        "en": "Scientific level"
+      },
+      "all_phrase.publicationstatus": {
+        "da": "Alle",
+        "en": "All"
+      },
       "more_filters": { "da": "Flere filtre", "en": "More filters" }
     },
     "advanced_search_worktypes": {
@@ -462,6 +470,10 @@
       "tooltip_nota_info": {
         "da": "Her kan du v\u00e6lge om du vil s\u00f8ge i Notas materialer til folk med syns- og l\u00e6sehandicap. Materialerne kan kun l\u00e5nes af medlemmer af Nota. Du kan blive medlem, hvis du har et dokumenteret l\u00e6sehandicap. Se mere p\u00e5 nota.dk",
         "en": "Here you can choose whether you want to search Nota\u0027s materials for people with visual and reading disabilities. The materials can only be borrowed by members of Nota. You can become a member if you have a documented reading disability. See more at nota.dk"
+      },
+      "tooltip_publication_status_info": {
+        "da": "Her kan du v\u00e6lge at s\u00f8ge i forskningsbaseret artikler. Disse er udvalgt ud fra tidsskriftets videnskabelige niveau i Kanalregisteret. Artikler fra tidsskrifter med niveau 1 eller 2 er medtaget.",
+        "en": "Here you can choose to search for research-based articles. These are selected based on the journal\u0027s scientific level in the Danish Register of Research Journals. Articles from journals at level 1 or 2 are included."
       }
     },
     "general": {
