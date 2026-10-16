@@ -688,7 +688,8 @@ function RenderSimpleList({ values }) {
   );
 }
 
-export function getPublicationStatuses(manifestations) {
+// Return the translated label when any manifestation is a scientific publication.
+export function getScientificPublicationStatus(manifestations) {
   const hasScientificPublication = manifestations?.some(
     (manifestation) => manifestation?.publicationStatus?.code === "SCIENTIFIC"
   );

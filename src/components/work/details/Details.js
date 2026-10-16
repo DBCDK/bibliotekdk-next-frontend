@@ -21,7 +21,7 @@ import isEmpty from "lodash/isEmpty";
 
 import {
   fieldsForRows,
-  getPublicationStatuses,
+  getScientificPublicationStatus,
 } from "@/components/work/details/utils/details.utils";
 
 // TODO: Use when jed data is ready and better
@@ -234,7 +234,7 @@ export default function Wrap(props) {
 
   const work = {
     ...data?.work,
-    publicationStatus: getPublicationStatuses(manifestations),
+    publicationStatus: getScientificPublicationStatus(manifestations),
     series: seriesData?.work?.series || [],
     seriesIsLoading: seriesIsLoading,
     universes: universesData?.work?.universes || [],

@@ -6,7 +6,7 @@ import {
   fieldsForRows,
   filterAndMerge,
   getLanguageValues,
-  getPublicationStatuses,
+  getScientificPublicationStatus,
 } from "@/components/work/details/utils/details.utils";
 
 test("Get translated scientific publication status from manifestations", () => {
@@ -16,13 +16,13 @@ test("Get translated scientific publication status from manifestations", () => {
     { publicationStatus: { code: "SCIENTIFIC" } },
   ];
 
-  expect(getPublicationStatuses(manifestations)).toBe(
+  expect(getScientificPublicationStatus(manifestations)).toBe(
     "Forskningsbaseret artikel"
   );
   expect(
-    getPublicationStatuses([{ publicationStatus: { code: "OTHER" } }])
+    getScientificPublicationStatus([{ publicationStatus: { code: "OTHER" } }])
   ).toBe("");
-  expect(getPublicationStatuses()).toBe("");
+  expect(getScientificPublicationStatus()).toBe("");
 });
 
 test("Show publication status in work details", () => {
