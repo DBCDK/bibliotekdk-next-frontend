@@ -3,9 +3,45 @@
  */
 
 import {
+  fieldsForRows,
   filterAndMerge,
   getLanguageValues,
+  getScientificPublicationStatus,
 } from "@/components/work/details/utils/details.utils";
+
+test("Get translated scientific publication status from manifestations", () => {
+  const manifestations = [
+    {},
+    { publicationStatus: { code: "OTHER" } },
+    { publicationStatus: { code: "SCIENTIFIC" } },
+  ];
+
+  expect(getScientificPublicationStatus(manifestations)).toBe(
+    "Forskningsbaseret artikel"
+  );
+  expect(
+    getScientificPublicationStatus([{ publicationStatus: { code: "OTHER" } }])
+  ).toBe("");
+  expect(getScientificPublicationStatus()).toBe("");
+});
+
+test("Show publication status in work details", () => {
+  const fields = fieldsForRows(
+    {},
+    {
+      publicationStatus: "Forskningsbaseret artikel",
+      series: [],
+      universes: [],
+      workTypes: [],
+    },
+    { context: "details" }
+  );
+  const publicationStatus = fields.find((field) => field.publicationStatus);
+
+  expect(publicationStatus.publicationStatus.value).toBe(
+    "Forskningsbaseret artikel"
+  );
+});
 
 test("Test get Languages method", () => {
   let manifestation = {};

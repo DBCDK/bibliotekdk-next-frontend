@@ -1288,6 +1288,14 @@
       "schooluse": { "da": "Undervisning", "en": "Education" },
       "physicalDescription": { "da": "Omfang", "en": "Scope" },
       "released": { "da": "Udgivet", "en": "Released" },
+      "publicationStatus": {
+        "da": "Videnskabeligt niveau",
+        "en": "Scientific level"
+      },
+      "publicationStatusScientific": {
+        "da": "Forskningsbaseret artikel",
+        "en": "Research-based article"
+      },
       "periodica_articles": { "da": "Artikler", "en": "Articles" },
       "periodica_articles_text": {
         "da": "%s artikler registreret fra %s\u0026nbsp;\u0026#8209;\u0026nbsp;%s",

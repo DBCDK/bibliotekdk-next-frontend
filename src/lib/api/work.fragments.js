@@ -796,6 +796,9 @@ export function fbiOverviewDetail({ workId }) {
                   frequency
                 }
               }
+              publicationStatus {
+                code
+              }
               notes {
                 type
                 heading
