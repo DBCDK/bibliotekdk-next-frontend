@@ -1,5 +1,5 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const fbiApiPath = Cypress.env("fbiApiSimpleSearchPath");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Search", () => {
   beforeEach(() => {
