@@ -9,7 +9,7 @@ import { ApiEnums } from "@/lib/api/api";
  */
 export function subjects({ q, limit = 10 }) {
   return {
-    apiUrl: ApiEnums.FBI_API_SIMPLESEARCH,
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query RelatedSubjects($q: [String!]!, $limit: Int) {
         recommendations {

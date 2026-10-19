@@ -1,3 +1,4 @@
+import { ApiEnums } from "@/lib/api/api";
 import {
   creatorsFragment,
   materialTypesFragment,
@@ -42,6 +43,7 @@ export const fetchAll = ({
   profile,
 } = {}) => {
   return {
+    apiUrl: ApiEnums.FBI_API,
     profile,
     query: `
     query patronBookmarks(
