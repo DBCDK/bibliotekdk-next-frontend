@@ -19,6 +19,7 @@ import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { getSite } from "@/components/hooks/useSiteConfig";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
@@ -95,6 +96,8 @@ const AnalyseItemAvailability = forwardRef(function AnalyseItemAvailability(
 });
 
 const BookmarkPage = () => {
+  const currentApplication =
+    getSite() === "studiebib" ? "STUDIEBIB" : "BIBLIOTEKDK";
   const modal = useModal();
   const itemsRef = useRef([]);
   const {
@@ -106,6 +109,7 @@ const BookmarkPage = () => {
     setCurrentPage,
     count,
     isLoading: bookmarsDataLoading,
+    isLoadingMore,
     error: bookmarksError,
   } = useBookmarks({ list: true });
 
@@ -292,6 +296,26 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark?.manifestations?.[0]);
   };
+  const getSourceText = ({ application, agency }) => {
+    if (application === currentApplication) return null;
+    if (!application && agency?.id === "190101") return null;
+
+    let source = agency?.name;
+
+    if (application === "BIBLIOTEKDK") {
+      source = "bibliotek.dk";
+    } else if (application === "STUDIEBIB") {
+      source = "Studiebib";
+    }
+
+    if (!source) return null;
+
+    return Translate({
+      context: CONTEXT,
+      label: "added-from",
+      vars: [source],
+    });
+  };
   const onPageChange = async (newPage, scroll = true) => {
     if (newPage > totalPages) {
       newPage = totalPages;
@@ -318,7 +342,7 @@ const BookmarkPage = () => {
       !bookmark.hasMaterial || bookmark.isAvailableInSearchProfile === false
   );
 
-  if (bookmarsDataLoading || isPopulateLoading) {
+  if ((bookmarsDataLoading && !isLoadingMore) || isPopulateLoading) {
     return (
       <ProfileLayout
         title={Translate({
@@ -535,6 +559,7 @@ const BookmarkPage = () => {
               creator={bookmark.creator}
               creators={bookmark.creators}
               materialType={bookmark.materialTypeLabel}
+              sourceText={getSourceText(bookmark)}
               image={bookmark.image}
               hasMaterial={bookmark.hasMaterial}
               isAvailableInSearchProfile={bookmark.isAvailableInSearchProfile}
@@ -566,6 +591,7 @@ const BookmarkPage = () => {
         <Pagination
           numPages={totalPages}
           currentPage={currentPage}
+          isLoading={isLoadingMore}
           className={styles.pagination}
           onChange={onPageChange}
         />

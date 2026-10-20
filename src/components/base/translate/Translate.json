@@ -1430,6 +1430,7 @@
       "defaultTitle": { "da": "Bogm\u00e6rk", "en": "Bookmark" },
       "title": { "da": "Bogm\u00e6rk %s", "en": "Bookmark %s" },
       "page-title": { "da": "Huskeliste", "en": "Bookmarks" },
+      "added-from": { "da": "Tilf\u00f8jet fra %s", "en": "Added from %s" },
       "result-amount": { "da": "materialer", "en": "materials" },
       "select-all": { "da": "V\u00e6lg alle", "en": "Select All" },
       "remove-selected": { "da": "Fjern valgte", "en": "Remove selected" },

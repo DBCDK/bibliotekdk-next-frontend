@@ -62,6 +62,11 @@ export const fetchAll = ({
             id
             materialId
             createdAt
+            application @include(if: $withMaterial)
+            agency @include(if: $withMaterial) {
+              id
+              name
+            }
             selection {
               materialTypes {
                 general
