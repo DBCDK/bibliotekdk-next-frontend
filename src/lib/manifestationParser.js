@@ -338,7 +338,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "edition",
     }),
-    valueParser: (value) => value.edition || "",
+    valueParser: (value) => value.summary || "",
   },
   {
     dataField: "audience",

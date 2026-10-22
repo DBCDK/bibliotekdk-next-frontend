@@ -24,3 +24,16 @@ test("Test_parseManifestation", () => {
   output = parseManifestation(twoElements);
   expect(output).toMatchSnapshot();
 });
+
+test("uses edition summary for the expanded manifestation", () => {
+  const output = parseManifestation({
+    edition: {
+      edition: "6. udgave",
+      summary: "6. udgave, 2. oplag",
+    },
+  });
+
+  expect(output.find(({ dataField }) => dataField === "edition")?.value).toBe(
+    "6. udgave, 2. oplag"
+  );
+});
