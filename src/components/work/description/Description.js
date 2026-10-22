@@ -15,11 +15,9 @@ import { getCreatorDisplay } from "@/lib/utils";
 
 /**
  * Format creators as a comma-separated list with "og" before the last name.
- * @param creators
- * @param functionCode
  * @returns {string}
  */
-function formatCreators(creators, functionCode) {
+function formatCreators({ creators, functionCode }) {
   const names = creators
     .filter((creator) => creator?.roles?.[0]?.functionCode === functionCode)
     .map((creator) => getCreatorDisplay(creator));
@@ -42,8 +40,8 @@ export function parseCreatorsForInterview(creators) {
     return "";
   }
 
-  const interviewees = formatCreators(creators, "ive");
-  const interviewers = formatCreators(creators, "ivr");
+  const interviewees = formatCreators({ creators, functionCode: "ive" });
+  const interviewers = formatCreators({ creators, functionCode: "ivr" });
 
   if (interviewees && interviewers) {
     return `Interview med ${interviewees} af ${interviewers}`;
