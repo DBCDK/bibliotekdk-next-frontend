@@ -2276,6 +2276,7 @@
       },
       "label-subjects": { "da": "Emne", "en": "Subject" },
       "label-creators": { "da": "Forfatter", "en": "Author" },
+      "label-year": { "da": "Udgivelsesår", "en": "Publication year" },
       "label-literature-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"
