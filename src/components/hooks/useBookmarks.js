@@ -405,6 +405,8 @@ const useBookmarksCore = ({
       : localBookmarks,
     paginatedBookmarks: hasCulrUniqueId ? globalBookmarks : localPage,
     isLoading: hasCulrUniqueId ? globalLoading : !localBookmarks && !localError,
+    isLoadingMore:
+      !!globalLoading && isMobile && list && globalBookmarks.length > 0,
     error: (hasCulrUniqueId ? globalError : localError) || mutationError,
     setSortBy,
     currentPage: hasCulrUniqueId ? currentPage : desktopPage,
