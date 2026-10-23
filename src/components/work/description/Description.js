@@ -14,39 +14,44 @@ import isEmpty from "lodash/isEmpty";
 import { getCreatorDisplay } from "@/lib/utils";
 
 /**
+ * Format creators as a comma-separated list with "og" before the last name.
+ * @returns {string}
+ */
+function formatCreators({ creators, functionCode }) {
+  const names = creators
+    .filter((creator) => creator?.roles?.[0]?.functionCode === functionCode)
+    .map((creator) => getCreatorDisplay(creator));
+
+  if (names.length > 1) {
+    return `${names.slice(0, -1).join(", ")} og ${names[names.length - 1]}`;
+  }
+
+  return names.join("");
+}
+
+/**
  * Parse creators array to see if description should include information
  * about people interviewing and/or being interviewed.
  * @param creators
  * @returns {string}
  */
-function parseCreatorsForInterview(creators) {
+export function parseCreatorsForInterview(creators) {
   if (isEmpty(creators)) {
     return "";
   }
-  // person(s) being interviewed
-  const interviewee = creators
-    .filter((creator) => creator?.roles?.[0]?.functionCode === "ive")
-    .map((creator) => getCreatorDisplay(creator));
-  // if there are more persons we want the last person to be seperated with "og"
-  // like: "jens, peter og hans"
-  let intervieweeAsString = "";
-  if (interviewee.length > 1) {
-    const last = interviewee.pop();
-    intervieweeAsString = interviewee.join(", ") + " og " + last;
-  } else {
-    intervieweeAsString = interviewee.join(", ");
+
+  const interviewees = formatCreators({ creators, functionCode: "ive" });
+  const interviewers = formatCreators({ creators, functionCode: "ivr" });
+
+  if (interviewees && interviewers) {
+    return `Interview med ${interviewees} af ${interviewers}`;
   }
 
-  // person(s) interviewing
-  const interviewer = creators
-    .filter((creator) => creator?.roles?.[0]?.functionCode === "ivr")
-    .map((creator) => getCreatorDisplay(creator))
-    .join(", ");
+  if (interviewees) {
+    return `Interview med ${interviewees}`;
+  }
 
-  return (
-    `${intervieweeAsString ? `Interview med  ${intervieweeAsString} ` : ""}` +
-    `${interviewer ? `af  ${interviewer}` : ""}`
-  );
+  return interviewers ? `Interview lavet af ${interviewers}` : "";
 }
 
 /**
