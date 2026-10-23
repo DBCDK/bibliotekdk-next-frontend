@@ -1431,6 +1431,10 @@
       "title": { "da": "Bogm\u00e6rk %s", "en": "Bookmark %s" },
       "page-title": { "da": "Huskeliste", "en": "Bookmarks" },
       "added-from": { "da": "Tilf\u00f8jet fra %s", "en": "Added from %s" },
+      "added-from-other-source": {
+        "da": "Tilføjet fra en anden kilde",
+        "en": "Added from another source"
+      },
       "result-amount": { "da": "materialer", "en": "materials" },
       "select-all": { "da": "V\u00e6lg alle", "en": "Select All" },
       "remove-selected": { "da": "Fjern valgte", "en": "Remove selected" },

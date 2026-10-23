@@ -19,7 +19,6 @@ import ProfileLayout from "../profileLayout/ProfileLayout";
 import Translate from "@/components/base/translate";
 import MenuDropdown from "@/components/base/dropdown/menuDropdown/MenuDropdown";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import { getSite } from "@/components/hooks/useSiteConfig";
 import List from "@/components/base/forms/list";
 import Pagination from "@/components/search/pagination/Pagination";
 import { createEditionText } from "@/components/work/details/utils/details.utils";
@@ -96,8 +95,6 @@ const AnalyseItemAvailability = forwardRef(function AnalyseItemAvailability(
 });
 
 const BookmarkPage = () => {
-  const currentApplication =
-    getSite() === "studiebib" ? "STUDIEBIB" : "BIBLIOTEKDK";
   const modal = useModal();
   const itemsRef = useRef([]);
   const {
@@ -296,24 +293,13 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark?.manifestations?.[0]);
   };
-  const getSourceText = ({ application, agency }) => {
-    if (application === currentApplication) return null;
-    if (!application && agency?.id === "190101") return null;
-
-    let source = agency?.name;
-
-    if (application === "BIBLIOTEKDK") {
-      source = "bibliotek.dk";
-    } else if (application === "STUDIEBIB") {
-      source = "Studiebib";
-    }
-
-    if (!source) return null;
+  const getSourceText = ({ origin }) => {
+    if (origin?.isCurrentOrigin !== false) return null;
 
     return Translate({
       context: CONTEXT,
-      label: "added-from",
-      vars: [source],
+      label: origin.displayName ? "added-from" : "added-from-other-source",
+      vars: [origin.displayName],
     });
   };
   const onPageChange = async (newPage, scroll = true) => {
