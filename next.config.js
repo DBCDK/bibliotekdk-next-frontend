@@ -175,6 +175,8 @@ module.exports = {
   },
   publicRuntimeConfig: {
     fbi_api_force_profile: process.env.FBI_API_FORCE_PROFILE,
+    fbi_api_present_profile:
+      process.env.NEXT_PUBLIC_FBI_API_PRESENT_PROFILE || "Huskeliste",
     cookiebot: {
       id: process.env.COOKIEBOT_ID || "0945225b-6b16-4166-82dd-ea5947b897b3",
       mode: process.env.COOKIEBOT_MODE || "auto",

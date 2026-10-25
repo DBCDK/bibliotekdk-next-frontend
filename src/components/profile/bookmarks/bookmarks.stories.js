@@ -10,7 +10,8 @@ const exportedObject = {
 
 export default exportedObject;
 
-const { WORK_11, WORK_12, USER_2, DEFAULT_STORY_PARAMETERS } = automock_utils();
+const { WORK_11, WORK_12, USER_2, BRANCH_3, DEFAULT_STORY_PARAMETERS } =
+  automock_utils();
 
 /**
  * Returns Bookmarks

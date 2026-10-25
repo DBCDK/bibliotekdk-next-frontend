@@ -688,6 +688,17 @@ function RenderSimpleList({ values }) {
   );
 }
 
+// Return the translated label when any manifestation is a scientific publication.
+export function getScientificPublicationStatus(manifestations) {
+  const hasScientificPublication = manifestations?.some(
+    (manifestation) => manifestation?.publicationStatus?.code === "SCIENTIFIC"
+  );
+
+  return hasScientificPublication
+    ? Translate({ context: "details", label: "publicationStatusScientific" })
+    : "";
+}
+
 /**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
@@ -780,6 +791,12 @@ export function fieldsForRows(manifestation, work, context) {
             label: "released",
           }),
           value: manifestation?.edition?.publicationYear?.display || "",
+        },
+      },
+      {
+        publicationStatus: {
+          label: Translate({ ...context, label: "publicationStatus" }),
+          value: work?.publicationStatus || "",
         },
       },
       {

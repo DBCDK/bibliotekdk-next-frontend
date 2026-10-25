@@ -19,7 +19,10 @@ import {
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
-import { fieldsForRows } from "@/components/work/details/utils/details.utils";
+import {
+  fieldsForRows,
+  getScientificPublicationStatus,
+} from "@/components/work/details/utils/details.utils";
 
 // TODO: Use when jed data is ready and better
 // import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
@@ -231,6 +234,7 @@ export default function Wrap(props) {
 
   const work = {
     ...data?.work,
+    publicationStatus: getScientificPublicationStatus(manifestations),
     series: seriesData?.work?.series || [],
     seriesIsLoading: seriesIsLoading,
     universes: universesData?.work?.universes || [],

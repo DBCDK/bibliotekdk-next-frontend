@@ -1,40 +1,46 @@
-/**
- *
- * @param {bookmarks} {materialId: string, materialType: string}
- * @returns
- */
+import { ApiEnums } from "@/lib/api/api";
 
 export function addBookmarks({ bookmarks }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `
-    mutation addBookmarks($bookmarks: [BookMarkInput!]!) {
-      users {
+    mutation addBookmarks($bookmarks: [BookmarksInput!]!) {
+      patron {
         addBookmarks(bookmarks: $bookmarks) {
-          bookmarksAdded {
-            materialType
+          status
+          items {
+            id
             materialId
-          }
-          bookmarksAlreadyExists {
-            materialType
-            materialId
+            status
+            selection {
+              materialTypes {
+                general
+                specific
+              }
+            }
           }
         }
       }
     }
     `,
     variables: {
-      bookmarks: bookmarks,
+      bookmarks,
     },
   };
 }
 
 export function deleteBookmarks({ bookmarkIds }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `
-    mutation deleteBookmarks($bookmarkIds: [Int!]!) {
-      users {
-        deleteBookmarks(bookmarkIds: $bookmarkIds) {
-          idsDeletedCount
+    mutation deleteBookmarks($bookmarkIds: [String!]!) {
+      patron {
+        deleteBookmarks(ids: $bookmarkIds) {
+          status
+          items {
+            id
+            status
+          }
         }
       }
     }

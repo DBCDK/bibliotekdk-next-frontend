@@ -536,6 +536,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     publicationYear {
       display
     }
+    summary
     edition
   }
   hostPublication {
