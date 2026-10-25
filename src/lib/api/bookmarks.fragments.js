@@ -62,6 +62,10 @@ export const fetchAll = ({
             id
             materialId
             createdAt
+            origin @include(if: $withMaterial) {
+              displayName
+              isCurrentOrigin
+            }
             selection {
               materialTypes {
                 general

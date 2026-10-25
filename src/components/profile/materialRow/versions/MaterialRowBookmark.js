@@ -111,6 +111,7 @@ const MaterialRowBookmark = ({
   onBookmarkDelete,
   allManifestations,
   materialType,
+  sourceText,
   hasMaterial = !!allManifestations?.length,
   isAvailableInSearchProfile = true,
   onSelect,
@@ -175,11 +176,13 @@ const MaterialRowBookmark = ({
       )}
 
       <div className={sharedStyles.materialInfo}>
-        {!!image && (
-          <div className={sharedStyles.imageContainer}>
-            <Cover src={image} size="fill-width" />
-          </div>
-        )}
+        <div className={sharedStyles.imageContainer}>
+          <Cover
+            src={image}
+            size="fill-width"
+            className={cx({ [styles.bookmarkMissingCover]: !image })}
+          />
+        </div>
         <div className={sharedStyles.textContainer}>
           <ConditionalWrapper
             condition={
@@ -236,6 +239,11 @@ const MaterialRowBookmark = ({
             >
               {materialLabel}
               {edition && <span>{edition}</span>}
+            </Text>
+          )}
+          {sourceText && (
+            <Text type="text3" className={styles.bookmarkSource}>
+              {sourceText}
             </Text>
           )}
         </div>

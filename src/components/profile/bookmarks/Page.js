@@ -106,6 +106,7 @@ const BookmarkPage = () => {
     setCurrentPage,
     count,
     isLoading: bookmarsDataLoading,
+    isLoadingMore,
     error: bookmarksError,
   } = useBookmarks({ list: true });
 
@@ -292,6 +293,15 @@ const BookmarkPage = () => {
      */
     return createEditionText(bookmark?.manifestations?.[0]);
   };
+  const getSourceText = ({ origin }) => {
+    if (origin?.isCurrentOrigin !== false) return null;
+
+    return Translate({
+      context: CONTEXT,
+      label: origin.displayName ? "added-from" : "added-from-other-source",
+      vars: [origin.displayName],
+    });
+  };
   const onPageChange = async (newPage, scroll = true) => {
     if (newPage > totalPages) {
       newPage = totalPages;
@@ -318,7 +328,7 @@ const BookmarkPage = () => {
       !bookmark.hasMaterial || bookmark.isAvailableInSearchProfile === false
   );
 
-  if (bookmarsDataLoading || isPopulateLoading) {
+  if ((bookmarsDataLoading && !isLoadingMore) || isPopulateLoading) {
     return (
       <ProfileLayout
         title={Translate({
@@ -535,6 +545,7 @@ const BookmarkPage = () => {
               creator={bookmark.creator}
               creators={bookmark.creators}
               materialType={bookmark.materialTypeLabel}
+              sourceText={getSourceText(bookmark)}
               image={bookmark.image}
               hasMaterial={bookmark.hasMaterial}
               isAvailableInSearchProfile={bookmark.isAvailableInSearchProfile}
@@ -566,6 +577,7 @@ const BookmarkPage = () => {
         <Pagination
           numPages={totalPages}
           currentPage={currentPage}
+          isLoading={isLoadingMore}
           className={styles.pagination}
           onChange={onPageChange}
         />
