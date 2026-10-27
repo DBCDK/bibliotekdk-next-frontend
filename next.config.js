@@ -90,6 +90,7 @@ module.exports = {
   images: {
     domains: [
       "forfatterweb.dk",
+      "fbiinfo-present.dbc.dk",
       "bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk",
       "bibdk-backend-www-master.febib-staging.svc.cloud.dbc.dk",
       "bibdk-backend-www-master.frontend-staging.svc.cloud.dbc.dk",
