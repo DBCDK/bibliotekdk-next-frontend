@@ -33,7 +33,7 @@ export const DropdownIndicesEnum = {
   NOTA: "nota", //this is not an index in complex search. It will be converted to an index when state is converted to cql. The index used is term.source.
   MUSICALEXERCISE: "musicalexercise",
   ARTICLE_TYPE: "phrase.hostpublicationtype",
-  PUBLICATION_STATUS: "phrase.publicationstatus",
+  PUBLICATION_STATUS: "term.hostpublication",
 };
 
 const specialIndices = new Set([
@@ -577,7 +577,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
   const publicationStatus = {
     items: convertToDropdownInput({
       prioritisedItems: [
-        { display: "Forskningsbaseret artikler", code: "videnskabelig" },
+        { display: "Forskningsbaseret artikler", code: "SCIENTIFIC" },
       ],
       prioritisedFormType: FormTypeEnum.CHECKBOX,
       unprioritisedItems: [],

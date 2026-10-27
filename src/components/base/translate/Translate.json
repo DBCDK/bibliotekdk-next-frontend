@@ -247,11 +247,11 @@
         "da": "Alle artikeltyper",
         "en": "All article types"
       },
-      "phrase.publicationstatus": {
+      "term.hostpublication": {
         "da": "Videnskabeligtniveau",
         "en": "Scientific level"
       },
-      "all_phrase.publicationstatus": {
+      "all_term.hostpublication": {
         "da": "Alle",
         "en": "All"
       },
