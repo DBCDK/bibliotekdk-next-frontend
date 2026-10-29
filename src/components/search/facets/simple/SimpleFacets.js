@@ -17,6 +17,7 @@ export function SimpleFacets({
       isLoading={isLoading}
       selectedFacets={selectedFacets}
       onItemClick={onItemClick}
+      sortChronological={["year"]}
       origin="simpleSearch"
       translateContext="facets"
     />
