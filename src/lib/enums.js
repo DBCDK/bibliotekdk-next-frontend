@@ -72,6 +72,7 @@ export const FilterTypeEnum = Object.freeze({
   GENRE_AND_FORM: "genreAndForm",
   CHILDREN_OR_ADULTS: "childrenOrAdults",
   FICTIONAL_CHARACTERS: "fictionalCharacters",
+  YEAR: "year",
   WORK_TYPES: "workTypes",
   //ALWAYS_LOAN: "canAlwaysBeLoaned",
 });

@@ -1,5 +1,8 @@
+import { ApiEnums } from "@/lib/api/api";
+
 export function addBookmarks({ bookmarks }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `
     mutation addBookmarks($bookmarks: [BookmarksInput!]!) {
       patron {
@@ -28,6 +31,7 @@ export function addBookmarks({ bookmarks }) {
 
 export function deleteBookmarks({ bookmarkIds }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `
     mutation deleteBookmarks($bookmarkIds: [String!]!) {
       patron {

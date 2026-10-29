@@ -75,7 +75,9 @@ export async function fetcher(
       ? getConfig()?.publicRuntimeConfig?.fbi_api_present_profile ||
         "Huskeliste"
       : forced_profile ||
-        (apiUrlFromQuery === ApiEnums.FBI_API ? "bibdk21" : "SimpleSearch");
+        (apiUrlFromQuery === ApiEnums.FBI_API_SIMPLESEARCH
+          ? "SimpleSearch"
+          : "bibdk21");
 
   const headers = {
     ...orgHeaders,
