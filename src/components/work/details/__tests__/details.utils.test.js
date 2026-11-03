@@ -13,7 +13,10 @@ test("Get translated scientific publication statuses from manifestations", () =>
   const manifestations = [
     {},
     { publicationStatus: { code: "OTHER" } },
-    { publicationStatus: { code: "SCIENTIFIC" } },
+    {
+      workTypes: ["PERIODICA"],
+      publicationStatus: { code: "SCIENTIFIC" },
+    },
   ];
 
   expect(getScientificPublicationStatus(manifestations)).toBe(
@@ -22,6 +25,7 @@ test("Get translated scientific publication statuses from manifestations", () =>
   expect(
     getScientificPublicationStatus([
       {
+        workTypes: ["ARTICLE"],
         hostPublication: {
           publicationStatus: { code: "SCIENTIFIC" },
         },
@@ -30,6 +34,24 @@ test("Get translated scientific publication statuses from manifestations", () =>
   ).toBe("Forskningsbaseret artikel");
   expect(
     getScientificPublicationStatus([{ publicationStatus: { code: "OTHER" } }])
+  ).toBe("");
+  expect(
+    getScientificPublicationStatus([
+      {
+        workTypes: ["ARTICLE"],
+        publicationStatus: { code: "SCIENTIFIC" },
+      },
+    ])
+  ).toBe("");
+  expect(
+    getScientificPublicationStatus([
+      {
+        workTypes: ["PERIODICA"],
+        hostPublication: {
+          publicationStatus: { code: "SCIENTIFIC" },
+        },
+      },
+    ])
   ).toBe("");
   expect(getScientificPublicationStatus()).toBe("");
 });

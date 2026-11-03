@@ -693,6 +693,7 @@ export function getScientificPublicationStatus(manifestations) {
   //for articles publicationstatus is inside hostPublication
   const hasScientificArticle = manifestations?.some(
     (manifestation) =>
+      manifestation?.workTypes?.includes("ARTICLE") &&
       manifestation?.hostPublication?.publicationStatus?.code === "SCIENTIFIC"
   );
 
@@ -705,7 +706,9 @@ export function getScientificPublicationStatus(manifestations) {
 
   //for periodica/tidskrift publicationstatus is inside (root manifestations)
   const hasScientificPeriodica = manifestations?.some(
-    (manifestation) => manifestation?.publicationStatus?.code === "SCIENTIFIC"
+    (manifestation) =>
+      manifestation?.workTypes?.includes("PERIODICA") &&
+      manifestation?.publicationStatus?.code === "SCIENTIFIC"
   );
 
   return hasScientificPeriodica
