@@ -690,8 +690,7 @@ function RenderSimpleList({ values }) {
 
 // Return the translated label when any manifestation is a scientific publication.
 export function getScientificPublicationStatus(manifestations) {
-
-//for articles publicationstatus is inside hostPublication
+  //for articles publicationstatus is inside hostPublication
   const hasScientificArticle = manifestations?.some(
     (manifestation) =>
       manifestation?.hostPublication?.publicationStatus?.code === "SCIENTIFIC"
