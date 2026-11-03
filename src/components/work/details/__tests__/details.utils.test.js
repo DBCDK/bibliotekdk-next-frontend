@@ -9,7 +9,7 @@ import {
   getScientificPublicationStatus,
 } from "@/components/work/details/utils/details.utils";
 
-test("Get translated scientific publication status from manifestations", () => {
+test("Get translated scientific publication statuses from manifestations", () => {
   const manifestations = [
     {},
     { publicationStatus: { code: "OTHER" } },
@@ -17,8 +17,17 @@ test("Get translated scientific publication status from manifestations", () => {
   ];
 
   expect(getScientificPublicationStatus(manifestations)).toBe(
-    "Forskningsbaseret artikel"
+    "Forskningsbaseret tidskrift"
   );
+  expect(
+    getScientificPublicationStatus([
+      {
+        hostPublication: {
+          publicationStatus: { code: "SCIENTIFIC" },
+        },
+      },
+    ])
+  ).toBe("Forskningsbaseret artikel");
   expect(
     getScientificPublicationStatus([{ publicationStatus: { code: "OTHER" } }])
   ).toBe("");

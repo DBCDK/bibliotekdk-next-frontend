@@ -1308,6 +1308,10 @@
         "da": "Forskningsbaseret artikel",
         "en": "Research-based article"
       },
+      "publicationStatusScientificPeriodica": {
+        "da": "Forskningsbaseret tidskrift",
+        "en": "Research-based periodical"
+      },
       "periodica_articles": { "da": "Artikler", "en": "Articles" },
       "periodica_articles_text": {
         "da": "%s artikler registreret fra %s\u0026nbsp;\u0026#8209;\u0026nbsp;%s",
