@@ -799,6 +799,11 @@ export function fbiOverviewDetail({ workId }) {
               publicationStatus {
                 code
               }
+              hostPublication {
+                publicationStatus {
+                  code
+                }
+              }
               notes {
                 type
                 heading

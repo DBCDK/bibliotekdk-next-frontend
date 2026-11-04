@@ -690,12 +690,32 @@ function RenderSimpleList({ values }) {
 
 // Return the translated label when any manifestation is a scientific publication.
 export function getScientificPublicationStatus(manifestations) {
-  const hasScientificPublication = manifestations?.some(
-    (manifestation) => manifestation?.publicationStatus?.code === "SCIENTIFIC"
+  //for articles publicationstatus is inside hostPublication
+  const hasScientificArticle = manifestations?.some(
+    (manifestation) =>
+      manifestation?.workTypes?.includes("ARTICLE") &&
+      manifestation?.hostPublication?.publicationStatus?.code === "SCIENTIFIC"
   );
 
-  return hasScientificPublication
-    ? Translate({ context: "details", label: "publicationStatusScientific" })
+  if (hasScientificArticle) {
+    return Translate({
+      context: "details",
+      label: "publicationStatusScientific",
+    });
+  }
+
+  //for periodica/tidskrift publicationstatus is inside (root manifestations)
+  const hasScientificPeriodica = manifestations?.some(
+    (manifestation) =>
+      manifestation?.workTypes?.includes("PERIODICA") &&
+      manifestation?.publicationStatus?.code === "SCIENTIFIC"
+  );
+
+  return hasScientificPeriodica
+    ? Translate({
+        context: "details",
+        label: "publicationStatusScientificPeriodica",
+      })
     : "";
 }
 

@@ -248,7 +248,7 @@
         "en": "All article types"
       },
       "term.hostpublication": {
-        "da": "Videnskabeligtniveau",
+        "da": "Videnskabeligt niveau",
         "en": "Scientific level"
       },
       "all_term.hostpublication": {
@@ -1307,6 +1307,10 @@
       "publicationStatusScientific": {
         "da": "Forskningsbaseret artikel",
         "en": "Research-based article"
+      },
+      "publicationStatusScientificPeriodica": {
+        "da": "Forskningsbaseret tidsskrift",
+        "en": "Research-based periodical"
       },
       "periodica_articles": { "da": "Artikler", "en": "Articles" },
       "periodica_articles_text": {
