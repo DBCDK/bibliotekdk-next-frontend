@@ -20,7 +20,7 @@ test("Get translated scientific publication statuses from manifestations", () =>
   ];
 
   expect(getScientificPublicationStatus(manifestations)).toBe(
-    "Forskningsbaseret tidskrift"
+    "Forskningsbaseret tidsskrift"
   );
   expect(
     getScientificPublicationStatus([
