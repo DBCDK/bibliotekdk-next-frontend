@@ -17,7 +17,7 @@ import cx from "classnames";
  * @returns {React.JSX.Element}
  */
 function Text({
-  children,
+  children = "lorem ipsum dolor sit amet ...",
   className = "",
   type = "text3",
   clamp,
@@ -117,9 +117,7 @@ export function TextSkeleton(props) {
     >
       <Skeleton lines={lines} />
       {Array.from(Array(lines).keys()).map((l) => (
-        <Text key={`txt-${l}`} {...props}>
-          lorem ipsum dolor sit amet ...
-        </Text>
+        <Text key={`txt-${l}`} {...props} />
       ))}
     </Text>
   );
