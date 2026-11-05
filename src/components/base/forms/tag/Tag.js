@@ -19,7 +19,7 @@ import cx from "classnames";
  * @returns {React.JSX.Element}
  */
 function Tag({
-  children = "im a tag",
+  children,
   className = "",
   selected = false,
   onClick = null,
@@ -94,6 +94,10 @@ function TagSkeleton(props) {
 export default function Container(props) {
   if (props.skeleton) {
     return <TagSkeleton {...props} />;
+  }
+
+  if (!props.children) {
+    return null;
   }
 
   return <Tag {...props} />;

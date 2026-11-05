@@ -367,6 +367,7 @@ export const includedTypes = {
     FilterTypeEnum.MAIN_LANGUAGES,
     FilterTypeEnum.MATERIAL_TYPES,
     FilterTypeEnum.SUBJECTS,
+    FilterTypeEnum.YEAR,
   ],
   article: [
     FilterTypeEnum.ACCESS_TYPES,
@@ -374,6 +375,7 @@ export const includedTypes = {
     FilterTypeEnum.MAIN_LANGUAGES,
     FilterTypeEnum.MATERIAL_TYPES,
     FilterTypeEnum.SUBJECTS,
+    FilterTypeEnum.YEAR,
   ],
   movie: [
     FilterTypeEnum.ACCESS_TYPES,
@@ -384,6 +386,7 @@ export const includedTypes = {
     FilterTypeEnum.MAIN_LANGUAGES,
     FilterTypeEnum.MATERIAL_TYPES,
     FilterTypeEnum.SUBJECTS,
+    FilterTypeEnum.YEAR,
   ],
   game: [
     FilterTypeEnum.ACCESS_TYPES,
@@ -391,6 +394,7 @@ export const includedTypes = {
     FilterTypeEnum.FICTIONAL_CHARACTERS,
     FilterTypeEnum.GENRE_AND_FORM,
     FilterTypeEnum.MATERIAL_TYPES,
+    FilterTypeEnum.YEAR,
   ],
   music: [
     FilterTypeEnum.ACCESS_TYPES,
@@ -398,6 +402,7 @@ export const includedTypes = {
     FilterTypeEnum.CREATORS,
     FilterTypeEnum.GENRE_AND_FORM,
     FilterTypeEnum.MATERIAL_TYPES,
+    FilterTypeEnum.YEAR,
   ],
   sheetmusic: [
     FilterTypeEnum.ACCESS_TYPES,
@@ -405,5 +410,6 @@ export const includedTypes = {
     FilterTypeEnum.GENRE_AND_FORM,
     FilterTypeEnum.MATERIAL_TYPES,
     FilterTypeEnum.SUBJECTS,
+    FilterTypeEnum.YEAR,
   ],
 };

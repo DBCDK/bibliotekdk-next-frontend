@@ -12,7 +12,11 @@ import styles from "./Badge.module.css";
  *
  * @returns {React.JSX.Element}
  */
-export default function Badge({ className = "", children = "0" }) {
+export default function Badge({ className = "", children }) {
+  if (!children) {
+    return null;
+  }
+
   return (
     <div className={`${className} ${styles.badge}`}>
       <span>{children}</span>

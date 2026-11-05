@@ -26,13 +26,17 @@ function Separator() {
  * @returns {React.JSX.Element}
  */
 function Breadcrumb({
-  children = "Crumb",
+  children,
   href = { pathname: "/", query: {} },
   separator = true,
   className = "",
   disabled = false,
   link = true,
 }) {
+  if (!children) {
+    return null;
+  }
+
   const disabledStyle = disabled ? styles.disabled : "";
   const key = cyKey({ name: children, prefix: "crumb" });
   return (

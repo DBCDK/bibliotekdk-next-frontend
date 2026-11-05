@@ -9,18 +9,49 @@ import {
   getScientificPublicationStatus,
 } from "@/components/work/details/utils/details.utils";
 
-test("Get translated scientific publication status from manifestations", () => {
+test("Get translated scientific publication statuses from manifestations", () => {
   const manifestations = [
     {},
     { publicationStatus: { code: "OTHER" } },
-    { publicationStatus: { code: "SCIENTIFIC" } },
+    {
+      workTypes: ["PERIODICA"],
+      publicationStatus: { code: "SCIENTIFIC" },
+    },
   ];
 
   expect(getScientificPublicationStatus(manifestations)).toBe(
-    "Forskningsbaseret artikel"
+    "Forskningsbaseret tidsskrift"
   );
   expect(
+    getScientificPublicationStatus([
+      {
+        workTypes: ["ARTICLE"],
+        hostPublication: {
+          publicationStatus: { code: "SCIENTIFIC" },
+        },
+      },
+    ])
+  ).toBe("Forskningsbaseret artikel");
+  expect(
     getScientificPublicationStatus([{ publicationStatus: { code: "OTHER" } }])
+  ).toBe("");
+  expect(
+    getScientificPublicationStatus([
+      {
+        workTypes: ["ARTICLE"],
+        publicationStatus: { code: "SCIENTIFIC" },
+      },
+    ])
+  ).toBe("");
+  expect(
+    getScientificPublicationStatus([
+      {
+        workTypes: ["PERIODICA"],
+        hostPublication: {
+          publicationStatus: { code: "SCIENTIFIC" },
+        },
+      },
+    ])
   ).toBe("");
   expect(getScientificPublicationStatus()).toBe("");
 });
