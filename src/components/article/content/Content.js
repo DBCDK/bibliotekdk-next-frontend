@@ -276,13 +276,13 @@ export function Content({
             {article?.subHeadLine && (
               <Title type="title4">{article?.subHeadLine}</Title>
             )}
-            {article?.fieldRubrik && (
-              <Title type="title4" skeleton={skeleton} lines={3}>
+            <Title type="title4" skeleton={skeleton} lines={3}>
+              {article.fieldRubrik && (
                 <span
                   dangerouslySetInnerHTML={{ __html: article.fieldRubrik }}
                 />
-              </Title>
-            )}
+              )}
+            </Title>
           </Col>
         </Row>
       )}
