@@ -20,7 +20,7 @@ function handleOnButtonClick() {
  * @returns {React.JSX.Element}
  */
 function Button({
-  children = "im a button",
+  children,
   id = null,
   className = "",
   type = "primary",
@@ -108,6 +108,10 @@ function ButtonSkeleton(props) {
 export default function Container(props) {
   if (props.skeleton) {
     return <ButtonSkeleton {...props} />;
+  }
+
+  if (!props.children) {
+    return null;
   }
 
   return <Button {...props} />;

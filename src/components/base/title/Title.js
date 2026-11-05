@@ -11,13 +11,13 @@ import Text, { TextSkeleton, allTextTypes } from "../text/Text";
  *
  * @returns {React.JSX.Element}
  */
-export default function Container({
-  children = "I'm a title",
-  tag = "div",
-  ...props
-}) {
+export default function Container({ children, tag = "div", ...props }) {
   if (props.skeleton) {
     return <TextSkeleton {...props} />;
+  }
+
+  if (!children) {
+    return null;
   }
 
   return (

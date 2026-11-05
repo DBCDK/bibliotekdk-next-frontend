@@ -136,6 +136,10 @@ export default function Container({ skeleton, ...props }) {
     return <TextSkeleton {...props} />;
   }
 
+  if (!props.children) {
+    return null;
+  }
+
   return <Text {...props} />;
 }
 

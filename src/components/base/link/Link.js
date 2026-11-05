@@ -134,7 +134,7 @@ let inferredLinkDisplay;
  * @returns {React.JSX.Element}
  */
 function Link({
-  children = "Im a hyperlink now!",
+  children,
   a = true,
   linkRef = null,
   href,
@@ -173,6 +173,10 @@ function Link({
     linkDisplay,
     childrenDisplay
   );
+
+  if (!children) {
+    return null;
+  }
 
   // Maybe wrap with an a-tag
   if (a) {

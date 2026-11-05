@@ -19,7 +19,7 @@ import styles from "./Label.module.css";
  * @returns {React.JSX.Element}
  */
 function Label({
-  children = "Some label",
+  children,
   className = "",
   for: htmlFor = "",
   dataCy,
@@ -70,6 +70,10 @@ function LabelSkeleton(props) {
 export default function Wrap(props) {
   if (props.skeleton) {
     return <LabelSkeleton {...props} />;
+  }
+
+  if (!props.children) {
+    return null;
   }
 
   return <Label {...props} />;
