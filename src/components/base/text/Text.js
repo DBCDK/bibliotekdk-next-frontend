@@ -17,7 +17,7 @@ import cx from "classnames";
  * @returns {React.JSX.Element}
  */
 function Text({
-  children = "lorem ipsum dolor sit amet ...",
+  children,
   className = "",
   type = "text3",
   clamp,
@@ -117,7 +117,9 @@ export function TextSkeleton(props) {
     >
       <Skeleton lines={lines} />
       {Array.from(Array(lines).keys()).map((l) => (
-        <Text key={`txt-${l}`} {...props} />
+        <Text key={`txt-${l}`} {...props}>
+          lorem ipsum dolor sit amet ...
+        </Text>
       ))}
     </Text>
   );
@@ -134,6 +136,10 @@ export function TextSkeleton(props) {
 export default function Container({ skeleton, ...props }) {
   if (skeleton) {
     return <TextSkeleton {...props} />;
+  }
+
+  if (!props.children) {
+    return null;
   }
 
   return <Text {...props} />;
