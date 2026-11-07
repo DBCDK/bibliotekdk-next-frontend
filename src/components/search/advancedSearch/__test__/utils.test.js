@@ -36,6 +36,19 @@ test.each([
   expect(actual).toBe(expected);
 });
 
+test("maps the publication status facet to its search index", () => {
+  const actual = convertStateToCql({
+    facets: [
+      {
+        searchIndex: "publicationstatus",
+        values: [{ value: "SCIENTIFIC" }],
+      },
+    ],
+  });
+
+  expect(actual).toBe('((phrase.publicationstatus="SCIENTIFIC"))');
+});
+
 test("add to inputfields on OR, AND operators", () => {
   // special case - empty array
   let actual = checkAndExpandInputFields([{}]);
