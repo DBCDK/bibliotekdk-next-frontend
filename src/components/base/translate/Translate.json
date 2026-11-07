@@ -247,11 +247,11 @@
         "da": "Alle artikeltyper",
         "en": "All article types"
       },
-      "term.cataloguedpublicationstatus": {
+      "phrase.publicationstatus": {
         "da": "Videnskabeligt niveau",
         "en": "Scientific level"
       },
-      "all_term.cataloguedpublicationstatus": {
+      "all_phrase.publicationstatus": {
         "da": "Alle",
         "en": "All"
       },
@@ -344,6 +344,10 @@
       "label-publicationyear": {
         "da": "Udgivelses\u00e5r",
         "en": "Publicationyear"
+      },
+      "label-publicationstatus": {
+        "da": "Videnskabeligt niveau",
+        "en": "Scientific level"
       },
       "fagbib_introtext": {
         "da": "Fagbibliografierne er en r\u00e6kke samlinger fra Det kgl. Bibliotek.",

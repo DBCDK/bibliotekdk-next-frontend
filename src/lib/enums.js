@@ -39,6 +39,7 @@ export const AdvFacetsTypeEnum = Object.freeze({
   LET: "let",
   PRIMARYTARGET: "primarytarget",
   PUBLICATIONYEAR: "publicationyear",
+  PUBLICATIONSTATUS: "publicationstatus",
   SOURCE: "source",
   INSTRUMENT: "instrument",
   CHOIRTYPE: "choirtype",
