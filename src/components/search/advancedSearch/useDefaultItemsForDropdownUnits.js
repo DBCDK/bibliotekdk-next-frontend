@@ -585,7 +585,6 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.PUBLICATION_STATUS,
     showSearchBar: false,
     infoBarLabel: "tooltip_publication_status_info",
-    fitWidth: true,
   };
 
   const players = {
