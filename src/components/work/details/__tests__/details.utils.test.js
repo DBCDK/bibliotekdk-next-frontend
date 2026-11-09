@@ -31,7 +31,7 @@ test("Get translated scientific publication statuses from manifestations", () =>
         },
       },
     ])
-  ).toBe("Forskningsbaseret artikel");
+  ).toBe("Artikel fra forskningsbaseret tidsskrift");
   expect(
     getScientificPublicationStatus([{ publicationStatus: { code: "OTHER" } }])
   ).toBe("");
@@ -57,21 +57,43 @@ test("Get translated scientific publication statuses from manifestations", () =>
 });
 
 test("Show publication status in work details", () => {
-  const fields = fieldsForRows(
+  const articleFields = fieldsForRows(
     {},
     {
-      publicationStatus: "Forskningsbaseret artikel",
+      publicationStatus: "Artikel fra forskningsbaseret tidsskrift",
       series: [],
       universes: [],
-      workTypes: [],
+      workTypes: ["ARTICLE"],
     },
     { context: "details" }
   );
-  const publicationStatus = fields.find((field) => field.publicationStatus);
-
-  expect(publicationStatus.publicationStatus.value).toBe(
-    "Forskningsbaseret artikel"
+  const articlePublicationStatus = articleFields.find(
+    (field) => field.publicationStatus
   );
+
+  expect(articlePublicationStatus.publicationStatus).toEqual({
+    label: "Akademisk indhold",
+    value: "Artikel fra forskningsbaseret tidsskrift",
+  });
+
+  const periodicaFields = fieldsForRows(
+    {},
+    {
+      publicationStatus: "Forskningsbaseret tidsskrift",
+      series: [],
+      universes: [],
+      workTypes: ["PERIODICA"],
+    },
+    { context: "details" }
+  );
+  const periodicaPublicationStatus = periodicaFields.find(
+    (field) => field.publicationStatus
+  );
+
+  expect(periodicaPublicationStatus.publicationStatus).toEqual({
+    label: "Videnskabeligt niveau",
+    value: "Forskningsbaseret tidsskrift",
+  });
 });
 
 test("Test get Languages method", () => {

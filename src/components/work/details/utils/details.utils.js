@@ -815,7 +815,13 @@ export function fieldsForRows(manifestation, work, context) {
       },
       {
         publicationStatus: {
-          label: Translate({ ...context, label: "publicationStatus" }),
+          label: Translate({
+            ...context,
+            label:
+              materialType === "ARTICLE"
+                ? "publicationStatusArticle"
+                : "publicationStatus",
+          }),
           value: work?.publicationStatus || "",
         },
       },
