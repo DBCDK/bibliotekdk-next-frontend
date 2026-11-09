@@ -576,7 +576,9 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
 
   const publicationStatus = {
     items: convertToDropdownInput({
-      prioritisedItems: [{ display: "videnskabelig", code: "SCIENTIFIC" }],
+      prioritisedItems: [
+        { display: "Forskningsbaseret artikler", code: "SCIENTIFIC" },
+      ],
       prioritisedFormType: FormTypeEnum.CHECKBOX,
       unprioritisedItems: [],
       unprioritisedFormType: FormTypeEnum.CHECKBOX,

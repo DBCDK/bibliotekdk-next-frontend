@@ -100,12 +100,10 @@
     --elements_min_width: 175px;
   }
   .toggler {
-    width: 100%;
-    min-width: var(--elements_min_width);
+    width: var(--elements_min_width);
   }
 
   .dropdown_items {
-    width: 100%;
     min-width: calc(var(--elements_min_width) + var(--pt5));
   }
 }
