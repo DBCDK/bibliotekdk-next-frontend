@@ -248,7 +248,7 @@
         "en": "All article types"
       },
       "phrase.publicationstatus": {
-        "da": "Videnskabeligt niveau",
+        "da": "Forskningsbaseret indhold",
         "en": "Scientific level"
       },
       "all_phrase.publicationstatus": {
@@ -346,7 +346,7 @@
         "en": "Publicationyear"
       },
       "label-publicationstatus": {
-        "da": "Videnskabeligt niveau",
+        "da": "Forskningsbaseret indhold",
         "en": "Scientific level"
       },
       "fagbib_introtext": {

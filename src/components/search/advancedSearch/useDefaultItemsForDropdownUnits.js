@@ -576,9 +576,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
 
   const publicationStatus = {
     items: convertToDropdownInput({
-      prioritisedItems: [
-        { display: "Forskningsbaseret artikler", code: "SCIENTIFIC" },
-      ],
+      prioritisedItems: [{ display: "videnskabelig", code: "SCIENTIFIC" }],
       prioritisedFormType: FormTypeEnum.CHECKBOX,
       unprioritisedItems: [],
       unprioritisedFormType: FormTypeEnum.CHECKBOX,
@@ -587,6 +585,7 @@ export function useDefaultItemsForDropdownUnits({ initDropdowns }, workType) {
     indexName: DropdownIndicesEnum.PUBLICATION_STATUS,
     showSearchBar: false,
     infoBarLabel: "tooltip_publication_status_info",
+    fitWidth: true,
   };
 
   const players = {

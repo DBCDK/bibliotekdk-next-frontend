@@ -121,6 +121,7 @@ export default function AdvancedSearchDropdown({
   updateIndex,
   showSearchBar,
   helpTxtLink,
+  fitWidth,
 }) {
   const { fieldSearchFromUrl, workType } = useAdvancedSearchContext();
 
@@ -189,7 +190,9 @@ export default function AdvancedSearchDropdown({
 
   return (
     <Dropdown
-      className={styles.nav_element}
+      className={cx(styles.nav_element, {
+        [styles.fit_width]: fitWidth,
+      })}
       data-cy={`advanced-search-dropdown-${indexName}`}
     >
       <Toggler
