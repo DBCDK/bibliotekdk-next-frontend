@@ -248,7 +248,7 @@
         "en": "All article types"
       },
       "phrase.publicationstatus": {
-        "da": "Forskningsbaseret indhold",
+        "da": "Akademisk indhold",
         "en": "Scientific level"
       },
       "all_phrase.publicationstatus": {
@@ -346,7 +346,7 @@
         "en": "Publicationyear"
       },
       "label-publicationstatus": {
-        "da": "Forskningsbaseret indhold",
+        "da": "Akademisk indhold",
         "en": "Scientific level"
       },
       "fagbib_introtext": {
@@ -1305,7 +1305,7 @@
       "physicalDescription": { "da": "Omfang", "en": "Scope" },
       "released": { "da": "Udgivet", "en": "Released" },
       "publicationStatus": {
-        "da": "Videnskabeligt niveau",
+        "da": "Akademisk indhold",
         "en": "Scientific level"
       },
       "publicationStatusScientific": {
