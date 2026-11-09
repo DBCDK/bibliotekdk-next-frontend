@@ -91,7 +91,7 @@ test("Show publication status in work details", () => {
   );
 
   expect(periodicaPublicationStatus.publicationStatus).toEqual({
-    label: "Videnskabeligt niveau",
+    label: "Akademisk indhold",
     value: "Forskningsbaseret tidsskrift",
   });
 });
