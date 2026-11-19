@@ -211,7 +211,7 @@ export default function SavedSearches() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      setDisplayedSearches([]);
+      setDisplayedSearches((prev) => (prev.length === 0 ? prev : []));
       return;
     }
 
